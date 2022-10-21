@@ -55,7 +55,12 @@ export class FlowWithPickSelectionSetProcessor extends BaseSelectionSetProcessor
     if (pieces.length === 1) {
       return pieces[0];
     }
-    return `({\n  ${pieces.map(t => indent(`...${t}`)).join(`,\n`)}\n})`;
+
+    const useFlowExactObject = this.config.useFlowExactObjects;
+
+    return `({${useFlowExactObject ? '|' : ''}\n  ${pieces
+      .map(t => visitorPluginCommon.indent(`...${t}`))
+      .join(`,\n`)}\n${useFlowExactObject ? '|' : ''}})`;
   }
 
   transformLinkFields(fields: LinkField[]): ProcessResult {
