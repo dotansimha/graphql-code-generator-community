@@ -20,6 +20,9 @@
     "change-case-all": "1.0.14",
     "tslib": "~2.4.0"
   },
+  "devDependencies": {
+    "@graphql-codegen/testing": "1.18.0-alpha-20221101142840-b5a6a91f6"
+  },
   "sideEffects": false,
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

@@ -17,6 +17,9 @@
     "@urql/introspection": "^0.3.2",
     "tslib": "~2.4.0"
   },
+  "devDependencies": {
+    "@graphql-codegen/testing": "1.18.0-alpha-20221101142840-b5a6a91f6"
+  },
   "peerDependencies": {
     "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
   },

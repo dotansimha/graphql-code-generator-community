@@ -13,7 +13,8 @@
     "test": "jest --no-watchman --config ../../../jest.config.js"
   },
   "devDependencies": {
-    "@types/parse-filepath": "1.0.0"
+    "@types/parse-filepath": "1.0.0",
+    "@graphql-codegen/cli": "2.13.9"
   },
   "dependencies": {
     "@graphql-codegen/add": "^3.2.1",

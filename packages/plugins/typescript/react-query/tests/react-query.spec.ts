@@ -2,8 +2,8 @@ import { GraphQLSchema, buildClientSchema, buildSchema, parse } from 'graphql';
 import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
 
 import { plugin } from '../src/index.js';
-import { plugin as tsDocumentsPlugin } from '../../operations/src/index.js';
-import { plugin as tsPlugin } from '../../typescript/src/index.js';
+import { plugin as tsPlugin } from '@graphql-codegen/typescript';
+import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
 import { validateTs } from '@graphql-codegen/testing';
 
 const validateTypeScript = async (

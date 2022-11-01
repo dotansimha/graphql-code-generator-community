@@ -4,8 +4,8 @@ import { ReactApolloRawPluginConfig } from '../src/config.js';
 import { parse, GraphQLSchema, buildClientSchema, buildASTSchema, buildSchema } from 'graphql';
 import gql from 'graphql-tag';
 import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
-import { plugin as tsPlugin } from '../../typescript/src/index.js';
-import { plugin as tsDocumentsPlugin } from '../../operations/src/index.js';
+import { plugin as tsPlugin } from '@graphql-codegen/typescript';
+import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import { extract } from 'jest-docblock';
 

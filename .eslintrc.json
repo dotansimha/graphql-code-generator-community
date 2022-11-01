@@ -49,5 +49,5 @@
       }
     }
   ],
-  "ignorePatterns": ["dist", "node_modules", "dev-test", "test-files", "examples/front-end"]
+  "ignorePatterns": ["dist", "node_modules", "dev-test", "test-files"]
 }

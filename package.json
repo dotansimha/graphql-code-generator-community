@@ -22,15 +22,13 @@
   },
   "workspaces": [
     "packages/*",
-    "packages/utils/*",
     "packages/plugins/flow/*",
     "packages/plugins/java/*",
     "packages/plugins/c-sharp/*",
     "packages/plugins/dart/*",
     "packages/plugins/typescript/*",
     "packages/plugins/other/*",
-    "packages/presets/*",
-    "examples/*"
+    "packages/presets/*"
   ],
   "devDependencies": {
     "@apollo/client": "3.6.9",

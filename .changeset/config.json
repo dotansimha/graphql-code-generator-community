@@ -5,10 +5,7 @@
   "access": "restricted",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignore": [
-    "@graphql-codegen/testing",
-    "example-*"
-  ],
+  "ignore": [],
   "changelog": [
     "@changesets/changelog-github",
     {

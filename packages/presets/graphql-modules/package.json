@@ -12,7 +12,10 @@
     "prepack": "bob prepack"
   },
   "devDependencies": {
-    "@types/parse-filepath": "1.0.0"
+    "@types/parse-filepath": "1.0.0",
+    "@graphql-codegen/typescript": "2.8.1",
+    "@graphql-codegen/typescript-resolvers": "2.7.6",
+    "@graphql-codegen/testing": "1.18.0-alpha-20221101142840-b5a6a91f6"
   },
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^2.7.2",
