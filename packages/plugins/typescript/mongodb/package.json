@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@types/lodash": "4.14.184",
-    "@graphql-codegen/testing": "1.18.0-alpha-20221101142840-b5a6a91f6"
+    "@graphql-codegen/testing": "1.18.0"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

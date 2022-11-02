@@ -17,7 +17,7 @@
     "graphql-tag": "^2.0.0"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "1.18.0-alpha-20221101142840-b5a6a91f6"
+    "@graphql-codegen/testing": "1.18.0"
   },
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^2.6.2",
