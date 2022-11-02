@@ -3,10 +3,10 @@ name: Testing
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 env:
   NODE_OPTIONS: '--max_old_space_size=4096'
@@ -23,7 +23,7 @@ jobs:
     name: 🧹 Prettier Check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Master
+      - name: Checkout Main
         uses: actions/checkout@v3
       - name: Setup env
         uses: the-guild-org/shared-config/setup@main
