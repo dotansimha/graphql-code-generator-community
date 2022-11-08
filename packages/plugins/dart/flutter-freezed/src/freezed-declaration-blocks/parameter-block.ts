@@ -4,6 +4,8 @@ import { camelCase } from 'change-case-all';
 import { ApplyDecoratorOn, FlutterFreezedPluginConfig } from '../config.js';
 import { getCustomDecorators, transformCustomDecorators, FieldType, FreezedConfigValue, NodeType } from '../utils.js';
 
+// TODO: Fix Dart keywords issue
+
 /**
  * maps GraphQL scalar types to Dart's scalar types
  */
