@@ -1,6 +1,0 @@
-query myQuery {
-  fieldA
-  fieldB {
-    fieldC
-  }
-}

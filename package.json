@@ -16,22 +16,19 @@
     "ci:lint": "eslint --ext .ts . --output-file eslint_report.json --format json",
     "prerelease": "yarn build",
     "release": "changeset publish",
-    "generate:examples:esm": "node packages/graphql-codegen-cli/dist/esm/bin.js --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
-    "generate:examples:cjs": "node packages/graphql-codegen-cli/dist/cjs/bin.js --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
+    "generate:examples:esm": "graphql-codegen-esm --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
+    "generate:examples:cjs": "graphql-codegen --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
     "generate:examples": "yarn generate:examples:cjs"
   },
   "workspaces": [
     "packages/*",
-    "packages/utils/*",
     "packages/plugins/flow/*",
     "packages/plugins/java/*",
     "packages/plugins/c-sharp/*",
     "packages/plugins/dart/*",
     "packages/plugins/typescript/*",
     "packages/plugins/other/*",
-    "packages/presets/*",
-    "website",
-    "examples/*"
+    "packages/presets/*"
   ],
   "devDependencies": {
     "@apollo/client": "3.6.9",
@@ -84,7 +81,6 @@
     "lodash": "4.17.21",
     "patch-package": "6.4.7",
     "prettier": "2.7.1",
-    "prettier-plugin-svelte": "2.7.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "rimraf": "3.0.2",

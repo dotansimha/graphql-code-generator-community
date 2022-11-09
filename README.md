@@ -1,41 +1,45 @@
 [![CodeGen](./logo.svg)](https://graphql-code-generator.com)
 
-[![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fcli)
+# GraphQL Code Generator: Community plugins
 
-[graphql-code-generator.com](https://graphql-code-generator.com)
+This repository is owned by the GraphQL Code Generator community and is home to the community plugins:
 
-GraphQL Code Generator is a tool that generates code out of your GraphQL schema. Whether you are developing a frontend or backend, you can utilize GraphQL Code Generator to generate output from your GraphQL Schema and GraphQL Documents (query/mutation/subscription/fragment).
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-react-apollo.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-react-apollo) - `@graphql-codegen/typescript-react-apollo`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-graphql-request.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-graphql-request) - `@graphql-codegen/typescript-graphql-request`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-apollo-angular.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-apollo-angular) - `@graphql-codegen/typescript-apollo-angular`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-apollo-client-helpers.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-apollo-client-helpers) - `@graphql-codegen/typescript-apollo-client-helpers`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-react-query.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-react-query) - `@graphql-codegen/typescript-react-query`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-urql.svg)](hts://badge.fury.io/js/%40graphql-codegen%2Ftypescript-urql) - `@graphql-codegen/typescript-urql`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fnamed-operations-object.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fnamed-operations-object) - `@graphql-codegen/named-operations-object`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Furql-introspection.svg)](https://badge.fury.io/js/%40graphql-codegen%2Furql-introspection) - `@graphql-codegen/urql-introspection`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](htflow-resolverss://badge.fury.io/js/%40graphql-codegen%2Fflow-resolvers) - `@graphql-codegen/flow-resolvers`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-vue-apollo.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-vue-apollo) - `@graphql-codegen/typescript-vue-apollo`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-rtk-query.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-rtk-query) - `@graphql-codegen/typescript-rtk-query`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](htflow-operationss://badge.fury.io/js/%40graphql-codegen%2Fflow-operations) - `@graphql-codegen/flow-operations`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](httypescript-msws://badge.fury.io/js/%40graphql-codegen%2Ftypescript-msw) - `@graphql-codegen/typescript-msw`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-mongodb.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-mongodb) - `@graphql-codegen/typescript-mongodb`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-type-graphql.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-type-graphql) - `@graphql-codegen/typescript-type-graphql`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](htjsdocs://badge.fury.io/js/%40graphql-codegen%2Fjsdoc) - `@graphql-codegen/jsdoc`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-vue-urql.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-vue-urql) - `@graphql-codegen/typescript-vue-urql`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](htkotlins://badge.fury.io/js/%40graphql-codegen%2Fkotlin) - `@graphql-codegen/kotlin`
+- [![npm version](https://badge.fury.io/js/%40graphql-cotypescript-vue-apollo-smart-ops%2Fcli.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-vue-apollo-smart-ops) - `@graphql-codegen/typescript-vue-apollo-smart-ops`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](htjavas://badge.fury.io/js/%40graphql-codegen%2Fjava) - `@graphql-codegen/java`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fc-sharp-operations.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fc-sharp-operations) - `@graphql-codegen/c-sharp-operations`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fhasura-allow-list.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fhasura-allow-list) - `@graphql-codegen/hasura-allow-list`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-stencil-apollo.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-stencil-apollo) - `@graphql-codegen/typescript-stencil-apollo`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Frelay-operation-optimizer.svg)](https://badge.fury.io/js/%40graphql-codegen%2Frelay-operation-optimizer) - `@graphql-codegen/relay-operation-optimizer`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-oclif.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-oclif) - `@graphql-codegen/typescript-oclif`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](htjava-resolverss://badge.fury.io/js/%40graphql-codegen%2Fjava-resolvers) - `@graphql-codegen/java-resolvers`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fjava-apollo-android.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fjava-apollo-android) - `@graphql-codegen/java-apollo-android`
 
-By analyzing the schema and documents and parsing it, GraphQL Code Generator can output code at a wide variety of formats, based on pre-defined templates or based on custom user-defined ones. Regardless of the language that you're using, GraphQL Code Generator got you covered.
+### Getting started with codegen
 
-GraphQL Code Generator lets you choose the output that you need, based on _plugins_, which are very flexible and customizable. You can also write your _plugins_ to generate custom outputs that match your needs.
+> You can find the complete instructions in [GraphQL Code Generator website](https://www.the-guild.dev/graphql/codegen/docs/getting-started/installation).
 
-You can try this tool live on your browser and see some useful examples. Check out [GraphQL Code Generator Live Examples](https://graphql-code-generator.com/#live-demo).
+Start by installing the basic dependencies of GraphQL Codegen;
 
-We currently support and maintain [these plugins](https://graphql-code-generator.com/plugins) (TypeScript, Flow, React, Angular, MongoDB, Stencil, Reason, and some more), and there is an active community that writes and maintains custom plugins.
-
-### Quick Start
-
-> You can find the complete instructions in [GraphQL-Code-Generator website](https://graphql-code-generator.com/docs/getting-started/installation).
-
-Start by installing the basic deps of GraphQL Codegen;
-
-    yarn add graphql
+    yarn add graphql typescript
     yarn add -D @graphql-codegen/cli
-
-GraphQL Code Generator lets you setup everything by simply running the following command:
-
-    yarn graphql-codegen init
-
-Question by question, it will guide you through the whole process of setting up a schema, selecting plugins, picking a destination of a generated file, and a lot more.
-
-If you wish to [manually setup codegen, follow these instructions](https://graphql-code-generator.com/docs/getting-started/installation).
-
-### Links
-
-Besides our [docs page](https://graphql-code-generator.com/docs/getting-started), feel free to go through our published Medium articles to get a better grasp of what GraphQL Code Generator is all about:
-
-- [All available plugins & presets](https://graphql-code-generator.com/plugins)
 
 ### Contributing
 
@@ -44,6 +48,10 @@ If this is your first time contributing to this project, please do read our [Con
 Feel free to open issues and pull requests. We're always welcome support from the community.
 
 For a contribution guide specific to this project, please refer to: http://graphql-code-generator.com/docs/custom-codegen/contributing
+
+#### Create a new community plugin
+
+Get started with our guide: https://www.the-guild.dev/graphql/codegen/docs/custom-codegen
 
 ### Code of Conduct
 

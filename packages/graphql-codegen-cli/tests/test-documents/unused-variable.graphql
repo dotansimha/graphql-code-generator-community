@@ -1,6 +1,0 @@
-query myQuery($v: String!) {
-  fieldA
-  fieldB {
-    fieldC
-  }
-}

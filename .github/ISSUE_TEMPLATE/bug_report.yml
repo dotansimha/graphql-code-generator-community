@@ -18,6 +18,55 @@ body:
         - [ ] 4. A pull request is pending review
 
         The more information you fill in, the better the community can help you.
+  - type: dropdown
+    id: packages
+    attributes:
+      label: Which packages are impacted by your issue?
+      multiple: true
+      options:
+        - '@graphql-codegen/c-sharp'
+        - '@graphql-codegen/c-sharp-common'
+        - '@graphql-codegen/c-sharp-operations'
+        - '@graphql-codegen/flutter-freezed'
+        - '@graphql-codegen/flow'
+        - '@graphql-codegen/flow-operations'
+        - '@graphql-codegen/flow-resolvers'
+        - '@graphql-codegen/java-apollo-android'
+        - '@graphql-codegen/java-common'
+        - '@graphql-codegen/java'
+        - '@graphql-codegen/kotlin'
+        - '@graphql-codegen/java-resolvers'
+        - '@graphql-codegen/hasura-allow-list'
+        - '@graphql-codegen/jsdoc'
+        - '@graphql-codegen/urql-introspection'
+        - '@graphql-codegen/typescript-apollo-angular'
+        - '@graphql-codegen/typescript-apollo-client-helpers'
+        - '@graphql-codegen/typescript-enum-array'
+        - '@graphql-codegen/typescript-generic-sdk'
+        - '@graphql-codegen/typescript-graphql-apollo'
+        - '@graphql-codegen/typescript-graphql-files-modules'
+        - '@graphql-codegen/typescript-graphql-request'
+        - '@graphql-codegen/typescript-jit-sdk'
+        - '@graphql-codegen/typescript-mongodb'
+        - '@graphql-codegen/typescript-msw'
+        - '@graphql-codegen/named-operations-object'
+        - '@graphql-codegen/typescript-oclif'
+        - '@graphql-codegen/typescript-react-apollo'
+        - '@graphql-codegen/typescript-react-offix'
+        - '@graphql-codegen/typescript-react-query'
+        - '@graphql-codegen/typescript-rtk-query'
+        - '@graphql-codegen/typescript-stencil-apollo'
+        - '@graphql-codegen/typescript-type-graphql'
+        - '@graphql-codegen/typescript-urql'
+        - '@graphql-codegen/typescript-urql-graphcache'
+        - '@graphql-codegen/urql-svelte-operations-store'
+        - '@graphql-codegen/typescript-vue-apollo'
+        - '@graphql-codegen/typescript-vue-apollo-smart-ops'
+        - '@graphql-codegen/typescript-vue-urql'
+        - '@graphql-codegen/import-types-preset'
+        - '@graphql-codegen/near-operation-file-preset'
+    validations:
+      required: false
   - type: textarea
     id: description
     attributes:

@@ -1,7 +1,7 @@
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin, addToSchema } from './../src/index.js';
 import { buildSchema, print, GraphQLSchema } from 'graphql';
-import { plugin as tsPlugin } from '../../typescript/src/index.js';
+import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
 
 describe('TypeScript Mongo', () => {

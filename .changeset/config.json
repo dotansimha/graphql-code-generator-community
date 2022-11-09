@@ -3,10 +3,15 @@
   "commit": false,
   "linked": [],
   "access": "restricted",
-  "baseBranch": "master",
+  "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@graphql-codegen/testing", "website", "example-*"],
-  "changelog": ["@changesets/changelog-github", { "repo": "dotansimha/graphql-code-generator" }],
+  "ignore": [],
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "dotansimha/graphql-code-generator"
+    }
+  ],
   "snapshot": {
     "useCalculatedVersion": true,
     "prereleaseTemplate": "{tag}-{datetime}-{commit}"

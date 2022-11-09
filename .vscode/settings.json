@@ -1,7 +1,4 @@
 {
-  "yaml.schemas": {
-    "./website/static/config.schema.json": "*codegen.*"
-  },
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.rulers": [80],
