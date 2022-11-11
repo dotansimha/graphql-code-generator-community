@@ -1,38 +1,39 @@
 import { oldVisit, PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import { transformSchemaAST } from '@graphql-codegen/schema-ast';
 import { GraphQLSchema } from 'graphql';
-import { FlutterFreezedPluginConfig } from './config.js';
-import { FreezedDeclarationBlock } from './freezed-declaration-blocks/index.js';
-import { schemaVisitor } from './schema-visitor.js';
-import { addFreezedImportStatements, DefaultFreezedPluginConfig } from './utils.js';
+import { FlutterFreezedPluginConfig } from './config';
+import { schemaVisitor } from './schema-visitor';
+import { buildImportStatements, defaultFreezedPluginConfig } from './utils';
 
 export const plugin: PluginFunction<FlutterFreezedPluginConfig> = (
   schema: GraphQLSchema,
   _documents: Types.DocumentFile[],
-  config: FlutterFreezedPluginConfig
+  _config: FlutterFreezedPluginConfig
 ): string => {
   // sets the defaults for the config
-  config = { ...new DefaultFreezedPluginConfig(config) };
+  const config = { ...defaultFreezedPluginConfig, ..._config };
 
   const { schema: _schema, ast } = transformSchemaAST(schema, config);
-  const { freezedFactoryBlockRepository, ...visitor } = schemaVisitor(_schema, config);
+  const { nodeRepository, ...visitor } = schemaVisitor(_schema, config);
 
   const visitorResult = oldVisit(ast, { leave: visitor });
 
-  const generated: FreezedDeclarationBlock[] = visitorResult.definitions.filter(
-    (def: any) => def instanceof FreezedDeclarationBlock
-  );
+  const generated: string[] = visitorResult.definitions.filter((def: any) => typeof def === 'string' && def.length > 0);
 
   return (
-    addFreezedImportStatements(config.fileName) +
-    generated
-      .map(freezedDeclarationBlock =>
+    buildImportStatements(config.fileName) +
+    generated // TODO: replace placeholders with factory blocks
+      /*       .map(freezedDeclarationBlock =>
         freezedDeclarationBlock.toString().replace(/==>factory==>.+\n/gm, s => {
           const pattern = s.replace('==>factory==>', '').trim();
+          // console.log('pattern:-->', pattern);
           const [key, appliesOn, name, typeName] = pattern.split('==>');
-          return freezedFactoryBlockRepository.retrieve(key, appliesOn, name, typeName ?? null);
+          if (appliesOn === 'class_factory') {
+            return freezedFactoryBlockRepository.retrieve(key, appliesOn, name);
+          }
+          return freezedFactoryBlockRepository.retrieve(key, appliesOn, name, typeName);
         })
-      )
+      ) */
       .join('')
       .trim()
   );

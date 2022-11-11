@@ -1,23 +1,24 @@
-import { DefaultFreezedPluginConfig } from '../src/utils';
+import { FlutterFreezedPluginConfig } from '../src/config';
+import { mergeConfig } from '../src/utils';
 
-export const defaultConfig = new DefaultFreezedPluginConfig();
-
-export const typeConfig = new DefaultFreezedPluginConfig({
+export const typeConfig: FlutterFreezedPluginConfig = mergeConfig({
   globalFreezedConfig: {
     unionValueCase: 'FreezedUnionCase.camel',
   },
   typeSpecificFreezedConfig: {
     Starship: {
+      deprecated: true,
       config: {
         alwaysUseJsonKeyName: true,
         copyWith: false,
+        immutable: false,
         unionValueCase: 'FreezedUnionCase.pascal',
       },
     },
   },
 });
 
-export const customDecoratorsConfig = new DefaultFreezedPluginConfig({
+export const customDecoratorsConfig: FlutterFreezedPluginConfig = mergeConfig({
   globalFreezedConfig: {
     customDecorators: {
       '@JsonSerializable(explicitToJson: true)': {
@@ -52,21 +53,14 @@ export const customDecoratorsConfig = new DefaultFreezedPluginConfig({
   },
 });
 
-export const fullDemoConfig = new DefaultFreezedPluginConfig({
-  camelCasedEnums: true,
-  fileName: 'app_models',
+export const fullDemoConfig: FlutterFreezedPluginConfig = mergeConfig({
   customScalars: {
     jsonb: 'Map<String, dynamic>',
     timestamptz: 'DateTime',
     UUID: 'String',
   },
-  ignoreTypes: [],
   globalFreezedConfig: {
-    immutable: true,
-    privateEmptyConstructor: true,
     mergeInputs: ['Create$Input', 'Upsert$Input', 'Delete$Input'],
-    defaultUnionConstructor: true,
-    mutableInputs: true,
     customDecorators: {
       '@JsonSerializable(explicitToJson: true)': {
         applyOn: ['class'],

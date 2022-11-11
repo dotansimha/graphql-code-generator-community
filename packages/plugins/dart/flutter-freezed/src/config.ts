@@ -14,6 +14,177 @@ export type ApplyDecoratorOn =
   | 'merged_input_parameter';
 
 /**
+ * maps GraphQL scalar types to Dart's scalar types
+ */
+export const DART_SCALARS: Record<string, string> = {
+  ID: 'String',
+  String: 'String',
+  Boolean: 'bool',
+  Int: 'int',
+  Float: 'double',
+  DateTime: 'DateTime',
+};
+
+// TODO: get this from config or use default or build withPrefix or withSuffix
+export const DART_KEYWORDS = {
+  abstract: 'built-in',
+  else: 'reserved',
+  import: 'built-in',
+  show: 'context',
+  as: 'built-in',
+  enum: 'reserved',
+  in: 'reserved',
+  static: 'built-in',
+  assert: 'reserved',
+  export: 'built-in',
+  interface: 'built-in',
+  super: 'reserved',
+  async: 'context',
+  extends: 'reserved',
+  is: 'reserved',
+  switch: 'reserved',
+  await: 'async-reserved',
+  extension: 'built-in',
+  late: 'built-in',
+  sync: 'context',
+  break: 'reserved',
+  external: 'built-in',
+  library: 'built-in',
+  this: 'reserved',
+  case: 'reserved',
+  factory: 'built-in',
+  mixin: 'built-in',
+  throw: 'reserved',
+  catch: 'reserved',
+  false: 'reserved',
+  new: 'reserved',
+  true: 'reserved',
+  class: 'reserved',
+  final: 'reserved',
+  null: 'reserved',
+  try: 'reserved',
+  const: 'reserved',
+  finally: 'reserved',
+  on: 'context',
+  typedef: 'built-in',
+  continue: 'reserved',
+  for: 'reserved',
+  operator: 'built-in',
+  var: 'reserved',
+  covariant: 'built-in',
+  Function: 'built-in',
+  part: 'built-in',
+  void: 'reserved',
+  default: 'reserved',
+  get: 'built-in',
+  required: 'built-in',
+  while: 'reserved',
+  deferred: 'built-in',
+  hide: 'context',
+  rethrow: 'reserved',
+  with: 'reserved',
+  do: 'reserved',
+  if: 'reserved',
+  return: 'reserved',
+  yield: 'async-reserved',
+  dynamic: 'built-in',
+  implements: 'built-in',
+  set: 'built-in',
+  // built-in types
+  int: 'reserved',
+  double: 'reserved',
+  String: 'reserved',
+  bool: 'reserved',
+  List: 'reserved',
+  Set: 'reserved',
+  Map: 'reserved',
+  Runes: 'reserved',
+  Symbol: 'reserved',
+  Object: 'reserved',
+  Null: 'reserved',
+  Never: 'reserved',
+  Enum: 'reserved',
+  Future: 'reserved',
+  Iterable: 'reserved',
+};
+
+export type DartKeyword = keyof typeof DART_KEYWORDS;
+
+export type DartKeywordType = 'built-in' | 'context' | 'reserved' | 'async-reserved';
+
+export type DartIdentifierCasing = 'snake_case' | 'camelCase' | 'PascalCase';
+
+export type DartKeywordConfig = {
+  /**
+   * @name dartKeywordEscapeCasing
+   * @description after escaping a valid dart keyword, this option transforms the casing to `snake_cased`, `camelCase` or `PascalCase`. Defaults to `undefined` to leave the casing as it is.
+   * @default undefined
+   * @see_also [escapeDartKeywords, dartKeywordEscapePrefix]
+   *
+   * ```yaml
+   * generates:
+   *   flutter_app/lib/data/models/app_models.dart
+   *     plugins:
+   *       - flutter-freezed
+   *     config:
+   *       dartKeywordEscapeCasing: camelCase
+   *
+   * ```
+   */
+
+  dartKeywordEscapeCasing?: DartIdentifierCasing;
+
+  /**
+   * @name dartKeywordEscapePrefix
+   * @description prefix GraphQL type and field names that are valid dart keywords. Don't use only a underscore(`_`) as the `dartKeywordEscapePrefix` since it will make that identifier hidden or produce unexpected results. However, if you would want to change the case after escaping the keyword with `dartKeywordEscapeCasing`, you may use either an `_`, `-` or an empty space ` `.
+   * @default undefined
+   * @see_also [escapeDartKeywords, dartKeywordEscapeSuffix]
+   *
+   * @exampleMarkdown
+   * ```yaml
+   * generates:
+   *   flutter_app/lib/data/models/app_models.dart
+   *     plugins:
+   *       - flutter-freezed
+   *     config:
+   *       dartKeywordEscapePrefix: "k_"
+   *      # Example: let keyword = 'in'
+   *      # dartKeywordEscapeCasing === 'snake_case' => 'k_in'
+   *      # dartKeywordEscapeCasing === 'camelCase' => 'kIn'
+   *      # dartKeywordEscapeCasing === 'PascalCase' => 'KIn'
+   *      # dartKeywordEscapeCasing === undefined => 'k_in'
+   *
+   * ```
+   */
+
+  dartKeywordEscapePrefix?: string;
+
+  /**
+   * @name dartKeywordEscapeSuffix
+   * @description suffix GraphQL type and field names that are valid dart keywords. If the value of `dartKeywordEscapeSuffix` is an `_` and if `dartKeywordEscapeCasing` is `snake_case` or `camelCase`, then the casing will be ignored because it will remove the trailing `_` making the escapedKeyword invalid again
+   * @default "_"
+   * @see_also [escapeDartKeywords, dartKeywordEscapePrefix]
+   *
+   * ```yaml
+   * generates:
+   *   flutter_app/lib/data/models/app_models.dart
+   *     plugins:
+   *       - flutter-freezed
+   *     config:
+   *       dartKeywordEscapeSuffix: "_k" or using the default '_'
+   *      # Example: let keyword = 'in'
+   *      # dartKeywordEscapeCasing === 'snake_case'=> 'in_k' or 'in_' // ignored casing
+   *      # dartKeywordEscapeCasing === 'camelCase' =>'inK' or in_ // ignored casing
+   *      # dartKeywordEscapeCasing === 'PascalCase' => 'InK' or 'In'
+   *      # dartKeywordEscapeCasing === undefined  => 'in_k' or 'in_'
+   *
+   * ```
+   */
+
+  dartKeywordEscapeSuffix?: string;
+};
+
+/**
  * @name DecoratorToFreezed
  * @description the value of a `CustomDecorator`. This value specifies how the the decorator should be handled by Freezed
  */
@@ -57,7 +228,7 @@ export type CustomDecorator = Record<string, DecoratorToFreezed>;
  * @description configure what Freeze should generate
  * @default DefaultFreezedConfig
  */
-export interface FreezedConfig {
+export type FreezedConfig = DartKeywordConfig & {
   /**
    * @name alwaysUseJsonKeyName
    * @description Use @JsonKey(name: 'name') even if the name is already camelCased
@@ -134,9 +305,10 @@ export interface FreezedConfig {
   customDecorators?: CustomDecorator;
 
   /**
-   * @name defaultUnionConstructor
-   * @description generate empty constructors for Union Types and mergedInputs
+   * @name escapeDartKeywords
+   * @description wraps dart-language reserved keywords such as `void`, `in` etc with a prefix and/or suffix which can be set by changing `dartKeywordEscapePrefix` and `dartKeywordEscapeSuffix` config values
    * @default true
+   * @see_also [dartKeywordEscapePrefix,dartKeywordEscapeSuffix]
    *
    * @exampleMarkdown
    * ```yaml
@@ -145,11 +317,18 @@ export interface FreezedConfig {
    *     plugins:
    *       - flutter-freezed
    *     config:
-   *       defaultUnionConstructor: true
+   *       escapeDartKeywords: {
+   *          in: true # becomes `in_`,
+   *          required: { #becomes `argRequired`
+   *              dartKeywordEscapePrefix: "arg_",
+   *              dartKeywordEscapeCasing: camelCase
+   *          }
+   *       }
+   *
    * ```
    */
 
-  defaultUnionConstructor?: boolean;
+  escapeDartKeywords?: boolean | Record<DartKeyword, DartKeywordConfig | boolean>;
 
   /**
    * @name equal
@@ -319,13 +498,13 @@ export interface FreezedConfig {
    */
 
   unionValueCase?: 'FreezedUnionCase.camel' | 'FreezedUnionCase.pascal';
-}
+};
 
 /**
  * @name FieldConfig
  * @description configuration for the field
  */
-export interface FieldConfig {
+export type FieldConfig = {
   /**
    * @name final
    * @description marks a field as final
@@ -380,7 +559,7 @@ export interface FieldConfig {
    */
 
   customDecorators?: CustomDecorator;
-}
+};
 
 /**
  * @name TypeSpecificFreezedConfig
@@ -463,7 +642,7 @@ export interface FlutterFreezedPluginConfig /* extends TypeScriptPluginConfig */
    * ```
    */
 
-  fileName?: string;
+  fileName: string;
 
   /**
    * @name globalFreezedConfig

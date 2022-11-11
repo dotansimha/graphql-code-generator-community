@@ -1,427 +1,98 @@
-import { plugin } from '@graphql-codegen/flutter-freezed';
-import { DefaultFreezedPluginConfig, getFreezedConfigValue } from '../src/utils';
-import { defaultConfig, typeConfig } from './config';
-import {
-  baseSchema,
-  cyclicSchema,
-  enumSchema,
-  extendedBaseSchema,
-  nonNullableListWithCustomScalars,
-  simpleUnionSchema,
-} from './schema';
+import { DART_KEYWORDS, DART_SCALARS, FlutterFreezedPluginConfig } from '../src/config';
+import { defaultFreezedConfig, defaultFreezedPluginConfig } from '../src/utils';
+import { customDecoratorsConfig, typeConfig } from './config';
 
 describe('flutter-freezed-plugin-config', () => {
+  it('should return the built-in Dart scalar types', () => {
+    expect(DART_SCALARS).toMatchObject({
+      ID: 'String',
+      String: 'String',
+      Boolean: 'bool',
+      Int: 'int',
+      Float: 'double',
+      DateTime: 'DateTime',
+    });
+  });
+
+  it('checks that all Dart language keywords are accounted for', () => {
+    expect(Object.keys(DART_KEYWORDS)).toHaveLength(78);
+    expect(Object.values(DART_KEYWORDS).filter((v: string) => v === 'built-in')).toHaveLength(23);
+    expect(Object.values(DART_KEYWORDS).filter((v: string) => v === 'context')).toHaveLength(5);
+    expect(Object.values(DART_KEYWORDS).filter((v: string) => v === 'async-reserved')).toHaveLength(2);
+    expect(Object.values(DART_KEYWORDS).filter((v: string) => v === 'reserved')).toHaveLength(48);
+  });
+
   it('should return the default plugin values', () => {
-    const config = defaultConfig;
+    const config: FlutterFreezedPluginConfig = defaultFreezedPluginConfig;
     expect(config.camelCasedEnums).toBe(true);
     expect(config.customScalars).toMatchObject({});
     expect(config.fileName).toBe('app_models');
+    expect(config.globalFreezedConfig).toMatchObject(defaultFreezedConfig);
     expect(config.ignoreTypes).toMatchObject([]);
+    expect(config.typeSpecificFreezedConfig).toMatchObject({});
   });
 
   it('should return the default globalFreezedConfig values', () => {
-    const config = defaultConfig;
-    expect(config.globalFreezedConfig.alwaysUseJsonKeyName).toBe(false);
-    expect(config.globalFreezedConfig.copyWith).toBeUndefined();
-    expect(config.globalFreezedConfig.customDecorators).toMatchObject({});
-    expect(config.globalFreezedConfig.defaultUnionConstructor).toBe(true);
-    expect(config.globalFreezedConfig.equal).toBeUndefined();
-    expect(config.globalFreezedConfig.fromJsonToJson).toBe(true);
-    expect(config.globalFreezedConfig.immutable).toBe(true);
-    expect(config.globalFreezedConfig.makeCollectionsUnmodifiable).toBeUndefined();
-    expect(config.globalFreezedConfig.mergeInputs).toMatchObject([]);
-    expect(config.globalFreezedConfig.mutableInputs).toBe(true);
-    expect(config.globalFreezedConfig.privateEmptyConstructor).toBe(true);
-    expect(config.globalFreezedConfig.unionKey).toBeUndefined();
-    expect(config.globalFreezedConfig.unionValueCase).toBeUndefined();
+    const config: FlutterFreezedPluginConfig = defaultFreezedPluginConfig;
+    const globalFreezedConfig = config?.globalFreezedConfig;
+
+    expect(globalFreezedConfig?.alwaysUseJsonKeyName).toBe(false);
+    expect(globalFreezedConfig?.copyWith).toBeUndefined();
+    expect(globalFreezedConfig?.customDecorators).toMatchObject({});
+    expect(globalFreezedConfig?.dartKeywordEscapeCasing).toBeUndefined();
+    expect(globalFreezedConfig?.dartKeywordEscapePrefix).toBeUndefined();
+    expect(globalFreezedConfig?.dartKeywordEscapeSuffix).toBe('_');
+    expect(globalFreezedConfig?.equal).toBeUndefined();
+    expect(globalFreezedConfig?.escapeDartKeywords).toBe(true);
+    expect(globalFreezedConfig?.fromJsonToJson).toBe(true);
+    expect(globalFreezedConfig?.immutable).toBe(true);
+    expect(globalFreezedConfig?.makeCollectionsUnmodifiable).toBeUndefined();
+    expect(globalFreezedConfig?.mergeInputs).toMatchObject([]);
+    expect(globalFreezedConfig?.mutableInputs).toBe(true);
+    expect(globalFreezedConfig?.privateEmptyConstructor).toBe(true);
+    expect(globalFreezedConfig?.unionKey).toBeUndefined();
+    expect(globalFreezedConfig?.unionValueCase).toBeUndefined();
   });
 
   it('should  return the typeSpecificFreezedConfig values', () => {
     const config = typeConfig;
-    const Starship = 'Starship';
-    expect(config.typeSpecificFreezedConfig[Starship].config.alwaysUseJsonKeyName).toBe(true);
-    expect(config.typeSpecificFreezedConfig[Starship].config.copyWith).toBe(false);
-    expect(config.typeSpecificFreezedConfig[Starship].config.unionValueCase).toBe('FreezedUnionCase.pascal');
+    const typeName = 'Starship';
+    const typeSpecificFreezedConfig = config?.typeSpecificFreezedConfig?.[typeName]?.config;
+
+    expect(config?.typeSpecificFreezedConfig?.[typeName]?.deprecated).toBe(true);
+    expect(typeSpecificFreezedConfig?.alwaysUseJsonKeyName).toBe(true);
+    expect(typeSpecificFreezedConfig?.copyWith).toBe(false);
+    expect(typeSpecificFreezedConfig?.customDecorators).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.dartKeywordEscapeCasing).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.dartKeywordEscapePrefix).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.dartKeywordEscapeSuffix).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.equal).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.escapeDartKeywords).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.fromJsonToJson).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.immutable).toBe(false);
+    expect(typeSpecificFreezedConfig?.makeCollectionsUnmodifiable).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.mergeInputs).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.mutableInputs).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.privateEmptyConstructor).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.unionKey).toBeUndefined();
+    expect(typeSpecificFreezedConfig?.unionValueCase).toBe('FreezedUnionCase.pascal');
   });
 
-  describe('getFreezedConfigValue() returns the expect config value', () => {
-    const config = typeConfig;
-    const Starship = 'Starship';
-    test('without a typeName should return the globalFreezedConfig value', () => {
-      expect(getFreezedConfigValue('alwaysUseJsonKeyName', config)).toBe(false);
-      expect(getFreezedConfigValue('copyWith', config)).toBeUndefined();
-      expect(getFreezedConfigValue('unionValueCase', config)).toBe('FreezedUnionCase.camel');
-    });
+  it('should  return the values of the field of the Droid Type', () => {
+    const config = customDecoratorsConfig;
+    const typeName = 'Droid';
+    const fieldName = 'id';
+    const decorator = '@NanoId';
+    const fieldConfig = config?.typeSpecificFreezedConfig?.[typeName]?.fields?.[fieldName];
 
-    test('given a typeName should return the typeSpecificFreezedConfig value', () => {
-      expect(getFreezedConfigValue('alwaysUseJsonKeyName', config, Starship)).toBe(true);
-      expect(getFreezedConfigValue('copyWith', config, Starship)).toBe(false);
-      expect(getFreezedConfigValue('unionValueCase', config, Starship)).toBe('FreezedUnionCase.pascal');
-    });
-  });
-
-  describe('configuring the plugin', () => {
-    test('the imported packages', () => {
-      expect(plugin(baseSchema, [], new DefaultFreezedPluginConfig({ fileName: 'graphql_models' })))
-        .toContain(`import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-part graphql_models.dart;
-part 'graphql_models.g.dart';
-`);
-
-      expect(plugin(baseSchema, [], new DefaultFreezedPluginConfig({ fileName: 'my_file_name.dart' })))
-        .toContain(`import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-part my_file_name.dart;
-part 'my_file_name.g.dart';
-`);
-    });
-
-    test('the casing of Enum fields ', () => {
-      expect(plugin(enumSchema, [], new DefaultFreezedPluginConfig({ camelCasedEnums: true }))).toContain(`enum Episode{
-  @JsonKey(name: NEWHOPE) newhope
-  @JsonKey(name: EMPIRE) empire
-  @JsonKey(name: JEDI) jedi
-}`);
-
-      expect(plugin(enumSchema, [], new DefaultFreezedPluginConfig({ camelCasedEnums: false })))
-        .toContain(`enum Episode{
-  NEWHOPE
-  EMPIRE
-  JEDI
-}`);
-    });
-
-    it('ignores these types ', () => {
-      expect(plugin(baseSchema, [], new DefaultFreezedPluginConfig({ ignoreTypes: ['PersonType'] }))).not.toContain(
-        `PersonType`
-      );
-    });
-
-    it('should handle custom scalars', () => {
-      expect(
-        plugin(
-          nonNullableListWithCustomScalars,
-          [],
-          new DefaultFreezedPluginConfig({
-            customScalars: {
-              jsonb: 'Map<String, dynamic>',
-              timestamptz: 'DateTime',
-              UUID: 'String',
-            },
-          })
-        )
-      ).toBe(`import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-part app_models.dart;
-part 'app_models.g.dart';
-
-@freezed
-class ComplexType with _$ComplexType {
-  const ComplexType._();
-
-  const factory ComplexType({
-    List<String?>? a,
-    List<String>? b,
-    required List<bool> c,
-    List<List<int?>?>? d,
-    List<List<double?>>? e,
-    required List<List<String?>> f,
-    Map<String, dynamic>? g,
-    required DateTime h,
-    required String i,
-  }) = _ComplexType;
-
-  factory ComplexType.fromJson(Map<String, Object?> json) => _ComplexTypeFromJson(json);
-}`);
-    });
-
-    it('using @JsonKey(name: "fieldName") for fields that are not camelCased', () => {
-      expect(
-        plugin(
-          extendedBaseSchema,
-          [],
-          new DefaultFreezedPluginConfig({
-            globalFreezedConfig: {
-              alwaysUseJsonKeyName: true,
-            },
-            typeSpecificFreezedConfig: {
-              PersonType: {
-                config: {
-                  alwaysUseJsonKeyName: false,
-                },
-              },
-            },
-          })
-        )
-      ).toBe(`import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-part app_models.dart;
-part 'app_models.g.dart';
-
-@freezed
-class BaseType with _$BaseType {
-  const BaseType._();
-
-  const factory BaseType({
-    @JsonKey(name: 'id')
-    String? id,
-    @JsonKey(name: 'primaryKey')
-    required String primaryKey,
-    @JsonKey(name: 'CompositeForeignKey')
-    required String compositeForeignKey,
-  }) = _BaseType;
-
-  factory BaseType.fromJson(Map<String, Object?> json) => _BaseTypeFromJson(json);
-}
-
-@freezed
-class PersonType with _$PersonType {
-  const PersonType._();
-
-  const factory PersonType({
-    String? id,
-    required String name,
-    required String primaryKey,
-    @JsonKey(name: 'CompositeForeignKey')
-    required String compositeForeignKey,
-  }) = _PersonType;
-
-  factory PersonType.fromJson(Map<String, Object?> json) => _PersonTypeFromJson(json);
-}`);
-    });
-
-    describe('using defaultUnionConstructor & privateEmptyConstructor ', () => {
-      it('generates empty constructors for Union Types and mergedInputs and a private empty constructor to allow getter and methods to work on the class', () => {});
-      // this is enabled by default
-      let result = plugin(simpleUnionSchema, [], new DefaultFreezedPluginConfig({}));
-
-      // contains defaultUnionConstructor
-      expect(result).toContain('const factory AuthWithOtpInput() = _AuthWithOtpInput;');
-      // contains privateEmptyConstructor
-      expect(result).toContain('const VerifyOtpInput._();');
-      // expected output
-      expect(result).toBe(`import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-part app_models.dart;
-part 'app_models.g.dart';
-
-@unfreezed
-class RequestOtpInput with _$RequestOtpInput {
-  const RequestOtpInput._();
-
-  const factory RequestOtpInput({
-    String? email,
-    String? phoneNumber,
-  }) = _RequestOtpInput;
-
-  factory RequestOtpInput.fromJson(Map<String, Object?> json) => _RequestOtpInputFromJson(json);
-}
-
-@unfreezed
-class VerifyOtpInput with _$VerifyOtpInput {
-  const VerifyOtpInput._();
-
-  const factory VerifyOtpInput({
-    String? email,
-    String? phoneNumber,
-    required String otpCode,
-  }) = _VerifyOtpInput;
-
-  factory VerifyOtpInput.fromJson(Map<String, Object?> json) => _VerifyOtpInputFromJson(json);
-}
-
-@freezed
-class AuthWithOtpInput with _$AuthWithOtpInput {
-  const AuthWithOtpInput._();
-
-  const factory AuthWithOtpInput() = _AuthWithOtpInput;
-
-  const factory AuthWithOtpInput.requestOtpInput({
-    String? email,
-    String? phoneNumber,
-  }) = RequestOtpInput;
-
-  const factory AuthWithOtpInput.verifyOtpInput({
-    String? email,
-    String? phoneNumber,
-    required String otpCode,
-  }) = VerifyOtpInput;
-
-  factory AuthWithOtpInput.fromJson(Map<String, Object?> json) => _AuthWithOtpInputFromJson(json);
-}`);
-
-      // disabling the default config
-      result = plugin(
-        simpleUnionSchema,
-        [],
-        new DefaultFreezedPluginConfig({
-          globalFreezedConfig: {
-            defaultUnionConstructor: false,
-          },
-          typeSpecificFreezedConfig: {
-            VerifyOTPInput: {
-              config: {
-                privateEmptyConstructor: false,
-              },
-            },
-          },
-        })
-      );
-
-      // does NOT contain defaultUnionConstructor
-      expect(result).not.toContain('const factory AuthWithOtpInput() = _AuthWithOtpInput;');
-      // does NOT contain privateEmptyConstructor
-      expect(result).not.toContain('const VerifyOtpInput._();');
-      // expected output
-      expect(result).toBe(`import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-part app_models.dart;
-part 'app_models.g.dart';
-
-@unfreezed
-class RequestOtpInput with _$RequestOtpInput {
-  const RequestOtpInput._();
-
-  const factory RequestOtpInput({
-    String? email,
-    String? phoneNumber,
-  }) = _RequestOtpInput;
-
-  factory RequestOtpInput.fromJson(Map<String, Object?> json) => _RequestOtpInputFromJson(json);
-}
-
-@unfreezed
-class VerifyOtpInput with _$VerifyOtpInput {
-  const factory VerifyOtpInput({
-    String? email,
-    String? phoneNumber,
-    required String otpCode,
-  }) = _VerifyOtpInput;
-
-  factory VerifyOtpInput.fromJson(Map<String, Object?> json) => _VerifyOtpInputFromJson(json);
-}
-
-@freezed
-class AuthWithOtpInput with _$AuthWithOtpInput {
-  const AuthWithOtpInput._();
-
-  const factory AuthWithOtpInput.requestOtpInput({
-    String? email,
-    String? phoneNumber,
-  }) = RequestOtpInput;
-
-  const factory AuthWithOtpInput.verifyOtpInput({
-    String? email,
-    String? phoneNumber,
-    required String otpCode,
-  }) = VerifyOtpInput;
-
-  factory AuthWithOtpInput.fromJson(Map<String, Object?> json) => _AuthWithOtpInputFromJson(json);
-}`);
-    });
-
-    it('to be immutable OR immutable but configurable OR mutable ', () => {
-      expect(
-        plugin(
-          cyclicSchema,
-          [],
-          new DefaultFreezedPluginConfig({
-            globalFreezedConfig: {
-              immutable: true,
-              mutableInputs: true,
-            },
-            typeSpecificFreezedConfig: {
-              BaseAInput: {
-                config: {
-                  immutable: true,
-                  mutableInputs: false, // takes precedence
-                },
-              },
-              BaseBInput: {
-                config: {
-                  immutable: false,
-                  mutableInputs: false, // takes precedence
-                },
-              },
-              BaseCInput: {
-                config: {
-                  immutable: false,
-                  mutableInputs: true, // takes precedence
-                },
-              },
-              Base: {
-                config: {
-                  copyWith: false,
-                  fromJsonToJson: false,
-                  makeCollectionsUnmodifiable: true,
-                  unionValueCase: 'FreezedUnionCase.pascal',
-                },
-              },
-            },
-          })
-        )
-      ).toBe(`import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-part app_models.dart;
-part 'app_models.g.dart';
-
-@freezed
-class BaseAInput with _$BaseAInput {
-  const BaseAInput._();
-
-  const factory BaseAInput({
-    required BaseBInput b,
-  }) = _BaseAInput;
-
-  factory BaseAInput.fromJson(Map<String, Object?> json) => _BaseAInputFromJson(json);
-}
-
-@unfreezed
-class BaseBInput with _$BaseBInput {
-  const BaseBInput._();
-
-  factory BaseBInput({
-    required BaseCInput c,
-  }) = _BaseBInput;
-
-  factory BaseBInput.fromJson(Map<String, Object?> json) => _BaseBInputFromJson(json);
-}
-
-@unfreezed
-class BaseCInput with _$BaseCInput {
-  const BaseCInput._();
-
-  factory BaseCInput({
-    required BaseAInput a,
-  }) = _BaseCInput;
-
-  factory BaseCInput.fromJson(Map<String, Object?> json) => _BaseCInputFromJson(json);
-}
-
-@Freezed(
-  copyWith: false,
-  makeCollectionsUnmodifiable: true,
-  unionValueCase: 'FreezedUnionCase.pascal',
-)
-class Base with _$Base {
-  const Base._();
-
-  const factory Base({
-    String? id,
-  }) = _Base;
-
-}`);
-    });
+    expect(fieldConfig?.final).toBeUndefined();
+    expect(fieldConfig?.deprecated).toBeUndefined();
+    expect(fieldConfig?.defaultValue).toBeUndefined();
+    expect(fieldConfig?.customDecorators?.[decorator].applyOn).toMatchObject(['union_factory_parameter']);
+    expect(fieldConfig?.customDecorators?.[decorator].arguments).toMatchObject([
+      'size: 16',
+      'alphabets: NanoId.ALPHA_NUMERIC',
+    ]);
+    expect(fieldConfig?.customDecorators?.[decorator].mapsToFreezedAs).toBe('custom');
   });
 });
-/*   it('should ', () => {});
-  it('should ', () => {});
-  it('should ', () => {}) */
