@@ -4,7 +4,7 @@
   "description": "graphql-code-generate plugin for generating fragments matcher introspection file",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator.git",
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
     "directory": "packages/plugins/other/urql-introspection"
   },
   "license": "MIT",

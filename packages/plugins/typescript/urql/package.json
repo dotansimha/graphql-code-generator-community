@@ -4,7 +4,7 @@
   "description": "GraphQL Code Generator plugin for generating an introspection file for Urql's Schema Awareness",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator.git",
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
     "directory": "packages/plugins/typescript/urql"
   },
   "license": "MIT",

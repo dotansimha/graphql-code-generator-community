@@ -4,7 +4,7 @@
   "description": "GraphQL Code Generator plugin for generating Flow types for GraphQL resolvers signature",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator.git",
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
     "directory": "packages/plugins/flow/resolvers"
   },
   "license": "MIT",

@@ -4,7 +4,7 @@
   "description": "GraphQL Code Generator plugin for generating wrapper for OperationsStore for Svelte & Urql",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator.git",
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
     "directory": "packages/plugins/typescript/urql-svelte-operations-store"
   },
   "license": "MIT",

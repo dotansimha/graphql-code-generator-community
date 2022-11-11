@@ -4,7 +4,7 @@
   "description": "GraphQL Code Generator plugin for generating TypeScript helpers for Apollo Client > 3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator.git",
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
     "directory": "packages/plugins/typescript/apollo-client-helpers"
   },
   "license": "MIT",
