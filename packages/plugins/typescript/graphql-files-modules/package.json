@@ -4,7 +4,7 @@
   "description": "GraphQL Code Generator plugin for generating TypeScript module declarations based on GraphQL operations",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator.git",
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
     "directory": "packages/plugins/typescript/graphql-files-modules"
   },
   "license": "MIT",
