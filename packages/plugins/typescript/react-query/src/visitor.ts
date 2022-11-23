@@ -10,6 +10,8 @@ import {
   generateMutationKeyMaker,
   generateQueryKeyMaker,
   generateInfiniteQueryKeyMaker,
+  generateQueryRootKeyMaker,
+  generateInfiniteQueryRootKeyMaker,
 } from './variables-generator.js';
 
 import { CustomMapperFetcher } from './fetcher-custom-mapper.js';
@@ -181,6 +183,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
         query += `\nuse${operationName}.document = ${documentVariableName};\n`;
       }
       if (this.config.exposeQueryKeys) {
+        query += `\n${generateQueryRootKeyMaker(node, operationName)};\n`;
         query += `\n${generateQueryKeyMaker(node, operationName, operationVariablesTypes, hasRequiredVariables)};\n`;
       }
       if (this.config.addInfiniteQuery) {
@@ -193,8 +196,8 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
           hasRequiredVariables
         )}\n`;
         if (this.config.exposeQueryKeys) {
+          query += `\n${generateInfiniteQueryRootKeyMaker(node, operationName)};\n`;
           query += `\n${generateInfiniteQueryKeyMaker(
-            node,
             operationName,
             operationVariablesTypes,
             hasRequiredVariables

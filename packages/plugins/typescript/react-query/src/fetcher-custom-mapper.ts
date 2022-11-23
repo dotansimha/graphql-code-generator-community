@@ -72,7 +72,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     ) =>{
     ${implHookOuter}
     return ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
+      ${generateInfiniteQueryKey(operationName, hasRequiredVariables)},
       ${impl},
       options
     )};`;
@@ -107,7 +107,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
+      ${generateQueryKey(operationName, hasRequiredVariables)},
       ${impl},
       options
     );`;

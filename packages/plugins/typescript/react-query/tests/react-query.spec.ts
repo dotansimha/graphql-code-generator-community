@@ -78,7 +78,7 @@ export const useTestQuery = <
       options?: UseQueryOptions<TestQuery, TError, TData>
     ) =>
     useQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables],
       fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
       options
     );
@@ -92,7 +92,7 @@ export const useInfiniteTestQuery = <
       options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
     ) =>
     useInfiniteQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      variables === undefined ? [useInfiniteTestQuery.rootKey] : [useInfiniteTestQuery.rootKey, variables],
       (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})})(),
       options
     );
@@ -254,7 +254,7 @@ export const useTestMutation = <
           options?: UseQueryOptions<TTestQuery, TError, TData>
         ) =>
         useQuery<TTestQuery, TError, TData>(
-          variables === undefined ? ['test'] : ['test', variables],
+          variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables],
           myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
           options
         );`);
@@ -268,7 +268,7 @@ export const useTestMutation = <
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) =>{
     return useInfiniteQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      variables === undefined ? [useInfiniteTestQuery.rootKey] : [useInfiniteTestQuery.rootKey, variables],
       (metaData) => myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})})(),
       options
     )};`);
@@ -306,7 +306,7 @@ export const useTestMutation = <
         options?: UseQueryOptions<TTestQuery, TError, TData>
       ) =>
       useQuery<TTestQuery, TError, TData>(
-        variables === undefined ? ['test'] : ['test', variables],
+        variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables],
         myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
         options
       );`);
@@ -350,7 +350,7 @@ export const useTestMutation = <
           options?: UseQueryOptions<TTestQuery, TError, TData>
         ) =>
         useQuery<TTestQuery, TError, TData>(
-          variables === undefined ? ['test'] : ['test', variables],
+          variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables],
           useCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument).bind(null, variables),
           options
         );`);
@@ -365,7 +365,7 @@ export const useTestMutation = <
     ) =>{
       const query = useCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument)
       return useInfiniteQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      variables === undefined ? [useInfiniteTestQuery.rootKey] : [useInfiniteTestQuery.rootKey, variables],
       (metaData) => query({...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}),
       options
     )};`);
@@ -597,7 +597,7 @@ export const useTestMutation = <
       headers?: RequestInit['headers']
     ) =>
     useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables],
       fetcher<TTestQuery, TTestQueryVariables>(client, TestDocument, variables, headers),
       options
     );`);
@@ -791,7 +791,7 @@ export const useTestMutation = <
         options?: UseQueryOptions<TTestQuery, TError, TData>
       ) =>
       useQuery<TTestQuery, TError, TData>(
-        variables === undefined ? ['test'] : ['test', variables],
+        variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables],
         fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
         options
       );`);
@@ -1107,7 +1107,7 @@ export const useTestMutation = <
         options?: UseQueryOptions<TTestQuery, TError, TData>
       ) =>
       useQuery<TTestQuery, TError, TData>(
-        variables === undefined ? ['test'] : ['test', variables],
+        variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables],
         fetcher<TTestQuery, TTestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
         options
       );`);
@@ -1265,7 +1265,7 @@ export const useTestMutation = <
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`
+        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables];`
       );
     });
   });
@@ -1278,11 +1278,13 @@ export const useTestMutation = <
         addInfiniteQuery: true,
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.content).toBeSimilarStringTo(`useTestQuery.rootKey = 'test';`);
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`
+        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables];`
       );
+      expect(out.content).toBeSimilarStringTo(`useInfiniteTestQuery.rootKey = 'test.infinite';`);
       expect(out.content).toBeSimilarStringTo(
-        `useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];`
+        `useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? [useInfiniteTestQuery.rootKey] : [useInfiniteTestQuery.rootKey, variables];`
       );
     });
   });

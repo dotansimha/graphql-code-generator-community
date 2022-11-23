@@ -60,7 +60,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
       ${options}
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
+      ${generateInfiniteQueryKey(operationName, hasRequiredVariables)},
       (metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})})(),
       options
     );`;
@@ -90,7 +90,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
+      ${generateQueryKey(operationName, hasRequiredVariables)},
       fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables),
       options
     );`;

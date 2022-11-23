@@ -6,27 +6,53 @@ export function generateQueryVariablesSignature(
 ): string {
   return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
 }
-export function generateInfiniteQueryKey(node: OperationDefinitionNode, hasRequiredVariables: boolean): string {
-  if (hasRequiredVariables) return `['${node.name.value}.infinite', variables]`;
-  return `variables === undefined ? ['${node.name.value}.infinite'] : ['${node.name.value}.infinite', variables]`;
+
+function generateRootInifniteQueryKey(node: OperationDefinitionNode) {
+  return `'${node.name.value}.infinite'`;
+}
+
+function generateInfiniteRootQueryKeyReference(operationName: string) {
+  return `useInfinite${operationName}.rootKey`;
+}
+
+export function generateInfiniteQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
+  return `\nuseInfinite${operationName}.rootKey = ${generateRootInifniteQueryKey(node)}`;
+}
+
+export function generateInfiniteQueryKey(operationName: string, hasRequiredVariables: boolean): string {
+  const rootQueryKey = generateInfiniteRootQueryKeyReference(operationName);
+  if (hasRequiredVariables) return `[${rootQueryKey}, variables]`;
+  return `variables === undefined ? [${rootQueryKey}] : [${rootQueryKey}, variables]`;
 }
 
 export function generateInfiniteQueryKeyMaker(
-  node: OperationDefinitionNode,
   operationName: string,
   operationVariablesTypes: string,
   hasRequiredVariables: boolean
 ) {
   const signature = generateQueryVariablesSignature(hasRequiredVariables, operationVariablesTypes);
   return `\nuseInfinite${operationName}.getKey = (${signature}) => ${generateInfiniteQueryKey(
-    node,
+    operationName,
     hasRequiredVariables
-  )};\n`;
+  )}`;
 }
 
-export function generateQueryKey(node: OperationDefinitionNode, hasRequiredVariables: boolean): string {
-  if (hasRequiredVariables) return `['${node.name.value}', variables]`;
-  return `variables === undefined ? ['${node.name.value}'] : ['${node.name.value}', variables]`;
+function generateRootQueryKey(node: OperationDefinitionNode) {
+  return `'${node.name.value}'`;
+}
+
+function generateRootQueryKeyReference(operationName: string) {
+  return `use${operationName}.rootKey`;
+}
+
+export function generateQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
+  return `\nuse${operationName}.rootKey = ${generateRootQueryKey(node)}`;
+}
+
+export function generateQueryKey(operationName: string, hasRequiredVariables: boolean): string {
+  const rootQueryKey = generateRootQueryKeyReference(operationName);
+  if (hasRequiredVariables) return `[${rootQueryKey}, variables]`;
+  return `variables === undefined ? [${rootQueryKey}] : [${rootQueryKey}, variables]`;
 }
 
 export function generateQueryKeyMaker(
@@ -36,7 +62,7 @@ export function generateQueryKeyMaker(
   hasRequiredVariables: boolean
 ) {
   const signature = generateQueryVariablesSignature(hasRequiredVariables, operationVariablesTypes);
-  return `\nuse${operationName}.getKey = (${signature}) => ${generateQueryKey(node, hasRequiredVariables)};\n`;
+  return `\nuse${operationName}.getKey = (${signature}) => ${generateQueryKey(operationName, hasRequiredVariables)}`;
 }
 
 export function generateMutationKey(node: OperationDefinitionNode): string {
@@ -44,5 +70,5 @@ export function generateMutationKey(node: OperationDefinitionNode): string {
 }
 
 export function generateMutationKeyMaker(node: OperationDefinitionNode, operationName: string) {
-  return `\nuse${operationName}.getKey = () => ${generateMutationKey(node)};\n`;
+  return `\nuse${operationName}.getKey = () => ${generateMutationKey(node)}`;
 }

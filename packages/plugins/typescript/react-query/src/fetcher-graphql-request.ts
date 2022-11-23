@@ -85,7 +85,7 @@ function fetcher<TData, TVariables>(client: GraphQLClient, query: string, variab
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
+      ${generateQueryKey(operationName, hasRequiredVariables)},
       fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers),
       options
     );`;
