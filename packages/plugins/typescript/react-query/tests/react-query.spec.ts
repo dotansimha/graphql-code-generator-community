@@ -1264,6 +1264,7 @@ export const useTestMutation = <
         exposeQueryKeys: true,
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.content).toBeSimilarStringTo(`useTestQuery.rootKey = 'test';`);
       expect(out.content).toBeSimilarStringTo(
         `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? [useTestQuery.rootKey] : [useTestQuery.rootKey, variables];`
       );
