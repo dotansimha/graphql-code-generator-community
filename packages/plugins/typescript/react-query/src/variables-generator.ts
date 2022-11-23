@@ -7,7 +7,7 @@ export function generateQueryVariablesSignature(
   return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
 }
 
-function generateRootInifniteQueryKey(node: OperationDefinitionNode) {
+function generateInfiniteRootQueryKey(node: OperationDefinitionNode) {
   return `'${node.name.value}.infinite'`;
 }
 
@@ -16,7 +16,7 @@ function generateInfiniteRootQueryKeyReference(operationName: string) {
 }
 
 export function generateInfiniteQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
-  return `\nuseInfinite${operationName}.rootKey = ${generateRootInifniteQueryKey(node)}`;
+  return `\nuseInfinite${operationName}.rootKey = ${generateInfiniteRootQueryKey(node)}`;
 }
 
 export function generateInfiniteQueryKey(operationName: string, hasRequiredVariables: boolean): string {
