@@ -9,7 +9,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "dotansimha/graphql-code-generator"
+      "repo": "dotansimha/graphql-code-generator-community"
     }
   ],
   "snapshot": {
