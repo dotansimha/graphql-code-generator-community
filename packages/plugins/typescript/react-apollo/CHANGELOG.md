@@ -1,5 +1,11 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 3.3.7
+
+### Patch Changes
+
+- [#21](https://github.com/dotansimha/graphql-code-generator-community/pull/21) [`8a0359623`](https://github.com/dotansimha/graphql-code-generator-community/commit/8a0359623f03aecfad4a4e59d8677805f72d2ab6) Thanks [@charlypoly](https://github.com/charlypoly)! - doc API examples fix
+
 ## 3.3.6
 
 ### Patch Changes

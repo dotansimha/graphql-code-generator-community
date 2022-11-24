@@ -1,5 +1,11 @@
 # @graphql-codegen/typescript-react-query
 
+## 4.0.6
+
+### Patch Changes
+
+- [#19](https://github.com/dotansimha/graphql-code-generator-community/pull/19) [`d98ca30cd`](https://github.com/dotansimha/graphql-code-generator-community/commit/d98ca30cd6b0fe20356c3a4049b17873b397851b) Thanks [@charlypoly](https://github.com/charlypoly)! - Fix compatibility of graphql-request fetcher with >5.0
+
 ## 4.0.5
 
 ### Patch Changes
