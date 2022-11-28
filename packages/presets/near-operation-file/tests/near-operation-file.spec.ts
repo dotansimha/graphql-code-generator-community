@@ -725,6 +725,29 @@ describe('near-operation-file preset', () => {
     ]);
   });
 
+  it('Should allow to customize output fileName', async () => {
+    const result = await executePreset({
+      baseOutputDir: './src/',
+      config: {},
+      presetConfig: {
+        cwd: '/some/deep/path',
+        baseTypesPath: 'types.ts',
+        fileName: 'index',
+        extension: '.flow.js',
+      },
+      schema: schemaDocumentNode,
+      schemaAst: schemaNode,
+      documents: testDocuments,
+      plugins: [],
+      pluginMap: {},
+    });
+
+    expect(result.map(a => a.filename)).toEqual([
+      '/some/deep/path/src/graphql/index.flow.js',
+      '/some/deep/path/src/graphql/nested/index.flow.js',
+    ]);
+  });
+
   it('Should prepend the "add" plugin with the correct import', async () => {
     const result = await executePreset({
       baseOutputDir: './src/',
