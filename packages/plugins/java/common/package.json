@@ -4,7 +4,7 @@
   "description": "GraphQL Code Generator utils library for developing Java plugins",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator.git",
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
     "directory": "packages/plugins/java/common"
   },
   "license": "MIT",

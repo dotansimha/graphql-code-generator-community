@@ -18,7 +18,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          withComponent: true
    *        },
@@ -41,7 +41,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          withHOC: true
    *        },
@@ -64,7 +64,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          withHooks: true
    *        },
@@ -87,7 +87,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          withMutationFn: true
    *        },
@@ -110,7 +110,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          withRefetchFn: false
    *        },
@@ -160,7 +160,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          reactApolloVersion: 2
    *        },
@@ -183,7 +183,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          withResultType: true
    *        },
@@ -206,7 +206,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          withMutationOptionsType: true
    *        },
@@ -230,7 +230,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    *    // ...
    *    generates: {
    *      'path/to/file.ts': {
-   *        plugins: ['typescript', 'typescript-operations', 'typescript-operations'],
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
    *        config: {
    *          addDocBlocks: true
    *        },
