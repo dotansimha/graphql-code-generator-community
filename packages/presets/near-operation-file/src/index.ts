@@ -74,7 +74,7 @@ export type NearOperationFileConfig = {
    */
   importAllFragmentsFrom?: string | FragmentImportFromFn;
   /**
-   * @description Optional, sets a specfic file name for the generated files. Use this to override the generated file name when generating files for example based on mutliple .graphql files.
+   * @description Optional, sets a specific file name for the generated files. Use this to override the generated file name when generating files for example based on multiple .graphql files in separate directories.
    *
    * @exampleMarkdown
    * ```ts filename="codegen.ts" {11}
@@ -209,7 +209,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       ? options.schemaAst
       : buildASTSchema(options.schema, options.config as any);
     const baseDir = options.presetConfig.cwd || process.cwd();
-    const fileName = options.presetConfig.fileName;
+    const fileName = options.presetConfig.fileName || '';
     const extension = options.presetConfig.extension || '.generated.ts';
     const folder = options.presetConfig.folder || '';
     const importTypesNamespace = options.presetConfig.importTypesNamespace || 'Types';

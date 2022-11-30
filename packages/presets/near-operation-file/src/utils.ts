@@ -9,7 +9,7 @@ export function defineFilepathSubfolder(baseFilePath: string, folder: string) {
   return join(parsedPath.dir, folder, parsedPath.base).replace(/\\/g, '/');
 }
 
-export function appendFileNameToFilePath(baseFilePath: string, fileName: string | undefined, extension: string) {
+export function appendFileNameToFilePath(baseFilePath: string, fileName: string, extension: string) {
   const parsedPath = parsePath(baseFilePath);
   const name = fileName || parsedPath.name;
 
