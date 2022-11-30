@@ -1,6 +1,6 @@
-import { DART_KEYWORDS, DART_SCALARS, FlutterFreezedPluginConfig } from '../src/config';
-import { defaultFreezedConfig, defaultFreezedPluginConfig } from '../src/utils';
-import { customDecoratorsConfig, typeConfig } from './config';
+import { DART_KEYWORDS, DART_SCALARS, FlutterFreezedPluginConfig } from '../src/config.js';
+import { defaultFreezedConfig, defaultFreezedPluginConfig } from '../src/utils.js';
+import { customDecoratorsConfig, typeConfig } from './config.js';
 
 describe('flutter-freezed-plugin-config', () => {
   it('should return the built-in Dart scalar types', () => {

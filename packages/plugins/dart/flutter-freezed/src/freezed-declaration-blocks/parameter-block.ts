@@ -1,4 +1,4 @@
-import { FlutterFreezedPluginConfig } from '../config';
+import { FlutterFreezedPluginConfig } from '../config.js';
 import {
   // buildBlockComment,
   // buildBlockDecorators,

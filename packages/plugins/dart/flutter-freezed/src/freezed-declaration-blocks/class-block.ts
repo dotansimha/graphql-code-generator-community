@@ -1,5 +1,5 @@
 import { Kind } from 'graphql';
-import { FlutterFreezedPluginConfig } from '../config';
+import { FlutterFreezedPluginConfig } from '../config.js';
 import {
   buildBlockComment,
   buildBlockDecorators,
@@ -7,7 +7,7 @@ import {
   buildBlockBody,
   buildBlockFooter,
   NodeType,
-} from '../utils';
+} from '../utils.js';
 
 export class FreezedDeclarationBlock {
   public static build(config: FlutterFreezedPluginConfig, node: NodeType): string {

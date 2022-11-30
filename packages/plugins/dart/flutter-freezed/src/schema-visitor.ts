@@ -5,8 +5,8 @@ import {
   ObjectTypeDefinitionNode,
   UnionTypeDefinitionNode,
 } from 'graphql';
-import { FlutterFreezedPluginConfig } from './config';
-import { buildBlock, NodeRepository } from './utils';
+import { FlutterFreezedPluginConfig } from './config.js';
+import { buildBlock, NodeRepository } from './utils.js';
 
 export const schemaVisitor = (_schema: GraphQLSchema, config: FlutterFreezedPluginConfig) => {
   const nodeRepository = new NodeRepository();

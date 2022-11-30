@@ -1,5 +1,5 @@
-import { FlutterFreezedPluginConfig } from '../src/config';
-import { mergeConfig } from '../src/utils';
+import { FlutterFreezedPluginConfig } from '../src/config.js';
+import { mergeConfig } from '../src/utils.js';
 
 export const typeConfig: FlutterFreezedPluginConfig = mergeConfig({
   globalFreezedConfig: {

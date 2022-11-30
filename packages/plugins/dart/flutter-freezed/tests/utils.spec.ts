@@ -1,7 +1,7 @@
 import { transformSchemaAST } from '@graphql-codegen/schema-ast';
 import { indent } from '@graphql-codegen/visitor-plugin-common';
-import { DartIdentifierCasing, FlutterFreezedPluginConfig } from '../src/config';
-import { FreezedFactoryBlock } from '../src/freezed-declaration-blocks';
+import { DartIdentifierCasing, FlutterFreezedPluginConfig } from '../src/config.js';
+import { FreezedFactoryBlock } from '../src/freezed-declaration-blocks/index.js';
 import {
   buildBlock,
   buildBlockName,

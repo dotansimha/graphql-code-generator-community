@@ -25,9 +25,9 @@ import {
   DART_SCALARS,
   DartIdentifierCasing,
   DART_KEYWORDS,
-} from './config';
-import { FreezedDeclarationBlock, FreezedFactoryBlock } from './freezed-declaration-blocks';
-import { FreezedParameterBlock } from './freezed-declaration-blocks/parameter-block';
+} from './config.js';
+import { FreezedDeclarationBlock, FreezedFactoryBlock } from './freezed-declaration-blocks/index.js';
+import { FreezedParameterBlock } from './freezed-declaration-blocks/parameter-block.js';
 
 export type FreezedConfigOptionName = keyof FreezedConfig;
 

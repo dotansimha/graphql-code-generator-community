@@ -1,5 +1,5 @@
 import { indent } from '@graphql-codegen/visitor-plugin-common';
-import { FlutterFreezedPluginConfig } from '../config';
+import { FlutterFreezedPluginConfig } from '../config.js';
 import {
   // buildBlockComment,
   // buildBlockDecorators,
@@ -7,7 +7,7 @@ import {
   buildBlockBody,
   buildBlockFooter,
   NodeType,
-} from '../utils';
+} from '../utils.js';
 
 export class FreezedFactoryBlock {
   public static build(
