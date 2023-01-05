@@ -9,10 +9,11 @@ export function defineFilepathSubfolder(baseFilePath: string, folder: string) {
   return join(parsedPath.dir, folder, parsedPath.base).replace(/\\/g, '/');
 }
 
-export function appendExtensionToFilePath(baseFilePath: string, extension: string) {
+export function appendFileNameToFilePath(baseFilePath: string, fileName: string, extension: string) {
   const parsedPath = parsePath(baseFilePath);
+  const name = fileName || parsedPath.name;
 
-  return join(parsedPath.dir, parsedPath.name + extension).replace(/\\/g, '/');
+  return join(parsedPath.dir, name + extension).replace(/\\/g, '/');
 }
 
 export function extractExternalFragmentsInUse(
