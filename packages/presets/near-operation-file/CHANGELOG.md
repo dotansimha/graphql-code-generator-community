@@ -1,5 +1,11 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 2.5.0
+
+### Minor Changes
+
+- [#24](https://github.com/dotansimha/graphql-code-generator-community/pull/24) [`41b0ae176`](https://github.com/dotansimha/graphql-code-generator-community/commit/41b0ae17626533ae7ba4ebba429634ec2df398bb) Thanks [@gwesseling](https://github.com/gwesseling)! - Added the fileName option for the near-operation-file-preset to force the generated filename
+
 ## 2.4.4
 
 ### Patch Changes
