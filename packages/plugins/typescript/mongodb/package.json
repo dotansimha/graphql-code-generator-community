@@ -13,7 +13,7 @@
     "test": "jest --no-watchman --config ../../../../jest.config.js"
   },
   "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^2.7.2",
+    "@graphql-codegen/plugin-helpers": "^3.0.0",
     "@graphql-codegen/typescript": "^2.8.1",
     "@graphql-codegen/visitor-plugin-common": "2.13.1",
     "@graphql-tools/utils": "^8.8.0",
