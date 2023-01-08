@@ -53,7 +53,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
+      ${generateInfiniteQueryKey(operationName, hasRequiredVariables)},
       (metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})}, headers)(),
       options
     );`;
@@ -89,7 +89,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
+      ${generateQueryKey(operationName, hasRequiredVariables)},
       fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers),
       options
     );`;

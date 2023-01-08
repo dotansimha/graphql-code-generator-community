@@ -82,7 +82,7 @@ ${this.getFetchParams()}
       ${options}
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
+      ${generateInfiniteQueryKey(operationName, hasRequiredVariables)},
       (metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, ...(metaData.pageParam ? {[pageParamKey]: metaData.pageParam} : {})})(),
       options
     );`;
@@ -111,7 +111,7 @@ ${this.getFetchParams()}
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
+      ${generateQueryKey(operationName, hasRequiredVariables)},
       fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables),
       options
     );`;
