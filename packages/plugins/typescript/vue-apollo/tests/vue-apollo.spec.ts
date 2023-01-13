@@ -37,7 +37,7 @@ describe('Vue Apollo', () => {
     }
   `);
   const mutationDoc = parse(/* GraphQL */ `
-    mutation test($name: String) {
+    mutation test($name: String!) {
       submitRepository(repoFullName: $name) {
         id
       }
@@ -1227,6 +1227,22 @@ query MyFeed {
 
       expect(content.prepend).toContain(`import * as Operations from 'path/to/documents';`);
       expect(content.content).toBeSimilarStringTo(`export function useTestMutation`);
+      await validateTypeScript(content, schema, docs, {});
+    });
+
+    it('should default to an empty options object in useMutation', async () => {
+      const config: VueApolloRawPluginConfig = {
+        documentMode: DocumentMode.external,
+        importDocumentNodeExternallyFrom: 'path/to/documents.ts',
+      };
+
+      const docs = [{ location: '', document: mutationDoc }];
+
+      const content = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`>> = {}) {`);
       await validateTypeScript(content, schema, docs, {});
     });
 
