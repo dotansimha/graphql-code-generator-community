@@ -269,9 +269,7 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginCo
 }`;
       }
       case 'Mutation': {
-        return `export function use${operationName}(options: VueApolloComposable.UseMutationOptions<${operationResultType}, ${operationVariablesTypes}> | ReactiveFunction<VueApolloComposable.UseMutationOptions<${operationResultType}, ${operationVariablesTypes}>>${
-          operationHasNonNullableVariable ? '' : ' = {}'
-        }) {
+        return `export function use${operationName}(options: VueApolloComposable.UseMutationOptions<${operationResultType}, ${operationVariablesTypes}> | ReactiveFunction<VueApolloComposable.UseMutationOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
   return VueApolloComposable.useMutation<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, options);
 }`;
       }
