@@ -1,10 +1,10 @@
 import { EnumTypeDefinitionNode, EnumValueDefinitionNode } from 'graphql';
-import { TypeName, FieldName } from '../config/pattern';
-import { APPLIES_ON_ENUM, APPLIES_ON_ENUM_VALUE, FlutterFreezedPluginConfig } from '../config/plugin-config';
+import { TypeName, FieldName } from '../config/pattern.js';
+import { APPLIES_ON_ENUM, APPLIES_ON_ENUM_VALUE, FlutterFreezedPluginConfig } from '../config/plugin-config.js';
 import { indent } from '@graphql-codegen/visitor-plugin-common';
-import { Block } from './index';
-import { Config } from '../config/config-value';
-import { atJsonKeyDecorator, stringIsNotEmpty } from '../utils';
+import { Block } from './index.js';
+import { Config } from '../config/config-value.js';
+import { atJsonKeyDecorator, stringIsNotEmpty } from '../utils.js';
 
 export class EnumBlock {
   // TODO: @next-version: Implement enhanced enums

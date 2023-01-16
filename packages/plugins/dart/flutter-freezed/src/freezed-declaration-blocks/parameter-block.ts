@@ -1,10 +1,10 @@
 // import { indent } from '@graphql-codegen/visitor-plugin-common';
 import { ListTypeNode, NamedTypeNode, NonNullTypeNode, TypeNode } from 'graphql';
-import { atJsonKeyDecorator, stringIsNotEmpty } from '../utils';
-import { Config } from '../config/config-value';
-import { FieldName, TypeName } from '../config/pattern';
-import { AppliesOnParameters, FieldType, FlutterFreezedPluginConfig, NodeType } from '../config/plugin-config';
-import { Block } from './index';
+import { atJsonKeyDecorator, stringIsNotEmpty } from '../utils.js';
+import { Config } from '../config/config-value.js';
+import { FieldName, TypeName } from '../config/pattern.js';
+import { AppliesOnParameters, FieldType, FlutterFreezedPluginConfig, NodeType } from '../config/plugin-config.js';
+import { Block } from './index.js';
 import { indent } from '@graphql-codegen/visitor-plugin-common';
 
 export class ParameterBlock {

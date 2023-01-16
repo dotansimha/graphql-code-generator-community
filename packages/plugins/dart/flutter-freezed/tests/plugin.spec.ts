@@ -1,4 +1,4 @@
-import { plugin } from '../src/index';
+import { plugin } from '../src/index.js';
 import {
   cyclicSchema,
   enumSchema,
@@ -7,9 +7,9 @@ import {
   nonNullableListWithCustomScalars,
   simpleSchema,
   unionSchema,
-} from './schema';
-import { Config } from '../src/config/config-value';
-import { FieldName, FieldNamePattern, TypeName, TypeNamePattern } from '../src/config/pattern';
+} from './schema.js';
+import { Config } from '../src/config/config-value.js';
+import { FieldName, FieldNamePattern, TypeName, TypeNamePattern } from '../src/config/pattern.js';
 
 const Droid = TypeName.fromString('Droid');
 // const Starship = TypeName.fromString('Starship');

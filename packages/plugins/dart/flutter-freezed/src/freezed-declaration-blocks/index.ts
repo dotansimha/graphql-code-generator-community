@@ -1,7 +1,7 @@
 import { snakeCase } from 'change-case-all';
 import { Kind, EnumValueDefinitionNode } from 'graphql';
-import { FieldName, TypeName } from '../config/pattern';
-import { Config } from '../config/config-value';
+import { FieldName, TypeName } from '../config/pattern.js';
+import { Config } from '../config/config-value.js';
 import {
   AppliesOn,
   AppliesOnDefaultFactory,
@@ -10,12 +10,12 @@ import {
   FieldType,
   FlutterFreezedPluginConfig,
   NodeType,
-} from '../config/plugin-config';
-import { dartCasing, escapeDartKeyword, isDartKeyword, nodeIsObjectType } from '../utils';
-import { ClassBlock } from './class-block';
-import { EnumBlock } from './enum-block';
-import { FactoryBlock } from './factory-block';
-import { NodeRepository } from './node-repository';
+} from '../config/plugin-config.js';
+import { dartCasing, escapeDartKeyword, isDartKeyword, nodeIsObjectType } from '../utils.js';
+import { ClassBlock } from './class-block.js';
+import { EnumBlock } from './enum-block.js';
+import { FactoryBlock } from './factory-block.js';
+import { NodeRepository } from './node-repository.js';
 
 export class Block {
   static buildImportStatements = (fileName: string) => {

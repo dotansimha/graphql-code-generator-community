@@ -6,7 +6,7 @@ import {
   FieldDefinitionNode,
   InputValueDefinitionNode,
 } from 'graphql';
-import { TypeNamePattern, TypeName, FieldNamePattern, Pattern } from './pattern';
+import { TypeNamePattern, TypeName, FieldNamePattern, Pattern } from './pattern.js';
 
 //#region PluginConfig
 /**

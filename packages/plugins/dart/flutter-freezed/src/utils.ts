@@ -2,9 +2,9 @@
 
 import { camelCase, pascalCase, snakeCase } from 'change-case-all';
 import { DefinitionNode, ObjectTypeDefinitionNode, InputObjectTypeDefinitionNode, Kind } from 'graphql';
-import { Config } from './config/config-value';
-import { FieldName, TypeName } from './config/pattern';
-import { AppliesOn, DartIdentifierCasing, DART_KEYWORDS, FlutterFreezedPluginConfig } from './config/plugin-config';
+import { Config } from './config/config-value.js';
+import { FieldName, TypeName } from './config/pattern.js';
+import { AppliesOn, DartIdentifierCasing, DART_KEYWORDS, FlutterFreezedPluginConfig } from './config/plugin-config.js';
 
 export const strToList = (str: string) => (str.length < 1 ? [] : str.split(/\s*,\s*/gim).filter(s => s.length > 0));
 

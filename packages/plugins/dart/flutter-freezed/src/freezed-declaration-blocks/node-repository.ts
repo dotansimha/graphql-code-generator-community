@@ -1,7 +1,7 @@
 //#region NodeRepository classes
 
-import { ObjectType } from '../config/plugin-config';
-import { nodeIsObjectType } from '../utils';
+import { ObjectType } from '../config/plugin-config.js';
+import { nodeIsObjectType } from '../utils.js';
 
 /**
  * stores an instance of  `ObjectTypeDefinitionNode` or `InputObjectTypeDefinitionNode` using the node name as the key

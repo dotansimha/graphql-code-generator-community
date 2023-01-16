@@ -1,11 +1,11 @@
 import { indent } from '@graphql-codegen/visitor-plugin-common';
 import { Kind } from 'graphql';
-import { Config } from '../config/config-value';
-import { APPLIES_ON_CLASS, FlutterFreezedPluginConfig, NodeType } from '../config/plugin-config';
-import { FactoryBlock } from './factory-block';
-import { TypeName } from '../config/pattern';
-import { Block } from './index';
-import { nodeIsObjectType, stringIsNotEmpty } from '../utils';
+import { Config } from '../config/config-value.js';
+import { APPLIES_ON_CLASS, FlutterFreezedPluginConfig, NodeType } from '../config/plugin-config.js';
+import { FactoryBlock } from './factory-block.js';
+import { TypeName } from '../config/pattern.js';
+import { Block } from './index.js';
+import { nodeIsObjectType, stringIsNotEmpty } from '../utils.js';
 
 export class ClassBlock {
   public static build(config: FlutterFreezedPluginConfig, node: NodeType): string {

@@ -1,7 +1,7 @@
 import { transformSchemaAST } from '@graphql-codegen/schema-ast';
-import { defaultFreezedPluginConfig, ObjectType } from '../src/config/plugin-config';
-import { NodeRepository } from '../src/freezed-declaration-blocks/node-repository';
-import { unionSchema } from './schema';
+import { defaultFreezedPluginConfig, ObjectType } from '../src/config/plugin-config.js';
+import { NodeRepository } from '../src/freezed-declaration-blocks/node-repository.js';
+import { unionSchema } from './schema.js';
 
 const {
   ast: { definitions: nodes },

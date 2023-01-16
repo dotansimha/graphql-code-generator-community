@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { arrayWrap, resetIndex, strToList } from '../utils';
+import { arrayWrap, resetIndex, strToList } from '../utils.js';
 
 /**
  * A list of GraphQL Type Names

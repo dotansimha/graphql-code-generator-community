@@ -1,4 +1,4 @@
-import { TypeName, FieldName, TypeNamePattern, FieldNamePattern, Pattern } from '../src/config/pattern';
+import { TypeName, FieldName, TypeNamePattern, FieldNamePattern, Pattern } from '../src/config/pattern.js';
 
 //#region helper functions
 

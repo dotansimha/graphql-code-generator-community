@@ -1,6 +1,6 @@
 import { indent } from '@graphql-codegen/visitor-plugin-common';
-import { Config } from '../config/config-value';
-import { TypeName } from '../config/pattern';
+import { Config } from '../config/config-value.js';
+import { TypeName } from '../config/pattern.js';
 import {
   FlutterFreezedPluginConfig,
   ObjectType,
@@ -14,12 +14,12 @@ import {
   APPLIES_ON_DEFAULT_FACTORY_PARAMETERS,
   APPLIES_ON_UNION_FACTORY_PARAMETERS,
   APPLIES_ON_MERGED_FACTORY_PARAMETERS,
-} from '../config/plugin-config';
-import { NodeRepository } from './node-repository';
-import { Block } from './index';
-import { ParameterBlock } from './parameter-block';
+} from '../config/plugin-config.js';
+import { NodeRepository } from './node-repository.js';
+import { Block } from './index.js';
+import { ParameterBlock } from './parameter-block.js';
 import { FieldDefinitionNode, InputValueDefinitionNode } from 'graphql';
-import { stringIsNotEmpty } from '../utils';
+import { stringIsNotEmpty } from '../utils.js';
 
 export class FactoryBlock {
   public static build(

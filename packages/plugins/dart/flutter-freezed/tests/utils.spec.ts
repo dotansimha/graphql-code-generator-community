@@ -1,7 +1,7 @@
 import { transformSchemaAST } from '@graphql-codegen/schema-ast';
-import { unionSchema } from './schema';
-import { appliesOnBlock, arrayWrap, dartCasing, nodeIsObjectType } from '../src/utils';
-import { defaultFreezedPluginConfig, APPLIES_ON_PARAMETERS } from '../src/config/plugin-config';
+import { unionSchema } from './schema.js';
+import { appliesOnBlock, arrayWrap, dartCasing, nodeIsObjectType } from '../src/utils.js';
+import { defaultFreezedPluginConfig, APPLIES_ON_PARAMETERS } from '../src/config/plugin-config.js';
 
 const {
   ast: { definitions: nodes },

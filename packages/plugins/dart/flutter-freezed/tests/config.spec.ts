@@ -8,9 +8,9 @@ import {
   DART_KEYWORDS,
   DART_SCALARS,
   defaultFreezedPluginConfig,
-} from '../src/config/plugin-config';
-import { Config } from '../src/config/config-value';
-import { FieldName, FieldNamePattern, Pattern, TypeName, TypeNamePattern } from '../src/config/pattern';
+} from '../src/config/plugin-config.js';
+import { Config } from '../src/config/config-value.js';
+import { FieldName, FieldNamePattern, Pattern, TypeName, TypeNamePattern } from '../src/config/pattern.js';
 
 describe("integrity checks: ensures that these values don't change and if they do, they're updated accordingly", () => {
   test('integrity check: DART_SCALARS contains corresponding Dart Types mapping for built-in Graphql Scalars', () => {

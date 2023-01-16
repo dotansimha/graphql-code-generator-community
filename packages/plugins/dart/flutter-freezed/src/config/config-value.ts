@@ -1,5 +1,5 @@
-import { appliesOnBlock } from '../utils';
-import { FieldName, Pattern, TypeName, TypeNamePattern } from './pattern';
+import { appliesOnBlock } from '../utils.js';
+import { FieldName, Pattern, TypeName, TypeNamePattern } from './pattern.js';
 import {
   AppliesOn,
   AppliesOnFactory,
@@ -7,7 +7,7 @@ import {
   DART_SCALARS,
   defaultFreezedPluginConfig,
   FlutterFreezedPluginConfig,
-} from './plugin-config';
+} from './plugin-config.js';
 
 export class Config {
   static camelCasedEnums = (config: FlutterFreezedPluginConfig) => {
