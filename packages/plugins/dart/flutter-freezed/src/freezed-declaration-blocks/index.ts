@@ -90,7 +90,7 @@ export class Block {
     fromJsonToJson: '==>from_json_to_json==>',
   };
 
-  static regexpForToken = <T = keyof typeof Block.tokens>(tokenName: T) => {
+  static regexpForToken = (tokenName: 'defaultFactory' | 'unionFactory' | 'mergedFactory' | 'fromJsonToJson') => {
     return RegExp(`${Block.tokens[tokenName as string]}.+\n`, 'gm');
   };
 
