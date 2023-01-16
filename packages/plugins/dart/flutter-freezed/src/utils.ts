@@ -36,7 +36,7 @@ export const dartCasing = (name: string, casing?: DartIdentifierCasing): string 
  * @param identifier The name or identifier to be checked
  * @returns `true` if name is a Dart Language keyword, otherwise `false`
  */
-export const isDartKeyword = (identifier: string) => Object.hasOwn(DART_KEYWORDS, identifier);
+export const isDartKeyword = (identifier: string) => DART_KEYWORDS[identifier] !== undefined;
 
 /**
  * Ensures that the blockName isn't a valid Dart language reserved keyword.
