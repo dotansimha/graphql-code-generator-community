@@ -52,14 +52,15 @@ export class ParameterBlock {
       name: fieldName.value !== parameterName ? fieldName.value : undefined,
     });
 
-    const decorators = [
+    return [
       deprecatedDecorator,
       defaultValueDecorator,
       jsonKeyDecorator,
       // TODO: add decorator for unionValueName
-    ].join('');
-
-    return stringIsNotEmpty(decorators) ? indent(decorators, 2) : decorators;
+    ]
+      .filter(decorator => stringIsNotEmpty(decorator))
+      .map(decorator => indent(decorator, 2))
+      .join('');
   };
 
   public static buildBody = (
