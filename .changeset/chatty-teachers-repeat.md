@@ -96,6 +96,7 @@ The 2 configurations above do the same thing, the later being more compact, flex
 
 ## How to update your existing configuration
 
-First understand the [usage of the Patterns](https://the-guild.dev/graphql/codegen/docs/guides/flutter-freezed#usage-for-graphql-types), then create a new config file(preferably a typescript file: previous version of the code generator used a YAML file).
+First understand the [usage of the Patterns](https://the-guild.dev/graphql/codegen/docs/guides/flutter-freezed#configuring-the-plugin), then create a new config file(preferably a typescript file: previous version of the code generator used a YAML file).
 And implement the new configuration one by one inspecting the generated output.
-Please avoid migrating all your configuration at once.Doing that means you wont be able to inspect the generated output and ensure that the expected results are produced.
+
+> Please avoid migrating all your configuration at once. Doing that means you wont be able to inspect the generated output and ensure that the expected results are produced.
