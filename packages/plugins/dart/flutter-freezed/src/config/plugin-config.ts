@@ -18,7 +18,6 @@ export type FlutterFreezedPluginConfig = {
    * @name camelCasedEnums
    * @type {(boolean | DartIdentifierCasing)}
    * @default true
-   * @see {@link url Dart Lint on Enum casing}
    * @summary Specify how Enum values should be cased.
    * @description Setting this option to `true` will camelCase enum values as required by Dart's recommended linter.
    *
@@ -58,10 +57,10 @@ export type FlutterFreezedPluginConfig = {
    * @name copyWith
    * @type {(boolean | TypeNamePattern)}
    * @default undefined
-   * @see {@link url Freezed copyWith helper method usage}
-   * @see {@link url TypeNamePattern}
+   * @see {@link https://pub.dev/packages/freezed#how-copywith-works How copyWith works}
+   * @see {@link https://pub.dev/documentation/freezed_annotation/latest/freezed_annotation/Freezed/copyWith.html Freezed annotation copyWith property}
    * @summary enables Freezed copyWith helper method
-   * @description The [`freezed`](url) library has this option enabled by default.
+   * @description The [`freezed`](https://pub.dev/packages/freezed) library has this option enabled by default.
    * Use this option to enable/disable this option completely.
    *
    *  The plugin by default generates immutable Freezed models using the `@freezed` decorator.
@@ -134,10 +133,14 @@ export type FlutterFreezedPluginConfig = {
    * @name defaultValues
    * @type {([pattern: FieldNamePattern, value: string, appliesOn: AppliesOnParameters[], directiveName?: string, directiveArgName?: string][])}
    * @default undefined
+   * @see {@link https://pub.dev/packages/freezed#default-values Default values}
+   * @see {@link https://pub.dev/documentation/freezed_annotation/latest/freezed_annotation/Default-class.html Default class}
    * @summary set the default value for a field.
    * @description This will annotate the generated parameter with a `@Default(value: defaultValue)` decorator.
    *
-   *  Use backticks for the values if you want to use the quotation marks for string values.
+   * The default value will be interpolated into the `@Default(value: ${value})` decorator so
+   *  Use backticks for the value element so that you can use quotation marks for string values.
+   * E.g: `"I'm a string default value"` but `Episode.jedi` is not a string value.
    *
    * Use the `appliesOn` to specify where this option should be applied on
    *
@@ -156,8 +159,6 @@ export type FlutterFreezedPluginConfig = {
    *           // ...
    *           defaultValues: [
    *             [FieldNamePattern.forFieldNamesOfTypeName(MovieCharacter, appearsIn), `Episode.jedi`, ['default_factory_parameter']],
-   *             // default value from directive. See Graphql Constraints: url
-   *             [FieldNamePattern.forFieldNamesOfAllTypeNames([age]), `18`, ['parameter'], 'constraint', min],
    *           ],
    *         },
    *       },
@@ -177,6 +178,7 @@ export type FlutterFreezedPluginConfig = {
    * @name deprecated
    * @type {([pattern: Pattern, appliesOn: (AppliesOnFactory | AppliesOnParameters)[]][])}
    * @default undefined
+   * @see {@link https://pub.dev/packages/freezed#decorators-and-comments Decorators and comments}
    * @summary a list of Graphql Types(factory constructors) or fields(parameters) to be marked as deprecated.
    * @description Using a TypeNamePattern, you can mark an entire factory constructor for one or more GraphQL types as deprecated.
    *
@@ -221,9 +223,9 @@ export type FlutterFreezedPluginConfig = {
    * @type {(boolean | TypeNamePattern)}
    * @default undefined
    * @see {@link url Freezed equal helper method usage}
-   * @see {@link url TypeNamePattern}
+   * @see {@link https://pub.dev/documentation/freezed_annotation/latest/freezed_annotation/Freezed/equal.html Freezed annotation equal property}
    * @summary enables Freezed equal helper method
-   * @description The [`freezed`](url) library has this option enabled by default.
+   * @description The [`freezed`](https://pub.dev/packages/freezed) library has this option enabled by default.
    * Use this option to enable/disable this option completely.
    *
    *  The plugin by default generates immutable Freezed models using the `@freezed` decorator.
@@ -342,89 +344,6 @@ export type FlutterFreezedPluginConfig = {
   final?: [pattern: FieldNamePattern, appliesOn: AppliesOnParameters[]][];
 
   /**
-   *
-   * @name fromJsonToJson
-   * @summary  makes your models compatible with `json_serializable`.
-   * @description If `true` freezed will use `json_serializable` to generate fromJson and toJson constructors for your models.
-   *
-   * You can use custom encodings for each field by passing in an array of tuple with the type signature below:
-   *
-   * `[typeFieldName: TypeFieldName, classOrFunctionName: string, useClassConverter?: boolean, appliesOn?: AppliesOnParameters[]]`
-   * @see {@link https://github.com/google/json_serializable.dart/tree/master/json_serializable#custom-types-and-custom-encoding Custom types and custom encoding}
-   * @default true
-   * @exampleMarkdown
-   * ## Usage:
-   * ```ts filename='codegen.ts'
-   * import type { CodegenConfig } from '@graphql-codegen/cli';
-   *
-   * const config: CodegenConfig = {
-   *   // ...
-   *   generates: {
-   *     'lib/data/models/app_models.dart': {
-   *       plugins: {
-   *         'flutter-freezed': {
-   *           // ...
-   *           fromJsonToJson: [
-   *             // Example 1: Using functionName
-   *             ['Movie.[createdAt,updatedAt]', timestamp, false, ['parameter']],
-   *             // Example 2: Using className
-   *             ['Movie.[createdAt,updatedAt]', Timestamp, true, ['parameter']],
-   *           ],
-   *         },
-   *       },
-   *     },
-   *   },
-   * };
-   * export default config;
-   * ```
-   *
-   * ### Example 1: using `functionName`
-   *
-   * This will declare two functions with a name `timestampFromJson` and `timestampToJson` that will an throw an Exception. You will need to implement the function manually.
-   *
-   * ```dart filename="app_models.dart"
-   * dynamic timestampFromJson(dynamic val) {
-   * throw Exception("You must implement `timestampToJson` function in `app_models.dart`");
-   * }
-   *
-   * dynamic timestampToJson(dynamic val) {
-   * throw Exception("You must implement `timestampToJson` function in `app_models.dart`");
-   * }
-   * ```
-   *
-   * ### Example 2: suing `className`
-   *
-   * Like the `functionName`, this will rather place the functions as methods in a class using the name given.
-   *
-   * This provides a better abstraction than the global functions. That's why `className` has a higher precedence than `functionName`
-   *
-   * ```dart filename="app_models.dart"
-   * class TimestampConvertor implements JsonConverter<dynamic, dynamic> {
-   *     const TimestampConvertor();
-   *
-   *     @override
-   *     dynamic fromJson(dynamic json){
-   *         throw Exception("You must implement `TimestampConvertor.fromJson` method in `app_models.dart`");
-   *     }
-   *
-   *     @override
-   *     dynamic toJson(dynamic object){
-   *         throw Exception("You must implement `TimestampConvertor.toJson` method in `app_models.dart`");
-   *     }
-   * }
-   * ```
-   */
-  /* fromJsonToJson?: // TODO: @next-version
-    | boolean
-    | TypeNamePattern
-    | [
-        pattern: FieldNamePattern,
-        classOrFunctionName: string,
-        useClassConverter?: boolean,
-        appliesOn?: AppliesOnParameters[]
-      ][]; */
-
-  /**
    * @name ignoreTypes
    * @type {(TypeNamePattern)}
    * @default undefined
@@ -457,11 +376,10 @@ export type FlutterFreezedPluginConfig = {
    * @name immutable
    * @type {(boolean | TypeNamePattern)}
    * @default undefined
-   * @see {@link url Freezed immutable helper method usage}
-   * @see {@link url TypeNamePattern}
+   * @see {@link https://pub.dev/packages/freezed#creating-a-model-using-freezed Creating a Model using Freezed}
    * @summary enables Freezed immutable helper method
    * @description  set to true to use the `@freezed` decorator or false to use the `@unfreezed` decorator
-   * @description The [`freezed`](url) library  by default generates immutable models decorated with the `@freezed` decorator.
+   * @description The [`freezed`](https://pub.dev/packages/freezed) library  by default generates immutable models decorated with the `@freezed` decorator.
    * This option if set to `false` the plugin will generate mutable Freezed models using the `@unfreezed` decorator instead.
    *
    * Setting a boolean value will enable/disable this option globally for every GraphQL Type
