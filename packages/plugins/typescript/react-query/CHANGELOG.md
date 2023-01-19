@@ -1,5 +1,11 @@
 # @graphql-codegen/typescript-react-query
 
+## 4.1.0
+
+### Minor Changes
+
+- [#25](https://github.com/dotansimha/graphql-code-generator-community/pull/25) [`a70964409`](https://github.com/dotansimha/graphql-code-generator-community/commit/a70964409e882ace42756e3f9f86a0eb8819a120) Thanks [@EandrewJones](https://github.com/EandrewJones)! - Reverts problematic part of PR #8497. That PR fixed an issue with infinite query generated hooks not utilizing pageParamKeys for custom fetchers but in the process introduced a type error. This removes the cause of the type error.
+
 ## 4.0.6
 
 ### Patch Changes
