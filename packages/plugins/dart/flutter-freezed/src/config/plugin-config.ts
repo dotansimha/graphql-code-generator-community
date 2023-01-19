@@ -608,22 +608,22 @@ export type AppliesOn =
   | 'merged_factory_parameter'; // like `named_factory_parameters` but ONLY for a parameter in a named factory constructor which for a GraphQL Input Type that is merged inside an a class generated for a GraphQL Object Type
 
 export const APPLIES_ON_ENUM = <const>['enum'];
-export type AppliesOnEnum = typeof APPLIES_ON_ENUM[number];
+export type AppliesOnEnum = (typeof APPLIES_ON_ENUM)[number];
 
 export const APPLIES_ON_ENUM_VALUE = <const>['enum_value'];
-export type AppliesOnEnumValue = typeof APPLIES_ON_ENUM_VALUE[number];
+export type AppliesOnEnumValue = (typeof APPLIES_ON_ENUM_VALUE)[number];
 
 export const APPLIES_ON_CLASS = <const>['class'];
-export type AppliesOnClass = typeof APPLIES_ON_CLASS[number];
+export type AppliesOnClass = (typeof APPLIES_ON_CLASS)[number];
 
 export const APPLIES_ON_DEFAULT_FACTORY = <const>['factory', 'default_factory'];
-export type AppliesOnDefaultFactory = typeof APPLIES_ON_DEFAULT_FACTORY[number];
+export type AppliesOnDefaultFactory = (typeof APPLIES_ON_DEFAULT_FACTORY)[number];
 
 export const APPLIES_ON_UNION_FACTORY = <const>['factory', 'named_factory', 'union_factory'];
-export type AppliesOnUnionFactory = typeof APPLIES_ON_UNION_FACTORY[number];
+export type AppliesOnUnionFactory = (typeof APPLIES_ON_UNION_FACTORY)[number];
 
 export const APPLIES_ON_MERGED_FACTORY = <const>['factory', 'named_factory', 'merged_factory'];
-export type AppliesOnMergedFactory = typeof APPLIES_ON_MERGED_FACTORY[number];
+export type AppliesOnMergedFactory = (typeof APPLIES_ON_MERGED_FACTORY)[number];
 
 export type AppliesOnNamedFactory = AppliesOnUnionFactory | AppliesOnMergedFactory;
 
@@ -631,21 +631,21 @@ export const APPLIES_ON_FACTORY = ['factory', 'default_factory', 'named_factory'
 export type AppliesOnFactory = AppliesOnDefaultFactory | AppliesOnNamedFactory;
 
 export const APPLIES_ON_DEFAULT_FACTORY_PARAMETERS = <const>['parameter', 'default_factory_parameter'];
-export type AppliesOnDefaultFactoryParameters = typeof APPLIES_ON_DEFAULT_FACTORY_PARAMETERS[number];
+export type AppliesOnDefaultFactoryParameters = (typeof APPLIES_ON_DEFAULT_FACTORY_PARAMETERS)[number];
 
 export const APPLIES_ON_UNION_FACTORY_PARAMETERS = <const>[
   'parameter',
   'named_factory_parameter',
   'union_factory_parameter',
 ];
-export type AppliesOnUnionFactoryParameters = typeof APPLIES_ON_UNION_FACTORY_PARAMETERS[number];
+export type AppliesOnUnionFactoryParameters = (typeof APPLIES_ON_UNION_FACTORY_PARAMETERS)[number];
 
 export const APPLIES_ON_MERGED_FACTORY_PARAMETERS = <const>[
   'parameter',
   'named_factory_parameter',
   'merged_factory_parameter',
 ];
-export type AppliesOnMergedFactoryParameters = typeof APPLIES_ON_MERGED_FACTORY_PARAMETERS[number];
+export type AppliesOnMergedFactoryParameters = (typeof APPLIES_ON_MERGED_FACTORY_PARAMETERS)[number];
 
 export type AppliesOnNamedParameters = AppliesOnUnionFactoryParameters | AppliesOnMergedFactoryParameters;
 
