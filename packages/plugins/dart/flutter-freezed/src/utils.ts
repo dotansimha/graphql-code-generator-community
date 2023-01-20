@@ -1,311 +1,104 @@
-import {
-  ArgumentNode,
-  DirectiveNode,
-  EnumTypeDefinitionNode,
-  FieldDefinitionNode,
-  InputObjectTypeDefinitionNode,
-  InputValueDefinitionNode,
-  ObjectTypeDefinitionNode,
-  UnionTypeDefinitionNode,
-} from 'graphql';
-import {
-  ApplyDecoratorOn,
-  CustomDecorator,
-  FreezedConfig,
-  FlutterFreezedPluginConfig,
-  TypeSpecificFreezedConfig,
-} from './config.js';
-import { FreezedDeclarationBlock, FreezedFactoryBlock } from './freezed-declaration-blocks/index.js';
+//#region helpers
 
-export type FieldType = FieldDefinitionNode | InputValueDefinitionNode;
+import { camelCase, pascalCase, snakeCase } from 'change-case-all';
+import { DefinitionNode, ObjectTypeDefinitionNode, InputObjectTypeDefinitionNode, Kind } from 'graphql';
+import { Config } from './config/config-value.js';
+import { FieldName, TypeName } from './config/pattern.js';
+import { AppliesOn, DartIdentifierCasing, DART_KEYWORDS, FlutterFreezedPluginConfig } from './config/plugin-config.js';
 
-export type NodeType =
-  | ObjectTypeDefinitionNode
-  | InputObjectTypeDefinitionNode
-  | UnionTypeDefinitionNode
-  | EnumTypeDefinitionNode;
+export const strToList = (str: string) => (str.length < 1 ? [] : str.split(/\s*,\s*/gim).filter(s => s.length > 0));
 
-export type OptionName =
-  // FreezedClassConfig
-  | 'alwaysUseJsonKeyName'
-  | 'copyWith'
-  | 'customDecorators'
-  | 'defaultUnionConstructor'
-  | 'equal'
-  | 'fromJsonToJson'
-  | 'immutable'
-  | 'makeCollectionsUnmodifiable'
-  | 'mergeInputs'
-  | 'mutableInputs'
-  | 'privateEmptyConstructor'
-  | 'unionKey'
-  | 'unionValueCase';
+export const arrayWrap = <T>(value: T | T[]) =>
+  value === undefined ? [] : Array.isArray(value) ? value : ([value] as T[]);
 
-export function transformDefinition(
+export const resetIndex = (regexp: RegExp) => (regexp.lastIndex = 0);
+
+export const nodeIsObjectType = (
+  node: DefinitionNode
+): node is ObjectTypeDefinitionNode | InputObjectTypeDefinitionNode =>
+  node.kind === Kind.OBJECT_TYPE_DEFINITION || node.kind === Kind.INPUT_OBJECT_TYPE_DEFINITION;
+
+export const appliesOnBlock = <T extends AppliesOn>(configAppliesOn: T[], blockAppliesOn: readonly T[]) =>
+  configAppliesOn.some(a => blockAppliesOn.includes(a));
+
+export const dartCasing = (name: string, casing?: DartIdentifierCasing): string => {
+  if (casing === 'camelCase') {
+    return camelCase(name);
+  } else if (casing === 'PascalCase') {
+    return pascalCase(name);
+  } else if (casing === 'snake_case') {
+    return snakeCase(name);
+  }
+  return name;
+};
+/**
+ * checks whether name is a Dart Language keyword
+ * @param identifier The name or identifier to be checked
+ * @returns `true` if name is a Dart Language keyword, otherwise `false`
+ */
+export const isDartKeyword = (identifier: string) => DART_KEYWORDS[identifier] !== undefined;
+
+/**
+ * Ensures that the blockName isn't a valid Dart language reserved keyword.
+ * It wraps the identifier with the prefix and suffix then transforms the casing as specified in the config
+ * @param config
+ * @param name
+ * @param typeName
+ * @returns
+ */
+export const escapeDartKeyword = (
   config: FlutterFreezedPluginConfig,
-  freezedFactoryBlockRepository: FreezedFactoryBlockRepository,
-  node: NodeType
-) {
-  // ignore these...
-  if (['Query', 'Mutation', 'Subscription', ...(config?.ignoreTypes ?? [])].includes(node.name.value)) {
-    return '';
+  blockAppliesOn: readonly AppliesOn[],
+  identifier: string,
+  typeName?: TypeName,
+  fieldName?: FieldName
+): string => {
+  if (isDartKeyword(identifier)) {
+    const [prefix, suffix] = Config.escapeDartKeywords(config, blockAppliesOn, typeName, fieldName);
+    return `${prefix}${identifier}${suffix}`;
   }
+  return identifier;
+};
 
-  return new FreezedDeclarationBlock(config, freezedFactoryBlockRepository, node).init();
-}
+// TODO: Add this option to the plugin-config
+type JsonKeyOptions = {
+  defaultValue?: string;
+  disallowNullValue?: boolean;
+  fromJson?: string;
+  ignore?: boolean;
+  includeIfNull?: boolean;
+  name?: string;
+  // readValue?: string,
+  required?: boolean;
+  toJson?: string;
+  // unknownEnumValue?: string
+};
+export const atJsonKeyDecorator = ({
+  defaultValue,
+  disallowNullValue,
+  fromJson,
+  ignore,
+  includeIfNull,
+  name,
+  required,
+  toJson,
+}: JsonKeyOptions): string => {
+  const body = [
+    stringIsNotEmpty(defaultValue) ? `defaultValue: ${defaultValue}` : undefined,
+    disallowNullValue ? `disallowNullValue: ${disallowNullValue}` : undefined,
+    stringIsNotEmpty(fromJson) ? `fromJson: ${fromJson}` : undefined,
+    ignore ? `ignore: ${ignore}` : undefined,
+    includeIfNull ? `includeIfNull: ${includeIfNull}` : undefined,
+    stringIsNotEmpty(name) ? `name: '${name}'` : undefined,
+    required ? `required: ${required}` : undefined,
+    stringIsNotEmpty(toJson) ? `toJson: ${toJson}` : undefined,
+  ]
+    .filter(value => value !== undefined)
+    .join(',');
 
-/**
- * returns the value of the FreezedConfig option
- * for a specific type if given typeName
- * or else fallback to the global FreezedConfig value
- */
-export function getFreezedConfigValue(
-  option: OptionName,
-  config: FlutterFreezedPluginConfig,
-  typeName?: string | undefined
-): any {
-  if (typeName) {
-    return config?.typeSpecificFreezedConfig?.[typeName]?.config?.[option] ?? getFreezedConfigValue(option, config);
-  }
-  return config?.globalFreezedConfig?.[option];
-}
+  return stringIsNotEmpty(body) ? `@JsonKey(${body})\n` : '';
+};
 
-/**
- * @description filters the customDirectives to return those that are applied on a list of blocks
- */
-export function getCustomDecorators(
-  config: FlutterFreezedPluginConfig,
-  appliesOn: ApplyDecoratorOn[],
-  nodeName?: string | undefined,
-  fieldName?: string | undefined
-): CustomDecorator {
-  const filteredCustomDecorators: CustomDecorator = {};
-  const globalCustomDecorators = config?.globalFreezedConfig?.customDecorators ?? {};
-  let customDecorators: CustomDecorator = { ...globalCustomDecorators };
+export const stringIsNotEmpty = (str: string) => str?.length > 0;
 
-  if (nodeName) {
-    const typeConfig = config?.typeSpecificFreezedConfig?.[nodeName];
-    const typeSpecificCustomDecorators = typeConfig?.config?.customDecorators ?? {};
-    customDecorators = { ...customDecorators, ...typeSpecificCustomDecorators };
-
-    if (fieldName) {
-      const fieldSpecificCustomDecorators = typeConfig?.fields?.[fieldName]?.customDecorators ?? {};
-      customDecorators = { ...customDecorators, ...fieldSpecificCustomDecorators };
-    }
-  }
-
-  Object.entries(customDecorators).forEach(([key, value]) =>
-    value?.applyOn?.forEach(a => {
-      if (appliesOn.includes(a)) {
-        filteredCustomDecorators[key] = value;
-      }
-    })
-  );
-
-  return filteredCustomDecorators;
-}
-
-export function transformCustomDecorators(
-  customDecorators: CustomDecorator,
-  node?: NodeType | undefined,
-  field?: FieldType | undefined
-): string[] {
-  let result: string[] = [];
-
-  result = [
-    ...result,
-    ...(node?.directives ?? [])
-      .concat(field?.directives ?? [])
-      // extract only the directives whose names were specified as keys
-      // and have values that not undefined or null in the customDecorator record
-      .filter(d => {
-        const key = d.name.value;
-        const value = customDecorators[key] ?? customDecorators[`@${key}`];
-        if (value && value.mapsToFreezedAs !== 'custom') {
-          return true;
-        }
-        return false;
-      })
-      // transform each directive to string
-      .map(d => directiveToString(d, customDecorators)),
-  ];
-
-  // for  decorators that mapsToFreezedAs === 'custom'
-  Object.entries(customDecorators).forEach(([key, value]) => {
-    if (value.mapsToFreezedAs === 'custom') {
-      const args = value?.arguments;
-      // if the custom directives have arguments,
-      if (args && args !== []) {
-        // join them with a comma in the parenthesis
-        result = [...result, `${key}(${args.join(', ')})\n`];
-      } else {
-        // else return the customDecorator key just as it is
-        result = [...result, key + '\n'];
-      }
-    }
-  });
-
-  return result;
-}
-
-/**
- * transforms the directive into a decorator array
- * this decorator array might contain a `final` string which would be filtered out
- * and used to mark the parameter block as final
- */
-function directiveToString(directive: DirectiveNode, customDecorators: CustomDecorator) {
-  const key = directive.name.value;
-  const value = customDecorators[key];
-  if (value.mapsToFreezedAs === 'directive') {
-    // get the directive's arguments
-    const directiveArgs: readonly ArgumentNode[] = directive?.arguments ?? [];
-    // extract the directive's argument using the template index: ["$0", "$1", ...]
-    // specified in the customDecorator.arguments array
-    const args = value?.arguments
-      ?.filter(a => directiveArgs[argToInt(a)])
-      // transform the template index: ["$0", "$1", ...] into the arguments
-      .map(a => directiveArgs[argToInt(a)])
-      // transform the arguments into string array of ["name: value" , "name: value", ...]
-      .map(a => `${a.name}: ${a.value}`);
-
-    // if the args is not empty
-    if (args !== []) {
-      // returns "@directiveName(argName: argValue, argName: argValue ...)"
-      return `@${directive.name.value}(${args?.join(', ')})\n`;
-    }
-  } else if (value.mapsToFreezedAs === '@Default') {
-    const defaultValue = directive?.arguments?.[argToInt(value?.arguments?.[0] ?? '0')];
-    if (defaultValue) {
-      return `@Default(value: ${defaultValue})\n`;
-    }
-  }
-  // returns either "@deprecated" || "final".
-  // `final` to be filtered from the decorators array when applying the decorators
-  return value.mapsToFreezedAs + '\n';
-}
-
-/** transforms string template: "$0" into an integer: 1 */
-function argToInt(arg: string) {
-  const parsedIndex = Number.parseInt(arg.replace('$', '').trim() ?? '0'); // '$1 => 1
-  return parsedIndex ? parsedIndex : 0;
-}
-
-/** returns freezed import statements */
-export function addFreezedImportStatements(fileName: string) {
-  return [
-    "import 'package:freezed_annotation/freezed_annotation.dart';\n",
-    "import 'package:flutter/foundation.dart';\n\n",
-    `part ${fileName.replace(/\.dart/g, '')}.dart;\n`,
-    `part '${fileName.replace(/\.dart/g, '')}.g.dart';\n\n`,
-  ].join('');
-}
-
-/** a class variant of the getFreezedConfigValue helper function
- *
- * returns the value of the FreezedConfig option
- * for a specific type if given typeName
- * or else fallback to the global FreezedConfig value
- */
-export class FreezedConfigValue {
-  constructor(private _config: FlutterFreezedPluginConfig, private _typeName: string | undefined) {
-    this._config = _config;
-    this._typeName = _typeName;
-  }
-
-  /**
-   * returns the value of the FreezedConfig option
-   * for a specific type if given typeName
-   * or else fallback to the global FreezedConfig value
-   */
-  get<T>(option: OptionName): T {
-    return getFreezedConfigValue(option, this._config, this._typeName) as T;
-  }
-}
-
-/**
- * stores an instance of  FreezedFactoryBlock using the node names as the key
- * and returns that instance when replacing tokens
- * */
-export class FreezedFactoryBlockRepository {
-  _store: Record<string, FreezedFactoryBlock> = {};
-
-  get(key: string): FreezedFactoryBlock | undefined {
-    return this._store[key];
-  }
-
-  register(key: string, value: FreezedFactoryBlock): FreezedFactoryBlock {
-    this._store[key] = value;
-    return value;
-  }
-
-  retrieve(key: string, appliesOn: string, name: string, typeName: string | undefined): string {
-    if (this._store[key]) {
-      return (
-        this._store[key]
-          .setDecorators(appliesOn, key)
-          .setKey(key)
-          .setName(name)
-          .setNamedConstructor(typeName)
-          .init()
-          .toString() + '\n'
-      );
-    }
-    return '';
-  }
-}
-
-/** initializes a FreezedPluginConfig with the defaults values */
-export class DefaultFreezedPluginConfig implements FlutterFreezedPluginConfig {
-  camelCasedEnums?: boolean;
-  customScalars?: { [name: string]: string };
-  fileName?: string;
-  globalFreezedConfig?: FreezedConfig;
-  typeSpecificFreezedConfig?: Record<string, TypeSpecificFreezedConfig>;
-  ignoreTypes?: string[];
-
-  constructor(config: FlutterFreezedPluginConfig = {}) {
-    Object.assign(this, {
-      camelCasedEnums: config.camelCasedEnums ?? true,
-      customScalars: config.customScalars ?? {},
-      fileName: config.fileName ?? 'app_models',
-      globalFreezedConfig: { ...new DefaultFreezedConfig(), ...(config.globalFreezedConfig ?? {}) },
-      typeSpecificFreezedConfig: config.typeSpecificFreezedConfig ?? {},
-      ignoreTypes: config.ignoreTypes ?? [],
-    });
-  }
-}
-
-/** initializes a FreezedConfig with the defaults values */
-export class DefaultFreezedConfig implements FreezedConfig {
-  alwaysUseJsonKeyName?: boolean;
-  copyWith?: boolean;
-  customDecorators?: CustomDecorator;
-  defaultUnionConstructor?: boolean;
-  equal?: boolean;
-  fromJsonToJson?: boolean;
-  immutable?: boolean;
-  makeCollectionsUnmodifiable?: boolean;
-  mergeInputs?: string[];
-  mutableInputs?: boolean;
-  privateEmptyConstructor?: boolean;
-  unionKey?: string;
-  unionValueCase?: 'FreezedUnionCase.camel' | 'FreezedUnionCase.pascal';
-
-  constructor() {
-    Object.assign(this, {
-      alwaysUseJsonKeyName: false,
-      copyWith: undefined,
-      customDecorators: {},
-      defaultUnionConstructor: true,
-      equal: undefined,
-      fromJsonToJson: true,
-      immutable: true,
-      makeCollectionsUnmodifiable: undefined,
-      mergeInputs: [],
-      mutableInputs: true,
-      privateEmptyConstructor: true,
-      unionKey: undefined,
-      unionValueCase: undefined,
-    });
-  }
-}
+//#endregion

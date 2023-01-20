@@ -1,39 +1,32 @@
 import { oldVisit, PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import { transformSchemaAST } from '@graphql-codegen/schema-ast';
 import { GraphQLSchema } from 'graphql';
-import { FlutterFreezedPluginConfig } from './config.js';
-import { FreezedDeclarationBlock } from './freezed-declaration-blocks/index.js';
+import { defaultFreezedPluginConfig, FlutterFreezedPluginConfig } from './config/plugin-config.js';
+import { Block } from './freezed-declaration-blocks/index.js';
 import { schemaVisitor } from './schema-visitor.js';
-import { addFreezedImportStatements, DefaultFreezedPluginConfig } from './utils.js';
 
 export const plugin: PluginFunction<FlutterFreezedPluginConfig> = (
   schema: GraphQLSchema,
   _documents: Types.DocumentFile[],
-  config: FlutterFreezedPluginConfig
+  _config: FlutterFreezedPluginConfig,
+  info
 ): string => {
   // sets the defaults for the config
-  config = { ...new DefaultFreezedPluginConfig(config) };
+  const config = { ...defaultFreezedPluginConfig, ..._config };
 
   const { schema: _schema, ast } = transformSchemaAST(schema, config);
-  const { freezedFactoryBlockRepository, ...visitor } = schemaVisitor(_schema, config);
+  const { nodeRepository, ...visitor } = schemaVisitor(_schema, config);
 
   const visitorResult = oldVisit(ast, { leave: visitor });
 
-  const generated: FreezedDeclarationBlock[] = visitorResult.definitions.filter(
-    (def: any) => def instanceof FreezedDeclarationBlock
-  );
+  const importStatements = Block.buildImportStatements(info?.outputFile ?? 'app_models');
 
-  return (
-    addFreezedImportStatements(config.fileName) +
-    generated
-      .map(freezedDeclarationBlock =>
-        freezedDeclarationBlock.toString().replace(/==>factory==>.+\n/gm, s => {
-          const pattern = s.replace('==>factory==>', '').trim();
-          const [key, appliesOn, name, typeName] = pattern.split('==>');
-          return freezedFactoryBlockRepository.retrieve(key, appliesOn, name, typeName ?? null);
-        })
-      )
-      .join('')
-      .trim()
+  const generatedBlocks: string[] = visitorResult.definitions.filter(
+    (def: any) => typeof def === 'string' && def.length > 0
   );
+  // return [importStatements, ...generatedBlocks].join('').trim();
+
+  const output = Block.replaceTokens(config, nodeRepository, generatedBlocks);
+
+  return [importStatements, output].join('').trim();
 };

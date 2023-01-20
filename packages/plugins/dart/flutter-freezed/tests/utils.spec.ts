@@ -1,84 +1,40 @@
-import { CustomDecorator } from '../src/config';
-import { getCustomDecorators, getFreezedConfigValue, transformCustomDecorators } from '../src/utils';
-import { customDecoratorsConfig, defaultConfig, typeConfig } from './config';
+import { transformSchemaAST } from '@graphql-codegen/schema-ast';
+import { unionSchema } from './schema.js';
+import { appliesOnBlock, arrayWrap, dartCasing, nodeIsObjectType } from '../src/utils.js';
+import { defaultFreezedPluginConfig, APPLIES_ON_PARAMETERS } from '../src/config/plugin-config.js';
 
-/** utils test */
-describe('flutter-freezed: utils & helpers', () => {
-  test('getFreezedConfigValue(): returns the expected value for globalFreezedConfig and typeSpecificFreezedConfig', () => {
-    const Starship = 'Starship';
+const {
+  ast: { definitions: nodes },
+} = transformSchemaAST(unionSchema, defaultFreezedPluginConfig);
 
-    expect(getFreezedConfigValue('alwaysUseJsonKeyName', defaultConfig)).toBe(false);
-    expect(getFreezedConfigValue('alwaysUseJsonKeyName', typeConfig, Starship)).toBe(true);
-
-    expect(getFreezedConfigValue('copyWith', defaultConfig)).toBe(undefined);
-    expect(getFreezedConfigValue('copyWith', typeConfig, Starship)).toBe(false);
-
-    expect(getFreezedConfigValue('customDecorators', defaultConfig)).toMatchObject({});
-    expect(getFreezedConfigValue('defaultUnionConstructor', defaultConfig)).toBe(true);
-    expect(getFreezedConfigValue('equal', defaultConfig)).toBe(undefined);
-    expect(getFreezedConfigValue('fromJsonToJson', defaultConfig)).toBe(true);
-    expect(getFreezedConfigValue('immutable', defaultConfig)).toBe(true);
-    expect(getFreezedConfigValue('makeCollectionsUnmodifiable', defaultConfig)).toBe(undefined);
-    expect(getFreezedConfigValue('mergeInputs', defaultConfig)).toMatchObject([]);
-    expect(getFreezedConfigValue('mutableInputs', defaultConfig)).toBe(true);
-    expect(getFreezedConfigValue('privateEmptyConstructor', defaultConfig)).toBe(true);
-    expect(getFreezedConfigValue('unionKey', defaultConfig)).toBe(undefined);
-
-    expect(getFreezedConfigValue('unionValueCase', defaultConfig)).toBe(undefined);
-    expect(getFreezedConfigValue('unionValueCase', typeConfig, Starship)).toBe('FreezedUnionCase.pascal');
+describe('arrayWrap:', () => {
+  it('wraps the value in array if the value is not an array', () => {
+    expect(arrayWrap('Hello')).toMatchObject(['Hello']);
   });
 
-  describe('customDecorators', () => {
-    const globalCustomDecorators = getCustomDecorators(customDecoratorsConfig, ['class']);
-
-    const droidCustomDecorators = getCustomDecorators(customDecoratorsConfig, ['class', 'union_factory'], 'Droid');
-
-    const idCustomDecorators = getCustomDecorators(customDecoratorsConfig, ['union_factory_parameter'], 'Droid', 'id');
-
-    test('getCustomDecorators()', () => {
-      expect(globalCustomDecorators).toMatchObject<CustomDecorator>({
-        '@JsonSerializable(explicitToJson: true)': {
-          applyOn: ['class'],
-          mapsToFreezedAs: 'custom',
-        },
-      });
-
-      expect(droidCustomDecorators).toMatchObject<CustomDecorator>({
-        '@JsonSerializable(explicitToJson: true)': {
-          applyOn: ['class'],
-          mapsToFreezedAs: 'custom',
-        },
-        '@FreezedUnionValue': {
-          applyOn: ['union_factory'],
-          arguments: ["'BestDroid'"],
-          mapsToFreezedAs: 'custom',
-        },
-      });
-
-      expect(idCustomDecorators).toMatchObject<CustomDecorator>({
-        '@NanoId': {
-          applyOn: ['union_factory_parameter'],
-          arguments: ['size: 16', 'alphabets: NanoId.ALPHA_NUMERIC'],
-          mapsToFreezedAs: 'custom',
-        },
-      });
-    });
-
-    test('transformCustomDecorators()', () => {
-      expect(transformCustomDecorators(globalCustomDecorators)).toMatchObject([
-        '@JsonSerializable(explicitToJson: true)\n',
-      ]);
-
-      /*
-      expect(transformCustomDecorators(droidCustomDecorators, 'Droid')).toMatchObject([
-        '@JsonSerializable(explicitToJson: true)\n',
-        "@FreezedUnionValue('BestDroid')\n",
-      ]);
-
-      expect(transformCustomDecorators(idCustomDecorators, 'Droid', 'id')).toMatchObject([
-        '@NanoId(size: 16, alphabets: NanoId.ALPHA_NUMERIC)\n',
-      ]);
-      */
-    });
+  it('returns the value if the value is already an array', () => {
+    expect(arrayWrap(['Hello'])).toMatchObject(['Hello']);
   });
+
+  it('returns an empty array `[]` if the value is undefined', () => {
+    expect(arrayWrap(undefined)).toMatchObject([]);
+  });
+});
+
+test('method: nodeIsObjectType() => returns true if node is an ObjectType', () => {
+  const expected = [false, true, true, false, true, true, false];
+  expect(nodes.map(nodeIsObjectType)).toEqual(expected);
+});
+
+test('method: appliesOnBlock() => returns true if the configAppliesOnBlock contains some of the blockAppliesOn values', () => {
+  expect(appliesOnBlock(['parameter'], APPLIES_ON_PARAMETERS)).toBe(true);
+  expect(appliesOnBlock(['factory', 'parameter'], ['parameter'])).toBe(true);
+  expect(appliesOnBlock(['default_factory_parameter', 'parameter'], ['union_factory_parameter'])).toBe(false);
+});
+
+test('method: dartCasing() => ', () => {
+  expect(dartCasing('snake---- Case___ ME', 'snake_case')).toBe('snake_case_me');
+  expect(dartCasing('Camel_ case- -- - ME', 'camelCase')).toBe('camelCaseMe');
+  expect(dartCasing('pascal-- --case _ ME', 'PascalCase')).toBe('PascalCaseMe');
+  expect(dartCasing('lE-AvE mE A-l_o_n-e')).toBe('lE-AvE mE A-l_o_n-e');
 });

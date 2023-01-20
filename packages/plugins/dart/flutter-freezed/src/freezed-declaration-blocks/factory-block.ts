@@ -1,170 +1,205 @@
 import { indent } from '@graphql-codegen/visitor-plugin-common';
-import { FieldDefinitionNode, InputValueDefinitionNode, Kind } from 'graphql';
-import { camelCase, pascalCase } from 'change-case-all';
-import { FreezedParameterBlock } from './parameter-block.js';
-import { ApplyDecoratorOn, FlutterFreezedPluginConfig } from '../config.js';
-import { FreezedConfigValue, getCustomDecorators, NodeType, transformCustomDecorators } from '../utils.js';
+import { Config } from '../config/config-value.js';
+import { TypeName } from '../config/pattern.js';
+import {
+  FlutterFreezedPluginConfig,
+  ObjectType,
+  AppliesOnFactory,
+  AppliesOnParameters,
+  AppliesOnDefaultFactory,
+  AppliesOnNamedFactory,
+  APPLIES_ON_DEFAULT_FACTORY,
+  APPLIES_ON_UNION_FACTORY,
+  APPLIES_ON_MERGED_FACTORY,
+  APPLIES_ON_DEFAULT_FACTORY_PARAMETERS,
+  APPLIES_ON_UNION_FACTORY_PARAMETERS,
+  APPLIES_ON_MERGED_FACTORY_PARAMETERS,
+} from '../config/plugin-config.js';
+import { NodeRepository } from './node-repository.js';
+import { Block } from './index.js';
+import { ParameterBlock } from './parameter-block.js';
+import { FieldDefinitionNode, InputValueDefinitionNode } from 'graphql';
+import { stringIsNotEmpty } from '../utils.js';
 
-export class FreezedFactoryBlock {
-  /** document the constructor */
-  _comment = '';
-
-  /** a list of decorators to copy paste to the generator */
-  _decorators: string[] = [];
-
-  /** the key of the original type name */
-  _key: string | undefined;
-
-  /** the name of the class */
-  _name: string | undefined;
-
-  /** the namedConstructor is used for GraphQL Union types or if mergeInput is true */
-  _namedConstructor: string | undefined;
-
-  /** a list of interfaces to implements */
-  // _implements: string[] = [];
-
-  /** a list of class to mixin with */
-  // _mixins: string[] = [];
-
-  /** the parameters of this factory constructor */
-  // TODO: handle other parameter types like positional parameters later.
-  // TODO: sticking to named parameters because GraphQL is a typed language
-  _parameters: FreezedParameterBlock[] = [];
-
-  /** the shape is the content of the block */
-  _shape: string | undefined;
-
-  /** the block is the final structure that is generated */
-  _block: string | undefined;
-
-  private _freezedConfigValue: FreezedConfigValue;
-
-  constructor(private _config: FlutterFreezedPluginConfig, private _node: NodeType) {
-    this._config = _config;
-    this._node = _node;
-    this._freezedConfigValue = new FreezedConfigValue(_config, _node.name.value);
-  }
-
-  public init(): FreezedFactoryBlock {
-    /*
-      setDecorators(), setName() and setType() will be called
-      when the factory is retrieved from the repository
-    */
-    this.setComment().setParameters().setShape().setBlock();
-    return this;
-  }
-
-  private setComment(): FreezedFactoryBlock {
-    const comment = this._node.description?.value;
-
-    if (comment && comment !== null && comment !== '') {
-      this._comment = indent(`/// ${comment} \n`);
-    }
-    return this;
-  }
-
-  setDecorators(appliesOn: string, nodeName: string): FreezedFactoryBlock {
-    this._decorators = [
-      ...transformCustomDecorators(
-        getCustomDecorators(this._config, appliesOn.split(',') as ApplyDecoratorOn[], nodeName),
-        this._node
-      ),
-    ];
-    return this;
-  }
-
-  setKey(key: string): FreezedFactoryBlock {
-    this._key = pascalCase(key);
-    return this;
-  }
-
-  setName(name: string): FreezedFactoryBlock {
-    this._name = pascalCase(name);
-    return this;
-  }
-
-  setNamedConstructor(namedConstructor: string | undefined): FreezedFactoryBlock {
-    if (namedConstructor) {
-      this._namedConstructor = camelCase(namedConstructor);
-    }
-    return this;
-  }
-
-  private setParameters(): FreezedFactoryBlock {
-    // TODO: get this from config directly
-    const mergeInputs = this._freezedConfigValue.get('mergeInputs');
-    const appliesOn: ApplyDecoratorOn[] = this._namedConstructor
-      ? ['union_factory_parameter']
-      : mergeInputs ?? mergeInputs !== []
-      ? ['merged_input_parameter']
-      : ['class_factory_parameter'];
-
-    if (this._node.kind !== Kind.UNION_TYPE_DEFINITION && this._node.kind !== Kind.ENUM_TYPE_DEFINITION) {
-      this._parameters =
-        this._node?.fields?.map((field: FieldDefinitionNode | InputValueDefinitionNode) =>
-          new FreezedParameterBlock(this._config, appliesOn, this._node, field).init()
-        ) ?? [];
-    }
-    return this;
-  }
-
-  private setShape(): FreezedFactoryBlock {
-    this._shape = this._parameters.map(p => p.toString()).join('');
-    return this;
-  }
-
-  private setBlock(): FreezedFactoryBlock {
+export class FactoryBlock {
+  public static build(
+    config: FlutterFreezedPluginConfig,
+    node: ObjectType,
+    blockAppliesOn: readonly AppliesOnFactory[],
+    className: TypeName,
+    factoryName?: TypeName
+  ): string {
     let block = '';
 
-    //append comment
-    block += this._comment;
+    block += Block.buildComment(node);
 
-    // append the decorators
-    block += this._decorators.map(d => indent(d)).join('');
+    block += this.buildDecorators(config, blockAppliesOn, className, factoryName);
 
-    block += indent('');
+    block += this.buildHeader(config, blockAppliesOn, className, factoryName);
 
-    // decide if to use const or not
-    if (this._freezedConfigValue.get('immutable')) {
-      block += 'const ';
-    }
+    block += this.buildBody(config, node, blockAppliesOn);
 
-    // append the factory keyword and the name
-    block += `factory ${this._name}`;
+    factoryName = blockAppliesOn.includes('default_factory') ? className : factoryName;
+    block += this.buildFooter(config, blockAppliesOn, factoryName);
 
-    // append .namedConstructor is not null
-    if (this._namedConstructor && this._namedConstructor !== '') {
-      block += `.${this._namedConstructor}`;
-    }
-
-    // append the parenthesis for the constructor and braces for the named parameters
-    block += '({\n';
-
-    //append the shape
-    block += this._shape;
-
-    // close the constructor and assign the key
-    block += indent(`}) = `);
-
-    // but first decide whether prefix the key with an underscore
-    if (!this._namedConstructor) {
-      block += '_';
-    }
-
-    // finally, append the key
-    block += `${this._key};\n`;
-
-    // store it in the shape
-    this._block = block;
-    return this;
+    return block;
   }
 
-  /** returns the block */
-  public toString(): string {
-    if (!this._block) {
-      throw new Error('FreezedFactoryBlock: setShape must be called before calling toString()');
+  public static buildDecorators = (
+    config: FlutterFreezedPluginConfig,
+    blockAppliesOn: readonly AppliesOnFactory[],
+    className: TypeName,
+    factoryName?: TypeName
+  ): string => {
+    // TODO: @Assert
+    const typeName = factoryName ? TypeName.fromUnionOfTypeNames(className, factoryName) : className;
+
+    const deprecatedDecorator = Config.deprecated(config, blockAppliesOn, typeName);
+
+    const decorators = [deprecatedDecorator].join('');
+
+    return stringIsNotEmpty(decorators) ? indent(decorators) : decorators;
+  };
+
+  public static buildHeader = (
+    config: FlutterFreezedPluginConfig,
+    blockAppliesOn: readonly AppliesOnFactory[],
+    className: TypeName,
+    factoryName?: TypeName
+  ) => {
+    const typeName = factoryName ? TypeName.fromUnionOfTypeNames(className, factoryName) : className;
+
+    const immutable = Config.immutable(config, typeName);
+    // const mutableInputs = Config.mutableInputs(config, factoryName);
+    // const mutable = immutable !== true || (node.kind === Kind.INPUT_OBJECT_TYPE_DEFINITION && mutableInputs);
+    const constFactory = immutable ? indent('const factory') : indent('factory');
+    const _className = Block.buildBlockName(
+      config,
+      blockAppliesOn,
+      className.value,
+      className,
+      undefined,
+      'PascalCase'
+    );
+
+    if (factoryName) {
+      const _factoryName = Block.buildBlockName(
+        config,
+        blockAppliesOn,
+        factoryName.value,
+        factoryName,
+        undefined,
+        'camelCase'
+      );
+      return `${constFactory} ${_className}.${_factoryName}({\n`;
     }
-    return this._block;
-  }
+
+    return `${constFactory} ${_className}({\n`;
+  };
+
+  public static buildBody = (
+    config: FlutterFreezedPluginConfig,
+    node: ObjectType,
+    appliesOn: readonly AppliesOnFactory[]
+  ): string => {
+    let appliesOnParameters: readonly AppliesOnParameters[] = [];
+    if (appliesOn.includes('default_factory')) {
+      appliesOnParameters = APPLIES_ON_DEFAULT_FACTORY_PARAMETERS;
+    } else if (appliesOn.includes('union_factory')) {
+      appliesOnParameters = APPLIES_ON_UNION_FACTORY_PARAMETERS;
+    } else if (appliesOn.includes('merged_factory')) {
+      appliesOnParameters = APPLIES_ON_MERGED_FACTORY_PARAMETERS;
+    }
+
+    return (
+      node.fields
+        ?.map((field: FieldDefinitionNode | InputValueDefinitionNode) => {
+          return ParameterBlock.build(config, node, field, appliesOnParameters);
+        })
+        .join('') ?? ''
+    );
+  };
+
+  public static buildFooter = (
+    config: FlutterFreezedPluginConfig,
+    blockAppliesOn: readonly AppliesOnFactory[],
+    factoryName: TypeName
+  ) => {
+    const _ = blockAppliesOn.includes('default_factory') ? '_' : '';
+    const _factoryName = Block.buildBlockName(
+      config,
+      blockAppliesOn,
+      factoryName.value,
+      factoryName,
+      undefined,
+      'PascalCase'
+    );
+    return indent(`}) = ${_}${_factoryName};\n\n`);
+  };
+
+  public static serializeDefaultFactory = (className: TypeName): string => {
+    return `${Block.tokens.defaultFactory}${className.value}==>${APPLIES_ON_DEFAULT_FACTORY.join(',')}\n`;
+  };
+
+  public static serializeUnionFactory = (className: TypeName, factoryName: TypeName): string => {
+    return `${Block.tokens.unionFactory}${className.value}==>${factoryName.value}==>${APPLIES_ON_UNION_FACTORY.join(
+      ','
+    )}\n`;
+  };
+
+  public static serializeMergedFactory = (className: TypeName, factoryName: TypeName): string => {
+    return `${Block.tokens.mergedFactory}${className.value}==>${factoryName.value}==>${APPLIES_ON_MERGED_FACTORY.join(
+      ','
+    )}\n`;
+  };
+
+  public static deserializeFactory = (
+    config: FlutterFreezedPluginConfig,
+    nodeRepository: NodeRepository,
+    blockAppliesOn: readonly AppliesOnDefaultFactory[],
+    className: TypeName
+  ): string => {
+    const node = nodeRepository.get(className.value);
+
+    if (node) {
+      return FactoryBlock.buildFromFactory(config, node, blockAppliesOn, className);
+    }
+
+    return '';
+  };
+
+  public static deserializeNamedFactory = (
+    config: FlutterFreezedPluginConfig,
+    nodeRepository: NodeRepository,
+    blockAppliesOn: readonly AppliesOnNamedFactory[],
+    className: TypeName,
+    factoryName: TypeName
+  ): string => {
+    const node = nodeRepository.get(factoryName.value);
+
+    if (node) {
+      return FactoryBlock.buildFromNamedFactory(config, node, blockAppliesOn, className, factoryName);
+    }
+
+    return '';
+  };
+
+  public static buildFromFactory = (
+    config: FlutterFreezedPluginConfig,
+    node: ObjectType,
+    blockAppliesOn: readonly AppliesOnDefaultFactory[],
+    className: TypeName
+  ): string => {
+    return FactoryBlock.build(config, node, blockAppliesOn, className);
+  };
+
+  public static buildFromNamedFactory = (
+    config: FlutterFreezedPluginConfig,
+    node: ObjectType,
+    blockAppliesOn: readonly AppliesOnNamedFactory[],
+    className: TypeName,
+    factoryName: TypeName
+  ): string => {
+    return FactoryBlock.build(config, node, blockAppliesOn, className, factoryName);
+  };
 }
