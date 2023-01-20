@@ -4,4 +4,8 @@ export interface EnumArrayPluginConfig {
    * if not given, omit import statement.
    */
   importFrom?: string;
+  /**
+   * @description generate the arrays as const. Defaults to false
+   */
+  constArrays?: boolean;
 }
