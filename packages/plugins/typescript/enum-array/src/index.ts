@@ -13,7 +13,7 @@ function getEnumTypeMap(schema: GraphQLSchema): GraphQLEnumType[] {
   return result;
 }
 
-function buildArrayDefinition(e: GraphQLEnumType): string {
+function buildArrayDefinition(e: GraphQLEnumType, constArrays: boolean): string {
   const upperName = e.name
     .replace(/[A-Z]/g, letter => `_${letter}`)
     .slice(1)
@@ -22,7 +22,11 @@ function buildArrayDefinition(e: GraphQLEnumType): string {
     .getValues()
     .map(v => `'${v.value}'`)
     .join(', ');
-  return `export const ${upperName}: ${e.name}[] = [${values}];`;
+  if (constArrays) {
+    return `export const ${upperName} = [${values}] as const;`;
+  } else {
+    return `export const ${upperName}: ${e.name}[] = [${values}];`;
+  }
 }
 
 function buildImportStatement(enums: GraphQLEnumType[], importFrom: string): string[] {
@@ -36,7 +40,7 @@ export const plugin: PluginFunction<EnumArrayPluginConfig> = (
   config: EnumArrayPluginConfig
 ): Types.PluginOutput => {
   const enums = getEnumTypeMap(schema);
-  const content = enums.map(buildArrayDefinition).join('\n');
+  const content = enums.map(e => buildArrayDefinition(e, config.constArrays ?? false)).join('\n');
   const result: Types.PluginOutput = { content };
   if (config.importFrom) {
     result['prepend'] = buildImportStatement(enums, config.importFrom);
