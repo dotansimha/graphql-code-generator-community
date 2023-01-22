@@ -1,5 +1,11 @@
 # @graphql-codegen/typescript-enum-array
 
+## 2.3.0
+
+### Minor Changes
+
+- [#59](https://github.com/dotansimha/graphql-code-generator-community/pull/59) [`1358a1e39`](https://github.com/dotansimha/graphql-code-generator-community/commit/1358a1e3946c19655249ff1cf45f6887aa23f0fe) Thanks [@omjadas](https://github.com/omjadas)! - Allow arrays to be generated as const.
+
 ## 2.2.1
 
 ### Patch Changes

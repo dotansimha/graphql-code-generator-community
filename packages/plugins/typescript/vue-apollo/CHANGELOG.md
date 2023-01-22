@@ -1,5 +1,11 @@
 # @graphql-codegen/typescript-vue-apollo
 
+## 3.3.7
+
+### Patch Changes
+
+- [#45](https://github.com/dotansimha/graphql-code-generator-community/pull/45) [`296ce64c0`](https://github.com/dotansimha/graphql-code-generator-community/commit/296ce64c0562ac2293674dcebe5f859c471ddb98) Thanks [@FloEdelmann](https://github.com/FloEdelmann)! - Default to empty object for `options` parameter in generated mutation functions, even those with required variables.
+
 ## 3.3.6
 
 ### Patch Changes
