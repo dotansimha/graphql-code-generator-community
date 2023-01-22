@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/flutter-freezed",
-  "version": "2.11.2",
+  "version": "3.0.0",
   "description": "GraphQL Code Generator plugin to generate Freezed models from your GraphQL schema",
   "repository": {
     "type": "git",
