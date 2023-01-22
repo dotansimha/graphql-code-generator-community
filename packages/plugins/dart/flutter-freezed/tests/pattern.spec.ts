@@ -1413,7 +1413,6 @@ describe('Pattern helper methods:', () => {
     });
 
     it('returns a new valid pattern', () => {
-      console.log(expected.value);
       expect(Pattern.compose([pattern1, pattern2]).value).toBe(expected.value);
     });
   });
