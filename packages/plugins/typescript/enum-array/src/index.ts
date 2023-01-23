@@ -1,6 +1,7 @@
 import { GraphQLSchema, GraphQLEnumType } from 'graphql';
 import { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import { EnumArrayPluginConfig } from './config.js';
+import { convertFactory } from '@graphql-codegen/visitor-plugin-common';
 
 function getEnumTypeMap(schema: GraphQLSchema): GraphQLEnumType[] {
   const typeMap = schema.getTypeMap();
@@ -13,19 +14,33 @@ function getEnumTypeMap(schema: GraphQLSchema): GraphQLEnumType[] {
   return result;
 }
 
-function buildArrayDefinition(e: GraphQLEnumType, constArrays: boolean): string {
+function buildArrayDefinition(e: GraphQLEnumType, config: EnumArrayPluginConfig): string {
+  const convert = convertFactory(config);
+
+  const enumName = convert(e.astNode, {
+    prefix: config.enumPrefix ?? true ? config.typesPrefix : undefined,
+    suffix: config.typesSuffix,
+  });
+
   const upperName = e.name
     .replace(/[A-Z]/g, letter => `_${letter}`)
     .slice(1)
     .toUpperCase();
   const values = e
     .getValues()
-    .map(v => `'${v.value}'`)
+    .map(v => {
+      if (config.useMembers) {
+        return `${enumName}.${convert(v.astNode, { transformUnderscore: true })}`;
+      } else {
+        return `'${v.value}'`;
+      }
+    })
     .join(', ');
-  if (constArrays) {
+
+  if (config.constArrays) {
     return `export const ${upperName} = [${values}] as const;`;
   } else {
-    return `export const ${upperName}: ${e.name}[] = [${values}];`;
+    return `export const ${upperName}: ${enumName}[] = [${values}];`;
   }
 }
 
@@ -40,7 +55,7 @@ export const plugin: PluginFunction<EnumArrayPluginConfig> = (
   config: EnumArrayPluginConfig
 ): Types.PluginOutput => {
   const enums = getEnumTypeMap(schema);
-  const content = enums.map(e => buildArrayDefinition(e, config.constArrays ?? false)).join('\n');
+  const content = enums.map(e => buildArrayDefinition(e, config)).join('\n');
   const result: Types.PluginOutput = { content };
   if (config.importFrom) {
     result['prepend'] = buildImportStatement(enums, config.importFrom);
