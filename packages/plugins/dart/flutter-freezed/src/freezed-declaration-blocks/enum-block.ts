@@ -67,7 +67,7 @@ export class EnumBlock {
           // jsonValue
         ].join('');
 
-        return [comment, decorators, `${enumValueName}\n`]
+        return [comment, decorators, `${enumValueName},\n`]
           .map(block => (stringIsNotEmpty(block) ? indent(block) : block))
           .join('');
       })
