@@ -4,6 +4,7 @@ import {
   AppliesOn,
   AppliesOnFactory,
   AppliesOnParameters,
+  APPLIES_ON_ALL_BLOCKS,
   DART_SCALARS,
   defaultFreezedPluginConfig,
   FlutterFreezedPluginConfig,
@@ -83,7 +84,7 @@ export class Config {
         .filter(
           ([pattern, , , configAppliesOn]) =>
             Pattern.findLastConfiguration(pattern, typeName, fieldName) &&
-            appliesOnBlock(configAppliesOn, blockAppliesOn)
+            appliesOnBlock(configAppliesOn ?? [...APPLIES_ON_ALL_BLOCKS], blockAppliesOn)
         )
         .slice(-1)[0];
       return [prefix, suffix];
@@ -174,7 +175,7 @@ export class Config {
     return undefined;
   };
 
-  static unionValueDecorator = () =>
+  static unionValueFactoryDecorator = () =>
     /*  config: FlutterFreezedPluginConfig,
     unionTypeName: TypeName,
     unionValueTypeName: TypeName */
