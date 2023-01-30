@@ -65,4 +65,45 @@ describe('TypeScript', () => {
       `);
     });
   });
+  describe('with useMembers', () => {
+    it('Should work', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        "custom enum"
+        enum MyEnum {
+          "this is abc_def"
+          abc_def
+          "this is ghi_jkl"
+          ghi_jkl
+        }
+      `);
+      const result = (await plugin(schema, [], { useMembers: true })) as Types.ComplexPluginOutput;
+
+      expect(result.prepend).toBeSimilarStringTo(`
+      `);
+      expect(result.content).toBeSimilarStringTo(`
+        const MY_ENUM: MyEnum[] = [MyEnum.AbcDef, MyEnum.GhiJkl];
+      `);
+    });
+    it('respects namingConvention', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        "custom enum"
+        enum MyEnum {
+          "this is abc_def"
+          abc_def
+          "this is ghi_jkl"
+          ghi_jkl
+        }
+      `);
+      const result = (await plugin(schema, [], {
+        useMembers: true,
+        namingConvention: 'change-case-all#snakeCase',
+      })) as Types.ComplexPluginOutput;
+
+      expect(result.prepend).toBeSimilarStringTo(`
+      `);
+      expect(result.content).toBeSimilarStringTo(`
+        const MY_ENUM: my_enum[] = [my_enum.abc_def, my_enum.ghi_jkl];
+      `);
+    });
+  });
 });
