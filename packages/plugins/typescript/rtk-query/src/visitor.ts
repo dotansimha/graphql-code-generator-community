@@ -25,6 +25,7 @@ export class RTKQueryVisitor extends ClientSideBaseVisitor<RTKQueryRawPluginConf
     super(schema, fragments, rawConfig, {
       documentMode: DocumentMode.string,
       importBaseApiFrom: getConfigValue(rawConfig.importBaseApiFrom, ''),
+      importBaseApiAlternateName: getConfigValue(rawConfig.importBaseApiAlternateName, 'api'),
       exportHooks: getConfigValue(rawConfig.exportHooks, false),
       overrideExisting: getConfigValue(rawConfig.overrideExisting, ''),
     });
@@ -49,7 +50,10 @@ export class RTKQueryVisitor extends ClientSideBaseVisitor<RTKQueryRawPluginConf
       return baseImports;
     }
 
-    return [...baseImports, `import { api } from '${this.config.importBaseApiFrom}';`];
+    return [
+      ...baseImports,
+      `import { ${this.config.importBaseApiAlternateName} } from '${this.config.importBaseApiFrom}';`,
+    ];
   }
 
   public getInjectCall() {
