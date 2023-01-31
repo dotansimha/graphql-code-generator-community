@@ -38,7 +38,7 @@
     "@changesets/cli": "2.26.0",
     "@changesets/changelog-github": "0.4.8",
     "@graphql-typed-document-node/core": "3.1.1",
-    "@reduxjs/toolkit": "1.9.1",
+    "@reduxjs/toolkit": "1.9.2",
     "@tanstack/react-query": "4.24.2",
     "@theguild/prettier-config": "0.1.1",
     "@types/common-tags": "1.8.1",
