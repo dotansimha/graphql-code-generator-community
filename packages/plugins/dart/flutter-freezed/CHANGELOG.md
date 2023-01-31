@@ -1,5 +1,42 @@
 # @graphql-codegen/flutter-freezed
 
+## 3.0.1
+
+### Patch Changes
+
+- [#74](https://github.com/dotansimha/graphql-code-generator-community/pull/74) [`349dc3a58`](https://github.com/dotansimha/graphql-code-generator-community/commit/349dc3a58bd7822cef984614d4282fa9d90e74be) Thanks [@Parables](https://github.com/Parables)! - docs(plugin config): :memo: updated plugin-config
+
+  added @type decorators, added missing TypeName and FieldName variables in the exampleMarkdowns
+
+  Breaking: mergeTypes signature changed to mergeTypes?: Record<string, TypeName[]>
+  Even though the key is a string, we recommend that you use the value of a TypeName.
+
+  Example:
+
+  ```ts filename='codegen.ts'
+  import type { CodegenConfig } from '@graphql-codegen/cli';
+
+  const Movie = TypeName.fromString('Movie');
+  const CreateMovieInput = TypeName.fromString('CreateMovieInput');
+  const UpdateMovieInput = TypeName.fromString('UpdateMovieInput');
+  const UpsertMovieInput = TypeName.fromString('UpsertMovieInput');
+
+  const config: CodegenConfig = {
+    generates: {
+      'lib/data/models/app_models.dart': {
+        plugins: {
+          'flutter-freezed': {
+            mergeTypes: {
+              [Movie.value]: [CreateMovieInput, UpdateMovieInput, UpsertMovieInput],
+            },
+          },
+        },
+      },
+    },
+  };
+  export default config;
+  ```
+
 ## 3.0.0
 
 ### Major Changes
