@@ -45,6 +45,7 @@ describe('RTK Query', () => {
 
     expect(content.content).toMatchSnapshot();
   });
+
   test('With hooks', async () => {
     const documents = parse(gql.commentQuery + gql.feedQuery + gql.newEntryMutation);
     const docs = [{ location: '', document: documents }];
@@ -65,6 +66,7 @@ describe('RTK Query', () => {
 
     expect(content.content).toMatchSnapshot();
   });
+
   test('With overrideExisting', async () => {
     const documents = parse(gql.commentQuery + gql.feedQuery + gql.newEntryMutation);
     const docs = [{ location: '', document: documents }];
@@ -87,6 +89,28 @@ describe('RTK Query', () => {
 
     expect(content.content).toMatchSnapshot();
   });
+
+  test('With importBaseApiAlternateName', async () => {
+    const documents = parse(gql.commentQuery + gql.feedQuery + gql.newEntryMutation);
+    const docs = [{ location: '', document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {
+        importBaseApiFrom: './baseApi',
+        importBaseApiAlternateName: 'alternateApiName',
+      },
+      {
+        outputFile: 'graphql.ts',
+      }
+    )) as Types.ComplexPluginOutput;
+
+    expect(content.prepend).toContain("import { alternateApiName } from './baseApi';");
+
+    expect(content.content).toMatchSnapshot();
+  });
+
   test('For fragment', async () => {
     const documents = parse(gql.voteButtonsFragment);
     const docs = [{ location: '', document: documents }];
