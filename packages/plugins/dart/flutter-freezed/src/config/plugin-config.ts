@@ -74,6 +74,9 @@ export type FlutterFreezedPluginConfig = {
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
    *
+   * const Droid = TypeName.fromString('Droid');
+   * const Starship = TypeName.fromString('Starship');
+   *
    * const config: CodegenConfig = {
    *   // ...
    *   generates: {
@@ -131,7 +134,7 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name defaultValues
-   * @type {([pattern: FieldNamePattern, value: string, appliesOn: AppliesOnParameters[], directiveName?: string, directiveArgName?: string][])}
+   * @type {([pattern: FieldNamePattern, value: string, appliesOn: AppliesOnParameters[]][])}
    * @default undefined
    * @see {@link https://pub.dev/packages/freezed#default-values Default values}
    * @see {@link https://pub.dev/documentation/freezed_annotation/latest/freezed_annotation/Default-class.html Default class}
@@ -144,11 +147,13 @@ export type FlutterFreezedPluginConfig = {
    *
    * Use the `appliesOn` to specify where this option should be applied on
    *
-   * If the `directiveName` and `directiveArgName` are passed, the value of the argument of the given directive specified in the Graphql Schema will be used as the defaultValue
    * @exampleMarkdown
    * ## Usage:
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   * const MovieCharacter = TypeName.fromString('MovieCharacter');
+   * const appearsIn = FieldName.fromString('appearsIn');
    *
    * const config: CodegenConfig = {
    *   // ...
@@ -195,6 +200,14 @@ export type FlutterFreezedPluginConfig = {
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
    *
+   * const MovieCharacter = TypeName.fromString('MovieCharacter');
+   * const Droid = TypeName.fromString('Droid');
+   * const Starship = TypeName.fromString('Starship');
+   * const Human = TypeName.fromString('Human');
+   *
+   * const name = FieldName.fromString('name');
+   * const appearsIn = FieldName.fromString('appearsIn');
+   *
    * const config: CodegenConfig = {
    *   // ...
    *   generates: {
@@ -222,7 +235,7 @@ export type FlutterFreezedPluginConfig = {
    * @name equal
    * @type {(boolean | TypeNamePattern)}
    * @default undefined
-   * @see {@link url Freezed equal helper method usage}
+   * @see {@link https://pub.dev/packages/freezed#changing-the-behavior-for-a-specific-model Freezed equal helper method usage}
    * @see {@link https://pub.dev/documentation/freezed_annotation/latest/freezed_annotation/Freezed/equal.html Freezed annotation equal property}
    * @summary enables Freezed equal helper method
    * @description The [`freezed`](https://pub.dev/packages/freezed) library has this option enabled by default.
@@ -238,6 +251,9 @@ export type FlutterFreezedPluginConfig = {
    * ## Usage:
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   * const Droid = TypeName.fromString('Droid');
+   * const Starship = TypeName.fromString('Starship');
    *
    * const config: CodegenConfig = {
    *   // ...
@@ -261,17 +277,19 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name escapeDartKeywords
+   * @type {(boolean | [pattern: Pattern, prefix?: string, suffix?: string, appliesOn?: AppliesOn[]][])}
    * @default true
    * @see_also [dartKeywordEscapePrefix,dartKeywordEscapeSuffix]
-   * @summary ensures that the generated Freezed models doesn't use any of Dart's reserved keywords as identifiers
-   * @description Wraps the fields names that are valid Dart keywords with the prefix and suffix given and allows you to specify your preferred casing: "snake_case" | "camelCase" | "PascalCase"
-   *
+   * @summary ensures that the generated Freezed models do not use any of Dart's reserved keywords as identifiers
+   * @description Wraps the fields names that are valid Dart keywords with the prefix and suffix given
    *
    * @exampleMarkdown
    * ## Usage:
    *
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   * const Episode = TypeName.fromString('Episode');
    *
    * const config: CodegenConfig = {
    *   // ...
@@ -285,14 +303,14 @@ export type FlutterFreezedPluginConfig = {
    *           // OR configure how Dart keywords are handled for each type
    *           escapeDartKeywords: [
    *             [
-   *               'Episode.@*FieldNames',
+   *               Pattern.compose([
+   *                 TypeNamePattern.forAllTypeNames(),
+   *                 FieldNamePattern.forAllFieldNamesOfTypeName([Episode]),
+   *               ]),
    *               // `prefix`: defaults to an empty string `''` if undefined.
-   *               // Note that using a underscore `_` as a prefix will make the field as private
+   *               // WARNING: Note that using a underscore `_` as a prefix will make the field as private
    *               undefined,
    *               // `suffix`: defaults to an underscore `_` if undefined
-   *               undefined,
-   *               // `casing`: maintains the original casing if undefined.
-   *               // Available options: `snake_cased`, `camelCase` or `PascalCase`
    *               undefined,
    *               // `appliesOn`: defaults to an ['enum', 'enum_value', 'class', 'factory', 'parameter'] if undefined.
    *               undefined,
@@ -310,17 +328,17 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name final
+   * @type {([pattern: FieldNamePattern, appliesOn: AppliesOnParameters[]][])}
+   * @default undefined
+   * @see {@link https://pub.dev/packages/freezed#defining-a-mutable-class-instead-of-an-immutable-one Freezed annotation equal property}
    * @summary  marks fields as final
    * @description This will mark the specified parameters as final
-   *
-   *   Requires a an array of tuples with the type signature below:
-   *
-   * ` [typeFieldName: TypeFieldName, appliesOn: AppliesOnParameters[]]`
-   * @default undefined
    * @exampleMarkdown
    * ## Usage:
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   * const id = FieldName.fromString('id');
    *
    * const config: CodegenConfig = {
    *   // ...
@@ -329,10 +347,7 @@ export type FlutterFreezedPluginConfig = {
    *       plugins: {
    *         'flutter-freezed': {
    *           // ...
-   *           final: [
-   *             ['Human.[name]', ['parameter']],
-   *             ['Starship.[id],Droid.[id],Human.[id]', ['default_factory_parameter']],
-   *           ],
+   *           final: [[FieldNamePattern.forFieldNamesOfAllTypeNames([id]), ['parameter']]],
    *         },
    *       },
    *     },
@@ -354,6 +369,8 @@ export type FlutterFreezedPluginConfig = {
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
    *
+   * const PaginatorInfo = TypeName.fromString('PaginatorInfo');
+   *
    * const config: CodegenConfig = {
    *   // ...
    *   generates: {
@@ -361,7 +378,7 @@ export type FlutterFreezedPluginConfig = {
    *       plugins: {
    *         'flutter-freezed': {
    *           // ...
-   *           ignoreTypes: ['PaginatorInfo'],
+   *           ignoreTypes: TypeNamePattern.forTypeNames([PaginatorInfo]),
    *         },
    *       },
    *     },
@@ -389,6 +406,9 @@ export type FlutterFreezedPluginConfig = {
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
    *
+   * const Droid = TypeName.fromString('Droid');
+   * const Starship = TypeName.fromString('Starship');
+   *
    * const config: CodegenConfig = {
    *   // ...
    *   generates: {
@@ -411,13 +431,18 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name makeCollectionsUnmodifiable
-   * @description allows collections(lists/maps) to be modified even if class is immutable
+   * @type {(boolean | TypeNamePattern)}
    * @default undefined
+   * @see {@link https://pub.dev/packages/freezed#allowing-the-mutation-of-listsmapssets Allowing the mutation of Lists/Maps/Sets}
+   * @description allows collections(lists/maps) to be modified even if class is immutable
    *
    * @exampleMarkdown
    * ## Usage:
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   * const Droid = TypeName.fromString('Droid');
+   * const Starship = TypeName.fromString('Starship');
    *
    * const config: CodegenConfig = {
    *   // ...
@@ -427,10 +452,8 @@ export type FlutterFreezedPluginConfig = {
    *         'flutter-freezed': {
    *           // ...
    *           makeCollectionsUnmodifiable: true,
-   *           // OR: a comma-separated string
-   *           makeCollectionsUnmodifiable: 'Droid,Starship',
-   *           // OR: a list of GRaphQL Type names
-   *           makeCollectionsUnmodifiable: ['Droid', 'Starship'],
+   *           // OR: enable it for only Droid and Starship GraphQL types
+   *           makeCollectionsUnmodifiable: TypeNamePattern.forTypeNames([Droid, Starship]),
    *         },
    *       },
    *     },
@@ -443,32 +466,53 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name mergeTypes
+   * @type {(Record<string, TypeName[]>)}
    * @default undefined
-   * @description merges other GraphQL Types as a named factory constructor inside a class generated for the target GraphQL ObjectType.
-   * This option takes an array of strings that are expected to be valid typeNames of GraphQL Types to be merged with the GraphQL Type used as the key.
-   * The array is mapped and each string is converted into a TypeName so please ensure that the strings are valid GraphQL TypeNames
-   * A string that contains any invalid characters will throw an exception.
+   * @description maps over the value(array of typeNames) and transform each as a named factory constructor inside a class generated for the key(target GraphQL Object Type).
    * @exampleMarkdown
-   * ```yaml
-   * generates:
-   *   flutter_app/lib/data/models/app_models.dart
-   *     plugins:
-   *       - flutter-freezed
-   *     config:
-   *      mergeTypes: ["Create$Input", "Update$Input", "Delete$Input"]
+   * ## Usage:
+   * ```ts filename='codegen.ts'
+   * import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   * const Movie = TypeName.fromString('Movie');
+   * const CreateMovieInput = TypeName.fromString('CreateMovieInput');
+   * const UpdateMovieInput = TypeName.fromString('UpdateMovieInput');
+   * const UpsertMovieInput = TypeName.fromString('UpsertMovieInput');
+   *
+   * const config: CodegenConfig = {
+   *   // ...
+   *   generates: {
+   *     'lib/data/models/app_models.dart': {
+   *       plugins: {
+   *         'flutter-freezed': {
+   *           // ...
+   *          mergeTypes: {
+   *            [Movie.value]: [CreateMovieInput, UpdateMovieInput, UpsertMovieInput],
+   *          },
+   *         },
+   *       },
+   *     },
+   *   },
+   * };
+   * export default config;
    * ```
    */
-  mergeTypes?: Record<string, string[]>;
+  mergeTypes?: Record<string, TypeName[]>;
 
   /**
    * @name mutableInputs
-   * @description  since inputs will be used to collect data, it makes sense to make them mutable with Freezed's `@unfreezed` decorator. This overrides(in order words: has a higher precedence than) the `immutable` config value `ONLY` for GraphQL `input types`.
+   * @description  since inputs will be used to collect data, it makes sense to make them mutable with Freezed's `@unfreezed` decorator.
+   *
+   * This overrides(in order words: has a higher precedence than) the `immutable` config value `ONLY` for GraphQL `input types`.
    * @default true
    *
    * @exampleMarkdown
    * ## Usage:
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   * const CreateMovieInput = TypeName.fromString('CreateMovieInput');
+   * const UpdateMovieInput = TypeName.fromString('UpdateMovieInput');
    *
    * const config: CodegenConfig = {
    *   // ...
@@ -478,10 +522,8 @@ export type FlutterFreezedPluginConfig = {
    *         'flutter-freezed': {
    *           // ...
    *           mutableInputs: true,
-   *           // OR: a comma-separated string
-   *           mutableInputs: 'Droid,Starship',
-   *           // OR: a list of GRaphQL Type names
-   *           mutableInputs: ['Droid', 'Starship'],
+   *           // OR: enable it for only Droid and Starship GraphQL types
+   *           mutableInputs: TypeNamePattern.forTypeNames([CreateMovieInput, UpdateMovieInput]),
    *         },
    *       },
    *     },
@@ -502,6 +544,9 @@ export type FlutterFreezedPluginConfig = {
    * ```ts filename='codegen.ts'
    * import type { CodegenConfig } from '@graphql-codegen/cli';
    *
+   * const Droid = TypeName.fromString('Droid');
+   * const Starship = TypeName.fromString('Starship');
+   *
    * const config: CodegenConfig = {
    *   // ...
    *   generates: {
@@ -510,10 +555,8 @@ export type FlutterFreezedPluginConfig = {
    *         'flutter-freezed': {
    *           // ...
    *           privateEmptyConstructor: true,
-   *           // OR: a comma-separated string
-   *           privateEmptyConstructor: 'Droid,Starship',
-   *           // OR: a list of GRaphQL Type names
-   *           privateEmptyConstructor: ['Droid', 'Starship'],
+   *           // OR: enable it for only Droid and Starship GraphQL types
+   *           privateEmptyConstructor: TypeNamePattern.forTypeNames([Droid, Starship]),
    *         },
    *       },
    *     },
@@ -657,6 +700,8 @@ export const APPLIES_ON_PARAMETERS = <const>[
   'merged_factory_parameter',
 ];
 export type AppliesOnParameters = AppliesOnDefaultFactoryParameters | AppliesOnNamedParameters;
+
+export const APPLIES_ON_ALL_BLOCKS = <const>['enum', 'enum_value', 'class', 'factory', 'parameter'];
 
 export type DartIdentifierCasing = 'snake_case' | 'camelCase' | 'PascalCase';
 

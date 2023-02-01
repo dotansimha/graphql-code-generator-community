@@ -1,5 +1,11 @@
 # @graphql-codegen/typescript-enum-array
 
+## 2.4.0
+
+### Minor Changes
+
+- [#66](https://github.com/dotansimha/graphql-code-generator-community/pull/66) [`aa46f2635`](https://github.com/dotansimha/graphql-code-generator-community/commit/aa46f2635ddd2cb5c723bf7240d31ceb1d5662c7) Thanks [@omjadas](https://github.com/omjadas)! - support using enum members instead of string literals
+
 ## 2.3.0
 
 ### Minor Changes

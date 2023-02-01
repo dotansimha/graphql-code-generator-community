@@ -30,7 +30,7 @@ export class ClassBlock {
 
     block += this.buildBody(config, node);
 
-    block += this.buildFooter(config, typeName, _className);
+    block += this.buildFooter(_className);
 
     return block;
   }
@@ -105,8 +105,7 @@ export class ClassBlock {
     }
 
     body += Config.mergeTypes(config, className)
-      .map(value => {
-        const factoryName = TypeName.fromString(value);
+      .map(factoryName => {
         return FactoryBlock.serializeMergedFactory(className, factoryName);
       })
       .join('');
@@ -114,7 +113,7 @@ export class ClassBlock {
     return body;
   };
 
-  public static buildFooter = (config: FlutterFreezedPluginConfig, typeName: TypeName, _className: string): string => {
+  public static buildFooter = (_className: string): string => {
     return indent(`factory ${_className}.fromJson(Map<String, dynamic> json) => _$${_className}FromJson(json);\n}\n\n`);
   };
 }

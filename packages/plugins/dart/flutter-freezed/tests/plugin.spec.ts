@@ -14,7 +14,7 @@ import { FieldName, FieldNamePattern, TypeName, TypeNamePattern } from '../src/c
 const Droid = TypeName.fromString('Droid');
 // const Starship = TypeName.fromString('Starship');
 const Human = TypeName.fromString('Human');
-// const Movie = TypeName.fromString('Movie');
+const Movie = TypeName.fromString('Movie');
 const Actor = TypeName.fromString('Actor');
 const SearchResult = TypeName.fromString('SearchResult');
 const SearchResultDroid = TypeName.fromUnionOfTypeNames(SearchResult, Droid);
@@ -273,7 +273,11 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         [],
         Config.create({
           mergeTypes: {
-            Movie: ['CreateMovieInput', 'UpdateMovieInput', 'UpsertMovieInput'],
+            [Movie.value]: [
+              TypeName.fromString('CreateMovieInput'),
+              TypeName.fromString('UpdateMovieInput'),
+              TypeName.fromString('UpsertMovieInput'),
+            ],
           },
         })
       );
@@ -638,8 +642,8 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
           //   ],
           // ],
           mergeTypes: {
-            Human: ['Actor'],
-            Actor: ['Human'],
+            [Human.value]: [Actor],
+            [Actor.value]: [Human],
           },
           immutable: TypeNamePattern.forAllTypeNamesExcludeTypeNames([Actor, Human]),
         })
