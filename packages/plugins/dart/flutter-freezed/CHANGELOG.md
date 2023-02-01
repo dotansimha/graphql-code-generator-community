@@ -1,5 +1,29 @@
 # @graphql-codegen/flutter-freezed
 
+## 3.0.2
+
+### Patch Changes
+
+- [#72](https://github.com/dotansimha/graphql-code-generator-community/pull/72) [`c70b4ce49`](https://github.com/dotansimha/graphql-code-generator-community/commit/c70b4ce4967db700266a64d514b8c787e7c0cf9a) Thanks [@MitkoTschimev](https://github.com/MitkoTschimev)! - missing trailing comma in enums
+  Before
+  ```dart
+  enum AssetOrder {
+    @JsonKey(name: 'contentType_ASC')
+    contentTypeAsc
+    @JsonKey(name: 'contentType_DESC')
+    contentTypeDesc
+  }
+  ```
+  Now
+  ```dart
+  enum AssetOrder {
+    @JsonKey(name: 'contentType_ASC')
+    contentTypeAsc,
+    @JsonKey(name: 'contentType_DESC')
+    contentTypeDesc,
+  }
+  ```
+
 ## 3.0.1
 
 ### Patch Changes

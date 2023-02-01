@@ -1,5 +1,13 @@
 # @graphql-codegen/typescript-rtk-query
 
+## 2.4.0
+
+### Minor Changes
+
+- [#75](https://github.com/dotansimha/graphql-code-generator-community/pull/75) [`7e80265e9`](https://github.com/dotansimha/graphql-code-generator-community/commit/7e80265e96ba8f8d984ef5399204b4632ab53c86) Thanks [@DominicGBauer](https://github.com/DominicGBauer)! - [typescript-rtk-query] feat: add importAlternateApiName to conifg options
+
+  Add functionality to allow users to use the optional config variable importAlternateApiName to change the api name of the import used by baseApi. It will default to 'api'.
+
 ## 2.3.7
 
 ### Patch Changes
