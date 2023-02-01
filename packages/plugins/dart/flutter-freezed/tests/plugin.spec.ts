@@ -40,33 +40,33 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
 
         enum Episode {
           @JsonKey(name: 'NEWHOPE')
-          newhope
+          newhope,
           @JsonKey(name: 'EMPIRE')
-          empire
+          empire,
           @JsonKey(name: 'JEDI')
-          jedi
+          jedi,
           @JsonKey(name: 'VOID')
-          void_
+          void_,
           @JsonKey(name: 'void')
-          void_
+          void_,
           @JsonKey(name: 'IN')
-          in_
+          in_,
           @JsonKey(name: 'in')
-          in_
+          in_,
           @JsonKey(name: 'String')
-          string
+          string,
           @JsonKey(name: 'ELSE')
-          else_
+          else_,
           @JsonKey(name: 'else')
-          else_
+          else_,
           @JsonKey(name: 'SWITCH')
-          switch_
+          switch_,
           @JsonKey(name: 'switch')
-          switch_
+          switch_,
           @JsonKey(name: 'FACTORY')
-          factory_
+          factory_,
           @JsonKey(name: 'factory')
-          factory_
+          factory_,
         }"
       `);
     });
@@ -80,26 +80,26 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         part 'app_models.g.dart';
 
         enum Episode {
-          NEWHOPE
-          EMPIRE
-          JEDI
-          VOID
+          NEWHOPE,
+          EMPIRE,
+          JEDI,
+          VOID,
           @JsonKey(name: 'void')
-          void_
-          IN
+          void_,
+          IN,
           @JsonKey(name: 'in')
-          in_
+          in_,
           @JsonKey(name: 'String')
-          String_
-          ELSE
+          String_,
+          ELSE,
           @JsonKey(name: 'else')
-          else_
-          SWITCH
+          else_,
+          SWITCH,
           @JsonKey(name: 'switch')
-          switch_
-          FACTORY
+          switch_,
+          FACTORY,
           @JsonKey(name: 'factory')
-          factory_
+          factory_,
         }"
       `);
     });
@@ -115,33 +115,33 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
 
         enum Episode {
           @JsonKey(name: 'NEWHOPE')
-          Newhope
+          Newhope,
           @JsonKey(name: 'EMPIRE')
-          Empire
+          Empire,
           @JsonKey(name: 'JEDI')
-          Jedi
+          Jedi,
           @JsonKey(name: 'VOID')
-          Void
+          Void,
           @JsonKey(name: 'void')
-          Void
+          Void,
           @JsonKey(name: 'IN')
-          In
+          In,
           @JsonKey(name: 'in')
-          In
+          In,
           @JsonKey(name: 'String')
-          String_
+          String_,
           @JsonKey(name: 'ELSE')
-          Else
+          Else,
           @JsonKey(name: 'else')
-          Else
+          Else,
           @JsonKey(name: 'SWITCH')
-          Switch
+          Switch,
           @JsonKey(name: 'switch')
-          Switch
+          Switch,
           @JsonKey(name: 'FACTORY')
-          Factory
+          Factory,
           @JsonKey(name: 'factory')
-          Factory
+          Factory,
         }"
       `);
     });
@@ -373,11 +373,11 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
 
         enum Episode {
           @JsonKey(name: 'NEWHOPE')
-          newhope
+          newhope,
           @JsonKey(name: 'EMPIRE')
-          empire
+          empire,
           @JsonKey(name: 'JEDI')
-          jedi
+          jedi,
         }
 
         @freezed
@@ -657,11 +657,11 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
 
         enum Episode {
           @JsonKey(name: 'NEWHOPE')
-          newhope
+          newhope,
           @JsonKey(name: 'EMPIRE')
-          empire
+          empire,
           @JsonKey(name: 'JEDI')
-          jedi
+          jedi,
         }
 
         @unfreezed
