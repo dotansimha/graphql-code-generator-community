@@ -2402,17 +2402,17 @@
   resolved "https://registry.yarnpkg.com/@stencil/state-tunnel/-/state-tunnel-1.0.1.tgz#21324f494ad719732505c8134099e415ac4c3c81"
   integrity sha512-DYG8uROgL9hkjVTCtCfRBb0d3FwpiFB0muRrNZQ2X1Qo5hxMuNNji76/ILddqeq0AfgkKCW82xrMPDpy+rNIhQ==
 
-"@tanstack/query-core@4.24.2":
-  version "4.24.2"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.24.2.tgz#3deaf7588a4c264c386dcb27ea6e4280b250a20f"
-  integrity sha512-nVX9Pfvash6o3gTquPsUXEcadEO7Rh7i0Aa5iM8gNA2x1HqF5mKXDZBCFQAbnwiJ/0kCxWMaMaqhtzjGWssmNA==
+"@tanstack/query-core@4.24.4":
+  version "4.24.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.24.4.tgz#6fe78777286fdd805ac319c7c743df4935e18ee2"
+  integrity sha512-9dqjv9eeB6VHN7lD3cLo16ZAjfjCsdXetSAD5+VyKqLUvcKTL0CklGQRJu+bWzdrS69R6Ea4UZo8obHYZnG6aA==
 
-"@tanstack/react-query@4.24.2":
-  version "4.24.2"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.24.2.tgz#54ba7622027aa781ca3d8c1c12bc5f03beabb0b5"
-  integrity sha512-lqpxLhPNJmxshhrevOW7UAlVxMEgh1Fdk6qw1MGd5ZayOKIIQaiYT3jjFVsm+xQA326XNTPF5pfJcrsU4y8aiQ==
+"@tanstack/react-query@4.24.4":
+  version "4.24.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.24.4.tgz#79e892edac33d8aa394795390c0f79e4a8c9be4d"
+  integrity sha512-RpaS/3T/a3pHuZJbIAzAYRu+1nkp+/enr9hfRXDS/mojwx567UiMksoqW4wUFWlwIvWTXyhot2nbIipTKEg55Q==
   dependencies:
-    "@tanstack/query-core" "4.24.2"
+    "@tanstack/query-core" "4.24.4"
     use-sync-external-store "^1.2.0"
 
 "@theguild/prettier-config@0.1.1":
