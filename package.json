@@ -60,7 +60,7 @@
     "chalk": "4.1.2",
     "dotenv": "16.0.3",
     "eslint": "8.33.0",
-    "eslint-config-prettier": "8.5.0",
+    "eslint-config-prettier": "8.6.0",
     "eslint-config-standard": "17.0.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-n": "15.2.5",
