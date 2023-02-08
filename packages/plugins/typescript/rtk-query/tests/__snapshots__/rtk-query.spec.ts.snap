@@ -130,7 +130,7 @@ export const SubmitRepositoryDocument = \`
 }
     \`;
 
-const injectedRtkApi = api.injectEndpoints({
+const injectedRtkApi = alternateApiName.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
       query: (variables) => ({ document: CommentDocument, variables })
