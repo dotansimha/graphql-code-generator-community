@@ -63,7 +63,7 @@ export class RTKQueryVisitor extends ClientSideBaseVisitor<RTKQueryRawPluginConf
 
     return (
       `
-const injectedRtkApi = api.injectEndpoints({
+const injectedRtkApi = ${this.config.importBaseApiAlternateName}.injectEndpoints({
   ${
     !this.config.overrideExisting
       ? ''
