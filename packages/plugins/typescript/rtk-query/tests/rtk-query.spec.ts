@@ -107,6 +107,30 @@ describe('RTK Query', () => {
     )) as Types.ComplexPluginOutput;
 
     expect(content.prepend).toContain("import { alternateApiName } from './baseApi';");
+    expect(content.content).toContain('alternateApiName.injectEndpoints');
+
+    expect(content.content).toMatchSnapshot();
+  });
+
+  test('With addTransformResponse', async () => {
+    const documents = parse(gql.commentQuery + gql.feedQuery + gql.newEntryMutation);
+    const docs = [{ location: '', document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {
+        importBaseApiFrom: './baseApi',
+        addTransformResponse: true,
+      },
+      {
+        outputFile: 'graphql.ts',
+      }
+    )) as Types.ComplexPluginOutput;
+
+    expect(content.content).toContain('transformResponse: (response: CommentQuery) => response');
+    expect(content.content).toContain('transformResponse: (response: FeedQuery) => response');
+    expect(content.content).toContain('transformResponse: (response: SubmitRepositoryMutation) => response');
 
     expect(content.content).toMatchSnapshot();
   });
