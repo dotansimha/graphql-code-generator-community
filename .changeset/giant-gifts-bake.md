@@ -1,5 +1,5 @@
 ---
-"@graphql-codegen/typescript-rtk-query": patch
+"@graphql-codegen/typescript-rtk-query": minor
 ---
 
 feat(typescript-rtk-query): add addTransformResponse to config
