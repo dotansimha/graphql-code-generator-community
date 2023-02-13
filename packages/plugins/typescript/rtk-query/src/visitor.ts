@@ -101,6 +101,14 @@ export { injectedRtkApi as api };
     const operationName = node.name?.value;
     if (!operationName) return '';
 
+    if (operationType === 'Subscription') {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `Plugin "typescript-rtk-query" does not support GraphQL Subscriptions at the moment! Skipping "${node.name?.value}"...`
+      );
+      return '';
+    }
+
     const Generics = `${operationResultType}, ${operationVariablesTypes}${hasRequiredVariables ? '' : ' | void'}`;
 
     const operationTypeString = operationType.toLowerCase();
@@ -123,14 +131,6 @@ export { injectedRtkApi as api };
       if (operationType === 'Mutation') {
         this._hooks.push(`use${pascalCase(operationName)}Mutation`);
       }
-    }
-
-    if (operationType === 'Subscription') {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `Plugin "typescript-rtk-query" does not support GraphQL Subscriptions at the moment! Skipping "${node.name?.value}"...`
-      );
-      return '';
     }
 
     return '';
