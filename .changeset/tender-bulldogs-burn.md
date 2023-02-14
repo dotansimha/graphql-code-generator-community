@@ -6,6 +6,11 @@ Initial release
 
 The `typescript-nhost` plugin generates the schema for the [`Typescript Nhost SDK`](https://docs.nhost.io/reference/javascript).
 
+What the plugin does:
+- Generate types with `graphql-codegem/typescript`, following a strict configuration. (the plugin does not require `@graphql-codegen/typescript` to be installed by the user but is use as a dependency).
+- Minify the introspection object with `'@urql/introspection`
+- Export the introspection object as well as all the types so they can be accessed through a default `import schema from './generated-schema'`
+
 ### Installation
 
 ```sh
