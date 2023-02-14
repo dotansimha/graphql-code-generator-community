@@ -18,6 +18,7 @@ This repository is owned by the GraphQL Code Generator community and is home to 
 - [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](htflow-operationss://badge.fury.io/js/%40graphql-codegen%2Fflow-operations) - `@graphql-codegen/flow-operations`
 - [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](httypescript-msws://badge.fury.io/js/%40graphql-codegen%2Ftypescript-msw) - `@graphql-codegen/typescript-msw`
 - [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-mongodb.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-mongodb) - `@graphql-codegen/typescript-mongodb`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-nhost.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-nhost) - `@graphql-codegen/typescript-nhost`
 - [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-type-graphql.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-type-graphql) - `@graphql-codegen/typescript-type-graphql`
 - [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fcli.svg)](htjsdocs://badge.fury.io/js/%40graphql-codegen%2Fjsdoc) - `@graphql-codegen/jsdoc`
 - [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-vue-urql.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-vue-urql) - `@graphql-codegen/typescript-vue-urql`
