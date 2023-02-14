@@ -1,5 +1,11 @@
 # @graphql-codegen/typescript-generic-sdk
 
+## 3.1.0
+
+### Minor Changes
+
+- [#70](https://github.com/dotansimha/graphql-code-generator-community/pull/70) [`e6e85a999`](https://github.com/dotansimha/graphql-code-generator-community/commit/e6e85a999c20bc72b6fb727c88e352ff702153d8) Thanks [@aplr](https://github.com/aplr)! - Make typescript-generic-sdk respect the `documentMode` external option by prefixing types with the value configured in `importOperationTypesFrom` as documented.
+
 ## 3.0.4
 
 ### Patch Changes
