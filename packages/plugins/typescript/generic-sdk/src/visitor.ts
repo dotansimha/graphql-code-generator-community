@@ -29,6 +29,7 @@ function isStreamOperation(operationAST: OperationDefinitionNode) {
 }
 
 export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPluginConfig, GenericSdkPluginConfig> {
+  private _externalImportPrefix: string;
   private _operationsToInclude: {
     node: OperationDefinitionNode;
     documentVariableName: string;
@@ -56,6 +57,8 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPlugin
     } else if (this.config.rawRequest) {
       this._additionalImports.push(`${importType} { ExecutionResult } from 'graphql';`);
     }
+
+    this._externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
   }
 
   protected buildOperation(
@@ -65,6 +68,9 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPlugin
     operationResultType: string,
     operationVariablesTypes: string
   ): string {
+    operationResultType = this._externalImportPrefix + operationResultType;
+    operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
+
     if (node.name == null) {
       throw new Error("Plugin 'generic-sdk' cannot generate SDK for unnamed operation.\n\n" + print(node));
     } else {
@@ -80,24 +86,32 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPlugin
     return null;
   }
 
+  private getDocumentNodeVariable(documentVariableName: string): string {
+    return this.config.documentMode === DocumentMode.external
+      ? `Operations.${documentVariableName}`
+      : documentVariableName;
+  }
+
   public get sdkContent(): string {
     const usingObservable = !!this.config.usingObservableFrom;
     const allPossibleActions = this._operationsToInclude
       .map(o => {
+        const operationName = o.node.name.value;
         const optionalVariables =
           !o.node.variableDefinitions ||
           o.node.variableDefinitions.length === 0 ||
           o.node.variableDefinitions.every(v => v.type.kind !== Kind.NON_NULL_TYPE || v.defaultValue);
+        const docVarName = this.getDocumentNodeVariable(o.documentVariableName);
         const returnType = isStreamOperation(o.node) ? (usingObservable ? 'Observable' : 'AsyncIterable') : 'Promise';
         const resultData = this.config.rawRequest
           ? `ExecutionResult<${o.operationResultType}, E>`
           : o.operationResultType;
-        return `${o.node.name.value}(variables${optionalVariables ? '?' : ''}: ${
+        return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
           o.operationVariablesTypes
         }, options?: C): ${returnType}<${resultData}> {
-  return requester<${o.operationResultType}, ${o.operationVariablesTypes}>(${
-          o.documentVariableName
-        }, variables, options) as ${returnType}<${resultData}>;
+  return requester<${o.operationResultType}, ${
+          o.operationVariablesTypes
+        }>(${docVarName}, variables, options) as ${returnType}<${resultData}>;
 }`;
       })
       .map(s => indentMultiline(s, 2));

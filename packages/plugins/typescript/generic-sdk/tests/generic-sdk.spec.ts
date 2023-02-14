@@ -231,5 +231,33 @@ async function test() {
 `);
       }
     });
+
+    it('respects importDocumentNodeExternallyFrom', async () => {
+      const config = { importDocumentNodeExternallyFrom: './operations', documentMode: DocumentMode.external };
+      const docs = [{ location: '', document: basicDoc }];
+      const result = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
+      const output = await validate(result, config, docs, schema, '');
+
+      expect(output).toContain(`import * as Operations from './operations';`);
+      expect(output).toContain(`(Operations.FeedDocument, variables, options)`);
+      expect(output).toContain(`(Operations.Feed2Document, variables, options)`);
+      expect(output).toContain(`(Operations.Feed3Document, variables, options)`);
+    });
+
+    it('respects importOperationTypesFrom', async () => {
+      const config = { importOperationTypesFrom: 'Types' };
+      const docs = [{ location: '', document: basicDoc }];
+      const result = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
+      const output = await validate(result, config, docs, schema, '');
+
+      expect(output).toContain(`Types.FeedQuery`);
+      expect(output).toContain(`Types.Feed2Query`);
+      expect(output).toContain(`Types.Feed3Query`);
+      expect(output).toContain(`Types.Feed4Query`);
+    });
   });
 });
