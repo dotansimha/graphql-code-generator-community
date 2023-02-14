@@ -40,7 +40,7 @@
     "@graphql-typed-document-node/core": "3.1.1",
     "@reduxjs/toolkit": "1.9.2",
     "@tanstack/react-query": "4.24.6",
-    "@theguild/prettier-config": "0.1.1",
+    "@theguild/prettier-config": "1.1.2",
     "@types/common-tags": "1.8.1",
     "@types/jest": "28.1.8",
     "@types/mkdirp": "1.0.2",
