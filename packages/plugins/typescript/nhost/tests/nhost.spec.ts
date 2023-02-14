@@ -1,7 +1,7 @@
 import { buildSchema } from 'graphql';
 import { plugin } from '../src/index.js';
 
-describe('TypeScript Operations Plugin', () => {
+describe('TypeScript Nhost Plugin', () => {
   const schema = buildSchema(/* GraphQL */ `
     scalar DateTime
 
