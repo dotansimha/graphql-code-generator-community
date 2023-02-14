@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TypeScript Operations Plugin Nhost plugin should generate the nhost-compatibel schema 1`] = `
+exports[`TypeScript Nhost Plugin should generate the nhost-compatible schema 1`] = `
 Object {
   "content": "/** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
