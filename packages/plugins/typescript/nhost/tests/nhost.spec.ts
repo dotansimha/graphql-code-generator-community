@@ -85,7 +85,7 @@ describe('TypeScript Operations Plugin', () => {
   `);
 
   describe('Nhost plugin', () => {
-    it('should generate the nhost-compatibel schema', async () => {
+    it('should generate the nhost-compatible schema', async () => {
       const result = await plugin(schema, [], {}, { outputFile: '' });
       expect(result).toMatchSnapshot();
     });
