@@ -45,13 +45,10 @@
     "@types/jest": "28.1.8",
     "@types/mkdirp": "1.0.2",
     "@types/node": "18.14.0",
-    "@types/react": "18.0.27",
     "@types/webpack-env": "1.18.0",
     "@typescript-eslint/eslint-plugin": "5.53.0",
     "@typescript-eslint/parser": "5.53.0",
     "@urql/exchange-graphcache": "5.0.9",
-    "@vue/apollo-composable": "4.0.0-beta.2",
-    "@vue/composition-api": "1.7.1",
     "apollo-client": "2.6.10",
     "apollo-server": "3.11.1",
     "auto-bind": "4.0.0",
@@ -81,8 +78,6 @@
     "lodash": "4.17.21",
     "patch-package": "6.5.1",
     "prettier": "2.8.4",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
     "rimraf": "3.0.2",
     "stencil-apollo": "0.1.6",
     "svelte": "3.55.1",
@@ -90,9 +85,7 @@
     "ts-node": "10.9.1",
     "tslib": "2.4.1",
     "typescript": "4.9.5",
-    "urql": "3.0.3",
-    "vue": "3.2.47",
-    "vue-apollo-smart-ops": "0.1.0"
+    "urql": "3.0.3"
   },
   "resolutions": {
     "**/@types/graphql-upload/graphql": "^16.0.0",
