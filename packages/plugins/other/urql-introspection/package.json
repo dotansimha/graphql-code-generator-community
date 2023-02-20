@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^3.0.0",
-    "@urql/introspection": "^0.3.2",
+    "@urql/introspection": "^1.0.0",
     "tslib": "~2.4.0"
   },
   "devDependencies": {
