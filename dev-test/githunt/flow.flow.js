@@ -167,7 +167,10 @@ export const VoteTypeValues = Object.freeze({
 /** The type of vote to record, when submitting a vote */
 export type VoteType = $Values<typeof VoteTypeValues>;
 
-type $Pick<Origin: Object, Keys: Object> = $ObjMapi<Keys, <Key>(k: Key) => $ElementType<Origin, Key>>;
+type $Pick<Origin: Object, Keys: Object> = $ObjMapi<
+  Keys,
+  <Key>(k: Key) => $ElementType<Origin, Key>,
+>;
 
 export type OnCommentAddedSubscriptionVariables = {
   repoFullName: $ElementType<Scalars, 'String'>,
@@ -224,7 +227,13 @@ export type CommentQuery = {
           ...{ __typename?: 'Repository' },
           ...$Pick<
             Repository,
-            {| description?: *, open_issues_count?: *, stargazers_count: *, full_name: *, html_url: * |}
+            {|
+              description?: *,
+              open_issues_count?: *,
+              stargazers_count: *,
+              full_name: *,
+              html_url: *,
+            |},
           >,
         },
       |},
@@ -263,7 +272,13 @@ export type FeedEntryFragment = {
       ...{ __typename?: 'Repository' },
       ...$Pick<
         Repository,
-        {| full_name: *, html_url: *, description?: *, stargazers_count: *, open_issues_count?: * |}
+        {|
+          full_name: *,
+          html_url: *,
+          description?: *,
+          stargazers_count: *,
+          open_issues_count?: *,
+        |},
       >,
       ...{|
         owner?: ?{
@@ -304,7 +319,13 @@ export type FeedQuery = {
           ...{ __typename?: 'Repository' },
           ...$Pick<
             Repository,
-            {| full_name: *, html_url: *, description?: *, stargazers_count: *, open_issues_count?: * |}
+            {|
+              full_name: *,
+              html_url: *,
+              description?: *,
+              stargazers_count: *,
+              open_issues_count?: *,
+            |},
           >,
           ...{|
             owner?: ?{

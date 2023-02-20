@@ -8,6 +8,3 @@ dist/
 CHANGELOG.md
 .husky/_/
 .changeset/*.md
-
-dev-test/githunt/flow.flow.js
-dev-test/test-schema/flow-types.flow.js
