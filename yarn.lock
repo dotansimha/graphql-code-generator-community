@@ -3012,10 +3012,10 @@
   dependencies:
     wonka "^6.1.2"
 
-"@urql/exchange-graphcache@5.0.8":
-  version "5.0.8"
-  resolved "https://registry.yarnpkg.com/@urql/exchange-graphcache/-/exchange-graphcache-5.0.8.tgz#23c3a24a308e062c2a0fdaf4bdfa822dff178d79"
-  integrity sha512-uUomVgpcvcOgFEkNWoz9eEPsZ4KNZpZ5YfopZHQ+SN6eZKtT91XqjHNP0mUdcKqIE3fmbKMiPMKbBvxBwzbOow==
+"@urql/exchange-graphcache@5.0.9":
+  version "5.0.9"
+  resolved "https://registry.yarnpkg.com/@urql/exchange-graphcache/-/exchange-graphcache-5.0.9.tgz#575b90bc8efb8ab29896210825b4fad60863d65b"
+  integrity sha512-GYhN4YDL+/alF6ci1OFOaL0Ze0GinmuYWrjQjpjl8kP/9ZbXY2LLN/3ZlRG9cCks1nxyea/9h4IS0mk5LS57lA==
   dependencies:
     "@urql/core" ">=3.1.1"
     wonka "^6.0.0"
