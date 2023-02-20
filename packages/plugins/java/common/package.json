@@ -43,6 +43,9 @@
     "tslib": "~2.4.0",
     "unixify": "^1.0.0"
   },
+  "devDependencies": {
+    "java-ast": "0.3.0"
+  },
   "publishConfig": {
     "directory": "dist",
     "access": "public"
