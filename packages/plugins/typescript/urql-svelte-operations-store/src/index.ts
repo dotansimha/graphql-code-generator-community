@@ -1,12 +1,12 @@
-import { concatAST, OperationDefinitionNode } from 'graphql';
 import { pascalCase } from 'change-case-all';
+import { concatAST, OperationDefinitionNode } from 'graphql';
 import { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import { convertFactory, getConfigValue } from '@graphql-codegen/visitor-plugin-common';
 
 function getOperationSuffix(
   config: { [key: string]: any },
   node: OperationDefinitionNode | string,
-  operationType: string
+  operationType: string,
 ): string {
   const { omitOperationSuffix = false, dedupeOperationSuffix = false } = config || {};
   const operationName = typeof node === 'string' ? node : node.name ? node.name.value : '';
@@ -17,7 +17,11 @@ function getOperationSuffix(
     : operationType;
 }
 
-export const plugin: PluginFunction<Record<string, any>, Types.ComplexPluginOutput> = (schema, documents, config) => {
+export const plugin: PluginFunction<Record<string, any>, Types.ComplexPluginOutput> = (
+  schema,
+  documents,
+  config,
+) => {
   const allAst = concatAST(documents.map(v => v.document));
   const convertName = convertFactory(config);
   const operationResultSuffix = getConfigValue(config.operationResultSuffix, '');

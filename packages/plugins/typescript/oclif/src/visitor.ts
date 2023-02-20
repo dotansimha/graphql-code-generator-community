@@ -1,12 +1,11 @@
-import {
-  ClientSideBaseVisitor,
-  ClientSideBasePluginConfig,
-  LoadedFragment,
-  indentMultiline,
-} from '@graphql-codegen/visitor-plugin-common';
 import autoBind from 'auto-bind';
 import { GraphQLSchema, OperationDefinitionNode, print } from 'graphql';
-
+import {
+  ClientSideBasePluginConfig,
+  ClientSideBaseVisitor,
+  indentMultiline,
+  LoadedFragment,
+} from '@graphql-codegen/visitor-plugin-common';
 import { Config, Info } from './index.js';
 import { getFlagConfigForVariableDefinition, omitOclifDirectives } from './utils.js';
 
@@ -23,7 +22,10 @@ interface OclifDirectiveValues {
   examples?: string[];
 }
 
-export class GraphQLRequestVisitor extends ClientSideBaseVisitor<Config, ClientSideBasePluginConfig> {
+export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
+  Config,
+  ClientSideBasePluginConfig
+> {
   private _operationsToInclude: Operation[] = [];
   private _info: Info;
 
@@ -48,7 +50,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<Config, ClientS
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     this._operationsToInclude.push({
       node,
@@ -72,7 +74,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<Config, ClientS
   public get cliContent(): string {
     if (this._operationsToInclude.length !== 1) {
       throw new Error(
-        `Each graphql document should have exactly one operation; found ${this._operationsToInclude.length} while generating ${this._info.outputFile}.`
+        `Each graphql document should have exactly one operation; found ${this._operationsToInclude.length} while generating ${this._info.outputFile}.`,
       );
     }
 

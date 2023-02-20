@@ -1,18 +1,21 @@
+import autoBind from 'auto-bind';
+import { pascalCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
-  LoadedFragment,
+  ClientSideBaseVisitor,
   DocumentMode,
+  LoadedFragment,
   RawClientSideBasePluginConfig,
 } from '@graphql-codegen/visitor-plugin-common';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, GraphQLSchema } from 'graphql';
-import { Types } from '@graphql-codegen/plugin-helpers';
-import { pascalCase } from 'change-case-all';
 
 export interface ReactApolloPluginConfig extends ClientSideBasePluginConfig {}
 
-export class ReactApolloVisitor extends ClientSideBaseVisitor<RawClientSideBasePluginConfig, ReactApolloPluginConfig> {
+export class ReactApolloVisitor extends ClientSideBaseVisitor<
+  RawClientSideBasePluginConfig,
+  ReactApolloPluginConfig
+> {
   private _externalImportPrefix: string;
   private imports = new Set<string>();
 
@@ -20,11 +23,13 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<RawClientSideBaseP
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
     rawConfig: RawClientSideBasePluginConfig,
-    documents: Types.DocumentFile[]
+    documents: Types.DocumentFile[],
   ) {
     super(schema, fragments, rawConfig, {});
 
-    this._externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
+    this._externalImportPrefix = this.config.importOperationTypesFrom
+      ? `${this.config.importOperationTypesFrom}.`
+      : '';
     this._documents = documents;
 
     autoBind(this);
@@ -34,8 +39,13 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<RawClientSideBaseP
     return `import * as OffixReactHooks from "react-offix-hooks";`;
   }
 
-  private getDocumentNodeVariable(node: OperationDefinitionNode, documentVariableName: string): string {
-    return this.config.documentMode === DocumentMode.external ? `Operations.${node.name.value}` : documentVariableName;
+  private getDocumentNodeVariable(
+    node: OperationDefinitionNode,
+    documentVariableName: string,
+  ): string {
+    return this.config.documentMode === DocumentMode.external
+      ? `Operations.${node.name.value}`
+      : documentVariableName;
   }
 
   public getImports(): string[] {
@@ -54,7 +64,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<RawClientSideBaseP
     operationType: string,
     documentVariableName: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const operationName: string = this.convertName(node.name?.value ?? '', {
       useTypesPrefix: false,
@@ -69,9 +79,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<RawClientSideBaseP
         `export function useOffline${operationName}(baseOptions?: OffixReactHooks.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>) {
     return OffixReactHooks.useOfflineMutation<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
           node,
-          documentVariableName
+          documentVariableName,
         )}, baseOptions);
-}`
+}`,
       );
     }
 
@@ -83,7 +93,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<RawClientSideBaseP
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     operationResultType = this._externalImportPrefix + operationResultType;
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
@@ -93,7 +103,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<RawClientSideBaseP
       operationType,
       documentVariableName,
       operationResultType,
-      operationVariablesTypes
+      operationVariablesTypes,
     );
 
     return [hooks].filter(a => a).join('\n');
@@ -123,7 +133,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<RawClientSideBaseP
       documentVariableName,
       operationType,
       operationResultType,
-      operationVariablesTypes
+      operationVariablesTypes,
     );
     return [additional].filter(a => a).join('\n');
   }

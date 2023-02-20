@@ -1,11 +1,11 @@
-import { validateTs } from '@graphql-codegen/testing';
-import { plugin } from '../src/index.js';
-import { parse, GraphQLSchema, buildClientSchema } from 'graphql';
+import { buildClientSchema, GraphQLSchema, parse } from 'graphql';
 import gql from 'graphql-tag';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
+import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
+import { plugin } from '../src/index.js';
 
 describe('urql', () => {
   let spyConsoleError: jest.SpyInstance;
@@ -39,10 +39,12 @@ describe('urql', () => {
     output: Types.PluginOutput,
     testSchema: GraphQLSchema,
     documents: Types.DocumentFile[],
-    config: any
+    config: any,
   ) => {
     const tsOutput = await tsPlugin(testSchema, documents, config, { outputFile: '' });
-    const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, { outputFile: '' });
+    const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, {
+      outputFile: '',
+    });
     const merged = mergeOutputs([tsOutput, tsDocumentsOutput, output]);
     await validateTs(merged, undefined, true);
   };
@@ -59,12 +61,12 @@ describe('urql', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       );
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledWith(
-        'importDocumentNodeExternallyFrom must be provided if documentMode=external'
+        'importDocumentNodeExternallyFrom must be provided if documentMode=external',
       );
     });
 
@@ -80,12 +82,12 @@ describe('urql', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       );
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledWith(
-        'importOperationTypesFrom only works correctly when left empty or set to "Operations"'
+        'importOperationTypesFrom only works correctly when left empty or set to "Operations"',
       );
     });
 
@@ -100,12 +102,12 @@ describe('urql', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       );
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledWith(
-        '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"'
+        '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"',
       );
     });
 
@@ -121,12 +123,12 @@ describe('urql', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       );
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledWith(
-        '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"'
+        '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"',
       );
     });
   });
@@ -142,7 +144,7 @@ describe('urql', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Urql from '@urql/vue';`);
@@ -160,7 +162,7 @@ describe('urql', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
@@ -176,7 +178,7 @@ describe('urql', () => {
         { gqlImport: 'graphql.macro#gql' },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { gql } from 'graphql.macro';`);
@@ -191,7 +193,7 @@ describe('urql', () => {
         { urqlImportFrom: 'custom-urql' },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Urql from 'custom-urql';`);
@@ -267,10 +269,11 @@ describe('urql', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.content).toBeSimilarStringTo(`export const FeedWithRepositoryFragmentDoc = gql\`
+      expect(content.content)
+        .toBeSimilarStringTo(`export const FeedWithRepositoryFragmentDoc = gql\`
 fragment FeedWithRepository on Entry {
   id
   commentCount
@@ -279,7 +282,8 @@ fragment FeedWithRepository on Entry {
   }
 }
 \${RepositoryWithOwnerFragmentDoc}\`;`);
-      expect(content.content).toBeSimilarStringTo(`export const RepositoryWithOwnerFragmentDoc = gql\`
+      expect(content.content)
+        .toBeSimilarStringTo(`export const RepositoryWithOwnerFragmentDoc = gql\`
 fragment RepositoryWithOwner on Repository {
   full_name
   html_url
@@ -323,7 +327,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -373,7 +377,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       const feedWithRepositoryPos = content.content.indexOf('fragment FeedWithRepository');
@@ -392,7 +396,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -425,11 +429,11 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(
-        `[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode;`
+        `[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode;`,
       );
 
       // For issue #1599 - make sure there are not `loc` properties
@@ -469,7 +473,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -492,7 +496,7 @@ export function useSubmitRepositoryMutation() {
         { withComposition: false },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toContain(`export function useTestQuery`);
@@ -516,7 +520,7 @@ export function useSubmitRepositoryMutation() {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -535,7 +539,7 @@ export function useSubmitRepositoryMutation() {
         { typesPrefix: 'I' },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toContain(`export function useTestQuery`);
@@ -549,7 +553,7 @@ export function useSubmitRepositoryMutation() {
         { omitOperationSuffix: true },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toContain(`export function useTest(`);
@@ -567,7 +571,7 @@ export function useSubmitRepositoryMutation() {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Operations from '@myproject/generated';`);

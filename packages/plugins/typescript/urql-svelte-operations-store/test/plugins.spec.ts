@@ -1,5 +1,5 @@
-import { Types } from '@graphql-codegen/plugin-helpers';
 import { parse } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import { plugin } from '../src/index.js';
 
 describe('svelte urql operations store types', () => {
@@ -20,11 +20,13 @@ describe('svelte urql operations store types', () => {
           document: parse(`fragment Test on Test { t }`),
         },
       ],
-      {}
+      {},
     )) as Types.ComplexPluginOutput;
-    expect(result.content).toContain('export type MeQueryStore = OperationStore<MeQuery, MeQueryVariables>;');
     expect(result.content).toContain(
-      'export type DoSomethingMutationStore = OperationStore<DoSomethingMutation, DoSomethingMutationVariables>;'
+      'export type MeQueryStore = OperationStore<MeQuery, MeQueryVariables>;',
+    );
+    expect(result.content).toContain(
+      'export type DoSomethingMutationStore = OperationStore<DoSomethingMutation, DoSomethingMutationVariables>;',
     );
     expect(result.prepend).toContain(`import type { OperationStore } from '@urql/svelte';`);
   });

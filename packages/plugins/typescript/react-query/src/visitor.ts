@@ -1,26 +1,25 @@
+import autoBind from 'auto-bind';
+import { pascalCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
   DocumentMode,
-  LoadedFragment,
   getConfigValue,
+  LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+import { ReactQueryRawPluginConfig } from './config.js';
+import { CustomMapperFetcher } from './fetcher-custom-mapper.js';
+import { HardcodedFetchFetcher } from './fetcher-fetch-hardcoded.js';
+import { FetchFetcher } from './fetcher-fetch.js';
+import { GraphQLRequestClientFetcher } from './fetcher-graphql-request.js';
+import { FetcherRenderer } from './fetcher.js';
 import {
+  generateInfiniteQueryKeyMaker,
   generateMutationKeyMaker,
   generateQueryKeyMaker,
-  generateInfiniteQueryKeyMaker,
 } from './variables-generator.js';
-
-import { CustomMapperFetcher } from './fetcher-custom-mapper.js';
-import { FetchFetcher } from './fetcher-fetch.js';
-import { FetcherRenderer } from './fetcher.js';
-import { GraphQLRequestClientFetcher } from './fetcher-graphql-request.js';
-import { HardcodedFetchFetcher } from './fetcher-fetch-hardcoded.js';
-import { ReactQueryRawPluginConfig } from './config.js';
-import { Types } from '@graphql-codegen/plugin-helpers';
-import autoBind from 'auto-bind';
-import { pascalCase } from 'change-case-all';
 
 export interface ReactQueryPluginConfig extends ClientSideBasePluginConfig {
   errorType: string;
@@ -47,7 +46,10 @@ export interface ReactQueryMethodMap {
   };
 }
 
-export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPluginConfig, ReactQueryPluginConfig> {
+export class ReactQueryVisitor extends ClientSideBaseVisitor<
+  ReactQueryRawPluginConfig,
+  ReactQueryPluginConfig
+> {
   private _externalImportPrefix: string;
   public fetcher: FetcherRenderer;
   public reactQueryHookIdentifiersInUse = new Set<string>();
@@ -72,7 +74,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
     protected rawConfig: ReactQueryRawPluginConfig,
-    documents: Types.DocumentFile[]
+    documents: Types.DocumentFile[],
   ) {
     super(schema, fragments, rawConfig, {
       documentMode: DocumentMode.string,
@@ -84,7 +86,9 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
       addInfiniteQuery: getConfigValue(rawConfig.addInfiniteQuery, false),
       legacyMode: getConfigValue(rawConfig.legacyMode, false),
     });
-    this._externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
+    this._externalImportPrefix = this.config.importOperationTypesFrom
+      ? `${this.config.importOperationTypesFrom}.`
+      : '';
     this._documents = documents;
     this.fetcher = this.createFetcher(rawConfig.fetcher || 'fetch');
 
@@ -123,7 +127,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
     const hookAndTypeImports = [
       ...Array.from(this.reactQueryHookIdentifiersInUse),
       ...Array.from(this.reactQueryOptionsIdentifiersInUse).map(
-        identifier => `${this.config.useTypeImports ? 'type ' : ''}${identifier}`
+        identifier => `${this.config.useTypeImports ? 'type ' : ''}${identifier}`,
       ),
     ];
 
@@ -155,7 +159,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
     operationType: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     const nodeName = node.name?.value ?? '';
     const suffix = this._getHookSuffix(nodeName, operationType);
@@ -175,13 +179,18 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
         operationName,
         operationResultType,
         operationVariablesTypes,
-        hasRequiredVariables
+        hasRequiredVariables,
       );
       if (this.config.exposeDocument) {
         query += `\nuse${operationName}.document = ${documentVariableName};\n`;
       }
       if (this.config.exposeQueryKeys) {
-        query += `\n${generateQueryKeyMaker(node, operationName, operationVariablesTypes, hasRequiredVariables)};\n`;
+        query += `\n${generateQueryKeyMaker(
+          node,
+          operationName,
+          operationVariablesTypes,
+          hasRequiredVariables,
+        )};\n`;
       }
       if (this.config.addInfiniteQuery) {
         query += `\n${this.fetcher.generateInfiniteQueryHook(
@@ -190,14 +199,14 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
           operationName,
           operationResultType,
           operationVariablesTypes,
-          hasRequiredVariables
+          hasRequiredVariables,
         )}\n`;
         if (this.config.exposeQueryKeys) {
           query += `\n${generateInfiniteQueryKeyMaker(
             node,
             operationName,
             operationVariablesTypes,
-            hasRequiredVariables
+            hasRequiredVariables,
           )};\n`;
         }
       }
@@ -212,7 +221,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
           operationName,
           operationResultType,
           operationVariablesTypes,
-          hasRequiredVariables
+          hasRequiredVariables,
         );
       }
       return query;
@@ -224,7 +233,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
         operationName,
         operationResultType,
         operationVariablesTypes,
-        hasRequiredVariables
+        hasRequiredVariables,
       );
       if (this.config.exposeMutationKeys) {
         query += generateMutationKeyMaker(node, operationName);
@@ -236,7 +245,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
           operationName,
           operationResultType,
           operationVariablesTypes,
-          hasRequiredVariables
+          hasRequiredVariables,
         );
       }
       return query;
@@ -244,7 +253,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<ReactQueryRawPlugin
     if (operationType === 'Subscription') {
       // eslint-disable-next-line no-console
       console.warn(
-        `Plugin "typescript-react-query" does not support GraphQL Subscriptions at the moment! Ignoring "${node.name.value}"...`
+        `Plugin "typescript-react-query" does not support GraphQL Subscriptions at the moment! Ignoring "${node.name.value}"...`,
       );
     }
 

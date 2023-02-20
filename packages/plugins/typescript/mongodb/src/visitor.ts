@@ -1,27 +1,27 @@
-import { FieldsTree } from './fields-tree.js';
-import {
-  getBaseTypeNode,
-  DeclarationBlock,
-  getConfigValue,
-  ParsedConfig,
-  BaseVisitor,
-  buildScalarsFromConfig,
-  wrapTypeNodeWithModifiers,
-} from '@graphql-codegen/visitor-plugin-common';
 import autoBind from 'auto-bind';
-import { Directives, TypeScriptMongoPluginConfig } from './config.js';
 import {
   DirectiveNode,
-  GraphQLSchema,
-  ObjectTypeDefinitionNode,
-  NamedTypeNode,
   FieldDefinitionNode,
-  Kind,
-  ValueNode,
-  isEnumType,
+  GraphQLSchema,
   InterfaceTypeDefinitionNode,
+  isEnumType,
+  Kind,
+  NamedTypeNode,
+  ObjectTypeDefinitionNode,
   UnionTypeDefinitionNode,
+  ValueNode,
 } from 'graphql';
+import {
+  BaseVisitor,
+  buildScalarsFromConfig,
+  DeclarationBlock,
+  getBaseTypeNode,
+  getConfigValue,
+  ParsedConfig,
+  wrapTypeNodeWithModifiers,
+} from '@graphql-codegen/visitor-plugin-common';
+import { Directives, TypeScriptMongoPluginConfig } from './config.js';
+import { FieldsTree } from './fields-tree.js';
 
 type AdditionalField = { path: string; type: string };
 
@@ -37,7 +37,10 @@ export interface TypeScriptMongoPluginParsedConfig extends ParsedConfig {
 
 type Directivable = { directives?: ReadonlyArray<DirectiveNode> };
 
-function resolveObjectId(pointer: string | null | undefined): { identifier: string; module: string } {
+function resolveObjectId(pointer: string | null | undefined): {
+  identifier: string;
+  module: string;
+} {
   if (!pointer) {
     return { identifier: 'ObjectId', module: 'mongodb' };
   }
@@ -54,7 +57,10 @@ function resolveObjectId(pointer: string | null | undefined): { identifier: stri
   };
 }
 
-export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, TypeScriptMongoPluginParsedConfig> {
+export class TsMongoVisitor extends BaseVisitor<
+  TypeScriptMongoPluginConfig,
+  TypeScriptMongoPluginParsedConfig
+> {
   constructor(private _schema: GraphQLSchema, pluginConfig: TypeScriptMongoPluginConfig) {
     super(pluginConfig, {
       dbTypeSuffix: pluginConfig.dbTypeSuffix || 'DbObject',
@@ -115,13 +121,16 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
     return this._resolveDirectiveValue<T>(foundArgument.value);
   }
 
-  private _getDirectiveFromAstNode(node: Directivable, directiveName: Directives): DirectiveNode | null {
+  private _getDirectiveFromAstNode(
+    node: Directivable,
+    directiveName: Directives,
+  ): DirectiveNode | null {
     if (!node || !node.directives || node.directives.length === 0) {
       return null;
     }
 
     const foundDirective = node.directives.find(
-      d => (d.name as any) === directiveName || (d.name.value && d.name.value === directiveName)
+      d => (d.name as any) === directiveName || (d.name.value && d.name.value === directiveName),
     );
 
     if (!foundDirective) {
@@ -135,7 +144,10 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
     return (interfaces || [])
       .map(namedType => {
         const schemaType = this._schema.getType(namedType.name.value);
-        const abstractEntityDirective = this._getDirectiveFromAstNode(schemaType.astNode, Directives.ABSTRACT_ENTITY);
+        const abstractEntityDirective = this._getDirectiveFromAstNode(
+          schemaType.astNode,
+          Directives.ABSTRACT_ENTITY,
+        );
 
         if (!abstractEntityDirective) {
           return null;
@@ -146,10 +158,14 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
       .filter(a => a);
   }
 
-  private _handleIdField(fieldNode: FieldDefinitionNode, tree: FieldsTree, addOptionalSign: boolean): void {
+  private _handleIdField(
+    fieldNode: FieldDefinitionNode,
+    tree: FieldsTree,
+    addOptionalSign: boolean,
+  ): void {
     tree.addField(
       `${this.config.idFieldName}${addOptionalSign ? '?' : ''}`,
-      wrapTypeNodeWithModifiers(this.config.objectIdType, fieldNode.type)
+      wrapTypeNodeWithModifiers(this.config.objectIdType, fieldNode.type),
     );
   }
 
@@ -158,7 +174,7 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
     tree: FieldsTree,
     linkDirective: DirectiveNode,
     mapPath: string | null,
-    addOptionalSign: boolean
+    addOptionalSign: boolean,
   ): void {
     const overrideType = this._getDirectiveArgValue<string>(linkDirective, 'overrideType');
     const coreType = overrideType || getBaseTypeNode(fieldNode.type);
@@ -166,7 +182,7 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
 
     tree.addField(
       `${mapPath || fieldNode.name.value}${addOptionalSign ? '?' : ''}`,
-      wrapTypeNodeWithModifiers(`${type}['${this.config.idFieldName}']`, fieldNode.type)
+      wrapTypeNodeWithModifiers(`${type}['${this.config.idFieldName}']`, fieldNode.type),
     );
   }
 
@@ -175,7 +191,7 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
     tree: FieldsTree,
     columnDirective: DirectiveNode,
     mapPath: string | null,
-    addOptionalSign: boolean
+    addOptionalSign: boolean,
   ): void {
     const overrideType = this._getDirectiveArgValue<string>(columnDirective, 'overrideType');
     const coreType = getBaseTypeNode(fieldNode.type);
@@ -195,7 +211,7 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
 
     tree.addField(
       `${mapPath || fieldNode.name.value}${addOptionalSign ? '?' : ''}`,
-      overrideType || wrapTypeNodeWithModifiers(type, fieldNode.type)
+      overrideType || wrapTypeNodeWithModifiers(type, fieldNode.type),
     );
   }
 
@@ -203,14 +219,14 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
     fieldNode: FieldDefinitionNode,
     tree: FieldsTree,
     mapPath: string | null,
-    addOptionalSign: boolean
+    addOptionalSign: boolean,
   ): void {
     const coreType = getBaseTypeNode(fieldNode.type);
     const type = this.convertName(coreType, { suffix: this.config.dbTypeSuffix });
 
     tree.addField(
       `${mapPath || fieldNode.name.value}${addOptionalSign ? '?' : ''}`,
-      wrapTypeNodeWithModifiers(type, fieldNode.type)
+      wrapTypeNodeWithModifiers(type, fieldNode.type),
     );
   }
 
@@ -248,7 +264,10 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
 
     for (const field of additioalFields) {
       const isOptional = field.path.includes('?');
-      tree.addField(`${isOptional && avoidOptionals ? field.path.replace(/\?/g, '') : field.path}`, field.type);
+      tree.addField(
+        `${isOptional && avoidOptionals ? field.path.replace(/\?/g, '') : field.path}`,
+        field.type,
+      );
     }
   }
 
@@ -259,8 +278,14 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
       return null;
     }
 
-    const discriminatorField = this._getDirectiveArgValue<string>(abstractEntityDirective, 'discriminatorField');
-    const additionalFields = this._getDirectiveArgValue<AdditionalField[]>(abstractEntityDirective, 'additionalFields');
+    const discriminatorField = this._getDirectiveArgValue<string>(
+      abstractEntityDirective,
+      'discriminatorField',
+    );
+    const additionalFields = this._getDirectiveArgValue<AdditionalField[]>(
+      abstractEntityDirective,
+      'additionalFields',
+    );
     const fields = this._buildFieldsTree(node.fields);
     fields.addField(discriminatorField, this.scalars.String);
     this._addAdditionalFields(fields, additionalFields);
@@ -279,12 +304,21 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
       return null;
     }
 
-    const discriminatorField = this._getDirectiveArgValue<string>(unionDirective, 'discriminatorField');
+    const discriminatorField = this._getDirectiveArgValue<string>(
+      unionDirective,
+      'discriminatorField',
+    );
     const possibleTypes = node.types
       .map(namedType => {
         const schemaType = this._schema.getType(namedType.name.value);
-        const entityDirective = this._getDirectiveFromAstNode(schemaType.astNode, Directives.ENTITY);
-        const abstractEntityDirective = this._getDirectiveFromAstNode(schemaType.astNode, Directives.ABSTRACT_ENTITY);
+        const entityDirective = this._getDirectiveFromAstNode(
+          schemaType.astNode,
+          Directives.ENTITY,
+        );
+        const abstractEntityDirective = this._getDirectiveFromAstNode(
+          schemaType.astNode,
+          Directives.ABSTRACT_ENTITY,
+        );
 
         if (entityDirective) {
           return this.convertName(namedType, { suffix: this.config.dbTypeSuffix });
@@ -301,7 +335,10 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
       return null;
     }
 
-    const additionalFields = this._getDirectiveArgValue<AdditionalField[]>(unionDirective, 'additionalFields');
+    const additionalFields = this._getDirectiveArgValue<AdditionalField[]>(
+      unionDirective,
+      'additionalFields',
+    );
     const fields = new FieldsTree();
     fields.addField(discriminatorField, this.scalars.String);
     this._addAdditionalFields(fields, additionalFields);
@@ -323,7 +360,10 @@ export class TsMongoVisitor extends BaseVisitor<TypeScriptMongoPluginConfig, Typ
 
     const implementingInterfaces = this._buildInterfaces(node.interfaces);
     const fields = this._buildFieldsTree(node.fields);
-    const additionalFields = this._getDirectiveArgValue<AdditionalField[]>(entityDirective, 'additionalFields');
+    const additionalFields = this._getDirectiveArgValue<AdditionalField[]>(
+      entityDirective,
+      'additionalFields',
+    );
     this._addAdditionalFields(fields, additionalFields);
 
     return new DeclarationBlock(this._declarationBlockConfig)

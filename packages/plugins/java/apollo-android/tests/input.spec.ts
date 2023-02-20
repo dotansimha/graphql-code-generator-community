@@ -1,9 +1,9 @@
-import '@graphql-codegen/testing';
 import { buildSchema, Kind } from 'graphql';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
-import { plugin } from '../src/plugin.js';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
+import '@graphql-codegen/testing';
 import { validateJava } from '../../common/tests/validate-java.js';
 import { FileType } from '../src/file-type.js';
+import { plugin } from '../src/plugin.js';
 
 describe('java-apollo-android', () => {
   describe('Input Types', () => {
@@ -31,7 +31,10 @@ describe('java-apollo-android', () => {
       fileType: FileType.INPUT_TYPE,
     };
     const files: Types.DocumentFile[] = [
-      { document: { kind: Kind.DOCUMENT, definitions: [schema.getType('MyInput').astNode] }, location: '' },
+      {
+        document: { kind: Kind.DOCUMENT, definitions: [schema.getType('MyInput').astNode] },
+        location: '',
+      },
     ];
 
     it('Should produce valid Java code', async () => {
@@ -91,17 +94,27 @@ describe('java-apollo-android', () => {
       expect(result.prepend).toContain('import javax.annotation.Nullable;');
 
       expect(output).toBeSimilarStringTo(`public @Nonnull Integer foo() { return this.foo; }`);
-      expect(output).toBeSimilarStringTo(`public @Nullable Input<String> bar() { return this.bar; }`);
-      expect(output).toBeSimilarStringTo(`public @Nonnull Boolean something() { return this.something; }`);
-      expect(output).toBeSimilarStringTo(`public @Nullable Input<NestedInput> nested() { return this.nested; }`);
-      expect(output).toBeSimilarStringTo(`public @Nullable Input<List<String>> testArr() { return this.testArr; }`);
+      expect(output).toBeSimilarStringTo(
+        `public @Nullable Input<String> bar() { return this.bar; }`,
+      );
+      expect(output).toBeSimilarStringTo(
+        `public @Nonnull Boolean something() { return this.something; }`,
+      );
+      expect(output).toBeSimilarStringTo(
+        `public @Nullable Input<NestedInput> nested() { return this.nested; }`,
+      );
+      expect(output).toBeSimilarStringTo(
+        `public @Nullable Input<List<String>> testArr() { return this.testArr; }`,
+      );
     });
 
     it('Should have Builder static getter', async () => {
       const result = await plugin(schema, files, config);
       const output = mergeOutputs([result]);
 
-      expect(output).toBeSimilarStringTo(`public static Builder builder() { return new Builder(); }`);
+      expect(output).toBeSimilarStringTo(
+        `public static Builder builder() { return new Builder(); }`,
+      );
     });
 
     it('Should have Builder nested class ', async () => {

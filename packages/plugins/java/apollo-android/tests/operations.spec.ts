@@ -1,8 +1,8 @@
-import '@graphql-codegen/testing';
-import { parse, buildSchema } from 'graphql';
-import { plugin } from '../src/plugin.js';
+import { buildSchema, parse } from 'graphql';
 import { mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import '@graphql-codegen/testing';
 import { FileType } from '../src/file-type.js';
+import { plugin } from '../src/plugin.js';
 
 describe('Operations Visitor', () => {
   const schema = buildSchema(/* GraphQL */ `
@@ -171,7 +171,11 @@ describe('Operations Visitor', () => {
 
     type Query {
       getProduct(id: ID!): Product
-      listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection
+      listProducts(
+        filter: ModelProductFilterInput
+        limit: Int
+        nextToken: String
+      ): ModelProductConnection
     }
 
     type Subscription {
@@ -208,7 +212,10 @@ describe('Operations Visitor', () => {
       location: '',
     };
 
-    const result = await plugin(schema, [ast], { package: 'app.test.generated.graphql', fileType: FileType.OPERATION });
+    const result = await plugin(schema, [ast], {
+      package: 'app.test.generated.graphql',
+      fileType: FileType.OPERATION,
+    });
     const output = mergeOutputs([result]);
 
     expect(output).toMatchSnapshot();
@@ -298,11 +305,14 @@ describe('Operations Visitor', () => {
       location: '',
     };
 
-    const result = await plugin(schema, [ast], { package: 'app.test.generated.graphql', fileType: FileType.OPERATION });
+    const result = await plugin(schema, [ast], {
+      package: 'app.test.generated.graphql',
+      fileType: FileType.OPERATION,
+    });
     const output = mergeOutputs([result]);
     expect(output).toMatchSnapshot();
     expect(output).toContain(
-      `final Fragments fragments = reader.readConditional($responseFields[1], new ResponseReader.ConditionalTypeReader<Fragments>() {`
+      `final Fragments fragments = reader.readConditional($responseFields[1], new ResponseReader.ConditionalTypeReader<Fragments>() {`,
     );
   });
 });

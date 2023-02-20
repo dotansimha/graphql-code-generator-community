@@ -1,13 +1,12 @@
+import { OperationDefinitionNode } from 'graphql';
+import { HardcodedFetch } from './config.js';
+import { FetcherRenderer } from './fetcher.js';
 import {
   generateInfiniteQueryKey,
   generateMutationKey,
   generateQueryKey,
   generateQueryVariablesSignature,
 } from './variables-generator.js';
-
-import { FetcherRenderer } from './fetcher.js';
-import { HardcodedFetch } from './config.js';
-import { OperationDefinitionNode } from 'graphql';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class HardcodedFetchFetcher implements FetcherRenderer {
@@ -28,7 +27,9 @@ export class HardcodedFetchFetcher implements FetcherRenderer {
 
     if (this.config.fetchParams) {
       const fetchParamsString =
-        typeof this.config.fetchParams === 'string' ? this.config.fetchParams : JSON.stringify(this.config.fetchParams);
+        typeof this.config.fetchParams === 'string'
+          ? this.config.fetchParams
+          : JSON.stringify(this.config.fetchParams);
 
       fetchParamsPartial = `\n    ...(${fetchParamsString}),`;
     }
@@ -64,9 +65,12 @@ ${this.getFetchParams()}
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(hasRequiredVariables, operationVariablesTypes);
+    const variables = generateQueryVariablesSignature(
+      hasRequiredVariables,
+      operationVariablesTypes,
+    );
     const hookConfig = this.visitor.queryMethodMap;
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
@@ -94,9 +98,12 @@ ${this.getFetchParams()}
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(hasRequiredVariables, operationVariablesTypes);
+    const variables = generateQueryVariablesSignature(
+      hasRequiredVariables,
+      operationVariablesTypes,
+    );
     const hookConfig = this.visitor.queryMethodMap;
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.query.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.query.options);
@@ -123,7 +130,7 @@ ${this.getFetchParams()}
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     const variables = `variables?: ${operationVariablesTypes}`;
     const hookConfig = this.visitor.queryMethodMap;
@@ -136,7 +143,9 @@ ${this.getFetchParams()}
       TError = ${this.visitor.config.errorType},
       TContext = unknown
     >(${options}) =>
-    ${hookConfig.mutation.hook}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
+    ${
+      hookConfig.mutation.hook
+    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
       ${generateMutationKey(node)},
       (${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)(),
       options
@@ -149,9 +158,12 @@ ${this.getFetchParams()}
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(hasRequiredVariables, operationVariablesTypes);
+    const variables = generateQueryVariablesSignature(
+      hasRequiredVariables,
+      operationVariablesTypes,
+    );
 
     return `\nuse${operationName}.fetcher = (${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables);`;
   }

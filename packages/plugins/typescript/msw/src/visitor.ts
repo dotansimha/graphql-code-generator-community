@@ -1,13 +1,13 @@
+import autoBind from 'auto-bind';
+import { pascalCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode, print } from 'graphql';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
+  ClientSideBaseVisitor,
   getConfigValue,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { MSWRawPluginConfig } from './config.js';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, GraphQLSchema, print } from 'graphql';
-import { pascalCase } from 'change-case-all';
 
 export interface MSWPluginConfig extends ClientSideBasePluginConfig {
   link?: {
@@ -31,7 +31,9 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
 
     autoBind(this);
 
-    this._externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
+    this._externalImportPrefix = this.config.importOperationTypesFrom
+      ? `${this.config.importOperationTypesFrom}.`
+      : '';
   }
 
   public getImports(): string[] {
@@ -66,20 +68,24 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
  * @param resolver a function that accepts a captured request and may return a mocked response.
  * @see https://mswjs.io/docs/basics/response-resolver
  * @example
- * ${handlerName}((req, res, ctx) => {${variables && `\n *   const { ${variables} } = req.variables;`}
+ * ${handlerName}((req, res, ctx) => {${
+            variables && `\n *   const { ${variables} } = req.variables;`
+          }
  *   return res(
  *     ctx.data({ ${selections} })
  *   )
  * })
  */
 export const ${handlerName} = (resolver: ResponseResolver<GraphQLRequest<${operationVariablesTypes}>, GraphQLContext<${operationResultType}>, any>) =>
-  ${link?.name || 'graphql'}.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>(
+  ${
+    link?.name || 'graphql'
+  }.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>(
     '${node.name.value}',
     resolver
   )\n`;
         }
         return '';
-      }
+      },
     );
 
     return [endpoint, ...operations].join('\n');
@@ -90,13 +96,15 @@ export const ${handlerName} = (resolver: ResponseResolver<GraphQLRequest<${opera
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ) {
     operationResultType = this._externalImportPrefix + operationResultType;
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
 
     if (node.name == null) {
-      throw new Error("Plugin 'msw' cannot generate mocks for unnamed operation.\n\n" + print(node));
+      throw new Error(
+        "Plugin 'msw' cannot generate mocks for unnamed operation.\n\n" + print(node),
+      );
     } else {
       this._operationsToInclude.push({
         node,

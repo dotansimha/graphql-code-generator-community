@@ -1,13 +1,13 @@
+import autoBind from 'auto-bind';
+import { paramCase, pascalCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
+  ClientSideBaseVisitor,
   getConfigValue,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import { StencilComponentType, StencilApolloRawPluginConfig } from './config.js';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, GraphQLSchema } from 'graphql';
-import { paramCase, pascalCase } from 'change-case-all';
+import { StencilApolloRawPluginConfig, StencilComponentType } from './config.js';
 
 export interface StencilApolloPluginConfig extends ClientSideBasePluginConfig {
   componentType: StencilComponentType;
@@ -17,7 +17,11 @@ export class StencilApolloVisitor extends ClientSideBaseVisitor<
   StencilApolloRawPluginConfig,
   StencilApolloPluginConfig
 > {
-  constructor(schema: GraphQLSchema, fragments: LoadedFragment[], rawConfig: StencilApolloRawPluginConfig) {
+  constructor(
+    schema: GraphQLSchema,
+    fragments: LoadedFragment[],
+    rawConfig: StencilApolloRawPluginConfig,
+  ) {
     super(schema, fragments, rawConfig, {
       componentType: getConfigValue(rawConfig.componentType, StencilComponentType.functional),
       noExport: rawConfig.componentType === StencilComponentType.class,
@@ -51,12 +55,13 @@ export class StencilApolloVisitor extends ClientSideBaseVisitor<
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const operationName: string = this.convertName(node.name.value);
     const propsTypeName: string = this.convertName(operationName + 'Props');
     const rendererSignature =
-      pascalCase(`${operationType}Renderer`) + `<${operationResultType}, ${operationVariablesTypes}>`;
+      pascalCase(`${operationType}Renderer`) +
+      `<${operationResultType}, ${operationVariablesTypes}>`;
     const apolloStencilComponentTag = paramCase(`Apollo${operationType}`);
     const componentName = this.convertName(`${operationName}Component`);
 
@@ -81,7 +86,7 @@ export const ${componentName} = (props: ${propsTypeName}, children: [StencilApol
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const componentName: string = this.convertName(node.name.value + 'Component');
     const apolloStencilComponentTag = paramCase(`Apollo${operationType}`);
@@ -106,7 +111,7 @@ export class ${componentName} {
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     switch (this.config.componentType) {
       case StencilComponentType.class:
@@ -115,7 +120,7 @@ export class ${componentName} {
           documentVariableName,
           operationType,
           operationResultType,
-          operationVariablesTypes
+          operationVariablesTypes,
         );
       case StencilComponentType.functional:
         return this._buildOperationFunctionalComponent(
@@ -123,7 +128,7 @@ export class ${componentName} {
           documentVariableName,
           operationType,
           operationResultType,
-          operationVariablesTypes
+          operationVariablesTypes,
         );
       default:
         return '';

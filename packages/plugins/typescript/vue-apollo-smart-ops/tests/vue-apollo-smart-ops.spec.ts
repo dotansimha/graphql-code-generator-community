@@ -1,11 +1,11 @@
-import { validateTs } from '@graphql-codegen/testing';
-import { parse, GraphQLSchema, buildClientSchema } from 'graphql';
+import { buildClientSchema, GraphQLSchema, parse } from 'graphql';
 import gql from 'graphql-tag';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import { extract } from 'jest-docblock';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
+import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
-import { extract } from 'jest-docblock';
 import { VueApolloSmartOpsRawPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
 
@@ -57,10 +57,12 @@ describe('Vue Apollo Operations', () => {
     output: Types.PluginOutput,
     testSchema: GraphQLSchema,
     documents: Types.DocumentFile[],
-    config: any
+    config: any,
   ): Promise<void> => {
     const tsOutput = await tsPlugin(testSchema, documents, config, { outputFile: '' });
-    const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, { outputFile: '' });
+    const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, {
+      outputFile: '',
+    });
     const merged = mergeOutputs([tsOutput, tsDocumentsOutput, output]);
     validateTs(merged, undefined, true, false);
   };
@@ -74,11 +76,11 @@ describe('Vue Apollo Operations', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(
-        `import { createMutationFunction, createSmartQueryOptionsFunction, createSmartSubscriptionOptionsFunction } from 'vue-apollo-smart-ops';`
+        `import { createMutationFunction, createSmartQueryOptionsFunction, createSmartSubscriptionOptionsFunction } from 'vue-apollo-smart-ops';`,
       );
       expect(content.prepend).toContain(`import gql from 'graphql-tag';`);
       await validateTypeScript(content, schema, docs, {});
@@ -94,11 +96,11 @@ describe('Vue Apollo Operations', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(
-        `import { createMutationFunction, createSmartQueryOptionsFunction, createSmartSubscriptionOptionsFunction } from 'custom-operation-functions-package';`
+        `import { createMutationFunction, createSmartQueryOptionsFunction, createSmartSubscriptionOptionsFunction } from 'custom-operation-functions-package';`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -111,7 +113,7 @@ describe('Vue Apollo Operations', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { ApolloError } from 'apollo-client';`);
@@ -129,10 +131,12 @@ describe('Vue Apollo Operations', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import { CustomApolloError } from 'custom-error-package';`);
+      expect(content.prepend).toContain(
+        `import { CustomApolloError } from 'custom-error-package';`,
+      );
       await validateTypeScript(content, schema, docs, {});
     });
 
@@ -147,10 +151,12 @@ describe('Vue Apollo Operations', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import { handleApolloError } from 'custom-error-handler';`);
+      expect(content.prepend).toContain(
+        `import { handleApolloError } from 'custom-error-handler';`,
+      );
       await validateTypeScript(content, schema, docs, {});
     });
 
@@ -165,7 +171,7 @@ describe('Vue Apollo Operations', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { CustomApp } from 'my-app';`);
@@ -182,7 +188,7 @@ describe('Vue Apollo Operations', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
@@ -198,7 +204,7 @@ describe('Vue Apollo Operations', () => {
         { gqlImport: 'graphql.macro#gql' },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { gql } from 'graphql.macro';`);
@@ -274,10 +280,11 @@ describe('Vue Apollo Operations', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.content).toBeSimilarStringTo(`export const FeedWithRepositoryFragmentDoc = gql\`
+      expect(content.content)
+        .toBeSimilarStringTo(`export const FeedWithRepositoryFragmentDoc = gql\`
 fragment FeedWithRepository on Entry {
   id
   commentCount
@@ -286,7 +293,8 @@ fragment FeedWithRepository on Entry {
   }
 }
 \${RepositoryWithOwnerFragmentDoc}\`;`);
-      expect(content.content).toBeSimilarStringTo(`export const RepositoryWithOwnerFragmentDoc = gql\`
+      expect(content.content)
+        .toBeSimilarStringTo(`export const RepositoryWithOwnerFragmentDoc = gql\`
 fragment RepositoryWithOwner on Repository {
   full_name
   html_url
@@ -330,7 +338,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -380,7 +388,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       const feedWithRepositoryPos = content.content.indexOf('fragment FeedWithRepository');
@@ -421,14 +429,14 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
       expect(content.content).toBeSimilarStringTo(
         `export const useFeedQuery = createSmartQueryOptionsFunction<
   FeedQuery,
   FeedQueryVariables,
   ApolloError
->(FeedDocument);`
+>(FeedDocument);`,
       );
 
       expect(content.content).toBeSimilarStringTo(
@@ -436,7 +444,7 @@ query MyFeed {
   SubmitRepositoryMutation,
   SubmitRepositoryMutationVariables,
   ApolloError
->(SubmitRepositoryDocument);`
+>(SubmitRepositoryDocument);`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -476,14 +484,14 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
       expect(content.content).toBeSimilarStringTo(
         `export const useFeedQuery = createSmartQueryOptionsFunction<
   FeedQuery,
   FeedQueryVariables,
   CustomApolloError
->(FeedDocument, handleApolloError);`
+>(FeedDocument, handleApolloError);`,
       );
 
       expect(content.content).toBeSimilarStringTo(
@@ -491,7 +499,7 @@ query MyFeed {
   SubmitRepositoryMutation,
   SubmitRepositoryMutationVariables,
   CustomApolloError
->(SubmitRepositoryDocument, handleApolloError);`
+>(SubmitRepositoryDocument, handleApolloError);`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -529,7 +537,7 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
       expect(content.content).toBeSimilarStringTo(
         `export const useFeedQuery = createSmartQueryOptionsFunction<
@@ -537,7 +545,7 @@ query MyFeed {
   FeedQueryVariables,
   ApolloError,
   CustomApp
->(FeedDocument);`
+>(FeedDocument);`,
       );
 
       expect(content.content).toBeSimilarStringTo(
@@ -546,7 +554,7 @@ query MyFeed {
   SubmitRepositoryMutationVariables,
   ApolloError,
   CustomApp
->(SubmitRepositoryDocument);`
+>(SubmitRepositoryDocument);`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -585,7 +593,7 @@ query MyFeed {
   FeedQuery,
   FeedQueryVariables,
   ApolloError
->(FeedQueryDocument);`
+>(FeedQueryDocument);`,
       );
 
       expect(content.content).toBeSimilarStringTo(
@@ -593,7 +601,7 @@ query MyFeed {
   SubmitRepositoryMutation,
   SubmitRepositoryMutationVariables,
   ApolloError
->(SubmitRepositoryMutationDocument);`
+>(SubmitRepositoryMutationDocument);`,
       );
       await validateTypeScript(content, schema, docs, config);
     });
@@ -606,7 +614,7 @@ query MyFeed {
         { withSmartOperationFunctions: false },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toContain(`export const useTestQuery`);
@@ -630,7 +638,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(
@@ -638,7 +646,7 @@ query MyFeed {
   ListenToCommentsSubscription,
   ListenToCommentsSubscriptionVariables,
   ApolloError
->(ListenToCommentsDocument);`
+>(ListenToCommentsDocument);`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -665,7 +673,7 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(
@@ -673,7 +681,7 @@ query MyFeed {
   ListenToCommentsSubscription,
   ListenToCommentsSubscriptionVariables,
   CustomApolloError
->(ListenToCommentsDocument, handleApolloError);`
+>(ListenToCommentsDocument, handleApolloError);`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -686,7 +694,7 @@ query MyFeed {
         { typesPrefix: 'I' },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toContain(`export const useTestQuery`);
@@ -708,7 +716,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(
@@ -716,7 +724,7 @@ query MyFeed {
   SubmitRepositoryMutation,
   SubmitRepositoryMutationVariables,
   ApolloError
->(SubmitRepositoryDocument);`
+>(SubmitRepositoryDocument);`,
       );
 
       await validateTypeScript(content, schema, docs, {});
@@ -738,7 +746,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(
@@ -746,7 +754,7 @@ query MyFeed {
   SubmitRepositoryMutation,
   SubmitRepositoryMutationVariables,
   ApolloError
->(SubmitRepositoryDocument);`
+>(SubmitRepositoryDocument);`,
       );
 
       await validateTypeScript(content, schema, docs, {});
@@ -768,7 +776,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(
@@ -776,7 +784,7 @@ query MyFeed {
   SubmitRepositoryMutation,
   SubmitRepositoryMutationVariables,
   ApolloError
->(SubmitRepositoryDocument);`
+>(SubmitRepositoryDocument);`,
       );
 
       await validateTypeScript(content, schema, docs, {});
@@ -804,7 +812,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       // query with required variables
@@ -813,7 +821,7 @@ query MyFeed {
   FeedQuery,
   FeedQueryVariables,
   ApolloError
->(FeedDocument);`
+>(FeedDocument);`,
       );
 
       // subscription with required variables
@@ -822,7 +830,7 @@ query MyFeed {
   TestSubscription,
   TestSubscriptionVariables,
   ApolloError
->(TestDocument);`
+>(TestDocument);`,
       );
 
       await validateTypeScript(content, schema, docs, {});
@@ -851,7 +859,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       // query with optional variables
@@ -860,7 +868,7 @@ query MyFeed {
   FeedQuery,
   FeedQueryVariables,
   ApolloError
->(FeedDocument);`
+>(FeedDocument);`,
       );
 
       // subscription with optional variables
@@ -869,7 +877,7 @@ query MyFeed {
   TestSubscription,
   TestSubscriptionVariables,
   ApolloError
->(TestDocument);`
+>(TestDocument);`,
       );
 
       await validateTypeScript(content, schema, docs, {});
@@ -966,18 +974,20 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       const queryDocBlock = extract(content.content.substr(content.content.indexOf('/**')));
       expect(queryDocBlock).toEqual(queryDocBlockSnapshot);
 
       const mutationDocBlock = extract(
-        content.content.substr(content.content.indexOf('/**', content.content.indexOf('/**') + 1))
+        content.content.substr(content.content.indexOf('/**', content.content.indexOf('/**') + 1)),
       );
       expect(mutationDocBlock).toEqual(mutationDocBlockSnapshot);
 
-      const subscriptionDocBlock = extract(content.content.substr(content.content.lastIndexOf('/**')));
+      const subscriptionDocBlock = extract(
+        content.content.substr(content.content.lastIndexOf('/**')),
+      );
       expect(subscriptionDocBlock).toEqual(subscriptionDocBlockSnapshot);
     });
 
@@ -1003,7 +1013,7 @@ query MyFeed {
         { addDocBlocks: false },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       const queryDocBlock = extract(content.content.substr(content.content.indexOf('/**')));
@@ -1055,7 +1065,7 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
@@ -1073,7 +1083,7 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`export const TestDocument`);
@@ -1112,7 +1122,7 @@ query MyFeed {
         { ...config },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toBeSimilarStringTo(`export const FeedFragmentFragmentDoc`);
@@ -1149,7 +1159,7 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toBeSimilarStringTo(`export const FeedFragmentFragmentDoc`);
@@ -1180,7 +1190,7 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toBeSimilarStringTo(`export const FeedFragmentFragmentDoc`);
@@ -1351,7 +1361,7 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toBeSimilarStringTo(`import * as Operations`);
@@ -1388,7 +1398,7 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toBeSimilarStringTo(`import * as Operations`);

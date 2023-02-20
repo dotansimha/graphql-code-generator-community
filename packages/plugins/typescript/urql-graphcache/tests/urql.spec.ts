@@ -1,6 +1,6 @@
-import '@graphql-codegen/testing';
-import { mergeOutputs } from '@graphql-codegen/plugin-helpers';
 import { buildSchema } from 'graphql';
+import { mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
 
 describe('urql graphcache', () => {
@@ -129,7 +129,9 @@ describe('urql graphcache', () => {
         author: Author
       }
     `);
-    const result = mergeOutputs([await plugin(schema, [], { typesPrefix: 'Prefix', typesSuffix: 'Suffix' })]);
+    const result = mergeOutputs([
+      await plugin(schema, [], { typesPrefix: 'Prefix', typesSuffix: 'Suffix' }),
+    ]);
     expect(result).toMatchSnapshot();
   });
 
@@ -165,7 +167,7 @@ describe('urql graphcache', () => {
 
     expect(result).toBeSimilarStringTo(
       `import type { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver, StorageAdapter as GraphCacheStorageAdapter } from '@urql/exchange-graphcache';
-import type { IntrospectionData } from '@urql/exchange-graphcache/dist/types/ast';`
+import type { IntrospectionData } from '@urql/exchange-graphcache/dist/types/ast';`,
     );
   });
 

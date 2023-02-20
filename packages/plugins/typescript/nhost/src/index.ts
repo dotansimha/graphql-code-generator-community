@@ -1,12 +1,15 @@
-import { getIntrospectedSchema, minifyIntrospectionQuery } from '@urql/introspection';
-
-import { plugin as typescriptPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
 import { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
+import { plugin as typescriptPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
+import { getIntrospectedSchema, minifyIntrospectionQuery } from '@urql/introspection';
 import { NhostPluginConfig } from './config';
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
-export const plugin: PluginFunction<NhostPluginConfig, Types.ComplexPluginOutput> = (schema, documents, config) => {
+export const plugin: PluginFunction<NhostPluginConfig, Types.ComplexPluginOutput> = (
+  schema,
+  documents,
+  config,
+) => {
   // * We don't allow the other @graphql-codegen/typescript options as they could break the generator and the types.
   const { scalars } = config;
   const conf: TypeScriptPluginConfig = {

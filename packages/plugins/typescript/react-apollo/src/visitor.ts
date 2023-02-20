@@ -1,16 +1,16 @@
+import autoBind from 'auto-bind';
+import { camelCase, pascalCase } from 'change-case-all';
+import { GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
+  ClientSideBaseVisitor,
+  DocumentMode,
   getConfigValue,
   LoadedFragment,
   OMIT_TYPE,
-  DocumentMode,
 } from '@graphql-codegen/visitor-plugin-common';
 import { ReactApolloRawPluginConfig } from './config.js';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, Kind, GraphQLSchema } from 'graphql';
-import { Types } from '@graphql-codegen/plugin-helpers';
-import { pascalCase, camelCase } from 'change-case-all';
 
 const APOLLO_CLIENT_3_UNIFIED_PACKAGE = `@apollo/client`;
 const GROUPED_APOLLO_CLIENT_3_IDENTIFIER = 'Apollo';
@@ -37,12 +37,15 @@ export interface ReactApolloPluginConfig extends ClientSideBasePluginConfig {
 function hasRequiredVariables(node: OperationDefinitionNode): boolean {
   return (
     node.variableDefinitions?.some(
-      variableDef => variableDef.type.kind === Kind.NON_NULL_TYPE && !variableDef.defaultValue
+      variableDef => variableDef.type.kind === Kind.NON_NULL_TYPE && !variableDef.defaultValue,
     ) ?? false
   );
 }
 
-export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPluginConfig, ReactApolloPluginConfig> {
+export class ReactApolloVisitor extends ClientSideBaseVisitor<
+  ReactApolloRawPluginConfig,
+  ReactApolloPluginConfig
+> {
   private _externalImportPrefix: string;
   private imports = new Set<string>();
 
@@ -50,7 +53,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
     protected rawConfig: ReactApolloRawPluginConfig,
-    documents: Types.DocumentFile[]
+    documents: Types.DocumentFile[],
   ) {
     super(schema, fragments, rawConfig, {
       componentSuffix: getConfigValue(rawConfig.componentSuffix, 'Component'),
@@ -61,21 +64,27 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
       withRefetchFn: getConfigValue(rawConfig.withRefetchFn, false),
       apolloReactCommonImportFrom: getConfigValue(
         rawConfig.apolloReactCommonImportFrom,
-        rawConfig.reactApolloVersion === 2 ? '@apollo/react-common' : APOLLO_CLIENT_3_UNIFIED_PACKAGE
+        rawConfig.reactApolloVersion === 2
+          ? '@apollo/react-common'
+          : APOLLO_CLIENT_3_UNIFIED_PACKAGE,
       ),
       apolloReactComponentsImportFrom: getConfigValue(
         rawConfig.apolloReactComponentsImportFrom,
         rawConfig.reactApolloVersion === 2
           ? '@apollo/react-components'
-          : `${APOLLO_CLIENT_3_UNIFIED_PACKAGE}/react/components`
+          : `${APOLLO_CLIENT_3_UNIFIED_PACKAGE}/react/components`,
       ),
       apolloReactHocImportFrom: getConfigValue(
         rawConfig.apolloReactHocImportFrom,
-        rawConfig.reactApolloVersion === 2 ? '@apollo/react-hoc' : `${APOLLO_CLIENT_3_UNIFIED_PACKAGE}/react/hoc`
+        rawConfig.reactApolloVersion === 2
+          ? '@apollo/react-hoc'
+          : `${APOLLO_CLIENT_3_UNIFIED_PACKAGE}/react/hoc`,
       ),
       apolloReactHooksImportFrom: getConfigValue(
         rawConfig.apolloReactHooksImportFrom,
-        rawConfig.reactApolloVersion === 2 ? '@apollo/react-hooks' : APOLLO_CLIENT_3_UNIFIED_PACKAGE
+        rawConfig.reactApolloVersion === 2
+          ? '@apollo/react-hooks'
+          : APOLLO_CLIENT_3_UNIFIED_PACKAGE,
       ),
       reactApolloVersion: getConfigValue(rawConfig.reactApolloVersion, 3),
       withResultType: getConfigValue(rawConfig.withResultType, true),
@@ -84,12 +93,14 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
       defaultBaseOptions: getConfigValue(rawConfig.defaultBaseOptions, {}),
       gqlImport: getConfigValue(
         rawConfig.gqlImport,
-        rawConfig.reactApolloVersion === 2 ? null : `${APOLLO_CLIENT_3_UNIFIED_PACKAGE}#gql`
+        rawConfig.reactApolloVersion === 2 ? null : `${APOLLO_CLIENT_3_UNIFIED_PACKAGE}#gql`,
       ),
       hooksSuffix: getConfigValue(rawConfig.hooksSuffix, ''),
     });
 
-    this._externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
+    this._externalImportPrefix = this.config.importOperationTypesFrom
+      ? `${this.config.importOperationTypesFrom}.`
+      : '';
     this._documents = documents;
 
     autoBind(this);
@@ -135,7 +146,8 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
 
     return `${this.getImportStatement(
       isTypeImport &&
-        (apolloReactCommonIdentifier !== GROUPED_APOLLO_CLIENT_3_IDENTIFIER || this.usesExternalHooksOnly())
+        (apolloReactCommonIdentifier !== GROUPED_APOLLO_CLIENT_3_IDENTIFIER ||
+          this.usesExternalHooksOnly()),
     )} * as ${apolloReactCommonIdentifier} from '${this.config.apolloReactCommonImportFrom}';`;
   }
 
@@ -152,7 +164,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
   }
 
   private getApolloReactHooksImport(isTypeImport: boolean): string {
-    return `${this.getImportStatement(isTypeImport)} * as ${this.getApolloReactHooksIdentifier()} from '${
+    return `${this.getImportStatement(
+      isTypeImport,
+    )} * as ${this.getApolloReactHooksIdentifier()} from '${
       this.config.apolloReactHooksImportFrom
     }';`;
   }
@@ -165,7 +179,10 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     return `const defaultOptions = ${JSON.stringify(this.config.defaultBaseOptions)} as const;`;
   }
 
-  private getDocumentNodeVariable(node: OperationDefinitionNode, documentVariableName: string): string {
+  private getDocumentNodeVariable(
+    node: OperationDefinitionNode,
+    documentVariableName: string,
+  ): string {
     return this.config.documentMode === DocumentMode.external
       ? `Operations.${node.name?.value ?? ''}`
       : documentVariableName;
@@ -185,9 +202,12 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
   private _buildHocProps(operationName: string, operationType: string): string {
     const typeVariableName =
       this._externalImportPrefix +
-      this.convertName(operationName + pascalCase(operationType) + this._parsedConfig.operationResultSuffix);
+      this.convertName(
+        operationName + pascalCase(operationType) + this._parsedConfig.operationResultSuffix,
+      );
     const variablesVarName =
-      this._externalImportPrefix + this.convertName(operationName + pascalCase(operationType) + 'Variables');
+      this._externalImportPrefix +
+      this.convertName(operationName + pascalCase(operationType) + 'Variables');
     const typeArgs = `<${typeVariableName}, ${variablesVarName}>`;
 
     if (operationType === 'mutation') {
@@ -203,12 +223,12 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
   private _buildMutationFn(
     node: OperationDefinitionNode,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     if (node.operation === 'mutation') {
       this.imports.add(this.getApolloReactCommonImport(true));
       return `export type ${this.convertName(
-        (node.name?.value ?? '') + 'MutationFn'
+        (node.name?.value ?? '') + 'MutationFn',
       )} = ${this.getApolloReactCommonIdentifier()}.MutationFunction<${operationResultType}, ${operationVariablesTypes}>;`;
     }
     return null;
@@ -218,7 +238,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     node: OperationDefinitionNode,
     documentVariableName: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     this.imports.add(this.getApolloReactCommonImport(false));
     this.imports.add(this.getApolloReactHocImport(false));
@@ -237,10 +257,10 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
   ${operationVariablesTypes},
   ${propsTypeName}<TChildProps, TDataName>>) {
     return ApolloReactHoc.with${pascalCase(
-      node.operation
+      node.operation,
     )}<TProps, ${operationResultType}, ${operationVariablesTypes}, ${propsTypeName}<TChildProps, TDataName>>(${this.getDocumentNodeVariable(
       node,
-      documentVariableName
+      documentVariableName,
     )}, {
       alias: '${camelCase(operationName)}',
       ...operationOptions
@@ -255,7 +275,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const nodeName = node.name?.value ?? '';
     const componentPropsName: string = this.convertName(nodeName, {
@@ -292,7 +312,11 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     return [componentProps, component].join('\n');
   }
 
-  private _buildHooksJSDoc(node: OperationDefinitionNode, operationName: string, operationType: string): string {
+  private _buildHooksJSDoc(
+    node: OperationDefinitionNode,
+    operationName: string,
+    operationType: string,
+  ): string {
     const variableString = node.variableDefinitions.reduce((acc, item) => {
       const name = item.variable.name.value;
 
@@ -341,7 +365,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     documentVariableName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     const nodeName = node.name?.value ?? '';
     const suffix = this._getHookSuffix(nodeName, operationType);
@@ -363,7 +387,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
         const options = {...defaultOptions, ...baseOptions}
         return ${this.getApolloReactHooksIdentifier()}.use${operationType}<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
         node,
-        documentVariableName
+        documentVariableName,
       )}, options);
       }`,
     ];
@@ -372,7 +396,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
       hookFns.unshift(this._buildHooksJSDoc(node, operationName, operationType));
     }
 
-    const hookResults = [`export type ${operationName}HookResult = ReturnType<typeof use${operationName}>;`];
+    const hookResults = [
+      `export type ${operationName}HookResult = ReturnType<typeof use${operationName}>;`,
+    ];
 
     if (operationType === 'Query') {
       const lazyOperationName: string =
@@ -385,11 +411,13 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
           const options = {...defaultOptions, ...baseOptions}
           return ${this.getApolloReactHooksIdentifier()}.useLazyQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
           node,
-          documentVariableName
+          documentVariableName,
         )}, options);
-        }`
+        }`,
       );
-      hookResults.push(`export type ${lazyOperationName}HookResult = ReturnType<typeof use${lazyOperationName}>;`);
+      hookResults.push(
+        `export type ${lazyOperationName}HookResult = ReturnType<typeof use${lazyOperationName}>;`,
+      );
     }
 
     return [...hookFns, ...hookResults].join('\n');
@@ -412,7 +440,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     node: OperationDefinitionNode,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const componentResultType = this.convertName(node.name?.value ?? '', {
       suffix: `${operationType}Result`,
@@ -437,7 +465,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
   private _buildWithMutationOptionsType(
     node: OperationDefinitionNode,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     if (node.operation !== 'mutation') {
       return '';
@@ -457,7 +485,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     node: OperationDefinitionNode,
     documentVariableName: string,
     operationType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     if (node.operation !== 'query') {
       return '';
@@ -473,7 +501,10 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     const optional = hasRequiredVariables(node) ? '' : '?';
 
     return `export function refetch${operationName}(variables${optional}: ${operationVariablesTypes}) {
-      return { query: ${this.getDocumentNodeVariable(node, documentVariableName)}, variables: variables }
+      return { query: ${this.getDocumentNodeVariable(
+        node,
+        documentVariableName,
+      )}, variables: variables }
     }`;
   }
 
@@ -483,7 +514,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
     operationType: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     operationResultType = this._externalImportPrefix + operationResultType;
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
@@ -493,10 +524,21 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
         ? this._buildMutationFn(node, operationResultType, operationVariablesTypes)
         : null;
     const component = this.config.withComponent
-      ? this._buildComponent(node, documentVariableName, operationType, operationResultType, operationVariablesTypes)
+      ? this._buildComponent(
+          node,
+          documentVariableName,
+          operationType,
+          operationResultType,
+          operationVariablesTypes,
+        )
       : null;
     const hoc = this.config.withHOC
-      ? this._buildOperationHoc(node, documentVariableName, operationResultType, operationVariablesTypes)
+      ? this._buildOperationHoc(
+          node,
+          documentVariableName,
+          operationResultType,
+          operationVariablesTypes,
+        )
       : null;
     const hooks = this.config.withHooks
       ? this._buildHooks(
@@ -505,7 +547,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
           documentVariableName,
           operationResultType,
           operationVariablesTypes,
-          hasRequiredVariables
+          hasRequiredVariables,
         )
       : null;
     const resultType = this.config.withResultType
@@ -518,6 +560,8 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<ReactApolloRawPlug
       ? this._buildRefetchFn(node, documentVariableName, operationType, operationVariablesTypes)
       : null;
 
-    return [mutationFn, component, hoc, hooks, resultType, mutationOptionsType, refetchFn].filter(a => a).join('\n');
+    return [mutationFn, component, hoc, hooks, resultType, mutationOptionsType, refetchFn]
+      .filter(a => a)
+      .join('\n');
   }
 }

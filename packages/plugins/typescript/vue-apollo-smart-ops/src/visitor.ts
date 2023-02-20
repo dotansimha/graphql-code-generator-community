@@ -1,14 +1,14 @@
+import autoBind from 'auto-bind';
+import { camelCase, pascalCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
+  ClientSideBaseVisitor,
+  DocumentMode,
   getConfigValue,
   LoadedFragment,
-  DocumentMode,
 } from '@graphql-codegen/visitor-plugin-common';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, GraphQLSchema } from 'graphql';
-import { Types } from '@graphql-codegen/plugin-helpers';
-import { camelCase, pascalCase } from 'change-case-all';
 import { VueApolloSmartOpsRawPluginConfig } from './config.js';
 
 export interface VueApolloSmartOpsPluginConfig extends ClientSideBasePluginConfig {
@@ -50,27 +50,35 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
     rawConfig: VueApolloSmartOpsRawPluginConfig,
-    documents: Types.DocumentFile[]
+    documents: Types.DocumentFile[],
   ) {
     super(schema, fragments, rawConfig, {
       withSmartOperationFunctions: getConfigValue(rawConfig.withSmartOperationFunctions, true),
       vueApolloOperationFunctionsImportFrom: getConfigValue(
         rawConfig.vueApolloOperationFunctionsImportFrom,
-        'vue-apollo-smart-ops'
+        'vue-apollo-smart-ops',
       ),
       vueApolloErrorType: getConfigValue(rawConfig.vueApolloErrorType, 'ApolloError'),
-      vueApolloErrorTypeImportFrom: getConfigValue(rawConfig.vueApolloErrorTypeImportFrom, 'apollo-client'),
-      vueApolloErrorHandlerFunction: getConfigValue(rawConfig.vueApolloErrorHandlerFunction, undefined),
+      vueApolloErrorTypeImportFrom: getConfigValue(
+        rawConfig.vueApolloErrorTypeImportFrom,
+        'apollo-client',
+      ),
+      vueApolloErrorHandlerFunction: getConfigValue(
+        rawConfig.vueApolloErrorHandlerFunction,
+        undefined,
+      ),
       vueApolloErrorHandlerFunctionImportFrom: getConfigValue(
         rawConfig.vueApolloErrorHandlerFunctionImportFrom,
-        undefined
+        undefined,
       ),
       vueAppType: getConfigValue(rawConfig.vueAppType, undefined),
       vueAppTypeImportFrom: getConfigValue(rawConfig.vueAppTypeImportFrom, undefined),
       addDocBlocks: getConfigValue(rawConfig.addDocBlocks, true),
     });
 
-    this.externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
+    this.externalImportPrefix = this.config.importOperationTypesFrom
+      ? `${this.config.importOperationTypesFrom}.`
+      : '';
     this._documents = documents;
 
     autoBind(this);
@@ -85,7 +93,10 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
   }
 
   private get vueApolloErrorHandlerFunctionImport(): string {
-    if (!this.config.vueApolloErrorHandlerFunction || !this.config.vueApolloErrorHandlerFunctionImportFrom) {
+    if (
+      !this.config.vueApolloErrorHandlerFunction ||
+      !this.config.vueApolloErrorHandlerFunctionImportFrom
+    ) {
       return '';
     }
 
@@ -100,8 +111,13 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
     return `import { ${this.config.vueAppType} } from '${this.config.vueAppTypeImportFrom}';`;
   }
 
-  private getDocumentNodeVariable(node: OperationDefinitionNode, documentVariableName: string): string {
-    return this.config.documentMode === DocumentMode.external ? `Operations.${node.name?.value}` : documentVariableName;
+  private getDocumentNodeVariable(
+    node: OperationDefinitionNode,
+    documentVariableName: string,
+  ): string {
+    return this.config.documentMode === DocumentMode.external
+      ? `Operations.${node.name?.value}`
+      : documentVariableName;
   }
 
   public getImports(): string[] {
@@ -117,10 +133,14 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
   private buildOperationFunctionsJSDoc(
     node: OperationDefinitionNode,
     operationName: string,
-    operationType: OperationTypeName
+    operationType: OperationTypeName,
   ): string {
-    const operationFunctionName = operationType === 'Mutation' ? camelCase(operationName) : `use${operationName}`;
-    const operationNameWithoutSuffix = camelCase(operationName).replace(/(Query|Mutation|Subscription)$/, '');
+    const operationFunctionName =
+      operationType === 'Mutation' ? camelCase(operationName) : `use${operationName}`;
+    const operationNameWithoutSuffix = camelCase(operationName).replace(
+      /(Query|Mutation|Subscription)$/,
+      '',
+    );
 
     const exampleVariables = (node.variableDefinitions ?? []).map(variableDefinition => {
       const name = variableDefinition.variable.name.value;
@@ -229,7 +249,7 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
     documentVariableName: string,
     operationType: OperationTypeName,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     operationResultType = this.externalImportPrefix + operationResultType;
     operationVariablesTypes = this.externalImportPrefix + operationVariablesTypes;
@@ -251,7 +271,9 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
     });
 
     const operationHasVariables = (node.variableDefinitions ?? []).length > 0;
-    const operationHasNonNullableVariable = !!node.variableDefinitions?.some(({ type }) => type.kind === 'NonNullType');
+    const operationHasNonNullableVariable = !!node.variableDefinitions?.some(
+      ({ type }) => type.kind === 'NonNullType',
+    );
 
     this.imports.add(this.vueApolloOperationFunctionsImport);
     this.imports.add(this.vueApolloErrorTypeImport);
@@ -276,7 +298,9 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
       documentNodeVariable,
     });
     return [
-      ...insertIf(this.config.addDocBlocks, [this.buildOperationFunctionsJSDoc(node, operationName, operationType)]),
+      ...insertIf(this.config.addDocBlocks, [
+        this.buildOperationFunctionsJSDoc(node, operationName, operationType),
+      ]),
       operationFunction,
       '',
     ].join('\n');

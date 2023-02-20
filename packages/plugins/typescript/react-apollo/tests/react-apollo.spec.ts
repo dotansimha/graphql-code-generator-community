@@ -1,13 +1,13 @@
-import { validateTs } from '@graphql-codegen/testing';
-import { plugin } from '../src/index.js';
-import { ReactApolloRawPluginConfig } from '../src/config.js';
-import { parse, GraphQLSchema, buildClientSchema, buildASTSchema, buildSchema } from 'graphql';
+import { buildASTSchema, buildClientSchema, buildSchema, GraphQLSchema, parse } from 'graphql';
 import gql from 'graphql-tag';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import { extract } from 'jest-docblock';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
+import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
-import { extract } from 'jest-docblock';
+import { ReactApolloRawPluginConfig } from '../src/config.js';
+import { plugin } from '../src/index.js';
 
 describe('React Apollo', () => {
   let spyConsoleError: jest.SpyInstance;
@@ -74,10 +74,12 @@ describe('React Apollo', () => {
     output: Types.PluginOutput,
     testSchema: GraphQLSchema,
     documents: Types.DocumentFile[],
-    config: any
+    config: any,
   ) => {
     const tsOutput = await tsPlugin(testSchema, documents, config, { outputFile: '' });
-    const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, { outputFile: '' });
+    const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, {
+      outputFile: '',
+    });
     const merged = mergeOutputs([tsOutput, tsDocumentsOutput, output]);
     validateTs(merged, undefined, true, false, [`Cannot find namespace 'Types'.`]);
 
@@ -115,15 +117,19 @@ describe('React Apollo', () => {
         { reactApolloVersion: 2, withComponent: true, withHOC: true },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       // To make sure we have the gql tag imported
       expect(content.prepend).toContain(`import gql from 'graphql-tag';`);
       // To make sure we have React for the Component  and the rest of the grouped namespaces
       expect(content.prepend).toContain(`import * as React from 'react';`);
-      expect(content.prepend).toContain(`import * as ApolloReactCommon from '@apollo/react-common';`);
-      expect(content.prepend).toContain(`import * as ApolloReactComponents from '@apollo/react-components';`);
+      expect(content.prepend).toContain(
+        `import * as ApolloReactCommon from '@apollo/react-common';`,
+      );
+      expect(content.prepend).toContain(
+        `import * as ApolloReactComponents from '@apollo/react-components';`,
+      );
       expect(content.prepend).toContain(`import * as ApolloReactHoc from '@apollo/react-hoc';`);
       expect(content.prepend).toContain(`import * as ApolloReactHooks from '@apollo/react-hooks';`);
       // To make sure the default gql is used correctly, without namespace prefix
@@ -193,11 +199,11 @@ describe('React Apollo', () => {
           {},
           {
             outputFile: 'graphql.tsx',
-          }
+          },
         )) as Types.ComplexPluginOutput;
 
         expect(result.content).toContain(`(baseOptions${optionalBaseOptions ? '?' : ''}: Apollo.`);
-      }
+      },
     );
 
     it('Issue #3612 - Missing fragments spread when fragment name is same as operation?', async () => {
@@ -235,7 +241,7 @@ describe('React Apollo', () => {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(result.content).toBeSimilarStringTo(`    export const FeedDocument = gql\`
@@ -277,7 +283,7 @@ describe('React Apollo', () => {
       expect(mergeOutputs([output])).toMatchSnapshot();
 
       expect(output).toContain(
-        `export type Get_SomethingQueryResult = Apollo.QueryResult<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>;`
+        `export type Get_SomethingQueryResult = Apollo.QueryResult<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>;`,
       );
     });
 
@@ -311,7 +317,7 @@ describe('React Apollo', () => {
       expect(mergeOutputs([output])).toMatchSnapshot();
 
       expect(output).toContain(
-        `export type Get_SomethingQueryResult = Apollo.QueryResult<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>;`
+        `export type Get_SomethingQueryResult = Apollo.QueryResult<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>;`,
       );
     });
 
@@ -382,10 +388,12 @@ describe('React Apollo', () => {
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
       expect(
-        content.content.split('{"kind":"FragmentDefinition","name":{"kind":"Name","value":"RepositoryFields"}').length
+        content.content.split(
+          '{"kind":"FragmentDefinition","name":{"kind":"Name","value":"RepositoryFields"}',
+        ).length,
       ).toBe(3);
     });
 
@@ -409,7 +417,9 @@ describe('React Apollo', () => {
 
       expect(content.content).toEqual(expect.stringMatching(/UserQueryType/));
       // String matching `useUserQuery` but not `useUserQueryType`.
-      expect(content.content).toEqual(expect.stringMatching(/(?=.useUserQuery)(?!.useUserQueryType)(.+)/));
+      expect(content.content).toEqual(
+        expect.stringMatching(/(?=.useUserQuery)(?!.useUserQueryType)(.+)/),
+      );
     });
 
     it('#6212 - Should use TypesSuffix on function names if hooksSuffix provided', async () => {
@@ -432,7 +442,9 @@ describe('React Apollo', () => {
 
       expect(content.content).toEqual(expect.stringMatching(/UserQueryType/));
       // String matching `useUserQuery` but not `useUserQueryType`.
-      expect(content.content).toEqual(expect.stringMatching(/(?=.useUserQueryHookXYZ)(?!.useUserQueryType)(.+)/));
+      expect(content.content).toEqual(
+        expect.stringMatching(/(?=.useUserQueryHookXYZ)(?!.useUserQueryType)(.+)/),
+      );
     });
   });
 
@@ -445,12 +457,14 @@ describe('React Apollo', () => {
         { withComponent: true },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Apollo from '@apollo/client';`);
       expect(content.prepend).toContain(`import { gql } from '@apollo/client';`);
-      expect(content.prepend).toContain(`import * as ApolloReactComponents from '@apollo/client/react/components';`);
+      expect(content.prepend).toContain(
+        `import * as ApolloReactComponents from '@apollo/client/react/components';`,
+      );
       expect(content.prepend).toContain(`import * as React from 'react';`);
 
       // To make sure all imports are unified correctly under Apollo namespaced import
@@ -468,7 +482,7 @@ describe('React Apollo', () => {
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
@@ -484,7 +498,7 @@ describe('React Apollo', () => {
         { gqlImport: 'graphql.macro#gql' },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { gql } from 'graphql.macro';`);
@@ -508,7 +522,14 @@ describe('React Apollo', () => {
       `);
 
       expect(
-        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, { outputFile: '' })) as any).content
+        (
+          (await plugin(
+            schema,
+            [{ location: 'test-file.ts', document: ast }],
+            {},
+            { outputFile: '' },
+          )) as any
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQueryQuery, NotificationsQueryQueryVariables>;');
       expect(
         (
@@ -516,9 +537,9 @@ describe('React Apollo', () => {
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            { outputFile: '' }
+            { outputFile: '' },
           )) as any
-        ).content
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -526,9 +547,9 @@ describe('React Apollo', () => {
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            { outputFile: '' }
+            { outputFile: '' },
           )) as any
-        ).content
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -536,9 +557,9 @@ describe('React Apollo', () => {
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            { outputFile: '' }
+            { outputFile: '' },
           )) as any
-        ).content
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -546,9 +567,9 @@ describe('React Apollo', () => {
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            { outputFile: '' }
+            { outputFile: '' },
           )) as any
-        ).content
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQuery, NotificationsQueryVariables>');
     });
 
@@ -569,7 +590,14 @@ describe('React Apollo', () => {
       `);
 
       expect(
-        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, { outputFile: '' })) as any).content
+        (
+          (await plugin(
+            schema,
+            [{ location: 'test-file.ts', document: ast }],
+            {},
+            { outputFile: '' },
+          )) as any
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQueryQuery, NotificationsQueryQueryVariables>;');
       expect(
         (
@@ -577,9 +605,9 @@ describe('React Apollo', () => {
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { omitOperationSuffix: false },
-            { outputFile: '' }
+            { outputFile: '' },
           )) as any
-        ).content
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -587,9 +615,9 @@ describe('React Apollo', () => {
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { omitOperationSuffix: true },
-            { outputFile: '' }
+            { outputFile: '' },
           )) as any
-        ).content
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -597,9 +625,9 @@ describe('React Apollo', () => {
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { omitOperationSuffix: true },
-            { outputFile: '' }
+            { outputFile: '' },
           )) as any
-        ).content
+        ).content,
       ).toContain('Apollo.QueryResult<Notifications, NotificationsVariables>');
       expect(
         (
@@ -607,9 +635,9 @@ describe('React Apollo', () => {
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { omitOperationSuffix: false },
-            { outputFile: '' }
+            { outputFile: '' },
           )) as any
-        ).content
+        ).content,
       ).toContain('Apollo.QueryResult<NotificationsQuery, NotificationsQueryVariables>');
     });
 
@@ -621,7 +649,7 @@ describe('React Apollo', () => {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Apollo from '@apollo/client';`);
@@ -636,7 +664,7 @@ describe('React Apollo', () => {
         { apolloReactHooksImportFrom: 'react-apollo-hooks' },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as ApolloReactHooks from 'react-apollo-hooks';`);
@@ -651,10 +679,12 @@ describe('React Apollo', () => {
         { apolloReactCommonImportFrom: 'custom-apollo-react-common' },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as ApolloReactCommon from 'custom-apollo-react-common';`);
+      expect(content.prepend).toContain(
+        `import * as ApolloReactCommon from 'custom-apollo-react-common';`,
+      );
       await validateTypeScript(content, schema, docs, {});
     });
 
@@ -666,10 +696,12 @@ describe('React Apollo', () => {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).not.toContain(`import * as ApolloReactComponents from '@apollo/react-components';`);
+      expect(content.prepend).not.toContain(
+        `import * as ApolloReactComponents from '@apollo/react-components';`,
+      );
       expect(content.prepend).not.toContain(`import * as React from 'react';`);
       await validateTypeScript(content, schema, docs, {});
     });
@@ -743,10 +775,11 @@ describe('React Apollo', () => {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.content).toBeSimilarStringTo(`export const FeedWithRepositoryFragmentDoc = gql\`
+      expect(content.content)
+        .toBeSimilarStringTo(`export const FeedWithRepositoryFragmentDoc = gql\`
 fragment FeedWithRepository on Entry {
   id
   commentCount
@@ -755,7 +788,8 @@ fragment FeedWithRepository on Entry {
   }
 }
 \${RepositoryWithOwnerFragmentDoc}\`;`);
-      expect(content.content).toBeSimilarStringTo(`export const RepositoryWithOwnerFragmentDoc = gql\`
+      expect(content.content)
+        .toBeSimilarStringTo(`export const RepositoryWithOwnerFragmentDoc = gql\`
 fragment RepositoryWithOwner on Repository {
   full_name
   html_url
@@ -799,7 +833,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -849,7 +883,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       const feedWithRepositoryPos = content.content.indexOf('fragment FeedWithRepository');
@@ -868,7 +902,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -901,11 +935,11 @@ query MyFeed {
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(
-        `[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode;`
+        `[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode;`,
       );
 
       // For issue #1599 - make sure there are not `loc` properties
@@ -934,7 +968,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -958,7 +992,7 @@ query MyFeed {
         { withComponent: true },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -982,7 +1016,7 @@ query MyFeed {
         { componentSuffix: 'Element', withComponent: true },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -1005,7 +1039,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toContain(`export class TestComponent`);
@@ -1034,7 +1068,7 @@ query MyFeed {
         { withComponent: true },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -1072,7 +1106,7 @@ query MyFeed {
         { withComponent: true },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -1093,7 +1127,7 @@ query MyFeed {
         { typesPrefix: 'I' },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toContain(`export class ITestComponent`);
@@ -1111,7 +1145,7 @@ query MyFeed {
       expect(content.content).toBeSimilarStringTo(
         `export type TestProps<TChildProps = {}, TDataName extends string = 'data'> = {
           [key in TDataName]: ApolloReactHoc.DataValue<TestQuery, TestQueryVariables>
-        } & TChildProps;`
+        } & TChildProps;`,
       );
 
       expect(content.content)
@@ -1138,7 +1172,7 @@ query MyFeed {
       expect(content.content).toBeSimilarStringTo(
         `export type TestProps<TChildProps = {}, TDataName extends string = 'data'> = {
           [key in TDataName]: ApolloReactHoc.DataValue<TestQueryResponse, TestQueryVariables>
-        } & TChildProps;`
+        } & TChildProps;`,
       );
 
       await validateTypeScript(content, schema, docs, config);
@@ -1152,7 +1186,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toContain(`export type TestProps`);
@@ -1168,7 +1202,7 @@ query MyFeed {
         { typesPrefix: 'I', withHOC: true },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toContain(`export type ITestProps`);
@@ -1194,11 +1228,11 @@ query MyFeed {
         { withMutationFn: true },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toContain(
-        `export type SubmitCommentMutationFn = Apollo.MutationFunction<SubmitCommentMutation, SubmitCommentMutationVariables>;`
+        `export type SubmitCommentMutationFn = Apollo.MutationFunction<SubmitCommentMutation, SubmitCommentMutationVariables>;`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1235,7 +1269,7 @@ query MyFeed {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -1275,7 +1309,12 @@ export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOpt
         }
       `);
       const docs = [{ location: '', document: documents }];
-      const config = { withHooks: true, withComponent: false, withHOC: false, dedupeOperationSuffix: true };
+      const config = {
+        withHooks: true,
+        withComponent: false,
+        withHOC: false,
+        dedupeOperationSuffix: true,
+      };
 
       const content = (await plugin(schema, docs, config, {
         outputFile: 'graphql.tsx',
@@ -1303,7 +1342,7 @@ export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOpt
         { withHooks: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toContain(`export function useTestQuery`);
@@ -1331,7 +1370,7 @@ export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOpt
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -1350,7 +1389,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { withHooks: true, typesPrefix: 'I' },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toContain(`export function useTestQuery`);
@@ -1386,7 +1425,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { withHooks: true, withComponent: false, withHOC: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -1460,7 +1499,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { withHooks: true, withComponent: false, withHOC: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       const queryDocBlock = extract(content.content.substr(content.content.indexOf('/**')));
@@ -1494,7 +1533,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { withHooks: true, withComponent: false, withHOC: false, addDocBlocks: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       const queryDocBlock = extract(content.content.substr(content.content.indexOf('/**')));
@@ -1541,12 +1580,12 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Apollo from '@apollo/client';`);
       expect(content.content).toContain(
-        `export type TestQueryResult = Apollo.QueryResult<TestQuery, TestQueryVariables>;`
+        `export type TestQueryResult = Apollo.QueryResult<TestQuery, TestQueryVariables>;`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1559,12 +1598,14 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config, withResultType: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).not.toContain(`import * as ApolloReactCommon from '@apollo/react-common';`);
+      expect(content.prepend).not.toContain(
+        `import * as ApolloReactCommon from '@apollo/react-common';`,
+      );
       expect(content.content).not.toContain(
-        `export type TestQueryResult = Apollo.QueryResult<TestQuery, TestQueryVariables>;`
+        `export type TestQueryResult = Apollo.QueryResult<TestQuery, TestQueryVariables>;`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1578,11 +1619,13 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Apollo from '@apollo/client';`);
-      expect(content.content).toContain(`export type TestMutationResult = Apollo.MutationResult<TestMutation>;`);
+      expect(content.content).toContain(
+        `export type TestMutationResult = Apollo.MutationResult<TestMutation>;`,
+      );
       await validateTypeScript(content, schema, docs, {});
     });
 
@@ -1595,11 +1638,13 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config, withResultType: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toContain(`import * as Apollo from '@apollo/react-common';`);
-      expect(content.content).not.toContain(`export type TestMutationResult = Apollo.MutationResult<TestMutation>;`);
+      expect(content.content).not.toContain(
+        `export type TestMutationResult = Apollo.MutationResult<TestMutation>;`,
+      );
       await validateTypeScript(content, schema, docs, {});
     });
 
@@ -1612,12 +1657,12 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Apollo from '@apollo/client';`);
       expect(content.content).toContain(
-        `export type TestSubscriptionResult = Apollo.SubscriptionResult<TestSubscription>;`
+        `export type TestSubscriptionResult = Apollo.SubscriptionResult<TestSubscription>;`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1631,12 +1676,12 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config, withResultType: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toContain(`import * as Apollo from '@apollo/react-common';`);
       expect(content.content).not.toContain(
-        `export type TestSubscriptionResult = Apollo.SubscriptionResult<TestSubscription>;`
+        `export type TestSubscriptionResult = Apollo.SubscriptionResult<TestSubscription>;`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1664,7 +1709,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { withHooks: true, withComponent: false, withHOC: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -1698,7 +1743,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { withHooks: true, withComponent: false, withHOC: false, hooksSuffix: 'MySuffix' },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -1729,12 +1774,12 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Apollo from '@apollo/client';`);
       expect(content.content).toContain(
-        `export type TestMutationOptions = Apollo.BaseMutationOptions<TestMutation, TestMutationVariables>;`
+        `export type TestMutationOptions = Apollo.BaseMutationOptions<TestMutation, TestMutationVariables>;`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1748,12 +1793,14 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config, withMutationOptionsType: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).not.toContain(`import * as ApolloReactCommon from '@apollo/react-common';`);
+      expect(content.prepend).not.toContain(
+        `import * as ApolloReactCommon from '@apollo/react-common';`,
+      );
       expect(content.content).not.toContain(
-        `export type TestMutationOptions = Apollo.BaseMutationOptions<TestMutation, TestMutationVariables>;`
+        `export type TestMutationOptions = Apollo.BaseMutationOptions<TestMutation, TestMutationVariables>;`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1766,7 +1813,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toContain(`import * as ApolloReactCommon from 'react-apollo';`);
@@ -1782,7 +1829,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config, withMutationOptionsType: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toContain(`import * as ApolloReactCommon from 'react-apollo';`);
@@ -1799,7 +1846,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toContain(`import * as ApolloReactCommon from 'react-apollo';`);
@@ -1816,7 +1863,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config, withMutationOptionsType: false },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toContain(`import * as ApolloReactCommon from 'react-apollo';`);
@@ -1836,7 +1883,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.content).toContain(
         `export function refetchTestQuery(variables?: TestQueryVariables) {
       return { query: TestDocument, variables: variables }
-    }`
+    }`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1851,7 +1898,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.content).toContain(
         `export function refetchWithRequiredVariablesQuery(variables: WithRequiredVariablesQueryVariables) {
       return { query: WithRequiredVariablesDocument, variables: variables }
-    }`
+    }`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1866,7 +1913,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.content).toContain(
         `export function refetchWithNonNullDefaultVariablesQuery(variables?: WithNonNullDefaultVariablesQueryVariables) {
       return { query: WithNonNullDefaultVariablesDocument, variables: variables }
-    }`
+    }`,
       );
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1910,7 +1957,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
@@ -1928,11 +1975,11 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(
-        `[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode;`
+        `[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode;`,
       );
 
       // For issue #1599 - make sure there are not `loc` properties
@@ -1995,7 +2042,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toMatchSnapshot();
@@ -2030,7 +2077,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         { ...config },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toBeSimilarStringTo(`export const FeedFragmentFragmentDoc = gql`);
@@ -2067,7 +2114,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toBeSimilarStringTo(`export const FeedFragmentFragmentDoc = gql`);
@@ -2098,7 +2145,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).not.toBeSimilarStringTo(`export const FeedFragmentFragmentDoc = gql`);
@@ -2873,7 +2920,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toBeSimilarStringTo(`import * as Operations`);
@@ -2910,7 +2957,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).not.toBeSimilarStringTo(`import * as Operations`);
