@@ -1,8 +1,6 @@
+import { buildSchema } from 'graphql';
 import '@graphql-codegen/testing';
 import { getIntrospectedSchema, minifyIntrospectionQuery } from '@urql/introspection';
-
-import { buildSchema } from 'graphql';
-
 import { plugin, validate } from '../src/index.js';
 
 const schema = buildSchema(`
@@ -26,7 +24,11 @@ const schema = buildSchema(`
 `);
 
 // should only contain Unions and Interfaces
-const introspection = JSON.stringify(minifyIntrospectionQuery(getIntrospectedSchema(schema)), null, 2);
+const introspection = JSON.stringify(
+  minifyIntrospectionQuery(getIntrospectedSchema(schema)),
+  null,
+  2,
+);
 
 describe('Urql Introspection Plugin', () => {
   describe('validate', () => {
@@ -58,7 +60,9 @@ describe('Urql Introspection Plugin', () => {
       const allCases = extensions.concat(extensions.map(val => val.toUpperCase()));
 
       try {
-        await Promise.all(allCases.map(ext => validate(schema, [], { useTypeImports: true }, `foo${ext}`, [])));
+        await Promise.all(
+          allCases.map(ext => validate(schema, [], { useTypeImports: true }, `foo${ext}`, [])),
+        );
 
         throw new Error('DONE');
       } catch (e) {
@@ -84,7 +88,7 @@ describe('Urql Introspection Plugin', () => {
         {},
         {
           outputFile: 'foo.json',
-        }
+        },
       );
 
       expect(content).toEqual(introspection);
@@ -99,7 +103,7 @@ describe('Urql Introspection Plugin', () => {
         {},
         {
           outputFile: 'foo.js',
-        }
+        },
       );
       const jsxContent = await plugin(
         schema,
@@ -107,7 +111,7 @@ describe('Urql Introspection Plugin', () => {
         {},
         {
           outputFile: 'foo.jsx',
-        }
+        },
       );
       const output = `export default ${introspection}`;
 
@@ -124,7 +128,7 @@ describe('Urql Introspection Plugin', () => {
         },
         {
           outputFile: 'foo.js',
-        }
+        },
       );
       const jsxContent = await plugin(
         schema,
@@ -134,7 +138,7 @@ describe('Urql Introspection Plugin', () => {
         },
         {
           outputFile: 'foo.jsx',
-        }
+        },
       );
       const output = `
         module.exports = ${introspection}
@@ -153,7 +157,7 @@ describe('Urql Introspection Plugin', () => {
         {},
         {
           outputFile: 'foo.ts',
-        }
+        },
       );
       const tsxContent = await plugin(
         schema,
@@ -161,7 +165,7 @@ describe('Urql Introspection Plugin', () => {
         {},
         {
           outputFile: 'foo.tsx',
-        }
+        },
       );
       const output = `import { IntrospectionQuery } from 'graphql';
 export default ${introspection} as unknown as IntrospectionQuery;`;
@@ -179,7 +183,7 @@ export default ${introspection} as unknown as IntrospectionQuery;`;
         },
         {
           outputFile: 'foo.ts',
-        }
+        },
       );
       const tsxContent = await plugin(
         schema,
@@ -189,7 +193,7 @@ export default ${introspection} as unknown as IntrospectionQuery;`;
         },
         {
           outputFile: 'foo.tsx',
-        }
+        },
       );
       const output = `import { IntrospectionQuery } from 'graphql';
 export default ${introspection} as unknown as IntrospectionQuery;`;
@@ -207,7 +211,7 @@ export default ${introspection} as unknown as IntrospectionQuery;`;
         },
         {
           outputFile: 'foo.ts',
-        }
+        },
       );
       const tsxContent = await plugin(
         schema,
@@ -217,7 +221,7 @@ export default ${introspection} as unknown as IntrospectionQuery;`;
         },
         {
           outputFile: 'foo.tsx',
-        }
+        },
       );
       const output = `import type { IntrospectionQuery } from 'graphql';
 export default ${introspection} as unknown as IntrospectionQuery;`;
@@ -246,7 +250,12 @@ export default ${introspection} as unknown as IntrospectionQuery;`;
           foo: Int @myDirective
         }
       `);
-      const result = await plugin(schema, [], { includeDirectives: true }, { outputFile: 'foo.ts' });
+      const result = await plugin(
+        schema,
+        [],
+        { includeDirectives: true },
+        { outputFile: 'foo.ts' },
+      );
 
       expect(result).toContain('myDirective');
     });

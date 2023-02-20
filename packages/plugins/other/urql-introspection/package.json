@@ -1,6 +1,7 @@
 {
   "name": "@graphql-codegen/urql-introspection",
   "version": "2.2.1",
+  "type": "module",
   "description": "graphql-code-generate plugin for generating fragments matcher introspection file",
   "repository": {
     "type": "git",
@@ -8,21 +9,6 @@
     "directory": "packages/plugins/other/urql-introspection"
   },
   "license": "MIT",
-  "scripts": {
-    "lint": "eslint **/*.ts",
-    "test": "jest --no-watchman --config ../../../../jest.config.js"
-  },
-  "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^3.0.0",
-    "@urql/introspection": "^0.3.2",
-    "tslib": "~2.4.0"
-  },
-  "devDependencies": {
-    "@graphql-codegen/testing": "1.18.0"
-  },
-  "peerDependencies": {
-    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
-  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
@@ -43,12 +29,26 @@
     "./package.json": "./package.json"
   },
   "typings": "dist/typings/index.d.ts",
-  "typescript": {
-    "definition": "dist/typings/index.d.ts"
+  "scripts": {
+    "lint": "eslint **/*.ts",
+    "test": "jest --no-watchman --config ../../../../jest.config.js"
+  },
+  "peerDependencies": {
+    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
+  },
+  "dependencies": {
+    "@graphql-codegen/plugin-helpers": "^3.0.0",
+    "@urql/introspection": "^0.3.2",
+    "tslib": "~2.4.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/testing": "1.18.0"
   },
   "publishConfig": {
     "directory": "dist",
     "access": "public"
   },
-  "type": "module"
+  "typescript": {
+    "definition": "dist/typings/index.d.ts"
+  }
 }

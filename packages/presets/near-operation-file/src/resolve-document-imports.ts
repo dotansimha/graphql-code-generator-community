@@ -1,18 +1,23 @@
+import { FragmentDefinitionNode, GraphQLSchema } from 'graphql';
 import { isUsingTypes, Types } from '@graphql-codegen/plugin-helpers';
 import {
-  generateImportStatement,
-  ImportSource,
-  resolveImportSource,
   FragmentImport,
+  generateImportStatement,
   ImportDeclaration,
+  ImportSource,
   LoadedFragment,
+  resolveImportSource,
 } from '@graphql-codegen/visitor-plugin-common';
-import { FragmentDefinitionNode, GraphQLSchema } from 'graphql';
-import buildFragmentResolver from './fragment-resolver.js';
 import { Source } from '@graphql-tools/utils';
+import buildFragmentResolver from './fragment-resolver.js';
 
 export type FragmentRegistry = {
-  [fragmentName: string]: { location: string; importNames: string[]; onType: string; node: FragmentDefinitionNode };
+  [fragmentName: string]: {
+    location: string;
+    importNames: string[];
+    onType: string;
+    node: FragmentDefinitionNode;
+  };
 };
 
 export type DocumentImportResolverOptions = {
@@ -51,9 +56,14 @@ export function resolveDocumentImports<T>(
   presetOptions: Types.PresetFnArgs<T>,
   schemaObject: GraphQLSchema,
   importResolverOptions: DocumentImportResolverOptions,
-  dedupeFragments = false
+  dedupeFragments = false,
 ): Array<ResolveDocumentImportResult> {
-  const resolveFragments = buildFragmentResolver(importResolverOptions, presetOptions, schemaObject, dedupeFragments);
+  const resolveFragments = buildFragmentResolver(
+    importResolverOptions,
+    presetOptions,
+    schemaObject,
+    dedupeFragments,
+  );
   const { baseOutputDir, documents } = presetOptions;
   const { generateFilePath, schemaTypesSource, baseDir, typesImport } = importResolverOptions;
 
@@ -61,11 +71,17 @@ export function resolveDocumentImports<T>(
     try {
       const generatedFilePath = generateFilePath(documentFile.location);
       const importStatements: string[] = [];
-      const { externalFragments, fragmentImports } = resolveFragments(generatedFilePath, documentFile.document);
+      const { externalFragments, fragmentImports } = resolveFragments(
+        generatedFilePath,
+        documentFile.document,
+      );
 
       const externalFragmentsInjectedDocument = {
         ...documentFile.document,
-        definitions: [...documentFile.document.definitions, ...externalFragments.map(fragment => fragment.node)],
+        definitions: [
+          ...documentFile.document.definitions,
+          ...externalFragments.map(fragment => fragment.node),
+        ],
       };
 
       if (isUsingTypes(externalFragmentsInjectedDocument, [], schemaObject)) {
@@ -91,7 +107,7 @@ export function resolveDocumentImports<T>(
       throw new Error(
         `Unable to validate GraphQL document! \n
          File ${documentFile.location} caused error:
-         ${e.message || e.toString()}`
+         ${e.message || e.toString()}`,
       );
     }
   });

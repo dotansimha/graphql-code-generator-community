@@ -1,5 +1,5 @@
-import '@graphql-codegen/testing';
 import { buildSchema } from 'graphql';
+import '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
 
 describe('JSDoc Plugin', () => {
@@ -86,7 +86,7 @@ describe('JSDoc Plugin', () => {
         expect.stringContaining(`/**
  * @typedef {Object} Foo
  * @property {number} foo
- */`)
+ */`),
       );
     });
 
@@ -117,7 +117,7 @@ describe('JSDoc Plugin', () => {
         expect.stringContaining(`/**
  * @typedef {Object} FooInput
  * @property {number} foo
- */`)
+ */`),
       );
     });
 
@@ -162,9 +162,13 @@ describe('JSDoc Plugin', () => {
 
       expect(result).toEqual(expect.stringContaining('@property {Array<number>} foo'));
       expect(result).toEqual(expect.stringContaining('@property {Array<number>} [nullableFoo]'));
-      expect(result).toEqual(expect.stringContaining('@property {Array<(number|null|undefined)>} nullableItemsFoo'));
       expect(result).toEqual(
-        expect.stringContaining('@property {Array<(number|null|undefined)>} [nullableItemsNullableFoo]')
+        expect.stringContaining('@property {Array<(number|null|undefined)>} nullableItemsFoo'),
+      );
+      expect(result).toEqual(
+        expect.stringContaining(
+          '@property {Array<(number|null|undefined)>} [nullableItemsNullableFoo]',
+        ),
       );
     });
 
@@ -210,7 +214,9 @@ describe('JSDoc Plugin', () => {
       const config = {};
       const result = await plugin(schema, [], config, { outputFile: '' });
 
-      expect(result).toEqual(expect.stringContaining(`* @property {string} foo - DEPRECATED: ${warning}`));
+      expect(result).toEqual(
+        expect.stringContaining(`* @property {string} foo - DEPRECATED: ${warning}`),
+      );
     });
 
     it('should not generate [object Object] for directives', async () => {

@@ -1,13 +1,13 @@
-import { PluginFunction, getCachedDocumentNodeFromSchema } from '@graphql-codegen/plugin-helpers';
 import {
-  visit,
-  ListTypeNode,
+  concatAST,
   DocumentNode,
   FieldDefinitionNode,
-  concatAST,
   InputValueDefinitionNode,
+  ListTypeNode,
   StringValueNode,
+  visit,
 } from 'graphql';
+import { getCachedDocumentNodeFromSchema, PluginFunction } from '@graphql-codegen/plugin-helpers';
 import { DEFAULT_SCALARS, RawDocumentsConfig } from '@graphql-codegen/visitor-plugin-common';
 
 const transformScalar = (scalar: string) => {
@@ -42,7 +42,9 @@ const createDescriptionBlock = (nodeWithDesc: any | { description?: StringValueN
 
 export const plugin: PluginFunction<RawDocumentsConfig> = (schema, documents) => {
   const parsedSchema = getCachedDocumentNodeFromSchema(schema);
-  const mappedDocuments = documents.map(document => document.document).filter(document => document !== undefined);
+  const mappedDocuments = documents
+    .map(document => document.document)
+    .filter(document => document !== undefined);
   const ast = concatAST([parsedSchema, ...(mappedDocuments as Array<DocumentNode>)]);
 
   const schemaTypes = visit(ast, {
@@ -90,7 +92,10 @@ export const plugin: PluginFunction<RawDocumentsConfig> = (schema, documents) =>
     UnionTypeDefinition: {
       leave(node) {
         if (node.types !== undefined) {
-          return createDocBlock([createDescriptionBlock(node), `@typedef {(${node.types.join('|')})} ${node.name}`]);
+          return createDocBlock([
+            createDescriptionBlock(node),
+            `@typedef {(${node.types.join('|')})} ${node.name}`,
+          ]);
         }
 
         return node;
@@ -146,7 +151,8 @@ export const plugin: PluginFunction<RawDocumentsConfig> = (schema, documents) =>
       },
       leave(node: FieldDefinitionNode & { nonNullable?: boolean }) {
         const fieldName = node.nonNullable ? node.name : `[${node.name}]`;
-        const description = node.description && node.description.value ? ` - ${node.description.value}` : '';
+        const description =
+          node.description && node.description.value ? ` - ${node.description.value}` : '';
         const directives = node?.directives?.filter(d => d !== null && d !== undefined);
 
         return `@property {${node.type}} ${fieldName}${description}${directives}`;
@@ -194,7 +200,10 @@ export const plugin: PluginFunction<RawDocumentsConfig> = (schema, documents) =>
         /** If for some reason the enum does not contain any values we fallback to "any" or "*" */
         const valueType = values ? `(${values})` : '*';
 
-        return createDocBlock([createDescriptionBlock(node), `@typedef {${valueType}} ${node.name}`]);
+        return createDocBlock([
+          createDescriptionBlock(node),
+          `@typedef {${valueType}} ${node.name}`,
+        ]);
       },
     },
     OperationDefinition: {

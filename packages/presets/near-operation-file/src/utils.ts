@@ -1,15 +1,19 @@
 import { join } from 'path';
-import { DocumentNode, FragmentSpreadNode, FragmentDefinitionNode } from 'graphql';
-import { FragmentRegistry } from './fragment-resolver.js';
+import { DocumentNode, FragmentDefinitionNode, FragmentSpreadNode } from 'graphql';
 import parsePath from 'parse-filepath';
 import { oldVisit } from '@graphql-codegen/plugin-helpers';
+import { FragmentRegistry } from './fragment-resolver.js';
 
 export function defineFilepathSubfolder(baseFilePath: string, folder: string) {
   const parsedPath = parsePath(baseFilePath);
   return join(parsedPath.dir, folder, parsedPath.base).replace(/\\/g, '/');
 }
 
-export function appendFileNameToFilePath(baseFilePath: string, fileName: string, extension: string) {
+export function appendFileNameToFilePath(
+  baseFilePath: string,
+  fileName: string,
+  extension: string,
+) {
   const parsedPath = parsePath(baseFilePath);
   const name = fileName || parsedPath.name;
 
@@ -20,7 +24,7 @@ export function extractExternalFragmentsInUse(
   documentNode: DocumentNode | FragmentDefinitionNode,
   fragmentNameToFile: FragmentRegistry,
   result: { [fragmentName: string]: number } = {},
-  level = 0
+  level = 0,
 ): { [fragmentName: string]: number } {
   const ignoreList: Set<string> = new Set();
 
@@ -48,7 +52,7 @@ export function extractExternalFragmentsInUse(
               fragmentNameToFile[node.name.value].node,
               fragmentNameToFile,
               result,
-              level + 1
+              level + 1,
             );
           }
         }

@@ -1,8 +1,8 @@
+import path from 'path';
+import { buildASTSchema, buildSchema, parse } from 'graphql';
 import { executeCodegen } from '@graphql-codegen/cli';
 import { getCachedDocumentNodeFromSchema, Types } from '@graphql-codegen/plugin-helpers';
 import { generateFragmentImportStatement } from '@graphql-codegen/visitor-plugin-common';
-import { buildASTSchema, buildSchema, parse } from 'graphql';
-import path from 'path';
 import { preset } from '../src/index.js';
 
 describe('near-operation-file preset', () => {
@@ -250,7 +250,7 @@ describe('near-operation-file preset', () => {
             }
           }
         `,
-        `import { PageFragmentDoc, PageFragment, BookFragmentDoc, BookFragment } from './fragments.generated';`
+        `import { PageFragmentDoc, PageFragment, BookFragmentDoc, BookFragment } from './fragments.generated';`,
       );
 
       // Try to flip the order of operations to see if it's still works
@@ -268,7 +268,7 @@ describe('near-operation-file preset', () => {
             }
           }
         `,
-        `import { BookFragmentDoc, BookFragment, PageFragmentDoc, PageFragment } from './fragments.generated';`
+        `import { BookFragmentDoc, BookFragment, PageFragmentDoc, PageFragment } from './fragments.generated';`,
       );
     });
 
@@ -320,11 +320,11 @@ describe('near-operation-file preset', () => {
           {
             'typescript-react-apollo': {},
           },
-        ])
+        ]),
       );
 
       expect(getFragmentImportsFromResult(result)).toContain(
-        `import { UserFieldsFragmentDoc, UserFieldsFragment } from './user-fragment.generated';`
+        `import { UserFieldsFragmentDoc, UserFieldsFragment } from './user-fragment.generated';`,
       );
     });
 
@@ -374,11 +374,11 @@ describe('near-operation-file preset', () => {
           {
             'typescript-react-apollo': {},
           },
-        ])
+        ]),
       );
 
       expect(getFragmentImportsFromResult(result)).toContain(
-        `import { UserFieldsFragmentFragmentDoc, UserFieldsFragmentFragment } from './user-fragment.generated';`
+        `import { UserFieldsFragmentFragmentDoc, UserFieldsFragmentFragment } from './user-fragment.generated';`,
       );
     });
 
@@ -486,7 +486,9 @@ describe('near-operation-file preset', () => {
         },
       });
 
-      const queriesContent = result.find(generatedDoc => generatedDoc.filename.match(/issue-6546-queries/)).content;
+      const queriesContent = result.find(generatedDoc =>
+        generatedDoc.filename.match(/issue-6546-queries/),
+      ).content;
       const imports = queriesContent.match(/import.*UsernameFragmentFragmentDoc/g);
       expect(imports).toHaveLength(1);
     });
@@ -548,7 +550,7 @@ describe('near-operation-file preset', () => {
 
       for (const o of result) {
         expect(o.plugins).toEqual(
-          expect.arrayContaining([{ add: { content: `import * as Types from '../types';\n` } }])
+          expect.arrayContaining([{ add: { content: `import * as Types from '../types';\n` } }]),
         );
       }
     });
@@ -583,7 +585,9 @@ describe('near-operation-file preset', () => {
         },
       });
 
-      const parentContent = result.find(generatedDoc => generatedDoc.filename.match(/issue-7798-parent/)).content;
+      const parentContent = result.find(generatedDoc =>
+        generatedDoc.filename.match(/issue-7798-parent/),
+      ).content;
       const imports = parentContent.match(/import.*UserNameFragment/g);
       expect(imports).toHaveLength(1);
     });
@@ -770,7 +774,7 @@ describe('near-operation-file preset', () => {
             content: `import * as Types from '../types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -796,7 +800,7 @@ describe('near-operation-file preset', () => {
             content: `import * as Types from '@custom-package/types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -825,7 +829,7 @@ describe('near-operation-file preset', () => {
             content: `import * as Types from '../types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -853,7 +857,7 @@ describe('near-operation-file preset', () => {
         ],
         plugins: [{ typescript: {} }],
         pluginMap: { typescript: {} as any },
-      })
+      }),
     ).toThrow('Multiple fragments with the name(s) "UserFields" were found.');
   });
 
@@ -871,7 +875,7 @@ describe('near-operation-file preset', () => {
         documents: [testDocuments[1], testDocuments[1]],
         plugins: [{ typescript: {} }],
         pluginMap: { typescript: {} as any },
-      })
+      }),
     ).not.toThrow('Multiple fragments with the name(s) "UserFields" were found.');
   });
 
@@ -903,7 +907,7 @@ describe('near-operation-file preset', () => {
     });
 
     expect(result.map(o => o.plugins)[0]).not.toEqual(
-      expect.arrayContaining([{ add: { content: `import * as Types from '../types.js';\n` } }])
+      expect.arrayContaining([{ add: { content: `import * as Types from '../types.js';\n` } }]),
     );
   });
 
@@ -941,7 +945,7 @@ describe('near-operation-file preset', () => {
             content: `import * as Types from './src/types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -972,7 +976,7 @@ describe('near-operation-file preset', () => {
             content: `import * as Types from '../../../types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -1003,7 +1007,7 @@ describe('near-operation-file preset', () => {
             content: `import * as Types from './types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -1034,7 +1038,7 @@ describe('near-operation-file preset', () => {
             content: `import * as Types from '@internal/types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -1099,11 +1103,11 @@ describe('near-operation-file preset', () => {
         {
           'typescript-react-apollo': {},
         },
-      ])
+      ]),
     );
 
     expect(getFragmentImportsFromResult(result)).toContain(
-      `import { UserFieldsFragmentDoc, UserFieldsFragment } from './user-fragment.generated';`
+      `import { UserFieldsFragmentDoc, UserFieldsFragment } from './user-fragment.generated';`,
     );
   });
 
@@ -1126,7 +1130,9 @@ describe('near-operation-file preset', () => {
 
     expect(spy.mock.calls.length).toBe(1);
     expect(spy.mock.calls[0][1]).toBe('/some/deep/path/src/graphql/me-query.generated.ts');
-    expect(spy.mock.calls[0][0].path).toBe('/some/deep/path/src/graphql/user-fragment.generated.ts');
+    expect(spy.mock.calls[0][0].path).toBe(
+      '/some/deep/path/src/graphql/user-fragment.generated.ts',
+    );
   });
 
   it('Should allow external fragments to be imported from packages', async () => {
@@ -1155,11 +1161,11 @@ describe('near-operation-file preset', () => {
         {
           'typescript-react-apollo': {},
         },
-      ])
+      ]),
     );
 
     expect(getFragmentImportsFromResult(result)).toContain(
-      `import { UserFieldsFragmentDoc, UserFieldsFragment } from '@fragments';`
+      `import { UserFieldsFragmentDoc, UserFieldsFragment } from '@fragments';`,
     );
   });
 
@@ -1185,7 +1191,7 @@ describe('near-operation-file preset', () => {
     });
 
     expect(getFragmentImportsFromResult(result)).toContain(
-      `import { UserFieldsFragmentDoc, UserFieldsFragment } from '../../../user-fragment.generated';`
+      `import { UserFieldsFragmentDoc, UserFieldsFragment } from '../../../user-fragment.generated';`,
     );
   });
 
@@ -1211,7 +1217,7 @@ describe('near-operation-file preset', () => {
     });
 
     expect(getFragmentImportsFromResult(result)).toContain(
-      `import { UserFieldsFragmentDoc, UserFieldsFragment } from './nested/down/here/user-fragment.generated';`
+      `import { UserFieldsFragmentDoc, UserFieldsFragment } from './nested/down/here/user-fragment.generated';`,
     );
   });
 
@@ -1298,15 +1304,19 @@ describe('near-operation-file preset', () => {
       schemaAst: buildASTSchema(testSchema),
       documents: operations,
       plugins: [{ typescript: {} }, { 'typescript-operations': {} }, { 'typed-document-node': {} }],
-      pluginMap: { typescript: {} as any, 'typescript-operations': {} as any, 'typed-document-node': {} as any },
+      pluginMap: {
+        typescript: {} as any,
+        'typescript-operations': {} as any,
+        'typed-document-node': {} as any,
+      },
     });
 
     expect(getFragmentImportsFromResult(result)).toContain(
-      `import { MyGroupFragmentFragmentDoc, MyGroupFragmentFragment } from './fragments/MyGroupFragment';`
+      `import { MyGroupFragmentFragmentDoc, MyGroupFragmentFragment } from './fragments/MyGroupFragment';`,
     );
 
     expect(getFragmentImportsFromResult(result)).toContain(
-      `import { AnotherGroupFragmentFragmentDoc, AnotherGroupFragmentFragment } from './fragments/AnotherGroupFragment';`
+      `import { AnotherGroupFragmentFragmentDoc, AnotherGroupFragmentFragment } from './fragments/AnotherGroupFragment';`,
     );
   });
 
@@ -1375,11 +1385,15 @@ describe('near-operation-file preset', () => {
       schemaAst: buildASTSchema(schema),
       documents: operations,
       plugins: [{ typescript: {} }, { 'typescript-operations': {} }, { 'typed-document-node': {} }],
-      pluginMap: { typescript: {} as any, 'typescript-operations': {} as any, 'typed-document-node': {} as any },
+      pluginMap: {
+        typescript: {} as any,
+        'typescript-operations': {} as any,
+        'typed-document-node': {} as any,
+      },
     });
 
     expect(getFragmentImportsFromResult(result, 1)).toContain(
-      `import { AuthorFragmentDoc, AuthorFragment, AddressFragmentDoc, AddressFragment } from './author';`
+      `import { AuthorFragmentDoc, AuthorFragment, AddressFragmentDoc, AddressFragment } from './author';`,
     );
   });
 });
