@@ -488,10 +488,7 @@ export const useInfiniteCommentQuery = <TData = CommentQuery, TError = unknown>(
         dataSource.endpoint,
         dataSource.fetchParams || {},
         CommentDocument,
-        {
-          ...variables,
-          ...(metaData.pageParam ?? {}),
-        },
+        { ...variables, ...(metaData.pageParam ?? {}) },
       )(),
     options,
   );
@@ -580,10 +577,7 @@ export const useInfiniteFeedQuery = <TData = FeedQuery, TError = unknown>(
         dataSource.endpoint,
         dataSource.fetchParams || {},
         FeedDocument,
-        {
-          ...variables,
-          ...(metaData.pageParam ?? {}),
-        },
+        { ...variables, ...(metaData.pageParam ?? {}) },
       )(),
     options,
   );
