@@ -1,47 +1,47 @@
+import { pascalCase } from 'change-case-all';
 import {
-  ParsedConfig,
-  BaseVisitor,
-  EnumValuesMap,
-  indentMultiline,
-  indent,
-  getBaseTypeNode,
-  buildScalarsFromConfig,
-} from '@graphql-codegen/visitor-plugin-common';
-import { CSharpResolversPluginRawConfig } from './config.js';
-import {
-  GraphQLSchema,
+  DirectiveNode,
   EnumTypeDefinitionNode,
   EnumValueDefinitionNode,
-  InterfaceTypeDefinitionNode,
-  InputObjectTypeDefinitionNode,
-  ObjectTypeDefinitionNode,
   FieldDefinitionNode,
+  GraphQLSchema,
+  InputObjectTypeDefinitionNode,
   InputValueDefinitionNode,
-  TypeNode,
-  Kind,
-  isScalarType,
-  isInputObjectType,
+  InterfaceTypeDefinitionNode,
   isEnumType,
-  DirectiveNode,
-  StringValueNode,
+  isInputObjectType,
+  isScalarType,
+  Kind,
   NamedTypeNode,
+  ObjectTypeDefinitionNode,
+  StringValueNode,
+  TypeNode,
 } from 'graphql';
 import {
   C_SHARP_SCALARS,
-  CSharpDeclarationBlock,
-  transformComment,
-  isValueType,
-  getListInnerTypeNode,
-  CSharpFieldType,
   convertSafeName,
-  wrapFieldType,
+  CSharpDeclarationBlock,
+  CSharpFieldType,
+  getListInnerTypeNode,
   getListTypeField,
+  isValueType,
+  transformComment,
+  wrapFieldType,
 } from '@graphql-codegen/c-sharp-common';
-import { pascalCase } from 'change-case-all';
 import {
+  BaseVisitor,
+  buildScalarsFromConfig,
+  EnumValuesMap,
+  getBaseTypeNode,
+  indent,
+  indentMultiline,
+  ParsedConfig,
+} from '@graphql-codegen/visitor-plugin-common';
+import { CSharpResolversPluginRawConfig } from './config.js';
+import {
+  getJsonAttributeSourceConfiguration,
   JsonAttributesSource,
   JsonAttributesSourceConfiguration,
-  getJsonAttributeSourceConfiguration,
 } from './json-attributes.js';
 
 export interface CSharpResolverParsedConfig extends ParsedConfig {
@@ -54,7 +54,10 @@ export interface CSharpResolverParsedConfig extends ParsedConfig {
   jsonAttributesSource: JsonAttributesSource;
 }
 
-export class CSharpResolversVisitor extends BaseVisitor<CSharpResolversPluginRawConfig, CSharpResolverParsedConfig> {
+export class CSharpResolversVisitor extends BaseVisitor<
+  CSharpResolversPluginRawConfig,
+  CSharpResolverParsedConfig
+> {
   private readonly jsonAttributesConfiguration: JsonAttributesSourceConfiguration;
 
   constructor(rawConfig: CSharpResolversPluginRawConfig, private _schema: GraphQLSchema) {
@@ -70,12 +73,18 @@ export class CSharpResolversVisitor extends BaseVisitor<CSharpResolversPluginRaw
     });
 
     if (this._parsedConfig.emitJsonAttributes) {
-      this.jsonAttributesConfiguration = getJsonAttributeSourceConfiguration(this._parsedConfig.jsonAttributesSource);
+      this.jsonAttributesConfiguration = getJsonAttributeSourceConfiguration(
+        this._parsedConfig.jsonAttributesSource,
+      );
     }
   }
 
   public getImports(): string {
-    const allImports = ['System', 'System.Collections.Generic', 'System.ComponentModel.DataAnnotations'];
+    const allImports = [
+      'System',
+      'System.Collections.Generic',
+      'System.ComponentModel.DataAnnotations',
+    ];
     if (this._parsedConfig.emitJsonAttributes) {
       const jsonAttributesNamespace = this.jsonAttributesConfiguration.namespace;
       allImports.push(jsonAttributesNamespace);
@@ -120,7 +129,9 @@ export class CSharpResolversVisitor extends BaseVisitor<CSharpResolversPluginRaw
 
   EnumTypeDefinition(node: EnumTypeDefinitionNode): string {
     const enumName = this.convertName(node.name);
-    const enumValues = node.values.map(enumValue => (enumValue as any)(node.name.value)).join(',\n');
+    const enumValues = node.values
+      .map(enumValue => (enumValue as any)(node.name.value))
+      .join(',\n');
     const enumBlock = [enumValues].join('\n');
 
     return new CSharpDeclarationBlock()
@@ -133,7 +144,7 @@ export class CSharpResolversVisitor extends BaseVisitor<CSharpResolversPluginRaw
 
   getFieldHeader(
     node: InputValueDefinitionNode | FieldDefinitionNode | EnumValueDefinitionNode,
-    fieldType?: CSharpFieldType
+    fieldType?: CSharpFieldType,
   ): string {
     const attributes = [];
     const commentText = transformComment(node.description?.value);
@@ -189,7 +200,10 @@ export class CSharpResolversVisitor extends BaseVisitor<CSharpResolversPluginRaw
     return reason;
   }
 
-  protected resolveInputFieldType(typeNode: TypeNode, hasDefaultValue: Boolean = false): CSharpFieldType {
+  protected resolveInputFieldType(
+    typeNode: TypeNode,
+    hasDefaultValue: Boolean = false,
+  ): CSharpFieldType {
     const innerType = getBaseTypeNode(typeNode);
     const schemaType = this._schema.getType(innerType.name.value);
     const listType = getListTypeField(typeNode);
@@ -259,18 +273,23 @@ export class CSharpResolversVisitor extends BaseVisitor<CSharpResolversPluginRaw
     name: string,
     description: StringValueNode,
     inputValueArray: ReadonlyArray<FieldDefinitionNode>,
-    interfaces?: ReadonlyArray<NamedTypeNode>
+    interfaces?: ReadonlyArray<NamedTypeNode>,
   ): string {
     const classSummary = transformComment(description?.value);
     const interfaceImpl =
-      interfaces && interfaces.length > 0 ? ` : ${interfaces.map(ntn => ntn.name.value).join(', ')}` : '';
+      interfaces && interfaces.length > 0
+        ? ` : ${interfaces.map(ntn => ntn.name.value).join(', ')}`
+        : '';
     const recordMembers = inputValueArray
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
         const fieldHeader = this.getFieldHeader(arg, fieldType);
         const fieldName = convertSafeName(pascalCase(this.convertName(arg.name)));
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
-        return fieldHeader + indent(`public ${csharpFieldType} ${fieldName} { get; init; } = ${fieldName};`);
+        return (
+          fieldHeader +
+          indent(`public ${csharpFieldType} ${fieldName} { get; init; } = ${fieldName};`)
+        );
       })
       .join('\n\n');
     const recordInitializer = inputValueArray
@@ -295,11 +314,13 @@ ${recordMembers}
     name: string,
     description: StringValueNode,
     inputValueArray: ReadonlyArray<FieldDefinitionNode>,
-    interfaces?: ReadonlyArray<NamedTypeNode>
+    interfaces?: ReadonlyArray<NamedTypeNode>,
   ): string {
     const classSummary = transformComment(description?.value);
     const interfaceImpl =
-      interfaces && interfaces.length > 0 ? ` : ${interfaces.map(ntn => ntn.name.value).join(', ')}` : '';
+      interfaces && interfaces.length > 0
+        ? ` : ${interfaces.map(ntn => ntn.name.value).join(', ')}`
+        : '';
     const classMembers = inputValueArray
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
@@ -323,7 +344,7 @@ ${classMembers}
   protected buildInterface(
     name: string,
     description: StringValueNode,
-    inputValueArray: ReadonlyArray<FieldDefinitionNode>
+    inputValueArray: ReadonlyArray<FieldDefinitionNode>,
   ): string {
     const classSummary = transformComment(description?.value);
     const classMembers = inputValueArray
@@ -359,7 +380,7 @@ ${classMembers}
   protected buildInputTransformer(
     name: string,
     description: StringValueNode,
-    inputValueArray: ReadonlyArray<InputValueDefinitionNode>
+    inputValueArray: ReadonlyArray<InputValueDefinitionNode>,
   ): string {
     const classSummary = transformComment(description?.value);
     const classMembers = inputValueArray
@@ -390,7 +411,8 @@ ${classMembers}
       var value = propertyInfo.GetValue(this);
       var defaultValue = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null;
 ${
-  this._parsedConfig.emitJsonAttributes && this.jsonAttributesConfiguration.requiredAttribute != null
+  this._parsedConfig.emitJsonAttributes &&
+  this.jsonAttributesConfiguration.requiredAttribute != null
     ? `
       var requiredProp = propertyInfo.GetCustomAttributes(typeof(${this.jsonAttributesConfiguration.requiredAttribute}Attribute), false).Length > 0;
 `
