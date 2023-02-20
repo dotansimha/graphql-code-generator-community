@@ -1,3 +1,5 @@
+import autoBind from 'auto-bind';
+import { GraphQLSchema, Kind, OperationDefinitionNode, print } from 'graphql';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
@@ -6,8 +8,6 @@ import {
   indentMultiline,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import autoBind from 'auto-bind';
-import { GraphQLSchema, Kind, OperationDefinitionNode, print } from 'graphql';
 import { RawGenericSdkPluginConfig } from './config.js';
 
 export interface GenericSdkPluginConfig extends ClientSideBasePluginConfig {
@@ -28,7 +28,10 @@ function isStreamOperation(operationAST: OperationDefinitionNode) {
   return false;
 }
 
-export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPluginConfig, GenericSdkPluginConfig> {
+export class GenericSdkVisitor extends ClientSideBaseVisitor<
+  RawGenericSdkPluginConfig,
+  GenericSdkPluginConfig
+> {
   private _externalImportPrefix: string;
   private _operationsToInclude: {
     node: OperationDefinitionNode;
@@ -38,7 +41,11 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPlugin
     operationVariablesTypes: string;
   }[] = [];
 
-  constructor(schema: GraphQLSchema, fragments: LoadedFragment[], rawConfig: RawGenericSdkPluginConfig) {
+  constructor(
+    schema: GraphQLSchema,
+    fragments: LoadedFragment[],
+    rawConfig: RawGenericSdkPluginConfig,
+  ) {
     super(schema, fragments, rawConfig, {
       usingObservableFrom: rawConfig.usingObservableFrom,
       rawRequest: getConfigValue(rawConfig.rawRequest, false),
@@ -52,13 +59,17 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPlugin
     const importType = this.config.useTypeImports ? 'import type' : 'import';
     if (this.config.documentMode !== DocumentMode.string) {
       this._additionalImports.push(
-        `${importType} { DocumentNode${this.config.rawRequest ? ', ExecutionResult' : ''} } from 'graphql';`
+        `${importType} { DocumentNode${
+          this.config.rawRequest ? ', ExecutionResult' : ''
+        } } from 'graphql';`,
       );
     } else if (this.config.rawRequest) {
       this._additionalImports.push(`${importType} { ExecutionResult } from 'graphql';`);
     }
 
-    this._externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
+    this._externalImportPrefix = this.config.importOperationTypesFrom
+      ? `${this.config.importOperationTypesFrom}.`
+      : '';
   }
 
   protected buildOperation(
@@ -66,13 +77,15 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPlugin
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     operationResultType = this._externalImportPrefix + operationResultType;
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
 
     if (node.name == null) {
-      throw new Error("Plugin 'generic-sdk' cannot generate SDK for unnamed operation.\n\n" + print(node));
+      throw new Error(
+        "Plugin 'generic-sdk' cannot generate SDK for unnamed operation.\n\n" + print(node),
+      );
     } else {
       this._operationsToInclude.push({
         node,
@@ -100,9 +113,15 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPlugin
         const optionalVariables =
           !o.node.variableDefinitions ||
           o.node.variableDefinitions.length === 0 ||
-          o.node.variableDefinitions.every(v => v.type.kind !== Kind.NON_NULL_TYPE || v.defaultValue);
+          o.node.variableDefinitions.every(
+            v => v.type.kind !== Kind.NON_NULL_TYPE || v.defaultValue,
+          );
         const docVarName = this.getDocumentNodeVariable(o.documentVariableName);
-        const returnType = isStreamOperation(o.node) ? (usingObservable ? 'Observable' : 'AsyncIterable') : 'Promise';
+        const returnType = isStreamOperation(o.node)
+          ? usingObservable
+            ? 'Observable'
+            : 'AsyncIterable'
+          : 'Promise';
         const resultData = this.config.rawRequest
           ? `ExecutionResult<${o.operationResultType}, E>`
           : o.operationResultType;
@@ -116,9 +135,12 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<RawGenericSdkPlugin
       })
       .map(s => indentMultiline(s, 2));
 
-    const documentNodeType = this.config.documentMode === DocumentMode.string ? 'string' : 'DocumentNode';
+    const documentNodeType =
+      this.config.documentMode === DocumentMode.string ? 'string' : 'DocumentNode';
     const resultData = this.config.rawRequest ? 'ExecutionResult<R, E>' : 'R';
-    const returnType = `Promise<${resultData}> | ${usingObservable ? 'Observable' : 'AsyncIterable'}<${resultData}>`;
+    const returnType = `Promise<${resultData}> | ${
+      usingObservable ? 'Observable' : 'AsyncIterable'
+    }<${resultData}>`;
 
     return `export type Requester<C = {}, E = unknown> = <R, V>(doc: ${documentNodeType}, vars?: V, options?: C) => ${returnType}
 export function getSdk<C, E>(requester: Requester<C, E>) {

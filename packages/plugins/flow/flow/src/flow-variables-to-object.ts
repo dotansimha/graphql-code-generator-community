@@ -1,5 +1,5 @@
+import { Kind, TypeNode } from 'graphql';
 import { OperationVariablesToObject } from '@graphql-codegen/visitor-plugin-common';
-import { TypeNode, Kind } from 'graphql';
 
 export class FlowOperationVariablesToObject extends OperationVariablesToObject {
   private clearOptional(str: string): string {
@@ -16,7 +16,11 @@ export class FlowOperationVariablesToObject extends OperationVariablesToObject {
     return `$ElementType<${prefix}Scalars, '${name}'>`;
   }
 
-  public wrapAstTypeWithModifiers(baseType: string, typeNode: TypeNode, applyCoercion = false): string {
+  public wrapAstTypeWithModifiers(
+    baseType: string,
+    typeNode: TypeNode,
+    applyCoercion = false,
+  ): string {
     if (typeNode.kind === Kind.NON_NULL_TYPE) {
       const type = this.wrapAstTypeWithModifiers(baseType, typeNode.type, applyCoercion);
 
@@ -31,14 +35,22 @@ export class FlowOperationVariablesToObject extends OperationVariablesToObject {
     return `?${baseType}`;
   }
 
-  protected formatFieldString(fieldName: string, isNonNullType: boolean, hasDefaultValue: boolean): string {
+  protected formatFieldString(
+    fieldName: string,
+    isNonNullType: boolean,
+    hasDefaultValue: boolean,
+  ): string {
     if (hasDefaultValue || isNonNullType) {
       return fieldName;
     }
     return `${fieldName}?`;
   }
 
-  protected formatTypeString(fieldType: string, isNonNullType: boolean, hasDefaultValue: boolean): string {
+  protected formatTypeString(
+    fieldType: string,
+    isNonNullType: boolean,
+    hasDefaultValue: boolean,
+  ): string {
     if (hasDefaultValue && !isNonNullType) {
       return this.clearOptional(fieldType);
     }

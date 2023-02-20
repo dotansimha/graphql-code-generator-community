@@ -1,9 +1,9 @@
+import { buildSchema } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
 import { resolversTestingSchema } from '@graphql-codegen/testing';
-import { plugin } from '../src/index.js';
-import { buildSchema } from 'graphql';
 import { validateFlow as validate } from '../../flow/tests/validate-flow.js';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import { plugin } from '../src/index.js';
 
 describe('ResolversTypes', () => {
   it('Should build ResolversTypes object when there are no mappers', async () => {
@@ -38,7 +38,7 @@ describe('ResolversTypes', () => {
           String: 'number',
         },
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -71,7 +71,7 @@ describe('ResolversTypes', () => {
         },
         defaultMapper: 'any',
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -102,7 +102,7 @@ describe('ResolversTypes', () => {
           MyType: './my-module#MyTypeDb',
         },
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -154,7 +154,7 @@ describe('ResolversTypes', () => {
       },
       {
         outputFile: 'graphql.ts',
-      }
+      },
     );
 
     expect(spy).toHaveBeenCalledWith('Unused mappers: Post');
@@ -192,7 +192,7 @@ describe('ResolversTypes', () => {
       },
       {
         outputFile: 'graphql.ts',
-      }
+      },
     );
 
     expect(spy).not.toHaveBeenCalled();
@@ -208,7 +208,7 @@ describe('ResolversTypes', () => {
           MyOtherType: './my-file#MyCustomOtherType',
         },
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.prepend).toContain(`import { MyCustomOtherType } from './my-file';`);
@@ -291,7 +291,7 @@ describe('ResolversTypes', () => {
           MyOtherType: './my-file#MyCustomOtherType',
         },
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.prepend).toContain(`import { MyCustomOtherType } from './my-file';`);
@@ -373,7 +373,7 @@ describe('ResolversTypes', () => {
           Node: 'MyNodeType',
         },
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -453,7 +453,7 @@ describe('ResolversTypes', () => {
       {
         defaultMapper: 'any',
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -531,7 +531,7 @@ describe('ResolversTypes', () => {
       {
         defaultMapper: './my-file#MyBaseType',
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.prepend).toContain(`import { MyBaseType } from './my-file';`);
@@ -613,7 +613,7 @@ describe('ResolversTypes', () => {
           MyOtherType: 'MyOtherTypeCustom',
         },
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -645,7 +645,7 @@ describe('ResolversTypes', () => {
           MyOtherType: 'MyOtherTypeCustom',
         },
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -675,7 +675,7 @@ describe('ResolversTypes', () => {
       {
         defaultMapper: '$Shape<{T}>',
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -704,7 +704,7 @@ describe('ResolversTypes', () => {
       {
         defaultMapper: './my-wrapper#CustomPartial<{T}>',
       },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.prepend).toContain(`import { CustomPartial } from './my-wrapper';`);

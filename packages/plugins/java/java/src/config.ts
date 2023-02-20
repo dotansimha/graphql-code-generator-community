@@ -1,4 +1,4 @@
-import { RawConfig, EnumValuesMap } from '@graphql-codegen/visitor-plugin-common';
+import { EnumValuesMap, RawConfig } from '@graphql-codegen/visitor-plugin-common';
 
 /**
  * @description You can use this plugin to generate Java enums based on your GraphQL schema, and it also generates a type-safe Java transformer for GraphQL `input` types.

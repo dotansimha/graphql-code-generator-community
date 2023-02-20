@@ -1,5 +1,5 @@
-import '@graphql-codegen/testing';
 import { buildSchema } from 'graphql';
+import '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
 
 const OUTPUT_FILE = 'com/kotlin/generated/resolvers.kt';
@@ -89,7 +89,12 @@ describe('Kotlin', () => {
     });
 
     it('Should use the package name provided from the config', async () => {
-      const result = await plugin(schema, [], { package: 'com.my.package' }, { outputFile: OUTPUT_FILE });
+      const result = await plugin(
+        schema,
+        [],
+        { package: 'com.my.package' },
+        { outputFile: OUTPUT_FILE },
+      );
 
       expect(result).toContain(`package com.my.package\n`);
     });
@@ -125,7 +130,7 @@ describe('Kotlin', () => {
             },
           },
         },
-        { outputFile: OUTPUT_FILE }
+        { outputFile: OUTPUT_FILE },
       );
 
       expect(result).toContain(`Admin("AdminRoleValue"),`);

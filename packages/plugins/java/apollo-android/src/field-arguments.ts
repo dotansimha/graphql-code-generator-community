@@ -1,16 +1,16 @@
 import {
-  FieldNode,
   ArgumentNode,
-  ObjectValueNode,
-  ObjectFieldNode,
-  VariableNode,
-  StringValueNode,
-  IntValueNode,
+  FieldNode,
   FloatValueNode,
+  IntValueNode,
+  ObjectFieldNode,
+  ObjectValueNode,
+  StringValueNode,
+  VariableNode,
 } from 'graphql';
-import { ImportsSet } from './types.js';
-import { Imports } from './imports.js';
 import { oldVisit } from '@graphql-codegen/plugin-helpers';
+import { Imports } from './imports.js';
+import { ImportsSet } from './types.js';
 
 export function visitFieldArguments(selection: FieldNode, imports: ImportsSet): string {
   if (!selection.arguments || selection.arguments.length === 0) {
@@ -25,14 +25,20 @@ export function visitFieldArguments(selection: FieldNode, imports: ImportsSet): 
     leave: {
       Field: (node: FieldNode) => {
         return (
-          `new UnmodifiableMapBuilder<String, Object>(${node.arguments.length})` + node.arguments.join('') + '.build()'
+          `new UnmodifiableMapBuilder<String, Object>(${node.arguments.length})` +
+          node.arguments.join('') +
+          '.build()'
         );
       },
       Argument: (node: ArgumentNode) => {
         return `.put("${node.name.value}", ${node.value})`;
       },
       ObjectValue: (node: ObjectValueNode) => {
-        return `new UnmodifiableMapBuilder<String, Object>(${node.fields.length})` + node.fields.join('') + '.build()';
+        return (
+          `new UnmodifiableMapBuilder<String, Object>(${node.fields.length})` +
+          node.fields.join('') +
+          '.build()'
+        );
       },
       ObjectField: (node: ObjectFieldNode) => {
         return `.put("${node.name.value}", ${node.value})`;

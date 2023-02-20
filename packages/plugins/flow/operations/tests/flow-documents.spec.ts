@@ -1,8 +1,8 @@
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import { buildClientSchema, buildSchema, parse } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
-import { parse, buildClientSchema, buildSchema } from 'graphql';
-import { plugin } from '../src/index.js';
 import { validateFlow } from '../../flow/tests/validate-flow.js';
+import { plugin } from '../src/index.js';
 
 describe('Flow Operations Plugin', () => {
   const gitHuntSchema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
@@ -103,7 +103,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           { namingConvention: 'change-case-all#lowerCase' },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -155,7 +155,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           { typesPrefix: 'i', namingConvention: 'change-case-all#lowerCase' },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -201,7 +201,12 @@ describe('Flow Operations Plugin', () => {
         }
       `);
       const result = mergeOutputs([
-        await plugin(schema, [{ location: '', document: ast }], { namespacedImportName: 'Types' }, { outputFile: '' }),
+        await plugin(
+          schema,
+          [{ location: '', document: ast }],
+          { namespacedImportName: 'Types' },
+          { outputFile: '' },
+        ),
       ]);
 
       expect(result).toMatchSnapshot();
@@ -226,7 +231,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
       expect(result).not.toContain(`__typename`);
@@ -250,7 +255,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           {},
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
       expect(result).toBeSimilarStringTo(`
@@ -278,7 +283,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           {},
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
       expect(result).toBeSimilarStringTo(`
@@ -307,7 +312,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
       expect(result).toBeSimilarStringTo(`
@@ -343,7 +348,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           {},
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -386,7 +391,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           { nonOptionalTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -434,7 +439,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           {},
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
       expect(result).toBeSimilarStringTo(`
@@ -474,11 +479,13 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
-      expect(result).toBeSimilarStringTo(`export type Unnamed_1_Query = $Pick<Query, {| dummy?: * |}>;`);
+      expect(result).toBeSimilarStringTo(
+        `export type Unnamed_1_Query = $Pick<Query, {| dummy?: * |}>;`,
+      );
       expect(result).toBeSimilarStringTo(`export type Unnamed_1_QueryVariables = {};`);
       validateFlow(result);
     });
@@ -503,12 +510,16 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
-      expect(result).toBeSimilarStringTo(`export type Unnamed_1_Query = $Pick<Query, {| dummy?: * |}>;`);
+      expect(result).toBeSimilarStringTo(
+        `export type Unnamed_1_Query = $Pick<Query, {| dummy?: * |}>;`,
+      );
       expect(result).toBeSimilarStringTo(`export type Unnamed_1_QueryVariables = {};`);
-      expect(result).toBeSimilarStringTo(`export type Unnamed_2_Query = $Pick<Query, {| dummy?: * |}>;`);
+      expect(result).toBeSimilarStringTo(
+        `export type Unnamed_2_Query = $Pick<Query, {| dummy?: * |}>;`,
+      );
       expect(result).toBeSimilarStringTo(`export type Unnamed_2_QueryVariables = {};`);
       validateFlow(result);
     });
@@ -542,7 +553,7 @@ describe('Flow Operations Plugin', () => {
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -595,7 +606,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true, flattenGeneratedTypes: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -630,7 +641,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true, flattenGeneratedTypes: true, preResolveTypes: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -664,7 +675,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -708,7 +719,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -750,7 +761,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -787,7 +798,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -821,7 +832,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -861,13 +872,13 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
       expect(result).toBeSimilarStringTo(
         `export type MeQueryVariables = {
           repoFullName: $ElementType<Scalars, 'String'>,
-        };`
+        };`,
       );
       expect(result).toBeSimilarStringTo(`
       export type MeQuery = {| currentUser?: ?$Pick<User, {| login: *, html_url: * |}>, entry?: ?({
@@ -894,7 +905,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
       expect(result).toBeSimilarStringTo(`export type DummyQuery = $Pick<Query, {| dummy?: * |}>;`);
@@ -920,7 +931,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -956,7 +967,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -992,7 +1003,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -1029,7 +1040,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -1058,7 +1069,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -1084,11 +1095,11 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
       expect(result).toBeSimilarStringTo(
-        `export type TestSubscription = {| userCreated?: ?$Pick<User, {| id: * |}> |};`
+        `export type TestSubscription = {| userCreated?: ?$Pick<User, {| id: * |}> |};`,
       );
       validateFlow(result);
     });
@@ -1109,7 +1120,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -1123,7 +1134,7 @@ export type MeQuery = {| me?: ?({
           testArray?: ?Array<?$ElementType<Scalars, 'String'>> | ?$ElementType<Scalars, 'String'>,
           requireString: Array<?$ElementType<Scalars, 'String'>> | ?$ElementType<Scalars, 'String'>,
           innerRequired: Array<$ElementType<Scalars, 'String'>> | $ElementType<Scalars, 'String'>,
-        };`
+        };`,
       );
       validateFlow(result);
     });
@@ -1144,7 +1155,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -1177,7 +1188,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true, useFlowExactObjects: false },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -1213,7 +1224,7 @@ export type MeQuery = {| me?: ?({
           },
         ],
         { skipTypename: true, useFlowReadOnlyTypes: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toMatchSnapshot();
       expect(result.content).toBeSimilarStringTo(`
@@ -1271,7 +1282,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { skipTypename: true, useFlowExactObjects: false },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 
@@ -1330,7 +1341,7 @@ export type MeQuery = {| me?: ?({
             },
           ],
           { preResolveTypes: true },
-          { outputFile: '' }
+          { outputFile: '' },
         ),
       ]);
 

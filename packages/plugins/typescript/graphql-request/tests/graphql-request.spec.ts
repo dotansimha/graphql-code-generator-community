@@ -1,11 +1,14 @@
-import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
+import { buildClientSchema, GraphQLSchema, parse } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
-import { plugin } from '../src/index.js';
-import { parse, buildClientSchema, GraphQLSchema } from 'graphql';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
 import { plugin as tsPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
-import { plugin as tsDocumentsPlugin, TypeScriptDocumentsPluginConfig } from '@graphql-codegen/typescript-operations';
+import {
+  plugin as tsDocumentsPlugin,
+  TypeScriptDocumentsPluginConfig,
+} from '@graphql-codegen/typescript-operations';
+import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import { RawGraphQLRequestPluginConfig } from '../src/config.js';
+import { plugin } from '../src/index.js';
 
 describe('graphql-request', () => {
   const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
@@ -43,10 +46,12 @@ describe('graphql-request', () => {
 
   const validate = async (
     content: Types.PluginOutput,
-    config: TypeScriptPluginConfig & TypeScriptDocumentsPluginConfig & RawGraphQLRequestPluginConfig,
+    config: TypeScriptPluginConfig &
+      TypeScriptDocumentsPluginConfig &
+      RawGraphQLRequestPluginConfig,
     docs: Types.DocumentFile[],
     pluginSchema: GraphQLSchema,
-    usage: string
+    usage: string,
   ) => {
     const m = mergeOutputs([
       await tsPlugin(pluginSchema, docs, config, { outputFile: '' }),
@@ -88,7 +93,7 @@ async function test() {
       const output = await validate(result, config, docs, schema, usage);
 
       expect(result.content).toContain(
-        `(FeedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query');`
+        `(FeedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query');`,
       );
       expect(output).toMatchSnapshot();
     });
@@ -360,7 +365,10 @@ async function test() {
     });
 
     it('#4748 - integration with importDocumentNodeExternallyFrom', async () => {
-      const config = { importDocumentNodeExternallyFrom: './operations', documentMode: DocumentMode.external };
+      const config = {
+        importDocumentNodeExternallyFrom: './operations',
+        documentMode: DocumentMode.external,
+      };
       const docs = [{ location: '', document: basicDoc }];
       const result = (await plugin(schema, docs, config, {
         outputFile: 'graphql.ts',
@@ -369,13 +377,13 @@ async function test() {
 
       expect(output).toContain(`import * as Operations from './operations';`);
       expect(output).toContain(
-        `(Operations.FeedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query');`
+        `(Operations.FeedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query');`,
       );
       expect(output).toContain(
-        `(Operations.Feed2Document, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed2', 'query');`
+        `(Operations.Feed2Document, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed2', 'query');`,
       );
       expect(output).toContain(
-        `(Operations.Feed3Document, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed3', 'query');`
+        `(Operations.Feed3Document, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed3', 'query');`,
       );
     });
 
