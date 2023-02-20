@@ -10,5 +10,4 @@ CHANGELOG.md
 .changeset/*.md
 
 dev-test/githunt/flow.flow.js
-packages/plugins/dart/flutter-freezed/src/config/plugin-config.ts
 dev-test/test-schema/flow-types.flow.js

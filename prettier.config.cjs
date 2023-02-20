@@ -1,6 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const { plugins, ...prettierConfig } = require('@theguild/prettier-config');
+const prettierConfig = require('@theguild/prettier-config');
 
-module.exports = {
-  ...prettierConfig,
-};
+module.exports = prettierConfig;
