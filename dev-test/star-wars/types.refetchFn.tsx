@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -290,16 +291,22 @@ export type CreateReviewForEpisodeMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useCreateReviewForEpisodeMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateReviewForEpisodeMutation, CreateReviewForEpisodeMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateReviewForEpisodeMutation,
+    CreateReviewForEpisodeMutationVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateReviewForEpisodeMutation, CreateReviewForEpisodeMutationVariables>(
-    CreateReviewForEpisodeDocument,
-    options
-  );
+  return Apollo.useMutation<
+    CreateReviewForEpisodeMutation,
+    CreateReviewForEpisodeMutationVariables
+  >(CreateReviewForEpisodeDocument, options);
 }
-export type CreateReviewForEpisodeMutationHookResult = ReturnType<typeof useCreateReviewForEpisodeMutation>;
-export type CreateReviewForEpisodeMutationResult = Apollo.MutationResult<CreateReviewForEpisodeMutation>;
+export type CreateReviewForEpisodeMutationHookResult = ReturnType<
+  typeof useCreateReviewForEpisodeMutation
+>;
+export type CreateReviewForEpisodeMutationResult =
+  Apollo.MutationResult<CreateReviewForEpisodeMutation>;
 export type CreateReviewForEpisodeMutationOptions = Apollo.BaseMutationOptions<
   CreateReviewForEpisodeMutation,
   CreateReviewForEpisodeMutationVariables
@@ -332,25 +339,33 @@ export const HeroAndFriendsNamesDocument = gql`
  * });
  */
 export function useHeroAndFriendsNamesQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HeroAndFriendsNamesQuery,
+    HeroAndFriendsNamesQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
     HeroAndFriendsNamesDocument,
-    options
+    options,
   );
 }
 export function useHeroAndFriendsNamesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    HeroAndFriendsNamesQuery,
+    HeroAndFriendsNamesQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
     HeroAndFriendsNamesDocument,
-    options
+    options,
   );
 }
 export type HeroAndFriendsNamesQueryHookResult = ReturnType<typeof useHeroAndFriendsNamesQuery>;
-export type HeroAndFriendsNamesLazyQueryHookResult = ReturnType<typeof useHeroAndFriendsNamesLazyQuery>;
+export type HeroAndFriendsNamesLazyQueryHookResult = ReturnType<
+  typeof useHeroAndFriendsNamesLazyQuery
+>;
 export type HeroAndFriendsNamesQueryResult = Apollo.QueryResult<
   HeroAndFriendsNamesQuery,
   HeroAndFriendsNamesQueryVariables
@@ -383,20 +398,29 @@ export const HeroAppearsInDocument = gql`
  * });
  */
 export function useHeroAppearsInQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(HeroAppearsInDocument, options);
+  return Apollo.useQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
+    HeroAppearsInDocument,
+    options,
+  );
 }
 export function useHeroAppearsInLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(HeroAppearsInDocument, options);
+  return Apollo.useLazyQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
+    HeroAppearsInDocument,
+    options,
+  );
 }
 export type HeroAppearsInQueryHookResult = ReturnType<typeof useHeroAppearsInQuery>;
 export type HeroAppearsInLazyQueryHookResult = ReturnType<typeof useHeroAppearsInLazyQuery>;
-export type HeroAppearsInQueryResult = Apollo.QueryResult<HeroAppearsInQuery, HeroAppearsInQueryVariables>;
+export type HeroAppearsInQueryResult = Apollo.QueryResult<
+  HeroAppearsInQuery,
+  HeroAppearsInQueryVariables
+>;
 export function refetchHeroAppearsInQuery(variables?: HeroAppearsInQueryVariables) {
   return { query: HeroAppearsInDocument, variables: variables };
 }
@@ -431,20 +455,26 @@ export const HeroDetailsDocument = gql`
  * });
  */
 export function useHeroDetailsQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(HeroDetailsDocument, options);
 }
 export function useHeroDetailsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(HeroDetailsDocument, options);
+  return Apollo.useLazyQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(
+    HeroDetailsDocument,
+    options,
+  );
 }
 export type HeroDetailsQueryHookResult = ReturnType<typeof useHeroDetailsQuery>;
 export type HeroDetailsLazyQueryHookResult = ReturnType<typeof useHeroDetailsLazyQuery>;
-export type HeroDetailsQueryResult = Apollo.QueryResult<HeroDetailsQuery, HeroDetailsQueryVariables>;
+export type HeroDetailsQueryResult = Apollo.QueryResult<
+  HeroDetailsQuery,
+  HeroDetailsQueryVariables
+>;
 export function refetchHeroDetailsQuery(variables?: HeroDetailsQueryVariables) {
   return { query: HeroDetailsDocument, variables: variables };
 }
@@ -474,30 +504,42 @@ export const HeroDetailsWithFragmentDocument = gql`
  * });
  */
 export function useHeroDetailsWithFragmentQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>(
     HeroDetailsWithFragmentDocument,
-    options
+    options,
   );
 }
 export function useHeroDetailsWithFragmentLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>(
     HeroDetailsWithFragmentDocument,
-    options
+    options,
   );
 }
-export type HeroDetailsWithFragmentQueryHookResult = ReturnType<typeof useHeroDetailsWithFragmentQuery>;
-export type HeroDetailsWithFragmentLazyQueryHookResult = ReturnType<typeof useHeroDetailsWithFragmentLazyQuery>;
+export type HeroDetailsWithFragmentQueryHookResult = ReturnType<
+  typeof useHeroDetailsWithFragmentQuery
+>;
+export type HeroDetailsWithFragmentLazyQueryHookResult = ReturnType<
+  typeof useHeroDetailsWithFragmentLazyQuery
+>;
 export type HeroDetailsWithFragmentQueryResult = Apollo.QueryResult<
   HeroDetailsWithFragmentQuery,
   HeroDetailsWithFragmentQueryVariables
 >;
-export function refetchHeroDetailsWithFragmentQuery(variables?: HeroDetailsWithFragmentQueryVariables) {
+export function refetchHeroDetailsWithFragmentQuery(
+  variables?: HeroDetailsWithFragmentQueryVariables,
+) {
   return { query: HeroDetailsWithFragmentDocument, variables: variables };
 }
 export const HeroNameDocument = gql`
@@ -524,11 +566,15 @@ export const HeroNameDocument = gql`
  *   },
  * });
  */
-export function useHeroNameQuery(baseOptions?: Apollo.QueryHookOptions<HeroNameQuery, HeroNameQueryVariables>) {
+export function useHeroNameQuery(
+  baseOptions?: Apollo.QueryHookOptions<HeroNameQuery, HeroNameQueryVariables>,
+) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<HeroNameQuery, HeroNameQueryVariables>(HeroNameDocument, options);
 }
-export function useHeroNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HeroNameQuery, HeroNameQueryVariables>) {
+export function useHeroNameLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<HeroNameQuery, HeroNameQueryVariables>,
+) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<HeroNameQuery, HeroNameQueryVariables>(HeroNameDocument, options);
 }
@@ -564,27 +610,32 @@ export const HeroNameConditionalInclusionDocument = gql`
  * });
  */
 export function useHeroNameConditionalInclusionQuery(
-  baseOptions: Apollo.QueryHookOptions<HeroNameConditionalInclusionQuery, HeroNameConditionalInclusionQueryVariables>
+  baseOptions: Apollo.QueryHookOptions<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroNameConditionalInclusionQuery, HeroNameConditionalInclusionQueryVariables>(
-    HeroNameConditionalInclusionDocument,
-    options
-  );
+  return Apollo.useQuery<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >(HeroNameConditionalInclusionDocument, options);
 }
 export function useHeroNameConditionalInclusionLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroNameConditionalInclusionQuery, HeroNameConditionalInclusionQueryVariables>(
-    HeroNameConditionalInclusionDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >(HeroNameConditionalInclusionDocument, options);
 }
-export type HeroNameConditionalInclusionQueryHookResult = ReturnType<typeof useHeroNameConditionalInclusionQuery>;
+export type HeroNameConditionalInclusionQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalInclusionQuery
+>;
 export type HeroNameConditionalInclusionLazyQueryHookResult = ReturnType<
   typeof useHeroNameConditionalInclusionLazyQuery
 >;
@@ -592,7 +643,9 @@ export type HeroNameConditionalInclusionQueryResult = Apollo.QueryResult<
   HeroNameConditionalInclusionQuery,
   HeroNameConditionalInclusionQueryVariables
 >;
-export function refetchHeroNameConditionalInclusionQuery(variables: HeroNameConditionalInclusionQueryVariables) {
+export function refetchHeroNameConditionalInclusionQuery(
+  variables: HeroNameConditionalInclusionQueryVariables,
+) {
   return { query: HeroNameConditionalInclusionDocument, variables: variables };
 }
 export const HeroNameConditionalExclusionDocument = gql`
@@ -621,27 +674,32 @@ export const HeroNameConditionalExclusionDocument = gql`
  * });
  */
 export function useHeroNameConditionalExclusionQuery(
-  baseOptions: Apollo.QueryHookOptions<HeroNameConditionalExclusionQuery, HeroNameConditionalExclusionQueryVariables>
+  baseOptions: Apollo.QueryHookOptions<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroNameConditionalExclusionQuery, HeroNameConditionalExclusionQueryVariables>(
-    HeroNameConditionalExclusionDocument,
-    options
-  );
+  return Apollo.useQuery<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >(HeroNameConditionalExclusionDocument, options);
 }
 export function useHeroNameConditionalExclusionLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroNameConditionalExclusionQuery, HeroNameConditionalExclusionQueryVariables>(
-    HeroNameConditionalExclusionDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >(HeroNameConditionalExclusionDocument, options);
 }
-export type HeroNameConditionalExclusionQueryHookResult = ReturnType<typeof useHeroNameConditionalExclusionQuery>;
+export type HeroNameConditionalExclusionQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalExclusionQuery
+>;
 export type HeroNameConditionalExclusionLazyQueryHookResult = ReturnType<
   typeof useHeroNameConditionalExclusionLazyQuery
 >;
@@ -649,7 +707,9 @@ export type HeroNameConditionalExclusionQueryResult = Apollo.QueryResult<
   HeroNameConditionalExclusionQuery,
   HeroNameConditionalExclusionQueryVariables
 >;
-export function refetchHeroNameConditionalExclusionQuery(variables: HeroNameConditionalExclusionQueryVariables) {
+export function refetchHeroNameConditionalExclusionQuery(
+  variables: HeroNameConditionalExclusionQueryVariables,
+) {
   return { query: HeroNameConditionalExclusionDocument, variables: variables };
 }
 export const HeroParentTypeDependentFieldDocument = gql`
@@ -693,27 +753,32 @@ export const HeroParentTypeDependentFieldDocument = gql`
  * });
  */
 export function useHeroParentTypeDependentFieldQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroParentTypeDependentFieldQuery, HeroParentTypeDependentFieldQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroParentTypeDependentFieldQuery, HeroParentTypeDependentFieldQueryVariables>(
-    HeroParentTypeDependentFieldDocument,
-    options
-  );
+  return Apollo.useQuery<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >(HeroParentTypeDependentFieldDocument, options);
 }
 export function useHeroParentTypeDependentFieldLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     HeroParentTypeDependentFieldQuery,
     HeroParentTypeDependentFieldQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroParentTypeDependentFieldQuery, HeroParentTypeDependentFieldQueryVariables>(
-    HeroParentTypeDependentFieldDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >(HeroParentTypeDependentFieldDocument, options);
 }
-export type HeroParentTypeDependentFieldQueryHookResult = ReturnType<typeof useHeroParentTypeDependentFieldQuery>;
+export type HeroParentTypeDependentFieldQueryHookResult = ReturnType<
+  typeof useHeroParentTypeDependentFieldQuery
+>;
 export type HeroParentTypeDependentFieldLazyQueryHookResult = ReturnType<
   typeof useHeroParentTypeDependentFieldLazyQuery
 >;
@@ -721,7 +786,9 @@ export type HeroParentTypeDependentFieldQueryResult = Apollo.QueryResult<
   HeroParentTypeDependentFieldQuery,
   HeroParentTypeDependentFieldQueryVariables
 >;
-export function refetchHeroParentTypeDependentFieldQuery(variables?: HeroParentTypeDependentFieldQueryVariables) {
+export function refetchHeroParentTypeDependentFieldQuery(
+  variables?: HeroParentTypeDependentFieldQueryVariables,
+) {
   return { query: HeroParentTypeDependentFieldDocument, variables: variables };
 }
 export const HeroTypeDependentAliasedFieldDocument = gql`
@@ -754,27 +821,32 @@ export const HeroTypeDependentAliasedFieldDocument = gql`
  * });
  */
 export function useHeroTypeDependentAliasedFieldQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroTypeDependentAliasedFieldQuery, HeroTypeDependentAliasedFieldQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroTypeDependentAliasedFieldQuery, HeroTypeDependentAliasedFieldQueryVariables>(
-    HeroTypeDependentAliasedFieldDocument,
-    options
-  );
+  return Apollo.useQuery<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >(HeroTypeDependentAliasedFieldDocument, options);
 }
 export function useHeroTypeDependentAliasedFieldLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     HeroTypeDependentAliasedFieldQuery,
     HeroTypeDependentAliasedFieldQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroTypeDependentAliasedFieldQuery, HeroTypeDependentAliasedFieldQueryVariables>(
-    HeroTypeDependentAliasedFieldDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >(HeroTypeDependentAliasedFieldDocument, options);
 }
-export type HeroTypeDependentAliasedFieldQueryHookResult = ReturnType<typeof useHeroTypeDependentAliasedFieldQuery>;
+export type HeroTypeDependentAliasedFieldQueryHookResult = ReturnType<
+  typeof useHeroTypeDependentAliasedFieldQuery
+>;
 export type HeroTypeDependentAliasedFieldLazyQueryHookResult = ReturnType<
   typeof useHeroTypeDependentAliasedFieldLazyQuery
 >;
@@ -782,7 +854,9 @@ export type HeroTypeDependentAliasedFieldQueryResult = Apollo.QueryResult<
   HeroTypeDependentAliasedFieldQuery,
   HeroTypeDependentAliasedFieldQueryVariables
 >;
-export function refetchHeroTypeDependentAliasedFieldQuery(variables?: HeroTypeDependentAliasedFieldQueryVariables) {
+export function refetchHeroTypeDependentAliasedFieldQuery(
+  variables?: HeroTypeDependentAliasedFieldQueryVariables,
+) {
   return { query: HeroTypeDependentAliasedFieldDocument, variables: variables };
 }
 export const HumanWithNullHeightDocument = gql`
@@ -810,25 +884,33 @@ export const HumanWithNullHeightDocument = gql`
  * });
  */
 export function useHumanWithNullHeightQuery(
-  baseOptions?: Apollo.QueryHookOptions<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HumanWithNullHeightQuery,
+    HumanWithNullHeightQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
     HumanWithNullHeightDocument,
-    options
+    options,
   );
 }
 export function useHumanWithNullHeightLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    HumanWithNullHeightQuery,
+    HumanWithNullHeightQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
     HumanWithNullHeightDocument,
-    options
+    options,
   );
 }
 export type HumanWithNullHeightQueryHookResult = ReturnType<typeof useHumanWithNullHeightQuery>;
-export type HumanWithNullHeightLazyQueryHookResult = ReturnType<typeof useHumanWithNullHeightLazyQuery>;
+export type HumanWithNullHeightLazyQueryHookResult = ReturnType<
+  typeof useHumanWithNullHeightLazyQuery
+>;
 export type HumanWithNullHeightQueryResult = Apollo.QueryResult<
   HumanWithNullHeightQuery,
   HumanWithNullHeightQueryVariables
@@ -862,12 +944,14 @@ export const TwoHeroesDocument = gql`
  *   },
  * });
  */
-export function useTwoHeroesQuery(baseOptions?: Apollo.QueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>) {
+export function useTwoHeroesQuery(
+  baseOptions?: Apollo.QueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
+) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
 export function useTwoHeroesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);

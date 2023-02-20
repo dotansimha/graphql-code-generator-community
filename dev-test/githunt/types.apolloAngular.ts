@@ -1,6 +1,7 @@
 import { gql } from 'apollo-angular';
-import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
+import { Injectable } from '@angular/core';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -330,7 +331,12 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = {
   __typename?: 'Mutation';
-  vote?: { __typename?: 'Entry'; score: number; id: number; vote: { __typename?: 'Vote'; vote_value: number } } | null;
+  vote?: {
+    __typename?: 'Entry';
+    score: number;
+    id: number;
+    vote: { __typename?: 'Vote'; vote_value: number };
+  } | null;
 };
 
 export const CommentsPageCommentFragmentDoc = gql`
@@ -506,7 +512,10 @@ export const SubmitRepositoryDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class SubmitRepositoryGQL extends Apollo.Mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables> {
+export class SubmitRepositoryGQL extends Apollo.Mutation<
+  SubmitRepositoryMutation,
+  SubmitRepositoryMutationVariables
+> {
   document = SubmitRepositoryDocument;
 
   constructor(apollo: Apollo.Apollo) {
@@ -525,7 +534,10 @@ export const SubmitCommentDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class SubmitCommentGQL extends Apollo.Mutation<SubmitCommentMutation, SubmitCommentMutationVariables> {
+export class SubmitCommentGQL extends Apollo.Mutation<
+  SubmitCommentMutation,
+  SubmitCommentMutationVariables
+> {
   document = SubmitCommentDocument;
 
   constructor(apollo: Apollo.Apollo) {

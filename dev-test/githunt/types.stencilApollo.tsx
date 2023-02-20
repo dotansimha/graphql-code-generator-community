@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import * as StencilApollo from 'stencil-apollo';
 import { h } from '@stencil/core';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -330,7 +331,12 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = {
   __typename?: 'Mutation';
-  vote?: { __typename?: 'Entry'; score: number; id: number; vote: { __typename?: 'Vote'; vote_value: number } } | null;
+  vote?: {
+    __typename?: 'Entry';
+    score: number;
+    id: number;
+    vote: { __typename?: 'Vote'; vote_value: number };
+  } | null;
 };
 
 export const CommentsPageCommentFragmentDoc = gql`
@@ -399,13 +405,23 @@ export const OnCommentAddedDocument = gql`
 
 export type OnCommentAddedProps = {
   variables?: OnCommentAddedSubscriptionVariables;
-  inlist?: StencilApollo.SubscriptionRenderer<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>;
+  inlist?: StencilApollo.SubscriptionRenderer<
+    OnCommentAddedSubscription,
+    OnCommentAddedSubscriptionVariables
+  >;
 };
 
 export const OnCommentAddedComponent = (
   props: OnCommentAddedProps,
-  children: [StencilApollo.SubscriptionRenderer<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>]
-) => <apollo-subscription subscription={OnCommentAddedDocument} {...props} renderer={children[0]} />;
+  children: [
+    StencilApollo.SubscriptionRenderer<
+      OnCommentAddedSubscription,
+      OnCommentAddedSubscriptionVariables
+    >,
+  ],
+) => (
+  <apollo-subscription subscription={OnCommentAddedDocument} {...props} renderer={children[0]} />
+);
 
 export const CommentDocument = gql`
   query Comment($repoFullName: String!, $limit: Int, $offset: Int) {
@@ -445,7 +461,7 @@ export type CommentProps = {
 
 export const CommentComponent = (
   props: CommentProps,
-  children: [StencilApollo.QueryRenderer<CommentQuery, CommentQueryVariables>]
+  children: [StencilApollo.QueryRenderer<CommentQuery, CommentQueryVariables>],
 ) => <apollo-query query={CommentDocument} {...props} renderer={children[0]} />;
 
 export const CurrentUserForProfileDocument = gql`
@@ -459,12 +475,17 @@ export const CurrentUserForProfileDocument = gql`
 
 export type CurrentUserForProfileProps = {
   variables?: CurrentUserForProfileQueryVariables;
-  inlist?: StencilApollo.QueryRenderer<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>;
+  inlist?: StencilApollo.QueryRenderer<
+    CurrentUserForProfileQuery,
+    CurrentUserForProfileQueryVariables
+  >;
 };
 
 export const CurrentUserForProfileComponent = (
   props: CurrentUserForProfileProps,
-  children: [StencilApollo.QueryRenderer<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>]
+  children: [
+    StencilApollo.QueryRenderer<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>,
+  ],
 ) => <apollo-query query={CurrentUserForProfileDocument} {...props} renderer={children[0]} />;
 
 export const FeedDocument = gql`
@@ -486,7 +507,7 @@ export type FeedProps = {
 
 export const FeedComponent = (
   props: FeedProps,
-  children: [StencilApollo.QueryRenderer<FeedQuery, FeedQueryVariables>]
+  children: [StencilApollo.QueryRenderer<FeedQuery, FeedQueryVariables>],
 ) => <apollo-query query={FeedDocument} {...props} renderer={children[0]} />;
 
 export const SubmitRepositoryDocument = gql`
@@ -499,12 +520,17 @@ export const SubmitRepositoryDocument = gql`
 
 export type SubmitRepositoryProps = {
   variables?: SubmitRepositoryMutationVariables;
-  inlist?: StencilApollo.MutationRenderer<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>;
+  inlist?: StencilApollo.MutationRenderer<
+    SubmitRepositoryMutation,
+    SubmitRepositoryMutationVariables
+  >;
 };
 
 export const SubmitRepositoryComponent = (
   props: SubmitRepositoryProps,
-  children: [StencilApollo.MutationRenderer<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>]
+  children: [
+    StencilApollo.MutationRenderer<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>,
+  ],
 ) => <apollo-mutation mutation={SubmitRepositoryDocument} {...props} renderer={children[0]} />;
 
 export const SubmitCommentDocument = gql`
@@ -523,7 +549,7 @@ export type SubmitCommentProps = {
 
 export const SubmitCommentComponent = (
   props: SubmitCommentProps,
-  children: [StencilApollo.MutationRenderer<SubmitCommentMutation, SubmitCommentMutationVariables>]
+  children: [StencilApollo.MutationRenderer<SubmitCommentMutation, SubmitCommentMutationVariables>],
 ) => <apollo-mutation mutation={SubmitCommentDocument} {...props} renderer={children[0]} />;
 
 export const VoteDocument = gql`
@@ -545,5 +571,5 @@ export type VoteProps = {
 
 export const VoteComponent = (
   props: VoteProps,
-  children: [StencilApollo.MutationRenderer<VoteMutation, VoteMutationVariables>]
+  children: [StencilApollo.MutationRenderer<VoteMutation, VoteMutationVariables>],
 ) => <apollo-mutation mutation={VoteDocument} {...props} renderer={children[0]} />;

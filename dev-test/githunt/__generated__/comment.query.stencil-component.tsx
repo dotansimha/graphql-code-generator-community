@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
-import { CommentsPageCommentFragmentDoc } from './comments-page-comment.fragment.stencil-component.js';
 import 'stencil-apollo';
-import { Component, Prop, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
+import { CommentsPageCommentFragmentDoc } from './comments-page-comment.fragment.stencil-component.js';
 
 declare global {
   export type CommentQueryVariables = Types.Exact<{
@@ -76,6 +76,8 @@ export class CommentComponent {
   @Prop() renderer: import('stencil-apollo').QueryRenderer<CommentQuery, CommentQueryVariables>;
   @Prop() variables: CommentQueryVariables;
   render() {
-    return <apollo-query query={CommentDocument} variables={this.variables} renderer={this.renderer} />;
+    return (
+      <apollo-query query={CommentDocument} variables={this.variables} renderer={this.renderer} />
+    );
   }
 }

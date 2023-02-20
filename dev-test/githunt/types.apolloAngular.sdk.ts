@@ -1,7 +1,8 @@
 import { gql } from 'apollo-angular';
-import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
+import { Injectable } from '@angular/core';
 import * as ApolloCore from '@apollo/client/core';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -331,7 +332,12 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = {
   __typename?: 'Mutation';
-  vote?: { __typename?: 'Entry'; score: number; id: number; vote: { __typename?: 'Vote'; vote_value: number } } | null;
+  vote?: {
+    __typename?: 'Entry';
+    score: number;
+    id: number;
+    vote: { __typename?: 'Vote'; vote_value: number };
+  } | null;
 };
 
 export const CommentsPageCommentFragmentDoc = gql`
@@ -507,7 +513,10 @@ export const SubmitRepositoryDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class SubmitRepositoryGQL extends Apollo.Mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables> {
+export class SubmitRepositoryGQL extends Apollo.Mutation<
+  SubmitRepositoryMutation,
+  SubmitRepositoryMutationVariables
+> {
   document = SubmitRepositoryDocument;
 
   constructor(apollo: Apollo.Apollo) {
@@ -526,7 +535,10 @@ export const SubmitCommentDocument = gql`
 @Injectable({
   providedIn: 'root',
 })
-export class SubmitCommentGQL extends Apollo.Mutation<SubmitCommentMutation, SubmitCommentMutationVariables> {
+export class SubmitCommentGQL extends Apollo.Mutation<
+  SubmitCommentMutation,
+  SubmitCommentMutationVariables
+> {
   document = SubmitCommentDocument;
 
   constructor(apollo: Apollo.Apollo) {
@@ -558,13 +570,16 @@ export class VoteGQL extends Apollo.Mutation<VoteMutation, VoteMutationVariables
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-interface WatchQueryOptionsAlone<V> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}
+interface WatchQueryOptionsAlone<V>
+  extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}
 
 interface QueryOptionsAlone<V> extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}
 
-interface MutationOptionsAlone<T, V> extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}
+interface MutationOptionsAlone<T, V>
+  extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}
 
-interface SubscriptionOptionsAlone<V> extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}
+interface SubscriptionOptionsAlone<V>
+  extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}
 
 @Injectable({ providedIn: 'root' })
 export class ApolloAngularSDK {
@@ -575,12 +590,12 @@ export class ApolloAngularSDK {
     private feedGql: FeedGQL,
     private submitRepositoryGql: SubmitRepositoryGQL,
     private submitCommentGql: SubmitCommentGQL,
-    private voteGql: VoteGQL
+    private voteGql: VoteGQL,
   ) {}
 
   onCommentAdded(
     variables: OnCommentAddedSubscriptionVariables,
-    options?: SubscriptionOptionsAlone<OnCommentAddedSubscriptionVariables>
+    options?: SubscriptionOptionsAlone<OnCommentAddedSubscriptionVariables>,
   ) {
     return this.onCommentAddedGql.subscribe(variables, options);
   }
@@ -589,20 +604,23 @@ export class ApolloAngularSDK {
     return this.commentGql.fetch(variables, options);
   }
 
-  commentWatch(variables: CommentQueryVariables, options?: WatchQueryOptionsAlone<CommentQueryVariables>) {
+  commentWatch(
+    variables: CommentQueryVariables,
+    options?: WatchQueryOptionsAlone<CommentQueryVariables>,
+  ) {
     return this.commentGql.watch(variables, options);
   }
 
   currentUserForProfile(
     variables?: CurrentUserForProfileQueryVariables,
-    options?: QueryOptionsAlone<CurrentUserForProfileQueryVariables>
+    options?: QueryOptionsAlone<CurrentUserForProfileQueryVariables>,
   ) {
     return this.currentUserForProfileGql.fetch(variables, options);
   }
 
   currentUserForProfileWatch(
     variables?: CurrentUserForProfileQueryVariables,
-    options?: WatchQueryOptionsAlone<CurrentUserForProfileQueryVariables>
+    options?: WatchQueryOptionsAlone<CurrentUserForProfileQueryVariables>,
   ) {
     return this.currentUserForProfileGql.watch(variables, options);
   }
@@ -617,19 +635,22 @@ export class ApolloAngularSDK {
 
   submitRepository(
     variables: SubmitRepositoryMutationVariables,
-    options?: MutationOptionsAlone<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>
+    options?: MutationOptionsAlone<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>,
   ) {
     return this.submitRepositoryGql.mutate(variables, options);
   }
 
   submitComment(
     variables: SubmitCommentMutationVariables,
-    options?: MutationOptionsAlone<SubmitCommentMutation, SubmitCommentMutationVariables>
+    options?: MutationOptionsAlone<SubmitCommentMutation, SubmitCommentMutationVariables>,
   ) {
     return this.submitCommentGql.mutate(variables, options);
   }
 
-  vote(variables: VoteMutationVariables, options?: MutationOptionsAlone<VoteMutation, VoteMutationVariables>) {
+  vote(
+    variables: VoteMutationVariables,
+    options?: MutationOptionsAlone<VoteMutation, VoteMutationVariables>,
+  ) {
     return this.voteGql.mutate(variables, options);
   }
 }

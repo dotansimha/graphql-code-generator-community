@@ -1,7 +1,7 @@
-import * as Types from '../types.d.js';
-
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import * as Types from '../types.d.js';
+
 const defaultOptions = {} as const;
 export type TwoHeroesQueryVariables = Types.Exact<{ [key: string]: never }>;
 
@@ -37,12 +37,14 @@ export const TwoHeroesDocument = gql`
  *   },
  * });
  */
-export function useTwoHeroesQuery(baseOptions?: Apollo.QueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>) {
+export function useTwoHeroesQuery(
+  baseOptions?: Apollo.QueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
+) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
 export function useTwoHeroesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);

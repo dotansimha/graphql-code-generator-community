@@ -1,18 +1,24 @@
 import {
-  useQuery,
   useInfiniteQuery,
-  useMutation,
-  UseQueryOptions,
   UseInfiniteQueryOptions,
+  useMutation,
   UseMutationOptions,
+  useQuery,
+  UseQueryOptions,
 } from '@tanstack/react-query';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(
+  endpoint: string,
+  requestInit: RequestInit,
+  query: string,
+  variables?: TVariables,
+) {
   return async (): Promise<TData> => {
     const res = await fetch(endpoint, {
       method: 'POST',
@@ -355,7 +361,12 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = {
   __typename?: 'Mutation';
-  vote?: { __typename?: 'Entry'; score: number; id: number; vote: { __typename?: 'Vote'; vote_value: number } } | null;
+  vote?: {
+    __typename?: 'Entry';
+    score: number;
+    id: number;
+    vote: { __typename?: 'Vote'; vote_value: number };
+  } | null;
 };
 
 export const CommentsPageCommentFragmentDoc = `
@@ -452,7 +463,7 @@ export const CommentDocument = `
 export const useCommentQuery = <TData = CommentQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   variables: CommentQueryVariables,
-  options?: UseQueryOptions<CommentQuery, TError, TData>
+  options?: UseQueryOptions<CommentQuery, TError, TData>,
 ) =>
   useQuery<CommentQuery, TError, TData>(
     ['Comment', variables],
@@ -460,24 +471,29 @@ export const useCommentQuery = <TData = CommentQuery, TError = unknown>(
       dataSource.endpoint,
       dataSource.fetchParams || {},
       CommentDocument,
-      variables
+      variables,
     ),
-    options
+    options,
   );
 export const useInfiniteCommentQuery = <TData = CommentQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   pageParamKey: keyof CommentQueryVariables,
   variables: CommentQueryVariables,
-  options?: UseInfiniteQueryOptions<CommentQuery, TError, TData>
+  options?: UseInfiniteQueryOptions<CommentQuery, TError, TData>,
 ) =>
   useInfiniteQuery<CommentQuery, TError, TData>(
     ['Comment.infinite', variables],
     metaData =>
-      fetcher<CommentQuery, CommentQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, CommentDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
+      fetcher<CommentQuery, CommentQueryVariables>(
+        dataSource.endpoint,
+        dataSource.fetchParams || {},
+        CommentDocument,
+        {
+          ...variables,
+          ...(metaData.pageParam ?? {}),
+        },
+      )(),
+    options,
   );
 
 export const CurrentUserForProfileDocument = `
@@ -491,7 +507,7 @@ export const CurrentUserForProfileDocument = `
 export const useCurrentUserForProfileQuery = <TData = CurrentUserForProfileQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   variables?: CurrentUserForProfileQueryVariables,
-  options?: UseQueryOptions<CurrentUserForProfileQuery, TError, TData>
+  options?: UseQueryOptions<CurrentUserForProfileQuery, TError, TData>,
 ) =>
   useQuery<CurrentUserForProfileQuery, TError, TData>(
     variables === undefined ? ['CurrentUserForProfile'] : ['CurrentUserForProfile', variables],
@@ -499,26 +515,31 @@ export const useCurrentUserForProfileQuery = <TData = CurrentUserForProfileQuery
       dataSource.endpoint,
       dataSource.fetchParams || {},
       CurrentUserForProfileDocument,
-      variables
+      variables,
     ),
-    options
+    options,
   );
-export const useInfiniteCurrentUserForProfileQuery = <TData = CurrentUserForProfileQuery, TError = unknown>(
+export const useInfiniteCurrentUserForProfileQuery = <
+  TData = CurrentUserForProfileQuery,
+  TError = unknown,
+>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   pageParamKey: keyof CurrentUserForProfileQueryVariables,
   variables?: CurrentUserForProfileQueryVariables,
-  options?: UseInfiniteQueryOptions<CurrentUserForProfileQuery, TError, TData>
+  options?: UseInfiniteQueryOptions<CurrentUserForProfileQuery, TError, TData>,
 ) =>
   useInfiniteQuery<CurrentUserForProfileQuery, TError, TData>(
-    variables === undefined ? ['CurrentUserForProfile.infinite'] : ['CurrentUserForProfile.infinite', variables],
+    variables === undefined
+      ? ['CurrentUserForProfile.infinite']
+      : ['CurrentUserForProfile.infinite', variables],
     metaData =>
       fetcher<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
         dataSource.endpoint,
         dataSource.fetchParams || {},
         CurrentUserForProfileDocument,
-        { ...variables, ...(metaData.pageParam ?? {}) }
+        { ...variables, ...(metaData.pageParam ?? {}) },
       )(),
-    options
+    options,
   );
 
 export const FeedDocument = `
@@ -534,27 +555,37 @@ export const FeedDocument = `
 export const useFeedQuery = <TData = FeedQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   variables: FeedQueryVariables,
-  options?: UseQueryOptions<FeedQuery, TError, TData>
+  options?: UseQueryOptions<FeedQuery, TError, TData>,
 ) =>
   useQuery<FeedQuery, TError, TData>(
     ['Feed', variables],
-    fetcher<FeedQuery, FeedQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, FeedDocument, variables),
-    options
+    fetcher<FeedQuery, FeedQueryVariables>(
+      dataSource.endpoint,
+      dataSource.fetchParams || {},
+      FeedDocument,
+      variables,
+    ),
+    options,
   );
 export const useInfiniteFeedQuery = <TData = FeedQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   pageParamKey: keyof FeedQueryVariables,
   variables: FeedQueryVariables,
-  options?: UseInfiniteQueryOptions<FeedQuery, TError, TData>
+  options?: UseInfiniteQueryOptions<FeedQuery, TError, TData>,
 ) =>
   useInfiniteQuery<FeedQuery, TError, TData>(
     ['Feed.infinite', variables],
     metaData =>
-      fetcher<FeedQuery, FeedQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, FeedDocument, {
-        ...variables,
-        ...(metaData.pageParam ?? {}),
-      })(),
-    options
+      fetcher<FeedQuery, FeedQueryVariables>(
+        dataSource.endpoint,
+        dataSource.fetchParams || {},
+        FeedDocument,
+        {
+          ...variables,
+          ...(metaData.pageParam ?? {}),
+        },
+      )(),
+    options,
   );
 
 export const SubmitRepositoryDocument = `
@@ -566,7 +597,12 @@ export const SubmitRepositoryDocument = `
     `;
 export const useSubmitRepositoryMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
-  options?: UseMutationOptions<SubmitRepositoryMutation, TError, SubmitRepositoryMutationVariables, TContext>
+  options?: UseMutationOptions<
+    SubmitRepositoryMutation,
+    TError,
+    SubmitRepositoryMutationVariables,
+    TContext
+  >,
 ) =>
   useMutation<SubmitRepositoryMutation, TError, SubmitRepositoryMutationVariables, TContext>(
     ['submitRepository'],
@@ -575,9 +611,9 @@ export const useSubmitRepositoryMutation = <TError = unknown, TContext = unknown
         dataSource.endpoint,
         dataSource.fetchParams || {},
         SubmitRepositoryDocument,
-        variables
+        variables,
       )(),
-    options
+    options,
   );
 export const SubmitCommentDocument = `
     mutation submitComment($repoFullName: String!, $commentContent: String!) {
@@ -588,7 +624,12 @@ export const SubmitCommentDocument = `
     ${CommentsPageCommentFragmentDoc}`;
 export const useSubmitCommentMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
-  options?: UseMutationOptions<SubmitCommentMutation, TError, SubmitCommentMutationVariables, TContext>
+  options?: UseMutationOptions<
+    SubmitCommentMutation,
+    TError,
+    SubmitCommentMutationVariables,
+    TContext
+  >,
 ) =>
   useMutation<SubmitCommentMutation, TError, SubmitCommentMutationVariables, TContext>(
     ['submitComment'],
@@ -597,9 +638,9 @@ export const useSubmitCommentMutation = <TError = unknown, TContext = unknown>(
         dataSource.endpoint,
         dataSource.fetchParams || {},
         SubmitCommentDocument,
-        variables
+        variables,
       )(),
-    options
+    options,
   );
 export const VoteDocument = `
     mutation vote($repoFullName: String!, $type: VoteType!) {
@@ -614,7 +655,7 @@ export const VoteDocument = `
     `;
 export const useVoteMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
-  options?: UseMutationOptions<VoteMutation, TError, VoteMutationVariables, TContext>
+  options?: UseMutationOptions<VoteMutation, TError, VoteMutationVariables, TContext>,
 ) =>
   useMutation<VoteMutation, TError, VoteMutationVariables, TContext>(
     ['vote'],
@@ -623,7 +664,7 @@ export const useVoteMutation = <TError = unknown, TContext = unknown>(
         dataSource.endpoint,
         dataSource.fetchParams || {},
         VoteDocument,
-        variables
+        variables,
       )(),
-    options
+    options,
   );

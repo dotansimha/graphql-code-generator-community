@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
-import { FeedEntryFragmentDoc } from './feed-entry.fragment.stencil-component.js';
 import 'stencil-apollo';
-import { Component, Prop, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
+import { FeedEntryFragmentDoc } from './feed-entry.fragment.stencil-component.js';
 
 declare global {
   export type FeedQueryVariables = Types.Exact<{
@@ -53,6 +53,8 @@ export class FeedComponent {
   @Prop() renderer: import('stencil-apollo').QueryRenderer<FeedQuery, FeedQueryVariables>;
   @Prop() variables: FeedQueryVariables;
   render() {
-    return <apollo-query query={FeedDocument} variables={this.variables} renderer={this.renderer} />;
+    return (
+      <apollo-query query={FeedDocument} variables={this.variables} renderer={this.renderer} />
+    );
   }
 }

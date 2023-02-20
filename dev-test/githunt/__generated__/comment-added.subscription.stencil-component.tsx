@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import 'stencil-apollo';
-import { Component, Prop, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 declare global {
   export type OnCommentAddedSubscriptionVariables = Types.Exact<{
@@ -44,7 +44,11 @@ export class OnCommentAddedComponent {
   @Prop() variables: OnCommentAddedSubscriptionVariables;
   render() {
     return (
-      <apollo-subscription subscription={OnCommentAddedDocument} variables={this.variables} renderer={this.renderer} />
+      <apollo-subscription
+        subscription={OnCommentAddedDocument}
+        variables={this.variables}
+        renderer={this.renderer}
+      />
     );
   }
 }
