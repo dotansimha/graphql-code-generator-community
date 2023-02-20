@@ -13,6 +13,7 @@ import { RawGraphQLRequestPluginConfig } from './config.js';
 export interface GraphQLRequestPluginConfig extends ClientSideBasePluginConfig {
   rawRequest: boolean;
   extensionsType: string;
+  generateIndividualOperations: boolean;
 }
 
 const additionalExportedTypes = `
@@ -36,6 +37,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     super(schema, fragments, rawConfig, {
       rawRequest: getConfigValue(rawConfig.rawRequest, false),
       extensionsType: getConfigValue(rawConfig.extensionsType, 'any'),
+      generateIndividualOperations: getConfigValue(rawConfig.generateIndividualOperations, false),
     });
 
     autoBind(this);
@@ -108,12 +110,31 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
           o.node.variableDefinitions.every(v => v.type.kind !== Kind.NON_NULL_TYPE || v.defaultValue);
         const docVarName = this.getDocumentNodeVariable(o.documentVariableName);
 
+        if (this.config.generateIndividualOperations) {
+          if (this.config.rawRequest) {
+            return `export function ${operationName}(client: GraphQLClient, variables${optionalVariables ? '?' : ''}: ${
+              o.operationVariablesTypes
+            }, requestHeaders?: Dom.RequestInit["headers"]) {
+              return client.rawRequest<${o.operationResultType}, ${
+              o.operationVariablesTypes
+            }>(${docVarName}, variables, {...requestHeaders });
+            }`;
+          }
+
+          return `export function ${operationName}(client: GraphQLClient, variables${optionalVariables ? '?' : ''}: ${
+            o.operationVariablesTypes
+          }, requestHeaders?: Dom.RequestInit["headers"]): Promise<${o.operationResultType}> {
+            return client.request<${o.operationResultType}>(${docVarName}, variables, {...requestHeaders });
+          }`;
+        }
+
         if (this.config.rawRequest) {
           let docArg = docVarName;
           if (this.config.documentMode !== DocumentMode.string) {
             docArg = `${docVarName}String`;
             extraVariables.push(`const ${docArg} = print(${docVarName});`);
           }
+
           return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
             o.operationVariablesTypes
           }, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data: ${o.operationResultType}; extensions?: ${
@@ -133,9 +154,11 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 }`;
       })
       .filter(Boolean)
-      .map(s => indentMultiline(s, 2));
+      .map(s => (this.config.generateIndividualOperations ? s : indentMultiline(s, 2)));
 
-    return `${additionalExportedTypes}
+    return this.config.generateIndividualOperations
+      ? `${allPossibleActions.join('\n')}`
+      : `${additionalExportedTypes}
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
 ${extraVariables.join('\n')}

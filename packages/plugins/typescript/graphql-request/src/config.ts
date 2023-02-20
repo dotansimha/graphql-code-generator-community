@@ -53,4 +53,15 @@ export interface RawGraphQLRequestPluginConfig extends RawClientSideBasePluginCo
    * ```
    */
   extensionsType?: string;
+  /**
+   * @description Allows you to create individual tree-shakable operations as opposed to wrapping them inside a sdk object
+   * @default false
+   *
+   * @exampleMarkdown
+   * ```yaml
+   * config:
+   *   generateIndividualOperations: true
+   * ```
+   */
+  generateIndividualOperations?: boolean;
 }
