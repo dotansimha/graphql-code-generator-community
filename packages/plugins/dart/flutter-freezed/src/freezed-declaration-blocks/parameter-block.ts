@@ -1,18 +1,23 @@
 // import { indent } from '@graphql-codegen/visitor-plugin-common';
 import { ListTypeNode, NamedTypeNode, NonNullTypeNode, TypeNode } from 'graphql';
-import { atJsonKeyDecorator, stringIsNotEmpty } from '../utils.js';
+import { indent } from '@graphql-codegen/visitor-plugin-common';
 import { Config } from '../config/config-value.js';
 import { FieldName, TypeName } from '../config/pattern.js';
-import { AppliesOnParameters, FieldType, FlutterFreezedPluginConfig, NodeType } from '../config/plugin-config.js';
+import {
+  AppliesOnParameters,
+  FieldType,
+  FlutterFreezedPluginConfig,
+  NodeType,
+} from '../config/plugin-config.js';
+import { atJsonKeyDecorator, stringIsNotEmpty } from '../utils.js';
 import { Block } from './index.js';
-import { indent } from '@graphql-codegen/visitor-plugin-common';
 
 export class ParameterBlock {
   public static build(
     config: FlutterFreezedPluginConfig,
     node: NodeType,
     field: FieldType,
-    blockAppliesOn: readonly AppliesOnParameters[]
+    blockAppliesOn: readonly AppliesOnParameters[],
   ): string {
     const typeName = TypeName.fromString(node.name.value);
     const fieldName = FieldName.fromString(field.name.value);
@@ -22,7 +27,7 @@ export class ParameterBlock {
       fieldName.value,
       typeName,
       fieldName,
-      'camelCase'
+      'camelCase',
     );
 
     let block = '';
@@ -42,7 +47,7 @@ export class ParameterBlock {
     typeName: TypeName,
     fieldName: FieldName,
     parameterName: string,
-    blockAppliesOn: readonly AppliesOnParameters[]
+    blockAppliesOn: readonly AppliesOnParameters[],
   ): string => {
     const deprecatedDecorator = Config.deprecated(config, blockAppliesOn, typeName, fieldName);
 
@@ -69,7 +74,7 @@ export class ParameterBlock {
     typeName: TypeName,
     fieldName: FieldName,
     parameterName: string,
-    blockAppliesOn: readonly AppliesOnParameters[]
+    blockAppliesOn: readonly AppliesOnParameters[],
   ): string => {
     const required = this.isNonNullType(field.type) ? 'required ' : '';
     const final = Config.final(config, blockAppliesOn, typeName, fieldName) ? 'final ' : '';
@@ -78,7 +83,11 @@ export class ParameterBlock {
     return indent(`${required}${final}${dartType} ${parameterName},\n`, 2);
   };
 
-  public static parameterType = (config: FlutterFreezedPluginConfig, type: TypeNode, parentType?: TypeNode): string => {
+  public static parameterType = (
+    config: FlutterFreezedPluginConfig,
+    type: TypeNode,
+    parentType?: TypeNode,
+  ): string => {
     if (this.isNonNullType(type)) {
       return this.parameterType(config, type.type, type);
     }
@@ -89,7 +98,9 @@ export class ParameterBlock {
     }
 
     if (this.isNamedType(type)) {
-      return `${Config.customScalars(config, type.name.value)}${this.isNonNullType(parentType) ? '' : '?'}`;
+      return `${Config.customScalars(config, type.name.value)}${
+        this.isNonNullType(parentType) ? '' : '?'
+      }`;
     }
 
     return '';
@@ -97,7 +108,9 @@ export class ParameterBlock {
 
   public static isListType = (type?: TypeNode): type is ListTypeNode => type?.kind === 'ListType';
 
-  public static isNonNullType = (type?: TypeNode): type is NonNullTypeNode => type?.kind === 'NonNullType';
+  public static isNonNullType = (type?: TypeNode): type is NonNullTypeNode =>
+    type?.kind === 'NonNullType';
 
-  public static isNamedType = (type?: TypeNode): type is NamedTypeNode => type?.kind === 'NamedType';
+  public static isNamedType = (type?: TypeNode): type is NamedTypeNode =>
+    type?.kind === 'NamedType';
 }

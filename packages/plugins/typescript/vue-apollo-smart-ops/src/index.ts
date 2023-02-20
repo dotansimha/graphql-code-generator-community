@@ -1,26 +1,28 @@
 import { extname } from 'path';
-import { Types, PluginValidateFn, PluginFunction, oldVisit } from '@graphql-codegen/plugin-helpers';
-import { GraphQLSchema, concatAST, Kind, FragmentDefinitionNode } from 'graphql';
+import { concatAST, FragmentDefinitionNode, GraphQLSchema, Kind } from 'graphql';
+import { oldVisit, PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
 import { LoadedFragment } from '@graphql-codegen/visitor-plugin-common';
-import { VueApolloVisitor } from './visitor.js';
 import { VueApolloSmartOpsRawPluginConfig } from './config.js';
+import { VueApolloVisitor } from './visitor.js';
 
 export const plugin: PluginFunction<VueApolloSmartOpsRawPluginConfig, Types.ComplexPluginOutput> = (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: VueApolloSmartOpsRawPluginConfig
+  config: VueApolloSmartOpsRawPluginConfig,
 ) => {
   const allAst = concatAST(documents.map(s => s.document!));
 
   const allFragments: LoadedFragment[] = [
-    ...(allAst.definitions.filter(d => d.kind === Kind.FRAGMENT_DEFINITION) as FragmentDefinitionNode[]).map(
-      fragmentDef => ({
-        node: fragmentDef,
-        name: fragmentDef.name.value,
-        onType: fragmentDef.typeCondition.name.value,
-        isExternal: false,
-      })
-    ),
+    ...(
+      allAst.definitions.filter(
+        d => d.kind === Kind.FRAGMENT_DEFINITION,
+      ) as FragmentDefinitionNode[]
+    ).map(fragmentDef => ({
+      node: fragmentDef,
+      name: fragmentDef.name.value,
+      onType: fragmentDef.typeCondition.name.value,
+      isExternal: false,
+    })),
     ...(config.externalFragments || []),
   ];
 
@@ -40,10 +42,12 @@ export const validate: PluginValidateFn<any> = (
   _schema: GraphQLSchema,
   _documents: Types.DocumentFile[],
   _config: VueApolloSmartOpsRawPluginConfig,
-  outputFile: string
+  outputFile: string,
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
-    throw new Error(`Plugin "typescript-vue-apollo-smart-ops" requires extension to be ".ts" or ".tsx"!`);
+    throw new Error(
+      `Plugin "typescript-vue-apollo-smart-ops" requires extension to be ".ts" or ".tsx"!`,
+    );
   }
 };
 

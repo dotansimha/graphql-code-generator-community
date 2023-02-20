@@ -1,11 +1,11 @@
+import autoBind from 'auto-bind';
+import { camelCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode, print } from 'graphql';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import autoBind from 'auto-bind';
-import { camelCase } from 'change-case-all';
-import { GraphQLSchema, OperationDefinitionNode, print } from 'graphql';
 import { RawGraphQLApolloPluginConfig } from './config.js';
 
 export interface GraphQLRequestPluginConfig extends ClientSideBasePluginConfig {
@@ -24,7 +24,11 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
     operationVariablesTypes: string;
   }[] = [];
 
-  constructor(schema: GraphQLSchema, fragments: LoadedFragment[], rawConfig: RawGraphQLApolloPluginConfig) {
+  constructor(
+    schema: GraphQLSchema,
+    fragments: LoadedFragment[],
+    rawConfig: RawGraphQLApolloPluginConfig,
+  ) {
     super(schema, fragments, rawConfig, {});
 
     autoBind(this);
@@ -32,7 +36,7 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
     const typeImport = this.config.useTypeImports ? 'import type' : 'import';
 
     this._additionalImports.push(
-      `${typeImport} { ApolloClient, QueryOptions, SubscriptionOptions, MutationOptions } from '@apollo/client';`
+      `${typeImport} { ApolloClient, QueryOptions, SubscriptionOptions, MutationOptions } from '@apollo/client';`,
     );
   }
 
@@ -43,7 +47,7 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
       // eslint-disable-next-line no-console
       console.warn(
         `Anonymous GraphQL operation was ignored in "typescript-graphql-request", please make sure to name your operation: `,
-        print(node)
+        print(node),
       );
 
       return null;
@@ -57,7 +61,7 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     this._operationsToInclude.push({
       node,
@@ -77,14 +81,17 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
       const generics = [x.operationResultType, x.operationVariablesTypes];
 
       const operationName = x.node.name.value;
-      const genericParameter = x.operationType !== 'Mutation' ? [...generics].reverse() : [...generics];
+      const genericParameter =
+        x.operationType !== 'Mutation' ? [...generics].reverse() : [...generics];
       // the reason we're reversing: https://github.com/apollographql/apollo-client/issues/8537
-      return `${camelCase(operationName)}${x.operationType}(options: Partial<${optionType}<${genericParameter.join(
-        ', '
-      )}>>) {
+      return `${camelCase(operationName)}${
+        x.operationType
+      }(options: Partial<${optionType}<${genericParameter.join(', ')}>>) {
           return client.${GraphQLApolloVisitor.getApolloOperation(x.operationType)}<${generics.join(
-        ', '
-      )}>({...options, ${GraphQLApolloVisitor.getDocumentFieldName(x.operationType)}: ${documentVariableName}})
+        ', ',
+      )}>({...options, ${GraphQLApolloVisitor.getDocumentFieldName(
+        x.operationType,
+      )}: ${documentVariableName}})
       }`;
     });
     return `export const getSdk = (client: ApolloClient<any>) => ({

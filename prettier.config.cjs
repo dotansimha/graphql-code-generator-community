@@ -1,6 +1,16 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const { plugins, ...prettierConfig } = require('@theguild/prettier-config');
+const prettierConfig = require('@theguild/prettier-config');
 
 module.exports = {
   ...prettierConfig,
+  overrides: [
+    ...prettierConfig.overrides,
+    {
+      // fixes SyntaxError: Unexpected token (7:23)
+      files: '*.flow.js',
+      options: {
+        importOrderParserPlugins: ['flow'],
+      },
+    },
+  ],
 };

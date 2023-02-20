@@ -1,10 +1,15 @@
-import { transformComment, indentMultiline } from '@graphql-codegen/visitor-plugin-common';
-import { StringValueNode, NameNode } from 'graphql';
+import { NameNode, StringValueNode } from 'graphql';
+import { indentMultiline, transformComment } from '@graphql-codegen/visitor-plugin-common';
 import { stripIndent } from './utils.js';
 
 export type Access = 'private' | 'public' | 'protected';
 export type Kind = 'class' | 'interface' | 'enum';
-export type MemberFlags = { transient?: boolean; final?: boolean; volatile?: boolean; static?: boolean };
+export type MemberFlags = {
+  transient?: boolean;
+  final?: boolean;
+  volatile?: boolean;
+  static?: boolean;
+};
 export type ClassMember = {
   value: string;
   name: string;
@@ -150,7 +155,7 @@ ${indentMultiline(method.implementation)}
     value: string,
     typeAnnotations: string[] = [],
     access: Access = null,
-    flags: MemberFlags = {}
+    flags: MemberFlags = {},
   ): JavaDeclarationBlock {
     this._members.push({
       name,
@@ -178,7 +183,7 @@ ${indentMultiline(method.implementation)}
     returnTypeAnnotations: string[] = [],
     access: Access = null,
     flags: MemberFlags = {},
-    methodAnnotations: string[] = []
+    methodAnnotations: string[] = [],
   ): JavaDeclarationBlock {
     this._methods.push({
       name,
@@ -232,17 +237,23 @@ ${indentMultiline(method.implementation)}
     }
 
     const members = this._members.length
-      ? indentMultiline(stripIndent(this._members.map(member => this.printMember(member) + ';').join('\n')))
+      ? indentMultiline(
+          stripIndent(this._members.map(member => this.printMember(member) + ';').join('\n')),
+        )
       : null;
     const methods = this._methods.length
-      ? indentMultiline(stripIndent(this._methods.map(method => this.printMethod(method)).join('\n\n')))
+      ? indentMultiline(
+          stripIndent(this._methods.map(method => this.printMethod(method)).join('\n\n')),
+        )
       : null;
     const nestedClasses = this._nestedClasses.length
       ? this._nestedClasses.map(c => indentMultiline(c.string)).join('\n\n')
       : null;
     const before = '{';
     const after = '}';
-    const block = [before, members, methods, nestedClasses, this._block, after].filter(f => f).join('\n');
+    const block = [before, members, methods, nestedClasses, this._block, after]
+      .filter(f => f)
+      .join('\n');
     result += block;
 
     return (this._comment ? this._comment : '') + result + '\n';

@@ -1,18 +1,18 @@
-import { getBaseTypeNode, indent, indentMultiline } from '@graphql-codegen/visitor-plugin-common';
-import { JavaApolloAndroidPluginConfig } from './plugin.js';
-import { JavaDeclarationBlock } from '@graphql-codegen/java-common';
 import {
-  InputObjectTypeDefinitionNode,
   GraphQLSchema,
+  InputObjectTypeDefinitionNode,
   InputValueDefinitionNode,
-  isScalarType,
-  isInputObjectType,
-  Kind,
   isEnumType,
+  isInputObjectType,
+  isScalarType,
+  Kind,
   VariableDefinitionNode,
 } from 'graphql';
-import { Imports } from './imports.js';
+import { JavaDeclarationBlock } from '@graphql-codegen/java-common';
+import { getBaseTypeNode, indent, indentMultiline } from '@graphql-codegen/visitor-plugin-common';
 import { BaseJavaVisitor, SCALAR_TO_WRITER_METHOD } from './base-java-visitor.js';
+import { Imports } from './imports.js';
+import { JavaApolloAndroidPluginConfig } from './plugin.js';
 import { VisitorConfig } from './visitor-config.js';
 
 export class InputTypeVisitor extends BaseJavaVisitor<VisitorConfig> {
@@ -26,21 +26,26 @@ export class InputTypeVisitor extends BaseJavaVisitor<VisitorConfig> {
     return this.config.typePackage;
   }
 
-  private addInputMembers(cls: JavaDeclarationBlock, fields: ReadonlyArray<InputValueDefinitionNode>): void {
+  private addInputMembers(
+    cls: JavaDeclarationBlock,
+    fields: ReadonlyArray<InputValueDefinitionNode>,
+  ): void {
     fields.forEach(field => {
       const type = this.transformType(field.type);
       const actualType = type.isNonNull ? type.typeToUse : `Input<${type.typeToUse}>`;
       const annotations = type.isNonNull ? [type.annotation] : [];
       this._imports.add(Imports[type.annotation]);
 
-      cls.addClassMember(field.name.value, actualType, null, annotations, 'private', { final: true });
+      cls.addClassMember(field.name.value, actualType, null, annotations, 'private', {
+        final: true,
+      });
       cls.addClassMethod(
         field.name.value,
         actualType,
         `return this.${field.name.value};`,
         [],
         [type.annotation],
-        'public'
+        'public',
       );
     });
   }
@@ -48,7 +53,7 @@ export class InputTypeVisitor extends BaseJavaVisitor<VisitorConfig> {
   private addInputCtor(
     cls: JavaDeclarationBlock,
     className: string,
-    fields: ReadonlyArray<InputValueDefinitionNode>
+    fields: ReadonlyArray<InputValueDefinitionNode>,
   ): void {
     const impl = fields.map(field => `this.${field.name.value} = ${field.name.value};`).join('\n');
 
@@ -68,7 +73,7 @@ export class InputTypeVisitor extends BaseJavaVisitor<VisitorConfig> {
         };
       }),
       [],
-      'public'
+      'public',
     );
   }
 
@@ -96,12 +101,15 @@ export class InputTypeVisitor extends BaseJavaVisitor<VisitorConfig> {
   protected getFieldWithTypePrefix(
     field: InputValueDefinitionNode | VariableDefinitionNode,
     wrapWith: ((s: string) => string) | string | null = null,
-    applyNullable = false
+    applyNullable = false,
   ): string {
     this._imports.add(Imports.Input);
-    const typeToUse = this.getJavaClass(this._schema.getType(getBaseTypeNode(field.type).name.value));
+    const typeToUse = this.getJavaClass(
+      this._schema.getType(getBaseTypeNode(field.type).name.value),
+    );
     const isNonNull = field.type.kind === Kind.NON_NULL_TYPE;
-    const name = field.kind === Kind.INPUT_VALUE_DEFINITION ? field.name.value : field.variable.name.value;
+    const name =
+      field.kind === Kind.INPUT_VALUE_DEFINITION ? field.name.value : field.variable.name.value;
 
     if (isNonNull) {
       this._imports.add(Imports.Nonnull);
@@ -109,7 +117,9 @@ export class InputTypeVisitor extends BaseJavaVisitor<VisitorConfig> {
       return `@Nonnull ${typeToUse} ${name}`;
     }
     if (wrapWith) {
-      return typeof wrapWith === 'function' ? `${wrapWith(typeToUse)} ${name}` : `${wrapWith}<${typeToUse}> ${name}`;
+      return typeof wrapWith === 'function'
+        ? `${wrapWith(typeToUse)} ${name}`
+        : `${wrapWith}<${typeToUse}> ${name}`;
     }
     if (applyNullable) {
       this._imports.add(Imports.Nullable);
@@ -154,7 +164,9 @@ ${indentMultiline(result)}
     this._imports.add(Imports.IOException);
     this._imports.add(Imports.InputFieldWriter);
     this._imports.add(Imports.InputFieldMarshaller);
-    const allMarshallers = fields.map(field => indentMultiline(this.buildFieldsMarshaller(field), 2));
+    const allMarshallers = fields.map(field =>
+      indentMultiline(this.buildFieldsMarshaller(field), 2),
+    );
 
     return indentMultiline(`@Override
 public InputFieldMarshaller marshaller() {
@@ -167,14 +179,19 @@ ${allMarshallers.join('\n')}
 }`);
   }
 
-  private buildBuilderNestedClass(className: string, fields: ReadonlyArray<InputValueDefinitionNode>): string {
+  private buildBuilderNestedClass(
+    className: string,
+    fields: ReadonlyArray<InputValueDefinitionNode>,
+  ): string {
     const builderClassName = 'Builder';
     const privateFields = fields
       .map<string>(field => {
         const isArray =
           field.type.kind === Kind.LIST_TYPE ||
           (field.type.kind === Kind.NON_NULL_TYPE && field.type.type.kind === Kind.LIST_TYPE);
-        const fieldType = this.getFieldWithTypePrefix(field, v => (!isArray ? `Input<${v}>` : `Input<List<${v}>>`));
+        const fieldType = this.getFieldWithTypePrefix(field, v =>
+          !isArray ? `Input<${v}>` : `Input<List<${v}>>`,
+        );
         const isNonNull = field.type.kind === Kind.NON_NULL_TYPE;
 
         return `private ${fieldType}${isNonNull ? '' : ' = Input.absent()'};`;
@@ -189,8 +206,12 @@ ${allMarshallers.join('\n')}
         const fieldType = this.getFieldWithTypePrefix(field, isArray ? 'List' : null);
         const isNonNull = field.type.kind === Kind.NON_NULL_TYPE;
 
-        return `\npublic ${builderClassName} ${field.name.value}(${isNonNull ? '' : '@Nullable '}${fieldType}) {
-  this.${field.name.value} = ${isNonNull ? field.name.value : `Input.fromNullable(${field.name.value})`};
+        return `\npublic ${builderClassName} ${field.name.value}(${
+          isNonNull ? '' : '@Nullable '
+        }${fieldType}) {
+  this.${field.name.value} = ${
+          isNonNull ? field.name.value : `Input.fromNullable(${field.name.value})`
+        };
   return this;
 }`;
       })
@@ -201,7 +222,10 @@ ${allMarshallers.join('\n')}
       .map<string>(nnField => {
         this._imports.add(Imports.Utils);
 
-        return indent(`Utils.checkNotNull(${nnField.name.value}, "${nnField.name.value} == null");`, 1);
+        return indent(
+          `Utils.checkNotNull(${nnField.name.value}, "${nnField.name.value} == null");`,
+          1,
+        );
       });
 
     const ctor = '\n' + indent(`${builderClassName}() {}`);
@@ -218,7 +242,7 @@ ${nonNullFields.join('\n')}
         .final()
         .static()
         .withBlock(body)
-        .asKind('class').string
+        .asKind('class').string,
     );
   }
 
@@ -237,7 +261,9 @@ ${nonNullFields.join('\n')}
 
     this.addInputMembers(cls, node.fields);
     this.addInputCtor(cls, className, node.fields);
-    cls.addClassMethod('builder', 'Builder', 'return new Builder();', [], [], 'public', { static: true });
+    cls.addClassMethod('builder', 'Builder', 'return new Builder();', [], [], 'public', {
+      static: true,
+    });
     const marshallerOverride = this.buildMarshallerOverride(node.fields);
     const builderClass = this.buildBuilderNestedClass(className, node.fields);
 

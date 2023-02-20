@@ -1,15 +1,15 @@
+import autoBind from 'auto-bind';
+import { pascalCase, titleCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
+  ClientSideBaseVisitor,
+  DocumentMode,
   getConfigValue,
   LoadedFragment,
-  DocumentMode,
 } from '@graphql-codegen/visitor-plugin-common';
 import { VueApolloRawPluginConfig } from './config.js';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, GraphQLSchema } from 'graphql';
-import { Types } from '@graphql-codegen/plugin-helpers';
-import { pascalCase, titleCase } from 'change-case-all';
 
 export interface VueApolloPluginConfig extends ClientSideBasePluginConfig {
   withCompositionFunctions: boolean;
@@ -32,7 +32,10 @@ function insertIf(condition: boolean, ...elements: any[]) {
   return condition ? elements : [];
 }
 
-export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginConfig, VueApolloPluginConfig> {
+export class VueApolloVisitor extends ClientSideBaseVisitor<
+  VueApolloRawPluginConfig,
+  VueApolloPluginConfig
+> {
   private externalImportPrefix: string;
   private imports = new Set<string>();
 
@@ -40,16 +43,24 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginCo
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
     rawConfig: VueApolloRawPluginConfig,
-    documents: Types.DocumentFile[]
+    documents: Types.DocumentFile[],
   ) {
     super(schema, fragments, rawConfig, {
       withCompositionFunctions: getConfigValue(rawConfig.withCompositionFunctions, true),
-      vueApolloComposableImportFrom: getConfigValue(rawConfig.vueApolloComposableImportFrom, '@vue/apollo-composable'),
-      vueCompositionApiImportFrom: getConfigValue(rawConfig.vueCompositionApiImportFrom, '@vue/composition-api'),
+      vueApolloComposableImportFrom: getConfigValue(
+        rawConfig.vueApolloComposableImportFrom,
+        '@vue/apollo-composable',
+      ),
+      vueCompositionApiImportFrom: getConfigValue(
+        rawConfig.vueCompositionApiImportFrom,
+        '@vue/composition-api',
+      ),
       addDocBlocks: getConfigValue(rawConfig.addDocBlocks, true),
     });
 
-    this.externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
+    this.externalImportPrefix = this.config.importOperationTypesFrom
+      ? `${this.config.importOperationTypesFrom}.`
+      : '';
     this._documents = documents;
 
     autoBind(this);
@@ -71,8 +82,13 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginCo
     return 'export type ReactiveFunction<TParam> = () => TParam;';
   }
 
-  private getDocumentNodeVariable(node: OperationDefinitionNode, documentVariableName: string): string {
-    return this.config.documentMode === DocumentMode.external ? `Operations.${node.name.value}` : documentVariableName;
+  private getDocumentNodeVariable(
+    node: OperationDefinitionNode,
+    documentVariableName: string,
+  ): string {
+    return this.config.documentMode === DocumentMode.external
+      ? `Operations.${node.name.value}`
+      : documentVariableName;
   }
 
   public getImports(): string[] {
@@ -88,15 +104,20 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginCo
   private buildCompositionFunctionsJSDoc(
     node: OperationDefinitionNode,
     operationName: string,
-    operationType: string
+    operationType: string,
   ): string {
     const operationHasVariables = node.variableDefinitions?.length > 0;
 
-    const exampleVariablesString = node.variableDefinitions?.reduce((accumulator, currentDefinition) => {
-      const name = currentDefinition.variable.name.value;
+    const exampleVariablesString = node.variableDefinitions?.reduce(
+      (accumulator, currentDefinition) => {
+        const name = currentDefinition.variable.name.value;
 
-      return `${accumulator}\n *   ${operationType === 'Mutation' ? '  ' : ''}${name}: // value for '${name}'`;
-    }, '');
+        return `${accumulator}\n *   ${
+          operationType === 'Mutation' ? '  ' : ''
+        }${name}: // value for '${name}'`;
+      },
+      '',
+    );
 
     const exampleArguments = operationHasVariables
       ? operationType === 'Mutation'
@@ -136,7 +157,11 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginCo
      : ''
  }
  * @param options that will be passed into the ${operationType.toLowerCase()}, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/${
-      operationType === 'Mutation' ? 'mutation' : operationType === 'Subscription' ? 'subscription' : 'query'
+      operationType === 'Mutation'
+        ? 'mutation'
+        : operationType === 'Subscription'
+        ? 'subscription'
+        : 'query'
     }.html#options;
  *
  * @example${operationType === 'Mutation' ? mutationExample : queryExample}
@@ -158,7 +183,7 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginCo
     documentVariableName: string,
     operationType: 'Query' | 'Mutation' | 'Subscription',
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     operationResultType = this.externalImportPrefix + operationResultType;
     operationVariablesTypes = this.externalImportPrefix + operationVariablesTypes;
@@ -181,7 +206,9 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginCo
 
     const operationHasVariables = node.variableDefinitions?.length > 0;
 
-    const operationHasNonNullableVariable = !!node.variableDefinitions?.some(({ type }) => type.kind === 'NonNullType');
+    const operationHasNonNullableVariable = !!node.variableDefinitions?.some(
+      ({ type }) => type.kind === 'NonNullType',
+    );
 
     this.imports.add(this.vueApolloComposableImport);
     this.imports.add(this.vueCompositionApiImport);
@@ -227,12 +254,14 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<VueApolloRawPluginCo
           operationHasNonNullableVariable,
           operationHasVariables,
           documentNodeVariable,
-        })
+        }),
       );
     }
 
     return [
-      ...insertIf(this.config.addDocBlocks, [this.buildCompositionFunctionsJSDoc(node, operationName, operationType)]),
+      ...insertIf(this.config.addDocBlocks, [
+        this.buildCompositionFunctionsJSDoc(node, operationName, operationType),
+      ]),
       compositionFunctions.join('\n'),
       compositionFunctionResultType,
     ].join('\n');

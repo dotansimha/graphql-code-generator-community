@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import 'stencil-apollo';
-import { Component, Prop, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 declare global {
   export type CurrentUserForProfileQueryVariables = Types.Exact<{ [key: string]: never }>;
@@ -30,6 +30,12 @@ export class CurrentUserForProfileComponent {
   >;
   @Prop() variables: CurrentUserForProfileQueryVariables;
   render() {
-    return <apollo-query query={CurrentUserForProfileDocument} variables={this.variables} renderer={this.renderer} />;
+    return (
+      <apollo-query
+        query={CurrentUserForProfileDocument}
+        variables={this.variables}
+        renderer={this.renderer}
+      />
+    );
   }
 }

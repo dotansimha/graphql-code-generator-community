@@ -1,6 +1,6 @@
 import { basename, relative } from 'path';
-import { Types, PluginFunction, PluginValidateFn } from '@graphql-codegen/plugin-helpers';
 import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+import { PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
 
 /**
  * @description This plugin generates TypeScript typings for `.graphql` files containing GraphQL documents, which later on can be consumed using [`graphql-tag/loader`](https://github.com/apollographql/graphql-tag#webpack-preprocessing-with-graphql-tagloader) or use `string` types if you will use the operations as raw strings, and get type-check and type-safety for your imports. This means that any time you import objects from `.graphql` files, your IDE will provide auto-complete.
@@ -57,7 +57,12 @@ export interface TypeScriptFilesModulesPluginConfig {
 export const plugin: PluginFunction = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  { modulePathPrefix = '', relativeToCwd, prefix = '*/', type = 'DocumentNode' }: TypeScriptFilesModulesPluginConfig
+  {
+    modulePathPrefix = '',
+    relativeToCwd,
+    prefix = '*/',
+    type = 'DocumentNode',
+  }: TypeScriptFilesModulesPluginConfig,
 ): Promise<string> => {
   const useRelative = relativeToCwd === true;
 
@@ -73,13 +78,14 @@ export const plugin: PluginFunction = async (
 
       prev[fileName].push(
         ...documentRecord.document.definitions.filter(
-          document => document.kind === 'OperationDefinition' || document.kind === 'FragmentDefinition'
-        )
+          document =>
+            document.kind === 'OperationDefinition' || document.kind === 'FragmentDefinition',
+        ),
       );
 
       return prev;
     },
-    {} as any
+    {} as any,
   );
 
   return Object.keys(mappedDocuments)
@@ -107,7 +113,7 @@ export const validate: PluginValidateFn<any> = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
   config: any,
-  outputFile: string
+  outputFile: string,
 ) => {
   if (!outputFile.endsWith('.d.ts')) {
     throw new Error(`Plugin "typescript-graphql-files-modules" requires extension to be ".d.ts"!`);

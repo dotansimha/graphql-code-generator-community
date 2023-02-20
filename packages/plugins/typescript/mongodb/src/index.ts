@@ -1,20 +1,20 @@
+import { extname } from 'path';
+import { GraphQLSchema } from 'graphql';
+import gql from 'graphql-tag';
 import {
-  Types,
-  PluginFunction,
-  PluginValidateFn,
   getCachedDocumentNodeFromSchema,
   oldVisit,
+  PluginFunction,
+  PluginValidateFn,
+  Types,
 } from '@graphql-codegen/plugin-helpers';
-import { GraphQLSchema } from 'graphql';
-import { extname } from 'path';
-import gql from 'graphql-tag';
+import { Directives, TypeScriptMongoPluginConfig } from './config.js';
 import { TsMongoVisitor } from './visitor.js';
-import { TypeScriptMongoPluginConfig, Directives } from './config.js';
 
 export const plugin: PluginFunction<TypeScriptMongoPluginConfig> = (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: TypeScriptMongoPluginConfig
+  config: TypeScriptMongoPluginConfig,
 ) => {
   const visitor = new TsMongoVisitor(schema, config);
   const astNode = getCachedDocumentNodeFromSchema(schema);
@@ -46,7 +46,7 @@ export const validate: PluginValidateFn<any> = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
   config: any,
-  outputFile: string
+  outputFile: string,
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "typescript-mongodb" requires extension to be ".ts" or ".tsx"!`);

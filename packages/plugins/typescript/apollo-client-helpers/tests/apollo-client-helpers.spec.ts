@@ -1,5 +1,5 @@
-import { mergeOutputs } from '@graphql-codegen/plugin-helpers';
 import { buildSchema } from 'graphql';
+import { mergeOutputs } from '@graphql-codegen/plugin-helpers';
 import { plugin } from '../src/index.js';
 
 describe('apollo-client-helpers', () => {

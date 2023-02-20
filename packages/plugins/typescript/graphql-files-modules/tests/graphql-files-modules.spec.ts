@@ -1,6 +1,6 @@
+import { parse } from 'graphql';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
-import { parse } from 'graphql';
 
 describe('graphql-codegen typescript-graphql-files-modules', () => {
   it('Should generate simple module with one file', async () => {
@@ -17,7 +17,7 @@ describe('graphql-codegen typescript-graphql-files-modules', () => {
         },
       ],
       {},
-      { outputFile: '' }
+      { outputFile: '' },
     );
 
     expect(result).toBeSimilarStringTo(`
@@ -54,7 +54,7 @@ describe('graphql-codegen typescript-graphql-files-modules', () => {
         },
       ],
       {},
-      { outputFile: '' }
+      { outputFile: '' },
     );
 
     expect(result).toBeSimilarStringTo(`
@@ -91,7 +91,7 @@ describe('graphql-codegen typescript-graphql-files-modules', () => {
         },
       ],
       {},
-      { outputFile: '' }
+      { outputFile: '' },
     );
 
     expect(result).toBeSimilarStringTo(`
@@ -123,7 +123,7 @@ describe('graphql-codegen typescript-graphql-files-modules', () => {
         },
       ],
       {},
-      { outputFile: '' }
+      { outputFile: '' },
     );
 
     expect(result).toBeSimilarStringTo(`
@@ -161,7 +161,7 @@ describe('graphql-codegen typescript-graphql-files-modules', () => {
         },
       ],
       {},
-      { outputFile: '' }
+      { outputFile: '' },
     );
 
     expect(result).toBeSimilarStringTo(`
@@ -191,7 +191,7 @@ describe('graphql-codegen typescript-graphql-files-modules', () => {
         },
       ],
       { modulePathPrefix: 'api/' },
-      { outputFile: '' }
+      { outputFile: '' },
     );
 
     expect(result).toBeSimilarStringTo(`

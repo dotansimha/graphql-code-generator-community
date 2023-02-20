@@ -1,7 +1,7 @@
 import { snakeCase } from 'change-case-all';
-import { Kind, EnumValueDefinitionNode } from 'graphql';
-import { FieldName, TypeName } from '../config/pattern.js';
+import { EnumValueDefinitionNode, Kind } from 'graphql';
 import { Config } from '../config/config-value.js';
+import { FieldName, TypeName } from '../config/pattern.js';
 import {
   AppliesOn,
   AppliesOnDefaultFactory,
@@ -40,10 +40,18 @@ export class Block {
    * @param nodeRepository A map that stores the name of the Graphql Type as the key and it AST node as the value. Used to build FactoryBlocks from placeholders for mergedInputs and Union Types
    * @returns a string output of a `FreezedDeclarationBlock` which represents a Freezed class/model in Dart
    */
-  static build = (config: FlutterFreezedPluginConfig, node: NodeType, nodeRepository: NodeRepository) => {
+  static build = (
+    config: FlutterFreezedPluginConfig,
+    node: NodeType,
+    nodeRepository: NodeRepository,
+  ) => {
     // ignore these...
     const typeName = TypeName.fromString(node.name.value);
-    if (['Query', 'Mutation', 'Subscription', ...Config.ignoreTypes(config, typeName)].includes(typeName.value)) {
+    if (
+      ['Query', 'Mutation', 'Subscription', ...Config.ignoreTypes(config, typeName)].includes(
+        typeName.value,
+      )
+    ) {
       return '';
     }
 
@@ -52,7 +60,9 @@ export class Block {
       nodeRepository.register(node);
     }
 
-    return node.kind === Kind.ENUM_TYPE_DEFINITION ? EnumBlock.build(config, node) : ClassBlock.build(config, node);
+    return node.kind === Kind.ENUM_TYPE_DEFINITION
+      ? EnumBlock.build(config, node)
+      : ClassBlock.build(config, node);
   };
 
   static buildComment = (node?: NodeType | FieldType | EnumValueDefinitionNode): string => {
@@ -73,7 +83,7 @@ export class Block {
     identifier: string,
     typeName: TypeName,
     fieldName?: FieldName,
-    blockCasing?: DartIdentifierCasing
+    blockCasing?: DartIdentifierCasing,
   ): string => {
     identifier = dartCasing(identifier, blockCasing);
 
@@ -90,14 +100,16 @@ export class Block {
     fromJsonToJson: '==>from_json_to_json==>',
   };
 
-  static regexpForToken = (tokenName: 'defaultFactory' | 'unionFactory' | 'mergedFactory' | 'fromJsonToJson') => {
+  static regexpForToken = (
+    tokenName: 'defaultFactory' | 'unionFactory' | 'mergedFactory' | 'fromJsonToJson',
+  ) => {
     return RegExp(`${Block.tokens[tokenName as string]}.+\n`, 'gm');
   };
 
   static replaceTokens = (
     config: FlutterFreezedPluginConfig,
     nodeRepository: NodeRepository,
-    generatedBlocks: string[]
+    generatedBlocks: string[],
   ): string =>
     generatedBlocks
       .map(block => {
@@ -112,7 +124,7 @@ export class Block {
   static replaceDefaultFactoryToken = (
     block: string,
     config: FlutterFreezedPluginConfig,
-    nodeRepository: NodeRepository
+    nodeRepository: NodeRepository,
   ) =>
     block.replace(Block.regexpForToken('defaultFactory'), token => {
       const pattern = token.replace(Block.tokens.defaultFactory, '').trim();
@@ -121,7 +133,7 @@ export class Block {
         config,
         nodeRepository,
         blockAppliesOn.split(',') as readonly AppliesOnDefaultFactory[],
-        TypeName.fromString(className)
+        TypeName.fromString(className),
       );
     });
 
@@ -129,7 +141,7 @@ export class Block {
     block: string,
     config: FlutterFreezedPluginConfig,
     nodeRepository: NodeRepository,
-    blockType: 'unionFactory' | 'mergedFactory'
+    blockType: 'unionFactory' | 'mergedFactory',
   ) =>
     block.replace(Block.regexpForToken(blockType), token => {
       const pattern = token.replace(Block.tokens[blockType], '').trim();
@@ -139,7 +151,7 @@ export class Block {
         nodeRepository,
         blockAppliesOn.split(',') as readonly AppliesOnNamedFactory[],
         TypeName.fromString(className),
-        TypeName.fromString(factoryName)
+        TypeName.fromString(factoryName),
       );
     });
 }

@@ -1,5 +1,4 @@
 //#region NodeRepository classes
-
 import { ObjectType } from '../config/plugin-config.js';
 import { nodeIsObjectType } from '../utils.js';
 

@@ -1,25 +1,29 @@
 import {
-  ParsedConfig,
-  BaseVisitor,
-  ParsedMapper,
-  transformMappers,
-  parseMapper,
-  indent,
-  indentMultiline,
-  getBaseTypeNode,
-  ExternalParsedMapper,
-  buildScalarsFromConfig,
-} from '@graphql-codegen/visitor-plugin-common';
-import { JavaResolversPluginRawConfig } from './config.js';
-import { JAVA_SCALARS, JavaDeclarationBlock, wrapTypeWithModifiers } from '@graphql-codegen/java-common';
-import {
+  FieldDefinitionNode,
   GraphQLSchema,
+  InterfaceTypeDefinitionNode,
   NamedTypeNode,
   ObjectTypeDefinitionNode,
-  FieldDefinitionNode,
-  InterfaceTypeDefinitionNode,
 } from 'graphql';
 import { UnionTypeDefinitionNode } from 'graphql/language/ast.js';
+import {
+  JAVA_SCALARS,
+  JavaDeclarationBlock,
+  wrapTypeWithModifiers,
+} from '@graphql-codegen/java-common';
+import {
+  BaseVisitor,
+  buildScalarsFromConfig,
+  ExternalParsedMapper,
+  getBaseTypeNode,
+  indent,
+  indentMultiline,
+  ParsedConfig,
+  ParsedMapper,
+  parseMapper,
+  transformMappers,
+} from '@graphql-codegen/visitor-plugin-common';
+import { JavaResolversPluginRawConfig } from './config.js';
 
 export interface JavaResolverParsedConfig extends ParsedConfig {
   package: string;
@@ -29,10 +33,17 @@ export interface JavaResolverParsedConfig extends ParsedConfig {
   listType: string;
 }
 
-export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConfig, JavaResolverParsedConfig> {
+export class JavaResolversVisitor extends BaseVisitor<
+  JavaResolversPluginRawConfig,
+  JavaResolverParsedConfig
+> {
   private _includeTypeResolverImport = false;
 
-  constructor(rawConfig: JavaResolversPluginRawConfig, _schema: GraphQLSchema, defaultPackageName: string) {
+  constructor(
+    rawConfig: JavaResolversPluginRawConfig,
+    _schema: GraphQLSchema,
+    defaultPackageName: string,
+  ) {
     super(rawConfig, {
       mappers: transformMappers(rawConfig.mappers || {}),
       package: rawConfig.package || defaultPackageName,

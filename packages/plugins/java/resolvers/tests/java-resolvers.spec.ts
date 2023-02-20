@@ -1,7 +1,7 @@
-import '@graphql-codegen/testing';
 import { buildSchema } from 'graphql';
-import { plugin } from '../src/index.js';
+import '@graphql-codegen/testing';
 import { validateJava } from '../../common/tests/validate-java.js';
+import { plugin } from '../src/index.js';
 
 const OUTPUT_FILE = 'com/java/generated/resolvers.java';
 
@@ -64,9 +64,16 @@ describe('Java Resolvers', () => {
   });
 
   it('Should generate neseted list types correctly', async () => {
-    const result = await plugin(buildSchema(`type Query { data: [[[[String]]]]}`), [], {}, { outputFile: OUTPUT_FILE });
+    const result = await plugin(
+      buildSchema(`type Query { data: [[[[String]]]]}`),
+      [],
+      {},
+      { outputFile: OUTPUT_FILE },
+    );
 
-    expect(result).toBeSimilarStringTo(`public DataFetcher<Iterable<Iterable<Iterable<Iterable<String>>>>> data();`);
+    expect(result).toBeSimilarStringTo(
+      `public DataFetcher<Iterable<Iterable<Iterable<Iterable<String>>>>> data();`,
+    );
   });
 
   it('Should generate union correctly', async () => {
@@ -94,7 +101,12 @@ describe('Java Resolvers', () => {
   });
 
   it('Should use the package name provided from the config', async () => {
-    const result = await plugin(schema, [], { package: 'com.my.package' }, { outputFile: OUTPUT_FILE });
+    const result = await plugin(
+      schema,
+      [],
+      { package: 'com.my.package' },
+      { outputFile: OUTPUT_FILE },
+    );
 
     expect(result).toContain(`package com.my.package;`);
   });

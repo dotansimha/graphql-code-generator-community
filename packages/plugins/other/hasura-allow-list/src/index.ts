@@ -8,10 +8,9 @@ import {
   print,
   visit,
 } from 'graphql';
+import yaml from 'yaml';
 import { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import { HasuraAllowListPluginConfig } from './config.js';
-
-import yaml from 'yaml';
 
 /**
  * Returns an array of fragments required for a given operation, recursively.
@@ -24,7 +23,7 @@ import yaml from 'yaml';
 function getOperationFragmentsRecursively(
   operationDefinition: OperationDefinitionNode,
   fragmentDefinitions: FragmentDefinitionNode[],
-  documentLocation: string
+  documentLocation: string,
 ): FragmentDefinitionNode[] {
   const requiredFragmentNames = new Set<string>();
 
@@ -47,14 +46,14 @@ function getOperationFragmentsRecursively(
           requiredFragmentNames.add(fragmentSpreadNode.name.value);
 
           const fragmentDefinition = fragmentDefinitions.find(
-            definition => definition.name.value === fragmentSpreadNode.name.value
+            definition => definition.name.value === fragmentSpreadNode.name.value,
           );
 
           if (!fragmentDefinition) {
             throw new Error(
               `Missing fragment ${fragmentSpreadNode.name.value} for ${
                 definition.kind === Kind.FRAGMENT_DEFINITION ? 'fragment' : 'operation'
-              } ${definition.name.value} in file ${documentLocation}`
+              } ${definition.name.value} in file ${documentLocation}`,
             );
           } else {
             getRequiredFragments(fragmentDefinition);
@@ -84,40 +83,48 @@ function getGlobalFragments(documents: Types.DocumentFile[]): FragmentDefinition
       if (fragmentDictionary.has(fragment.name.value)) {
         const locationA = document.location;
         const locationB = fragmentDictionary.get(fragmentName);
-        throw new Error(`Duplicate fragment definitions for ${fragmentName} in files ${locationA}, ${locationB}`);
+        throw new Error(
+          `Duplicate fragment definitions for ${fragmentName} in files ${locationA}, ${locationB}`,
+        );
       }
       fragmentDictionary.set(fragmentName, document.location);
     }
   }
 
-  return documents.flatMap(document => document.document.definitions.filter(namedFragmentDefinitionFilter));
+  return documents.flatMap(document =>
+    document.document.definitions.filter(namedFragmentDefinitionFilter),
+  );
 }
 
 function getDocumentFragments(document: Types.DocumentFile): FragmentDefinitionNode[] {
   return document.document.definitions.filter(namedFragmentDefinitionFilter);
 }
 
-function namedOperationDefinitionFilter(definition: DefinitionNode): definition is OperationDefinitionNode {
+function namedOperationDefinitionFilter(
+  definition: DefinitionNode,
+): definition is OperationDefinitionNode {
   return definition.kind === Kind.OPERATION_DEFINITION && !!definition.name;
 }
-function namedFragmentDefinitionFilter(definition: DefinitionNode): definition is FragmentDefinitionNode {
+function namedFragmentDefinitionFilter(
+  definition: DefinitionNode,
+): definition is FragmentDefinitionNode {
   return definition.kind === Kind.FRAGMENT_DEFINITION && !!definition.name;
 }
 
 export const plugin: PluginFunction<HasuraAllowListPluginConfig> = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: HasuraAllowListPluginConfig
+  config: HasuraAllowListPluginConfig,
 ): Promise<Types.PluginOutput> => {
   if ('config_version' in config) {
     throw new Error(
-      `[hasura allow list plugin] Configuration error: configuration property config_version has been renamed configVersion. Please update your configuration accordingly.`
+      `[hasura allow list plugin] Configuration error: configuration property config_version has been renamed configVersion. Please update your configuration accordingly.`,
     );
   }
 
   if ('collection_name' in config) {
     throw new Error(
-      `[hasura allow list plugin] Configuration error: configuration property collection_name has been renamed collectionName. Please update your configuration accordingly.`
+      `[hasura allow list plugin] Configuration error: configuration property collection_name has been renamed collectionName. Please update your configuration accordingly.`,
     );
   }
 
@@ -136,7 +143,11 @@ export const plugin: PluginFunction<HasuraAllowListPluginConfig> = async (
     // for each operation in the document
     for (const operation of documentOperations) {
       // get fragments required by the operations
-      const requiredFragmentDefinitions = getOperationFragmentsRecursively(operation, fragments, document.location);
+      const requiredFragmentDefinitions = getOperationFragmentsRecursively(
+        operation,
+        fragments,
+        document.location,
+      );
 
       // insert the operation and any fragments to our queries definition.
       // fragment order is preserved, and each fragment is separated by a new line

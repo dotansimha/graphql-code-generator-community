@@ -1,11 +1,11 @@
 // This file is bundled and inlined.
 // We should probably make this a shared package though.
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Kind, TypeNode, StringValueNode } from 'graphql';
+import { Kind, StringValueNode, TypeNode } from 'graphql';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { indent } from '@graphql-codegen/visitor-plugin-common';
+import { CSharpFieldType, ListTypeField } from './c-sharp-field-types.js';
 import { csharpValueTypes } from './scalars.js';
-import { ListTypeField, CSharpFieldType } from './c-sharp-field-types.js';
 
 export function transformComment(comment: string | StringValueNode, indentLevel = 0): string {
   if (!comment) {
@@ -71,7 +71,7 @@ export function getListInnerTypeNode(typeNode: TypeNode): TypeNode {
 export function wrapFieldType(
   fieldType: CSharpFieldType,
   listTypeField?: ListTypeField,
-  listType = 'IEnumerable'
+  listType = 'IEnumerable',
 ): string {
   if (listTypeField) {
     const innerType = wrapFieldType(fieldType, listTypeField.type, listType);

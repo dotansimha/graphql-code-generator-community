@@ -1,12 +1,11 @@
+import { OperationDefinitionNode } from 'graphql';
+import { FetcherRenderer } from './fetcher.js';
 import {
   generateInfiniteQueryKey,
   generateMutationKey,
   generateQueryKey,
   generateQueryVariablesSignature,
 } from './variables-generator.js';
-
-import { FetcherRenderer } from './fetcher.js';
-import { OperationDefinitionNode } from 'graphql';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class FetchFetcher implements FetcherRenderer {
@@ -41,9 +40,12 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(hasRequiredVariables, operationVariablesTypes);
+    const variables = generateQueryVariablesSignature(
+      hasRequiredVariables,
+      operationVariablesTypes,
+    );
     const hookConfig = this.visitor.queryMethodMap;
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
@@ -72,9 +74,12 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(hasRequiredVariables, operationVariablesTypes);
+    const variables = generateQueryVariablesSignature(
+      hasRequiredVariables,
+      operationVariablesTypes,
+    );
     const hookConfig = this.visitor.queryMethodMap;
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.query.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.query.options);
@@ -102,7 +107,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     const variables = `variables?: ${operationVariablesTypes}`;
     const hookConfig = this.visitor.queryMethodMap;
@@ -118,7 +123,9 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       ${options}
     ) =>
-    ${hookConfig.mutation.hook}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
+    ${
+      hookConfig.mutation.hook
+    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
       ${generateMutationKey(node)},
       (${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)(),
       options
@@ -131,9 +138,12 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(hasRequiredVariables, operationVariablesTypes);
+    const variables = generateQueryVariablesSignature(
+      hasRequiredVariables,
+      operationVariablesTypes,
+    );
 
     return `\nuse${operationName}.fetcher = (dataSource: { endpoint: string, fetchParams?: RequestInit }, ${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables);`;
   }

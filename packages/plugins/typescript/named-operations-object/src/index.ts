@@ -1,6 +1,6 @@
-import { Types, PluginFunction, oldVisit } from '@graphql-codegen/plugin-helpers';
-import { GraphQLSchema, concatAST } from 'graphql';
 import { capitalCase } from 'change-case-all';
+import { concatAST, GraphQLSchema } from 'graphql';
+import { oldVisit, PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 
 export interface NamedOperationsObjectPluginConfig {
   /**
@@ -29,11 +29,14 @@ export interface NamedOperationsObjectPluginConfig {
 export const plugin: PluginFunction<NamedOperationsObjectPluginConfig, string> = (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: NamedOperationsObjectPluginConfig
+  config: NamedOperationsObjectPluginConfig,
 ) => {
   const identifierName = config.identifierName || 'namedOperations';
   const allAst = concatAST(documents.map(v => v.document));
-  const allOperationsNames: Record<'query' | 'mutation' | 'subscription' | 'fragment', Set<string>> = {
+  const allOperationsNames: Record<
+    'query' | 'mutation' | 'subscription' | 'fragment',
+    Set<string>
+  > = {
     query: new Set(),
     mutation: new Set(),
     subscription: new Set(),
@@ -73,7 +76,9 @@ ${Array.from(relevantOperations)
 
   if (objectItems.length === 0) {
     // eslint-disable-next-line no-console
-    console.warn(`Plugin "named-operations-object" has an empty output, since there are no valid operations!`);
+    console.warn(
+      `Plugin "named-operations-object" has an empty output, since there are no valid operations!`,
+    );
 
     return '';
   }

@@ -1,7 +1,7 @@
 import { transformSchemaAST } from '@graphql-codegen/schema-ast';
-import { unionSchema } from './schema.js';
+import { APPLIES_ON_PARAMETERS, defaultFreezedPluginConfig } from '../src/config/plugin-config.js';
 import { appliesOnBlock, arrayWrap, dartCasing, nodeIsObjectType } from '../src/utils.js';
-import { defaultFreezedPluginConfig, APPLIES_ON_PARAMETERS } from '../src/config/plugin-config.js';
+import { unionSchema } from './schema.js';
 
 const {
   ast: { definitions: nodes },
@@ -29,7 +29,9 @@ test('method: nodeIsObjectType() => returns true if node is an ObjectType', () =
 test('method: appliesOnBlock() => returns true if the configAppliesOnBlock contains some of the blockAppliesOn values', () => {
   expect(appliesOnBlock(['parameter'], APPLIES_ON_PARAMETERS)).toBe(true);
   expect(appliesOnBlock(['factory', 'parameter'], ['parameter'])).toBe(true);
-  expect(appliesOnBlock(['default_factory_parameter', 'parameter'], ['union_factory_parameter'])).toBe(false);
+  expect(
+    appliesOnBlock(['default_factory_parameter', 'parameter'], ['union_factory_parameter']),
+  ).toBe(false);
 });
 
 test('method: dartCasing() => ', () => {

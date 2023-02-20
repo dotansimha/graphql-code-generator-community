@@ -1,8 +1,8 @@
+import { buildSchema } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
 import { resolversTestingSchema } from '@graphql-codegen/testing';
-import { buildSchema } from 'graphql';
 import { plugin } from '../src/index.js';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
 import { ENUM_RESOLVERS_SIGNATURE } from '../src/visitor.js';
 
 describe('Flow Resolvers Plugin', () => {
@@ -50,7 +50,9 @@ describe('Flow Resolvers Plugin', () => {
       const result = await plugin(testSchema, [], config, { outputFile: '' });
       expect(result.prepend).not.toContain(ENUM_RESOLVERS_SIGNATURE);
       expect(result.content).not.toContain('EnumResolverSignature');
-      expect(result.content).toContain(`export type MyEnumResolvers = {| A: 'val_1', B: 'val_2', C: 'val_3' |};`);
+      expect(result.content).toContain(
+        `export type MyEnumResolvers = {| A: 'val_1', B: 'val_2', C: 'val_3' |};`,
+      );
     });
 
     it('Should generate enum internal values resolvers when enum has enumValues set as external enum', async () => {
@@ -75,7 +77,7 @@ describe('Flow Resolvers Plugin', () => {
       expect(result.prepend).toContain(ENUM_RESOLVERS_SIGNATURE);
       expect(result.content).toContain('EnumResolverSignature');
       expect(result.content).toContain(
-        `export type MyEnumResolvers = EnumResolverSignature<{| A?: *, B?: *, C?: * |}, $ElementType<ResolversTypes, 'MyEnum'>>;`
+        `export type MyEnumResolvers = EnumResolverSignature<{| A?: *, B?: *, C?: * |}, $ElementType<ResolversTypes, 'MyEnum'>>;`,
       );
       expect(result.content).toContain(`MyEnum?: MyEnumResolvers,`);
     });
@@ -102,7 +104,7 @@ describe('Flow Resolvers Plugin', () => {
       expect(result.prepend).toContain(ENUM_RESOLVERS_SIGNATURE);
       expect(result.content).toContain('EnumResolverSignature');
       expect(result.content).toContain(
-        `export type MyEnumResolvers = EnumResolverSignature<{| A?: *, B?: *, C?: * |}, $ElementType<ResolversTypes, 'MyEnum'>>;`
+        `export type MyEnumResolvers = EnumResolverSignature<{| A?: *, B?: *, C?: * |}, $ElementType<ResolversTypes, 'MyEnum'>>;`,
       );
     });
 
@@ -126,7 +128,7 @@ describe('Flow Resolvers Plugin', () => {
       expect(result.prepend).toContain(ENUM_RESOLVERS_SIGNATURE);
       expect(result.content).toContain('EnumResolverSignature');
       expect(result.content).toContain(
-        `export type MyEnumResolvers = EnumResolverSignature<{| A?: *, B?: *, C?: * |}, $ElementType<ResolversTypes, 'MyEnum'>>;`
+        `export type MyEnumResolvers = EnumResolverSignature<{| A?: *, B?: *, C?: * |}, $ElementType<ResolversTypes, 'MyEnum'>>;`,
       );
     });
   });
@@ -148,15 +150,20 @@ describe('Flow Resolvers Plugin', () => {
     const result = await plugin(testSchema, [], config, { outputFile: '' });
 
     expect(result.prepend).toContain(
-      `export type $RequireFields<Origin, Keys> = $Diff<Origin, Keys> & $ObjMapi<Keys, <Key>(k: Key) => $NonMaybeType<$ElementType<Origin, Key>>>;`
+      `export type $RequireFields<Origin, Keys> = $Diff<Origin, Keys> & $ObjMapi<Keys, <Key>(k: Key) => $NonMaybeType<$ElementType<Origin, Key>>>;`,
     );
     expect(result.content).toContain(
-      `something?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType, $RequireFields<QuerySomethingArgs, { arg: * }>>,`
+      `something?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType, $RequireFields<QuerySomethingArgs, { arg: * }>>,`,
     );
   });
 
   it('Should generate ResolversParentTypes', () => {
-    const result = plugin(resolversTestingSchema, [], {}, { outputFile: '' }) as Types.ComplexPluginOutput;
+    const result = plugin(
+      resolversTestingSchema,
+      [],
+      {},
+      { outputFile: '' },
+    ) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
       /** Mapping between all available schema types and the resolvers parents */
@@ -180,10 +187,15 @@ describe('Flow Resolvers Plugin', () => {
   });
 
   it('Should generate the correct imports when schema has scalars', () => {
-    const result = plugin(buildSchema(`scalar MyScalar`), [], {}, { outputFile: '' }) as Types.ComplexPluginOutput;
+    const result = plugin(
+      buildSchema(`scalar MyScalar`),
+      [],
+      {},
+      { outputFile: '' },
+    ) as Types.ComplexPluginOutput;
 
     expect(result.prepend).toContain(
-      `import { type GraphQLResolveInfo, type GraphQLScalarType, type GraphQLScalarTypeConfig } from 'graphql';`
+      `import { type GraphQLResolveInfo, type GraphQLScalarType, type GraphQLScalarTypeConfig } from 'graphql';`,
     );
   });
 
@@ -192,7 +204,7 @@ describe('Flow Resolvers Plugin', () => {
       buildSchema(`type MyType { f: String }`),
       [],
       {},
-      { outputFile: '' }
+      { outputFile: '' },
     ) as Types.ComplexPluginOutput;
 
     expect(result.prepend).toContain(`import { type GraphQLResolveInfo } from 'graphql';`);
@@ -220,7 +232,7 @@ describe('Flow Resolvers Plugin', () => {
     const o = mergeOutputs([result]);
     expect(o).toContain(`$RequireFields<Mutation_RandomArgs, { byteLength: * }>>,`);
     expect(o).toContain(
-      `export type $RequireFields<Origin, Keys> = $Diff<Origin, Keys> & $ObjMapi<Keys, <Key>(k: Key) => $NonMaybeType<$ElementType<Origin, Key>>>;`
+      `export type $RequireFields<Origin, Keys> = $Diff<Origin, Keys> & $ObjMapi<Keys, <Key>(k: Key) => $NonMaybeType<$ElementType<Origin, Key>>>;`,
     );
   });
 
@@ -229,11 +241,11 @@ describe('Flow Resolvers Plugin', () => {
       buildSchema(`type MyType { f(a: String): String }`),
       [],
       { typesPrefix: 'T' },
-      { outputFile: '' }
+      { outputFile: '' },
     ) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(
-      `f?: Resolver<?$ElementType<TResolversTypes, 'String'>, ParentType, ContextType, TMyTypeFArgs>,`
+      `f?: Resolver<?$ElementType<TResolversTypes, 'String'>, ParentType, ContextType, TMyTypeFArgs>,`,
     );
   });
 
@@ -259,7 +271,7 @@ describe('Flow Resolvers Plugin', () => {
         rootValueType: 'MyRoot',
         asyncResolverTypes: true,
       } as any,
-      { outputFile: 'graphql.ts' }
+      { outputFile: 'graphql.ts' },
     )) as Types.ComplexPluginOutput;
 
     expect(content.content).toBeSimilarStringTo(`

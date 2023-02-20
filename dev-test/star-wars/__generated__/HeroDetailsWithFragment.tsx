@@ -1,8 +1,8 @@
-import * as Types from '../types.d.js';
-
 import { gql } from '@apollo/client';
-import { HeroDetailsFragmentDoc } from './HeroDetailsFragment.js';
 import * as Apollo from '@apollo/client';
+import * as Types from '../types.d.js';
+import { HeroDetailsFragmentDoc } from './HeroDetailsFragment.js';
+
 const defaultOptions = {} as const;
 export type HeroDetailsWithFragmentQueryVariables = Types.Exact<{
   episode?: Types.InputMaybe<Types.Episode>;
@@ -42,25 +42,35 @@ export const HeroDetailsWithFragmentDocument = gql`
  * });
  */
 export function useHeroDetailsWithFragmentQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>(
     HeroDetailsWithFragmentDocument,
-    options
+    options,
   );
 }
 export function useHeroDetailsWithFragmentLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>(
     HeroDetailsWithFragmentDocument,
-    options
+    options,
   );
 }
-export type HeroDetailsWithFragmentQueryHookResult = ReturnType<typeof useHeroDetailsWithFragmentQuery>;
-export type HeroDetailsWithFragmentLazyQueryHookResult = ReturnType<typeof useHeroDetailsWithFragmentLazyQuery>;
+export type HeroDetailsWithFragmentQueryHookResult = ReturnType<
+  typeof useHeroDetailsWithFragmentQuery
+>;
+export type HeroDetailsWithFragmentLazyQueryHookResult = ReturnType<
+  typeof useHeroDetailsWithFragmentLazyQuery
+>;
 export type HeroDetailsWithFragmentQueryResult = Apollo.QueryResult<
   HeroDetailsWithFragmentQuery,
   HeroDetailsWithFragmentQueryVariables

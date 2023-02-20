@@ -1,16 +1,16 @@
+import { DocumentNode, FragmentDefinitionNode, GraphQLSchema, Kind, print } from 'graphql';
 import { Types } from '@graphql-codegen/plugin-helpers';
 import {
   BaseVisitor,
+  buildScalarsFromConfig,
   FragmentImport,
   getConfigValue,
   getPossibleTypes,
+  ImportDeclaration,
   LoadedFragment,
   ParsedConfig,
   RawConfig,
-  ImportDeclaration,
-  buildScalarsFromConfig,
 } from '@graphql-codegen/visitor-plugin-common';
-import { DocumentNode, FragmentDefinitionNode, GraphQLSchema, Kind, print } from 'graphql';
 import { DocumentImportResolverOptions } from './resolve-document-imports.js';
 import { extractExternalFragmentsInUse } from './utils.js';
 
@@ -37,7 +37,7 @@ export type FragmentRegistry = {
 function buildFragmentRegistry(
   { generateFilePath }: DocumentImportResolverOptions,
   { documents, config }: Types.PresetFnArgs<{}>,
-  schemaObject: GraphQLSchema
+  schemaObject: GraphQLSchema,
 ): FragmentRegistry {
   const baseVisitor = new BaseVisitor<RawConfig, NearOperationFileParsedConfig>(config, {
     scalars: buildScalarsFromConfig(schemaObject, config),
@@ -79,7 +79,7 @@ function buildFragmentRegistry(
   const duplicateFragmentNames: string[] = [];
   const registry = documents.reduce<FragmentRegistry>((prev: FragmentRegistry, documentRecord) => {
     const fragments: FragmentDefinitionNode[] = documentRecord.document.definitions.filter(
-      d => d.kind === Kind.FRAGMENT_DEFINITION
+      d => d.kind === Kind.FRAGMENT_DEFINITION,
     ) as FragmentDefinitionNode[];
 
     if (fragments.length > 0) {
@@ -88,7 +88,7 @@ function buildFragmentRegistry(
 
         if (!schemaType) {
           throw new Error(
-            `Fragment "${fragment.name.value}" is set on non-existing type "${fragment.typeCondition.name.value}"!`
+            `Fragment "${fragment.name.value}" is set on non-existing type "${fragment.typeCondition.name.value}"!`,
           );
         }
 
@@ -96,10 +96,13 @@ function buildFragmentRegistry(
         const filePath = generateFilePath(documentRecord.location);
         const imports = getFragmentImports(
           possibleTypes.map(t => t.name),
-          fragment.name.value
+          fragment.name.value,
         );
 
-        if (prev[fragment.name.value] && print(fragment) !== print(prev[fragment.name.value].node)) {
+        if (
+          prev[fragment.name.value] &&
+          print(fragment) !== print(prev[fragment.name.value].node)
+        ) {
           duplicateFragmentNames.push(fragment.name.value);
         }
 
@@ -116,7 +119,9 @@ function buildFragmentRegistry(
   }, {});
 
   if (duplicateFragmentNames.length) {
-    throw new Error(`Multiple fragments with the name(s) "${duplicateFragmentNames.join(', ')}" were found.`);
+    throw new Error(
+      `Multiple fragments with the name(s) "${duplicateFragmentNames.join(', ')}" were found.`,
+    );
   }
 
   return registry;
@@ -129,7 +134,7 @@ export default function buildFragmentResolver<T>(
   collectorOptions: DocumentImportResolverOptions,
   presetOptions: Types.PresetFnArgs<T>,
   schemaObject: GraphQLSchema,
-  dedupeFragments = false
+  dedupeFragments = false,
 ) {
   const fragmentRegistry = buildFragmentRegistry(collectorOptions, presetOptions, schemaObject);
   const { baseOutputDir } = presetOptions;
@@ -150,7 +155,9 @@ export default function buildFragmentResolver<T>(
         if (
           level === 0 ||
           (dedupeFragments &&
-            ['OperationDefinition', 'FragmentDefinition'].includes(documentFileContent.definitions[0].kind))
+            ['OperationDefinition', 'FragmentDefinition'].includes(
+              documentFileContent.definitions[0].kind,
+            ))
         ) {
           if (fragmentDetails.filePath !== generatedFilePath) {
             // don't emit imports to same location
@@ -185,7 +192,7 @@ export default function buildFragmentResolver<T>(
           },
           emitLegacyCommonJSImports: presetOptions.config.emitLegacyCommonJSImports,
           typesImport,
-        })
+        }),
       ),
     };
   }

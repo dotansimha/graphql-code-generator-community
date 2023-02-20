@@ -1,5 +1,5 @@
-import preset from '../src/index.js';
 import { parse } from 'graphql';
+import preset from '../src/index.js';
 
 const schemaDocumentNode = parse(/* GraphQL */ `
   type Query {
@@ -107,7 +107,7 @@ describe('import-types preset', () => {
             content: `import * as Types from './types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -133,7 +133,7 @@ describe('import-types preset', () => {
             content: `import type * as Types from './types';\n`,
           },
         },
-      ])
+      ]),
     );
   });
 
@@ -154,7 +154,7 @@ describe('import-types preset', () => {
     });
 
     expect(result.map(o => o.plugins)[0]).toEqual(
-      expect.arrayContaining([{ add: { content: `import * as Types from './types';\n` } }])
+      expect.arrayContaining([{ add: { content: `import * as Types from './types';\n` } }]),
     );
   });
 
@@ -184,7 +184,7 @@ describe('import-types preset', () => {
     });
 
     expect(result.map(o => o.plugins)[0]).not.toEqual(
-      expect.arrayContaining([{ add: { content: `import * as Types from '../types';\n` } }])
+      expect.arrayContaining([{ add: { content: `import * as Types from '../types';\n` } }]),
     );
   });
 

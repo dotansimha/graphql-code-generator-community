@@ -1,46 +1,46 @@
-import {
-  ClientSideBaseVisitor,
-  ClientSideBasePluginConfig,
-  DocumentMode,
-  LoadedFragment,
-  indentMultiline,
-  getBaseTypeNode,
-  indent,
-  buildScalarsFromConfig,
-} from '@graphql-codegen/visitor-plugin-common';
 import autoBind from 'auto-bind';
 import {
-  OperationDefinitionNode,
-  print,
-  visit,
-  GraphQLSchema,
-  Kind,
-  VariableDefinitionNode,
-  isScalarType,
-  FieldNode,
+  DirectiveNode,
   DocumentNode,
+  EnumTypeDefinitionNode,
+  FieldNode,
+  FragmentSpreadNode,
+  GraphQLSchema,
+  InputObjectTypeDefinitionNode,
   isEnumType,
   isInputObjectType,
-  TypeNode,
+  isScalarType,
+  Kind,
   ObjectTypeDefinitionNode,
-  InputObjectTypeDefinitionNode,
-  EnumTypeDefinitionNode,
-  FragmentSpreadNode,
-  DirectiveNode,
+  OperationDefinitionNode,
+  print,
+  TypeNode,
+  VariableDefinitionNode,
+  visit,
 } from 'graphql';
-import { CSharpOperationsRawPluginConfig } from './config.js';
-import { getCachedDocumentNodeFromSchema, Types } from '@graphql-codegen/plugin-helpers';
 import {
-  getListInnerTypeNode,
   C_SHARP_SCALARS,
-  getListTypeField,
-  getListTypeDepth,
-  CSharpFieldType,
   convertSafeName,
+  CSharpDeclarationBlock,
+  CSharpFieldType,
+  getListInnerTypeNode,
+  getListTypeDepth,
+  getListTypeField,
   isValueType,
   wrapFieldType,
-  CSharpDeclarationBlock,
 } from '@graphql-codegen/c-sharp-common';
+import { getCachedDocumentNodeFromSchema, Types } from '@graphql-codegen/plugin-helpers';
+import {
+  buildScalarsFromConfig,
+  ClientSideBasePluginConfig,
+  ClientSideBaseVisitor,
+  DocumentMode,
+  getBaseTypeNode,
+  indent,
+  indentMultiline,
+  LoadedFragment,
+} from '@graphql-codegen/visitor-plugin-common';
+import { CSharpOperationsRawPluginConfig } from './config.js';
 
 const defaultSuffix = 'GQL';
 const R_NAME = /name:\s*"([^"]+)"/;
@@ -76,7 +76,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
     rawConfig: CSharpOperationsRawPluginConfig,
-    documents?: Types.DocumentFile[]
+    documents?: Types.DocumentFile[],
   ) {
     super(
       schema,
@@ -91,7 +91,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         scalars: buildScalarsFromConfig(schema, rawConfig, C_SHARP_SCALARS),
         typesafeOperation: rawConfig.typesafeOperation || false,
       },
-      documents
+      documents,
     );
 
     this.overruleConfigSettings();
@@ -130,7 +130,9 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     const directives = print(operation).match(R_DEF(directive));
 
     if (directives.length > 1) {
-      throw new Error(`The ${directive} directive used multiple times in '${operation.name}' operation`);
+      throw new Error(
+        `The ${directive} directive used multiple times in '${operation.name}' operation`,
+      );
     }
 
     return directives[0];
@@ -156,22 +158,34 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
 
   protected _gql(node: OperationDefinitionNode): string {
     const fragments = this._transformFragments(node);
-    const doc = this._prepareDocument([print(node), this._includeFragments(fragments, node.kind)].join('\n'));
+    const doc = this._prepareDocument(
+      [print(node), this._includeFragments(fragments, node.kind)].join('\n'),
+    );
 
     return doc.replace(/"/g, '""');
   }
 
-  private _getDocumentNodeVariable(node: OperationDefinitionNode, documentVariableName: string): string {
-    return this.config.documentMode === DocumentMode.external ? `Operations.${node.name.value}` : documentVariableName;
+  private _getDocumentNodeVariable(
+    node: OperationDefinitionNode,
+    documentVariableName: string,
+  ): string {
+    return this.config.documentMode === DocumentMode.external
+      ? `Operations.${node.name.value}`
+      : documentVariableName;
   }
 
-  private _gqlInputSignature(variable: VariableDefinitionNode): { signature: string; required: boolean } {
+  private _gqlInputSignature(variable: VariableDefinitionNode): {
+    signature: string;
+    required: boolean;
+  } {
     const typeNode = variable.type;
     const innerType = getBaseTypeNode(typeNode);
     const schemaType = this._schema.getType(innerType.name.value);
 
     const name = variable.variable.name.value;
-    const baseType = !isScalarType(schemaType) ? innerType.name.value : this.scalars[schemaType.name] || 'object';
+    const baseType = !isScalarType(schemaType)
+      ? innerType.name.value
+      : this.scalars[schemaType.name] || 'object';
 
     const listType = getListTypeField(typeNode);
     const required = getListInnerTypeNode(typeNode).kind === Kind.NON_NULL_TYPE;
@@ -186,7 +200,9 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
 
   public getCSharpImports(): string {
     return (
-      ['System', 'Newtonsoft.Json', 'GraphQL', 'GraphQL.Client.Abstractions'].map(i => `using ${i};`).join('\n') + '\n'
+      ['System', 'Newtonsoft.Json', 'GraphQL', 'GraphQL.Client.Abstractions']
+        .map(i => `using ${i};`)
+        .join('\n') + '\n'
     );
   }
 
@@ -203,7 +219,10 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     }
   }
 
-  protected resolveFieldType(typeNode: TypeNode, hasDefaultValue: Boolean = false): CSharpFieldType {
+  protected resolveFieldType(
+    typeNode: TypeNode,
+    hasDefaultValue: Boolean = false,
+  ): CSharpFieldType {
     const innerType = getBaseTypeNode(typeNode);
     const schemaType = this._schema.getType(innerType.name.value);
     const listType = getListTypeField(typeNode);
@@ -271,7 +290,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
 
   private _getResponseFieldRecursive(
     node: OperationDefinitionNode | FieldNode | FragmentSpreadNode | DirectiveNode,
-    parentSchema: ObjectTypeDefinitionNode
+    parentSchema: ObjectTypeDefinitionNode,
   ): string {
     switch (node.kind) {
       case Kind.OPERATION_DEFINITION: {
@@ -288,7 +307,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
                   }
                   return this._getResponseFieldRecursive(opr, parentSchema);
                 })
-                .join('\n')
+                .join('\n'),
           ).string;
       }
       case Kind.FIELD: {
@@ -302,13 +321,13 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
           const responseTypeName = wrapFieldType(
             responseType,
             responseType.listType,
-            'System.Collections.Generic.List'
+            'System.Collections.Generic.List',
           );
           return indentMultiline(
             [
               `[JsonProperty("${node.name.value}")]`,
               `public ${responseTypeName} ${convertSafeName(node.name.value)} { get; set; }`,
-            ].join('\n') + '\n'
+            ].join('\n') + '\n',
           );
         }
         const selectionBaseTypeName = `${responseType.baseType.type}Selection`;
@@ -318,10 +337,11 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         const selectionTypeName = wrapFieldType(
           selectionType,
           selectionType.listType,
-          'System.Collections.Generic.List'
+          'System.Collections.Generic.List',
         );
         const innerClassSchema = this._schemaAST.definitions.find(
-          d => d.kind === Kind.OBJECT_TYPE_DEFINITION && d.name.value === responseType.baseType.type
+          d =>
+            d.kind === Kind.OBJECT_TYPE_DEFINITION && d.name.value === responseType.baseType.type,
         ) as ObjectTypeDefinitionNode;
 
         const innerClassDefinition = new CSharpDeclarationBlock()
@@ -337,14 +357,14 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
                   }
                   return this._getResponseFieldRecursive(s, innerClassSchema);
                 })
-                .join('\n')
+                .join('\n'),
           ).string;
         return indentMultiline(
           [
             innerClassDefinition,
             `[JsonProperty("${node.name.value}")]`,
             `public ${selectionTypeName} ${convertSafeName(node.name.value)} { get; set; }`,
-          ].join('\n') + '\n'
+          ].join('\n') + '\n',
         );
       }
       case Kind.FRAGMENT_SPREAD: {
@@ -369,7 +389,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
 
   private _getResponseClass(node: OperationDefinitionNode): string {
     const operationSchema = this._schemaAST.definitions.find(
-      s => s.kind === Kind.OBJECT_TYPE_DEFINITION && s.name.value.toLowerCase() === node.operation
+      s => s.kind === Kind.OBJECT_TYPE_DEFINITION && s.name.value.toLowerCase() === node.operation,
     );
     return this._getResponseFieldRecursive(node, operationSchema as ObjectTypeDefinitionNode);
   }
@@ -387,21 +407,25 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
           node.variableDefinitions
             ?.map(v => {
               const inputType = this.resolveFieldType(v.type);
-              const inputTypeName = wrapFieldType(inputType, inputType.listType, 'System.Collections.Generic.List');
+              const inputTypeName = wrapFieldType(
+                inputType,
+                inputType.listType,
+                'System.Collections.Generic.List',
+              );
               return indentMultiline(
                 [
                   `[JsonProperty("${v.variable.name.value}")]`,
                   `public ${inputTypeName} ${convertSafeName(v.variable.name.value)} { get; set; }`,
-                ].join('\n') + '\n'
+                ].join('\n') + '\n',
               );
             })
-            .join('\n')
+            .join('\n'),
       ).string;
   }
 
   private _getOperationMethod(node: OperationDefinitionNode): string {
     const operationSchema = this._schemaAST.definitions.find(
-      s => s.kind === Kind.OBJECT_TYPE_DEFINITION && s.name.value.toLowerCase() === node.operation
+      s => s.kind === Kind.OBJECT_TYPE_DEFINITION && s.name.value.toLowerCase() === node.operation,
     ) as ObjectTypeDefinitionNode;
     if (!operationSchema) {
       throw new Error(`Operation schema not found; ${node.operation}`);
@@ -417,7 +441,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
           indent(
             `return client.Send${operationSchema.name.value}Async<Response>(Request(${
               node.variableDefinitions?.length ? 'variables' : ''
-            }), cancellationToken);`
+            }), cancellationToken);`,
           ),
           `}`,
         ].join('\n');
@@ -427,7 +451,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
           indent(
             `return client.CreateSubscriptionStream<Response>(Request(${
               node.variableDefinitions?.length ? 'variables' : ''
-            }));`
+            }));`,
           ),
           `}`,
           '',
@@ -435,7 +459,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
           indent(
             `return client.CreateSubscriptionStream<Response>(Request(${
               node.variableDefinitions?.length ? 'variables' : ''
-            }), exceptionHandler);`
+            }), exceptionHandler);`,
           ),
           `}`,
         ].join('\n');
@@ -461,7 +485,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     if (this.config.documentMode !== DocumentMode.external) {
       const gqlBlock = indentMultiline(this._gql(node), 4);
       documentString = `${this.config.noExport ? '' : 'public'} static string ${convertSafeName(
-        documentVariableName
+        documentVariableName,
       )} = @"\n${gqlBlock}";`;
     }
 
@@ -562,16 +586,20 @@ ${this._getOperationMethod(node)}
                 return null;
               }
               const inputType = this.resolveFieldType(f.type);
-              const inputTypeName = wrapFieldType(inputType, inputType.listType, 'System.Collections.Generic.List');
+              const inputTypeName = wrapFieldType(
+                inputType,
+                inputType.listType,
+                'System.Collections.Generic.List',
+              );
               return indentMultiline(
                 [
                   `[JsonProperty("${f.name.value}")]`,
                   `public ${inputTypeName} ${convertSafeName(f.name.value)} { get; set; }`,
-                ].join('\n') + '\n'
+                ].join('\n') + '\n',
               );
             })
             .filter(f => !!f)
-            .join('\n')
+            .join('\n'),
       ).string;
 
     return indentMultiline(inputClass, 2);

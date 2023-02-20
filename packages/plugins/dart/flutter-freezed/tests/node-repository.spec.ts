@@ -16,7 +16,7 @@ describe('NodeRepository can store and retrieve Object Types', () => {
     expect(nodeRepository.get('Human')).toBe(objNode);
 
     expect(() => nodeRepository.register(nodes[6] as ObjectType)).toThrow(
-      'Node is not an ObjectTypeDefinitionNode or InputObjectTypeDefinitionNode'
+      'Node is not an ObjectTypeDefinitionNode or InputObjectTypeDefinitionNode',
     );
     expect(nodeRepository.get('SearchResult')).toBeUndefined();
   });

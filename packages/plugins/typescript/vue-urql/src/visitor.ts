@@ -1,15 +1,15 @@
+import autoBind from 'auto-bind';
+import { pascalCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
-  LoadedFragment,
-  getConfigValue,
-  OMIT_TYPE,
+  ClientSideBaseVisitor,
   DocumentMode,
+  getConfigValue,
+  LoadedFragment,
+  OMIT_TYPE,
 } from '@graphql-codegen/visitor-plugin-common';
 import { VueUrqlRawPluginConfig } from './config.js';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, GraphQLSchema } from 'graphql';
-import { pascalCase } from 'change-case-all';
 
 export interface UrqlPluginConfig extends ClientSideBasePluginConfig {
   withComposition: boolean;
@@ -19,7 +19,11 @@ export interface UrqlPluginConfig extends ClientSideBasePluginConfig {
 export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, UrqlPluginConfig> {
   private _externalImportPrefix = '';
 
-  constructor(schema: GraphQLSchema, fragments: LoadedFragment[], rawConfig: VueUrqlRawPluginConfig) {
+  constructor(
+    schema: GraphQLSchema,
+    fragments: LoadedFragment[],
+    rawConfig: VueUrqlRawPluginConfig,
+  ) {
     super(schema, fragments, rawConfig, {
       withComposition: getConfigValue(rawConfig.withComposition, true),
       urqlImportFrom: getConfigValue(rawConfig.urqlImportFrom, '@urql/vue'),
@@ -28,16 +32,21 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
     if (this.config.importOperationTypesFrom) {
       this._externalImportPrefix = `${this.config.importOperationTypesFrom}.`;
 
-      if (this.config.documentMode !== DocumentMode.external || !this.config.importDocumentNodeExternallyFrom) {
+      if (
+        this.config.documentMode !== DocumentMode.external ||
+        !this.config.importDocumentNodeExternallyFrom
+      ) {
         // eslint-disable-next-line no-console
         console.warn(
-          '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"'
+          '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"',
         );
       }
 
       if (this.config.importOperationTypesFrom !== 'Operations') {
         // eslint-disable-next-line no-console
-        console.warn('importOperationTypesFrom only works correctly when left empty or set to "Operations"');
+        console.warn(
+          'importOperationTypesFrom only works correctly when left empty or set to "Operations"',
+        );
       }
     }
 
@@ -67,7 +76,7 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
     operationType: string,
     documentVariableName: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const operationName: string = this.convertName(node.name?.value ?? '', {
       suffix: this.config.omitOperationSuffix ? '' : pascalCase(operationType),
@@ -99,7 +108,7 @@ export function use${operationName}(options: Omit<Urql.Use${operationType}Args<n
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const documentVariablePrefixed = this._externalImportPrefix + documentVariableName;
     const operationResultTypePrefixed = this._externalImportPrefix + operationResultType;
@@ -111,7 +120,7 @@ export function use${operationName}(options: Omit<Urql.Use${operationType}Args<n
           operationType,
           documentVariablePrefixed,
           operationResultTypePrefixed,
-          operationVariablesTypesPrefixed
+          operationVariablesTypesPrefixed,
         )
       : null;
 

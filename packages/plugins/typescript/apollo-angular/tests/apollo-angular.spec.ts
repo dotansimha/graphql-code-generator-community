@@ -1,11 +1,11 @@
-import { validateTs } from '@graphql-codegen/testing';
+import { buildClientSchema, buildSchema, extendSchema, GraphQLSchema, parse } from 'graphql';
 import { gql } from 'graphql-tag';
-import { plugin, addToSchema } from '../src/index.js';
-import { parse, GraphQLSchema, buildClientSchema, buildSchema, extendSchema } from 'graphql';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
+import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
+import { addToSchema, plugin } from '../src/index.js';
 
 describe('Apollo Angular', () => {
   const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
@@ -29,10 +29,12 @@ describe('Apollo Angular', () => {
     output: Types.PluginOutput,
     testSchema: GraphQLSchema,
     documents: Types.DocumentFile[],
-    config: any
+    config: any,
   ) => {
     const tsOutput = await tsPlugin(testSchema, documents, config, { outputFile: '' });
-    const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, { outputFile: '' });
+    const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, {
+      outputFile: '',
+    });
     const merged = mergeOutputs([tsOutput, tsDocumentsOutput, output]);
     validateTs(merged, undefined, true);
   };
@@ -48,7 +50,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
@@ -64,7 +66,7 @@ describe('Apollo Angular', () => {
         { gqlImport: 'graphql.macro#gql' },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { gql } from 'graphql.macro';`);
@@ -79,7 +81,7 @@ describe('Apollo Angular', () => {
         {},
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Apollo from 'apollo-angular';`);
@@ -95,7 +97,7 @@ describe('Apollo Angular', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -117,7 +119,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -140,7 +142,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`override document = TestDocument;`);
@@ -158,7 +160,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.tsx',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Apollo from 'my-custom-apollo-angular';`);
@@ -186,7 +188,7 @@ describe('Apollo Angular', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import { ${moduleName} } from '${modulePath}';`);
@@ -221,7 +223,7 @@ describe('Apollo Angular', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`document = MyFeedDocument;`);
@@ -244,12 +246,12 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       );
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledWith(
-        'importDocumentNodeExternallyFrom must be provided if documentMode=external'
+        'importDocumentNodeExternallyFrom must be provided if documentMode=external',
       );
     });
 
@@ -265,12 +267,12 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       );
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledWith(
-        'importOperationTypesFrom only works correctly when left empty or set to "Operations"'
+        'importOperationTypesFrom only works correctly when left empty or set to "Operations"',
       );
     });
 
@@ -285,12 +287,12 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       );
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledWith(
-        '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"'
+        '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"',
       );
     });
 
@@ -306,12 +308,12 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       );
 
       // eslint-disable-next-line no-console
       expect(console.warn).toHaveBeenCalledWith(
-        '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"'
+        '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"',
       );
     });
 
@@ -327,7 +329,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as Operations from '@myproject/generated';`);
@@ -356,7 +358,7 @@ describe('Apollo Angular', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -384,7 +386,7 @@ describe('Apollo Angular', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`document = MyFeedDocument;`);
@@ -423,7 +425,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       // NgModule
@@ -499,7 +501,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toContain(`export class MyFeedQueryService`);
@@ -526,7 +528,7 @@ describe('Apollo Angular', () => {
         { sdkClass: true },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       // NgModule
@@ -566,7 +568,7 @@ describe('Apollo Angular', () => {
         { sdkClass: true },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -595,7 +597,7 @@ describe('Apollo Angular', () => {
         { sdkClass: true },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -623,7 +625,7 @@ describe('Apollo Angular', () => {
         { sdkClass: true },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
@@ -655,7 +657,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       // NgModule
@@ -698,7 +700,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.prepend).toContain(`import * as ApolloCore from 'apollo-client';`);
@@ -723,7 +725,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       // NgModule import
@@ -748,7 +750,7 @@ describe('Apollo Angular', () => {
         },
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`@Injectable({
@@ -786,7 +788,7 @@ describe('Apollo Angular', () => {
         {},
         {
           outputFile: 'graphql.ts',
-        }
+        },
       )) as Types.ComplexPluginOutput;
 
       await validateTypeScript(content, schema, docs, {});

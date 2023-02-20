@@ -103,7 +103,11 @@ const config: CodegenConfig = {
         '!./dev-test/githunt-invalid/**/*.graphql',
       ],
       preset: 'near-operation-file',
-      presetConfig: { extension: '.stencil-component.tsx', folder: '__generated__', baseTypesPath: 'types.d.ts' },
+      presetConfig: {
+        extension: '.stencil-component.tsx',
+        folder: '__generated__',
+        baseTypesPath: 'types.d.ts',
+      },
       plugins: ['typescript-operations', 'typescript-stencil-apollo'],
       config: { componentType: 'class', globalNamespace: true },
     },

@@ -1,6 +1,6 @@
+import { GraphQLSchema } from 'graphql';
 import { oldVisit, PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import { transformSchemaAST } from '@graphql-codegen/schema-ast';
-import { GraphQLSchema } from 'graphql';
 import { defaultFreezedPluginConfig, FlutterFreezedPluginConfig } from './config/plugin-config.js';
 import { Block } from './freezed-declaration-blocks/index.js';
 import { schemaVisitor } from './schema-visitor.js';
@@ -9,7 +9,7 @@ export const plugin: PluginFunction<FlutterFreezedPluginConfig> = (
   schema: GraphQLSchema,
   _documents: Types.DocumentFile[],
   _config: FlutterFreezedPluginConfig,
-  info
+  info,
 ): string => {
   // sets the defaults for the config
   const config = { ...defaultFreezedPluginConfig, ..._config };
@@ -22,7 +22,7 @@ export const plugin: PluginFunction<FlutterFreezedPluginConfig> = (
   const importStatements = Block.buildImportStatements(info?.outputFile ?? 'app_models');
 
   const generatedBlocks: string[] = visitorResult.definitions.filter(
-    (def: any) => typeof def === 'string' && def.length > 0
+    (def: any) => typeof def === 'string' && def.length > 0,
   );
   // return [importStatements, ...generatedBlocks].join('').trim();
 

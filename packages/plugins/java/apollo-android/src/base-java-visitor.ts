@@ -1,23 +1,23 @@
-import { Imports } from './imports.js';
-import { BaseVisitor, getBaseTypeNode, buildScalars } from '@graphql-codegen/visitor-plugin-common';
-import { getBaseType } from '@graphql-codegen/plugin-helpers';
-import { JavaApolloAndroidPluginConfig } from './plugin.js';
-import { JAVA_SCALARS } from '@graphql-codegen/java-common';
 import {
-  GraphQLSchema,
-  isScalarType,
-  isInputObjectType,
-  Kind,
-  GraphQLNamedType,
-  GraphQLOutputType,
-  isNonNullType,
-  isListType,
-  TypeNode,
   GraphQLInterfaceType,
+  GraphQLNamedType,
   GraphQLObjectType,
+  GraphQLOutputType,
+  GraphQLSchema,
+  isInputObjectType,
+  isListType,
+  isNonNullType,
+  isScalarType,
+  Kind,
+  TypeNode,
 } from 'graphql';
-import { VisitorConfig } from './visitor-config.js';
+import { JAVA_SCALARS } from '@graphql-codegen/java-common';
+import { getBaseType } from '@graphql-codegen/plugin-helpers';
+import { BaseVisitor, buildScalars, getBaseTypeNode } from '@graphql-codegen/visitor-plugin-common';
+import { Imports } from './imports.js';
+import { JavaApolloAndroidPluginConfig } from './plugin.js';
 import { ImportsSet, TransformedType } from './types.js';
+import { VisitorConfig } from './visitor-config.js';
 
 export const SCALAR_TO_WRITER_METHOD = {
   ID: 'writeString',
@@ -40,7 +40,7 @@ export class BaseJavaVisitor<Config extends VisitorConfig = any> extends BaseVis
   constructor(
     protected _schema: GraphQLSchema,
     rawConfig: JavaApolloAndroidPluginConfig,
-    additionalConfig: Partial<Config>
+    additionalConfig: Partial<Config>,
   ) {
     super(rawConfig, {
       ...additionalConfig,

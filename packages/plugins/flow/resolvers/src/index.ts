@@ -1,21 +1,22 @@
+import { GraphQLSchema } from 'graphql';
 import {
-  Types,
-  PluginFunction,
   addFederationReferencesToSchema,
   getCachedDocumentNodeFromSchema,
   oldVisit,
+  PluginFunction,
+  Types,
 } from '@graphql-codegen/plugin-helpers';
-import { GraphQLSchema } from 'graphql';
 import { FlowResolversPluginConfig } from './config';
 import { FlowResolversVisitor } from './visitor.js';
 
 export const plugin: PluginFunction<FlowResolversPluginConfig, Types.ComplexPluginOutput> = (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: FlowResolversPluginConfig
+  config: FlowResolversPluginConfig,
 ) => {
   const imports = ['type GraphQLResolveInfo'];
-  const showUnusedMappers = typeof config.showUnusedMappers === 'boolean' ? config.showUnusedMappers : true;
+  const showUnusedMappers =
+    typeof config.showUnusedMappers === 'boolean' ? config.showUnusedMappers : true;
 
   const transformedSchema = config.federation ? addFederationReferencesToSchema(schema) : schema;
 
@@ -99,7 +100,8 @@ ${defsToInclude.join('\n')}
 
   const resolversTypeMapping = visitor.buildResolversTypes();
   const resolversParentTypeMapping = visitor.buildResolversParentTypes();
-  const { getRootResolver, getAllDirectiveResolvers, mappersImports, unusedMappers, hasScalars } = visitor;
+  const { getRootResolver, getAllDirectiveResolvers, mappersImports, unusedMappers, hasScalars } =
+    visitor;
 
   if (hasScalars()) {
     imports.push('type GraphQLScalarType', 'type GraphQLScalarTypeConfig');

@@ -1,15 +1,20 @@
-import { GraphQLSchema } from 'graphql';
-import { PluginFunction, Types, getCachedDocumentNodeFromSchema, oldVisit } from '@graphql-codegen/plugin-helpers';
-import { KotlinResolversVisitor } from './visitor.js';
-import { buildPackageNameFromPath } from '@graphql-codegen/java-common';
 import { dirname, normalize } from 'path';
+import { GraphQLSchema } from 'graphql';
+import { buildPackageNameFromPath } from '@graphql-codegen/java-common';
+import {
+  getCachedDocumentNodeFromSchema,
+  oldVisit,
+  PluginFunction,
+  Types,
+} from '@graphql-codegen/plugin-helpers';
 import { KotlinResolversPluginRawConfig } from './config.js';
+import { KotlinResolversVisitor } from './visitor.js';
 
 export const plugin: PluginFunction<KotlinResolversPluginRawConfig> = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
   config: KotlinResolversPluginRawConfig,
-  { outputFile }
+  { outputFile },
 ): Promise<string> => {
   const relevantPath = dirname(normalize(outputFile));
   const defaultPackageName = buildPackageNameFromPath(relevantPath);

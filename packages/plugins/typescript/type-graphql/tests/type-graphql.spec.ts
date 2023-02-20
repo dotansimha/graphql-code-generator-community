@@ -1,6 +1,6 @@
-import '@graphql-codegen/testing';
-import { Types } from '@graphql-codegen/plugin-helpers';
 import { buildSchema } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
+import '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
 
 describe('type-graphql', () => {
@@ -322,7 +322,7 @@ describe('type-graphql', () => {
       schema,
       [],
       { decoratorName: { type: 'Foo', field: 'Bar', interface: 'FooBar' } },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -359,7 +359,7 @@ describe('type-graphql', () => {
       schema,
       [],
       { scalars: { DateTime: 'Date' } },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
@@ -733,21 +733,21 @@ describe('type-graphql', () => {
           'QueryTypeGraphQlFunctionArgs',
         ],
       },
-      { outputFile: '' }
+      { outputFile: '' },
     );
 
     expect(result.content).not.toBeSimilarStringTo(
-      `TypeGraphQL.registerEnumType(RegularEnum, { name: 'RegularEnum' });`
+      `TypeGraphQL.registerEnumType(RegularEnum, { name: 'RegularEnum' });`,
     );
 
     expect(result.content).toBeSimilarStringTo(
-      `TypeGraphQL.registerEnumType(TypeGraphQlEnum, { name: 'TypeGraphQlEnum' });`
+      `TypeGraphQL.registerEnumType(TypeGraphQlEnum, { name: 'TypeGraphQlEnum' });`,
     );
 
     expect(result.content).toBeSimilarStringTo(
       `export type IRegularInterfaceType = {
         id?: Maybe<Scalars['ID']>;
-      };`
+      };`,
     );
 
     expect(result.content).toBeSimilarStringTo(
@@ -756,14 +756,14 @@ describe('type-graphql', () => {
       export abstract class ITypeGraphQlInterfaceType {
         @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
-      }`
+      }`,
     );
 
     expect(result.content).toBeSimilarStringTo(
       `export type RegularType = {
         __typename?: 'RegularType';
         id?: Maybe<Scalars['ID']>;
-      };`
+      };`,
     );
 
     expect(result.content).toBeSimilarStringTo(
@@ -772,13 +772,13 @@ describe('type-graphql', () => {
         __typename?: 'TypeGraphQLType';
         @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
-      }`
+      }`,
     );
 
     expect(result.content).toBeSimilarStringTo(
       `export type RegularInputType = {
         id?: Maybe<Scalars['ID']>;
-      };`
+      };`,
     );
 
     expect(result.content).toBeSimilarStringTo(
@@ -786,7 +786,7 @@ describe('type-graphql', () => {
       export class TypeGraphQlInputType {
         @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
-      }`
+      }`,
     );
 
     expect(result.content).toBeSimilarStringTo(`

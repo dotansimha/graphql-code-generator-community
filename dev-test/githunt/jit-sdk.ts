@@ -1,7 +1,8 @@
-import { GraphQLSchema, ExecutionResult } from 'graphql';
-import { compileQuery, isCompiledQuery, CompilerOptions } from 'graphql-jit';
-import { AggregateError, isAsyncIterable, mapAsyncIterator } from '@graphql-tools/utils';
+import { ExecutionResult, GraphQLSchema } from 'graphql';
+import { compileQuery, CompilerOptions, isCompiledQuery } from 'graphql-jit';
 import gql from 'graphql-tag';
+import { AggregateError, isAsyncIterable, mapAsyncIterator } from '@graphql-tools/utils';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -331,7 +332,12 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = {
   __typename?: 'Mutation';
-  vote?: { __typename?: 'Entry'; score: number; id: number; vote: { __typename?: 'Vote'; vote_value: number } } | null;
+  vote?: {
+    __typename?: 'Entry';
+    score: number;
+    id: number;
+    vote: { __typename?: 'Vote'; vote_value: number };
+  } | null;
 };
 
 export const CommentsPageCommentFragmentDoc = gql`
@@ -474,10 +480,12 @@ export const VoteDocument = gql`
 `;
 async function handleSubscriptionResult<T>(
   resultIterator: AsyncIterableIterator<ExecutionResult> | ExecutionResult,
-  operationName: string
+  operationName: string,
 ) {
   if (isAsyncIterable(resultIterator)) {
-    return mapAsyncIterator<any, T>(resultIterator, result => handleExecutionResult(result, operationName));
+    return mapAsyncIterator<any, T>(resultIterator, result =>
+      handleExecutionResult(result, operationName),
+    );
   } else {
     return handleExecutionResult<T>(resultIterator, operationName);
   }
@@ -485,7 +493,10 @@ async function handleSubscriptionResult<T>(
 function handleExecutionResult<T>(result: ExecutionResult, operationName: string) {
   if (result.errors) {
     const originalErrors = result.errors.map(error => error.originalError || error);
-    throw new AggregateError(originalErrors, `Failed to execute ${operationName}: \n\t${originalErrors.join('\n\t')}`);
+    throw new AggregateError(
+      originalErrors,
+      `Failed to execute ${operationName}: \n\t${originalErrors.join('\n\t')}`,
+    );
   }
   return result.data as unknown as T;
 }
@@ -494,65 +505,108 @@ export interface SdkOptions<TGlobalContext = any, TGlobalRoot = any> {
   globalRoot?: TGlobalRoot;
   jitOptions?: Partial<CompilerOptions>;
 }
-export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContext = any, TOperationRoot = any>(
+export function getSdk<
+  TGlobalContext = any,
+  TGlobalRoot = any,
+  TOperationContext = any,
+  TOperationRoot = any,
+>(
   schema: GraphQLSchema,
-  { globalContext, globalRoot, jitOptions = {} }: SdkOptions<TGlobalContext, TGlobalRoot> = {}
+  { globalContext, globalRoot, jitOptions = {} }: SdkOptions<TGlobalContext, TGlobalRoot> = {},
 ) {
-  const onCommentAddedCompiled = compileQuery(schema, OnCommentAddedDocument, 'onCommentAdded', jitOptions);
+  const onCommentAddedCompiled = compileQuery(
+    schema,
+    OnCommentAddedDocument,
+    'onCommentAdded',
+    jitOptions,
+  );
   if (!isCompiledQuery(onCommentAddedCompiled)) {
-    const originalErrors = onCommentAddedCompiled?.errors?.map(error => error.originalError || error) || [];
-    throw new AggregateError(originalErrors, `Failed to compile onCommentAdded: \n\t${originalErrors.join('\n\t')}`);
+    const originalErrors =
+      onCommentAddedCompiled?.errors?.map(error => error.originalError || error) || [];
+    throw new AggregateError(
+      originalErrors,
+      `Failed to compile onCommentAdded: \n\t${originalErrors.join('\n\t')}`,
+    );
   }
 
   const CommentCompiled = compileQuery(schema, CommentDocument, 'Comment', jitOptions);
   if (!isCompiledQuery(CommentCompiled)) {
-    const originalErrors = CommentCompiled?.errors?.map(error => error.originalError || error) || [];
-    throw new AggregateError(originalErrors, `Failed to compile Comment: \n\t${originalErrors.join('\n\t')}`);
+    const originalErrors =
+      CommentCompiled?.errors?.map(error => error.originalError || error) || [];
+    throw new AggregateError(
+      originalErrors,
+      `Failed to compile Comment: \n\t${originalErrors.join('\n\t')}`,
+    );
   }
 
   const CurrentUserForProfileCompiled = compileQuery(
     schema,
     CurrentUserForProfileDocument,
     'CurrentUserForProfile',
-    jitOptions
+    jitOptions,
   );
   if (!isCompiledQuery(CurrentUserForProfileCompiled)) {
-    const originalErrors = CurrentUserForProfileCompiled?.errors?.map(error => error.originalError || error) || [];
+    const originalErrors =
+      CurrentUserForProfileCompiled?.errors?.map(error => error.originalError || error) || [];
     throw new AggregateError(
       originalErrors,
-      `Failed to compile CurrentUserForProfile: \n\t${originalErrors.join('\n\t')}`
+      `Failed to compile CurrentUserForProfile: \n\t${originalErrors.join('\n\t')}`,
     );
   }
 
   const FeedCompiled = compileQuery(schema, FeedDocument, 'Feed', jitOptions);
   if (!isCompiledQuery(FeedCompiled)) {
     const originalErrors = FeedCompiled?.errors?.map(error => error.originalError || error) || [];
-    throw new AggregateError(originalErrors, `Failed to compile Feed: \n\t${originalErrors.join('\n\t')}`);
+    throw new AggregateError(
+      originalErrors,
+      `Failed to compile Feed: \n\t${originalErrors.join('\n\t')}`,
+    );
   }
 
-  const submitRepositoryCompiled = compileQuery(schema, SubmitRepositoryDocument, 'submitRepository', jitOptions);
+  const submitRepositoryCompiled = compileQuery(
+    schema,
+    SubmitRepositoryDocument,
+    'submitRepository',
+    jitOptions,
+  );
   if (!isCompiledQuery(submitRepositoryCompiled)) {
-    const originalErrors = submitRepositoryCompiled?.errors?.map(error => error.originalError || error) || [];
-    throw new AggregateError(originalErrors, `Failed to compile submitRepository: \n\t${originalErrors.join('\n\t')}`);
+    const originalErrors =
+      submitRepositoryCompiled?.errors?.map(error => error.originalError || error) || [];
+    throw new AggregateError(
+      originalErrors,
+      `Failed to compile submitRepository: \n\t${originalErrors.join('\n\t')}`,
+    );
   }
 
-  const submitCommentCompiled = compileQuery(schema, SubmitCommentDocument, 'submitComment', jitOptions);
+  const submitCommentCompiled = compileQuery(
+    schema,
+    SubmitCommentDocument,
+    'submitComment',
+    jitOptions,
+  );
   if (!isCompiledQuery(submitCommentCompiled)) {
-    const originalErrors = submitCommentCompiled?.errors?.map(error => error.originalError || error) || [];
-    throw new AggregateError(originalErrors, `Failed to compile submitComment: \n\t${originalErrors.join('\n\t')}`);
+    const originalErrors =
+      submitCommentCompiled?.errors?.map(error => error.originalError || error) || [];
+    throw new AggregateError(
+      originalErrors,
+      `Failed to compile submitComment: \n\t${originalErrors.join('\n\t')}`,
+    );
   }
 
   const voteCompiled = compileQuery(schema, VoteDocument, 'vote', jitOptions);
   if (!isCompiledQuery(voteCompiled)) {
     const originalErrors = voteCompiled?.errors?.map(error => error.originalError || error) || [];
-    throw new AggregateError(originalErrors, `Failed to compile vote: \n\t${originalErrors.join('\n\t')}`);
+    throw new AggregateError(
+      originalErrors,
+      `Failed to compile vote: \n\t${originalErrors.join('\n\t')}`,
+    );
   }
 
   return {
     async onCommentAdded(
       variables: OnCommentAddedSubscriptionVariables,
       context?: TOperationContext,
-      root?: TOperationRoot
+      root?: TOperationRoot,
     ): Promise<AsyncIterableIterator<OnCommentAddedSubscription> | OnCommentAddedSubscription> {
       const result = await onCommentAddedCompiled.subscribe!(
         {
@@ -563,14 +617,14 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
           ...globalContext,
           ...context,
         },
-        variables
+        variables,
       );
       return handleSubscriptionResult(result, 'onCommentAdded');
     },
     async Comment(
       variables: CommentQueryVariables,
       context?: TOperationContext,
-      root?: TOperationRoot
+      root?: TOperationRoot,
     ): Promise<CommentQuery> {
       const result = await CommentCompiled.query(
         {
@@ -581,14 +635,14 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
           ...globalContext,
           ...context,
         },
-        variables
+        variables,
       );
       return handleExecutionResult(result, 'Comment');
     },
     async CurrentUserForProfile(
       variables?: CurrentUserForProfileQueryVariables,
       context?: TOperationContext,
-      root?: TOperationRoot
+      root?: TOperationRoot,
     ): Promise<CurrentUserForProfileQuery> {
       const result = await CurrentUserForProfileCompiled.query(
         {
@@ -599,11 +653,15 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
           ...globalContext,
           ...context,
         },
-        variables
+        variables,
       );
       return handleExecutionResult(result, 'CurrentUserForProfile');
     },
-    async Feed(variables: FeedQueryVariables, context?: TOperationContext, root?: TOperationRoot): Promise<FeedQuery> {
+    async Feed(
+      variables: FeedQueryVariables,
+      context?: TOperationContext,
+      root?: TOperationRoot,
+    ): Promise<FeedQuery> {
       const result = await FeedCompiled.query(
         {
           ...globalRoot,
@@ -613,14 +671,14 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
           ...globalContext,
           ...context,
         },
-        variables
+        variables,
       );
       return handleExecutionResult(result, 'Feed');
     },
     async submitRepository(
       variables: SubmitRepositoryMutationVariables,
       context?: TOperationContext,
-      root?: TOperationRoot
+      root?: TOperationRoot,
     ): Promise<SubmitRepositoryMutation> {
       const result = await submitRepositoryCompiled.query(
         {
@@ -631,14 +689,14 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
           ...globalContext,
           ...context,
         },
-        variables
+        variables,
       );
       return handleExecutionResult(result, 'submitRepository');
     },
     async submitComment(
       variables: SubmitCommentMutationVariables,
       context?: TOperationContext,
-      root?: TOperationRoot
+      root?: TOperationRoot,
     ): Promise<SubmitCommentMutation> {
       const result = await submitCommentCompiled.query(
         {
@@ -649,14 +707,14 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
           ...globalContext,
           ...context,
         },
-        variables
+        variables,
       );
       return handleExecutionResult(result, 'submitComment');
     },
     async vote(
       variables: VoteMutationVariables,
       context?: TOperationContext,
-      root?: TOperationRoot
+      root?: TOperationRoot,
     ): Promise<VoteMutation> {
       const result = await voteCompiled.query(
         {
@@ -667,7 +725,7 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
           ...globalContext,
           ...context,
         },
-        variables
+        variables,
       );
       return handleExecutionResult(result, 'vote');
     },

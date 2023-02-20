@@ -1,12 +1,12 @@
 import {
-  ObjectTypeDefinitionNode,
-  InputObjectTypeDefinitionNode,
-  UnionTypeDefinitionNode,
   EnumTypeDefinitionNode,
   FieldDefinitionNode,
+  InputObjectTypeDefinitionNode,
   InputValueDefinitionNode,
+  ObjectTypeDefinitionNode,
+  UnionTypeDefinitionNode,
 } from 'graphql';
-import { TypeNamePattern, TypeName, FieldNamePattern, Pattern } from './pattern.js';
+import { FieldNamePattern, Pattern, TypeName, TypeNamePattern } from './pattern.js';
 
 //#region PluginConfig
 /**
@@ -176,7 +176,7 @@ export type FlutterFreezedPluginConfig = {
   defaultValues?: [
     pattern: FieldNamePattern,
     value: string, // use backticks for string values
-    appliesOn: AppliesOnParameters[]
+    appliesOn: AppliesOnParameters[],
   ][];
 
   /**
@@ -324,7 +324,9 @@ export type FlutterFreezedPluginConfig = {
    * export default config;
    * ```
    */
-  escapeDartKeywords?: boolean | [pattern: Pattern, prefix?: string, suffix?: string, appliesOn?: AppliesOn[]][];
+  escapeDartKeywords?:
+    | boolean
+    | [pattern: Pattern, prefix?: string, suffix?: string, appliesOn?: AppliesOn[]][];
 
   /**
    * @name final
@@ -623,7 +625,7 @@ export type FlutterFreezedPluginConfig = {
     /**
      * just as the unionKey changes the key used, this changes the value for each union/sealed factories
      */
-    unionValuesNameMap?: [typeName: TypeName, unionValueKey: string][]
+    unionValuesNameMap?: [typeName: TypeName, unionValueKey: string][],
   ][];
 };
 
@@ -650,58 +652,77 @@ export type AppliesOn =
   | 'union_factory_parameter' // like `named_factory_parameters` but ONLY for a parameter in a named factory constructor which for a GraphQL Union Type
   | 'merged_factory_parameter'; // like `named_factory_parameters` but ONLY for a parameter in a named factory constructor which for a GraphQL Input Type that is merged inside an a class generated for a GraphQL Object Type
 
-export const APPLIES_ON_ENUM = <const>['enum'];
+export const APPLIES_ON_ENUM = ['enum'] as const;
 export type AppliesOnEnum = (typeof APPLIES_ON_ENUM)[number];
 
-export const APPLIES_ON_ENUM_VALUE = <const>['enum_value'];
+export const APPLIES_ON_ENUM_VALUE = ['enum_value'] as const;
 export type AppliesOnEnumValue = (typeof APPLIES_ON_ENUM_VALUE)[number];
 
-export const APPLIES_ON_CLASS = <const>['class'];
+export const APPLIES_ON_CLASS = ['class'] as const;
 export type AppliesOnClass = (typeof APPLIES_ON_CLASS)[number];
 
-export const APPLIES_ON_DEFAULT_FACTORY = <const>['factory', 'default_factory'];
+export const APPLIES_ON_DEFAULT_FACTORY = ['factory', 'default_factory'] as const;
 export type AppliesOnDefaultFactory = (typeof APPLIES_ON_DEFAULT_FACTORY)[number];
 
-export const APPLIES_ON_UNION_FACTORY = <const>['factory', 'named_factory', 'union_factory'];
+export const APPLIES_ON_UNION_FACTORY = ['factory', 'named_factory', 'union_factory'] as const;
 export type AppliesOnUnionFactory = (typeof APPLIES_ON_UNION_FACTORY)[number];
 
-export const APPLIES_ON_MERGED_FACTORY = <const>['factory', 'named_factory', 'merged_factory'];
+export const APPLIES_ON_MERGED_FACTORY = ['factory', 'named_factory', 'merged_factory'] as const;
 export type AppliesOnMergedFactory = (typeof APPLIES_ON_MERGED_FACTORY)[number];
 
 export type AppliesOnNamedFactory = AppliesOnUnionFactory | AppliesOnMergedFactory;
 
-export const APPLIES_ON_FACTORY = ['factory', 'default_factory', 'named_factory', 'merged_factory', 'union_factory'];
+export const APPLIES_ON_FACTORY = [
+  'factory',
+  'default_factory',
+  'named_factory',
+  'merged_factory',
+  'union_factory',
+];
 export type AppliesOnFactory = AppliesOnDefaultFactory | AppliesOnNamedFactory;
 
-export const APPLIES_ON_DEFAULT_FACTORY_PARAMETERS = <const>['parameter', 'default_factory_parameter'];
-export type AppliesOnDefaultFactoryParameters = (typeof APPLIES_ON_DEFAULT_FACTORY_PARAMETERS)[number];
+export const APPLIES_ON_DEFAULT_FACTORY_PARAMETERS = [
+  'parameter',
+  'default_factory_parameter',
+] as const;
+export type AppliesOnDefaultFactoryParameters =
+  (typeof APPLIES_ON_DEFAULT_FACTORY_PARAMETERS)[number];
 
-export const APPLIES_ON_UNION_FACTORY_PARAMETERS = <const>[
+export const APPLIES_ON_UNION_FACTORY_PARAMETERS = [
   'parameter',
   'named_factory_parameter',
   'union_factory_parameter',
-];
+] as const;
 export type AppliesOnUnionFactoryParameters = (typeof APPLIES_ON_UNION_FACTORY_PARAMETERS)[number];
 
-export const APPLIES_ON_MERGED_FACTORY_PARAMETERS = <const>[
+export const APPLIES_ON_MERGED_FACTORY_PARAMETERS = [
   'parameter',
   'named_factory_parameter',
   'merged_factory_parameter',
-];
-export type AppliesOnMergedFactoryParameters = (typeof APPLIES_ON_MERGED_FACTORY_PARAMETERS)[number];
+] as const;
+export type AppliesOnMergedFactoryParameters =
+  (typeof APPLIES_ON_MERGED_FACTORY_PARAMETERS)[number];
 
-export type AppliesOnNamedParameters = AppliesOnUnionFactoryParameters | AppliesOnMergedFactoryParameters;
+export type AppliesOnNamedParameters =
+  | AppliesOnUnionFactoryParameters
+  | AppliesOnMergedFactoryParameters;
 
-export const APPLIES_ON_PARAMETERS = <const>[
+export const APPLIES_ON_PARAMETERS = [
   'parameter',
   'default_factory_parameter',
   'named_factory_parameter',
   'union_factory_parameter',
   'merged_factory_parameter',
-];
+] as const;
 export type AppliesOnParameters = AppliesOnDefaultFactoryParameters | AppliesOnNamedParameters;
 
-export const APPLIES_ON_ALL_BLOCKS = <const>['enum', 'enum_value', 'class', 'factory', 'parameter'];
+export const APPLIES_ON_ALL_BLOCKS = [
+  'enum',
+  'enum_value',
+  'class',
+  'factory',
+  'parameter',
+] as const;
 
 export type DartIdentifierCasing = 'snake_case' | 'camelCase' | 'PascalCase';
 
@@ -718,7 +739,12 @@ export type ObjectType = ObjectTypeDefinitionNode | InputObjectTypeDefinitionNod
 export type ConfigOption = keyof FlutterFreezedPluginConfig;
 export type FreezedOption = Extract<
   ConfigOption,
-  'copyWith' | 'equal' | 'immutable' | 'makeCollectionsUnmodifiable' | 'mutableInputs' | 'privateEmptyConstructor'
+  | 'copyWith'
+  | 'equal'
+  | 'immutable'
+  | 'makeCollectionsUnmodifiable'
+  | 'mutableInputs'
+  | 'privateEmptyConstructor'
 >;
 
 export type TypeFieldNameOption = Extract<

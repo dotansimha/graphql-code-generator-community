@@ -1,10 +1,11 @@
+import { ApolloError } from 'apollo-client';
 import gql from 'graphql-tag';
 import {
   createMutationFunction,
   createSmartQueryOptionsFunction,
   createSmartSubscriptionOptionsFunction,
 } from 'vue-apollo-smart-ops';
-import { ApolloError } from 'apollo-client';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -334,7 +335,12 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = {
   __typename?: 'Mutation';
-  vote?: { __typename?: 'Entry'; score: number; id: number; vote: { __typename?: 'Vote'; vote_value: number } } | null;
+  vote?: {
+    __typename?: 'Entry';
+    score: number;
+    id: number;
+    vote: { __typename?: 'Vote'; vote_value: number };
+  } | null;
 };
 
 export const CommentsPageCommentFragmentDoc = gql`
@@ -484,9 +490,11 @@ export const CommentDocument = gql`
  *   }
  * }
  */
-export const useCommentQuery = createSmartQueryOptionsFunction<CommentQuery, CommentQueryVariables, ApolloError>(
-  CommentDocument
-);
+export const useCommentQuery = createSmartQueryOptionsFunction<
+  CommentQuery,
+  CommentQueryVariables,
+  ApolloError
+>(CommentDocument);
 
 export const CurrentUserForProfileDocument = gql`
   query CurrentUserForProfile {
@@ -557,7 +565,11 @@ export const FeedDocument = gql`
  *   }
  * }
  */
-export const useFeedQuery = createSmartQueryOptionsFunction<FeedQuery, FeedQueryVariables, ApolloError>(FeedDocument);
+export const useFeedQuery = createSmartQueryOptionsFunction<
+  FeedQuery,
+  FeedQueryVariables,
+  ApolloError
+>(FeedDocument);
 
 export const SubmitRepositoryDocument = gql`
   mutation submitRepository($repoFullName: String!) {
@@ -653,4 +665,8 @@ export const VoteDocument = gql`
  *   },
  * });
  */
-export const voteMutation = createMutationFunction<VoteMutation, VoteMutationVariables, ApolloError>(VoteDocument);
+export const voteMutation = createMutationFunction<
+  VoteMutation,
+  VoteMutationVariables,
+  ApolloError
+>(VoteDocument);

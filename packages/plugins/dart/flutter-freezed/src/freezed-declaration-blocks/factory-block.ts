@@ -1,25 +1,25 @@
+import { FieldDefinitionNode, InputValueDefinitionNode } from 'graphql';
 import { indent } from '@graphql-codegen/visitor-plugin-common';
 import { Config } from '../config/config-value.js';
 import { TypeName } from '../config/pattern.js';
 import {
+  APPLIES_ON_DEFAULT_FACTORY,
+  APPLIES_ON_DEFAULT_FACTORY_PARAMETERS,
+  APPLIES_ON_MERGED_FACTORY,
+  APPLIES_ON_MERGED_FACTORY_PARAMETERS,
+  APPLIES_ON_UNION_FACTORY,
+  APPLIES_ON_UNION_FACTORY_PARAMETERS,
+  AppliesOnDefaultFactory,
+  AppliesOnFactory,
+  AppliesOnNamedFactory,
+  AppliesOnParameters,
   FlutterFreezedPluginConfig,
   ObjectType,
-  AppliesOnFactory,
-  AppliesOnParameters,
-  AppliesOnDefaultFactory,
-  AppliesOnNamedFactory,
-  APPLIES_ON_DEFAULT_FACTORY,
-  APPLIES_ON_UNION_FACTORY,
-  APPLIES_ON_MERGED_FACTORY,
-  APPLIES_ON_DEFAULT_FACTORY_PARAMETERS,
-  APPLIES_ON_UNION_FACTORY_PARAMETERS,
-  APPLIES_ON_MERGED_FACTORY_PARAMETERS,
 } from '../config/plugin-config.js';
-import { NodeRepository } from './node-repository.js';
-import { Block } from './index.js';
-import { ParameterBlock } from './parameter-block.js';
-import { FieldDefinitionNode, InputValueDefinitionNode } from 'graphql';
 import { stringIsNotEmpty } from '../utils.js';
+import { Block } from './index.js';
+import { NodeRepository } from './node-repository.js';
+import { ParameterBlock } from './parameter-block.js';
 
 export class FactoryBlock {
   public static build(
@@ -27,7 +27,7 @@ export class FactoryBlock {
     node: ObjectType,
     blockAppliesOn: readonly AppliesOnFactory[],
     className: TypeName,
-    factoryName?: TypeName
+    factoryName?: TypeName,
   ): string {
     let block = '';
 
@@ -49,10 +49,12 @@ export class FactoryBlock {
     config: FlutterFreezedPluginConfig,
     blockAppliesOn: readonly AppliesOnFactory[],
     className: TypeName,
-    factoryName?: TypeName
+    factoryName?: TypeName,
   ): string => {
     // TODO: @Assert
-    const typeName = factoryName ? TypeName.fromUnionOfTypeNames(className, factoryName) : className;
+    const typeName = factoryName
+      ? TypeName.fromUnionOfTypeNames(className, factoryName)
+      : className;
 
     const deprecatedDecorator = Config.deprecated(config, blockAppliesOn, typeName);
 
@@ -65,9 +67,11 @@ export class FactoryBlock {
     config: FlutterFreezedPluginConfig,
     blockAppliesOn: readonly AppliesOnFactory[],
     className: TypeName,
-    factoryName?: TypeName
+    factoryName?: TypeName,
   ) => {
-    const typeName = factoryName ? TypeName.fromUnionOfTypeNames(className, factoryName) : className;
+    const typeName = factoryName
+      ? TypeName.fromUnionOfTypeNames(className, factoryName)
+      : className;
 
     const immutable = Config.immutable(config, typeName);
     // const mutableInputs = Config.mutableInputs(config, factoryName);
@@ -79,7 +83,7 @@ export class FactoryBlock {
       className.value,
       className,
       undefined,
-      'PascalCase'
+      'PascalCase',
     );
 
     if (factoryName) {
@@ -89,7 +93,7 @@ export class FactoryBlock {
         factoryName.value,
         factoryName,
         undefined,
-        'camelCase'
+        'camelCase',
       );
       return `${constFactory} ${_className}.${_factoryName}({\n`;
     }
@@ -100,7 +104,7 @@ export class FactoryBlock {
   public static buildBody = (
     config: FlutterFreezedPluginConfig,
     node: ObjectType,
-    appliesOn: readonly AppliesOnFactory[]
+    appliesOn: readonly AppliesOnFactory[],
   ): string => {
     let appliesOnParameters: readonly AppliesOnParameters[] = [];
     if (appliesOn.includes('default_factory')) {
@@ -123,7 +127,7 @@ export class FactoryBlock {
   public static buildFooter = (
     config: FlutterFreezedPluginConfig,
     blockAppliesOn: readonly AppliesOnFactory[],
-    factoryName: TypeName
+    factoryName: TypeName,
   ) => {
     const _ = blockAppliesOn.includes('default_factory') ? '_' : '';
     const _factoryName = Block.buildBlockName(
@@ -132,32 +136,34 @@ export class FactoryBlock {
       factoryName.value,
       factoryName,
       undefined,
-      'PascalCase'
+      'PascalCase',
     );
     return indent(`}) = ${_}${_factoryName};\n\n`);
   };
 
   public static serializeDefaultFactory = (className: TypeName): string => {
-    return `${Block.tokens.defaultFactory}${className.value}==>${APPLIES_ON_DEFAULT_FACTORY.join(',')}\n`;
+    return `${Block.tokens.defaultFactory}${className.value}==>${APPLIES_ON_DEFAULT_FACTORY.join(
+      ',',
+    )}\n`;
   };
 
   public static serializeUnionFactory = (className: TypeName, factoryName: TypeName): string => {
-    return `${Block.tokens.unionFactory}${className.value}==>${factoryName.value}==>${APPLIES_ON_UNION_FACTORY.join(
-      ','
-    )}\n`;
+    return `${Block.tokens.unionFactory}${className.value}==>${
+      factoryName.value
+    }==>${APPLIES_ON_UNION_FACTORY.join(',')}\n`;
   };
 
   public static serializeMergedFactory = (className: TypeName, factoryName: TypeName): string => {
-    return `${Block.tokens.mergedFactory}${className.value}==>${factoryName.value}==>${APPLIES_ON_MERGED_FACTORY.join(
-      ','
-    )}\n`;
+    return `${Block.tokens.mergedFactory}${className.value}==>${
+      factoryName.value
+    }==>${APPLIES_ON_MERGED_FACTORY.join(',')}\n`;
   };
 
   public static deserializeFactory = (
     config: FlutterFreezedPluginConfig,
     nodeRepository: NodeRepository,
     blockAppliesOn: readonly AppliesOnDefaultFactory[],
-    className: TypeName
+    className: TypeName,
   ): string => {
     const node = nodeRepository.get(className.value);
 
@@ -173,12 +179,18 @@ export class FactoryBlock {
     nodeRepository: NodeRepository,
     blockAppliesOn: readonly AppliesOnNamedFactory[],
     className: TypeName,
-    factoryName: TypeName
+    factoryName: TypeName,
   ): string => {
     const node = nodeRepository.get(factoryName.value);
 
     if (node) {
-      return FactoryBlock.buildFromNamedFactory(config, node, blockAppliesOn, className, factoryName);
+      return FactoryBlock.buildFromNamedFactory(
+        config,
+        node,
+        blockAppliesOn,
+        className,
+        factoryName,
+      );
     }
 
     return '';
@@ -188,7 +200,7 @@ export class FactoryBlock {
     config: FlutterFreezedPluginConfig,
     node: ObjectType,
     blockAppliesOn: readonly AppliesOnDefaultFactory[],
-    className: TypeName
+    className: TypeName,
   ): string => {
     return FactoryBlock.build(config, node, blockAppliesOn, className);
   };
@@ -198,7 +210,7 @@ export class FactoryBlock {
     node: ObjectType,
     blockAppliesOn: readonly AppliesOnNamedFactory[],
     className: TypeName,
-    factoryName: TypeName
+    factoryName: TypeName,
   ): string => {
     return FactoryBlock.build(config, node, blockAppliesOn, className, factoryName);
   };

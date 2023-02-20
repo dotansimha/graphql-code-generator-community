@@ -19,14 +19,14 @@ export class JsonAttributesSourceConfiguration {
 const newtonsoftConfiguration = new JsonAttributesSourceConfiguration(
   'Newtonsoft.Json',
   'JsonProperty',
-  'JsonRequired'
+  'JsonRequired',
 );
 
 // System.Text.Json does not have support of `JsonRequired` alternative (as for .NET 5)
 const systemTextJsonConfiguration = new JsonAttributesSourceConfiguration(
   'System.Text.Json.Serialization',
   'JsonPropertyName',
-  null
+  null,
 );
 
 export function getJsonAttributeSourceConfiguration(attributesSource: JsonAttributesSource) {

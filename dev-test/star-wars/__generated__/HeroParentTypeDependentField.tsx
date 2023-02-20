@@ -1,7 +1,7 @@
-import * as Types from '../types.d.js';
-
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import * as Types from '../types.d.js';
+
 const defaultOptions = {} as const;
 export type HeroParentTypeDependentFieldQueryVariables = Types.Exact<{
   episode?: Types.InputMaybe<Types.Episode>;
@@ -14,14 +14,18 @@ export type HeroParentTypeDependentFieldQuery = {
         __typename?: 'Droid';
         name: string;
         friends?: Array<
-          { __typename?: 'Droid'; name: string } | { __typename?: 'Human'; height?: number | null; name: string } | null
+          | { __typename?: 'Droid'; name: string }
+          | { __typename?: 'Human'; height?: number | null; name: string }
+          | null
         > | null;
       }
     | {
         __typename?: 'Human';
         name: string;
         friends?: Array<
-          { __typename?: 'Droid'; name: string } | { __typename?: 'Human'; height?: number | null; name: string } | null
+          | { __typename?: 'Droid'; name: string }
+          | { __typename?: 'Human'; height?: number | null; name: string }
+          | null
         > | null;
       }
     | null;
@@ -68,27 +72,32 @@ export const HeroParentTypeDependentFieldDocument = gql`
  * });
  */
 export function useHeroParentTypeDependentFieldQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroParentTypeDependentFieldQuery, HeroParentTypeDependentFieldQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroParentTypeDependentFieldQuery, HeroParentTypeDependentFieldQueryVariables>(
-    HeroParentTypeDependentFieldDocument,
-    options
-  );
+  return Apollo.useQuery<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >(HeroParentTypeDependentFieldDocument, options);
 }
 export function useHeroParentTypeDependentFieldLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     HeroParentTypeDependentFieldQuery,
     HeroParentTypeDependentFieldQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroParentTypeDependentFieldQuery, HeroParentTypeDependentFieldQueryVariables>(
-    HeroParentTypeDependentFieldDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >(HeroParentTypeDependentFieldDocument, options);
 }
-export type HeroParentTypeDependentFieldQueryHookResult = ReturnType<typeof useHeroParentTypeDependentFieldQuery>;
+export type HeroParentTypeDependentFieldQueryHookResult = ReturnType<
+  typeof useHeroParentTypeDependentFieldQuery
+>;
 export type HeroParentTypeDependentFieldLazyQueryHookResult = ReturnType<
   typeof useHeroParentTypeDependentFieldLazyQuery
 >;

@@ -1,13 +1,13 @@
+import { concatAST, FragmentDefinitionNode, GraphQLSchema, Kind } from 'graphql';
 import { oldVisit, PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
-import { concatAST, GraphQLSchema, Kind, FragmentDefinitionNode } from 'graphql';
-import { FlowDocumentsVisitor } from './visitor.js';
 import { LoadedFragment, optimizeOperations } from '@graphql-codegen/visitor-plugin-common';
 import { FlowDocumentsPluginConfig } from './config.js';
+import { FlowDocumentsVisitor } from './visitor.js';
 
 export const plugin: PluginFunction<FlowDocumentsPluginConfig> = (
   schema: GraphQLSchema,
   rawDocuments: Types.DocumentFile[],
-  config: FlowDocumentsPluginConfig
+  config: FlowDocumentsPluginConfig,
 ) => {
   const documents = config.flattenGeneratedTypes
     ? optimizeOperations(schema, rawDocuments, { includeFragments: true })

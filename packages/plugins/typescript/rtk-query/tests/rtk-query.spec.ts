@@ -1,8 +1,8 @@
-import { plugin } from '../src/index.js';
-import { parse, buildClientSchema } from 'graphql';
-import { Types } from '@graphql-codegen/plugin-helpers';
-import { resolve, join } from 'path';
 import { readFileSync } from 'fs';
+import { join, resolve } from 'path';
+import { buildClientSchema, parse } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
+import { plugin } from '../src/index.js';
 
 const githunt = resolve(__dirname, '../../../../../dev-test/githunt/');
 
@@ -21,8 +21,12 @@ describe('RTK Query', () => {
   const gql = {
     commentQuery: readFileSync(join(githunt, 'comment.query.graphql'), { encoding: 'utf-8' }),
     feedQuery: readFileSync(join(githunt, 'feed.query.graphql'), { encoding: 'utf-8' }),
-    voteButtonsFragment: readFileSync(join(githunt, 'vote-buttons.fragment.graphql'), { encoding: 'utf-8' }),
-    newEntryMutation: readFileSync(join(githunt, 'new-entry.mutation.graphql'), { encoding: 'utf-8' }),
+    voteButtonsFragment: readFileSync(join(githunt, 'vote-buttons.fragment.graphql'), {
+      encoding: 'utf-8',
+    }),
+    newEntryMutation: readFileSync(join(githunt, 'new-entry.mutation.graphql'), {
+      encoding: 'utf-8',
+    }),
   };
 
   test('Without hooks', async () => {
@@ -38,7 +42,7 @@ describe('RTK Query', () => {
       },
       {
         outputFile: 'graphql.ts',
-      }
+      },
     )) as Types.ComplexPluginOutput;
 
     expect(content.prepend).toContain("import { api } from './baseApi';");
@@ -59,7 +63,7 @@ describe('RTK Query', () => {
       },
       {
         outputFile: 'graphql.ts',
-      }
+      },
     )) as Types.ComplexPluginOutput;
 
     expect(content.prepend).toContain("import { api } from './baseApi';");
@@ -81,7 +85,7 @@ describe('RTK Query', () => {
       },
       {
         outputFile: 'graphql.ts',
-      }
+      },
     )) as Types.ComplexPluginOutput;
 
     expect(content.prepend).toContain("import { api } from './baseApi';");
@@ -103,7 +107,7 @@ describe('RTK Query', () => {
       },
       {
         outputFile: 'graphql.ts',
-      }
+      },
     )) as Types.ComplexPluginOutput;
 
     expect(content.prepend).toContain("import { alternateApiName } from './baseApi';");
@@ -124,7 +128,7 @@ describe('RTK Query', () => {
       },
       {
         outputFile: 'graphql.ts',
-      }
+      },
     )) as Types.ComplexPluginOutput;
 
     expect(content.prepend).not.toContain("import { api } from './baseApi';");
