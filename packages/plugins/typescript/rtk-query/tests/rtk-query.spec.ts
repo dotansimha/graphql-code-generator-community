@@ -129,12 +129,14 @@ describe('RTK Query', () => {
       },
       {
         outputFile: 'graphql.ts',
-      }
+      },
     )) as Types.ComplexPluginOutput;
 
     expect(content.content).toContain('transformResponse: (response: CommentQuery) => response');
     expect(content.content).toContain('transformResponse: (response: FeedQuery) => response');
-    expect(content.content).toContain('transformResponse: (response: SubmitRepositoryMutation) => response');
+    expect(content.content).toContain(
+      'transformResponse: (response: SubmitRepositoryMutation) => response',
+    );
 
     expect(content.content).toMatchSnapshot();
   });

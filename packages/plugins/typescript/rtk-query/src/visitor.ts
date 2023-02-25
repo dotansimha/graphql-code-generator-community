@@ -111,7 +111,7 @@ export { injectedRtkApi as api };
     if (operationType === 'Subscription') {
       // eslint-disable-next-line no-console
       console.warn(
-        `Plugin "typescript-rtk-query" does not support GraphQL Subscriptions at the moment! Skipping "${node.name?.value}"...`
+        `Plugin "typescript-rtk-query" does not support GraphQL Subscriptions at the moment! Skipping "${node.name?.value}"...`,
       );
       return '';
     }
@@ -122,7 +122,8 @@ export { injectedRtkApi as api };
 
     const operationTypeString = operationType.toLowerCase();
 
-    const functionsString = `query: (variables) => ({ document: ${documentVariableName}, variables })
+    const functionsString =
+      `query: (variables) => ({ document: ${documentVariableName}, variables })
       ${this.injectTransformResponse(Generics)}`.trim();
 
     const endpointString = `
