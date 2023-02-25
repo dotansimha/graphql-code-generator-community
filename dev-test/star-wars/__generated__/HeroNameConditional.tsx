@@ -1,7 +1,7 @@
-import * as Types from '../types.d.js';
-
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import * as Types from '../types.d.js';
+
 const defaultOptions = {} as const;
 export type HeroNameConditionalInclusionQueryVariables = Types.Exact<{
   episode?: Types.InputMaybe<Types.Episode>;
@@ -49,27 +49,32 @@ export const HeroNameConditionalInclusionDocument = gql`
  * });
  */
 export function useHeroNameConditionalInclusionQuery(
-  baseOptions: Apollo.QueryHookOptions<HeroNameConditionalInclusionQuery, HeroNameConditionalInclusionQueryVariables>
+  baseOptions: Apollo.QueryHookOptions<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroNameConditionalInclusionQuery, HeroNameConditionalInclusionQueryVariables>(
-    HeroNameConditionalInclusionDocument,
-    options
-  );
+  return Apollo.useQuery<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >(HeroNameConditionalInclusionDocument, options);
 }
 export function useHeroNameConditionalInclusionLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroNameConditionalInclusionQuery, HeroNameConditionalInclusionQueryVariables>(
-    HeroNameConditionalInclusionDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >(HeroNameConditionalInclusionDocument, options);
 }
-export type HeroNameConditionalInclusionQueryHookResult = ReturnType<typeof useHeroNameConditionalInclusionQuery>;
+export type HeroNameConditionalInclusionQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalInclusionQuery
+>;
 export type HeroNameConditionalInclusionLazyQueryHookResult = ReturnType<
   typeof useHeroNameConditionalInclusionLazyQuery
 >;
@@ -103,27 +108,32 @@ export const HeroNameConditionalExclusionDocument = gql`
  * });
  */
 export function useHeroNameConditionalExclusionQuery(
-  baseOptions: Apollo.QueryHookOptions<HeroNameConditionalExclusionQuery, HeroNameConditionalExclusionQueryVariables>
+  baseOptions: Apollo.QueryHookOptions<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroNameConditionalExclusionQuery, HeroNameConditionalExclusionQueryVariables>(
-    HeroNameConditionalExclusionDocument,
-    options
-  );
+  return Apollo.useQuery<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >(HeroNameConditionalExclusionDocument, options);
 }
 export function useHeroNameConditionalExclusionLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroNameConditionalExclusionQuery, HeroNameConditionalExclusionQueryVariables>(
-    HeroNameConditionalExclusionDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >(HeroNameConditionalExclusionDocument, options);
 }
-export type HeroNameConditionalExclusionQueryHookResult = ReturnType<typeof useHeroNameConditionalExclusionQuery>;
+export type HeroNameConditionalExclusionQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalExclusionQuery
+>;
 export type HeroNameConditionalExclusionLazyQueryHookResult = ReturnType<
   typeof useHeroNameConditionalExclusionLazyQuery
 >;

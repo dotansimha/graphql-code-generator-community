@@ -1,28 +1,32 @@
 import {
-  ParsedConfig,
-  BaseVisitor,
-  EnumValuesMap,
-  indentMultiline,
-  indent,
-  getBaseTypeNode,
-  buildScalarsFromConfig,
-} from '@graphql-codegen/visitor-plugin-common';
-import { JavaResolversPluginRawConfig } from './config.js';
-import {
-  GraphQLSchema,
   EnumTypeDefinitionNode,
   EnumValueDefinitionNode,
-  InputObjectTypeDefinitionNode,
-  ObjectTypeDefinitionNode,
   FieldDefinitionNode,
+  GraphQLSchema,
+  InputObjectTypeDefinitionNode,
   InputValueDefinitionNode,
-  TypeNode,
-  Kind,
-  isScalarType,
-  isInputObjectType,
   isEnumType,
+  isInputObjectType,
+  isScalarType,
+  Kind,
+  ObjectTypeDefinitionNode,
+  TypeNode,
 } from 'graphql';
-import { JAVA_SCALARS, JavaDeclarationBlock, wrapTypeWithModifiers } from '@graphql-codegen/java-common';
+import {
+  JAVA_SCALARS,
+  JavaDeclarationBlock,
+  wrapTypeWithModifiers,
+} from '@graphql-codegen/java-common';
+import {
+  BaseVisitor,
+  buildScalarsFromConfig,
+  EnumValuesMap,
+  getBaseTypeNode,
+  indent,
+  indentMultiline,
+  ParsedConfig,
+} from '@graphql-codegen/visitor-plugin-common';
+import { JavaResolversPluginRawConfig } from './config.js';
 
 export interface JavaResolverParsedConfig extends ParsedConfig {
   package: string;
@@ -33,12 +37,19 @@ export interface JavaResolverParsedConfig extends ParsedConfig {
   useEmptyCtor: boolean;
 }
 
-export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConfig, JavaResolverParsedConfig> {
+export class JavaResolversVisitor extends BaseVisitor<
+  JavaResolversPluginRawConfig,
+  JavaResolverParsedConfig
+> {
   private _addHashMapImport = false;
   private _addMapImport = false;
   private _addListImport = false;
 
-  constructor(rawConfig: JavaResolversPluginRawConfig, private _schema: GraphQLSchema, defaultPackageName: string) {
+  constructor(
+    rawConfig: JavaResolversPluginRawConfig,
+    private _schema: GraphQLSchema,
+    defaultPackageName: string,
+  ) {
     super(rawConfig, {
       enumValues: rawConfig.enumValues || {},
       listType: rawConfig.listType || 'Iterable',
@@ -137,7 +148,13 @@ export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConf
     const isArray =
       typeNode.kind === Kind.LIST_TYPE ||
       (typeNode.kind === Kind.NON_NULL_TYPE && typeNode.type.kind === Kind.LIST_TYPE);
-    let result: { baseType: string; typeName: string; isScalar: boolean; isArray: boolean; isEnum: boolean };
+    let result: {
+      baseType: string;
+      typeName: string;
+      isScalar: boolean;
+      isArray: boolean;
+      isEnum: boolean;
+    };
 
     if (isScalarType(schemaType)) {
       if (this.scalars[schemaType.name]) {
@@ -180,7 +197,10 @@ export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConf
     return result;
   }
 
-  protected buildInputTransfomer(name: string, inputValueArray: ReadonlyArray<InputValueDefinitionNode>): string {
+  protected buildInputTransfomer(
+    name: string,
+    inputValueArray: ReadonlyArray<InputValueDefinitionNode>,
+  ): string {
     this._addMapImport = true;
 
     const classMembers = inputValueArray
@@ -189,9 +209,13 @@ export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConf
 
         if (arg.name.value === 'interface' || arg.name.value === 'new') {
           // forcing prefix of _ since interface is a keyword in JAVA
-          return indent(`private ${typeToUse.typeName} _${this.config.classMembersPrefix}${arg.name.value};`);
+          return indent(
+            `private ${typeToUse.typeName} _${this.config.classMembersPrefix}${arg.name.value};`,
+          );
         }
-        return indent(`private ${typeToUse.typeName} ${this.config.classMembersPrefix}${arg.name.value};`);
+        return indent(
+          `private ${typeToUse.typeName} ${this.config.classMembersPrefix}${arg.name.value};`,
+        );
       })
       .join('\n');
     const ctorSet = inputValueArray
@@ -208,20 +232,20 @@ export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConf
 				.map(${typeToUse.baseType}.class::cast)
 				.collect(Collectors.toList());
 }`,
-              3
+              3,
             );
           }
           return indentMultiline(
             `if (args.get("${arg.name.value}") != null) {
 		this.${arg.name.value} = (${this.config.listType}<${typeToUse.baseType}>) args.get("${arg.name.value}");
 }`,
-            3
+            3,
           );
         }
         if (typeToUse.isScalar) {
           return indent(
             `this.${this.config.classMembersPrefix}${arg.name.value} = (${typeToUse.typeName}) args.get("${arg.name.value}");`,
-            3
+            3,
           );
         }
         if (typeToUse.isEnum) {
@@ -231,19 +255,19 @@ export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConf
 } else {
   this.${this.config.classMembersPrefix}${arg.name.value} = ${typeToUse.typeName}.valueOf((String) args.get("${arg.name.value}"));
 }`,
-            3
+            3,
           );
         }
         if (arg.name.value === 'interface') {
           // forcing prefix of _ since interface is a keyword in JAVA
           return indent(
             `this._${this.config.classMembersPrefix}${arg.name.value} = new ${typeToUse.typeName}((Map<String, Object>) args.get("${arg.name.value}"));`,
-            3
+            3,
           );
         }
         return indent(
           `this.${this.config.classMembersPrefix}${arg.name.value} = new ${typeToUse.typeName}((Map<String, Object>) args.get("${arg.name.value}"));`,
-          3
+          3,
         );
       })
       .join('\n');
@@ -257,13 +281,13 @@ export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConf
           return indent(
             `public ${typeToUse.typeName} get${this.convertName(arg.name.value)}() { return this._${
               this.config.classMembersPrefix
-            }${arg.name.value}; }`
+            }${arg.name.value}; }`,
           );
         }
         return indent(
           `public ${typeToUse.typeName} get${this.convertName(arg.name.value)}() { return this.${
             this.config.classMembersPrefix
-          }${arg.name.value}; }`
+          }${arg.name.value}; }`,
         );
       })
       .join('\n');
@@ -274,15 +298,15 @@ export class JavaResolversVisitor extends BaseVisitor<JavaResolversPluginRawConf
 
         if (arg.name.value === 'interface' || arg.name.value === 'new') {
           return indent(
-            `public void set${this.convertName(arg.name.value)}(${typeToUse.typeName} _${arg.name.value}) { this._${
+            `public void set${this.convertName(arg.name.value)}(${typeToUse.typeName} _${
               arg.name.value
-            } = _${arg.name.value}; }`
+            }) { this._${arg.name.value} = _${arg.name.value}; }`,
           );
         }
         return indent(
-          `public void set${this.convertName(arg.name.value)}(${typeToUse.typeName} ${arg.name.value}) { this.${
+          `public void set${this.convertName(arg.name.value)}(${typeToUse.typeName} ${
             arg.name.value
-          } = ${arg.name.value}; }`
+          }) { this.${arg.name.value} = ${arg.name.value}; }`,
         );
       })
       .join('\n');
@@ -314,10 +338,9 @@ ${setters}
   FieldDefinition(node: FieldDefinitionNode): (typeName: string) => string {
     return (typeName: string) => {
       if (node.arguments.length > 0) {
-        const transformerName = `${this.convertName(typeName, { useTypesPrefix: true })}${this.convertName(
-          node.name.value,
-          { useTypesPrefix: false }
-        )}Args`;
+        const transformerName = `${this.convertName(typeName, {
+          useTypesPrefix: true,
+        })}${this.convertName(node.name.value, { useTypesPrefix: false })}Args`;
 
         return this.buildInputTransfomer(transformerName, node.arguments);
       }

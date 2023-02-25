@@ -1,26 +1,26 @@
+import autoBind from 'auto-bind';
 import {
-  NonNullTypeNode,
-  ListTypeNode,
-  ObjectTypeDefinitionNode,
-  FieldDefinitionNode,
   EnumTypeDefinitionNode,
-  NamedTypeNode,
+  FieldDefinitionNode,
+  GraphQLEnumType,
   GraphQLSchema,
   InputValueDefinitionNode,
   Kind,
-  GraphQLEnumType,
+  ListTypeNode,
+  NamedTypeNode,
+  NonNullTypeNode,
+  ObjectTypeDefinitionNode,
 } from 'graphql';
 import {
   BaseTypesVisitor,
   DeclarationBlock,
-  wrapWithSingleQuotes,
+  DeclarationKind,
+  getConfigValue,
   indent,
   ParsedTypesConfig,
   transformComment,
-  getConfigValue,
-  DeclarationKind,
+  wrapWithSingleQuotes,
 } from '@graphql-codegen/visitor-plugin-common';
-import autoBind from 'auto-bind';
 import { FlowPluginConfig } from './config.js';
 import { FlowOperationVariablesToObject } from './flow-variables-to-object.js';
 
@@ -41,7 +41,13 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
       .map(type => (type instanceof GraphQLEnumType ? type.name : undefined))
       .filter(t => t);
     this.setArgumentsTransformer(
-      new FlowOperationVariablesToObject(this.scalars, this.convertName, null, enumNames, pluginConfig.enumPrefix)
+      new FlowOperationVariablesToObject(
+        this.scalars,
+        this.convertName,
+        null,
+        enumNames,
+        pluginConfig.enumPrefix,
+      ),
     );
     this.setDeclarationBlockConfig({
       blockWrapper: this.config.useFlowExactObjects ? '|' : '',
@@ -52,7 +58,11 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
     return `$ElementType<Scalars, '${name}'>`;
   }
 
-  InputValueDefinition(node: InputValueDefinitionNode, key?: number | string, parent?: any): string {
+  InputValueDefinition(
+    node: InputValueDefinitionNode,
+    key?: number | string,
+    parent?: any,
+  ): string {
     const originalFieldNode = parent[key] as FieldDefinitionNode;
     const addOptionalSign = originalFieldNode.type.kind !== Kind.NON_NULL_TYPE;
     const comment = transformComment(node.description as any as string, 1);
@@ -83,7 +93,12 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
     const namePostfix = typeString.startsWith('?') ? '?' : '';
     const comment = transformComment(node.description as any as string, 1);
 
-    return comment + indent(`${this.config.useFlowReadOnlyTypes ? '+' : ''}${node.name}${namePostfix}: ${typeString},`);
+    return (
+      comment +
+      indent(
+        `${this.config.useFlowReadOnlyTypes ? '+' : ''}${node.name}${namePostfix}: ${typeString},`,
+      )
+    );
   }
 
   ObjectTypeDefinition(node: ObjectTypeDefinitionNode, key: number | string, parent: any): string {
@@ -96,7 +111,7 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
             : ([] as any),
       },
       key,
-      parent
+      parent,
     );
   }
 
@@ -112,9 +127,14 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
     return interfaces.map(i => indent(`...${i}`)).join(',\n') + (hasOtherFields ? ',\n  ' : '');
   }
 
-  appendInterfacesAndFieldsToBlock(block: DeclarationBlock, interfaces: string[], fields: string[]): void {
+  appendInterfacesAndFieldsToBlock(
+    block: DeclarationBlock,
+    interfaces: string[],
+    fields: string[],
+  ): void {
     block.withBlock(
-      this.mergeInterfaces(interfaces, fields.length > 0) + this.mergeAllFields(fields, interfaces.length > 0)
+      this.mergeInterfaces(interfaces, fields.length > 0) +
+        this.mergeAllFields(fields, interfaces.length > 0),
     );
   }
 
@@ -127,16 +147,16 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
       return allFields.join('\n');
     }
 
-    return `...{${this.config.useFlowExactObjects ? '|' : ''}\n${allFields.map(s => indent(s)).join('\n')}\n  ${
-      this.config.useFlowExactObjects ? '|' : ''
-    }}`;
+    return `...{${this.config.useFlowExactObjects ? '|' : ''}\n${allFields
+      .map(s => indent(s))
+      .join('\n')}\n  ${this.config.useFlowExactObjects ? '|' : ''}}`;
   }
 
   handleEnumValueMapper(
     typeIdentifier: string,
     importIdentifier: string | null,
     sourceIdentifier: string | null,
-    sourceFile: string | null
+    sourceFile: string | null,
   ): string[] {
     let identifier = sourceIdentifier;
 
@@ -168,7 +188,10 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
         node.values
           .map(enumOption => {
             const comment = transformComment(enumOption.description as any as string, 1);
-            const optionName = this.convertName(enumOption, { transformUnderscore: true, useTypesPrefix: false });
+            const optionName = this.convertName(enumOption, {
+              transformUnderscore: true,
+              useTypesPrefix: false,
+            });
             let enumValue: string | number = enumOption.name as any;
 
             if (
@@ -181,7 +204,7 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
 
             return comment + indent(`${optionName}: ${wrapWithSingleQuotes(enumValue)}`);
           })
-          .join(', \n')
+          .join(', \n'),
       ).string;
 
     const enumType = new DeclarationBlock(this._declarationBlockConfig)

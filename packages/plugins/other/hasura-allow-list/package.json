@@ -1,6 +1,7 @@
 {
   "name": "@graphql-codegen/hasura-allow-list",
   "version": "2.0.0",
+  "type": "module",
   "description": "GraphQL Code Generator plugin to generate hasura allow liste metadata from graphql files",
   "repository": {
     "type": "git",
@@ -8,17 +9,6 @@
     "directory": "packages/plugins/other/hasura-allow-list"
   },
   "license": "MIT",
-  "scripts": {
-    "lint": "eslint **/*.ts"
-  },
-  "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^3.0.0",
-    "tslib": "~2.4.0",
-    "yaml": "^1.10.2"
-  },
-  "peerDependencies": {
-    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
-  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
@@ -39,12 +29,22 @@
     "./package.json": "./package.json"
   },
   "typings": "dist/typings/index.d.ts",
-  "typescript": {
-    "definition": "dist/typings/index.d.ts"
+  "scripts": {
+    "lint": "eslint **/*.ts"
+  },
+  "peerDependencies": {
+    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
+  },
+  "dependencies": {
+    "@graphql-codegen/plugin-helpers": "^3.0.0",
+    "tslib": "~2.4.0",
+    "yaml": "^1.10.2"
   },
   "publishConfig": {
     "directory": "dist",
     "access": "public"
   },
-  "type": "module"
+  "typescript": {
+    "definition": "dist/typings/index.d.ts"
+  }
 }

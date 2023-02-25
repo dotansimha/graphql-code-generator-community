@@ -1,6 +1,7 @@
 {
   "name": "@graphql-codegen/typescript-rtk-query",
-  "version": "2.4.0",
+  "version": "2.4.1",
+  "type": "module",
   "description": "GraphQL Code Generator plugin for injecting graphql endpoints into a preconfigured RTK Query api",
   "repository": {
     "type": "git",
@@ -8,28 +9,6 @@
     "directory": "packages/plugins/typescript/rtk-query"
   },
   "license": "MIT",
-  "scripts": {
-    "lint": "eslint **/*.ts",
-    "test": "jest --no-watchman --config ../../../../jest.config.js --forceExit"
-  },
-  "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^3.0.0",
-    "@graphql-codegen/visitor-plugin-common": "2.13.1",
-    "auto-bind": "~4.0.0",
-    "change-case-all": "1.0.15",
-    "tslib": "~2.4.0"
-  },
-  "peerDependencies": {
-    "@reduxjs/toolkit": "^1.6.0",
-    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0",
-    "graphql-request": "^3.4.0 || ^4.0.0 || ^5.0.0",
-    "graphql-tag": "^2.0.0"
-  },
-  "peerDependenciesMeta": {
-    "graphql-request": {
-      "optional": true
-    }
-  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
@@ -50,16 +29,38 @@
     "./package.json": "./package.json"
   },
   "typings": "dist/typings/index.d.ts",
-  "typescript": {
-    "definition": "dist/typings/index.d.ts"
+  "scripts": {
+    "lint": "eslint **/*.ts",
+    "test": "jest --no-watchman --config ../../../../jest.config.js --forceExit"
+  },
+  "peerDependencies": {
+    "@reduxjs/toolkit": "^1.6.0",
+    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0",
+    "graphql-request": "^3.4.0 || ^4.0.0 || ^5.0.0",
+    "graphql-tag": "^2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "graphql-request": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@graphql-codegen/plugin-helpers": "^3.0.0",
+    "@graphql-codegen/visitor-plugin-common": "2.13.1",
+    "auto-bind": "~4.0.0",
+    "change-case-all": "1.0.15",
+    "tslib": "~2.4.0"
+  },
+  "devDependencies": {
+    "@reduxjs/toolkit": "1.9.3",
+    "@rtk-query/graphql-request-base-query": "2.2.0",
+    "graphql-request": "^4.0.0"
   },
   "publishConfig": {
     "directory": "dist",
     "access": "public"
   },
-  "devDependencies": {
-    "@rtk-query/graphql-request-base-query": "2.2.0",
-    "graphql-request": "^4.0.0"
-  },
-  "type": "module"
+  "typescript": {
+    "definition": "dist/typings/index.d.ts"
+  }
 }

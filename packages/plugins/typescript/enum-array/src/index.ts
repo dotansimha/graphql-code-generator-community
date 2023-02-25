@@ -1,7 +1,7 @@
-import { GraphQLSchema, GraphQLEnumType } from 'graphql';
+import { GraphQLEnumType, GraphQLSchema } from 'graphql';
 import { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
-import { EnumArrayPluginConfig } from './config.js';
 import { convertFactory } from '@graphql-codegen/visitor-plugin-common';
+import { EnumArrayPluginConfig } from './config.js';
 
 function getEnumTypeMap(schema: GraphQLSchema): GraphQLEnumType[] {
   const typeMap = schema.getTypeMap();
@@ -52,7 +52,7 @@ function buildImportStatement(enums: GraphQLEnumType[], importFrom: string): str
 export const plugin: PluginFunction<EnumArrayPluginConfig> = (
   schema: GraphQLSchema,
   _documents: Types.DocumentFile[],
-  config: EnumArrayPluginConfig
+  config: EnumArrayPluginConfig,
 ): Types.PluginOutput => {
   const enums = getEnumTypeMap(schema);
   const content = enums.map(e => buildArrayDefinition(e, config)).join('\n');

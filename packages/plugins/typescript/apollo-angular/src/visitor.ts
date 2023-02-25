@@ -1,17 +1,17 @@
+import autoBind from 'auto-bind';
+import { camelCase } from 'change-case-all';
+import { GraphQLSchema, Kind, OperationDefinitionNode, print, visit } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
+  ClientSideBaseVisitor,
   DocumentMode,
-  LoadedFragment,
-  indentMultiline,
   getConfigValue,
   indent,
+  indentMultiline,
+  LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, print, visit, GraphQLSchema, Kind } from 'graphql';
 import { ApolloAngularRawPluginConfig } from './config.js';
-import { camelCase } from 'change-case-all';
-import { Types } from '@graphql-codegen/plugin-helpers';
 
 const R_MOD = /module:\s*"([^"]+)"/; // matches: module: "..."
 const R_NAME = /name:\s*"([^"]+)"/; // matches: name: "..."
@@ -57,7 +57,7 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
     fragments: LoadedFragment[],
     private _allOperations: OperationDefinitionNode[],
     rawConfig: ApolloAngularRawPluginConfig,
-    documents?: Types.DocumentFile[]
+    documents?: Types.DocumentFile[],
   ) {
     super(
       schema,
@@ -78,26 +78,33 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
         apolloAngularVersion: getConfigValue(rawConfig.apolloAngularVersion, 2),
         gqlImport: getConfigValue(
           rawConfig.gqlImport,
-          !rawConfig.apolloAngularVersion || rawConfig.apolloAngularVersion === 2 ? `apollo-angular#gql` : null
+          !rawConfig.apolloAngularVersion || rawConfig.apolloAngularVersion === 2
+            ? `apollo-angular#gql`
+            : null,
         ),
         addExplicitOverride: getConfigValue(rawConfig.addExplicitOverride, false),
       },
-      documents
+      documents,
     );
 
     if (this.config.importOperationTypesFrom) {
       this._externalImportPrefix = `${this.config.importOperationTypesFrom}.`;
 
-      if (this.config.documentMode !== DocumentMode.external || !this.config.importDocumentNodeExternallyFrom) {
+      if (
+        this.config.documentMode !== DocumentMode.external ||
+        !this.config.importDocumentNodeExternallyFrom
+      ) {
         // eslint-disable-next-line no-console
         console.warn(
-          '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"'
+          '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"',
         );
       }
 
       if (this.config.importOperationTypesFrom !== 'Operations') {
         // eslint-disable-next-line no-console
-        console.warn('importOperationTypesFrom only works correctly when left empty or set to "Operations"');
+        console.warn(
+          'importOperationTypesFrom only works correctly when left empty or set to "Operations"',
+        );
       }
     }
 
@@ -126,7 +133,8 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
     ];
 
     if (this.config.sdkClass) {
-      const corePackage = this.config.apolloAngularVersion > 1 ? '@apollo/client/core' : 'apollo-client';
+      const corePackage =
+        this.config.apolloAngularVersion > 1 ? '@apollo/client/core' : 'apollo-client';
       imports.push(`import * as ApolloCore from '${corePackage}';`);
     }
 
@@ -214,7 +222,9 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
     const directives = print(operation).match(R_DEF(directive));
 
     if (directives.length > 1) {
-      throw new Error(`The ${directive} directive used multiple times in '${operation.name}' operation`);
+      throw new Error(
+        `The ${directive} directive used multiple times in '${operation.name}' operation`,
+      );
     }
 
     return directives[0];
@@ -254,7 +264,10 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
     return `'root'`;
   }
 
-  private _getDocumentNodeVariable(node: OperationDefinitionNode, documentVariableName: string): string {
+  private _getDocumentNodeVariable(
+    node: OperationDefinitionNode,
+    documentVariableName: string,
+  ): string {
     if (this.config.importDocumentNodeExternallyFrom === 'near-operation-file') {
       return `Operations.${documentVariableName}`;
     }
@@ -283,7 +296,7 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const serviceName = `${this.convertName(node)}${this._operationSuffix(operationType)}`;
     this._operationsToInclude.push({
@@ -306,7 +319,7 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
   export class ${serviceName} extends Apollo.${operationType}<${operationResultType}, ${operationVariablesTypes}> {
     ${this.config.addExplicitOverride ? 'override ' : ''}document = ${this._getDocumentNodeVariable(
       node,
-      documentVariableName
+      documentVariableName,
     )};
     ${namedClient !== '' ? (this.config.addExplicitOverride ? 'override ' : '') + namedClient : ''}
     constructor(${this.dependencyInjections}) {
@@ -330,7 +343,9 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
     };
 
     const hasMutations = this._operationsToInclude.find(o => o.operationType === 'Mutation');
-    const hasSubscriptions = this._operationsToInclude.find(o => o.operationType === 'Subscription');
+    const hasSubscriptions = this._operationsToInclude.find(
+      o => o.operationType === 'Subscription',
+    );
     const hasQueries = this._operationsToInclude.find(o => o.operationType === 'Query');
 
     const allPossibleActions = this._operationsToInclude
@@ -341,7 +356,9 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
         const optionalVariables =
           !o.node.variableDefinitions ||
           o.node.variableDefinitions.length === 0 ||
-          o.node.variableDefinitions.every(v => v.type.kind !== Kind.NON_NULL_TYPE || !!v.defaultValue);
+          o.node.variableDefinitions.every(
+            v => v.type.kind !== Kind.NON_NULL_TYPE || !!v.defaultValue,
+          );
 
         const options =
           o.operationType === 'Mutation'

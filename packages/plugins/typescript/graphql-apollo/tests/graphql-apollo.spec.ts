@@ -1,10 +1,13 @@
+import { buildClientSchema, GraphQLSchema, parse } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
-import { plugin } from '../src/index.js';
-import { parse, buildClientSchema, GraphQLSchema } from 'graphql';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
 import { plugin as tsPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
-import { plugin as tsDocumentsPlugin, TypeScriptDocumentsPluginConfig } from '@graphql-codegen/typescript-operations';
+import {
+  plugin as tsDocumentsPlugin,
+  TypeScriptDocumentsPluginConfig,
+} from '@graphql-codegen/typescript-operations';
 import { RawGraphQLApolloPluginConfig } from '../src/config.js';
+import { plugin } from '../src/index.js';
 
 describe('apollo-client', () => {
   const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
@@ -57,7 +60,7 @@ describe('apollo-client', () => {
     config: TypeScriptPluginConfig & TypeScriptDocumentsPluginConfig & RawGraphQLApolloPluginConfig,
     docs: Types.DocumentFile[],
     pluginSchema: GraphQLSchema,
-    usage: string
+    usage: string,
   ) => {
     const m = mergeOutputs([
       await tsPlugin(pluginSchema, docs, config, { outputFile: '' }),

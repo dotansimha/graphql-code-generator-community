@@ -1,7 +1,7 @@
-import * as Types from '../types.d.js';
-
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import * as Types from '../types.d.js';
+
 const defaultOptions = {} as const;
 export type HeroTypeDependentAliasedFieldQueryVariables = Types.Exact<{
   episode?: Types.InputMaybe<Types.Episode>;
@@ -9,7 +9,10 @@ export type HeroTypeDependentAliasedFieldQueryVariables = Types.Exact<{
 
 export type HeroTypeDependentAliasedFieldQuery = {
   __typename?: 'Query';
-  hero?: { __typename?: 'Droid'; property?: string | null } | { __typename?: 'Human'; property?: string | null } | null;
+  hero?:
+    | { __typename?: 'Droid'; property?: string | null }
+    | { __typename?: 'Human'; property?: string | null }
+    | null;
 };
 
 export const HeroTypeDependentAliasedFieldDocument = gql`
@@ -42,27 +45,32 @@ export const HeroTypeDependentAliasedFieldDocument = gql`
  * });
  */
 export function useHeroTypeDependentAliasedFieldQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroTypeDependentAliasedFieldQuery, HeroTypeDependentAliasedFieldQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroTypeDependentAliasedFieldQuery, HeroTypeDependentAliasedFieldQueryVariables>(
-    HeroTypeDependentAliasedFieldDocument,
-    options
-  );
+  return Apollo.useQuery<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >(HeroTypeDependentAliasedFieldDocument, options);
 }
 export function useHeroTypeDependentAliasedFieldLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     HeroTypeDependentAliasedFieldQuery,
     HeroTypeDependentAliasedFieldQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroTypeDependentAliasedFieldQuery, HeroTypeDependentAliasedFieldQueryVariables>(
-    HeroTypeDependentAliasedFieldDocument,
-    options
-  );
+  return Apollo.useLazyQuery<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >(HeroTypeDependentAliasedFieldDocument, options);
 }
-export type HeroTypeDependentAliasedFieldQueryHookResult = ReturnType<typeof useHeroTypeDependentAliasedFieldQuery>;
+export type HeroTypeDependentAliasedFieldQueryHookResult = ReturnType<
+  typeof useHeroTypeDependentAliasedFieldQuery
+>;
 export type HeroTypeDependentAliasedFieldLazyQueryHookResult = ReturnType<
   typeof useHeroTypeDependentAliasedFieldLazyQuery
 >;

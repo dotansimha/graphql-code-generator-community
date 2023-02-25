@@ -1,6 +1,6 @@
+import { parse } from 'graphql';
 import '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
-import { parse } from 'graphql';
 
 describe('named-operations-object', () => {
   it('Should generate const strings when useConsts: true is set', async () => {
@@ -17,7 +17,7 @@ describe('named-operations-object', () => {
       ],
       {
         useConsts: true,
-      }
+      },
     );
 
     expect(result).toBeSimilarStringTo(`export const namedOperations = {
@@ -39,7 +39,7 @@ describe('named-operations-object', () => {
           `),
         },
       ],
-      {}
+      {},
     );
 
     expect(result).toBeSimilarStringTo(`export const namedOperations = {
@@ -61,7 +61,7 @@ describe('named-operations-object', () => {
           `),
         },
       ],
-      {}
+      {},
     );
 
     expect(result).toBe('');
@@ -86,7 +86,7 @@ describe('named-operations-object', () => {
           `),
         },
       ],
-      {}
+      {},
     );
 
     expect(result).toBeSimilarStringTo(`export const namedOperations = {
@@ -117,7 +117,7 @@ describe('named-operations-object', () => {
           `),
         },
       ],
-      { identifierName: 'AllMyOperations' }
+      { identifierName: 'AllMyOperations' },
     );
 
     expect(result).toBeSimilarStringTo(`export const AllMyOperations = {
@@ -160,7 +160,7 @@ describe('named-operations-object', () => {
           `),
         },
       ],
-      {}
+      {},
     );
 
     expect(result).toBeSimilarStringTo(`export const namedOperations = {
@@ -210,7 +210,7 @@ describe('named-operations-object', () => {
           `),
         },
       ],
-      {}
+      {},
     );
 
     expect(result).toBeSimilarStringTo(`export const namedOperations = {

@@ -1,17 +1,20 @@
-import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
+import { buildClientSchema, extendSchema, GraphQLSchema, parse } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
+import { plugin as tsPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
+import {
+  plugin as tsDocumentsPlugin,
+  TypeScriptDocumentsPluginConfig,
+} from '@graphql-codegen/typescript-operations';
+import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import { RawGenericSdkPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
-import { parse, buildClientSchema, GraphQLSchema, extendSchema } from 'graphql';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
-import { plugin as tsPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
-import { plugin as tsDocumentsPlugin, TypeScriptDocumentsPluginConfig } from '@graphql-codegen/typescript-operations';
 
 const schema = extendSchema(
   buildClientSchema(require('../../../../../dev-test/githunt/schema.json')),
   parse(/* GraphQL */ `
     directive @live on QUERY
-  `)
+  `),
 );
 const basicDoc = parse(/* GraphQL */ `
   query feed {
@@ -78,7 +81,7 @@ const validate = async (
   config: TypeScriptPluginConfig & TypeScriptDocumentsPluginConfig & RawGenericSdkPluginConfig,
   docs: Types.DocumentFile[],
   pluginSchema: GraphQLSchema,
-  usage: string
+  usage: string,
 ) => {
   const m = mergeOutputs([
     await tsPlugin(pluginSchema, docs, config, { outputFile: '' }),
@@ -187,7 +190,9 @@ async function test() {
     it('Should generate a correct wrap method when usingObservableFrom is not set', async () => {
       const config = {};
       const docs = [{ filePath: '', document: docWithSubscription }];
-      const result = (await plugin(schema, docs, config, { outputFile: 'graphql.ts' })) as Types.ComplexPluginOutput;
+      const result = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
 
       const usage = /* TypeScript */ `
         async function test() {
@@ -207,7 +212,9 @@ async function test() {
     it('Should generate a correct wrap method when usingObservableFrom is set', async () => {
       const config = { usingObservableFrom: "import Observable from 'zen-observable';" };
       const docs = [{ filePath: '', document: docWithSubscription }];
-      const result = (await plugin(schema, docs, config, { outputFile: 'graphql.ts' })) as Types.ComplexPluginOutput;
+      const result = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
 
       const output = await validate(result, config, docs, schema, '');
       expect(output).toMatchSnapshot();
@@ -230,6 +237,37 @@ async function test() {
 }]
 `);
       }
+    });
+
+    it('respects importDocumentNodeExternallyFrom', async () => {
+      const config = {
+        importDocumentNodeExternallyFrom: './operations',
+        documentMode: DocumentMode.external,
+      };
+      const docs = [{ location: '', document: basicDoc }];
+      const result = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
+      const output = await validate(result, config, docs, schema, '');
+
+      expect(output).toContain(`import * as Operations from './operations';`);
+      expect(output).toContain(`(Operations.FeedDocument, variables, options)`);
+      expect(output).toContain(`(Operations.Feed2Document, variables, options)`);
+      expect(output).toContain(`(Operations.Feed3Document, variables, options)`);
+    });
+
+    it('respects importOperationTypesFrom', async () => {
+      const config = { importOperationTypesFrom: 'Types' };
+      const docs = [{ location: '', document: basicDoc }];
+      const result = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
+      const output = await validate(result, config, docs, schema, '');
+
+      expect(output).toContain(`Types.FeedQuery`);
+      expect(output).toContain(`Types.Feed2Query`);
+      expect(output).toContain(`Types.Feed3Query`);
+      expect(output).toContain(`Types.Feed4Query`);
     });
   });
 });

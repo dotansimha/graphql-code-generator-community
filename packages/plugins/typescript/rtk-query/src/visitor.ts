@@ -1,16 +1,19 @@
+import autoBind from 'auto-bind';
+import { pascalCase } from 'change-case-all';
+import { GraphQLSchema, OperationDefinitionNode } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
   ClientSideBaseVisitor,
-  LoadedFragment,
-  getConfigValue,
   DocumentMode,
+  getConfigValue,
+  LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import { OperationDefinitionNode, GraphQLSchema } from 'graphql';
-import { pascalCase } from 'change-case-all';
 import { RTKQueryPluginConfig, RTKQueryRawPluginConfig } from './config.js';
-import autoBind from 'auto-bind';
-import { Types } from '@graphql-codegen/plugin-helpers';
 
-export class RTKQueryVisitor extends ClientSideBaseVisitor<RTKQueryRawPluginConfig, RTKQueryPluginConfig> {
+export class RTKQueryVisitor extends ClientSideBaseVisitor<
+  RTKQueryRawPluginConfig,
+  RTKQueryPluginConfig
+> {
   private _externalImportPrefix: string;
   private _endpoints: string[] = [];
   private _hooks: string[] = [];
@@ -19,7 +22,7 @@ export class RTKQueryVisitor extends ClientSideBaseVisitor<RTKQueryRawPluginConf
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
     protected rawConfig: RTKQueryRawPluginConfig,
-    documents: Types.DocumentFile[]
+    documents: Types.DocumentFile[],
   ) {
     super(schema, fragments, rawConfig, {
       documentMode: DocumentMode.string,
@@ -29,7 +32,9 @@ export class RTKQueryVisitor extends ClientSideBaseVisitor<RTKQueryRawPluginConf
       exportHooks: getConfigValue(rawConfig.exportHooks, false),
       overrideExisting: getConfigValue(rawConfig.overrideExisting, ''),
     });
-    this._externalImportPrefix = this.config.importOperationTypesFrom ? `${this.config.importOperationTypesFrom}.` : '';
+    this._externalImportPrefix = this.config.importOperationTypesFrom
+      ? `${this.config.importOperationTypesFrom}.`
+      : '';
     this._documents = documents;
 
     autoBind(this);
@@ -75,7 +80,9 @@ const injectedRtkApi = ${this.config.importBaseApiAlternateName}.injectEndpoints
 
 export { injectedRtkApi as api };
 ` +
-      (this.config.exportHooks ? `export const { ${this._hooks.join(', ')} } = injectedRtkApi;` : '') +
+      (this.config.exportHooks
+        ? `export const { ${this._hooks.join(', ')} } = injectedRtkApi;`
+        : '') +
       '\n\n'
     );
   }
@@ -94,7 +101,7 @@ export { injectedRtkApi as api };
     operationType: 'Query' | 'Mutation' | 'Subscription',
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     operationResultType = this._externalImportPrefix + operationResultType;
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
@@ -109,7 +116,9 @@ export { injectedRtkApi as api };
       return '';
     }
 
-    const Generics = `${operationResultType}, ${operationVariablesTypes}${hasRequiredVariables ? '' : ' | void'}`;
+    const Generics = `${operationResultType}, ${operationVariablesTypes}${
+      hasRequiredVariables ? '' : ' | void'
+    }`;
 
     const operationTypeString = operationType.toLowerCase();
 

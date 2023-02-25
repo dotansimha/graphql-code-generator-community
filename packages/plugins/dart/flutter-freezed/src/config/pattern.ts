@@ -55,7 +55,9 @@ export class TypeName {
     if (value === undefined || value.length < 1) {
       throw new Error('TypeName is the name of a GraphQL Type and it cannot be empty');
     } else if (/([^a-zA-Z0-9_])/gim.test(value)) {
-      throw new Error('TypeName is the name of a GraphQL Type and it must consist of only AlphaNumeric characters');
+      throw new Error(
+        'TypeName is the name of a GraphQL Type and it must consist of only AlphaNumeric characters',
+      );
     }
     return new TypeName(value.trim());
   };
@@ -101,7 +103,7 @@ export class FieldName {
       throw new Error('FieldName is the name of a field in a GraphQL Type and it cannot be empty');
     } else if (/([^a-zA-Z0-9_])/gim.test(value)) {
       throw new Error(
-        'FieldName is the name of a field in a GraphQL Type and it must consist of only AlphaNumeric characters'
+        'FieldName is the name of a field in a GraphQL Type and it must consist of only AlphaNumeric characters',
       );
     }
     return new FieldName(value.trim());
@@ -134,17 +136,23 @@ export class Pattern {
   };
 
   // #region attemptMatchAndConfigure
-  static attemptMatchAndConfigure = (pattern: FieldNamePattern, typeName: TypeName, fieldName?: FieldName) => {
+  static attemptMatchAndConfigure = (
+    pattern: FieldNamePattern,
+    typeName: TypeName,
+    fieldName?: FieldName,
+  ) => {
     if (pattern.value.split(';').filter(_pattern => _pattern.length > 0).length !== 1) {
       throw new Error(
-        'attemptMatchAndConfigure can only handle one pattern at a time... use the `splitPatterns(...)` helper function to split your patterns into a list and loop over the list calling the `attemptMatchAndConfigure(...)`  for each single pattern'
+        'attemptMatchAndConfigure can only handle one pattern at a time... use the `splitPatterns(...)` helper function to split your patterns into a list and loop over the list calling the `attemptMatchAndConfigure(...)`  for each single pattern',
       );
     }
 
     const isTypeNamePattern = (baseName: string): boolean => {
       if (
         fieldName === undefined &&
-        (baseName === 'TypeNames' || baseName === 'AllTypeNames' || baseName === 'AllTypeNamesExcludeTypeNames')
+        (baseName === 'TypeNames' ||
+          baseName === 'AllTypeNames' ||
+          baseName === 'AllTypeNamesExcludeTypeNames')
       ) {
         return true;
       }
@@ -167,7 +175,9 @@ export class Pattern {
         : FieldNamePattern[`matchAndConfigure${baseName}`](pattern, ...args); // check if fieldName is passed in ...args
     };
 
-    const matchList: string[] = Pattern.getMatchList(fieldName === undefined ? 'TypeNamePattern' : 'FieldNamePattern');
+    const matchList: string[] = Pattern.getMatchList(
+      fieldName === undefined ? 'TypeNamePattern' : 'FieldNamePattern',
+    );
     for (let i = 0; i < matchList.length; i++) {
       const baseName = matchList[i];
 
@@ -224,7 +234,11 @@ export class Pattern {
    * @param fieldName
    * @returns true if a pattern marks the typeName and or fieldName given to be configured, otherwise false
    */
-  static findLastConfiguration = (pattern: Pattern, typeName: TypeName, fieldName?: FieldName): boolean => {
+  static findLastConfiguration = (
+    pattern: Pattern,
+    typeName: TypeName,
+    fieldName?: FieldName,
+  ): boolean => {
     const key = fieldName ? `${typeName.value}.${fieldName.value}` : typeName.value;
     return Pattern.split(pattern)
       .map(pattern => {
@@ -289,13 +303,16 @@ export class TypeNamePattern extends Pattern {
     return TypeNamePattern.fromString(
       arrayWrap(typeNames)
         .map(typeName => `${typeName.value};`)
-        .join('')
+        .join(''),
     );
   };
 
   static regexpForTypeNames = /\b(?!TypeNames|FieldNames\b)(?<typeName>\w+;)/gim; // TODO: fix this: regexp.test('@*TypeName;') returns true which shouldn't happen
 
-  static matchAndConfigureTypeNames = (pattern: TypeNamePattern, typeName: TypeName): MatchAndConfigure => {
+  static matchAndConfigureTypeNames = (
+    pattern: TypeNamePattern,
+    typeName: TypeName,
+  ): MatchAndConfigure => {
     const regexp = TypeNamePattern.regexpForTypeNames;
     resetIndex(regexp);
 
@@ -323,7 +340,10 @@ export class TypeNamePattern extends Pattern {
 
   static regexpForAllTypeNames = /(?<allTypeNames>@\*TypeNames;)/gim;
 
-  static matchAndConfigureAllTypeNames = (pattern: TypeNamePattern, typeName: TypeName): MatchAndConfigure => {
+  static matchAndConfigureAllTypeNames = (
+    pattern: TypeNamePattern,
+    typeName: TypeName,
+  ): MatchAndConfigure => {
     const regexp = TypeNamePattern.regexpForAllTypeNames;
     resetIndex(regexp);
 
@@ -353,11 +373,12 @@ export class TypeNamePattern extends Pattern {
     return Pattern.fromString(`${TypeName.allTypeNames}-[${_typeNames}];`);
   };
 
-  static regexpForAllTypeNamesExcludeTypeNames = /@\*TypeNames-\[\s*(?<typeNames>(\w+,?\s*)*)\];/gim;
+  static regexpForAllTypeNamesExcludeTypeNames =
+    /@\*TypeNames-\[\s*(?<typeNames>(\w+,?\s*)*)\];/gim;
 
   static matchAndConfigureAllTypeNamesExcludeTypeNames = (
     pattern: TypeNamePattern,
-    typeName: TypeName
+    typeName: TypeName,
   ): MatchAndConfigure => {
     const regexp = TypeNamePattern.regexpForAllTypeNamesExcludeTypeNames;
     resetIndex(regexp);
@@ -479,7 +500,9 @@ export class FieldNamePattern extends Pattern {
   }
 
   //#region `'TypeName.[fieldNames];'`
-  static forFieldNamesOfTypeName = (data: [typeNames: TypeNames, fieldNames: FieldNames][]): FieldNamePattern => {
+  static forFieldNamesOfTypeName = (
+    data: [typeNames: TypeNames, fieldNames: FieldNames][],
+  ): FieldNamePattern => {
     const expandedPattern: Record<string, FieldName[]> = {};
 
     if (data.length < 1) {
@@ -497,7 +520,10 @@ export class FieldNamePattern extends Pattern {
       }
 
       _typeNames.forEach(typeName => {
-        expandedPattern[typeName.value] = [...(expandedPattern[typeName.value] ?? []), ..._fieldNames];
+        expandedPattern[typeName.value] = [
+          ...(expandedPattern[typeName.value] ?? []),
+          ..._fieldNames,
+        ];
       });
     });
 
@@ -507,7 +533,7 @@ export class FieldNamePattern extends Pattern {
           const _fieldNames = expandedPattern[_typeName].map(fieldName => fieldName.value).join();
           return `${_typeName}.[${_fieldNames}];`;
         })
-        .join('')
+        .join(''),
     );
   };
 
@@ -517,7 +543,7 @@ export class FieldNamePattern extends Pattern {
   static matchAndConfigureFieldNamesOfTypeName = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
     const regexp = FieldNamePattern.regexpForFieldNamesOfTypeName;
     resetIndex(regexp);
@@ -553,16 +579,17 @@ export class FieldNamePattern extends Pattern {
     }
 
     return FieldNamePattern.fromString(
-      _typeNames.map(_typeName => `${_typeName.value}.${FieldName.allFieldNames};`).join('')
+      _typeNames.map(_typeName => `${_typeName.value}.${FieldName.allFieldNames};`).join(''),
     );
   };
 
-  static regexpForAllFieldNamesOfTypeName = /(?<typeName>\w+\s*)(?<!\s*@\s*\*\s*TypeNames\s*)\.@\*FieldNames;/gim;
+  static regexpForAllFieldNamesOfTypeName =
+    /(?<typeName>\w+\s*)(?<!\s*@\s*\*\s*TypeNames\s*)\.@\*FieldNames;/gim;
 
   static matchAndConfigureAllFieldNamesOfTypeName = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
     const regexp = FieldNamePattern.regexpForAllFieldNamesOfTypeName;
     resetIndex(regexp);
@@ -587,7 +614,7 @@ export class FieldNamePattern extends Pattern {
 
   //#region `'TypeName.@*FieldNames-[excludeFieldNames];'`
   static forAllFieldNamesExcludeFieldNamesOfTypeName = (
-    data: [typeNames: TypeNames, fieldNames: FieldNames][]
+    data: [typeNames: TypeNames, fieldNames: FieldNames][],
   ): FieldNamePattern => {
     const expandedPattern: Record<string, FieldName[]> = {};
 
@@ -606,7 +633,10 @@ export class FieldNamePattern extends Pattern {
       }
 
       _typeNames.forEach(typeName => {
-        expandedPattern[typeName.value] = [...(expandedPattern[typeName.value] ?? []), ..._fieldNames];
+        expandedPattern[typeName.value] = [
+          ...(expandedPattern[typeName.value] ?? []),
+          ..._fieldNames,
+        ];
       });
     });
 
@@ -616,7 +646,7 @@ export class FieldNamePattern extends Pattern {
           const _fieldNames = expandedPattern[_typeName].map(fieldName => fieldName.value).join();
           return `${_typeName}.${FieldName.allFieldNames}-[${_fieldNames}];`;
         })
-        .join('')
+        .join(''),
     );
   };
 
@@ -626,7 +656,7 @@ export class FieldNamePattern extends Pattern {
   static matchAndConfigureAllFieldNamesExcludeFieldNamesOfTypeName = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
     const regexp = FieldNamePattern.regexpForAllFieldNamesExcludeFieldNamesOfTypeName;
     resetIndex(regexp);
@@ -677,7 +707,7 @@ export class FieldNamePattern extends Pattern {
   static matchAndConfigureFieldNamesOfAllTypeNames = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
     const regexp = FieldNamePattern.regexpForFieldNamesOfAllTypeNames;
     resetIndex(regexp);
@@ -712,7 +742,7 @@ export class FieldNamePattern extends Pattern {
   static matchAndConfigureAllFieldNamesOfAllTypeNames = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
     const regexp = FieldNamePattern.regexpForAllFieldNamesOfAllTypeNames;
     resetIndex(regexp);
@@ -731,7 +761,9 @@ export class FieldNamePattern extends Pattern {
   //#endregion
 
   //#region `'@*TypeNames.@*FieldNames-[excludeFieldNames];'`
-  static forAllFieldNamesExcludeFieldNamesOfAllTypeNames = (fieldNames: FieldNames): FieldNamePattern => {
+  static forAllFieldNamesExcludeFieldNamesOfAllTypeNames = (
+    fieldNames: FieldNames,
+  ): FieldNamePattern => {
     fieldNames = arrayWrap(fieldNames);
 
     if (fieldNames.length < 1) {
@@ -740,7 +772,9 @@ export class FieldNamePattern extends Pattern {
 
     const _fieldNames = fieldNames.map(fieldName => fieldName.value).join();
 
-    return FieldNamePattern.fromString(`${TypeName.allTypeNames}.${FieldName.allFieldNames}-[${_fieldNames}];`);
+    return FieldNamePattern.fromString(
+      `${TypeName.allTypeNames}.${FieldName.allFieldNames}-[${_fieldNames}];`,
+    );
   };
 
   static regexpForAllFieldNamesExcludeFieldNamesOfAllTypeNames =
@@ -749,7 +783,7 @@ export class FieldNamePattern extends Pattern {
   static matchAndConfigureAllFieldNamesExcludeFieldNamesOfAllTypeNames = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
     const regexp = FieldNamePattern.regexpForAllFieldNamesExcludeFieldNamesOfAllTypeNames;
     resetIndex(regexp);
@@ -784,7 +818,7 @@ export class FieldNamePattern extends Pattern {
   //#region `'@*TypeNames-[excludeTypeNames].[fieldNames];'`
   static forFieldNamesOfAllTypeNamesExcludeTypeNames = (
     typeNames: TypeNames,
-    fieldNames: FieldNames
+    fieldNames: FieldNames,
   ): FieldNamePattern => {
     typeNames = arrayWrap(typeNames);
     fieldNames = arrayWrap(fieldNames);
@@ -798,7 +832,9 @@ export class FieldNamePattern extends Pattern {
     const _typeNames = typeNames.map(typeName => typeName.value).join();
     const _fieldNames = fieldNames.map(fieldName => fieldName.value).join();
 
-    return FieldNamePattern.fromString(`${TypeName.allTypeNames}-[${_typeNames}].[${_fieldNames}];`);
+    return FieldNamePattern.fromString(
+      `${TypeName.allTypeNames}-[${_typeNames}].[${_fieldNames}];`,
+    );
   };
 
   static regexpForFieldNamesOfAllTypeNamesExcludeTypeNames =
@@ -807,7 +843,7 @@ export class FieldNamePattern extends Pattern {
   static matchAndConfigureFieldNamesOfAllTypeNamesExcludeTypeNames = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
     const regexp = FieldNamePattern.regexpForFieldNamesOfAllTypeNamesExcludeTypeNames;
     resetIndex(regexp);
@@ -827,7 +863,7 @@ export class FieldNamePattern extends Pattern {
           const shouldBeConfigured = false;
 
           matchAndConfigure[key] = { matchFound, shouldBeConfigured };
-        })
+        }),
       );
 
       // interpret the global pattern:
@@ -849,7 +885,9 @@ export class FieldNamePattern extends Pattern {
   //#endregion
 
   //#region `'@*TypeNames-[excludeTypeNames].@*FieldNames;'`
-  static forAllFieldNamesOfAllTypeNamesExcludeTypeNames = (typeNames: TypeNames): FieldNamePattern => {
+  static forAllFieldNamesOfAllTypeNamesExcludeTypeNames = (
+    typeNames: TypeNames,
+  ): FieldNamePattern => {
     typeNames = arrayWrap(typeNames);
 
     if (typeNames.length < 1) {
@@ -858,7 +896,9 @@ export class FieldNamePattern extends Pattern {
 
     const _typeNames = typeNames.map(typeName => typeName.value).join();
 
-    return FieldNamePattern.fromString(`${TypeName.allTypeNames}-[${_typeNames}].${FieldName.allFieldNames};`);
+    return FieldNamePattern.fromString(
+      `${TypeName.allTypeNames}-[${_typeNames}].${FieldName.allFieldNames};`,
+    );
   };
 
   static regexpForAllFieldNamesOfAllTypeNamesExcludeTypeNames =
@@ -867,7 +907,7 @@ export class FieldNamePattern extends Pattern {
   static matchAndConfigureAllFieldNamesOfAllTypeNamesExcludeTypeNames = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
     const regexp = FieldNamePattern.regexpForAllFieldNamesOfAllTypeNamesExcludeTypeNames;
     resetIndex(regexp);
@@ -902,7 +942,7 @@ export class FieldNamePattern extends Pattern {
   //#region `'@*TypeNames-[excludeTypeNames].@*FieldNames-[excludeFieldNames];'`
   static forAllFieldNamesExcludeFieldNamesOfAllTypeNamesExcludeTypeNames = (
     typeNames: TypeNames,
-    fieldNames: FieldNames
+    fieldNames: FieldNames,
   ): FieldNamePattern => {
     typeNames = arrayWrap(typeNames);
     fieldNames = arrayWrap(fieldNames);
@@ -917,7 +957,7 @@ export class FieldNamePattern extends Pattern {
     const _fieldNames = fieldNames.map(fieldName => fieldName.value).join();
 
     return FieldNamePattern.fromString(
-      `${TypeName.allTypeNames}-[${_typeNames}].${FieldName.allFieldNames}-[${_fieldNames}];`
+      `${TypeName.allTypeNames}-[${_typeNames}].${FieldName.allFieldNames}-[${_fieldNames}];`,
     );
   };
 
@@ -927,9 +967,10 @@ export class FieldNamePattern extends Pattern {
   static matchAndConfigureAllFieldNamesExcludeFieldNamesOfAllTypeNamesExcludeTypeNames = (
     pattern: FieldNamePattern,
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): MatchAndConfigure => {
-    const regexp = FieldNamePattern.regexpForAllFieldNamesExcludeFieldNamesOfAllTypeNamesExcludeTypeNames;
+    const regexp =
+      FieldNamePattern.regexpForAllFieldNamesExcludeFieldNamesOfAllTypeNamesExcludeTypeNames;
     resetIndex(regexp);
 
     let result: RegExpExecArray | null;
@@ -946,7 +987,7 @@ export class FieldNamePattern extends Pattern {
           const shouldBeConfigured = false;
 
           matchAndConfigure[key] = { matchFound, shouldBeConfigured };
-        })
+        }),
       );
     }
 
@@ -963,7 +1004,10 @@ export class FieldNamePattern extends Pattern {
   //#endregion
 }
 
-export type MatchAndConfigure = Record<string, { matchFound: boolean; shouldBeConfigured: boolean }>;
+export type MatchAndConfigure = Record<
+  string,
+  { matchFound: boolean; shouldBeConfigured: boolean }
+>;
 
 // type MatchAndConfigure =
 //   | 'matchAndConfigureTypeNames'

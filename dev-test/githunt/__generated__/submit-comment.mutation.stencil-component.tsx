@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
-import { CommentsPageCommentFragmentDoc } from './comments-page-comment.fragment.stencil-component.js';
 import 'stencil-apollo';
-import { Component, Prop, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
+import { CommentsPageCommentFragmentDoc } from './comments-page-comment.fragment.stencil-component.js';
 
 declare global {
   export type SubmitCommentMutationVariables = Types.Exact<{
@@ -34,9 +34,18 @@ const SubmitCommentDocument = gql`
   tag: 'apollo-submit-comment',
 })
 export class SubmitCommentComponent {
-  @Prop() renderer: import('stencil-apollo').MutationRenderer<SubmitCommentMutation, SubmitCommentMutationVariables>;
+  @Prop() renderer: import('stencil-apollo').MutationRenderer<
+    SubmitCommentMutation,
+    SubmitCommentMutationVariables
+  >;
   @Prop() variables: SubmitCommentMutationVariables;
   render() {
-    return <apollo-mutation mutation={SubmitCommentDocument} variables={this.variables} renderer={this.renderer} />;
+    return (
+      <apollo-mutation
+        mutation={SubmitCommentDocument}
+        variables={this.variables}
+        renderer={this.renderer}
+      />
+    );
   }
 }

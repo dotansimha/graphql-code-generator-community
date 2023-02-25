@@ -1,9 +1,16 @@
-import { ParsedMapper, buildMapperImport, parseMapper } from '@graphql-codegen/visitor-plugin-common';
-import { generateInfiniteQueryKey, generateMutationKey, generateQueryKey } from './variables-generator.js';
-
+import { OperationDefinitionNode } from 'graphql';
+import {
+  buildMapperImport,
+  ParsedMapper,
+  parseMapper,
+} from '@graphql-codegen/visitor-plugin-common';
 import { CustomFetch } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
-import { OperationDefinitionNode } from 'graphql';
+import {
+  generateInfiniteQueryKey,
+  generateMutationKey,
+  generateQueryKey,
+} from './variables-generator.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class CustomMapperFetcher implements FetcherRenderer {
@@ -32,7 +39,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
             asDefault: this._mapper.default,
           },
         ],
-        this.visitor.config.useTypeImports
+        this.visitor.config.useTypeImports,
       );
     }
 
@@ -45,7 +52,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     const pageParamKey = `pageParamKey: keyof ${operationVariablesTypes}`;
     const variables = `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
@@ -57,7 +64,9 @@ export class CustomMapperFetcher implements FetcherRenderer {
     const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
-    const implHookOuter = this._isReactHook ? `const query = ${typedFetcher}(${documentVariableName})` : '';
+    const implHookOuter = this._isReactHook
+      ? `const query = ${typedFetcher}(${documentVariableName})`
+      : '';
     const impl = this._isReactHook
       ? `(metaData) => query({...variables, ...(metaData.pageParam ?? {})})`
       : `(metaData) => ${typedFetcher}(${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`;
@@ -84,7 +93,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     const variables = `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
 
@@ -119,7 +128,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     const variables = `variables?: ${operationVariablesTypes}`;
     const hookConfig = this.visitor.queryMethodMap;
@@ -136,7 +145,9 @@ export class CustomMapperFetcher implements FetcherRenderer {
       TError = ${this.visitor.config.errorType},
       TContext = unknown
     >(${options}) =>
-    ${hookConfig.mutation.hook}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
+    ${
+      hookConfig.mutation.hook
+    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
       ${generateMutationKey(node)},
       ${impl},
       options
@@ -149,7 +160,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ): string {
     // We can't generate a fetcher field since we can't call react hooks outside of a React Fucntion Component
     // Related: https://reactjs.org/docs/hooks-rules.html

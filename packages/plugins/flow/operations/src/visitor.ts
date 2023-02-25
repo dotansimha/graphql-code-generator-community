@@ -1,33 +1,37 @@
-import { FlowWithPickSelectionSetProcessor } from './flow-selection-set-processor.js';
+import autoBind from 'auto-bind';
 import {
+  GraphQLNamedType,
+  GraphQLOutputType,
   GraphQLSchema,
   isEnumType,
   isNonNullType,
-  GraphQLOutputType,
-  GraphQLNamedType,
   SelectionSetNode,
 } from 'graphql';
-import { FlowDocumentsPluginConfig } from './config.js';
 import { FlowOperationVariablesToObject } from '@graphql-codegen/flow';
 import {
-  wrapTypeWithModifiers,
-  PreResolveTypesProcessor,
-  ParsedDocumentsConfig,
   BaseDocumentsVisitor,
-  LoadedFragment,
-  SelectionSetProcessorConfig,
-  SelectionSetToObject,
-  getConfigValue,
   DeclarationKind,
   generateFragmentImportStatement,
+  getConfigValue,
+  LoadedFragment,
+  ParsedDocumentsConfig,
+  PreResolveTypesProcessor,
+  SelectionSetProcessorConfig,
+  SelectionSetToObject,
+  wrapTypeWithModifiers,
 } from '@graphql-codegen/visitor-plugin-common';
+import { FlowDocumentsPluginConfig } from './config.js';
+import { FlowWithPickSelectionSetProcessor } from './flow-selection-set-processor.js';
 
 class FlowSelectionSetToObject extends SelectionSetToObject {
   getUnknownType() {
     return 'any';
   }
 
-  public createNext(parentSchemaType: GraphQLNamedType, selectionSet: SelectionSetNode): SelectionSetToObject {
+  public createNext(
+    parentSchemaType: GraphQLNamedType,
+    selectionSet: SelectionSetNode,
+  ): SelectionSetToObject {
     return new FlowSelectionSetToObject(
       this._processor,
       this._scalars,
@@ -37,39 +41,45 @@ class FlowSelectionSetToObject extends SelectionSetToObject {
       this._loadedFragments,
       this._config,
       parentSchemaType,
-      selectionSet
+      selectionSet,
     );
   }
 }
-
-import autoBind from 'auto-bind';
 
 export interface FlowDocumentsParsedConfig extends ParsedDocumentsConfig {
   useFlowExactObjects: boolean;
   useFlowReadOnlyTypes: boolean;
 }
 
-export class FlowDocumentsVisitor extends BaseDocumentsVisitor<FlowDocumentsPluginConfig, FlowDocumentsParsedConfig> {
-  constructor(schema: GraphQLSchema, config: FlowDocumentsPluginConfig, allFragments: LoadedFragment[]) {
+export class FlowDocumentsVisitor extends BaseDocumentsVisitor<
+  FlowDocumentsPluginConfig,
+  FlowDocumentsParsedConfig
+> {
+  constructor(
+    schema: GraphQLSchema,
+    config: FlowDocumentsPluginConfig,
+    allFragments: LoadedFragment[],
+  ) {
     super(
       config,
       {
         useFlowExactObjects: getConfigValue(config.useFlowExactObjects, true),
         useFlowReadOnlyTypes: getConfigValue(config.useFlowReadOnlyTypes, false),
       } as FlowDocumentsParsedConfig,
-      schema
+      schema,
     );
 
     autoBind(this);
 
-    const wrapArray = (type: string) => `${this.config.useFlowReadOnlyTypes ? '$ReadOnlyArray' : 'Array'}<${type}>`;
+    const wrapArray = (type: string) =>
+      `${this.config.useFlowReadOnlyTypes ? '$ReadOnlyArray' : 'Array'}<${type}>`;
     const wrapOptional = (type: string) => `?${type}`;
 
     const { useFlowReadOnlyTypes } = this.config;
     const formatNamedField = (
       name: string,
       type: GraphQLOutputType | GraphQLNamedType | null,
-      isConditional = false
+      isConditional = false,
     ): string => {
       const optional = (!!type && !isNonNullType(type)) || isConditional;
       return `${useFlowReadOnlyTypes ? '+' : ''}${name}${optional ? '?' : ''}`;
@@ -92,7 +102,9 @@ export class FlowDocumentsVisitor extends BaseDocumentsVisitor<FlowDocumentsPlug
           ...processorConfig,
           useFlowExactObjects: this.config.useFlowExactObjects,
         });
-    const enumsNames = Object.keys(schema.getTypeMap()).filter(typeName => isEnumType(schema.getType(typeName)));
+    const enumsNames = Object.keys(schema.getTypeMap()).filter(typeName =>
+      isEnumType(schema.getType(typeName)),
+    );
     this.setSelectionSetHandler(
       new FlowSelectionSetToObject(
         processor,
@@ -101,8 +113,8 @@ export class FlowDocumentsVisitor extends BaseDocumentsVisitor<FlowDocumentsPlug
         this.convertName.bind(this),
         this.getFragmentSuffix.bind(this),
         allFragments,
-        this.config
-      )
+        this.config,
+      ),
     );
     this.setVariablesTransformer(
       new FlowOperationVariablesToObject(
@@ -112,8 +124,8 @@ export class FlowDocumentsVisitor extends BaseDocumentsVisitor<FlowDocumentsPlug
         enumsNames,
         this.config.enumPrefix,
         {},
-        true
-      )
+        true,
+      ),
     );
   }
 

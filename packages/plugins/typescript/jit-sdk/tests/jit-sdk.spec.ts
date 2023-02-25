@@ -1,11 +1,14 @@
-import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
+import { buildClientSchema, GraphQLSchema, parse, printSchema } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
+import { plugin as tsPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
+import {
+  plugin as tsDocumentsPlugin,
+  TypeScriptDocumentsPluginConfig,
+} from '@graphql-codegen/typescript-operations';
+import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import { RawJitSdkPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
-import { parse, buildClientSchema, GraphQLSchema, printSchema } from 'graphql';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
-import { plugin as tsPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
-import { plugin as tsDocumentsPlugin, TypeScriptDocumentsPluginConfig } from '@graphql-codegen/typescript-operations';
 
 const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
 const basicDoc = parse(/* GraphQL */ `
@@ -67,7 +70,7 @@ const validate = async (
   config: TypeScriptPluginConfig & TypeScriptDocumentsPluginConfig & RawJitSdkPluginConfig,
   docs: Types.DocumentFile[],
   pluginSchema: GraphQLSchema,
-  usage: string
+  usage: string,
 ) => {
   const m = mergeOutputs([
     await tsPlugin(pluginSchema, docs, config, { outputFile: '' }),
@@ -145,7 +148,12 @@ async function test() {
 
     it('Should generate a correct wrap method in case of Subscription', async () => {
       const docs = [{ filePath: '', document: docWithSubscription }];
-      const result = (await plugin(schema, docs, {}, { outputFile: 'graphql.ts' })) as Types.ComplexPluginOutput;
+      const result = (await plugin(
+        schema,
+        docs,
+        {},
+        { outputFile: 'graphql.ts' },
+      )) as Types.ComplexPluginOutput;
 
       const output = await validate(result, {}, docs, schema, '');
       expect(output).toMatchSnapshot();

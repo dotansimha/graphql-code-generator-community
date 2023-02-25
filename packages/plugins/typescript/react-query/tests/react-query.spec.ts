@@ -1,19 +1,20 @@
-import { GraphQLSchema, buildClientSchema, buildSchema, parse } from 'graphql';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
-
-import { plugin } from '../src/index.js';
+import { buildClientSchema, buildSchema, GraphQLSchema, parse } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
+import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
-import { validateTs } from '@graphql-codegen/testing';
+import { plugin } from '../src/index.js';
 
 const validateTypeScript = async (
   output: Types.PluginOutput,
   testSchema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: any
+  config: any,
 ) => {
   const tsOutput = await tsPlugin(testSchema, documents, config, { outputFile: '' });
-  const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, { outputFile: '' });
+  const tsDocumentsOutput = await tsDocumentsPlugin(testSchema, documents, config, {
+    outputFile: '',
+  });
   const merged = mergeOutputs([tsOutput, tsDocumentsOutput, output]);
   validateTs(merged, undefined, true, false);
 
@@ -162,7 +163,7 @@ export const useTestMutation = <
       schema,
       [{ location: '', document: ast }],
       { dedupeFragments: true },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect((res.content.match(/\{UserBaseFragmentDoc\}/g) || []).length).toBe(1);
@@ -242,7 +243,7 @@ export const useTestMutation = <
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
       expect(out.prepend).toContain(
-        `import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';`
+        `import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';`,
       );
 
       expect(out.prepend).toContain(`import { myCustomFetcher } from './my-file';`);
@@ -296,7 +297,7 @@ export const useTestMutation = <
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
       expect(out.prepend).toContain(
-        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`
+        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`,
       );
       expect(out.content).toBeSimilarStringTo(`export const useTestQuery = <
         TData = TTestQuery,
@@ -339,7 +340,7 @@ export const useTestMutation = <
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
       expect(out.prepend).toContain(
-        `import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';`
+        `import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';`,
       );
       expect(out.prepend).toContain(`import { useCustomFetcher } from './my-file';`);
       expect(out.content).toBeSimilarStringTo(`export const useTestQuery = <
@@ -406,7 +407,7 @@ export const useTestMutation = <
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.fetcher = (variables?: TestQueryVariables, options?: RequestInit['headers']) => customFetcher<TestQuery, TestQueryVariables>(TestDocument, variables, options);`
+        `useTestQuery.fetcher = (variables?: TestQueryVariables, options?: RequestInit['headers']) => customFetcher<TestQuery, TestQueryVariables>(TestDocument, variables, options);`,
       );
     });
 
@@ -433,7 +434,7 @@ export const useTestMutation = <
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestMutation.fetcher = (variables?: TestMutationVariables, options?: RequestInit['headers']) => customFetcher<TestMutation, TestMutationVariables>(TestDocument, variables, options);`
+        `useTestMutation.fetcher = (variables?: TestMutationVariables, options?: RequestInit['headers']) => customFetcher<TestMutation, TestMutationVariables>(TestDocument, variables, options);`,
       );
     });
 
@@ -483,7 +484,8 @@ export const useTestMutation = <
       };
 
       expect(
-        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, config)) as any).content
+        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, config)) as any)
+          .content,
       ).toContain('fetcher<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -491,9 +493,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -501,9 +503,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQueryQuery = ');
       expect(
         (
@@ -511,9 +513,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -521,9 +523,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
       expect(
         (
@@ -531,9 +533,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -541,9 +543,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
       expect(
         (
@@ -551,9 +553,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -561,9 +563,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
     });
   });
@@ -579,10 +581,12 @@ export const useTestMutation = <
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
       expect(out.prepend).toContain(
-        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`
+        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`,
       );
       expect(out.prepend).toContain(`import { GraphQLClient } from 'graphql-request';`);
-      expect(out.prepend).toContain(`import { RequestInit } from 'graphql-request/dist/types.dom';`);
+      expect(out.prepend).toContain(
+        `import { RequestInit } from 'graphql-request/dist/types.dom';`,
+      );
       expect(out.prepend[3])
         .toBeSimilarStringTo(`    function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
            return async (): Promise<TData> => client.request({
@@ -632,7 +636,7 @@ export const useTestMutation = <
 
       expect(out.prepend).toContain(`import type { GraphQLClient } from 'graphql-request';`);
       expect(out.prepend).toContain(
-        `import { useQuery, useMutation, type UseQueryOptions, type UseMutationOptions } from 'react-query';`
+        `import { useQuery, useMutation, type UseQueryOptions, type UseMutationOptions } from 'react-query';`,
       );
     });
     it('Should generate fetcher field when exposeFetcher is true', async () => {
@@ -643,7 +647,7 @@ export const useTestMutation = <
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.fetcher = (client: GraphQLClient, variables?: TestQueryVariables, headers?: RequestInit['headers']) => fetcher<TestQuery, TestQueryVariables>(client, TestDocument, variables, headers);`
+        `useTestQuery.fetcher = (client: GraphQLClient, variables?: TestQueryVariables, headers?: RequestInit['headers']) => fetcher<TestQuery, TestQueryVariables>(client, TestDocument, variables, headers);`,
       );
     });
     it(`tests for dedupeOperationSuffix`, async () => {
@@ -667,7 +671,8 @@ export const useTestMutation = <
       };
 
       expect(
-        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, config)) as any).content
+        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, config)) as any)
+          .content,
       ).toContain('fetcher<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -675,9 +680,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -685,9 +690,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQueryQuery = ');
       expect(
         (
@@ -695,9 +700,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -705,9 +710,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
       expect(
         (
@@ -715,9 +720,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -725,9 +730,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
       expect(
         (
@@ -735,9 +740,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -745,9 +750,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
     });
   });
@@ -765,7 +770,7 @@ export const useTestMutation = <
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
       expect(out.prepend).toContain(
-        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`
+        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`,
       );
       expect(out.prepend[1])
         .toBeSimilarStringTo(`    function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
@@ -975,7 +980,7 @@ export const useTestMutation = <
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.fetcher = (variables?: TestQueryVariables) => fetcher<TestQuery, TestQueryVariables>(TestDocument, variables);`
+        `useTestQuery.fetcher = (variables?: TestQueryVariables) => fetcher<TestQuery, TestQueryVariables>(TestDocument, variables);`,
       );
     });
 
@@ -1002,7 +1007,8 @@ export const useTestMutation = <
       };
 
       expect(
-        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, config)) as any).content
+        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, config)) as any)
+          .content,
       ).toContain('fetcher<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -1010,9 +1016,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -1020,9 +1026,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQueryQuery = ');
       expect(
         (
@@ -1030,9 +1036,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -1040,9 +1046,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
       expect(
         (
@@ -1050,9 +1056,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -1060,9 +1066,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
       expect(
         (
@@ -1070,9 +1076,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -1080,9 +1086,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
     });
   });
@@ -1098,7 +1104,7 @@ export const useTestMutation = <
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
       expect(out.prepend).toContain(
-        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`
+        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`,
       );
 
       expect(out.content).toBeSimilarStringTo(`export const useTestQuery = <
@@ -1139,7 +1145,7 @@ export const useTestMutation = <
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.fetcher = (dataSource: { endpoint: string, fetchParams?: RequestInit }, variables?: TestQueryVariables) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables);`
+        `useTestQuery.fetcher = (dataSource: { endpoint: string, fetchParams?: RequestInit }, variables?: TestQueryVariables) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables);`,
       );
     });
 
@@ -1164,7 +1170,8 @@ export const useTestMutation = <
       };
 
       expect(
-        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, config)) as any).content
+        ((await plugin(schema, [{ location: 'test-file.ts', document: ast }], {}, config)) as any)
+          .content,
       ).toContain('fetcher<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -1172,9 +1179,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQueryQuery, NotificationsQueryQueryVariables>');
       expect(
         (
@@ -1182,9 +1189,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQueryQuery = ');
       expect(
         (
@@ -1192,9 +1199,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -1202,9 +1209,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
       expect(
         (
@@ -1212,9 +1219,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -1222,9 +1229,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: true },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
       expect(
         (
@@ -1232,9 +1239,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('fetcher<NotificationsQuery, NotificationsQueryVariables>');
       expect(
         (
@@ -1242,9 +1249,9 @@ export const useTestMutation = <
             schema,
             [{ location: 'test-file.ts', document: ast2 }],
             { dedupeOperationSuffix: false },
-            config
+            config,
           )) as any
-        ).content
+        ).content,
       ).toContain('export const useNotificationsQuery =');
     });
   });
@@ -1268,7 +1275,7 @@ export const useTestMutation = <
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`
+        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`,
       );
     });
   });
@@ -1282,10 +1289,10 @@ export const useTestMutation = <
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`
+        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`,
       );
       expect(out.content).toBeSimilarStringTo(
-        `useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];`
+        `useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];`,
       );
     });
   });
@@ -1298,8 +1305,14 @@ export const useTestMutation = <
       fetcher: 'graphql-request',
     };
 
-    const outGraphqlRequest = (await plugin(schema, notOperationDocs, config)) as Types.ComplexPluginOutput;
-    expect(outGraphqlRequest.prepend).not.toContain(`import { GraphQLClient } from 'graphql-request';`);
+    const outGraphqlRequest = (await plugin(
+      schema,
+      notOperationDocs,
+      config,
+    )) as Types.ComplexPluginOutput;
+    expect(outGraphqlRequest.prepend).not.toContain(
+      `import { GraphQLClient } from 'graphql-request';`,
+    );
   });
 
   it('Parses process.env variables correctly', async () => {

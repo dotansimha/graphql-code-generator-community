@@ -1,5 +1,31 @@
 # @graphql-codegen/typescript-rtk-query
 
+## 2.4.1
+
+### Patch Changes
+
+- [#248](https://github.com/dotansimha/graphql-code-generator-community/pull/248) [`98d3da6b1`](https://github.com/dotansimha/graphql-code-generator-community/commit/98d3da6b11510dd7b48c5cf244ae0122d2c04945) Thanks [@DominicGBauer](https://github.com/DominicGBauer)! - fix: update imported api to use alternate name
+
+  Previously imported api name did not update actual implementation
+
+  ```
+  import { newApiName } from '../baseApi'
+
+  ...
+  const injectedApi = oldApiName...
+
+  ```
+
+  now it does update the implementation
+
+  ```
+  import { newApiName } from '../baseApi'
+
+  ...
+  const injectedApi = newApiName...
+  ...
+  ```
+
 ## 2.4.0
 
 ### Minor Changes

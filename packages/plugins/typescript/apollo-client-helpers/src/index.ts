@@ -1,12 +1,12 @@
-import { Types, PluginValidateFn, PluginFunction } from '@graphql-codegen/plugin-helpers';
-import { GraphQLSchema, isInterfaceType, isObjectType } from 'graphql';
 import { extname } from 'path';
+import { GraphQLSchema, isInterfaceType, isObjectType } from 'graphql';
+import { PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
 import { ApolloClientHelpersConfig } from './config.js';
 
 export const plugin: PluginFunction<ApolloClientHelpersConfig> = (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: ApolloClientHelpersConfig
+  config: ApolloClientHelpersConfig,
 ) => {
   const results: Types.ComplexPluginOutput[] = [];
 
@@ -21,7 +21,7 @@ export const plugin: PluginFunction<ApolloClientHelpersConfig> = (
 
 function generateTypePoliciesSignature(
   schema: GraphQLSchema,
-  config: ApolloClientHelpersConfig
+  config: ApolloClientHelpersConfig,
 ): Types.ComplexPluginOutput {
   const typeMap = schema.getTypeMap();
   const perTypePolicies: string[] = [];
@@ -36,11 +36,13 @@ function generateTypePoliciesSignature(
       perTypePolicies.push(
         `export type ${keySpecifierVarName} = (${fieldsNames
           .map(f => `'${f}'`)
-          .join(' | ')} | ${keySpecifierVarName})[];`
+          .join(' | ')} | ${keySpecifierVarName})[];`,
       );
 
       perTypePolicies.push(`export type ${fieldPolicyVarName} = {
-${fieldsNames.map(fieldName => `\t${fieldName}?: FieldPolicy<any> | FieldReadFunction<any>`).join(',\n')}
+${fieldsNames
+  .map(fieldName => `\t${fieldName}?: FieldPolicy<any> | FieldReadFunction<any>`)
+  .join(',\n')}
 };`);
 
       return {
@@ -85,7 +87,7 @@ export const validate: PluginValidateFn<ApolloClientHelpersConfig> = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
   config,
-  outputFile: string
+  outputFile: string,
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "apollo-client-helpers" requires extension to be ".ts" or ".tsx"!`);

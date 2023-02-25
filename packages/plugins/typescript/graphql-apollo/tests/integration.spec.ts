@@ -1,14 +1,14 @@
-import { codegen } from '@graphql-codegen/core';
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { join } from 'path';
+import { fetch } from 'cross-fetch';
+import { remove, writeFile } from 'fs-extra';
 import { parse } from 'graphql';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { codegen } from '@graphql-codegen/core';
+import { mockGraphQLServer } from '@graphql-codegen/testing';
 import * as TypeScriptPlugin from '@graphql-codegen/typescript';
 import * as TypeScriptOperationsPlugin from '@graphql-codegen/typescript-operations';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import * as GraphQLApolloPlugin from '../src/index.js';
-import { remove, writeFile } from 'fs-extra';
-import { join } from 'path';
-import { mockGraphQLServer } from '@graphql-codegen/testing';
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import { fetch } from 'cross-fetch';
 
 describe('GraphQL Request Integration', () => {
   it.skip('should send requests correctly', async () => {

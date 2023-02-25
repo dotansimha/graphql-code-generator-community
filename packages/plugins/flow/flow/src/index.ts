@@ -1,7 +1,12 @@
-import { Types, PluginFunction, getCachedDocumentNodeFromSchema, oldVisit } from '@graphql-codegen/plugin-helpers';
 import { GraphQLSchema } from 'graphql';
-import { FlowVisitor } from './visitor.js';
+import {
+  getCachedDocumentNodeFromSchema,
+  oldVisit,
+  PluginFunction,
+  Types,
+} from '@graphql-codegen/plugin-helpers';
 import { FlowPluginConfig } from './config.js';
+import { FlowVisitor } from './visitor.js';
 
 export * from './visitor.js';
 export * from './flow-variables-to-object.js';
@@ -9,7 +14,7 @@ export * from './flow-variables-to-object.js';
 export const plugin: PluginFunction<FlowPluginConfig, Types.ComplexPluginOutput> = (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: FlowPluginConfig
+  config: FlowPluginConfig,
 ) => {
   const header = `// @flow\n`;
   const astNode = getCachedDocumentNodeFromSchema(schema);

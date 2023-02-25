@@ -1,10 +1,10 @@
 import { appliesOnBlock } from '../utils.js';
 import { FieldName, Pattern, TypeName, TypeNamePattern } from './pattern.js';
 import {
+  APPLIES_ON_ALL_BLOCKS,
   AppliesOn,
   AppliesOnFactory,
   AppliesOnParameters,
-  APPLIES_ON_ALL_BLOCKS,
   DART_SCALARS,
   defaultFreezedPluginConfig,
   FlutterFreezedPluginConfig,
@@ -34,14 +34,15 @@ export class Config {
     config: FlutterFreezedPluginConfig,
     blockAppliesOn: readonly AppliesOnParameters[],
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ) => {
     const decorator = (defaultValue: string) => (defaultValue ? `@Default(${defaultValue})\n` : '');
 
     const defaultValue = config.defaultValues
       ?.filter(
         ([pattern, , configAppliesOn]) =>
-          Pattern.findLastConfiguration(pattern, typeName, fieldName) && appliesOnBlock(configAppliesOn, blockAppliesOn)
+          Pattern.findLastConfiguration(pattern, typeName, fieldName) &&
+          appliesOnBlock(configAppliesOn, blockAppliesOn),
       )
       ?.slice(-1)?.[0]?.[1];
 
@@ -52,14 +53,14 @@ export class Config {
     config: FlutterFreezedPluginConfig,
     blockAppliesOn: readonly (AppliesOnFactory | AppliesOnParameters)[],
     typeName: TypeName,
-    fieldName?: FieldName
+    fieldName?: FieldName,
   ) => {
     const isDeprecated =
       config.deprecated
         ?.filter(
           ([pattern, configAppliesOn]) =>
             Pattern.findLastConfiguration(pattern, typeName, fieldName) &&
-            appliesOnBlock(configAppliesOn, blockAppliesOn)
+            appliesOnBlock(configAppliesOn, blockAppliesOn),
         )
         ?.slice(-1)?.[0] !== undefined;
     return isDeprecated ? '@deprecated\n' : '';
@@ -73,7 +74,7 @@ export class Config {
     config: FlutterFreezedPluginConfig,
     blockAppliesOn: readonly AppliesOn[],
     typeName?: TypeName,
-    fieldName?: FieldName
+    fieldName?: FieldName,
   ): [prefix?: string, suffix?: string] => {
     const escapeDartKeywords = config.escapeDartKeywords;
 
@@ -84,7 +85,7 @@ export class Config {
         .filter(
           ([pattern, , , configAppliesOn]) =>
             Pattern.findLastConfiguration(pattern, typeName, fieldName) &&
-            appliesOnBlock(configAppliesOn ?? [...APPLIES_ON_ALL_BLOCKS], blockAppliesOn)
+            appliesOnBlock(configAppliesOn ?? [...APPLIES_ON_ALL_BLOCKS], blockAppliesOn),
         )
         .slice(-1)[0];
       return [prefix, suffix];
@@ -96,14 +97,14 @@ export class Config {
     config: FlutterFreezedPluginConfig,
     blockAppliesOn: readonly AppliesOnParameters[],
     typeName: TypeName,
-    fieldName: FieldName
+    fieldName: FieldName,
   ): boolean => {
     return (
       config.final
         ?.filter(
           ([pattern, configAppliesOn]) =>
             Pattern.findLastConfiguration(pattern, typeName, fieldName) &&
-            appliesOnBlock(configAppliesOn, blockAppliesOn)
+            appliesOnBlock(configAppliesOn, blockAppliesOn),
         )
         ?.slice(-1)?.[0] !== undefined
     );
@@ -145,7 +146,10 @@ export class Config {
     return Config.enableWithBooleanOrTypeFieldName(config.immutable, typeName);
   };
 
-  static makeCollectionsUnmodifiable = (config: FlutterFreezedPluginConfig, typeName?: TypeName) => {
+  static makeCollectionsUnmodifiable = (
+    config: FlutterFreezedPluginConfig,
+    typeName?: TypeName,
+  ) => {
     return Config.enableWithBooleanOrTypeFieldName(config.makeCollectionsUnmodifiable, typeName);
   };
 
@@ -161,17 +165,22 @@ export class Config {
     return Config.enableWithBooleanOrTypeFieldName(config.privateEmptyConstructor, typeName);
   };
 
-  static unionClass = (/* config: FlutterFreezedPluginConfig, index: number, unionTypeName: TypeName */) => {
-    // const unionClass = config['unionClass'];
+  static unionClass =
+    (/* config: FlutterFreezedPluginConfig, index: number, unionTypeName: TypeName */) => {
+      // const unionClass = config['unionClass'];
 
+      return undefined;
+    };
+
+  static unionKey = (/* config: FlutterFreezedPluginConfig, typeName: TypeName */):
+    | string
+    | undefined => {
     return undefined;
   };
 
-  static unionKey = (/* config: FlutterFreezedPluginConfig, typeName: TypeName */): string | undefined => {
-    return undefined;
-  };
-
-  static unionValueCase = (/* config: FlutterFreezedPluginConfig, typeName: TypeName */): string | undefined => {
+  static unionValueCase = (/* config: FlutterFreezedPluginConfig, typeName: TypeName */):
+    | string
+    | undefined => {
     return undefined;
   };
 
@@ -183,7 +192,10 @@ export class Config {
       return undefined;
     };
 
-  static enableWithBooleanOrTypeFieldName = (value?: boolean | TypeNamePattern, typeName?: TypeName) => {
+  static enableWithBooleanOrTypeFieldName = (
+    value?: boolean | TypeNamePattern,
+    typeName?: TypeName,
+  ) => {
     if (typeof value === 'boolean') {
       return value;
     } else if (value !== undefined && typeName !== undefined) {
@@ -192,7 +204,9 @@ export class Config {
     return undefined;
   };
 
-  public static create = (...config: Partial<FlutterFreezedPluginConfig>[]): FlutterFreezedPluginConfig => {
+  public static create = (
+    ...config: Partial<FlutterFreezedPluginConfig>[]
+  ): FlutterFreezedPluginConfig => {
     return Object.assign({}, defaultFreezedPluginConfig, ...config);
   };
 }

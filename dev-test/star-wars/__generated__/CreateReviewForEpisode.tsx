@@ -1,7 +1,7 @@
-import * as Types from '../types.d.js';
-
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import * as Types from '../types.d.js';
+
 const defaultOptions = {} as const;
 export type CreateReviewForEpisodeMutationVariables = Types.Exact<{
   episode: Types.Episode;
@@ -45,16 +45,22 @@ export type CreateReviewForEpisodeMutationFn = Apollo.MutationFunction<
  * });
  */
 export function useCreateReviewForEpisodeMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreateReviewForEpisodeMutation, CreateReviewForEpisodeMutationVariables>
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateReviewForEpisodeMutation,
+    CreateReviewForEpisodeMutationVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateReviewForEpisodeMutation, CreateReviewForEpisodeMutationVariables>(
-    CreateReviewForEpisodeDocument,
-    options
-  );
+  return Apollo.useMutation<
+    CreateReviewForEpisodeMutation,
+    CreateReviewForEpisodeMutationVariables
+  >(CreateReviewForEpisodeDocument, options);
 }
-export type CreateReviewForEpisodeMutationHookResult = ReturnType<typeof useCreateReviewForEpisodeMutation>;
-export type CreateReviewForEpisodeMutationResult = Apollo.MutationResult<CreateReviewForEpisodeMutation>;
+export type CreateReviewForEpisodeMutationHookResult = ReturnType<
+  typeof useCreateReviewForEpisodeMutation
+>;
+export type CreateReviewForEpisodeMutationResult =
+  Apollo.MutationResult<CreateReviewForEpisodeMutation>;
 export type CreateReviewForEpisodeMutationOptions = Apollo.BaseMutationOptions<
   CreateReviewForEpisodeMutation,
   CreateReviewForEpisodeMutationVariables

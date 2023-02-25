@@ -1,8 +1,8 @@
-import '@graphql-codegen/testing';
 import { buildSchema, parse } from 'graphql';
-import { plugin } from '../src/index.js';
-import { CSharpOperationsRawPluginConfig } from '../src/config.js';
 import { Types } from '@graphql-codegen/plugin-helpers';
+import '@graphql-codegen/testing';
+import { CSharpOperationsRawPluginConfig } from '../src/config.js';
+import { plugin } from '../src/index.js';
 
 describe('C# Operations', () => {
   describe('Namespaces', () => {
@@ -21,7 +21,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toContain('namespace GraphQLCodeGen {');
     });
@@ -68,7 +68,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toContain('public class FindMeGQL {');
       expect(result.content).toContain('public class FindYouGQL {');
@@ -90,7 +90,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toContain('me(a: ""test"")');
     });
@@ -111,7 +111,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static string FindMeDocument = @"
@@ -138,7 +138,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static GraphQLRequest Request() {
@@ -166,7 +166,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static GraphQLRequest Request(object variables = null) {
@@ -195,7 +195,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         /// <remarks>This method is obsolete. Use Request instead.</remarks>
@@ -217,7 +217,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
@@ -247,7 +247,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
@@ -275,7 +275,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Variables {
@@ -299,7 +299,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static System.Threading.Tasks.Task<GraphQLResponse<Response>> SendQueryAsync(IGraphQLClient client, System.Threading.CancellationToken cancellationToken = default) {
@@ -322,7 +322,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static System.Threading.Tasks.Task<GraphQLResponse<Response>> SendQueryAsync(IGraphQLClient client, Variables variables, System.Threading.CancellationToken cancellationToken = default) {
@@ -350,7 +350,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Variables {
@@ -390,7 +390,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toContain('public class UpdateMeGQL {');
       expect(result.content).toContain('public class UpdateYouGQL {');
@@ -412,7 +412,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static string UpdateMeDocument = @"
@@ -439,7 +439,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static GraphQLRequest Request() {
@@ -467,7 +467,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static GraphQLRequest Request(object variables = null) {
@@ -496,7 +496,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         /// <remarks>This method is obsolete. Use Request instead.</remarks>
@@ -518,7 +518,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
@@ -548,7 +548,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
@@ -577,7 +577,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Variables {
@@ -602,7 +602,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static System.Threading.Tasks.Task<GraphQLResponse<Response>> SendMutationAsync(IGraphQLClient client, System.Threading.CancellationToken cancellationToken = default) {
@@ -625,7 +625,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static System.Threading.Tasks.Task<GraphQLResponse<Response>> SendMutationAsync(IGraphQLClient client, Variables variables, System.Threading.CancellationToken cancellationToken = default) {
@@ -653,7 +653,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Variables {
@@ -693,7 +693,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toContain('public class OnNotifyYouGQL {');
       expect(result.content).toContain('public class OnNotifyThemGQL {');
@@ -715,7 +715,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static string OnNotifyThemDocument = @"
@@ -742,7 +742,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static GraphQLRequest Request() {
@@ -770,7 +770,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static GraphQLRequest Request(object variables = null) {
@@ -799,7 +799,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         /// <remarks>This method is obsolete. Use Request instead.</remarks>
@@ -821,7 +821,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
@@ -851,7 +851,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
@@ -879,7 +879,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Variables {
@@ -903,7 +903,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static System.IObservable<GraphQLResponse<Response>> CreateSubscriptionStream(IGraphQLClient client) {
@@ -930,7 +930,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public static System.IObservable<GraphQLResponse<Response>> CreateSubscriptionStream(IGraphQLClient client, Variables variables) {
@@ -962,7 +962,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Variables {
@@ -1014,7 +1014,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toContain('Query = UserDocument');
       expect(result.content).toBeSimilarStringTo(`
@@ -1073,7 +1073,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
@@ -1128,7 +1128,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         { typesafeOperation: true },
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Variables {
@@ -1178,7 +1178,15 @@ describe('C# Operations', () => {
           $flt: Float
           $fltr: Float!
         ) {
-          runScalar(id: $id, idr: $idr, name: $name, namer: $namer, flagr: $flagr, flt: $flt, fltr: $fltr)
+          runScalar(
+            id: $id
+            idr: $idr
+            name: $name
+            namer: $namer
+            flagr: $flagr
+            flt: $flt
+            fltr: $fltr
+          )
         }
       `);
 
@@ -1186,7 +1194,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         /// <summary>
@@ -1220,7 +1228,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         /// <summary>
@@ -1247,7 +1255,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         /// <summary>
@@ -1298,7 +1306,9 @@ describe('C# Operations', () => {
 
       expect(result.content).toContain('public static GraphQLRequest getFindMeQuery() {');
       expect(result.content).toContain('public static GraphQLRequest getUpdateYouMutation() {');
-      expect(result.content).toContain('public static GraphQLRequest getOnNotifyThemSubscription() {');
+      expect(result.content).toContain(
+        'public static GraphQLRequest getOnNotifyThemSubscription() {',
+      );
     });
 
     it('#4260 - operation name casing', async () => {
@@ -1326,7 +1336,7 @@ describe('C# Operations', () => {
         schema,
         [{ location: '', document: operation }],
         {},
-        { outputFile: '' }
+        { outputFile: '' },
       )) as Types.ComplexPluginOutput;
 
       expect(result.content).toContain('OperationName = "findMe1"');

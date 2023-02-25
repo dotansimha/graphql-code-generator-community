@@ -1,6 +1,6 @@
-import { plugin } from '../src/index.js';
-import { parse, buildClientSchema } from 'graphql';
+import { buildClientSchema, parse } from 'graphql';
 import { Types } from '@graphql-codegen/plugin-helpers';
+import { plugin } from '../src/index.js';
 
 const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
 

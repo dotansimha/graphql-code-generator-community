@@ -1,3 +1,5 @@
+import { Config } from '../src/config/config-value.js';
+import { FieldName, FieldNamePattern, TypeName, TypeNamePattern } from '../src/config/pattern.js';
 import { plugin } from '../src/index.js';
 import {
   cyclicSchema,
@@ -8,8 +10,6 @@ import {
   simpleSchema,
   unionSchema,
 } from './schema.js';
-import { Config } from '../src/config/config-value.js';
-import { FieldName, FieldNamePattern, TypeName, TypeNamePattern } from '../src/config/pattern.js';
 
 const Droid = TypeName.fromString('Droid');
 // const Starship = TypeName.fromString('Starship');
@@ -72,7 +72,8 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
     });
 
     it('when config.camelCasedEnums === undefined: original casing is preserved, keywords are escaped', () => {
-      expect(plugin(enumSchema, [], Config.create({ camelCasedEnums: undefined }))).toMatchInlineSnapshot(`
+      expect(plugin(enumSchema, [], Config.create({ camelCasedEnums: undefined })))
+        .toMatchInlineSnapshot(`
         "import 'package:freezed_annotation/freezed_annotation.dart';
         import 'package:flutter/foundation.dart';
 
@@ -179,7 +180,7 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
           copyWith: false,
           equal: true,
           makeCollectionsUnmodifiable: true,
-        })
+        }),
       );
       expect(output).toMatchInlineSnapshot(`
         "import 'package:freezed_annotation/freezed_annotation.dart';
@@ -212,7 +213,7 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         [],
         Config.create({
           immutable: false,
-        })
+        }),
       );
       expect(output).toMatchInlineSnapshot(`
         "import 'package:freezed_annotation/freezed_annotation.dart';
@@ -242,7 +243,7 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         Config.create({
           immutable: false,
           copyWith: false,
-        })
+        }),
       );
       expect(output).toMatchInlineSnapshot(`
         "import 'package:freezed_annotation/freezed_annotation.dart';
@@ -279,7 +280,7 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
               TypeName.fromString('UpsertMovieInput'),
             ],
           },
-        })
+        }),
       );
       expect(output).toMatchInlineSnapshot(`
         "import 'package:freezed_annotation/freezed_annotation.dart';
@@ -619,8 +620,16 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         [],
         Config.create({
           defaultValues: [
-            [FieldNamePattern.forFieldNamesOfAllTypeNames([friends]), '[]', ['union_factory_parameter']],
-            [FieldNamePattern.forFieldNamesOfAllTypeNames([appearsIn]), '[]', ['default_factory_parameter']],
+            [
+              FieldNamePattern.forFieldNamesOfAllTypeNames([friends]),
+              '[]',
+              ['union_factory_parameter'],
+            ],
+            [
+              FieldNamePattern.forFieldNamesOfAllTypeNames([appearsIn]),
+              '[]',
+              ['default_factory_parameter'],
+            ],
           ],
           deprecated: [
             [FieldNamePattern.forAllFieldNamesOfTypeName([Actor]), ['default_factory_parameter']],
@@ -646,7 +655,7 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
             [Actor.value]: [Human],
           },
           immutable: TypeNamePattern.forAllTypeNamesExcludeTypeNames([Actor, Human]),
-        })
+        }),
       );
       expect(output).toMatchInlineSnapshot(`
         "import 'package:freezed_annotation/freezed_annotation.dart';

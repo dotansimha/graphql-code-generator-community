@@ -1,4 +1,7 @@
-import { RawClientSideBasePluginConfig, ClientSideBasePluginConfig } from '@graphql-codegen/visitor-plugin-common';
+import {
+  ClientSideBasePluginConfig,
+  RawClientSideBasePluginConfig,
+} from '@graphql-codegen/visitor-plugin-common';
 
 /**
  * @description This plugin generates `msw` (https://github.com/mswjs/msw) mock handlers with TypeScript typings.

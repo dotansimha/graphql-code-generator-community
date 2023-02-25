@@ -1,12 +1,22 @@
 //#region helpers
-
 import { camelCase, pascalCase, snakeCase } from 'change-case-all';
-import { DefinitionNode, ObjectTypeDefinitionNode, InputObjectTypeDefinitionNode, Kind } from 'graphql';
+import {
+  DefinitionNode,
+  InputObjectTypeDefinitionNode,
+  Kind,
+  ObjectTypeDefinitionNode,
+} from 'graphql';
 import { Config } from './config/config-value.js';
 import { FieldName, TypeName } from './config/pattern.js';
-import { AppliesOn, DartIdentifierCasing, DART_KEYWORDS, FlutterFreezedPluginConfig } from './config/plugin-config.js';
+import {
+  AppliesOn,
+  DART_KEYWORDS,
+  DartIdentifierCasing,
+  FlutterFreezedPluginConfig,
+} from './config/plugin-config.js';
 
-export const strToList = (str: string) => (str.length < 1 ? [] : str.split(/\s*,\s*/gim).filter(s => s.length > 0));
+export const strToList = (str: string) =>
+  str.length < 1 ? [] : str.split(/\s*,\s*/gim).filter(s => s.length > 0);
 
 export const arrayWrap = <T>(value: T | T[]) =>
   value === undefined ? [] : Array.isArray(value) ? value : ([value] as T[]);
@@ -14,12 +24,14 @@ export const arrayWrap = <T>(value: T | T[]) =>
 export const resetIndex = (regexp: RegExp) => (regexp.lastIndex = 0);
 
 export const nodeIsObjectType = (
-  node: DefinitionNode
+  node: DefinitionNode,
 ): node is ObjectTypeDefinitionNode | InputObjectTypeDefinitionNode =>
   node.kind === Kind.OBJECT_TYPE_DEFINITION || node.kind === Kind.INPUT_OBJECT_TYPE_DEFINITION;
 
-export const appliesOnBlock = <T extends AppliesOn>(configAppliesOn: T[], blockAppliesOn: readonly T[]) =>
-  configAppliesOn.some(a => blockAppliesOn.includes(a));
+export const appliesOnBlock = <T extends AppliesOn>(
+  configAppliesOn: T[],
+  blockAppliesOn: readonly T[],
+) => configAppliesOn.some(a => blockAppliesOn.includes(a));
 
 export const dartCasing = (name: string, casing?: DartIdentifierCasing): string => {
   if (casing === 'camelCase') {
@@ -51,7 +63,7 @@ export const escapeDartKeyword = (
   blockAppliesOn: readonly AppliesOn[],
   identifier: string,
   typeName?: TypeName,
-  fieldName?: FieldName
+  fieldName?: FieldName,
 ): string => {
   if (isDartKeyword(identifier)) {
     const [prefix, suffix] = Config.escapeDartKeywords(config, blockAppliesOn, typeName, fieldName);

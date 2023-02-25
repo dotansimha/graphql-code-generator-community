@@ -1,16 +1,22 @@
+import { Config } from '../src/config/config-value.js';
 import {
-  AppliesOnFactory,
-  AppliesOnParameters,
+  FieldName,
+  FieldNamePattern,
+  Pattern,
+  TypeName,
+  TypeNamePattern,
+} from '../src/config/pattern.js';
+import {
   APPLIES_ON_DEFAULT_FACTORY_PARAMETERS,
   APPLIES_ON_MERGED_FACTORY_PARAMETERS,
   APPLIES_ON_PARAMETERS,
   APPLIES_ON_UNION_FACTORY_PARAMETERS,
+  AppliesOnFactory,
+  AppliesOnParameters,
   DART_KEYWORDS,
   DART_SCALARS,
   defaultFreezedPluginConfig,
 } from '../src/config/plugin-config.js';
-import { Config } from '../src/config/config-value.js';
-import { FieldName, FieldNamePattern, Pattern, TypeName, TypeNamePattern } from '../src/config/pattern.js';
 
 describe("integrity checks: ensures that these values don't change and if they do, they're updated accordingly", () => {
   test('integrity check: DART_SCALARS contains corresponding Dart Types mapping for built-in Graphql Scalars', () => {
@@ -231,30 +237,53 @@ describe('Config: has methods that returns a ready-to-use value for all the conf
     describe('different values can be set for each block type:', () => {
       const config = Config.create({
         defaultValues: [
-          [FieldNamePattern.forFieldNamesOfTypeName([[[Human, Droid], id]]), `'id:1'`, ['merged_factory_parameter']],
-          [FieldNamePattern.forFieldNamesOfTypeName([[[Human, Droid], id]]), `'id:2'`, ['default_factory_parameter']],
-          [FieldNamePattern.forFieldNamesOfTypeName([[[Human, Droid], id]]), `'id:3'`, ['union_factory_parameter']],
+          [
+            FieldNamePattern.forFieldNamesOfTypeName([[[Human, Droid], id]]),
+            `'id:1'`,
+            ['merged_factory_parameter'],
+          ],
+          [
+            FieldNamePattern.forFieldNamesOfTypeName([[[Human, Droid], id]]),
+            `'id:2'`,
+            ['default_factory_parameter'],
+          ],
+          [
+            FieldNamePattern.forFieldNamesOfTypeName([[[Human, Droid], id]]),
+            `'id:3'`,
+            ['union_factory_parameter'],
+          ],
         ],
       });
 
-      it.each([Human, Droid])('each block type returns a decorator with a different value:', typeName => {
-        expect(Config.defaultValues(config, APPLIES_ON_PARAMETERS, typeName, id)).toBe(`@Default('id:3')\n`);
-        expect(Config.defaultValues(config, APPLIES_ON_DEFAULT_FACTORY_PARAMETERS, typeName, id)).toBe(
-          `@Default('id:2')\n`
-        );
-        expect(Config.defaultValues(config, APPLIES_ON_UNION_FACTORY_PARAMETERS, typeName, id)).toBe(
-          `@Default('id:3')\n`
-        );
-        expect(Config.defaultValues(config, APPLIES_ON_MERGED_FACTORY_PARAMETERS, typeName, id)).toBe(
-          `@Default('id:1')\n`
-        );
-      });
+      it.each([Human, Droid])(
+        'each block type returns a decorator with a different value:',
+        typeName => {
+          expect(Config.defaultValues(config, APPLIES_ON_PARAMETERS, typeName, id)).toBe(
+            `@Default('id:3')\n`,
+          );
+          expect(
+            Config.defaultValues(config, APPLIES_ON_DEFAULT_FACTORY_PARAMETERS, typeName, id),
+          ).toBe(`@Default('id:2')\n`);
+          expect(
+            Config.defaultValues(config, APPLIES_ON_UNION_FACTORY_PARAMETERS, typeName, id),
+          ).toBe(`@Default('id:3')\n`);
+          expect(
+            Config.defaultValues(config, APPLIES_ON_MERGED_FACTORY_PARAMETERS, typeName, id),
+          ).toBe(`@Default('id:1')\n`);
+        },
+      );
 
       it.each([Movie, Starship])('the following will return an empty string', typeName => {
         expect(Config.defaultValues(config, APPLIES_ON_PARAMETERS, typeName, id)).toBe('');
-        expect(Config.defaultValues(config, APPLIES_ON_DEFAULT_FACTORY_PARAMETERS, typeName, id)).toBe('');
-        expect(Config.defaultValues(config, APPLIES_ON_UNION_FACTORY_PARAMETERS, typeName, id)).toBe('');
-        expect(Config.defaultValues(config, APPLIES_ON_MERGED_FACTORY_PARAMETERS, typeName, id)).toBe('');
+        expect(
+          Config.defaultValues(config, APPLIES_ON_DEFAULT_FACTORY_PARAMETERS, typeName, id),
+        ).toBe('');
+        expect(
+          Config.defaultValues(config, APPLIES_ON_UNION_FACTORY_PARAMETERS, typeName, id),
+        ).toBe('');
+        expect(
+          Config.defaultValues(config, APPLIES_ON_MERGED_FACTORY_PARAMETERS, typeName, id),
+        ).toBe('');
       });
     });
 
@@ -269,23 +298,32 @@ describe('Config: has methods that returns a ready-to-use value for all the conf
         ],
       });
 
-      it.each([Human, Droid])('each block type returns a decorator with the same value:', typeName => {
-        expect(Config.defaultValues(config, APPLIES_ON_MERGED_FACTORY_PARAMETERS, typeName, id)).toBe(
-          `@Default('id:1')\n`
-        );
-        expect(Config.defaultValues(config, APPLIES_ON_DEFAULT_FACTORY_PARAMETERS, typeName, id)).toBe(
-          `@Default('id:1')\n`
-        );
-      });
+      it.each([Human, Droid])(
+        'each block type returns a decorator with the same value:',
+        typeName => {
+          expect(
+            Config.defaultValues(config, APPLIES_ON_MERGED_FACTORY_PARAMETERS, typeName, id),
+          ).toBe(`@Default('id:1')\n`);
+          expect(
+            Config.defaultValues(config, APPLIES_ON_DEFAULT_FACTORY_PARAMETERS, typeName, id),
+          ).toBe(`@Default('id:1')\n`);
+        },
+      );
 
       it.each([Human, Droid])('the following will return an empty string', typeName => {
-        expect(Config.defaultValues(config, APPLIES_ON_UNION_FACTORY_PARAMETERS, typeName, id)).toBe('');
+        expect(
+          Config.defaultValues(config, APPLIES_ON_UNION_FACTORY_PARAMETERS, typeName, id),
+        ).toBe('');
       });
 
       it.each([Movie, Starship])('the following will return an empty string', typeName => {
         expect(Config.defaultValues(config, APPLIES_ON_PARAMETERS, typeName, id)).toBe('');
-        expect(Config.defaultValues(config, APPLIES_ON_DEFAULT_FACTORY_PARAMETERS, typeName, id)).toBe('');
-        expect(Config.defaultValues(config, APPLIES_ON_UNION_FACTORY_PARAMETERS, typeName, id)).toBe('');
+        expect(
+          Config.defaultValues(config, APPLIES_ON_DEFAULT_FACTORY_PARAMETERS, typeName, id),
+        ).toBe('');
+        expect(
+          Config.defaultValues(config, APPLIES_ON_UNION_FACTORY_PARAMETERS, typeName, id),
+        ).toBe('');
       });
     });
   });
@@ -326,8 +364,12 @@ describe('Config: has methods that returns a ready-to-use value for all the conf
         [Droid, episode, 'default_factory_parameter'],
         [Droid, length, 'default_factory_parameter'],
       ])('%s.%s is deprecated:', (typeName, fieldName, configAppliesOn) => {
-        expect(Config.deprecated(config, [configAppliesOn] as T, typeName, fieldName)).toBe('@deprecated\n');
-        expect(Config.deprecated(config, [configAppliesOn] as T, typeName, fieldName)).toBe('@deprecated\n');
+        expect(Config.deprecated(config, [configAppliesOn] as T, typeName, fieldName)).toBe(
+          '@deprecated\n',
+        );
+        expect(Config.deprecated(config, [configAppliesOn] as T, typeName, fieldName)).toBe(
+          '@deprecated\n',
+        );
       });
     });
 
@@ -361,11 +403,14 @@ describe('Config: has methods that returns a ready-to-use value for all the conf
       });
     });
 
-    describe.each([Droid, Starship])('the following typeNames will not be configured:', typeName => {
-      it(`${typeName.value} will not be configured`, () => {
-        expect(Pattern.findLastConfiguration(pattern, typeName)).toBe(false);
-      });
-    });
+    describe.each([Droid, Starship])(
+      'the following typeNames will not be configured:',
+      typeName => {
+        it(`${typeName.value} will not be configured`, () => {
+          expect(Pattern.findLastConfiguration(pattern, typeName)).toBe(false);
+        });
+      },
+    );
 
     describe.each([
       [Droid, id],

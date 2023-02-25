@@ -1,7 +1,7 @@
-import * as Types from '../types.d.js';
-
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import * as Types from '../types.d.js';
+
 const defaultOptions = {} as const;
 export type HeroAppearsInQueryVariables = Types.Exact<{ [key: string]: never }>;
 
@@ -38,17 +38,26 @@ export const HeroAppearsInDocument = gql`
  * });
  */
 export function useHeroAppearsInQuery(
-  baseOptions?: Apollo.QueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(HeroAppearsInDocument, options);
+  return Apollo.useQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
+    HeroAppearsInDocument,
+    options,
+  );
 }
 export function useHeroAppearsInLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(HeroAppearsInDocument, options);
+  return Apollo.useLazyQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
+    HeroAppearsInDocument,
+    options,
+  );
 }
 export type HeroAppearsInQueryHookResult = ReturnType<typeof useHeroAppearsInQuery>;
 export type HeroAppearsInLazyQueryHookResult = ReturnType<typeof useHeroAppearsInLazyQuery>;
-export type HeroAppearsInQueryResult = Apollo.QueryResult<HeroAppearsInQuery, HeroAppearsInQueryVariables>;
+export type HeroAppearsInQueryResult = Apollo.QueryResult<
+  HeroAppearsInQuery,
+  HeroAppearsInQueryVariables
+>;

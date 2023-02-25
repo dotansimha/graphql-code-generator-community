@@ -1,8 +1,8 @@
-import * as Types from '../types.d.js';
-
 import { gql } from '@apollo/client';
-import { HumanFieldsFragmentDoc } from './HumanFields.js';
 import * as Apollo from '@apollo/client';
+import * as Types from '../types.d.js';
+import { HumanFieldsFragmentDoc } from './HumanFields.js';
+
 const defaultOptions = {} as const;
 export type HumanWithNullHeightQueryVariables = Types.Exact<{ [key: string]: never }>;
 
@@ -36,25 +36,33 @@ export const HumanWithNullHeightDocument = gql`
  * });
  */
 export function useHumanWithNullHeightQuery(
-  baseOptions?: Apollo.QueryHookOptions<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    HumanWithNullHeightQuery,
+    HumanWithNullHeightQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
     HumanWithNullHeightDocument,
-    options
+    options,
   );
 }
 export function useHumanWithNullHeightLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    HumanWithNullHeightQuery,
+    HumanWithNullHeightQueryVariables
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
     HumanWithNullHeightDocument,
-    options
+    options,
   );
 }
 export type HumanWithNullHeightQueryHookResult = ReturnType<typeof useHumanWithNullHeightQuery>;
-export type HumanWithNullHeightLazyQueryHookResult = ReturnType<typeof useHumanWithNullHeightLazyQuery>;
+export type HumanWithNullHeightLazyQueryHookResult = ReturnType<
+  typeof useHumanWithNullHeightLazyQuery
+>;
 export type HumanWithNullHeightQueryResult = Apollo.QueryResult<
   HumanWithNullHeightQuery,
   HumanWithNullHeightQueryVariables

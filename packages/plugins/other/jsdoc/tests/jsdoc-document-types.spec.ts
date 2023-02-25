@@ -1,5 +1,5 @@
-import '@graphql-codegen/testing';
 import { buildSchema, parse } from 'graphql';
+import '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
 
 describe('JSDoc Plugin', () => {

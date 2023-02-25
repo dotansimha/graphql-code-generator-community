@@ -8,7 +8,7 @@ export interface FetcherRenderer {
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ) => string;
   generateInfiniteQueryHook: (
     node: OperationDefinitionNode,
@@ -16,7 +16,7 @@ export interface FetcherRenderer {
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ) => string;
   generateMutationHook: (
     node: OperationDefinitionNode,
@@ -24,7 +24,7 @@ export interface FetcherRenderer {
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ) => string;
   generateFetcherFetch: (
     node: OperationDefinitionNode,
@@ -32,6 +32,6 @@ export interface FetcherRenderer {
     operationName: string,
     operationResultType: string,
     operationVariablesTypes: string,
-    hasRequiredVariables: boolean
+    hasRequiredVariables: boolean,
   ) => string;
 }

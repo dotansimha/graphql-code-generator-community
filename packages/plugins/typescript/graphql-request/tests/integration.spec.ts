@@ -1,12 +1,12 @@
-import { codegen } from '@graphql-codegen/core';
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { join } from 'path';
+import { remove, writeFile } from 'fs-extra';
 import { parse } from 'graphql';
+import { codegen } from '@graphql-codegen/core';
+import { mockGraphQLServer } from '@graphql-codegen/testing';
 import * as TypeScriptPlugin from '@graphql-codegen/typescript';
 import * as TypeScriptOperationsPlugin from '@graphql-codegen/typescript-operations';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import * as GraphQLRequestPlugin from '../src/index.js';
-import { remove, writeFile } from 'fs-extra';
-import { join } from 'path';
-import { mockGraphQLServer } from '@graphql-codegen/testing';
 
 describe('GraphQL Request Integration', () => {
   it('should send requests correctly', async () => {

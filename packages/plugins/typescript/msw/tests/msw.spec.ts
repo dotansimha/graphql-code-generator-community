@@ -63,7 +63,9 @@ describe('msw', () => {
 
     expect(result.content).toContain(`const { ${variables.join(', ')} } = req.variables`);
     expect(result.content).toContain(`ctx.data({ ${selection} })`);
-    expect(result.content).toMatchSnapshot('content with variables and selection JSDoc documentation');
+    expect(result.content).toMatchSnapshot(
+      'content with variables and selection JSDoc documentation',
+    );
   });
 
   it('Should use the "importOperationTypesFrom" setting', async () => {
@@ -83,6 +85,8 @@ describe('msw', () => {
     expect(result.content).toContain(`GraphQLContext<${mutationType}>`);
     expect(result.content).toContain(`graphql.mutation<${mutationType}, ${mutationVariablesType}>`);
 
-    expect(result.content).toMatchSnapshot('content with types configured via importOperationTypesFrom');
+    expect(result.content).toMatchSnapshot(
+      'content with types configured via importOperationTypesFrom',
+    );
   });
 });

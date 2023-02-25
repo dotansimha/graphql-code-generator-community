@@ -1,14 +1,14 @@
+import autoBind from 'auto-bind';
+import { GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
-  LoadedFragment,
-  getConfigValue,
-  OMIT_TYPE,
+  ClientSideBaseVisitor,
   DocumentMode,
+  getConfigValue,
+  LoadedFragment,
+  OMIT_TYPE,
 } from '@graphql-codegen/visitor-plugin-common';
 import { UrqlRawPluginConfig } from './config.js';
-import autoBind from 'auto-bind';
-import { OperationDefinitionNode, Kind, GraphQLSchema } from 'graphql';
 
 export interface UrqlPluginConfig extends ClientSideBasePluginConfig {
   withComponent: boolean;
@@ -29,16 +29,21 @@ export class UrqlVisitor extends ClientSideBaseVisitor<UrqlRawPluginConfig, Urql
     if (this.config.importOperationTypesFrom) {
       this._externalImportPrefix = `${this.config.importOperationTypesFrom}.`;
 
-      if (this.config.documentMode !== DocumentMode.external || !this.config.importDocumentNodeExternallyFrom) {
+      if (
+        this.config.documentMode !== DocumentMode.external ||
+        !this.config.importDocumentNodeExternallyFrom
+      ) {
         // eslint-disable-next-line no-console
         console.warn(
-          '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"'
+          '"importOperationTypesFrom" should be used with "documentMode=external" and "importDocumentNodeExternallyFrom"',
         );
       }
 
       if (this.config.importOperationTypesFrom !== 'Operations') {
         // eslint-disable-next-line no-console
-        console.warn('importOperationTypesFrom only works correctly when left empty or set to "Operations"');
+        console.warn(
+          'importOperationTypesFrom only works correctly when left empty or set to "Operations"',
+        );
       }
     }
 
@@ -72,7 +77,7 @@ export class UrqlVisitor extends ClientSideBaseVisitor<UrqlRawPluginConfig, Urql
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const componentName: string = this.convertName(node.name?.value ?? '', {
       suffix: 'Component',
@@ -90,7 +95,7 @@ export class UrqlVisitor extends ClientSideBaseVisitor<UrqlRawPluginConfig, Urql
     }
     return `
 export const ${componentName} = (props: Omit<Urql.${operationType}Props<${generics.join(
-      ', '
+      ', ',
     )}>, 'query'> & { variables${isVariablesRequired ? '' : '?'}: ${operationVariablesTypes} }) => (
   <Urql.${operationType} {...props} query={${documentVariableName}} />
 );
@@ -102,7 +107,7 @@ export const ${componentName} = (props: Omit<Urql.${operationType}Props<${generi
     operationType: string,
     documentVariableName: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const operationName: string = this.convertName(node.name?.value ?? '', {
       suffix: this.getOperationSuffix(node, operationType),
@@ -124,7 +129,8 @@ export function use${operationName}<TData = ${operationResultType}>(options: Omi
     }
 
     const isVariablesRequired = node.variableDefinitions.some(
-      variableDef => variableDef.type.kind === Kind.NON_NULL_TYPE && variableDef.defaultValue == null
+      variableDef =>
+        variableDef.type.kind === Kind.NON_NULL_TYPE && variableDef.defaultValue == null,
     );
 
     return `
@@ -140,7 +146,7 @@ export function use${operationName}(options${
     documentVariableName: string,
     operationType: string,
     operationResultType: string,
-    operationVariablesTypes: string
+    operationVariablesTypes: string,
   ): string {
     const documentVariablePrefixed = this._externalImportPrefix + documentVariableName;
     const operationResultTypePrefixed = this._externalImportPrefix + operationResultType;
@@ -152,7 +158,7 @@ export function use${operationName}(options${
           documentVariablePrefixed,
           operationType,
           operationResultTypePrefixed,
-          operationVariablesTypesPrefixed
+          operationVariablesTypesPrefixed,
         )
       : null;
     const hooks = this.config.withHooks
@@ -161,7 +167,7 @@ export function use${operationName}(options${
           operationType,
           documentVariablePrefixed,
           operationResultTypePrefixed,
-          operationVariablesTypesPrefixed
+          operationVariablesTypesPrefixed,
         )
       : null;
 

@@ -1,4 +1,4 @@
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 
 const flow = require('./flow.js');
 

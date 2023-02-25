@@ -1,4 +1,4 @@
-import { RawConfig, EnumValuesMap } from '@graphql-codegen/visitor-plugin-common';
+import { EnumValuesMap, RawConfig } from '@graphql-codegen/visitor-plugin-common';
 import { JsonAttributesSource } from './json-attributes.js';
 
 /**

@@ -1,4 +1,7 @@
-import { ClientSideBasePluginConfig, RawClientSideBasePluginConfig } from '@graphql-codegen/visitor-plugin-common';
+import {
+  ClientSideBasePluginConfig,
+  RawClientSideBasePluginConfig,
+} from '@graphql-codegen/visitor-plugin-common';
 
 export interface RTKConfig {
   /**

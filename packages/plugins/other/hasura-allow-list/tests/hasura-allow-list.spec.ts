@@ -215,7 +215,7 @@ describe('Hasura allow list', () => {
         { document: document2, location: '/dummy/location' },
         { document: document3, location: '/dummy/location' },
       ],
-      {}
+      {},
     );
 
     expect(content).toBe(expectedContent);
@@ -344,7 +344,7 @@ describe('Hasura allow list', () => {
         { document: document1, location: '/dummy/location1' },
         { document: document2, location: '/dummy/location2' },
       ],
-      { globalFragments: true }
+      { globalFragments: true },
     );
 
     expect(content).toBe(expectedContent);
@@ -369,8 +369,8 @@ describe('Hasura allow list', () => {
           { document: document1, location: '/dummy/location1' },
           { document: document2, location: '/dummy/location2' },
         ],
-        { globalFragments: true }
-      )
+        { globalFragments: true },
+      ),
     ).rejects.toThrow();
   });
   it('with globalFragments enabled, should error on duplicate fragments', async () => {
@@ -399,8 +399,8 @@ describe('Hasura allow list', () => {
           { document: document1, location: '/dummy/location1' },
           { document: document2, location: '/dummy/location2' },
         ],
-        { globalFragments: true }
-      )
+        { globalFragments: true },
+      ),
     ).rejects.toThrow();
   });
   it('should throw helpful errors when using older, deprecated configuration options', async () => {
@@ -417,13 +417,17 @@ describe('Hasura allow list', () => {
     };
     const error1 = `[hasura allow list plugin] Configuration error: configuration property config_version has been renamed configVersion. Please update your configuration accordingly.`;
     // test for renamed config_version config option
-    await expect(plugin(null, documents, config1 as HasuraAllowListPluginConfig)).rejects.toThrowError(error1);
+    await expect(
+      plugin(null, documents, config1 as HasuraAllowListPluginConfig),
+    ).rejects.toThrowError(error1);
 
     const config2 = {
       collection_name: 'custom_name',
     };
     // test for renamed collection_name config option
     const error2 = `[hasura allow list plugin] Configuration error: configuration property collection_name has been renamed collectionName. Please update your configuration accordingly.`;
-    await expect(plugin(null, documents, config2 as HasuraAllowListPluginConfig)).rejects.toThrowError(error2);
+    await expect(
+      plugin(null, documents, config2 as HasuraAllowListPluginConfig),
+    ).rejects.toThrowError(error2);
   });
 });

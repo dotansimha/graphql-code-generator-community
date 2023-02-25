@@ -1,9 +1,9 @@
-import '@graphql-codegen/testing';
-import { StencilComponentType } from '../src/config.js';
-import { plugin } from '../src/index.js';
 import { buildClientSchema } from 'graphql';
 import gql from 'graphql-tag';
 import { Types } from '@graphql-codegen/plugin-helpers';
+import '@graphql-codegen/testing';
+import { StencilComponentType } from '../src/config.js';
+import { plugin } from '../src/index.js';
 
 describe('Components', () => {
   const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
@@ -28,7 +28,7 @@ describe('Components', () => {
       schema,
       [{ location: '', document: documents }],
       { componentType: StencilComponentType.class },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(content.prepend).toContain(`import 'stencil-apollo';`);
@@ -56,7 +56,7 @@ describe('Components', () => {
       schema,
       [{ location: '', document: documents }],
       { componentType: StencilComponentType.functional },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(content).toBeSimilarStringTo(`
@@ -94,7 +94,7 @@ describe('Components', () => {
       schema,
       [{ location: '', document: documents }],
       { componentType: StencilComponentType.class },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(content).toBeSimilarStringTo(`
@@ -132,7 +132,7 @@ describe('Components', () => {
       schema,
       [{ location: '', document: documents }],
       { componentType: StencilComponentType.class },
-      { outputFile: '' }
+      { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(content).toBeSimilarStringTo(`

@@ -1,5 +1,5 @@
+import { NameNode, StringValueNode } from 'graphql';
 import { indentMultiline } from '@graphql-codegen/visitor-plugin-common';
-import { StringValueNode, NameNode } from 'graphql';
 import { transformComment } from './utils.js';
 
 export type Access = 'private' | 'public' | 'protected';

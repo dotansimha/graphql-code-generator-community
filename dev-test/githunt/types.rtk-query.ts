@@ -1,4 +1,5 @@
 import { api } from '../../packages/plugins/typescript/rtk-query/tests/baseApi';
+
 module.hot?.accept();
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -329,7 +330,12 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = {
   __typename?: 'Mutation';
-  vote?: { __typename?: 'Entry'; score: number; id: number; vote: { __typename?: 'Vote'; vote_value: number } } | null;
+  vote?: {
+    __typename?: 'Entry';
+    score: number;
+    id: number;
+    vote: { __typename?: 'Vote'; vote_value: number };
+  } | null;
 };
 
 export const CommentsPageCommentFragmentDoc = `
@@ -473,7 +479,10 @@ const injectedRtkApi = api.injectEndpoints({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
       query: variables => ({ document: CommentDocument, variables }),
     }),
-    CurrentUserForProfile: build.query<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables | void>({
+    CurrentUserForProfile: build.query<
+      CurrentUserForProfileQuery,
+      CurrentUserForProfileQueryVariables | void
+    >({
       query: variables => ({ document: CurrentUserForProfileDocument, variables }),
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({

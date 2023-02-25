@@ -1,4 +1,5 @@
 import { RawConfig } from '@graphql-codegen/visitor-plugin-common';
+
 export interface JavaResolversPluginRawConfig extends RawConfig {
   /**
    * @description Customize the Java package name. The default package name will be generated according to the output file path.

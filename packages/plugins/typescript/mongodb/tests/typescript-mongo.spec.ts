@@ -1,8 +1,8 @@
+import { buildSchema, GraphQLSchema, print } from 'graphql';
+import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
-import { plugin, addToSchema } from './../src/index.js';
-import { buildSchema, print, GraphQLSchema } from 'graphql';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
-import { Types, mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import { addToSchema, plugin } from './../src/index.js';
 
 describe('TypeScript Mongo', () => {
   const validate = async (content: Types.PluginOutput, schema: GraphQLSchema, config: any) => {
@@ -111,7 +111,12 @@ describe('TypeScript Mongo', () => {
     });
 
     it('Should accept dbInterfaceSuffix', async () => {
-      const result = await plugin(schema, [], { dbInterfaceSuffix: 'InterfaceObj' }, { outputFile: '' });
+      const result = await plugin(
+        schema,
+        [],
+        { dbInterfaceSuffix: 'InterfaceObj' },
+        { outputFile: '' },
+      );
       expect(result).toContain(`export type FeedItemInterfaceObj = {`);
       expect(result).toContain(`export type PostDbObject = FeedItemInterfaceObj & {`);
       await validate(result, schema, {});
@@ -125,7 +130,12 @@ describe('TypeScript Mongo', () => {
     });
 
     it('Should allow to customize objectIdType import with custom import', async () => {
-      const result = await plugin(schema, [], { objectIdType: 'ObjectID#bson' }, { outputFile: '' });
+      const result = await plugin(
+        schema,
+        [],
+        { objectIdType: 'ObjectID#bson' },
+        { outputFile: '' },
+      );
       expect(result).toContain(`_id: ObjectID`);
       expect(result).not.toContain(`ObjectId`);
       expect(result).toContain(`import { ObjectID } from 'bson';`);

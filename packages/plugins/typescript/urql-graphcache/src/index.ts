@@ -1,23 +1,22 @@
 import {
-  GraphQLSchema,
-  isWrappingType,
-  GraphQLWrappingType,
-  TypeNode,
   GraphQLObjectType,
+  GraphQLSchema,
   GraphQLType,
+  GraphQLWrappingType,
+  isEnumType,
+  isInputObjectType,
+  isInterfaceType,
   isListType,
   isNonNullType,
+  isObjectType,
   isScalarType,
   isUnionType,
-  isInputObjectType,
-  isObjectType,
-  isEnumType,
-  isInterfaceType,
+  isWrappingType,
+  TypeNode,
 } from 'graphql';
-
 import { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
-import { UrqlGraphCacheConfig } from './config.js';
 import { convertFactory, ConvertFn } from '@graphql-codegen/visitor-plugin-common';
+import { UrqlGraphCacheConfig } from './config.js';
 
 type GraphQLFlatType = Exclude<TypeNode, GraphQLWrappingType>;
 
@@ -64,11 +63,18 @@ function constructType(
   convertName: ConvertFn,
   config: UrqlGraphCacheConfig,
   nullable = true,
-  allowString = false
+  allowString = false,
 ): string {
   if (isListType(typeNode)) {
     return nullable
-      ? `Maybe<Array<${constructType(typeNode.ofType, schema, convertName, config, false, allowString)}>>`
+      ? `Maybe<Array<${constructType(
+          typeNode.ofType,
+          schema,
+          convertName,
+          config,
+          false,
+          allowString,
+        )}>>`
       : `Array<${constructType(typeNode.ofType, schema, convertName, config, false, allowString)}>`;
   }
 
@@ -83,7 +89,10 @@ function constructType(
       : `Scalars['${type.name}']${allowString ? ' | string' : ''}`;
   }
 
-  const tsTypeName = convertName(typeNode.name, { prefix: config.typesPrefix, suffix: config.typesSuffix });
+  const tsTypeName = convertName(typeNode.name, {
+    prefix: config.typesPrefix,
+    suffix: config.typesSuffix,
+  });
 
   if (isUnionType(type) || isInputObjectType(type) || isObjectType(type)) {
     const finalType = `WithTypename<${tsTypeName}>${allowString ? ' | string' : ''}`;
@@ -103,7 +112,9 @@ function constructType(
       });
       return `WithTypename<${tsPossibleTypeName}>`;
     });
-    const finalType = allowString ? possibleTypes.join(' | ') + ' | string' : possibleTypes.join(' | ');
+    const finalType = allowString
+      ? possibleTypes.join(' | ') + ' | string'
+      : possibleTypes.join(' | ');
     return nullable ? `Maybe<${finalType}>` : finalType;
   }
 
@@ -112,13 +123,17 @@ function constructType(
 
 const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
 
-function getKeysConfig(schema: GraphQLSchema, convertName: ConvertFn, config: UrqlGraphCacheConfig) {
+function getKeysConfig(
+  schema: GraphQLSchema,
+  convertName: ConvertFn,
+  config: UrqlGraphCacheConfig,
+) {
   const keys = getObjectTypes(schema).reduce((keys, type) => {
     keys.push(
       `${type.name}?: (data: WithTypename<${convertName(type.name, {
         prefix: config.typesPrefix,
         suffix: config.typesSuffix,
-      })}>) => null | string`
+      })}>) => null | string`,
     );
     return keys;
   }, []);
@@ -126,7 +141,11 @@ function getKeysConfig(schema: GraphQLSchema, convertName: ConvertFn, config: Ur
   return 'export type GraphCacheKeysConfig = {\n  ' + keys.join(',\n  ') + '\n}';
 }
 
-function getResolversConfig(schema: GraphQLSchema, convertName: ConvertFn, config: UrqlGraphCacheConfig) {
+function getResolversConfig(
+  schema: GraphQLSchema,
+  convertName: ConvertFn,
+  config: UrqlGraphCacheConfig,
+) {
   const objectTypes = [schema.getQueryType(), ...getObjectTypes(schema)];
 
   const resolvers = objectTypes.reduce((resolvers, parentType) => {
@@ -144,7 +163,7 @@ function getResolversConfig(schema: GraphQLSchema, convertName: ConvertFn, confi
             prefix: config.typesPrefix,
             suffix: config.typesSuffix,
           })}>, ${argsName}, ` +
-          `${constructType(field.type, schema, convertName, config, false, true)}>`
+          `${constructType(field.type, schema, convertName, config, false, true)}>`,
       );
 
       return fields;
@@ -158,34 +177,39 @@ function getResolversConfig(schema: GraphQLSchema, convertName: ConvertFn, confi
   return resolvers;
 }
 
-function getRootUpdatersConfig(schema: GraphQLSchema, convertName: ConvertFn, config: UrqlGraphCacheConfig) {
-  const [mutationUpdaters, subscriptionUpdaters] = [schema.getMutationType(), schema.getSubscriptionType()].map(
-    rootType => {
-      if (rootType) {
-        const updaters: string[] = [];
-        Object.values(rootType.getFields()).forEach(field => {
-          const argsName = field.args.length
-            ? convertName(`${rootType.name}${capitalize(field.name)}Args`, {
-                prefix: config.typesPrefix,
-                suffix: config.typesSuffix,
-              })
-            : 'Record<string, never>';
+function getRootUpdatersConfig(
+  schema: GraphQLSchema,
+  convertName: ConvertFn,
+  config: UrqlGraphCacheConfig,
+) {
+  const [mutationUpdaters, subscriptionUpdaters] = [
+    schema.getMutationType(),
+    schema.getSubscriptionType(),
+  ].map(rootType => {
+    if (rootType) {
+      const updaters: string[] = [];
+      Object.values(rootType.getFields()).forEach(field => {
+        const argsName = field.args.length
+          ? convertName(`${rootType.name}${capitalize(field.name)}Args`, {
+              prefix: config.typesPrefix,
+              suffix: config.typesSuffix,
+            })
+          : 'Record<string, never>';
 
-          updaters.push(
-            `${field.name}?: GraphCacheUpdateResolver<{ ${field.name}: ${constructType(
-              field.type,
-              schema,
-              convertName,
-              config
-            )} }, ${argsName}>`
-          );
-        });
+        updaters.push(
+          `${field.name}?: GraphCacheUpdateResolver<{ ${field.name}: ${constructType(
+            field.type,
+            schema,
+            convertName,
+            config,
+          )} }, ${argsName}>`,
+        );
+      });
 
-        return updaters;
-      }
-      return null;
+      return updaters;
     }
-  );
+    return null;
+  });
   return {
     mutationUpdaters,
     subscriptionUpdaters,
@@ -195,7 +219,7 @@ function getRootUpdatersConfig(schema: GraphQLSchema, convertName: ConvertFn, co
 function getOptimisticUpdatersConfig(
   schema: GraphQLSchema,
   convertName: ConvertFn,
-  config: UrqlGraphCacheConfig
+  config: UrqlGraphCacheConfig,
 ): string[] | null {
   const mutationType = schema.getMutationType();
   if (mutationType) {
@@ -209,7 +233,11 @@ function getOptimisticUpdatersConfig(
           })
         : 'Record<string, never>';
       const outputType = constructType(field.type, schema, convertName, config);
-      optimistic.push(`${field.name}?: GraphCacheOptimisticMutationResolver<` + `${argsName}, ` + `${outputType}>`);
+      optimistic.push(
+        `${field.name}?: GraphCacheOptimisticMutationResolver<` +
+          `${argsName}, ` +
+          `${outputType}>`,
+      );
     });
 
     return optimistic;
@@ -231,13 +259,17 @@ function getImports(config: UrqlGraphCacheConfig): string {
 export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOutput> = (
   schema: GraphQLSchema,
   _documents,
-  config
+  config,
 ) => {
   const convertName = convertFactory(config);
   const imports = getImports(config);
   const keys = getKeysConfig(schema, convertName, config);
   const resolvers = getResolversConfig(schema, convertName, config);
-  const { mutationUpdaters, subscriptionUpdaters } = getRootUpdatersConfig(schema, convertName, config);
+  const { mutationUpdaters, subscriptionUpdaters } = getRootUpdatersConfig(
+    schema,
+    convertName,
+    config,
+  );
   const optimisticUpdaters = getOptimisticUpdatersConfig(schema, convertName, config);
 
   return {

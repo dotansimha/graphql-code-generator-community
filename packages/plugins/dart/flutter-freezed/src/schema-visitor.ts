@@ -16,10 +16,13 @@ export const schemaVisitor = (_schema: GraphQLSchema, config: FlutterFreezedPlug
 
     EnumTypeDefinition: (node: EnumTypeDefinitionNode) => Block.build(config, node, nodeRepository),
 
-    UnionTypeDefinition: (node: UnionTypeDefinitionNode) => Block.build(config, node, nodeRepository),
+    UnionTypeDefinition: (node: UnionTypeDefinitionNode) =>
+      Block.build(config, node, nodeRepository),
 
-    ObjectTypeDefinition: (node: ObjectTypeDefinitionNode) => Block.build(config, node, nodeRepository),
+    ObjectTypeDefinition: (node: ObjectTypeDefinitionNode) =>
+      Block.build(config, node, nodeRepository),
 
-    InputObjectTypeDefinition: (node: InputObjectTypeDefinitionNode) => Block.build(config, node, nodeRepository),
+    InputObjectTypeDefinition: (node: InputObjectTypeDefinitionNode) =>
+      Block.build(config, node, nodeRepository),
   };
 };

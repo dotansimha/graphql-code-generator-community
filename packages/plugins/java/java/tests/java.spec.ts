@@ -1,8 +1,8 @@
-import '@graphql-codegen/testing';
 import { buildSchema } from 'graphql';
-import { plugin } from '../src/index.js';
-import { validateJava } from '../../common/tests/validate-java.js';
 import { mergeOutputs } from '@graphql-codegen/plugin-helpers';
+import '@graphql-codegen/testing';
+import { validateJava } from '../../common/tests/validate-java.js';
+import { plugin } from '../src/index.js';
 
 const OUTPUT_FILE = 'com/java/generated/resolvers.java';
 
@@ -97,7 +97,12 @@ describe('Java', () => {
     });
 
     it('Should use the package name provided from the config', async () => {
-      const result = await plugin(schema, [], { package: 'com.my.package' }, { outputFile: OUTPUT_FILE });
+      const result = await plugin(
+        schema,
+        [],
+        { package: 'com.my.package' },
+        { outputFile: OUTPUT_FILE },
+      );
 
       expect(result).toContain(`package com.my.package;`);
     });
@@ -133,7 +138,7 @@ describe('Java', () => {
             },
           },
         },
-        { outputFile: OUTPUT_FILE }
+        { outputFile: OUTPUT_FILE },
       );
 
       expect(result).toContain(`AdminRoleValue,`);

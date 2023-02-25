@@ -1,13 +1,13 @@
+import { GraphQLInterfaceType, GraphQLObjectType } from 'graphql';
 import {
-  LinkField,
-  PrimitiveAliasedFields,
-  SelectionSetProcessorConfig,
-  ProcessResult,
   BaseSelectionSetProcessor,
   indent,
+  LinkField,
+  PrimitiveAliasedFields,
   PrimitiveField,
+  ProcessResult,
+  SelectionSetProcessorConfig,
 } from '@graphql-codegen/visitor-plugin-common';
-import { GraphQLObjectType, GraphQLInterfaceType } from 'graphql';
 
 export interface FlowSelectionSetProcessorConfig extends SelectionSetProcessorConfig {
   useFlowExactObjects: boolean;
@@ -16,7 +16,7 @@ export interface FlowSelectionSetProcessorConfig extends SelectionSetProcessorCo
 export class FlowWithPickSelectionSetProcessor extends BaseSelectionSetProcessor<FlowSelectionSetProcessorConfig> {
   transformAliasesPrimitiveFields(
     schemaType: GraphQLObjectType | GraphQLInterfaceType,
-    fields: PrimitiveAliasedFields[]
+    fields: PrimitiveAliasedFields[],
   ): ProcessResult {
     if (fields.length === 0) {
       return [];
@@ -37,8 +37,8 @@ export class FlowWithPickSelectionSetProcessor extends BaseSelectionSetProcessor
           aliasedField =>
             `${formatNamedField(
               aliasedField.alias,
-              fieldObj[aliasedField.fieldName].type
-            )}: $ElementType<${parentName}, '${aliasedField.fieldName}'>`
+              fieldObj[aliasedField.fieldName].type,
+            )}: $ElementType<${parentName}, '${aliasedField.fieldName}'>`,
         )
         .join(', ')} ${useFlowExactObject ? '|' : ''}}`,
     ];
@@ -73,7 +73,7 @@ export class FlowWithPickSelectionSetProcessor extends BaseSelectionSetProcessor
 
   transformPrimitiveFields(
     schemaType: GraphQLObjectType | GraphQLInterfaceType,
-    fields: PrimitiveField[]
+    fields: PrimitiveField[],
   ): ProcessResult {
     if (fields.length === 0) {
       return [];
@@ -99,7 +99,9 @@ export class FlowWithPickSelectionSetProcessor extends BaseSelectionSetProcessor
       })
       .join(', ')} ${useFlowExactObject ? '|' : ''}}>`;
     if (hasConditionals) {
-      resString = `$MakeOptional<${resString}, ${conditilnalsList.map(field => `{ ${field}: * }`).join(' | ')}>`;
+      resString = `$MakeOptional<${resString}, ${conditilnalsList
+        .map(field => `{ ${field}: * }`)
+        .join(' | ')}>`;
     }
     return [resString];
   }

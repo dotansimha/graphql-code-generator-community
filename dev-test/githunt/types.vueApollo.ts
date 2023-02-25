@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from '@vue/composition-api';
+
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -331,7 +332,12 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = {
   __typename?: 'Mutation';
-  vote?: { __typename?: 'Entry'; score: number; id: number; vote: { __typename?: 'Vote'; vote_value: number } } | null;
+  vote?: {
+    __typename?: 'Entry';
+    score: number;
+    id: number;
+    vote: { __typename?: 'Vote'; vote_value: number };
+  } | null;
 };
 
 export const CommentsPageCommentFragmentDoc = gql`
@@ -419,24 +425,33 @@ export function useOnCommentAddedSubscription(
     | VueCompositionApi.Ref<OnCommentAddedSubscriptionVariables>
     | ReactiveFunction<OnCommentAddedSubscriptionVariables>,
   options:
-    | VueApolloComposable.UseSubscriptionOptions<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>
+    | VueApolloComposable.UseSubscriptionOptions<
+        OnCommentAddedSubscription,
+        OnCommentAddedSubscriptionVariables
+      >
     | VueCompositionApi.Ref<
-        VueApolloComposable.UseSubscriptionOptions<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>
+        VueApolloComposable.UseSubscriptionOptions<
+          OnCommentAddedSubscription,
+          OnCommentAddedSubscriptionVariables
+        >
       >
     | ReactiveFunction<
-        VueApolloComposable.UseSubscriptionOptions<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>
-      > = {}
+        VueApolloComposable.UseSubscriptionOptions<
+          OnCommentAddedSubscription,
+          OnCommentAddedSubscriptionVariables
+        >
+      > = {},
 ) {
-  return VueApolloComposable.useSubscription<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>(
-    OnCommentAddedDocument,
-    variables,
-    options
-  );
+  return VueApolloComposable.useSubscription<
+    OnCommentAddedSubscription,
+    OnCommentAddedSubscriptionVariables
+  >(OnCommentAddedDocument, variables, options);
 }
-export type OnCommentAddedSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<
-  OnCommentAddedSubscription,
-  OnCommentAddedSubscriptionVariables
->;
+export type OnCommentAddedSubscriptionCompositionFunctionResult =
+  VueApolloComposable.UseSubscriptionReturn<
+    OnCommentAddedSubscription,
+    OnCommentAddedSubscriptionVariables
+  >;
 export const CommentDocument = gql`
   query Comment($repoFullName: String!, $limit: Int, $offset: Int) {
     currentUser {
@@ -492,10 +507,18 @@ export function useCommentQuery(
     | ReactiveFunction<CommentQueryVariables>,
   options:
     | VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>
-    | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>>
-    | ReactiveFunction<VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>> = {}
+    | VueCompositionApi.Ref<
+        VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>
+      > = {},
 ) {
-  return VueApolloComposable.useQuery<CommentQuery, CommentQueryVariables>(CommentDocument, variables, options);
+  return VueApolloComposable.useQuery<CommentQuery, CommentQueryVariables>(
+    CommentDocument,
+    variables,
+    options,
+  );
 }
 export function useCommentLazyQuery(
   variables:
@@ -504,10 +527,18 @@ export function useCommentLazyQuery(
     | ReactiveFunction<CommentQueryVariables>,
   options:
     | VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>
-    | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>>
-    | ReactiveFunction<VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>> = {}
+    | VueCompositionApi.Ref<
+        VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>
+      > = {},
 ) {
-  return VueApolloComposable.useLazyQuery<CommentQuery, CommentQueryVariables>(CommentDocument, variables, options);
+  return VueApolloComposable.useLazyQuery<CommentQuery, CommentQueryVariables>(
+    CommentDocument,
+    variables,
+    options,
+  );
 }
 export type CommentQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
   CommentQuery,
@@ -536,40 +567,57 @@ export const CurrentUserForProfileDocument = gql`
  */
 export function useCurrentUserForProfileQuery(
   options:
-    | VueApolloComposable.UseQueryOptions<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>
+    | VueApolloComposable.UseQueryOptions<
+        CurrentUserForProfileQuery,
+        CurrentUserForProfileQueryVariables
+      >
     | VueCompositionApi.Ref<
-        VueApolloComposable.UseQueryOptions<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>
+        VueApolloComposable.UseQueryOptions<
+          CurrentUserForProfileQuery,
+          CurrentUserForProfileQueryVariables
+        >
       >
     | ReactiveFunction<
-        VueApolloComposable.UseQueryOptions<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>
-      > = {}
+        VueApolloComposable.UseQueryOptions<
+          CurrentUserForProfileQuery,
+          CurrentUserForProfileQueryVariables
+        >
+      > = {},
 ) {
-  return VueApolloComposable.useQuery<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
-    CurrentUserForProfileDocument,
-    {},
-    options
-  );
+  return VueApolloComposable.useQuery<
+    CurrentUserForProfileQuery,
+    CurrentUserForProfileQueryVariables
+  >(CurrentUserForProfileDocument, {}, options);
 }
 export function useCurrentUserForProfileLazyQuery(
   options:
-    | VueApolloComposable.UseQueryOptions<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>
+    | VueApolloComposable.UseQueryOptions<
+        CurrentUserForProfileQuery,
+        CurrentUserForProfileQueryVariables
+      >
     | VueCompositionApi.Ref<
-        VueApolloComposable.UseQueryOptions<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>
+        VueApolloComposable.UseQueryOptions<
+          CurrentUserForProfileQuery,
+          CurrentUserForProfileQueryVariables
+        >
       >
     | ReactiveFunction<
-        VueApolloComposable.UseQueryOptions<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>
-      > = {}
+        VueApolloComposable.UseQueryOptions<
+          CurrentUserForProfileQuery,
+          CurrentUserForProfileQueryVariables
+        >
+      > = {},
 ) {
-  return VueApolloComposable.useLazyQuery<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
-    CurrentUserForProfileDocument,
-    {},
-    options
-  );
+  return VueApolloComposable.useLazyQuery<
+    CurrentUserForProfileQuery,
+    CurrentUserForProfileQueryVariables
+  >(CurrentUserForProfileDocument, {}, options);
 }
-export type CurrentUserForProfileQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
-  CurrentUserForProfileQuery,
-  CurrentUserForProfileQueryVariables
->;
+export type CurrentUserForProfileQueryCompositionFunctionResult =
+  VueApolloComposable.UseQueryReturn<
+    CurrentUserForProfileQuery,
+    CurrentUserForProfileQueryVariables
+  >;
 export const FeedDocument = gql`
   query Feed($type: FeedType!, $offset: Int, $limit: Int) {
     currentUser {
@@ -600,24 +648,41 @@ export const FeedDocument = gql`
  * });
  */
 export function useFeedQuery(
-  variables: FeedQueryVariables | VueCompositionApi.Ref<FeedQueryVariables> | ReactiveFunction<FeedQueryVariables>,
+  variables:
+    | FeedQueryVariables
+    | VueCompositionApi.Ref<FeedQueryVariables>
+    | ReactiveFunction<FeedQueryVariables>,
   options:
     | VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>
     | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>>
-    | ReactiveFunction<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>> = {}
+    | ReactiveFunction<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>> = {},
 ) {
-  return VueApolloComposable.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options);
+  return VueApolloComposable.useQuery<FeedQuery, FeedQueryVariables>(
+    FeedDocument,
+    variables,
+    options,
+  );
 }
 export function useFeedLazyQuery(
-  variables: FeedQueryVariables | VueCompositionApi.Ref<FeedQueryVariables> | ReactiveFunction<FeedQueryVariables>,
+  variables:
+    | FeedQueryVariables
+    | VueCompositionApi.Ref<FeedQueryVariables>
+    | ReactiveFunction<FeedQueryVariables>,
   options:
     | VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>
     | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>>
-    | ReactiveFunction<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>> = {}
+    | ReactiveFunction<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>> = {},
 ) {
-  return VueApolloComposable.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options);
+  return VueApolloComposable.useLazyQuery<FeedQuery, FeedQueryVariables>(
+    FeedDocument,
+    variables,
+    options,
+  );
 }
-export type FeedQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<FeedQuery, FeedQueryVariables>;
+export type FeedQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
+  FeedQuery,
+  FeedQueryVariables
+>;
 export const SubmitRepositoryDocument = gql`
   mutation submitRepository($repoFullName: String!) {
     submitRepository(repoFullName: $repoFullName) {
@@ -645,20 +710,27 @@ export const SubmitRepositoryDocument = gql`
  */
 export function useSubmitRepositoryMutation(
   options:
-    | VueApolloComposable.UseMutationOptions<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>
+    | VueApolloComposable.UseMutationOptions<
+        SubmitRepositoryMutation,
+        SubmitRepositoryMutationVariables
+      >
     | ReactiveFunction<
-        VueApolloComposable.UseMutationOptions<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>
-      > = {}
+        VueApolloComposable.UseMutationOptions<
+          SubmitRepositoryMutation,
+          SubmitRepositoryMutationVariables
+        >
+      > = {},
 ) {
-  return VueApolloComposable.useMutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>(
-    SubmitRepositoryDocument,
-    options
-  );
+  return VueApolloComposable.useMutation<
+    SubmitRepositoryMutation,
+    SubmitRepositoryMutationVariables
+  >(SubmitRepositoryDocument, options);
 }
-export type SubmitRepositoryMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<
-  SubmitRepositoryMutation,
-  SubmitRepositoryMutationVariables
->;
+export type SubmitRepositoryMutationCompositionFunctionResult =
+  VueApolloComposable.UseMutationReturn<
+    SubmitRepositoryMutation,
+    SubmitRepositoryMutationVariables
+  >;
 export const SubmitCommentDocument = gql`
   mutation submitComment($repoFullName: String!, $commentContent: String!) {
     submitComment(repoFullName: $repoFullName, commentContent: $commentContent) {
@@ -690,12 +762,15 @@ export function useSubmitCommentMutation(
   options:
     | VueApolloComposable.UseMutationOptions<SubmitCommentMutation, SubmitCommentMutationVariables>
     | ReactiveFunction<
-        VueApolloComposable.UseMutationOptions<SubmitCommentMutation, SubmitCommentMutationVariables>
-      > = {}
+        VueApolloComposable.UseMutationOptions<
+          SubmitCommentMutation,
+          SubmitCommentMutationVariables
+        >
+      > = {},
 ) {
   return VueApolloComposable.useMutation<SubmitCommentMutation, SubmitCommentMutationVariables>(
     SubmitCommentDocument,
-    options
+    options,
   );
 }
 export type SubmitCommentMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<
@@ -735,9 +810,14 @@ export const VoteDocument = gql`
 export function useVoteMutation(
   options:
     | VueApolloComposable.UseMutationOptions<VoteMutation, VoteMutationVariables>
-    | ReactiveFunction<VueApolloComposable.UseMutationOptions<VoteMutation, VoteMutationVariables>> = {}
+    | ReactiveFunction<
+        VueApolloComposable.UseMutationOptions<VoteMutation, VoteMutationVariables>
+      > = {},
 ) {
-  return VueApolloComposable.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument, options);
+  return VueApolloComposable.useMutation<VoteMutation, VoteMutationVariables>(
+    VoteDocument,
+    options,
+  );
 }
 export type VoteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<
   VoteMutation,

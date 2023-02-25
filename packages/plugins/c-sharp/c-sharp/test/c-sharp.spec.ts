@@ -1,9 +1,9 @@
-import '@graphql-codegen/testing';
 import { buildSchema } from 'graphql';
-import { plugin } from '../src/index.js';
-import { CSharpResolversPluginRawConfig } from '../src/config.js';
-import { getJsonAttributeSourceConfiguration } from '../src/json-attributes.js';
 import each from 'jest-each';
+import '@graphql-codegen/testing';
+import { CSharpResolversPluginRawConfig } from '../src/config.js';
+import { plugin } from '../src/index.js';
+import { getJsonAttributeSourceConfiguration } from '../src/json-attributes.js';
 
 describe('C#', () => {
   describe('Using directives', () => {
@@ -45,7 +45,7 @@ describe('C#', () => {
         const jsonConfig = getJsonAttributeSourceConfiguration(source);
 
         expect(result).toContain(`using ${jsonConfig.namespace};`);
-      }
+      },
     );
   });
 
@@ -66,7 +66,12 @@ describe('C#', () => {
           dummy
         }
       `);
-      const result = await plugin(schema, [], { namespaceName: 'MyCompany.MyGeneratedGql' }, { outputFile: '' });
+      const result = await plugin(
+        schema,
+        [],
+        { namespaceName: 'MyCompany.MyGeneratedGql' },
+        { outputFile: '' },
+      );
       expect(result).toContain('namespace MyCompany.MyGeneratedGql {');
     });
   });
@@ -344,7 +349,7 @@ describe('C#', () => {
           [${jsonConfig.propertyAttribute}("email")]
           public string email { get; set; }
         `);
-      }
+      },
     );
 
     it(`Should generate properties for types without JSON attributes`, async () => {
@@ -502,7 +507,7 @@ describe('C#', () => {
             ${attributes}
             public bool boolReq { get; set; }
           `);
-        }
+        },
       );
 
       it(`Should generate properties for mandatory scalar types with JSON attributes disabled`, async () => {
