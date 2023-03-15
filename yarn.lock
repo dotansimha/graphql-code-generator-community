@@ -2668,9 +2668,9 @@
     eslint-visitor-keys "^3.3.0"
 
 "@urql/introspection@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@urql/introspection/-/introspection-0.3.2.tgz#18b737e17779cecb74e612a965ed5dc17b978355"
-  integrity sha512-dbszrDgTyTM1ndvdTe4X7RUciVi2zXxjHhTIrWOSvU3FODX4+90uSVtdn5bXwTuwqM4bxVEc1ekaLYEUeiNLsg==
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@urql/introspection/-/introspection-0.3.3.tgz#5bcedfebd515161eecf9b193169c2765bf5674f1"
+  integrity sha512-tekSLLqWnusfV6V7xaEnLJQSdXOD/lWy7f8JYQwrX+88Md+voGSCSx5WJXI7KLBN3Tat2OV08tAr8UROykls4Q==
 
 "@urql/introspection@^1.0.0":
   version "1.0.0"
