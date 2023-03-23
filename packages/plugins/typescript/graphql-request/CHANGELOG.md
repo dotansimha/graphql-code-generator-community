@@ -1,10 +1,20 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 4.5.9
+
+### Patch Changes
+
+- [#311](https://github.com/dotansimha/graphql-code-generator-community/pull/311)
+  [`2c1652ec0`](https://github.com/dotansimha/graphql-code-generator-community/commit/2c1652ec067248d91fd5674cdd4c07ab8ffb0b97)
+  Thanks [@domdomegg](https://github.com/domdomegg)! - Limit graphql-request version in plugin to <=
+  5.1 to reflect breaking changes in graphql-request package.
+
 ## 4.5.8
 
 ### Patch Changes
 
-- Updated dependencies [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
+- Updated dependencies
+  [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
   - @graphql-codegen/visitor-plugin-common@2.13.1
   - @graphql-codegen/plugin-helpers@2.7.2
 
@@ -12,43 +22,59 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
+- Updated dependencies
+  [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
   - @graphql-codegen/visitor-plugin-common@2.13.0
 
 ## 4.5.6
 
 ### Patch Changes
 
-- Updated dependencies [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
+- Updated dependencies
+  [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
   - @graphql-codegen/visitor-plugin-common@2.12.2
 
 ## 4.5.5
 
 ### Patch Changes
 
-- [#8334](https://github.com/dotansimha/graphql-code-generator/pull/8334) [`e6e497afa`](https://github.com/dotansimha/graphql-code-generator/commit/e6e497afa54213ad3eabfae26c014ab03eb4727c) Thanks [@jcarrus](https://github.com/jcarrus)! - graphql-request: append explicit extension when importing dom types
+- [#8334](https://github.com/dotansimha/graphql-code-generator/pull/8334)
+  [`e6e497afa`](https://github.com/dotansimha/graphql-code-generator/commit/e6e497afa54213ad3eabfae26c014ab03eb4727c)
+  Thanks [@jcarrus](https://github.com/jcarrus)! - graphql-request: append explicit extension when
+  importing dom types
 
-- Updated dependencies [[`4113b1bd3`](https://github.com/dotansimha/graphql-code-generator/commit/4113b1bd39f3d32759c68a292e8492a0dd4f7371)]:
+- Updated dependencies
+  [[`4113b1bd3`](https://github.com/dotansimha/graphql-code-generator/commit/4113b1bd39f3d32759c68a292e8492a0dd4f7371)]:
   - @graphql-codegen/plugin-helpers@2.7.1
 
 ## 4.5.4
 
 ### Patch Changes
 
-- [#8295](https://github.com/dotansimha/graphql-code-generator/pull/8295) [`a18818118`](https://github.com/dotansimha/graphql-code-generator/commit/a18818118c11d834ae41edbd172dbc259817fcb6) Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+- [#8295](https://github.com/dotansimha/graphql-code-generator/pull/8295)
+  [`a18818118`](https://github.com/dotansimha/graphql-code-generator/commit/a18818118c11d834ae41edbd172dbc259817fcb6)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
 
-  - Updated dependency [`graphql-request@^3.4.0 || ^4.0.0 || ^5.0.0` ↗︎](https://www.npmjs.com/package/graphql-request/v/null) (from `^3.4.0 || ^4.0.0`, in `peerDependencies`)
+  - Updated dependency
+    [`graphql-request@^3.4.0 || ^4.0.0 || ^5.0.0` ↗︎](https://www.npmjs.com/package/graphql-request/v/null)
+    (from `^3.4.0 || ^4.0.0`, in `peerDependencies`)
 
-- Updated dependencies [[`2ed21a471`](https://github.com/dotansimha/graphql-code-generator/commit/2ed21a471f8de58ecafebf4bf64b3c32cee24d2f)]:
+- Updated dependencies
+  [[`2ed21a471`](https://github.com/dotansimha/graphql-code-generator/commit/2ed21a471f8de58ecafebf4bf64b3c32cee24d2f)]:
   - @graphql-codegen/plugin-helpers@2.7.0
 
 ## 4.5.3
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
+  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
+  `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f), [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
+- Updated dependencies
+  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f),
+  [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
   - @graphql-codegen/visitor-plugin-common@2.12.1
   - @graphql-codegen/plugin-helpers@2.6.2
 
@@ -71,7 +97,8 @@
 
 ### Minor Changes
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
+  `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 
@@ -141,9 +168,9 @@
 
 - 44cd9a85e: Fix rawRequest return type
 
-  The errors property from the return type has been removed, because it is never
-  returned by `graphql-request`. Instead, failed requests throw a `ClientError`.
-  Also, data is no longer optional, because it always exists for successful responses.
+  The errors property from the return type has been removed, because it is never returned by
+  `graphql-request`. Instead, failed requests throw a `ClientError`. Also, data is no longer
+  optional, because it always exists for successful responses.
 
 ## 4.4.3
 
@@ -216,7 +243,8 @@
 
 ### Patch Changes
 
-- 22f6e4a92: Don't import `print` as type when supporting `useTypeImports` & `rawRequest` and `documentMode` is not a `string`.
+- 22f6e4a92: Don't import `print` as type when supporting `useTypeImports` & `rawRequest` and
+  `documentMode` is not a `string`.
 
 ## 4.3.1
 
@@ -230,7 +258,8 @@
 
 ### Minor Changes
 
-- 3b87f049a: Add the extensionsType config in order to change the default type for extensions when rawRequest is true.
+- 3b87f049a: Add the extensionsType config in order to change the default type for extensions when
+  rawRequest is true.
 
 ## 4.2.0
 
@@ -318,7 +347,8 @@
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
-  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no longer supported for Codegen packages.
+  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no
+  longer supported for Codegen packages.
 
 ### Patch Changes
 
@@ -373,7 +403,8 @@
 
 ### Minor Changes
 
-- 9b59605d: feat(typescript-graphql-request): Add enhancements to request middleware function (#5883, #5807) #5884
+- 9b59605d: feat(typescript-graphql-request): Add enhancements to request middleware function
+  (#5883, #5807) #5884
 
 ### Patch Changes
 
@@ -396,7 +427,8 @@
 
 ### Minor Changes
 
-- af6fb509: Removed the unnecessary call to the print function, since graphql-request would call this function internally if needed.
+- af6fb509: Removed the unnecessary call to the print function, since graphql-request would call
+  this function internally if needed.
 
 ### Patch Changes
 
@@ -488,14 +520,16 @@
 
   ## Breaking Changes
 
-  `v3` of `graphql-request` has changed the path of some files. That means that generated code needs to adjusted.
+  `v3` of `graphql-request` has changed the path of some files. That means that generated code needs
+  to adjusted.
 
   The actual change is described here: https://github.com/prisma-labs/graphql-request/issues/186
 
 ### Patch Changes
 
 - 1d7c6432: Bump all packages to allow "^" in deps and fix compatibility issues
-- 1d7c6432: Bump versions of @graphql-tools/ packages to fix issues with loading schemas and SDL comments
+- 1d7c6432: Bump versions of @graphql-tools/ packages to fix issues with loading schemas and SDL
+  comments
 - Updated dependencies [1d7c6432]
 - Updated dependencies [1d7c6432]
   - @graphql-codegen/visitor-plugin-common@1.17.13
