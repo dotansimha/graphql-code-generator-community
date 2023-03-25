@@ -1226,6 +1226,14 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    currentUser?: GraphCacheUpdateResolver<
+      { currentUser: Maybe<WithTypename<User>> },
+      Record<string, never>
+    >;
+    entry?: GraphCacheUpdateResolver<{ entry: Maybe<WithTypename<Entry>> }, QueryEntryArgs>;
+    feed?: GraphCacheUpdateResolver<{ feed: Maybe<Array<WithTypename<Entry>>> }, QueryFeedArgs>;
+  };
   Mutation?: {
     submitComment?: GraphCacheUpdateResolver<
       { submitComment: Maybe<WithTypename<Comment>> },

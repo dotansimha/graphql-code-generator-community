@@ -25,6 +25,9 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query_Root?: {
+    todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<Todo>>> }, Record<string, never>>
+  },
   Mutation_Root?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<Todo> }, Mutation_RootToggleTodoArgs>
   },
@@ -69,6 +72,9 @@ export type GraphCacheResolvers = {
 export type GraphCacheOptimisticUpdaters = {};
 
 export type GraphCacheUpdaters = {
+  Query_Root?: {
+    todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<Todo>>> }, Record<string, never>>
+  },
   Mutation?: {},
   Subscription?: {},
   Todo?: {
@@ -126,6 +132,9 @@ export type GraphCacheResolvers = {
 export type GraphCacheOptimisticUpdaters = {};
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    schoolBooks?: GraphCacheUpdateResolver<{ schoolBooks: Maybe<Array<WithTypename<Textbook>>> }, Record<string, never>>
+  },
   Mutation?: {},
   Subscription?: {},
   Author?: {
@@ -195,6 +204,9 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<PrefixTodoSuffix>>> }, Record<string, never>>
+  },
   Mutation?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<PrefixTodoSuffix> }, PrefixMutationToggleTodoArgsSuffix>,
     toggleTodos?: GraphCacheUpdateResolver<{ toggleTodos: Array<WithTypename<PrefixTodoSuffix>> }, PrefixMutationToggleTodosArgsSuffix>,
@@ -258,6 +270,9 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    media?: GraphCacheUpdateResolver<{ media: Maybe<Array<WithTypename<Media>>> }, Record<string, never>>
+  },
   Mutation?: {
     updateMedia?: GraphCacheUpdateResolver<{ updateMedia: Maybe<WithTypename<Media>> }, MutationUpdateMediaArgs>
   },
@@ -321,6 +336,9 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<Todo>>> }, Record<string, never>>
+  },
   Mutation?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<Todo> }, MutationToggleTodoArgs>,
     toggleTodos?: GraphCacheUpdateResolver<{ toggleTodos: Array<WithTypename<Todo>> }, MutationToggleTodosArgs>,

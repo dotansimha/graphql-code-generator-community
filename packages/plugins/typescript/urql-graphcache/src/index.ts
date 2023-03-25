@@ -182,7 +182,8 @@ function getRootUpdatersConfig(
   convertName: ConvertFn,
   config: UrqlGraphCacheConfig,
 ) {
-  const [mutationUpdaters, subscriptionUpdaters] = [
+  const [queryUpdaters, mutationUpdaters, subscriptionUpdaters] = [
+    schema.getQueryType(),
     schema.getMutationType(),
     schema.getSubscriptionType(),
   ].map(rootType => {
@@ -238,6 +239,7 @@ function getRootUpdatersConfig(
   }, []);
 
   return {
+    queryUpdaters,
     mutationUpdaters,
     subscriptionUpdaters,
     typeUpdateResolvers,
@@ -293,11 +295,8 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
   const imports = getImports(config);
   const keys = getKeysConfig(schema, convertName, config);
   const resolvers = getResolversConfig(schema, convertName, config);
-  const { mutationUpdaters, subscriptionUpdaters, typeUpdateResolvers } = getRootUpdatersConfig(
-    schema,
-    convertName,
-    config,
-  );
+  const { queryUpdaters, mutationUpdaters, subscriptionUpdaters, typeUpdateResolvers } =
+    getRootUpdatersConfig(schema, convertName, config);
   const optimisticUpdaters = getOptimisticUpdatersConfig(schema, convertName, config);
 
   return {
@@ -313,6 +312,9 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
         (optimisticUpdaters ? '{\n  ' + optimisticUpdaters.join(',\n  ') + '\n};' : '{};'),
 
       'export type GraphCacheUpdaters = {\n' +
+        `  ${schema.getQueryType()?.name || 'Mutation'}?: ` +
+        (queryUpdaters ? `{\n    ${queryUpdaters.join(',\n    ')}\n  }` : '{}') +
+        ',\n' +
         `  ${schema.getMutationType()?.name || 'Mutation'}?: ` +
         (mutationUpdaters ? `{\n    ${mutationUpdaters.join(',\n    ')}\n  }` : '{}') +
         ',\n' +
