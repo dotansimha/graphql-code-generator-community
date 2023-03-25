@@ -25,10 +25,15 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
-  Mutation?: {
+  Mutation_Root?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<Todo> }, Mutation_RootToggleTodoArgs>
   },
   Subscription?: {},
+  Todo?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<{ text: Maybe<Scalars['String']> }, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<{ complete: Maybe<Scalars['Boolean']> }, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = {
@@ -66,6 +71,11 @@ export type GraphCacheOptimisticUpdaters = {};
 export type GraphCacheUpdaters = {
   Mutation?: {},
   Subscription?: {},
+  Todo?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<{ text: Maybe<Scalars['String']> }, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<{ complete: Maybe<Scalars['Boolean']> }, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = {
@@ -118,6 +128,24 @@ export type GraphCacheOptimisticUpdaters = {};
 export type GraphCacheUpdaters = {
   Mutation?: {},
   Subscription?: {},
+  Author?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    name?: GraphCacheUpdateResolver<{ name: Maybe<Scalars['String']> }, Record<string, never>>,
+    friends?: GraphCacheUpdateResolver<{ friends: Maybe<Array<WithTypename<Author>>> }, Record<string, never>>,
+    friendsPaginated?: GraphCacheUpdateResolver<{ friendsPaginated: Maybe<Array<WithTypename<Author>>> }, AuthorFriendsPaginatedArgs>
+  },
+  Todo?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<{ text: Maybe<Scalars['String']> }, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<{ complete: Maybe<Scalars['Boolean']> }, Record<string, never>>,
+    author?: GraphCacheUpdateResolver<{ author: Maybe<WithTypename<Author>> }, Record<string, never>>
+  },
+  Textbook?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    title?: GraphCacheUpdateResolver<{ title: Maybe<Scalars['String']> }, Record<string, never>>,
+    author?: GraphCacheUpdateResolver<{ author: Maybe<WithTypename<Author>> }, Record<string, never>>,
+    todo?: GraphCacheUpdateResolver<{ todo: Maybe<WithTypename<Todo>> }, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = {
@@ -175,6 +203,18 @@ export type GraphCacheUpdaters = {
     toggleTodosOptional?: GraphCacheUpdateResolver<{ toggleTodosOptional: Maybe<Array<WithTypename<PrefixTodoSuffix>>> }, PrefixMutationToggleTodosOptionalArgsSuffix>
   },
   Subscription?: {},
+  Author?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    name?: GraphCacheUpdateResolver<{ name: Maybe<Scalars['String']> }, Record<string, never>>,
+    friends?: GraphCacheUpdateResolver<{ friends: Maybe<Array<WithTypename<PrefixAuthorSuffix>>> }, Record<string, never>>,
+    friendsPaginated?: GraphCacheUpdateResolver<{ friendsPaginated: Maybe<Array<WithTypename<PrefixAuthorSuffix>>> }, PrefixAuthorFriendsPaginatedArgsSuffix>
+  },
+  Todo?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<{ text: Maybe<Scalars['String']> }, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<{ complete: Maybe<Scalars['Boolean']> }, Record<string, never>>,
+    author?: GraphCacheUpdateResolver<{ author: Maybe<WithTypename<PrefixAuthorSuffix>> }, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = {
@@ -222,6 +262,16 @@ export type GraphCacheUpdaters = {
     updateMedia?: GraphCacheUpdateResolver<{ updateMedia: Maybe<WithTypename<Media>> }, MutationUpdateMediaArgs>
   },
   Subscription?: {},
+  Book?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    title?: GraphCacheUpdateResolver<{ title: Maybe<Scalars['String']> }, Record<string, never>>,
+    pages?: GraphCacheUpdateResolver<{ pages: Maybe<Scalars['Int']> }, Record<string, never>>
+  },
+  Movie?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    title?: GraphCacheUpdateResolver<{ title: Maybe<Scalars['String']> }, Record<string, never>>,
+    duration?: GraphCacheUpdateResolver<{ duration: Maybe<Scalars['Int']> }, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = {
@@ -279,6 +329,18 @@ export type GraphCacheUpdaters = {
     toggleTodosOptional?: GraphCacheUpdateResolver<{ toggleTodosOptional: Maybe<Array<WithTypename<Todo>>> }, MutationToggleTodosOptionalArgs>
   },
   Subscription?: {},
+  Author?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    name?: GraphCacheUpdateResolver<{ name: Maybe<Scalars['String']> }, Record<string, never>>,
+    friends?: GraphCacheUpdateResolver<{ friends: Maybe<Array<WithTypename<Author>>> }, Record<string, never>>,
+    friendsPaginated?: GraphCacheUpdateResolver<{ friendsPaginated: Maybe<Array<WithTypename<Author>>> }, AuthorFriendsPaginatedArgs>
+  },
+  Todo?: {
+    id?: GraphCacheUpdateResolver<{ id: Maybe<Scalars['ID']> }, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<{ text: Maybe<Scalars['String']> }, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<{ complete: Maybe<Scalars['Boolean']> }, Record<string, never>>,
+    author?: GraphCacheUpdateResolver<{ author: Maybe<WithTypename<Author>> }, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = {
