@@ -299,6 +299,9 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
     getRootUpdatersConfig(schema, convertName, config);
   const optimisticUpdaters = getOptimisticUpdatersConfig(schema, convertName, config);
 
+  const queryType = schema.getQueryType();
+  const mutationType = schema.getMutationType();
+  const subscriptionType = schema.getSubscriptionType();
   return {
     prepend: [imports],
     content: [
@@ -312,13 +315,13 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
         (optimisticUpdaters ? '{\n  ' + optimisticUpdaters.join(',\n  ') + '\n};' : '{};'),
 
       'export type GraphCacheUpdaters = {\n' +
-        `  ${schema.getQueryType()?.name || 'Mutation'}?: ` +
+        `  ${(queryType && queryType.name) || 'Mutation'}?: ` +
         (queryUpdaters ? `{\n    ${queryUpdaters.join(',\n    ')}\n  }` : '{}') +
         ',\n' +
-        `  ${schema.getMutationType()?.name || 'Mutation'}?: ` +
+        `  ${(mutationType && mutationType.name) || 'Mutation'}?: ` +
         (mutationUpdaters ? `{\n    ${mutationUpdaters.join(',\n    ')}\n  }` : '{}') +
         ',\n' +
-        `  ${schema.getSubscriptionType()?.name || 'Subscription'}?: ` +
+        `  ${(subscriptionType && subscriptionType.name) || 'Subscription'}?: ` +
         (subscriptionUpdaters ? `{\n    ${subscriptionUpdaters.join(',\n    ')}\n  }` : '{}') +
         ',\n' +
         `${typeUpdateResolvers.join(',\n')}` +
