@@ -221,12 +221,12 @@ function getRootUpdatersConfig(
         : 'Record<string, never>';
 
       fields.push(
-        `${field.name}?: GraphCacheUpdateResolver<{ ${field.name}: ${constructType(
-          field.type,
+        `${field.name}?: GraphCacheUpdateResolver<${constructType(
+          parentType,
           schema,
           convertName,
           config,
-        )} }, ${argsName}>`,
+        )}, ${argsName}>`,
       );
 
       return fields;
