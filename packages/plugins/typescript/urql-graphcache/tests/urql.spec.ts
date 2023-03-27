@@ -166,8 +166,7 @@ describe('urql graphcache', () => {
     const result = mergeOutputs([await plugin(schema, [], { useTypeImports: true })]);
 
     expect(result).toBeSimilarStringTo(
-      `import type { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver, StorageAdapter as GraphCacheStorageAdapter } from '@urql/exchange-graphcache';
-import type { IntrospectionData } from '@urql/exchange-graphcache/dist/types/ast';`,
+      `import type { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver, StorageAdapter as GraphCacheStorageAdapter, CacheExchangeOpts } from '@urql/exchange-graphcache';`,
     );
   });
 
