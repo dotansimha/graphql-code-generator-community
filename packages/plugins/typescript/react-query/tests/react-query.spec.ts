@@ -88,7 +88,6 @@ export const useInfiniteTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      pageParamKey: keyof TestQueryVariables,
       variables?: TestQueryVariables,
       options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
     ) =>
@@ -264,7 +263,6 @@ export const useTestMutation = <
       TData = TTestQuery,
       TError = unknown
     >(
-      pageParamKey: keyof TTestQueryVariables,
       variables?: TTestQueryVariables,
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) =>{
@@ -360,7 +358,6 @@ export const useTestMutation = <
       TData = TTestQuery,
       TError = unknown
     >(
-      pageParamKey: keyof TTestQueryVariables,
       variables?: TTestQueryVariables,
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) =>{
