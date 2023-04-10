@@ -1307,9 +1307,7 @@ export const useTestMutation = <
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toMatchSnapshot();
-      expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.rootKey = 'test';`,
-      );
+      expect(out.content).toBeSimilarStringTo(`useTestQuery.rootKey = 'test';`);
     });
   });
 
@@ -1322,9 +1320,8 @@ export const useTestMutation = <
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toMatchSnapshot();
-      expect(out.content).toBeSimilarStringTo(
-        `useInfiniteTestQuery.rootKey = 'test.infinite';`,
-      );
+      expect(out.content).toBeSimilarStringTo(`useTestQuery.rootKey = 'test';`);
+      expect(out.content).toBeSimilarStringTo(`useInfiniteTestQuery.rootKey = 'test.infinite';`);
     });
   });
 
