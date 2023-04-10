@@ -1312,7 +1312,7 @@ export const useTestMutation = <
   });
 
   describe('exposeQueryRootKeys: true, addInfiniteQuery: true', () => {
-    it('Should generate getKey for each query - also infinite queries', async () => {
+    it('Should generate rootKey for each query - also infinite queries', async () => {
       const config = {
         fetcher: 'fetch',
         exposeQueryRootKeys: true,

@@ -183,7 +183,7 @@ export const useTestMutation = <
     );"
 `;
 
-exports[`React-Query exposeQueryRootKeys: true, addInfiniteQuery: true Should generate getKey for each query - also infinite queries 1`] = `
+exports[`React-Query exposeQueryRootKeys: true, addInfiniteQuery: true Should generate rootKey for each query - also infinite queries 1`] = `
 "
 export const TestDocument = \`
     query test {
