@@ -17,14 +17,17 @@ import { GraphQLRequestClientFetcher } from './fetcher-graphql-request.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
   generateInfiniteQueryKeyMaker,
+  generateInfiniteQueryRootKeyMaker,
   generateMutationKeyMaker,
   generateQueryKeyMaker,
+  generateQueryRootKeyMaker,
 } from './variables-generator.js';
 
 export interface ReactQueryPluginConfig extends ClientSideBasePluginConfig {
   errorType: string;
   exposeDocument: boolean;
   exposeQueryKeys: boolean;
+  exposeQueryRootKeys: boolean;
   exposeMutationKeys: boolean;
   exposeFetcher: boolean;
   addInfiniteQuery: boolean;
@@ -81,6 +84,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       errorType: getConfigValue(rawConfig.errorType, 'unknown'),
       exposeDocument: getConfigValue(rawConfig.exposeDocument, false),
       exposeQueryKeys: getConfigValue(rawConfig.exposeQueryKeys, false),
+      exposeQueryRootKeys: getConfigValue(rawConfig.exposeQueryRootKeys, false),
       exposeMutationKeys: getConfigValue(rawConfig.exposeMutationKeys, false),
       exposeFetcher: getConfigValue(rawConfig.exposeFetcher, false),
       addInfiniteQuery: getConfigValue(rawConfig.addInfiniteQuery, false),
@@ -192,6 +196,12 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
           hasRequiredVariables,
         )};\n`;
       }
+      if (this.config.exposeQueryRootKeys) {
+        query += `\n${generateQueryRootKeyMaker(
+          node,
+          operationName,
+        )}`
+      }
       if (this.config.addInfiniteQuery) {
         query += `\n${this.fetcher.generateInfiniteQueryHook(
           node,
@@ -208,6 +218,12 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
             operationVariablesTypes,
             hasRequiredVariables,
           )};\n`;
+        }
+        if (this.config.exposeQueryRootKeys) {
+          query += `\n${generateInfiniteQueryRootKeyMaker(
+            node,
+            operationName,
+          )}`
         }
       }
 
