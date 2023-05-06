@@ -7,5 +7,5 @@ module.exports =
     : {
         rootDir: __dirname,
         projects: ['<rootDir>/packages/**/*/jest.config.js'],
-        resolver: 'bob-the-bundler/jest-resolver.js',
+        resolver: './node_modules/bob-the-bundler/jest-resolver.cjs',
       };
