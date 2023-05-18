@@ -1,5 +1,13 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 5.0.0
+
+### Major Changes
+
+- [#335](https://github.com/dotansimha/graphql-code-generator-community/pull/335)
+  [`b46fff0d6`](https://github.com/dotansimha/graphql-code-generator-community/commit/b46fff0d6d7f5a09e3a263715200d4044c590d63)
+  Thanks [@michaelgmcd](https://github.com/michaelgmcd)! - feature: support graphql-request 6+
+
 ## 4.5.9
 
 ### Patch Changes
