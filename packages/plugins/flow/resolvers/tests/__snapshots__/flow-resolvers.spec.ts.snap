@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Flow Resolvers Plugin Should generate basic type resolvers 1`] = `
-Object {
+{
   "content": "export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
   parent: Parent,
   args: Args,
@@ -177,7 +177,7 @@ export type DirectiveResolvers<ContextType = any> = {
   authenticated?: AuthenticatedDirectiveResolver<any, any, ContextType>,
 };
 ",
-  "prepend": Array [
+  "prepend": [
     "import { type GraphQLResolveInfo, type GraphQLScalarType, type GraphQLScalarTypeConfig } from 'graphql';",
     "export type $RequireFields<Origin, Keys> = $Diff<Origin, Keys> & $ObjMapi<Keys, <Key>(k: Key) => $NonMaybeType<$ElementType<Origin, Key>>>;",
   ],

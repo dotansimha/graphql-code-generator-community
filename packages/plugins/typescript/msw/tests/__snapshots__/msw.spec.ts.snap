@@ -112,7 +112,7 @@ export const mockUpdateUserMutation = (resolver: ResponseResolver<GraphQLRequest
 `;
 
 exports[`msw Should generate mocks based on queries and mutations: imports 1`] = `
-Array [
+[
   "import { graphql, ResponseResolver, GraphQLRequest, GraphQLContext } from 'msw'",
 ]
 `;

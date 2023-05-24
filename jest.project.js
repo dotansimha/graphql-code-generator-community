@@ -27,6 +27,7 @@ module.exports = ({ dirname, projectMode = true }) => {
     resolver: './node_modules/bob-the-bundler/jest-resolver.cjs',
     snapshotFormat: {
       escapeString: false,
+      printBasicPrototype: false,
     },
   };
 };
