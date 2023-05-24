@@ -4,6 +4,7 @@ import {
   DocumentNode,
   EnumTypeDefinitionNode,
   FieldNode,
+  FragmentDefinitionNode,
   FragmentSpreadNode,
   GraphQLSchema,
   InputObjectTypeDefinitionNode,
@@ -157,7 +158,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
   }
 
   protected _gql(node: OperationDefinitionNode): string {
-    const fragments = this._transformFragments(node);
+    const fragments = this._transformFragments(this._extractFragments(node));
     const doc = this._prepareDocument(
       [print(node), this._includeFragments(fragments, node.kind)].join('\n'),
     );
@@ -368,7 +369,10 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         );
       }
       case Kind.FRAGMENT_SPREAD: {
-        const fragmentSchema = this._fragments.find(f => f.name === node.name.value);
+        // @ts-expect-error _fragments is private but should be public
+        const fragmentSchema: { node: FragmentDefinitionNode } = this._fragments.get(
+          node.name.value,
+        );
         if (!fragmentSchema) {
           throw new Error(`Fragment schema not found; ${node.name.value}`);
         }
