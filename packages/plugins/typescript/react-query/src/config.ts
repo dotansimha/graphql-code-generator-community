@@ -64,6 +64,18 @@ export interface ReactQueryRawPluginConfig
 
   /**
    * @default false
+   * @description For each generate query hook adds rootKey. Useful for cache updates.
+   * @exampleMarkdown
+   * ```ts
+   * const query = useUserDetailsQuery(...)
+   * const key = useUserDetailsQuery.rootKey
+   * // use key in a cache update after a mutation
+   * ```
+   */
+  exposeQueryRootKeys?: boolean;
+
+  /**
+   * @default false
    * @description For each generate mutation hook adds getKey() function. Useful for call outside of functional component.
    * @exampleMarkdown
    * ```ts
