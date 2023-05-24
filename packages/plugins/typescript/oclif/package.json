@@ -48,7 +48,7 @@
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@oclif/command": "1.8.22"
+    "@oclif/command": "1.8.26"
   },
   "publishConfig": {
     "directory": "dist",
