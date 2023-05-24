@@ -42,7 +42,7 @@
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^4.0.0",
     "@graphql-codegen/typescript": "^3.0.0",
-    "@graphql-codegen/visitor-plugin-common": "3.0.0",
+    "@graphql-codegen/visitor-plugin-common": "3.1.1",
     "@urql/introspection": "^1.0.0",
     "tslib": "~2.5.0"
   },
