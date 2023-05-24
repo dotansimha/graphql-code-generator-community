@@ -5,6 +5,9 @@
   "description": "GraphQL Code Generator plugin for generating CSharp code based on a GraphQL schema",
   "repository": "git@github.com:dotansimha/graphql-code-generator.git",
   "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
