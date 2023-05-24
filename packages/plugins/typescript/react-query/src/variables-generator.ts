@@ -55,10 +55,7 @@ export function generateQueryKeyMaker(
   )};\n`;
 }
 
-export function generateQueryRootKeyMaker(
-  node: OperationDefinitionNode,
-  operationName: string,
-) {
+export function generateQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
   return `\nuse${operationName}.rootKey = '${node.name.value}';\n`;
 }
 

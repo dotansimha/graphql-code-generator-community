@@ -197,10 +197,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
         )};\n`;
       }
       if (this.config.exposeQueryRootKeys) {
-        query += `\n${generateQueryRootKeyMaker(
-          node,
-          operationName,
-        )}`
+        query += `\n${generateQueryRootKeyMaker(node, operationName)}`;
       }
       if (this.config.addInfiniteQuery) {
         query += `\n${this.fetcher.generateInfiniteQueryHook(
@@ -220,10 +217,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
           )};\n`;
         }
         if (this.config.exposeQueryRootKeys) {
-          query += `\n${generateInfiniteQueryRootKeyMaker(
-            node,
-            operationName,
-          )}`
+          query += `\n${generateInfiniteQueryRootKeyMaker(node, operationName)}`;
         }
       }
 
