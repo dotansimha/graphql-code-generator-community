@@ -10,14 +10,13 @@ import {
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { VueApolloRawPluginConfig } from './config.js';
-import {Maybe} from "@graphql-tools/utils";
 
 export interface VueApolloPluginConfig extends ClientSideBasePluginConfig {
   withCompositionFunctions: boolean;
   vueApolloComposableImportFrom: 'vue' | '@vue/apollo-composable' | string;
   vueCompositionApiImportFrom: 'vue' | '@vue/apollo-composable' | string;
   addDocBlocks: boolean;
-  clientId: Maybe<string>;
+  clientId: string | null;
 }
 
 interface BuildCompositionFunctions {
@@ -58,7 +57,7 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
         '@vue/composition-api',
       ),
       addDocBlocks: getConfigValue(rawConfig.addDocBlocks, true),
-      clientId: getConfigValue(rawConfig.clientId, null)
+      clientId: getConfigValue(rawConfig.clientId, null),
     });
 
     this.externalImportPrefix = this.config.importOperationTypesFrom
@@ -154,17 +153,17 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
  * __use${operationName}__
  *${operationType === 'Mutation' ? mutationDescription : queryDescription}
  *${
-      operationHasVariables && operationType !== 'Mutation'
-        ? `
+   operationHasVariables && operationType !== 'Mutation'
+     ? `
  * @param variables that will be passed into the ${operationType.toLowerCase()}`
-        : ''
-    }
+     : ''
+ }
  * @param options that will be passed into the ${operationType.toLowerCase()}, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/${
       operationType === 'Mutation'
         ? 'mutation'
         : operationType === 'Subscription'
-          ? 'subscription'
-          : 'query'
+        ? 'subscription'
+        : 'query'
     }.html#options;
  *
  * @example${operationType === 'Mutation' ? mutationExample : queryExample}
@@ -271,20 +270,22 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
   }
 
   private buildCompositionFunction({
-                                     operationName,
-                                     operationType,
-                                     operationResultType,
-                                     operationVariablesTypes,
-                                     operationHasNonNullableVariable,
-                                     operationHasVariables,
-                                     documentNodeVariable,
-                                   }: BuildCompositionFunctions): string {
+    operationName,
+    operationType,
+    operationResultType,
+    operationVariablesTypes,
+    operationHasNonNullableVariable,
+    operationHasVariables,
+    documentNodeVariable,
+  }: BuildCompositionFunctions): string {
     const variables = operationHasVariables
       ? `variables: ${operationVariablesTypes} | VueCompositionApi.Ref<${operationVariablesTypes}> | ReactiveFunction<${operationVariablesTypes}>${
-        operationHasNonNullableVariable ? '' : ' = {}'
-      }, `
+          operationHasNonNullableVariable ? '' : ' = {}'
+        }, `
       : '';
-    const options = `${this.config.clientId ? `{ clientId: '${this.config.clientId}', ...options}` : 'options'}`
+    const options = `${
+      this.config.clientId ? `{ clientId: '${this.config.clientId}', ...options}` : 'options'
+    }`;
     switch (operationType) {
       case 'Query': {
         return `export function use${operationName}(${variables}options: VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
@@ -316,11 +317,11 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
   }
 
   private buildCompositionFunctionReturnType({
-                                               operationName,
-                                               operationType,
-                                               operationResultType,
-                                               operationVariablesTypes,
-                                             }: Partial<BuildCompositionFunctions>) {
+    operationName,
+    operationType,
+    operationResultType,
+    operationVariablesTypes,
+  }: Partial<BuildCompositionFunctions>) {
     return `export type ${operationName}CompositionFunctionResult = VueApolloComposable.Use${operationType}Return<${operationResultType}, ${operationVariablesTypes}>;`;
   }
 }
