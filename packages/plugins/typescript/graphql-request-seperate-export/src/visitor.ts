@@ -2,7 +2,6 @@ import autoBind from 'auto-bind';
 import { GraphQLSchema, Kind, OperationDefinitionNode, print } from 'graphql';
 import {
   ClientSideBaseVisitor,
-  DocumentMode,
   getConfigValue,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
@@ -35,12 +34,14 @@ export class GraphQLRequestSeperateExportVisitor extends ClientSideBaseVisitor<
       importGraphQLClientStatment: rawConfig.importGraphQLClientStatment,
     });
     autoBind(this);
-    this._additionalImports.push("import { GraphQLClient } from 'graphql-request';");
+    this._additionalImports.push(
+      "import { GraphQLClientRequestHeaders } from 'graphql-request/src/types';",
+    );
     this._additionalImports.push(this.config.importGraphQLClientStatment);
-    if (this.config.documentMode !== DocumentMode.string) {
-      const importType = this.config.useTypeImports ? 'import type' : 'import';
-      this._additionalImports.push(`${importType} { DocumentNode } from 'graphql';`);
-    }
+    // if (this.config.documentMode !== DocumentMode.string) {
+    //   const importType = this.config.useTypeImports ? 'import type' : 'import';
+    //   this._additionalImports.push(`${importType} { DocumentNode } from 'graphql';`);
+    // }
   }
 
   protected buildOperation(
@@ -87,10 +88,14 @@ export class GraphQLRequestSeperateExportVisitor extends ClientSideBaseVisitor<
 export type ${resultDataTypeName} = ${resultDataType}\n
 export const ${functionName} = ${pureMagicComment ? '/*#__PURE__*/' : ''}async (variables${
         optionalVariables ? '?' : ''
-      }: ${o.operationVariablesTypes}, options?: C): Promise<${resultDataTypeName}> => {
+      }: ${
+        o.operationVariablesTypes
+      }, options?: GraphQLClientRequestHeaders): Promise<${resultDataTypeName}> => {
   return client.${rawRequest ? 'rawRequest' : 'request'}<${o.operationResultType}, ${
         o.operationVariablesTypes
-      }>(${o.documentVariableName}, variables, options) as Promise<${resultDataTypeName}>;
+      }>(${o.documentVariableName}, variables ${
+        optionalVariables ? '|| {}' : ''
+      }, options) as Promise<${resultDataTypeName}>;
 }`;
     });
 
