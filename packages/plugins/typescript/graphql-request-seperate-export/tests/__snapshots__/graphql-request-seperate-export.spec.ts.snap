@@ -6,7 +6,6 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-import { GraphQLClientRequestHeaders } from 'graphql-request/src/types';
 import { client } from "./my-graphql-request"
 import gql from 'graphql-tag';
 /** All built-in and custom scalars, mapped to their actual values */
@@ -204,6 +203,7 @@ export type Feed4QueryVariables = Exact<{
 
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
+type GraphQLClientRequestHeaders = Headers | string[][] | Record<string, string>
 export const FeedDocument = /*#__PURE__*/ gql\`
     query feed {
   feed {
@@ -283,7 +283,6 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-import { GraphQLClientRequestHeaders } from 'graphql-request/src/types';
 import { client } from "./my-graphql-request"
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -480,6 +479,7 @@ export type Feed4QueryVariables = Exact<{
 
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
+type GraphQLClientRequestHeaders = Headers | string[][] | Record<string, string>
 export const FeedDocument = \`
     query feed {
   feed {
@@ -559,7 +559,6 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-import { GraphQLClientRequestHeaders } from 'graphql-request/src/types';
 import { client } from "./my-graphql-request"
 import gql from 'graphql-tag';
 /** All built-in and custom scalars, mapped to their actual values */
@@ -757,6 +756,7 @@ export type Feed4QueryVariables = Exact<{
 
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
+type GraphQLClientRequestHeaders = Headers | string[][] | Record<string, string>
 export const FeedDocument = gql\`
     query feed {
   feed {

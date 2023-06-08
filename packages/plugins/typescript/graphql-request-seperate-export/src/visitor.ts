@@ -34,9 +34,6 @@ export class GraphQLRequestSeperateExportVisitor extends ClientSideBaseVisitor<
       importGraphQLClientStatment: rawConfig.importGraphQLClientStatment,
     });
     autoBind(this);
-    this._additionalImports.push(
-      "import { GraphQLClientRequestHeaders } from 'graphql-request/src/types';",
-    );
     this._additionalImports.push(this.config.importGraphQLClientStatment);
     // if (this.config.documentMode !== DocumentMode.string) {
     //   const importType = this.config.useTypeImports ? 'import type' : 'import';

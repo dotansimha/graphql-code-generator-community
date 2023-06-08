@@ -35,6 +35,7 @@ export const plugin: PluginFunction<RawGraphQLSeperateExportPluginConfig> = (
     prepend: visitor.getImports(),
     content: [
       visitor.fragments,
+      'type GraphQLClientRequestHeaders = Headers | string[][] | Record<string, string>',
       ...visitorResult.definitions.filter(t => typeof t === 'string'),
       visitor.sdkContent,
     ].join('\n'),
