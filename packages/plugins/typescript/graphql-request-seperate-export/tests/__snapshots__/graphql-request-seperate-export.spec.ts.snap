@@ -6,9 +6,8 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-import { GraphQLClient } from 'graphql-request';
+import { GraphQLClientRequestHeaders } from 'graphql-request/src/types';
 import { client } from "./my-graphql-request"
-import { DocumentNode } from 'graphql';
 import gql from 'graphql-tag';
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -242,26 +241,26 @@ export const Feed4Document = /*#__PURE__*/ gql\`
 
 export type FeedReturnType = FeedQuery
 
-export const feed = /*#__PURE__*/async (variables?: FeedQueryVariables, options?: C): Promise<FeedReturnType> => {
-  return client.request<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options) as Promise<FeedReturnType>;
+export const feed = /*#__PURE__*/async (variables?: FeedQueryVariables, options?: GraphQLClientRequestHeaders): Promise<FeedReturnType> => {
+  return client.request<FeedQuery, FeedQueryVariables>(FeedDocument, variables || {}, options) as Promise<FeedReturnType>;
 }
 
 export type Feed2ReturnType = Feed2Query
 
-export const feed2 = /*#__PURE__*/async (variables: Feed2QueryVariables, options?: C): Promise<Feed2ReturnType> => {
-  return client.request<Feed2Query, Feed2QueryVariables>(Feed2Document, variables, options) as Promise<Feed2ReturnType>;
+export const feed2 = /*#__PURE__*/async (variables: Feed2QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed2ReturnType> => {
+  return client.request<Feed2Query, Feed2QueryVariables>(Feed2Document, variables , options) as Promise<Feed2ReturnType>;
 }
 
 export type Feed3ReturnType = Feed3Query
 
-export const feed3 = /*#__PURE__*/async (variables?: Feed3QueryVariables, options?: C): Promise<Feed3ReturnType> => {
-  return client.request<Feed3Query, Feed3QueryVariables>(Feed3Document, variables, options) as Promise<Feed3ReturnType>;
+export const feed3 = /*#__PURE__*/async (variables?: Feed3QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed3ReturnType> => {
+  return client.request<Feed3Query, Feed3QueryVariables>(Feed3Document, variables || {}, options) as Promise<Feed3ReturnType>;
 }
 
 export type Feed4ReturnType = Feed4Query
 
-export const feed4 = /*#__PURE__*/async (variables?: Feed4QueryVariables, options?: C): Promise<Feed4ReturnType> => {
-  return client.request<Feed4Query, Feed4QueryVariables>(Feed4Document, variables, options) as Promise<Feed4ReturnType>;
+export const feed4 = /*#__PURE__*/async (variables?: Feed4QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed4ReturnType> => {
+  return client.request<Feed4Query, Feed4QueryVariables>(Feed4Document, variables || {}, options) as Promise<Feed4ReturnType>;
 }
 async function test() {
   await feed();
@@ -284,7 +283,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-import { GraphQLClient } from 'graphql-request';
+import { GraphQLClientRequestHeaders } from 'graphql-request/src/types';
 import { client } from "./my-graphql-request"
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -518,26 +517,26 @@ export const Feed4Document = \`
 
 export type FeedReturnType = FeedQuery
 
-export const feed = async (variables?: FeedQueryVariables, options?: C): Promise<FeedReturnType> => {
-  return client.request<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options) as Promise<FeedReturnType>;
+export const feed = async (variables?: FeedQueryVariables, options?: GraphQLClientRequestHeaders): Promise<FeedReturnType> => {
+  return client.request<FeedQuery, FeedQueryVariables>(FeedDocument, variables || {}, options) as Promise<FeedReturnType>;
 }
 
 export type Feed2ReturnType = Feed2Query
 
-export const feed2 = async (variables: Feed2QueryVariables, options?: C): Promise<Feed2ReturnType> => {
-  return client.request<Feed2Query, Feed2QueryVariables>(Feed2Document, variables, options) as Promise<Feed2ReturnType>;
+export const feed2 = async (variables: Feed2QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed2ReturnType> => {
+  return client.request<Feed2Query, Feed2QueryVariables>(Feed2Document, variables , options) as Promise<Feed2ReturnType>;
 }
 
 export type Feed3ReturnType = Feed3Query
 
-export const feed3 = async (variables?: Feed3QueryVariables, options?: C): Promise<Feed3ReturnType> => {
-  return client.request<Feed3Query, Feed3QueryVariables>(Feed3Document, variables, options) as Promise<Feed3ReturnType>;
+export const feed3 = async (variables?: Feed3QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed3ReturnType> => {
+  return client.request<Feed3Query, Feed3QueryVariables>(Feed3Document, variables || {}, options) as Promise<Feed3ReturnType>;
 }
 
 export type Feed4ReturnType = Feed4Query
 
-export const feed4 = async (variables?: Feed4QueryVariables, options?: C): Promise<Feed4ReturnType> => {
-  return client.request<Feed4Query, Feed4QueryVariables>(Feed4Document, variables, options) as Promise<Feed4ReturnType>;
+export const feed4 = async (variables?: Feed4QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed4ReturnType> => {
+  return client.request<Feed4Query, Feed4QueryVariables>(Feed4Document, variables || {}, options) as Promise<Feed4ReturnType>;
 }
 async function test() {
   await feed();
@@ -560,9 +559,8 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-import { GraphQLClient } from 'graphql-request';
+import { GraphQLClientRequestHeaders } from 'graphql-request/src/types';
 import { client } from "./my-graphql-request"
-import { DocumentNode } from 'graphql';
 import gql from 'graphql-tag';
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -796,26 +794,26 @@ export const Feed4Document = gql\`
 
 export type FeedReturnType = { data?: FeedQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }
 
-export const feed = async (variables?: FeedQueryVariables, options?: C): Promise<FeedReturnType> => {
-  return client.rawRequest<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options) as Promise<FeedReturnType>;
+export const feed = async (variables?: FeedQueryVariables, options?: GraphQLClientRequestHeaders): Promise<FeedReturnType> => {
+  return client.rawRequest<FeedQuery, FeedQueryVariables>(FeedDocument, variables || {}, options) as Promise<FeedReturnType>;
 }
 
 export type Feed2ReturnType = { data?: Feed2Query, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }
 
-export const feed2 = async (variables: Feed2QueryVariables, options?: C): Promise<Feed2ReturnType> => {
-  return client.rawRequest<Feed2Query, Feed2QueryVariables>(Feed2Document, variables, options) as Promise<Feed2ReturnType>;
+export const feed2 = async (variables: Feed2QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed2ReturnType> => {
+  return client.rawRequest<Feed2Query, Feed2QueryVariables>(Feed2Document, variables , options) as Promise<Feed2ReturnType>;
 }
 
 export type Feed3ReturnType = { data?: Feed3Query, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }
 
-export const feed3 = async (variables?: Feed3QueryVariables, options?: C): Promise<Feed3ReturnType> => {
-  return client.rawRequest<Feed3Query, Feed3QueryVariables>(Feed3Document, variables, options) as Promise<Feed3ReturnType>;
+export const feed3 = async (variables?: Feed3QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed3ReturnType> => {
+  return client.rawRequest<Feed3Query, Feed3QueryVariables>(Feed3Document, variables || {}, options) as Promise<Feed3ReturnType>;
 }
 
 export type Feed4ReturnType = { data?: Feed4Query, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }
 
-export const feed4 = async (variables?: Feed4QueryVariables, options?: C): Promise<Feed4ReturnType> => {
-  return client.rawRequest<Feed4Query, Feed4QueryVariables>(Feed4Document, variables, options) as Promise<Feed4ReturnType>;
+export const feed4 = async (variables?: Feed4QueryVariables, options?: GraphQLClientRequestHeaders): Promise<Feed4ReturnType> => {
+  return client.rawRequest<Feed4Query, Feed4QueryVariables>(Feed4Document, variables || {}, options) as Promise<Feed4ReturnType>;
 }
         async function rawRequestTest() {
           await feed();
