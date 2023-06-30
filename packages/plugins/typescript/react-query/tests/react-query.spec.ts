@@ -1370,4 +1370,16 @@ export const useTestMutation = <
           });
     `);
   });
+
+  describe('reactQueryImportFrom: custom-path', () => {
+    it('Should import react-query from custom path', async () => {
+      const config = {
+        legacyMode: true,
+        reactQueryImportFrom: 'custom-react-query',
+      };
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.prepend).toContain(`from 'custom-react-query';`);
+      expect(out.prepend).not.toContain(`from 'react-query';`);
+    });
+  });
 });
