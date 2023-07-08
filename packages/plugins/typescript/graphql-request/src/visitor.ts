@@ -129,7 +129,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
             o.operationVariablesTypes
           }, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ${
             o.operationResultType
-          }; extensions?: ${this.config.extensionsType}; headers: Dom.Headers; status: number; }> {
+          }; extensions?: ${this.config.extensionsType}; headers: Headers; status: number; }> {
     return withWrapper((wrappedRequestHeaders) => client.rawRequest<${
       o.operationResultType
     }>(${docArg}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}');
