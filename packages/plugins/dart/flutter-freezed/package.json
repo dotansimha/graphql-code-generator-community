@@ -6,7 +6,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
-    "directory": "packages/plugins/typescript/typescript"
+    "directory": "packages/plugins/dart/flutter-freezed"
+  },
+  "author": {
+    "email": "parables95@gmail.com",
+    "name": "Parables Boltnoel",
+    "url": "https://github.com/Parables"
   },
   "license": "MIT",
   "engines": {
