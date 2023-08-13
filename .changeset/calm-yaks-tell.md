@@ -3,3 +3,4 @@
 ---
 
 fix(flutter-freezed): exported Patterns for advanced configuration
+
