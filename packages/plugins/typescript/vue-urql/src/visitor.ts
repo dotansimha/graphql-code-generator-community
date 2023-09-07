@@ -98,8 +98,8 @@ export function use${operationName}<R = ${operationResultType}>(options: Omit<Ur
     }
 
     return `
-export function use${operationName}(options: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes}>, 'query'> = {}) {
-  return Urql.use${operationType}<${operationResultType}>({ query: ${documentVariableName}, ...options });
+export function use${operationName}(options: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes}>, 'query'>) {
+  return Urql.use${operationType}<${operationResultType}, ${operationVariablesTypes}>({ query: ${documentVariableName}, ...options });
 };`;
   }
 
