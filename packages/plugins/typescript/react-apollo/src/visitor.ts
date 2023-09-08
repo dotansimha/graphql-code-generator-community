@@ -1,17 +1,16 @@
+import autoBind from 'auto-bind';
+import { camelCase, pascalCase } from 'change-case-all';
+import { GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
   DocumentMode,
+  getConfigValue,
   LoadedFragment,
   OMIT_TYPE,
-  getConfigValue,
 } from '@graphql-codegen/visitor-plugin-common';
-import { GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
-import { camelCase, pascalCase } from 'change-case-all';
-
 import { ReactApolloRawPluginConfig } from './config.js';
-import { Types } from '@graphql-codegen/plugin-helpers';
-import autoBind from 'auto-bind';
 
 const APOLLO_CLIENT_3_UNIFIED_PACKAGE = `@apollo/client`;
 const GROUPED_APOLLO_CLIENT_3_IDENTIFIER = 'Apollo';
