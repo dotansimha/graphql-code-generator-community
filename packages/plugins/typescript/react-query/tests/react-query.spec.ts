@@ -754,6 +754,79 @@ export const useTestMutation = <
     });
   });
 
+  describe('fetcher: graphql-request with clientImportPath', () => {
+    const clientImportPath = "import { client as graphqlClient } from 'client.ts';";
+
+    it('Should generate query correctly with client', async () => {
+      const config = {
+        fetcher: {
+          clientImportPath,
+        },
+        typesPrefix: 'T',
+        legacyMode: true,
+      };
+
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+
+      expect(out.prepend).toContain(
+        `import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';`,
+      );
+      expect(out.prepend).toContain(clientImportPath);
+      expect(out.prepend).toContain(`import { GraphQLClient } from 'graphql-request';`);
+      expect(out.prepend).toContain(
+        `import { RequestInit } from 'graphql-request/dist/types.dom';`,
+      );
+      expect(out.prepend[4])
+        .toBeSimilarStringTo(`    function fetcher<TData, TVariables extends { [key: string]: any }>(query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
+           return async (): Promise<TData> => graphqlClient.request({
+             document: query,
+             variables,
+             requestHeaders
+          `);
+      expect(out.content).toBeSimilarStringTo(`export const useTestQuery = <
+      TData = TTestQuery,
+      TError = unknown
+    >(
+      variables?: TTestQueryVariables,
+      options?: UseQueryOptions<TTestQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<TTestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables, headers),
+      options
+    );`);
+      expect(out.content).toBeSimilarStringTo(`export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+      ['test'],
+      (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables, headers)(),
+      options
+    );`);
+
+      expect(out.content).toMatchSnapshot();
+      await validateTypeScript(mergeOutputs(out), schema, docs, config);
+    });
+    it('Should generate fetcher field when exposeFetcher is true', async () => {
+      const config = {
+        fetcher: {
+          clientImportPath,
+        },
+        exposeFetcher: true,
+      };
+
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.content).toBeSimilarStringTo(
+        `useTestQuery.fetcher = (variables?: TestQueryVariables, headers?: RequestInit['headers']) => fetcher<TestQuery, TestQueryVariables>(TestDocument, variables, headers);`,
+      );
+    });
+  });
+
   describe('fetcher: hardcoded-fetch', () => {
     it('Should generate query correctly with hardcoded endpoint', async () => {
       const config = {

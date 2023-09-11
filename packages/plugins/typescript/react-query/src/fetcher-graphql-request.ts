@@ -1,4 +1,5 @@
 import { OperationDefinitionNode } from 'graphql';
+import { GraphQlRequest } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
   generateInfiniteQueryKey,
@@ -9,10 +10,23 @@ import {
 import { ReactQueryVisitor } from './visitor.js';
 
 export class GraphQLRequestClientFetcher implements FetcherRenderer {
-  constructor(private visitor: ReactQueryVisitor) {}
+  private clientPath: string | null;
+
+  constructor(private visitor: ReactQueryVisitor, config: GraphQlRequest) {
+    this.clientPath = typeof config === 'object' ? config.clientImportPath : null;
+  }
 
   generateFetcherImplementaion(): string {
-    return `
+    return this.clientPath
+      ? `
+function fetcher<TData, TVariables extends { [key: string]: any }>(query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
+  return async (): Promise<TData> => graphqlClient.request({
+    document: query,
+    variables,
+    requestHeaders
+  });
+}`
+      : `
 function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
   return async (): Promise<TData> => client.request({
     document: query,
@@ -36,6 +50,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     );
 
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
+    if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
 
     const hookConfig = this.visitor.queryMethodMap;
@@ -44,7 +59,22 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 
     const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
 
-    return `export const useInfinite${operationName} = <
+    return this.clientPath
+      ? `export const useInfinite${operationName} = <
+      TData = ${operationResultType},
+      TError = ${this.visitor.config.errorType}
+    >(
+      pageParamKey: keyof ${operationVariablesTypes},
+      ${variables},
+      ${options},
+      headers?: RequestInit['headers']
+    ) =>
+    ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
+      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
+      (metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    );`
+      : `export const useInfinite${operationName} = <
       TData = ${operationResultType},
       TError = ${this.visitor.config.errorType}
     >(
@@ -74,6 +104,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     );
 
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
+    if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
     this.visitor.imports.add(
       `${typeImport} { RequestInit } from 'graphql-request/dist/types.dom';`,
@@ -85,7 +116,21 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 
     const options = `options?: ${hookConfig.query.options}<${operationResultType}, TError, TData>`;
 
-    return `export const use${operationName} = <
+    return this.clientPath
+      ? `export const use${operationName} = <
+      TData = ${operationResultType},
+      TError = ${this.visitor.config.errorType}
+    >(
+      ${variables},
+      ${options},
+      headers?: RequestInit['headers']
+    ) =>
+    ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
+      ${generateQueryKey(node, hasRequiredVariables)},
+      fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers),
+      options
+    );`
+      : `export const use${operationName} = <
       TData = ${operationResultType},
       TError = ${this.visitor.config.errorType}
     >(
@@ -111,6 +156,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
   ): string {
     const variables = `variables?: ${operationVariablesTypes}`;
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
+    if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
 
     const hookConfig = this.visitor.queryMethodMap;
@@ -119,7 +165,22 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 
     const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
 
-    return `export const use${operationName} = <
+    return this.clientPath
+      ? `export const use${operationName} = <
+      TError = ${this.visitor.config.errorType},
+      TContext = unknown
+    >(
+      ${options},
+      headers?: RequestInit['headers']
+    ) =>
+    ${
+      hookConfig.mutation.hook
+    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
+      ${generateMutationKey(node)},
+      (${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)(),
+      options
+    );`
+      : `export const use${operationName} = <
       TError = ${this.visitor.config.errorType},
       TContext = unknown
     >(
@@ -149,10 +210,13 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       operationVariablesTypes,
     );
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
+    if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(
       `${typeImport} { RequestInit } from 'graphql-request/dist/types.dom';`,
     );
 
-    return `\nuse${operationName}.fetcher = (client: GraphQLClient, ${variables}, headers?: RequestInit['headers']) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers);`;
+    return this.clientPath
+      ? `\nuse${operationName}.fetcher = (${variables}, headers?: RequestInit['headers']) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers);`
+      : `\nuse${operationName}.fetcher = (client: GraphQLClient, ${variables}, headers?: RequestInit['headers']) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers);`;
   }
 }
