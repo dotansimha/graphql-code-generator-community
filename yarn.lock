@@ -2171,17 +2171,17 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oclif/command@1.8.26":
-  version "1.8.26"
-  resolved "https://registry.yarnpkg.com/@oclif/command/-/command-1.8.26.tgz#302a1886992352f8f967b80b2728806e5e0b0501"
-  integrity sha512-IT9kOLFRMc3s6KJ1FymsNjbHShI211eVgAg+JMiDVl8LXwOJxYe8ybesgL1kpV9IUFByOBwZKNG2mmrVeNBHPg==
+"@oclif/command@1.8.36":
+  version "1.8.36"
+  resolved "https://registry.yarnpkg.com/@oclif/command/-/command-1.8.36.tgz#9739b9c268580d064a50887c4597d1b4e86ca8b5"
+  integrity sha512-/zACSgaYGtAQRzc7HjzrlIs14FuEYAZrMOEwicRoUnZVyRunG4+t5iSEeQu0Xy2bgbCD0U1SP/EdeNZSTXRwjQ==
   dependencies:
     "@oclif/config" "^1.18.2"
     "@oclif/errors" "^1.3.6"
     "@oclif/help" "^1.0.1"
-    "@oclif/parser" "^3.8.11"
+    "@oclif/parser" "^3.8.17"
     debug "^4.1.1"
-    semver "^7.5.1"
+    semver "^7.5.4"
 
 "@oclif/config@1.18.2", "@oclif/config@^1.18.2":
   version "1.18.2"
@@ -2237,15 +2237,15 @@
   resolved "https://registry.yarnpkg.com/@oclif/linewrap/-/linewrap-1.0.0.tgz#aedcb64b479d4db7be24196384897b5000901d91"
   integrity sha512-Ups2dShK52xXa8w6iBWLgcjPJWjais6KPJQq3gQ/88AY6BXoTX+MIGFPrWQO1KLMiQfoTpcLnUwloN4brrVUHw==
 
-"@oclif/parser@^3.8.0", "@oclif/parser@^3.8.11":
-  version "3.8.11"
-  resolved "https://registry.yarnpkg.com/@oclif/parser/-/parser-3.8.11.tgz#991a629a053d9fd38b73cc564d4a05e26b329838"
-  integrity sha512-B3NweRn1yZw2g7xaF10Zh/zwlqTJJINfU+CRkqll+LaTisSNvZbW0RR9WGan26EqqLp4qzNjzX/e90Ew8l9NLw==
+"@oclif/parser@^3.8.0", "@oclif/parser@^3.8.17":
+  version "3.8.17"
+  resolved "https://registry.yarnpkg.com/@oclif/parser/-/parser-3.8.17.tgz#e1ce0f29b22762d752d9da1c7abd57ad81c56188"
+  integrity sha512-l04iSd0xoh/16TGVpXb81Gg3z7tlQGrEup16BrVLsZBK6SEYpYHRJZnM32BwZrHI97ZSFfuSwVlzoo6HdsaK8A==
   dependencies:
     "@oclif/errors" "^1.3.6"
     "@oclif/linewrap" "^1.0.0"
     chalk "^4.1.0"
-    tslib "^2.5.2"
+    tslib "^2.6.2"
 
 "@peculiar/asn1-schema@^2.1.6":
   version "2.2.0"
@@ -6872,10 +6872,10 @@ scuid@^1.1.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
 
-semver@7.x, semver@^7.3.5, semver@^7.3.7, semver@^7.5.1:
-  version "7.5.1"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.1.tgz#c90c4d631cf74720e46b21c1d37ea07edfab91ec"
-  integrity sha512-Wvss5ivl8TMRZXXESstBA4uR5iXgEN/VC5/sOcuXdVLzcdkz4HWetIoRfG5gb5X+ij/G9rw9YoGn3QoQ8OCSpw==
+semver@7.x, semver@^7.3.5, semver@^7.3.7, semver@^7.5.4:
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
+  integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
   dependencies:
     lru-cache "^6.0.0"
 
@@ -7419,7 +7419,12 @@ tslib@^1.8.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0, tslib@^2.5.2, tslib@~2.5.0:
+tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0, tslib@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
+  integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
+
+tslib@~2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.2.tgz#1b6f07185c881557b0ffa84b111a0106989e8338"
   integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
