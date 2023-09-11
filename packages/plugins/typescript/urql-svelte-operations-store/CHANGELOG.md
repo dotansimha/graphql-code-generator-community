@@ -1,10 +1,20 @@
 # @graphql-codegen/urql-svelte-operations-store
 
+## 2.0.0
+
+### Major Changes
+
+- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
+  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
 ## 1.3.3
 
 ### Patch Changes
 
-- Updated dependencies [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
+- Updated dependencies
+  [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
   - @graphql-codegen/visitor-plugin-common@2.13.1
   - @graphql-codegen/plugin-helpers@2.7.2
 
@@ -12,29 +22,38 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
+- Updated dependencies
+  [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
   - @graphql-codegen/visitor-plugin-common@2.13.0
 
 ## 1.3.1
 
 ### Patch Changes
 
-- Updated dependencies [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
+- Updated dependencies
+  [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
   - @graphql-codegen/visitor-plugin-common@2.12.2
 
 ## 1.3.0
 
 ### Minor Changes
 
-- [#8323](https://github.com/dotansimha/graphql-code-generator/pull/8323) [`3eb273e79`](https://github.com/dotansimha/graphql-code-generator/commit/3eb273e79b446a4fa9c6cdf5fb63d8a0bc060a7c) Thanks [@JoviDeCroock](https://github.com/JoviDeCroock)! - upgrade to the new urql major version
+- [#8323](https://github.com/dotansimha/graphql-code-generator/pull/8323)
+  [`3eb273e79`](https://github.com/dotansimha/graphql-code-generator/commit/3eb273e79b446a4fa9c6cdf5fb63d8a0bc060a7c)
+  Thanks [@JoviDeCroock](https://github.com/JoviDeCroock)! - upgrade to the new urql major version
 
 ## 1.2.3
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
+  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
+  `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f), [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
+- Updated dependencies
+  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f),
+  [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
   - @graphql-codegen/visitor-plugin-common@2.12.1
   - @graphql-codegen/plugin-helpers@2.6.2
 
@@ -57,7 +76,8 @@
 
 ### Minor Changes
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
+  `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 
@@ -258,7 +278,8 @@
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
-  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no longer supported for Codegen packages.
+  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no
+  longer supported for Codegen packages.
 
 ### Patch Changes
 

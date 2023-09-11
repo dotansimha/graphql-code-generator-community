@@ -1,5 +1,21 @@
 # @graphql-codegen/typescript-urql-graphcache
 
+## 3.0.0
+
+### Major Changes
+
+- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
+  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
+### Minor Changes
+
+- [#361](https://github.com/dotansimha/graphql-code-generator-community/pull/361)
+  [`2d3df93f2`](https://github.com/dotansimha/graphql-code-generator-community/commit/2d3df93f21fa00ec75486c111e4a0903f0fbb509)
+  Thanks [@dargmuesli](https://github.com/dargmuesli)! - mark typescript-urql-graphcache as
+  @urql/exchange-graphcache v6 compatible
+
 ## 2.4.5
 
 ### Patch Changes
