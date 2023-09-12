@@ -420,21 +420,22 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
       );
 
       const suspenseOperationName: string =
-      this.convertName(nodeName, {
-        suffix: pascalCase('SuspenseQuery'),
-        useTypesPrefix: false,
-      }) + this.config.hooksSuffix;
+        this.convertName(nodeName, {
+          suffix: pascalCase('SuspenseQuery'),
+          useTypesPrefix: false,
+        }) + this.config.hooksSuffix;
 
       hookFns.push(
         `export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
           const options = {...defaultOptions, ...baseOptions}
           return ${this.getApolloReactHooksIdentifier()}.useSuspenseQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
-            node,
-            documentVariableName,
+          node,
+          documentVariableName,
         )}, options);
         }`,
-        );
-      hookResults.push(`export type ${suspenseOperationName}HookResult = ReturnType<typeof use${suspenseOperationName}>;`
+      );
+      hookResults.push(
+        `export type ${suspenseOperationName}HookResult = ReturnType<typeof use${suspenseOperationName}>;`,
       );
     }
 
