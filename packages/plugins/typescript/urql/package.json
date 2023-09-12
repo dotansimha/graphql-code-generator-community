@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-urql",
-  "version": "3.7.3",
+  "version": "4.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating an introspection file for Urql's Schema Awareness",
   "repository": {

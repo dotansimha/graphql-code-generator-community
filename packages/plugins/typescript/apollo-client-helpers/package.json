@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-apollo-client-helpers",
-  "version": "2.2.6",
+  "version": "3.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating TypeScript helpers for Apollo Client > 3",
   "repository": {

@@ -350,7 +350,10 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         config,
         schema: options.schema,
         schemaAst: schemaObject,
-        skipDocumentsValidation: true,
+        skipDocumentsValidation:
+          typeof options.skipDocumentsValidation === 'undefined'
+            ? { skipDuplicateValidation: true }
+            : options.skipDocumentsValidation,
       });
     }
 

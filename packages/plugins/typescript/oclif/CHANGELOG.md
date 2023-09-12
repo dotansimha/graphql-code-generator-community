@@ -1,10 +1,20 @@
 # @graphql-codegen/typescript-oclif
 
+## 3.0.0
+
+### Major Changes
+
+- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
+  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
 ## 2.3.6
 
 ### Patch Changes
 
-- Updated dependencies [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
+- Updated dependencies
+  [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
   - @graphql-codegen/visitor-plugin-common@2.13.1
   - @graphql-codegen/plugin-helpers@2.7.2
 
@@ -12,23 +22,30 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
+- Updated dependencies
+  [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
   - @graphql-codegen/visitor-plugin-common@2.13.0
 
 ## 2.3.4
 
 ### Patch Changes
 
-- Updated dependencies [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
+- Updated dependencies
+  [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
   - @graphql-codegen/visitor-plugin-common@2.12.2
 
 ## 2.3.3
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
+  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
+  `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f), [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
+- Updated dependencies
+  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f),
+  [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
   - @graphql-codegen/visitor-plugin-common@2.12.1
   - @graphql-codegen/plugin-helpers@2.6.2
 
@@ -44,7 +61,8 @@
 
 ### Patch Changes
 
-- 525ad580b: Revert breaking change for Next.js applications that are incapable of resolving an import with a `.js` extension.
+- 525ad580b: Revert breaking change for Next.js applications that are incapable of resolving an
+  import with a `.js` extension.
 - Updated dependencies [525ad580b]
   - @graphql-codegen/visitor-plugin-common@2.11.1
 
@@ -52,16 +70,19 @@
 
 ### Minor Changes
 
-- 68bb30e19: Attach `.js` extension to relative file imports for compliance with ESM module resolution. Since in CommonJS the `.js` extension is optional, this is not a breaking change.
+- 68bb30e19: Attach `.js` extension to relative file imports for compliance with ESM module
+  resolution. Since in CommonJS the `.js` extension is optional, this is not a breaking change.
 
-  If you have path configuration within your configuration, consider attaching `.js` if you are migrating to ESM.
+  If you have path configuration within your configuration, consider attaching `.js` if you are
+  migrating to ESM.
 
   ```yml
   mappers:
     MyOtherType: './my-file.js#MyCustomOtherType',
   ```
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
+  `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 
@@ -266,7 +287,8 @@
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
-  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no longer supported for Codegen packages.
+  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no
+  longer supported for Codegen packages.
 
 ### Patch Changes
 
@@ -330,7 +352,8 @@
 ### Patch Changes
 
 - 1d7c6432: Bump all packages to allow "^" in deps and fix compatibility issues
-- 1d7c6432: Bump versions of @graphql-tools/ packages to fix issues with loading schemas and SDL comments
+- 1d7c6432: Bump versions of @graphql-tools/ packages to fix issues with loading schemas and SDL
+  comments
 - Updated dependencies [1d7c6432]
 - Updated dependencies [1d7c6432]
   - @graphql-codegen/visitor-plugin-common@1.17.13
