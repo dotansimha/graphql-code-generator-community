@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/hasura-allow-list",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin to generate hasura allow liste metadata from graphql files",
   "repository": {

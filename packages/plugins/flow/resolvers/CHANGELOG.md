@@ -1,10 +1,32 @@
 # @graphql-codegen/flow-resolvers
 
+## 3.0.0
+
+### Major Changes
+
+- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
+  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
+### Patch Changes
+
+- [#352](https://github.com/dotansimha/graphql-code-generator-community/pull/352)
+  [`fd3e6e42f`](https://github.com/dotansimha/graphql-code-generator-community/commit/fd3e6e42f2d50707760b22dba422d6fc0e085b5f)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-tools/utils@^10.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/10.0.0)
+    (from `^8.8.0`, in `dependencies`)
+- Updated dependencies
+  [[`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)]:
+  - @graphql-codegen/flow@3.0.0
+
 ## 2.4.4
 
 ### Patch Changes
 
-- Updated dependencies [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
+- Updated dependencies
+  [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
   - @graphql-codegen/visitor-plugin-common@2.13.1
   - @graphql-codegen/plugin-helpers@2.7.2
   - @graphql-codegen/flow@2.3.6
@@ -13,7 +35,8 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
+- Updated dependencies
+  [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
   - @graphql-codegen/visitor-plugin-common@2.13.0
   - @graphql-codegen/flow@2.3.5
 
@@ -21,7 +44,8 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
+- Updated dependencies
+  [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
   - @graphql-codegen/visitor-plugin-common@2.12.2
   - @graphql-codegen/flow@2.3.4
 
@@ -29,9 +53,14 @@
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
+  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
+  `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f), [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
+- Updated dependencies
+  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f),
+  [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
   - @graphql-codegen/flow@2.3.3
   - @graphql-codegen/visitor-plugin-common@2.12.1
   - @graphql-codegen/plugin-helpers@2.6.2
@@ -63,7 +92,8 @@
 
 ### Minor Changes
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
+  `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 
@@ -279,7 +309,8 @@
 
 ### Minor Changes
 
-- 39773f59b: enhance(plugins): use getDocumentNodeFromSchema and other utilities from @graphql-tools/utils
+- 39773f59b: enhance(plugins): use getDocumentNodeFromSchema and other utilities from
+  @graphql-tools/utils
 - 440172cfe: support ESM
 
 ### Patch Changes
@@ -301,7 +332,8 @@
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
-  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no longer supported for Codegen packages.
+  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no
+  longer supported for Codegen packages.
 
 ### Patch Changes
 
@@ -411,7 +443,8 @@
 ### Patch Changes
 
 - 1d7c6432: Bump all packages to allow "^" in deps and fix compatibility issues
-- 1d7c6432: Bump versions of @graphql-tools/ packages to fix issues with loading schemas and SDL comments
+- 1d7c6432: Bump versions of @graphql-tools/ packages to fix issues with loading schemas and SDL
+  comments
 - Updated dependencies [e0d04cb6]
 - Updated dependencies [1d7c6432]
 - Updated dependencies [1d7c6432]

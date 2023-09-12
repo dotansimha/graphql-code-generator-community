@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/jsdoc",
-  "version": "2.3.6",
+  "version": "3.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating JSDoc based types for GraphQL queries, mutations, subscriptions and fragments",
   "repository": {

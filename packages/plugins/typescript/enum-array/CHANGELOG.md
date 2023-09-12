@@ -1,31 +1,50 @@
 # @graphql-codegen/typescript-enum-array
 
+## 3.0.0
+
+### Major Changes
+
+- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
+  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
 ## 2.4.0
 
 ### Minor Changes
 
-- [#66](https://github.com/dotansimha/graphql-code-generator-community/pull/66) [`aa46f2635`](https://github.com/dotansimha/graphql-code-generator-community/commit/aa46f2635ddd2cb5c723bf7240d31ceb1d5662c7) Thanks [@omjadas](https://github.com/omjadas)! - support using enum members instead of string literals
+- [#66](https://github.com/dotansimha/graphql-code-generator-community/pull/66)
+  [`aa46f2635`](https://github.com/dotansimha/graphql-code-generator-community/commit/aa46f2635ddd2cb5c723bf7240d31ceb1d5662c7)
+  Thanks [@omjadas](https://github.com/omjadas)! - support using enum members instead of string
+  literals
 
 ## 2.3.0
 
 ### Minor Changes
 
-- [#59](https://github.com/dotansimha/graphql-code-generator-community/pull/59) [`1358a1e39`](https://github.com/dotansimha/graphql-code-generator-community/commit/1358a1e3946c19655249ff1cf45f6887aa23f0fe) Thanks [@omjadas](https://github.com/omjadas)! - Allow arrays to be generated as const.
+- [#59](https://github.com/dotansimha/graphql-code-generator-community/pull/59)
+  [`1358a1e39`](https://github.com/dotansimha/graphql-code-generator-community/commit/1358a1e3946c19655249ff1cf45f6887aa23f0fe)
+  Thanks [@omjadas](https://github.com/omjadas)! - Allow arrays to be generated as const.
 
 ## 2.2.1
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
+  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
+  `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)]:
+- Updated dependencies
+  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)]:
   - @graphql-codegen/plugin-helpers@2.6.2
 
 ## 2.2.0
 
 ### Minor Changes
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
+  `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 
@@ -72,7 +91,8 @@
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
-  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no longer supported for Codegen packages.
+  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no
+  longer supported for Codegen packages.
 
 ### Patch Changes
 
