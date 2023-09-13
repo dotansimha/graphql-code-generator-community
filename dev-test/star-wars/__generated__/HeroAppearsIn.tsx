@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
@@ -40,7 +41,7 @@ export const HeroAppearsInDocument = gql`
 export function useHeroAppearsInQuery(
   baseOptions?: Apollo.QueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
     HeroAppearsInDocument,
     options,
@@ -49,7 +50,7 @@ export function useHeroAppearsInQuery(
 export function useHeroAppearsInLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
     HeroAppearsInDocument,
     options,

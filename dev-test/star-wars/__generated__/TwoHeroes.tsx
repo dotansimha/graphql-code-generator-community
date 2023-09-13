@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
@@ -40,13 +41,13 @@ export const TwoHeroesDocument = gql`
 export function useTwoHeroesQuery(
   baseOptions?: Apollo.QueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
 export function useTwoHeroesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
 export type TwoHeroesQueryHookResult = ReturnType<typeof useTwoHeroesQuery>;

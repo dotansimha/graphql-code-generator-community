@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
@@ -47,7 +48,7 @@ export function useHeroDetailsWithFragmentQuery(
     HeroDetailsWithFragmentQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>(
     HeroDetailsWithFragmentDocument,
     options,
@@ -59,7 +60,7 @@ export function useHeroDetailsWithFragmentLazyQuery(
     HeroDetailsWithFragmentQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>(
     HeroDetailsWithFragmentDocument,
     options,

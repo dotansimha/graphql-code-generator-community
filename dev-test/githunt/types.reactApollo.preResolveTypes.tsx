@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 
@@ -425,7 +426,7 @@ export function useOnCommentAddedSubscription(
     OnCommentAddedSubscriptionVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useSubscription<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>(
     OnCommentAddedDocument,
     options,
@@ -486,13 +487,13 @@ export const CommentDocument = gql`
 export function useCommentQuery(
   baseOptions: Apollo.QueryHookOptions<CommentQuery, CommentQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
 }
 export function useCommentLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<CommentQuery, CommentQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
 }
 export type CommentQueryHookResult = ReturnType<typeof useCommentQuery>;
@@ -528,7 +529,7 @@ export function useCurrentUserForProfileQuery(
     CurrentUserForProfileQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
     CurrentUserForProfileDocument,
     options,
@@ -540,7 +541,7 @@ export function useCurrentUserForProfileLazyQuery(
     CurrentUserForProfileQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
     CurrentUserForProfileDocument,
     options,
@@ -585,13 +586,13 @@ export const FeedDocument = gql`
  * });
  */
 export function useFeedQuery(baseOptions: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables>) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
 export function useFeedLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<FeedQuery, FeedQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
 export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;
@@ -632,7 +633,7 @@ export function useSubmitRepositoryMutation(
     SubmitRepositoryMutationVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>(
     SubmitRepositoryDocument,
     options,
@@ -678,7 +679,7 @@ export type SubmitCommentMutationFn = Apollo.MutationFunction<
 export function useSubmitCommentMutation(
   baseOptions?: Apollo.MutationHookOptions<SubmitCommentMutation, SubmitCommentMutationVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<SubmitCommentMutation, SubmitCommentMutationVariables>(
     SubmitCommentDocument,
     options,
@@ -724,7 +725,7 @@ export type VoteMutationFn = Apollo.MutationFunction<VoteMutation, VoteMutationV
 export function useVoteMutation(
   baseOptions?: Apollo.MutationHookOptions<VoteMutation, VoteMutationVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument, options);
 }
 export type VoteMutationHookResult = ReturnType<typeof useVoteMutation>;

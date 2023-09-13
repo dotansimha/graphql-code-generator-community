@@ -175,6 +175,10 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     return OMIT_TYPE;
   }
 
+  private getMergeDeepImport(): string {
+    return `import mergeDeep from 'deepmerge';`;
+  }
+
   private getDefaultOptions(): string {
     return `const defaultOptions = ${JSON.stringify(this.config.defaultBaseOptions)} as const;`;
   }
@@ -378,13 +382,14 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
 
     this.imports.add(this.getApolloReactCommonImport(true));
     this.imports.add(this.getApolloReactHooksImport(false));
+    this.imports.add(this.getMergeDeepImport());
     this.imports.add(this.getDefaultOptions());
 
     const hookFns = [
       `export function use${operationName}(baseOptions${
         hasRequiredVariables && operationType !== 'Mutation' ? '' : '?'
       }: ${this.getApolloReactHooksIdentifier()}.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return ${this.getApolloReactHooksIdentifier()}.use${operationType}<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
         node,
         documentVariableName,
@@ -408,7 +413,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
         }) + this.config.hooksSuffix;
       hookFns.push(
         `export function use${lazyOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.LazyQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
-          const options = {...defaultOptions, ...baseOptions}
+          const options = mergeDeep(defaultOptions, baseOptions ?? {});
           return ${this.getApolloReactHooksIdentifier()}.useLazyQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
           node,
           documentVariableName,

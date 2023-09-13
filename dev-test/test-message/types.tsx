@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import * as Apollo from '@apollo/client';
 import * as Operations from './documents';
 
@@ -124,7 +125,7 @@ export type EscalateMutation = {
 export function useGetMessagesQuery(
   baseOptions: Apollo.QueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<GetMessagesQuery, GetMessagesQueryVariables>(
     Operations.GetMessages,
     options,
@@ -133,7 +134,7 @@ export function useGetMessagesQuery(
 export function useGetMessagesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<GetMessagesQuery, GetMessagesQueryVariables>(
     Operations.GetMessages,
     options,
@@ -166,7 +167,7 @@ export type GetMessagesQueryResult = Apollo.QueryResult<
 export function useCreateMessageMutation(
   baseOptions?: Apollo.MutationHookOptions<CreateMessageMutation, CreateMessageMutationVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<CreateMessageMutation, CreateMessageMutationVariables>(
     Operations.CreateMessage,
     options,
@@ -200,7 +201,7 @@ export type CreateMessageMutationOptions = Apollo.BaseMutationOptions<
 export function useDeclineMutation(
   baseOptions?: Apollo.MutationHookOptions<DeclineMutation, DeclineMutationVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<DeclineMutation, DeclineMutationVariables>(Operations.Decline, options);
 }
 export type DeclineMutationHookResult = ReturnType<typeof useDeclineMutation>;
@@ -230,7 +231,7 @@ export type DeclineMutationOptions = Apollo.BaseMutationOptions<
 export function useApproveMutation(
   baseOptions?: Apollo.MutationHookOptions<ApproveMutation, ApproveMutationVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<ApproveMutation, ApproveMutationVariables>(Operations.Approve, options);
 }
 export type ApproveMutationHookResult = ReturnType<typeof useApproveMutation>;
@@ -260,7 +261,7 @@ export type ApproveMutationOptions = Apollo.BaseMutationOptions<
 export function useEscalateMutation(
   baseOptions?: Apollo.MutationHookOptions<EscalateMutation, EscalateMutationVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<EscalateMutation, EscalateMutationVariables>(
     Operations.Escalate,
     options,
