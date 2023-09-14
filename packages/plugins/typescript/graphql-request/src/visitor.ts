@@ -13,6 +13,7 @@ import { RawGraphQLRequestPluginConfig } from './config.js';
 export interface GraphQLRequestPluginConfig extends ClientSideBasePluginConfig {
   rawRequest: boolean;
   extensionsType: string;
+  useWebSocketClient: boolean;
 }
 
 const additionalExportedTypes = `
@@ -40,6 +41,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     super(schema, fragments, rawConfig, {
       rawRequest: getConfigValue(rawConfig.rawRequest, false),
       extensionsType: getConfigValue(rawConfig.extensionsType, 'any'),
+      useWebSocketClient: getConfigValue(rawConfig.useWebSocketClient, false),
     });
 
     autoBind(this);
@@ -48,7 +50,11 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     const fileExtension = this.config.emitLegacyCommonJSImports ? '' : '.js';
     const buildPath = this.config.emitLegacyCommonJSImports ? 'cjs' : 'esm';
 
-    this._additionalImports.push(`${typeImport} { GraphQLClient } from 'graphql-request';`);
+    if (this.config.useWebSocketClient)
+      this._additionalImports.push(
+        `${typeImport} { GraphQLWebSocketClient, GraphQLSubscriber, UnsubscribeCallback } from 'graphql-request';`,
+      );
+    else this._additionalImports.push(`${typeImport} { GraphQLClient } from 'graphql-request';`);
     this._additionalImports.push(
       `${typeImport} { GraphQLClientRequestHeaders } from 'graphql-request/build/${buildPath}/types${fileExtension}';`,
     );
@@ -118,13 +124,32 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
             v => v.type.kind !== Kind.NON_NULL_TYPE || v.defaultValue,
           );
         const docVarName = this.getDocumentNodeVariable(o.documentVariableName);
-
+        let docArg = undefined;
         if (this.config.rawRequest) {
-          let docArg = docVarName;
+          docArg = docVarName;
           if (this.config.documentMode !== DocumentMode.string) {
             docArg = `${docVarName}String`;
             extraVariables.push(`const ${docArg} = print(${docVarName});`);
           }
+        }
+        if (o.node.operation === 'subscription') {
+          // ignore node if operation is subsciption and we don't use WebSocket client
+          if (!this.config.useWebSocketClient) return '';
+          if (this.config.rawRequest) {
+            return `${operationName}(${
+              optionalVariables ? '' : 'variables: ' + o.operationVariablesTypes + ', '
+            }subscriber: GraphQLSubscriber<${o.operationResultType}>): UnsubscribeCallback {
+    return client.rawSubscribe(${docArg}, subscriber${optionalVariables ? '' : ', variables'});
+}`;
+          }
+          return `${operationName}(${
+            optionalVariables ? '' : 'variables: ' + o.operationVariablesTypes + ', '
+          }subscriber: GraphQLSubscriber<${o.operationResultType}>): UnsubscribeCallback {
+    return client.subscribe(${docVarName}, subscriber${optionalVariables ? '' : ', variables'});
+}`;
+        }
+
+        if (this.config.rawRequest) {
           return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
             o.operationVariablesTypes
           }, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ${
@@ -150,7 +175,9 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
 ${extraVariables.join('\n')}
-export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+export function getSdk(client:  ${
+      this.config.useWebSocketClient ? 'GraphQLWebSocketClient' : 'GraphQLClient'
+    }, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
 ${allPossibleActions.join(',\n')}
   };
