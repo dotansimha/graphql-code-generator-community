@@ -175,7 +175,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
 ${extraVariables.join('\n')}
-export function getSdk(client:  ${
+export function getSdk(client: ${
       this.config.useWebSocketClient ? 'GraphQLWebSocketClient' : 'GraphQLClient'
     }, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
