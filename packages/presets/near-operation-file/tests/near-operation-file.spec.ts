@@ -626,7 +626,7 @@ describe('near-operation-file preset', () => {
       });
 
       const queriesContent = result.find(generatedDoc =>
-          generatedDoc.filename.match(/issue-406-parent/),
+        generatedDoc.filename.match(/issue-406-parent/),
       ).content;
       const imports = queriesContent.match(/import.*\bUserNameFragment\b/g);
       expect(imports).toHaveLength(1);
