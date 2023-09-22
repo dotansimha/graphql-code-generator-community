@@ -708,15 +708,15 @@ describe('near-operation-file preset', () => {
       config: {},
       presetConfig: {
         baseTypesPath: 'types.ts',
+        skipDocumentsValidation: {
+          skipValidationAgainstSchema: true,
+        },
       },
       schema: schemaDocumentNode,
       schemaAst: schemaNode,
       documents: testDocuments,
       plugins: [],
       pluginMap: {},
-      skipDocumentsValidation: {
-        skipValidationAgainstSchema: true,
-      },
     });
 
     expect(result[0].skipDocumentsValidation).toEqual({ skipValidationAgainstSchema: true });
@@ -728,13 +728,13 @@ describe('near-operation-file preset', () => {
       config: {},
       presetConfig: {
         baseTypesPath: 'types.ts',
+        skipDocumentsValidation: false,
       },
       schema: schemaDocumentNode,
       schemaAst: schemaNode,
       documents: testDocuments,
       plugins: [],
       pluginMap: {},
-      skipDocumentsValidation: false,
     });
 
     expect(result[0].skipDocumentsValidation).toBe(false);
