@@ -200,31 +200,6 @@ export type NearOperationFileConfig = {
    * ```
    */
   importTypesNamespace?: string;
-
-  /**
-   * @description Optional, defines how document validation is performed.
-   * @default { skipDuplicateValidation: true }
-   *
-   * @exampleMarkdown
-   * ```ts filename="codegen.ts" {11}
-   *  import type { CodegenConfig } from '@graphql-codegen/cli';
-   *
-   *  const config: CodegenConfig = {
-   *    // ...
-   *    generates: {
-   *      'path/to/file.ts': {
-   *        preset: 'near-operation-file',
-   *        plugins: ['typescript-operations'],
-   *        presetConfig: {
-   *          skipDocumentsValidation: false,
-   *        },
-   *      },
-   *    },
-   *  };
-   *  export default config;
-   * ```
-   */
-  skipDocumentsValidation?: Types.SkipDocumentsValidationOptions;
 };
 
 export type FragmentNameToFile = {
@@ -368,6 +343,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       }
 
       artifacts.push({
+        ...options,
         filename,
         documents: [combinedSource],
         plugins,
@@ -376,9 +352,9 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         schema: options.schema,
         schemaAst: schemaObject,
         skipDocumentsValidation:
-          typeof options.presetConfig.skipDocumentsValidation === 'undefined'
+          typeof options.config.skipDocumentsValidation === 'undefined'
             ? { skipDuplicateValidation: true }
-            : options.presetConfig.skipDocumentsValidation,
+            : options.config.skipDocumentsValidation,
       });
     }
 

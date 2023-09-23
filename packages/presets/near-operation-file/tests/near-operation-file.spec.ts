@@ -705,12 +705,13 @@ describe('near-operation-file preset', () => {
   it('Should allow to customize the skip documents validation', async () => {
     const result = await executePreset({
       baseOutputDir: './src/',
-      config: {},
-      presetConfig: {
-        baseTypesPath: 'types.ts',
+      config: {
         skipDocumentsValidation: {
           skipValidationAgainstSchema: true,
         },
+      },
+      presetConfig: {
+        baseTypesPath: 'types.ts',
       },
       schema: schemaDocumentNode,
       schemaAst: schemaNode,
@@ -725,10 +726,11 @@ describe('near-operation-file preset', () => {
   it('Should allow to opt-out skipping documents validation', async () => {
     const result = await executePreset({
       baseOutputDir: './src/',
-      config: {},
+      config: {
+        skipDocumentsValidation: false,
+      },
       presetConfig: {
         baseTypesPath: 'types.ts',
-        skipDocumentsValidation: false,
       },
       schema: schemaDocumentNode,
       schemaAst: schemaNode,
