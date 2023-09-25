@@ -26,10 +26,18 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
-  Mutation?: {
+  Query_Root?: {
+    todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<Todo>>> }, Record<string, never>>
+  },
+  Mutation_Root?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<Todo> }, Mutation_RootToggleTodoArgs>
   },
   Subscription?: {},
+  Todo?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
@@ -64,8 +72,16 @@ export type GraphCacheResolvers = {
 export type GraphCacheOptimisticUpdaters = {};
 
 export type GraphCacheUpdaters = {
+  Query_Root?: {
+    todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<Todo>>> }, Record<string, never>>
+  },
   Mutation?: {},
   Subscription?: {},
+  Todo?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
@@ -115,8 +131,29 @@ export type GraphCacheResolvers = {
 export type GraphCacheOptimisticUpdaters = {};
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    schoolBooks?: GraphCacheUpdateResolver<{ schoolBooks: Maybe<Array<WithTypename<Textbook>>> }, Record<string, never>>
+  },
   Mutation?: {},
   Subscription?: {},
+  Author?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
+    name?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
+    friends?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
+    friendsPaginated?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, AuthorFriendsPaginatedArgs>
+  },
+  Todo?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    author?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>
+  },
+  Textbook?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Textbook>>, Record<string, never>>,
+    title?: GraphCacheUpdateResolver<Maybe<WithTypename<Textbook>>, Record<string, never>>,
+    author?: GraphCacheUpdateResolver<Maybe<WithTypename<Textbook>>, Record<string, never>>,
+    todo?: GraphCacheUpdateResolver<Maybe<WithTypename<Textbook>>, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
@@ -165,6 +202,9 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<PrefixTodoSuffix>>> }, Record<string, never>>
+  },
   Mutation?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<PrefixTodoSuffix> }, PrefixMutationToggleTodoArgsSuffix>,
     toggleTodos?: GraphCacheUpdateResolver<{ toggleTodos: Array<WithTypename<PrefixTodoSuffix>> }, PrefixMutationToggleTodosArgsSuffix>,
@@ -173,6 +213,18 @@ export type GraphCacheUpdaters = {
     toggleTodosOptional?: GraphCacheUpdateResolver<{ toggleTodosOptional: Maybe<Array<WithTypename<PrefixTodoSuffix>>> }, PrefixMutationToggleTodosOptionalArgsSuffix>
   },
   Subscription?: {},
+  Author?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixAuthorSuffix>>, Record<string, never>>,
+    name?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixAuthorSuffix>>, Record<string, never>>,
+    friends?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixAuthorSuffix>>, Record<string, never>>,
+    friendsPaginated?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixAuthorSuffix>>, PrefixAuthorFriendsPaginatedArgsSuffix>
+  },
+  Todo?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixTodoSuffix>>, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixTodoSuffix>>, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixTodoSuffix>>, Record<string, never>>,
+    author?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixTodoSuffix>>, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
@@ -215,10 +267,23 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    media?: GraphCacheUpdateResolver<{ media: Maybe<Array<WithTypename<Media>>> }, Record<string, never>>
+  },
   Mutation?: {
     updateMedia?: GraphCacheUpdateResolver<{ updateMedia: Maybe<WithTypename<Media>> }, MutationUpdateMediaArgs>
   },
   Subscription?: {},
+  Book?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Book>>, Record<string, never>>,
+    title?: GraphCacheUpdateResolver<Maybe<WithTypename<Book>>, Record<string, never>>,
+    pages?: GraphCacheUpdateResolver<Maybe<WithTypename<Book>>, Record<string, never>>
+  },
+  Movie?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Movie>>, Record<string, never>>,
+    title?: GraphCacheUpdateResolver<Maybe<WithTypename<Movie>>, Record<string, never>>,
+    duration?: GraphCacheUpdateResolver<Maybe<WithTypename<Movie>>, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
@@ -267,6 +332,9 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<Todo>>> }, Record<string, never>>
+  },
   Mutation?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<Todo> }, MutationToggleTodoArgs>,
     toggleTodos?: GraphCacheUpdateResolver<{ toggleTodos: Array<WithTypename<Todo>> }, MutationToggleTodosArgs>,
@@ -275,6 +343,18 @@ export type GraphCacheUpdaters = {
     toggleTodosOptional?: GraphCacheUpdateResolver<{ toggleTodosOptional: Maybe<Array<WithTypename<Todo>>> }, MutationToggleTodosOptionalArgs>
   },
   Subscription?: {},
+  Author?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
+    name?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
+    friends?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
+    friendsPaginated?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, AuthorFriendsPaginatedArgs>
+  },
+  Todo?: {
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    text?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    complete?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
+    author?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>
+  },
 };
 
 export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
