@@ -48,7 +48,6 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       TData = ${operationResultType},
       TError = ${this.visitor.config.errorType}
     >(
-      pageParamKey: keyof ${operationVariablesTypes},
       client: GraphQLClient,
       ${variables},
       ${options},

@@ -81,7 +81,6 @@ ${this.getFetchParams()}
       TData = ${operationResultType},
       TError = ${this.visitor.config.errorType}
     >(
-      pageParamKey: keyof ${operationVariablesTypes},
       ${variables},
       ${options}
     ) =>
