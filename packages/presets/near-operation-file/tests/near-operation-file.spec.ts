@@ -699,7 +699,47 @@ describe('near-operation-file preset', () => {
       pluginMap: {},
     });
 
-    expect(result[0].skipDocumentsValidation).toBeTruthy();
+    expect(result[0].skipDocumentsValidation).toEqual({ skipDuplicateValidation: true });
+  });
+
+  it('Should allow to customize the skip documents validation', async () => {
+    const result = await executePreset({
+      baseOutputDir: './src/',
+      config: {
+        skipDocumentsValidation: {
+          skipValidationAgainstSchema: true,
+        },
+      },
+      presetConfig: {
+        baseTypesPath: 'types.ts',
+      },
+      schema: schemaDocumentNode,
+      schemaAst: schemaNode,
+      documents: testDocuments,
+      plugins: [],
+      pluginMap: {},
+    });
+
+    expect(result[0].skipDocumentsValidation).toEqual({ skipValidationAgainstSchema: true });
+  });
+
+  it('Should allow to opt-out skipping documents validation', async () => {
+    const result = await executePreset({
+      baseOutputDir: './src/',
+      config: {
+        skipDocumentsValidation: false,
+      },
+      presetConfig: {
+        baseTypesPath: 'types.ts',
+      },
+      schema: schemaDocumentNode,
+      schemaAst: schemaNode,
+      documents: testDocuments,
+      plugins: [],
+      pluginMap: {},
+    });
+
+    expect(result[0].skipDocumentsValidation).toBe(false);
   });
 
   it('Should allow to customize output extension', async () => {
