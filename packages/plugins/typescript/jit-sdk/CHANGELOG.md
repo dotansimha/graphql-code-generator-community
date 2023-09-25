@@ -1,10 +1,44 @@
 # @graphql-codegen/typescript-jit-sdk
 
+## 3.0.0
+
+### Major Changes
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
+### Patch Changes
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - dependencies updates:
+
+  - Updated dependency
+    [`@graphql-tools/utils@^8.8.0 || ^10.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/8.8.0)
+    (from `^8.8.0`, in `peerDependencies`)
+
+- [#421](https://github.com/dotansimha/graphql-code-generator-community/pull/421)
+  [`1b819d387`](https://github.com/dotansimha/graphql-code-generator-community/commit/1b819d387d9721987587bd0b2993887c0c8a8886)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+
+  - Updated dependency
+    [`graphql-jit@^0.6.0 || ^0.7.0 || ^0.8.0` ↗︎](https://www.npmjs.com/package/graphql-jit/v/0.6.0)
+    (from `^0.6.0 || ^0.7.0`, in `peerDependencies`)
+
+- [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
+  [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+  - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
+    `~2.4.0`, in `dependencies`)
+
 ## 2.1.6
 
 ### Patch Changes
 
-- Updated dependencies [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
+- Updated dependencies
+  [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
   - @graphql-codegen/visitor-plugin-common@2.13.1
   - @graphql-codegen/plugin-helpers@2.7.2
 
@@ -12,23 +46,30 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
+- Updated dependencies
+  [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
   - @graphql-codegen/visitor-plugin-common@2.13.0
 
 ## 2.1.4
 
 ### Patch Changes
 
-- Updated dependencies [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
+- Updated dependencies
+  [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
   - @graphql-codegen/visitor-plugin-common@2.12.2
 
 ## 2.1.3
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
+  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
+  `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f), [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
+- Updated dependencies
+  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f),
+  [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
   - @graphql-codegen/visitor-plugin-common@2.12.1
   - @graphql-codegen/plugin-helpers@2.6.2
 
@@ -51,7 +92,8 @@
 
 ### Minor Changes
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
+  `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 

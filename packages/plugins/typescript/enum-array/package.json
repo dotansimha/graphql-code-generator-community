@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-enum-array",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for adding const array",
   "repository": {
