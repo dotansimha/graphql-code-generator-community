@@ -64,6 +64,18 @@ export interface ReactQueryRawPluginConfig
 
   /**
    * @default false
+   * @description For each generate query hook adds rootKey. Useful for cache updates.
+   * @exampleMarkdown
+   * ```ts
+   * const query = useUserDetailsQuery(...)
+   * const key = useUserDetailsQuery.rootKey
+   * // use key in a cache update after a mutation
+   * ```
+   */
+  exposeQueryRootKeys?: boolean;
+
+  /**
+   * @default false
    * @description For each generate mutation hook adds getKey() function. Useful for call outside of functional component.
    * @exampleMarkdown
    * ```ts
@@ -101,4 +113,15 @@ export interface ReactQueryRawPluginConfig
    * @description If false, it will work with `@tanstack/react-query`, default value is true.
    */
   legacyMode?: boolean;
+
+  /**
+   * @default empty
+   * @description Add custom import for react-query.
+   * It can be used to import from `@tanstack/react-query` instead of `react-query`. But make sure it include useQuery, UseQueryOptions, useMutation, UseMutationOptions, useInfiniteQuery, UseInfiniteQueryOptions
+   *
+   * The following options are available to use:
+   *
+   * - "src/your-own-react-query-customized": import { useQuery, UseQueryOptions, useMutation, UseMutationOptions, useInfiniteQuery, UseInfiniteQueryOptions } from your own react-query customized package.
+   */
+  reactQueryImportFrom?: string;
 }

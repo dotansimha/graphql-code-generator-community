@@ -5,6 +5,16 @@ import { defaultFreezedPluginConfig, FlutterFreezedPluginConfig } from './config
 import { Block } from './freezed-declaration-blocks/index.js';
 import { schemaVisitor } from './schema-visitor.js';
 
+export {
+  Pattern,
+  TypeName,
+  FieldName,
+  TypeNamePattern,
+  FieldNamePattern,
+} from './config/pattern.js';
+
+export { FlutterFreezedPluginConfig };
+
 export const plugin: PluginFunction<FlutterFreezedPluginConfig> = (
   schema: GraphQLSchema,
   _documents: Types.DocumentFile[],

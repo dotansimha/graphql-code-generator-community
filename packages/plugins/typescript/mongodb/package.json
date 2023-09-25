@@ -9,6 +9,9 @@
     "directory": "packages/plugins/typescript/mongodb"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
@@ -41,14 +44,14 @@
     "@graphql-codegen/plugin-helpers": "^3.0.0",
     "@graphql-codegen/typescript": "^2.8.1",
     "@graphql-codegen/visitor-plugin-common": "2.13.1",
-    "@graphql-tools/utils": "^8.8.0",
+    "@graphql-tools/utils": "^10.0.0",
     "auto-bind": "~4.0.0",
     "lodash": "~4.17.0",
     "tslib": "~2.4.0"
   },
   "devDependencies": {
     "@graphql-codegen/testing": "1.18.0",
-    "@types/lodash": "4.14.192"
+    "@types/lodash": "4.14.194"
   },
   "publishConfig": {
     "directory": "dist",

@@ -9,6 +9,9 @@
     "directory": "packages/plugins/typescript/apollo-client-helpers"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
@@ -44,7 +47,7 @@
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@apollo/client": "3.7.9"
+    "@apollo/client": "3.8.4"
   },
   "publishConfig": {
     "directory": "dist",

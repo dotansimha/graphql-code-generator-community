@@ -46,10 +46,11 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
     const typeImport = this.config.useTypeImports ? 'import type' : 'import';
     const fileExtension = this.config.emitLegacyCommonJSImports ? '' : '.js';
+    const buildPath = this.config.emitLegacyCommonJSImports ? 'cjs' : 'esm';
 
     this._additionalImports.push(`${typeImport} { GraphQLClient } from 'graphql-request';`);
     this._additionalImports.push(
-      `${typeImport} * as Dom from 'graphql-request/dist/types.dom${fileExtension}';`,
+      `${typeImport} { GraphQLClientRequestHeaders } from 'graphql-request/build/${buildPath}/types${fileExtension}';`,
     );
 
     if (this.config.rawRequest && this.config.documentMode !== DocumentMode.string) {
@@ -126,9 +127,11 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
           }
           return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
             o.operationVariablesTypes
-          }, requestHeaders?: Dom.RequestInit["headers"]): Promise<{ data: ${
+          }, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ${
             o.operationResultType
-          }; extensions?: ${this.config.extensionsType}; headers: Dom.Headers; status: number; }> {
+          }; errors?: GraphQLError[]; extensions?: ${
+            this.config.extensionsType
+          }; headers: Headers; status: number; }> {
     return withWrapper((wrappedRequestHeaders) => client.rawRequest<${
       o.operationResultType
     }>(${docArg}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}');
@@ -136,7 +139,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
         }
         return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
           o.operationVariablesTypes
-        }, requestHeaders?: Dom.RequestInit["headers"]): Promise<${o.operationResultType}> {
+        }, requestHeaders?: GraphQLClientRequestHeaders): Promise<${o.operationResultType}> {
   return withWrapper((wrappedRequestHeaders) => client.request<${
     o.operationResultType
   }>(${docVarName}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}');

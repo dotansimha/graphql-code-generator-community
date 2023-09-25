@@ -9,6 +9,9 @@
     "directory": "packages/plugins/typescript/rtk-query"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
@@ -52,7 +55,7 @@
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@reduxjs/toolkit": "1.9.3",
+    "@reduxjs/toolkit": "1.9.6",
     "@rtk-query/graphql-request-base-query": "2.2.0",
     "graphql-request": "^4.0.0"
   },

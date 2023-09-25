@@ -27,6 +27,13 @@ export function generateInfiniteQueryKeyMaker(
   )};\n`;
 }
 
+export function generateInfiniteQueryRootKeyMaker(
+  node: OperationDefinitionNode,
+  operationName: string,
+) {
+  return `\nuseInfinite${operationName}.rootKey = '${node.name.value}.infinite';\n`;
+}
+
 export function generateQueryKey(
   node: OperationDefinitionNode,
   hasRequiredVariables: boolean,
@@ -46,6 +53,10 @@ export function generateQueryKeyMaker(
     node,
     hasRequiredVariables,
   )};\n`;
+}
+
+export function generateQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
+  return `\nuse${operationName}.rootKey = '${node.name.value}';\n`;
 }
 
 export function generateMutationKey(node: OperationDefinitionNode): string {

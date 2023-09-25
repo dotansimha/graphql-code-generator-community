@@ -1,5 +1,260 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`React-Query exposeQueryKeys: true Should generate getKey for each query 1`] = `
+"
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+export const useTestQuery = <
+      TData = TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: TestQueryVariables,
+      options?: UseQueryOptions<TestQuery, TError, TData>
+    ) =>
+    useQuery<TestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+      options
+    );
+
+useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];
+;
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
+    ) =>
+    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+      ['test'],
+      (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+      options
+    );"
+`;
+
+exports[`React-Query exposeQueryKeys: true, addInfiniteQuery: true Should generate getKey for each query - also infinite queries 1`] = `
+"
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+export const useTestQuery = <
+      TData = TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: TestQueryVariables,
+      options?: UseQueryOptions<TestQuery, TError, TData>
+    ) =>
+    useQuery<TestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+      options
+    );
+
+useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];
+;
+
+export const useInfiniteTestQuery = <
+      TData = TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      pageParamKey: keyof TestQueryVariables,
+      variables?: TestQueryVariables,
+      options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
+    ) =>
+    useInfiniteQuery<TestQuery, TError, TData>(
+      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    );
+
+
+useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];
+;
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
+    ) =>
+    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+      ['test'],
+      (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+      options
+    );"
+`;
+
+exports[`React-Query exposeQueryRootKeys: true Should generate rootKey for each query 1`] = `
+"
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+export const useTestQuery = <
+      TData = TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: TestQueryVariables,
+      options?: UseQueryOptions<TestQuery, TError, TData>
+    ) =>
+    useQuery<TestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+      options
+    );
+
+useTestQuery.rootKey = 'test';
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
+    ) =>
+    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+      ['test'],
+      (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+      options
+    );"
+`;
+
+exports[`React-Query exposeQueryRootKeys: true, addInfiniteQuery: true Should generate rootKey for each query - also infinite queries 1`] = `
+"
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+export const useTestQuery = <
+      TData = TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: TestQueryVariables,
+      options?: UseQueryOptions<TestQuery, TError, TData>
+    ) =>
+    useQuery<TestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+      options
+    );
+
+useTestQuery.rootKey = 'test';
+
+export const useInfiniteTestQuery = <
+      TData = TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      pageParamKey: keyof TestQueryVariables,
+      variables?: TestQueryVariables,
+      options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
+    ) =>
+    useInfiniteQuery<TestQuery, TError, TData>(
+      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    );
+
+
+useInfiniteTestQuery.rootKey = 'test.infinite';
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
+    ) =>
+    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+      ['test'],
+      (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+      options
+    );"
+`;
+
 exports[`React-Query fetcher: custom-mapper Should generate mutation correctly with lazy variables 1`] = `
 "
 export const TestDocument = \`

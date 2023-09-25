@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-urql-graphcache
 
+## 2.4.5
+
+### Patch Changes
+
+- [#338](https://github.com/dotansimha/graphql-code-generator-community/pull/338)
+  [`7e3093508`](https://github.com/dotansimha/graphql-code-generator-community/commit/7e30935084fe8e8e97304bd9350113e2ba7a314a)
+  Thanks [@beerose](https://github.com/beerose)! - Make `GraphCacheConfig` type rely on
+  offlineExchange function signature for more up-to-date typings
+
 ## 2.4.4
 
 ### Patch Changes

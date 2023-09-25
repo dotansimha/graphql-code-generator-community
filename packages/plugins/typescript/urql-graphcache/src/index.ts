@@ -182,7 +182,8 @@ function getRootUpdatersConfig(
   convertName: ConvertFn,
   config: UrqlGraphCacheConfig,
 ) {
-  const [mutationUpdaters, subscriptionUpdaters] = [
+  const [queryUpdaters, mutationUpdaters, subscriptionUpdaters] = [
+    schema.getQueryType(),
     schema.getMutationType(),
     schema.getSubscriptionType(),
   ].map(rootType => {
@@ -210,9 +211,38 @@ function getRootUpdatersConfig(
     }
     return null;
   });
+
+  const typeUpdateResolvers = getObjectTypes(schema).reduce((resolvers, parentType) => {
+    const fields = Object.entries(parentType.getFields()).reduce((fields, [fieldName, field]) => {
+      const argsName = field.args.length
+        ? convertName(`${parentType.name}${capitalize(fieldName)}Args`, {
+            prefix: config.typesPrefix,
+            suffix: config.typesSuffix,
+          })
+        : 'Record<string, never>';
+
+      fields.push(
+        `${field.name}?: GraphCacheUpdateResolver<${constructType(
+          parentType,
+          schema,
+          convertName,
+          config,
+        )}, ${argsName}>`,
+      );
+
+      return fields;
+    }, []);
+
+    resolvers.push(`  ${parentType.name}?: {\n    ` + fields.join(',\n    ') + '\n  }');
+
+    return resolvers;
+  }, []);
+
   return {
+    queryUpdaters,
     mutationUpdaters,
     subscriptionUpdaters,
+    typeUpdateResolvers,
   };
 }
 
@@ -246,9 +276,12 @@ function getOptimisticUpdatersConfig(
 }
 
 function getImports(config: UrqlGraphCacheConfig): string {
-  return `${
-    config.useTypeImports ? 'import type' : 'import'
-  } { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver, StorageAdapter as GraphCacheStorageAdapter, CacheExchangeOpts } from '@urql/exchange-graphcache';\n`;
+  return [
+    "import { offlineExchange } from '@urql/exchange-graphcache';",
+    `${
+      config.useTypeImports ? 'import type' : 'import'
+    } { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';\n`,
+  ].join('\n');
 }
 
 export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOutput> = (
@@ -260,13 +293,13 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
   const imports = getImports(config);
   const keys = getKeysConfig(schema, convertName, config);
   const resolvers = getResolversConfig(schema, convertName, config);
-  const { mutationUpdaters, subscriptionUpdaters } = getRootUpdatersConfig(
-    schema,
-    convertName,
-    config,
-  );
+  const { queryUpdaters, mutationUpdaters, subscriptionUpdaters, typeUpdateResolvers } =
+    getRootUpdatersConfig(schema, convertName, config);
   const optimisticUpdaters = getOptimisticUpdatersConfig(schema, convertName, config);
 
+  const queryType = schema.getQueryType();
+  const mutationType = schema.getMutationType();
+  const subscriptionType = schema.getSubscriptionType();
   return {
     prepend: [imports],
     content: [
@@ -280,20 +313,23 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
         (optimisticUpdaters ? '{\n  ' + optimisticUpdaters.join(',\n  ') + '\n};' : '{};'),
 
       'export type GraphCacheUpdaters = {\n' +
-        '  Mutation?: ' +
+        `  ${(queryType && queryType.name) || 'Mutation'}?: ` +
+        (queryUpdaters ? `{\n    ${queryUpdaters.join(',\n    ')}\n  }` : '{}') +
+        ',\n' +
+        `  ${(mutationType && mutationType.name) || 'Mutation'}?: ` +
         (mutationUpdaters ? `{\n    ${mutationUpdaters.join(',\n    ')}\n  }` : '{}') +
         ',\n' +
-        '  Subscription?: ' +
+        `  ${(subscriptionType && subscriptionType.name) || 'Subscription'}?: ` +
         (subscriptionUpdaters ? `{\n    ${subscriptionUpdaters.join(',\n    ')}\n  }` : '{}') +
+        ',\n' +
+        `${typeUpdateResolvers.join(',\n')}` +
         ',\n};',
 
-      'export type GraphCacheConfig = {\n' +
-        "  schema?: CacheExchangeOpts['schema'],\n" +
+      'export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {\n' +
         '  updates?: GraphCacheUpdaters,\n' +
         '  keys?: GraphCacheKeysConfig,\n' +
         '  optimistic?: GraphCacheOptimisticUpdaters,\n' +
         '  resolvers?: GraphCacheResolvers,\n' +
-        '  storage?: GraphCacheStorageAdapter\n' +
         '};',
     ]
       .filter(Boolean)
