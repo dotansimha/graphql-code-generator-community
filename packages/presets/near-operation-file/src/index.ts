@@ -343,6 +343,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       }
 
       artifacts.push({
+        ...options,
         filename,
         documents: [combinedSource],
         plugins,
@@ -351,9 +352,9 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         schema: options.schema,
         schemaAst: schemaObject,
         skipDocumentsValidation:
-          typeof options.skipDocumentsValidation === 'undefined'
+          typeof options.config.skipDocumentsValidation === 'undefined'
             ? { skipDuplicateValidation: true }
-            : options.skipDocumentsValidation,
+            : options.config.skipDocumentsValidation,
       });
     }
 

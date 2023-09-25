@@ -705,7 +705,11 @@ describe('near-operation-file preset', () => {
   it('Should allow to customize the skip documents validation', async () => {
     const result = await executePreset({
       baseOutputDir: './src/',
-      config: {},
+      config: {
+        skipDocumentsValidation: {
+          skipValidationAgainstSchema: true,
+        },
+      },
       presetConfig: {
         baseTypesPath: 'types.ts',
       },
@@ -714,9 +718,6 @@ describe('near-operation-file preset', () => {
       documents: testDocuments,
       plugins: [],
       pluginMap: {},
-      skipDocumentsValidation: {
-        skipValidationAgainstSchema: true,
-      },
     });
 
     expect(result[0].skipDocumentsValidation).toEqual({ skipValidationAgainstSchema: true });
@@ -725,7 +726,9 @@ describe('near-operation-file preset', () => {
   it('Should allow to opt-out skipping documents validation', async () => {
     const result = await executePreset({
       baseOutputDir: './src/',
-      config: {},
+      config: {
+        skipDocumentsValidation: false,
+      },
       presetConfig: {
         baseTypesPath: 'types.ts',
       },
@@ -734,7 +737,6 @@ describe('near-operation-file preset', () => {
       documents: testDocuments,
       plugins: [],
       pluginMap: {},
-      skipDocumentsValidation: false,
     });
 
     expect(result[0].skipDocumentsValidation).toBe(false);
