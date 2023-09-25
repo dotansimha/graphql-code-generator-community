@@ -109,8 +109,8 @@ export interface ReactQueryRawPluginConfig
   addInfiniteQuery?: boolean;
 
   /**
-   * @default true
-   * @description If false, it will work with `@tanstack/react-query`, default value is true.
+   * @default false
+   * @description If true, it imports `react-query` not `@tanstack/react-query`, default is false.
    */
   legacyMode?: boolean;
 
