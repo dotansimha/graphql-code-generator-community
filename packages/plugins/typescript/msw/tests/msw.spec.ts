@@ -47,6 +47,18 @@ describe('msw', () => {
     expect(result.content).toMatchSnapshot('content with a link/endpoint');
   });
 
+  it('Should generate handlerNames without suffix when withSuffix is false', async () => {
+    const link = { name: 'api', endpoint: 'http://localhost:3000/graphql', withSuffix: false };
+
+    const result = await plugin(null, documents, { link });
+
+    // handler function names
+    expect(result.content).toContain(`mock${queryName}Query =`);
+    expect(result.content).toContain(`mock${mutationName}Mutation =`);
+
+    expect(result.content).toMatchSnapshot('content without link name suffix');
+  });
+
   it('Should generate JSDoc documentation with variables and selection from the operations themselves', async () => {
     const variables = ['id', 'offset', 'limit'];
     const input = variables.map(v => `$${v}: Int`).join(', ');
