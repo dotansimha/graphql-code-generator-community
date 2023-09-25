@@ -411,7 +411,7 @@ export const OnCommentAddedDocument = gql`
 `;
 
 export function useOnCommentAddedSubscription<TData = OnCommentAddedSubscription>(
-  options: Omit<Urql.UseSubscriptionArgs<OnCommentAddedSubscriptionVariables>, 'query'> = {},
+  options: Omit<Urql.UseSubscriptionArgs<OnCommentAddedSubscriptionVariables>, 'query'>,
   handler?: Urql.SubscriptionHandler<OnCommentAddedSubscription, TData>,
 ) {
   return Urql.useSubscription<
