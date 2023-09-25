@@ -1,60 +1,28 @@
 # @graphql-codegen/typescript-react-query
 
-## 5.0.0
-
-### Major Changes
-
-- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
-  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
-  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
-  `>= 16`
-
-### Minor Changes
-
-- [#327](https://github.com/dotansimha/graphql-code-generator-community/pull/327)
-  [`88ea4459c`](https://github.com/dotansimha/graphql-code-generator-community/commit/88ea4459cc645221242197331cf13299afef7781)
-  Thanks [@kambing86](https://github.com/kambing86)! - add exposeQueryRootKeys
-
-### Patch Changes
-
-- [#369](https://github.com/dotansimha/graphql-code-generator-community/pull/369)
-  [`9d6a3881a`](https://github.com/dotansimha/graphql-code-generator-community/commit/9d6a3881ab5b62f8aa853cff3155514a3b65621a)
-  Thanks [@vctqs1](https://github.com/vctqs1)! - Provide reactQueryImportFrom field to custom
-  react-query import from
-
 ## 4.1.0
 
 ### Minor Changes
 
-- [#25](https://github.com/dotansimha/graphql-code-generator-community/pull/25)
-  [`a70964409`](https://github.com/dotansimha/graphql-code-generator-community/commit/a70964409e882ace42756e3f9f86a0eb8819a120)
-  Thanks [@EandrewJones](https://github.com/EandrewJones)! - Reverts problematic part of PR #8497.
-  That PR fixed an issue with infinite query generated hooks not utilizing pageParamKeys for custom
-  fetchers but in the process introduced a type error. This removes the cause of the type error.
+- [#25](https://github.com/dotansimha/graphql-code-generator-community/pull/25) [`a70964409`](https://github.com/dotansimha/graphql-code-generator-community/commit/a70964409e882ace42756e3f9f86a0eb8819a120) Thanks [@EandrewJones](https://github.com/EandrewJones)! - Reverts problematic part of PR #8497. That PR fixed an issue with infinite query generated hooks not utilizing pageParamKeys for custom fetchers but in the process introduced a type error. This removes the cause of the type error.
 
 ## 4.0.6
 
 ### Patch Changes
 
-- [#19](https://github.com/dotansimha/graphql-code-generator-community/pull/19)
-  [`d98ca30cd`](https://github.com/dotansimha/graphql-code-generator-community/commit/d98ca30cd6b0fe20356c3a4049b17873b397851b)
-  Thanks [@charlypoly](https://github.com/charlypoly)! - Fix compatibility of graphql-request
-  fetcher with >5.0
+- [#19](https://github.com/dotansimha/graphql-code-generator-community/pull/19) [`d98ca30cd`](https://github.com/dotansimha/graphql-code-generator-community/commit/d98ca30cd6b0fe20356c3a4049b17873b397851b) Thanks [@charlypoly](https://github.com/charlypoly)! - Fix compatibility of graphql-request fetcher with >5.0
 
 ## 4.0.5
 
 ### Patch Changes
 
-- [#8567](https://github.com/dotansimha/graphql-code-generator/pull/8567)
-  [`af40efbd2`](https://github.com/dotansimha/graphql-code-generator/commit/af40efbd23850c6bdb5f5b3d8713bac24e72fe44)
-  Thanks [@EandrewJones](https://github.com/EandrewJones)! - fixes issue #7549
+- [#8567](https://github.com/dotansimha/graphql-code-generator/pull/8567) [`af40efbd2`](https://github.com/dotansimha/graphql-code-generator/commit/af40efbd23850c6bdb5f5b3d8713bac24e72fe44) Thanks [@EandrewJones](https://github.com/EandrewJones)! - fixes issue #7549
 
 ## 4.0.4
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
+- Updated dependencies [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
   - @graphql-codegen/visitor-plugin-common@2.13.1
   - @graphql-codegen/plugin-helpers@2.7.2
 
@@ -62,34 +30,25 @@
 
 ### Patch Changes
 
-- [#8497](https://github.com/dotansimha/graphql-code-generator/pull/8497)
-  [`7c2bb60a4`](https://github.com/dotansimha/graphql-code-generator/commit/7c2bb60a42c130bd428da1e9d8fabf5d84821433)
-  Thanks [@EandrewJones](https://github.com/EandrewJones)! - fixes issue #7549
+- [#8497](https://github.com/dotansimha/graphql-code-generator/pull/8497) [`7c2bb60a4`](https://github.com/dotansimha/graphql-code-generator/commit/7c2bb60a42c130bd428da1e9d8fabf5d84821433) Thanks [@EandrewJones](https://github.com/EandrewJones)! - fixes issue #7549
 
-- Updated dependencies
-  [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
+- Updated dependencies [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
   - @graphql-codegen/visitor-plugin-common@2.13.0
 
 ## 4.0.2
 
 ### Patch Changes
 
-- Updated dependencies
-  [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
+- Updated dependencies [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
   - @graphql-codegen/visitor-plugin-common@2.12.2
 
 ## 4.0.1
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
-  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
-  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
-  `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies
-  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f),
-  [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
+- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f), [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
   - @graphql-codegen/visitor-plugin-common@2.12.1
   - @graphql-codegen/plugin-helpers@2.6.2
 
@@ -102,8 +61,7 @@
   - react query package is now `@tanstack/react-query` -> import changes
   - introduced a `legacyMode` flag (`false` by default)
 
-  /!\ If you are using the 'react-query' package or `react-query < 4`, please set the `legacyMode`
-  option to `true`. /!\
+  /!\ If you are using the 'react-query' package or `react-query < 4`, please set the `legacyMode` option to `true`. /!\
 
 ## 3.6.2
 
@@ -124,8 +82,7 @@
 
 ### Minor Changes
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
-  `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 
@@ -251,8 +208,8 @@
 
 ### Minor Changes
 
-- ad8ffa457: Add options to exposed custom fetcher. eg. This enables passing headers to fetcher for
-  prefetchQuery & get more query possibilities (user authentication)
+- ad8ffa457: Add options to exposed custom fetcher.
+  eg. This enables passing headers to fetcher for prefetchQuery & get more query possibilities (user authentication)
 
 ## 3.4.0
 
@@ -268,8 +225,7 @@
 
 ### Patch Changes
 
-- fa517214c: Generate `getKey` function on generated infinite queries when both `exposeQueryKeys`
-  and `addInfiniteQuery` settings are `true`.
+- fa517214c: Generate `getKey` function on generated infinite queries when both `exposeQueryKeys` and `addInfiniteQuery` settings are `true`.
 
 ## 3.3.1
 
@@ -287,8 +243,7 @@
 
 ### Patch Changes
 
-- 9b4629465: fix invalid generated TypeScript code due to the `exposeMutationKey` option adding an
-  unnecessary bracket
+- 9b4629465: fix invalid generated TypeScript code due to the `exposeMutationKey` option adding an unnecessary bracket
 - 6002feb3d: Fix exports in package.json files for react-native projects
 - Updated dependencies [6002feb3d]
   - @graphql-codegen/visitor-plugin-common@2.5.2
@@ -361,8 +316,7 @@
 
 ### Major Changes
 
-- 545c47039: Change `fetchParams` configuration option from object to string.The string will be
-  inserted 1:1 into the generated code. This is a breaking change!
+- 545c47039: Change `fetchParams` configuration option from object to string.The string will be inserted 1:1 into the generated code. This is a breaking change!
 
   This allows more flexibility for customization. Here are some examples:
 
@@ -469,8 +423,7 @@
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
-  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no
-  longer supported for Codegen packages.
+  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no longer supported for Codegen packages.
 
 ### Minor Changes
 
@@ -552,8 +505,7 @@
 
 ### Patch Changes
 
-- 29b75b1e: enhance(namingConvention): use change-case-all instead of individual packages for naming
-  convention
+- 29b75b1e: enhance(namingConvention): use change-case-all instead of individual packages for naming convention
 - Updated dependencies [e947f8e3]
 - Updated dependencies [29b75b1e]
 - Updated dependencies [d4942d04]
@@ -607,8 +559,7 @@
 ### Major Changes
 
 - b51712c3: - Upgraded react-query to v3
-  - Modified generated useQuery hooks to allow passing in of data type to be used with query data
-    selectors
+  - Modified generated useQuery hooks to allow passing in of data type to be used with query data selectors
   - Reworked the mutations so that variables are passed in at mutate time and not at instantiation
 
 ### Patch Changes
