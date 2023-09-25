@@ -591,6 +591,46 @@ describe('near-operation-file preset', () => {
       const imports = parentContent.match(/import.*UserNameFragment/g);
       expect(imports).toHaveLength(1);
     });
+
+    it('#406 - duplicate fragment imports', async () => {
+      const result = await executeCodegen({
+        schema: [
+          /* GraphQL */ `
+            type Query {
+              user(id: String!): User!
+            }
+
+            type User {
+              id: String!
+              name: String!
+              email: String
+            }
+          `,
+        ],
+        documents: [
+          path.join(__dirname, 'fixtures/issue-406-child.ts'),
+          path.join(__dirname, 'fixtures/issue-406-parent.ts'),
+        ],
+        generates: {
+          'out1.ts': {
+            preset,
+            presetConfig: {
+              baseTypesPath: 'types.ts',
+            },
+            plugins: ['typescript-operations'],
+          },
+        },
+        config: {
+          inlineFragmentTypes: 'combine',
+        },
+      });
+
+      const queriesContent = result.find(generatedDoc =>
+        generatedDoc.filename.match(/issue-406-parent/),
+      ).content;
+      const imports = queriesContent.match(/import.*\bUserNameFragment\b/g);
+      expect(imports).toHaveLength(1);
+    });
   });
 
   it('should not add imports for fragments in the same location', async () => {
