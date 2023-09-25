@@ -46,7 +46,7 @@
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "1.18.0"
+    "@graphql-codegen/testing": "1.18.3"
   },
   "publishConfig": {
     "directory": "dist",

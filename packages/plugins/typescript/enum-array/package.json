@@ -41,11 +41,11 @@
   },
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^3.0.0",
-    "@graphql-codegen/visitor-plugin-common": "2.13.7",
+    "@graphql-codegen/visitor-plugin-common": "2.13.8",
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "1.18.0"
+    "@graphql-codegen/testing": "1.18.3"
   },
   "publishConfig": {
     "directory": "dist",
