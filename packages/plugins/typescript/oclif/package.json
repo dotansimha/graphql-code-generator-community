@@ -10,6 +10,9 @@
   },
   "author": "Kalan Snyder <hello@kalan.io>",
   "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
@@ -45,7 +48,7 @@
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@oclif/command": "1.8.22"
+    "@oclif/command": "1.8.36"
   },
   "publishConfig": {
     "directory": "dist",

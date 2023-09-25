@@ -17,18 +17,22 @@ import { GraphQLRequestClientFetcher } from './fetcher-graphql-request.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
   generateInfiniteQueryKeyMaker,
+  generateInfiniteQueryRootKeyMaker,
   generateMutationKeyMaker,
   generateQueryKeyMaker,
+  generateQueryRootKeyMaker,
 } from './variables-generator.js';
 
 export interface ReactQueryPluginConfig extends ClientSideBasePluginConfig {
   errorType: string;
   exposeDocument: boolean;
   exposeQueryKeys: boolean;
+  exposeQueryRootKeys: boolean;
   exposeMutationKeys: boolean;
   exposeFetcher: boolean;
   addInfiniteQuery: boolean;
   legacyMode: boolean;
+  reactQueryImportFrom?: string;
 }
 
 export interface ReactQueryMethodMap {
@@ -81,10 +85,12 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       errorType: getConfigValue(rawConfig.errorType, 'unknown'),
       exposeDocument: getConfigValue(rawConfig.exposeDocument, false),
       exposeQueryKeys: getConfigValue(rawConfig.exposeQueryKeys, false),
+      exposeQueryRootKeys: getConfigValue(rawConfig.exposeQueryRootKeys, false),
       exposeMutationKeys: getConfigValue(rawConfig.exposeMutationKeys, false),
       exposeFetcher: getConfigValue(rawConfig.exposeFetcher, false),
       addInfiniteQuery: getConfigValue(rawConfig.addInfiniteQuery, false),
       legacyMode: getConfigValue(rawConfig.legacyMode, false),
+      reactQueryImportFrom: getConfigValue(rawConfig.reactQueryImportFrom, ''),
     });
     this._externalImportPrefix = this.config.importOperationTypesFrom
       ? `${this.config.importOperationTypesFrom}.`
@@ -131,7 +137,11 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       ),
     ];
 
-    const moduleName = this.config.legacyMode ? 'react-query' : '@tanstack/react-query';
+    const moduleName = this.config.reactQueryImportFrom
+      ? this.config.reactQueryImportFrom
+      : this.config.legacyMode
+      ? 'react-query'
+      : '@tanstack/react-query';
 
     return [...baseImports, `import { ${hookAndTypeImports.join(', ')} } from '${moduleName}';`];
   }
@@ -192,6 +202,9 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
           hasRequiredVariables,
         )};\n`;
       }
+      if (this.config.exposeQueryRootKeys) {
+        query += `\n${generateQueryRootKeyMaker(node, operationName)}`;
+      }
       if (this.config.addInfiniteQuery) {
         query += `\n${this.fetcher.generateInfiniteQueryHook(
           node,
@@ -208,6 +221,9 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
             operationVariablesTypes,
             hasRequiredVariables,
           )};\n`;
+        }
+        if (this.config.exposeQueryRootKeys) {
+          query += `\n${generateInfiniteQueryRootKeyMaker(node, operationName)}`;
         }
       }
 

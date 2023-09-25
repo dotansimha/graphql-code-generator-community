@@ -9,6 +9,9 @@
     "directory": "packages/plugins/typescript/jit-sdk"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
@@ -34,7 +37,7 @@
     "test": "jest --no-watchman --config ../../../../jest.config.js"
   },
   "peerDependencies": {
-    "@graphql-tools/utils": "^8.8.0",
+    "@graphql-tools/utils": "^8.8.0 || ^10.0.0",
     "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0",
     "graphql-jit": "^0.6.0 || ^0.7.0",
     "graphql-tag": "^2.0.0"
@@ -46,7 +49,7 @@
     "tslib": "~2.4.0"
   },
   "devDependencies": {
-    "@graphql-tools/utils": "8.13.1",
+    "@graphql-tools/utils": "10.0.6",
     "graphql-jit": "0.7.4"
   },
   "publishConfig": {

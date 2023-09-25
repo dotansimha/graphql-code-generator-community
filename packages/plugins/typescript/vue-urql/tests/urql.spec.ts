@@ -477,8 +477,8 @@ query MyFeed {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-export function useFeedQuery(options: Omit<Urql.UseQueryArgs<never, FeedQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<FeedQuery>({ query: FeedDocument, ...options });
+export function useFeedQuery(options: Omit<Urql.UseQueryArgs<never, FeedQueryVariables>, 'query'>) {
+  return Urql.useQuery<FeedQuery, FeedQueryVariables>({ query: FeedDocument, ...options });
 };`);
 
       expect(content.content).toBeSimilarStringTo(`

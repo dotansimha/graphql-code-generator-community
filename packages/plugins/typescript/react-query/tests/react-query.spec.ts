@@ -1274,6 +1274,7 @@ export const useTestMutation = <
         exposeQueryKeys: true,
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.content).toMatchSnapshot();
       expect(out.content).toBeSimilarStringTo(
         `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`,
       );
@@ -1288,12 +1289,39 @@ export const useTestMutation = <
         addInfiniteQuery: true,
       };
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.content).toMatchSnapshot();
       expect(out.content).toBeSimilarStringTo(
         `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`,
       );
       expect(out.content).toBeSimilarStringTo(
         `useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];`,
       );
+    });
+  });
+
+  describe('exposeQueryRootKeys: true', () => {
+    it('Should generate rootKey for each query', async () => {
+      const config = {
+        fetcher: 'fetch',
+        exposeQueryRootKeys: true,
+      };
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.content).toMatchSnapshot();
+      expect(out.content).toBeSimilarStringTo(`useTestQuery.rootKey = 'test';`);
+    });
+  });
+
+  describe('exposeQueryRootKeys: true, addInfiniteQuery: true', () => {
+    it('Should generate rootKey for each query - also infinite queries', async () => {
+      const config = {
+        fetcher: 'fetch',
+        exposeQueryRootKeys: true,
+        addInfiniteQuery: true,
+      };
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.content).toMatchSnapshot();
+      expect(out.content).toBeSimilarStringTo(`useTestQuery.rootKey = 'test';`);
+      expect(out.content).toBeSimilarStringTo(`useInfiniteTestQuery.rootKey = 'test.infinite';`);
     });
   });
 
@@ -1341,5 +1369,21 @@ export const useTestMutation = <
             body: JSON.stringify({ query, variables }),
           });
     `);
+  });
+
+  describe('reactQueryImportFrom: custom-path', () => {
+    it('Should import react-query from custom path', async () => {
+      const config = {
+        legacyMode: true,
+        reactQueryImportFrom: 'custom-react-query',
+      };
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+      expect(out.prepend).toContain(
+        "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'custom-react-query';",
+      );
+      expect(out.prepend).not.toContain(
+        `"import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';"`,
+      );
+    });
   });
 });
