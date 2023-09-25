@@ -1,5 +1,32 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 6.0.0
+
+### Major Changes
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
+### Patch Changes
+
+- [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
+  [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+
+  - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
+    `~2.4.0`, in `dependencies`)
+
+- [#408](https://github.com/dotansimha/graphql-code-generator-community/pull/408)
+  [`5d5efe212`](https://github.com/dotansimha/graphql-code-generator-community/commit/5d5efe2123b4c6da0a5eebc83407a784bdbd59b4)
+  Thanks [@dseeto](https://github.com/dseeto)! - return errors in return type for rawRequest
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - fix(graphql-request): use Headers in return type
+  when rawRequest is true
+
 ## 5.0.0
 
 ### Major Changes

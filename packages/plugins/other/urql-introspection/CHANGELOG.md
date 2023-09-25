@@ -1,19 +1,41 @@
 # @graphql-codegen/urql-introspection
 
+## 3.0.0
+
+### Major Changes
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
+### Patch Changes
+
+- [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
+  [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+  - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
+    `~2.4.0`, in `dependencies`)
+
 ## 2.2.1
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
+  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
+  `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)]:
+- Updated dependencies
+  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)]:
   - @graphql-codegen/plugin-helpers@2.6.2
 
 ## 2.2.0
 
 ### Minor Changes
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
+  `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 
@@ -54,7 +76,8 @@
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
-  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no longer supported for Codegen packages.
+  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no
+  longer supported for Codegen packages.
 
 ### Patch Changes
 
