@@ -28,6 +28,7 @@ export class RTKQueryVisitor extends ClientSideBaseVisitor<
       documentMode: DocumentMode.string,
       importBaseApiFrom: getConfigValue(rawConfig.importBaseApiFrom, ''),
       importBaseApiAlternateName: getConfigValue(rawConfig.importBaseApiAlternateName, 'api'),
+      addTransformResponse: getConfigValue(rawConfig.addTransformResponse, false),
       exportHooks: getConfigValue(rawConfig.exportHooks, false),
       overrideExisting: getConfigValue(rawConfig.overrideExisting, ''),
     });
@@ -86,10 +87,18 @@ export { injectedRtkApi as api };
     );
   }
 
+  private injectTransformResponse(Generics: string): string {
+    if (this.config.addTransformResponse) {
+      const responseType = Generics.split(',')[0];
+      return `transformResponse: (response: ${responseType}) => response`;
+    }
+    return '';
+  }
+
   protected buildOperation(
     node: OperationDefinitionNode,
     documentVariableName: string,
-    operationType: string,
+    operationType: 'Query' | 'Mutation' | 'Subscription',
     operationResultType: string,
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
@@ -98,32 +107,40 @@ export { injectedRtkApi as api };
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
     const operationName = node.name?.value;
     if (!operationName) return '';
-    const Generics = `${operationResultType}, ${operationVariablesTypes}${
-      hasRequiredVariables ? '' : ' | void'
-    }`;
 
-    if (operationType === 'Query') {
-      this._endpoints.push(`
-    ${operationName}: build.query<${Generics}>({
-      query: (variables) => ({ document: ${documentVariableName}, variables })
-    }),`);
-      if (this.config.exportHooks) {
-        this._hooks.push(`use${pascalCase(operationName)}Query`);
-        this._hooks.push(`useLazy${pascalCase(operationName)}Query`);
-      }
-    } else if (operationType === 'Mutation') {
-      this._endpoints.push(`
-    ${operationName}: build.mutation<${Generics}>({
-      query: (variables) => ({ document: ${documentVariableName}, variables })
-    }),`);
-      if (this.config.exportHooks) {
-        this._hooks.push(`use${pascalCase(operationName)}Mutation`);
-      }
-    } else if (operationType === 'Subscription') {
+    if (operationType === 'Subscription') {
       // eslint-disable-next-line no-console
       console.warn(
         `Plugin "typescript-rtk-query" does not support GraphQL Subscriptions at the moment! Skipping "${node.name?.value}"...`,
       );
+      return '';
+    }
+
+    const Generics = `${operationResultType}, ${operationVariablesTypes}${
+      hasRequiredVariables ? '' : ' | void'
+    }`;
+
+    const operationTypeString = operationType.toLowerCase();
+
+    const functionsString =
+      `query: (variables) => ({ document: ${documentVariableName}, variables })
+      ${this.injectTransformResponse(Generics)}`.trim();
+
+    const endpointString = `
+    ${operationName}: build.${operationTypeString}<${Generics}>({
+      ${functionsString}
+    }),`;
+
+    this._endpoints.push(endpointString);
+
+    if (this.config.exportHooks) {
+      if (operationType === 'Query') {
+        this._hooks.push(`use${pascalCase(operationName)}Query`);
+        this._hooks.push(`useLazy${pascalCase(operationName)}Query`);
+      }
+      if (operationType === 'Mutation') {
+        this._hooks.push(`use${pascalCase(operationName)}Mutation`);
+      }
     }
 
     return '';
