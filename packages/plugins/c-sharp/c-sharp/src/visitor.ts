@@ -60,7 +60,10 @@ export class CSharpResolversVisitor extends BaseVisitor<
 > {
   private readonly jsonAttributesConfiguration: JsonAttributesSourceConfiguration;
 
-  constructor(rawConfig: CSharpResolversPluginRawConfig, private _schema: GraphQLSchema) {
+  constructor(
+    rawConfig: CSharpResolversPluginRawConfig,
+    private _schema: GraphQLSchema,
+  ) {
     super(rawConfig, {
       enumValues: rawConfig.enumValues || {},
       listType: rawConfig.listType || 'List',

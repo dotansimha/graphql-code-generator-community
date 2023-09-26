@@ -17,7 +17,10 @@ export class CustomMapperFetcher implements FetcherRenderer {
   private _mapper: ParsedMapper;
   private _isReactHook: boolean;
 
-  constructor(private visitor: ReactQueryVisitor, customFetcher: CustomFetch) {
+  constructor(
+    private visitor: ReactQueryVisitor,
+    customFetcher: CustomFetch,
+  ) {
     if (typeof customFetcher === 'string') {
       customFetcher = { func: customFetcher };
     }

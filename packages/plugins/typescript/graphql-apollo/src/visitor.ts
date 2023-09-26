@@ -88,10 +88,10 @@ export class GraphQLApolloVisitor extends ClientSideBaseVisitor<
         x.operationType
       }(options: Partial<${optionType}<${genericParameter.join(', ')}>>) {
           return client.${GraphQLApolloVisitor.getApolloOperation(x.operationType)}<${generics.join(
-        ', ',
-      )}>({...options, ${GraphQLApolloVisitor.getDocumentFieldName(
-        x.operationType,
-      )}: ${documentVariableName}})
+            ', ',
+          )}>({...options, ${GraphQLApolloVisitor.getDocumentFieldName(
+            x.operationType,
+          )}: ${documentVariableName}})
       }`;
     });
     return `export const getSdk = (client: ApolloClient<any>) => ({
