@@ -12,7 +12,10 @@ import { ReactQueryVisitor } from './visitor.js';
 export class GraphQLRequestClientFetcher implements FetcherRenderer {
   private clientPath: string | null;
 
-  constructor(private visitor: ReactQueryVisitor, config: GraphQlRequest) {
+  constructor(
+    private visitor: ReactQueryVisitor,
+    config: GraphQlRequest,
+  ) {
     this.clientPath = typeof config === 'object' ? config.clientImportPath : null;
   }
 

@@ -549,11 +549,11 @@ ${this._getOperationMethod(node)}
         return new GraphQLRequest {
           Query = ${this._getDocumentNodeVariable(node, documentVariableName)},
           OperationName = "${node.name.value}"${
-      hasInputArgs
-        ? `,
+            hasInputArgs
+              ? `,
           Variables = variables`
-        : ''
-    }
+              : ''
+          }
         };
       }
 

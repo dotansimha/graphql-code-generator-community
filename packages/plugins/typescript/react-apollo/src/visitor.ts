@@ -305,8 +305,8 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     const component = `
     export const ${componentName} = (props: ${componentPropsName}) => (
       <ApolloReactComponents.${operationType}<${operationResultType}, ${operationVariablesTypes}> ${
-      node.operation
-    }={${this.getDocumentNodeVariable(node, documentVariableName)}} {...props} />
+        node.operation
+      }={${this.getDocumentNodeVariable(node, documentVariableName)}} {...props} />
     );
     `;
     return [componentProps, component].join('\n');
@@ -352,8 +352,8 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
  *${operationType === 'Mutation' ? mutationDescription : queryDescription}
  *
  * @param baseOptions options that will be passed into the ${operationType.toLowerCase()}, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#${
-      operationType === 'Mutation' ? 'options-2' : 'options'
-    };
+   operationType === 'Mutation' ? 'options-2' : 'options'
+ };
  *
  * @example${operationType === 'Mutation' ? mutationExample : queryExample}
  */`;
@@ -386,9 +386,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
       }: ${this.getApolloReactHooksIdentifier()}.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>) {
         const options = {...defaultOptions, ...baseOptions}
         return ${this.getApolloReactHooksIdentifier()}.use${operationType}<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
-        node,
-        documentVariableName,
-      )}, options);
+          node,
+          documentVariableName,
+        )}, options);
       }`,
     ];
 
@@ -410,9 +410,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
         `export function use${lazyOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.LazyQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
           const options = {...defaultOptions, ...baseOptions}
           return ${this.getApolloReactHooksIdentifier()}.useLazyQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
-          node,
-          documentVariableName,
-        )}, options);
+            node,
+            documentVariableName,
+          )}, options);
         }`,
       );
       hookResults.push(
