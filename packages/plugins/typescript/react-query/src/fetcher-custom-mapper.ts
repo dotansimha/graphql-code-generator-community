@@ -54,7 +54,6 @@ export class CustomMapperFetcher implements FetcherRenderer {
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
-    const pageParamKey = `pageParamKey: keyof ${operationVariablesTypes}`;
     const variables = `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
 
     const hookConfig = this.visitor.queryMethodMap;
@@ -75,7 +74,6 @@ export class CustomMapperFetcher implements FetcherRenderer {
       TData = ${operationResultType},
       TError = ${this.visitor.config.errorType}
     >(
-      ${pageParamKey},
       ${variables},
       ${options}
     ) =>{

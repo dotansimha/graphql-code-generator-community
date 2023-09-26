@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`urql Hooks Should generate subscription hooks 1`] = `
+exports[`urql Hooks Should generate subscription hooks with optional arguments 1`] = `
 "import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -13,7 +13,25 @@ export const ListenToCommentsDocument = gql\`
 }
     \`;
 
-export function useListenToCommentsSubscription<TData = ListenToCommentsSubscription>(options: Omit<Urql.UseSubscriptionArgs<ListenToCommentsSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<ListenToCommentsSubscription, TData>) {
+export function useListenToCommentsSubscription<TData = ListenToCommentsSubscription>(options?: Omit<Urql.UseSubscriptionArgs<ListenToCommentsSubscriptionVariables>, 'query'>, handler?: Urql.SubscriptionHandler<ListenToCommentsSubscription, TData>) {
+  return Urql.useSubscription<ListenToCommentsSubscription, TData, ListenToCommentsSubscriptionVariables>({ query: ListenToCommentsDocument, ...options }, handler);
+};"
+`;
+
+exports[`urql Hooks Should generate subscription hooks with required arguments 1`] = `
+"import gql from 'graphql-tag';
+import * as Urql from 'urql';
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+export const ListenToCommentsDocument = gql\`
+    subscription ListenToComments($name: String!) {
+  commentAdded(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+
+export function useListenToCommentsSubscription<TData = ListenToCommentsSubscription>(options: Omit<Urql.UseSubscriptionArgs<ListenToCommentsSubscriptionVariables>, 'query'>, handler?: Urql.SubscriptionHandler<ListenToCommentsSubscription, TData>) {
   return Urql.useSubscription<ListenToCommentsSubscription, TData, ListenToCommentsSubscriptionVariables>({ query: ListenToCommentsDocument, ...options }, handler);
 };"
 `;

@@ -75,6 +75,43 @@ export const mockUpdateUserMutationApi = (resolver: ResponseResolver<GraphQLRequ
 "
 `;
 
+exports[`msw Should generate handlerNames without suffix when withSuffix is false: content without link name suffix 1`] = `
+"const api = graphql.link('http://localhost:3000/graphql')
+
+/**
+ * @param resolver a function that accepts a captured request and may return a mocked response.
+ * @see https://mswjs.io/docs/basics/response-resolver
+ * @example
+ * mockUserQuery((req, res, ctx) => {
+ *   return res(
+ *     ctx.data({ name })
+ *   )
+ * })
+ */
+export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<UserQueryVariables>, GraphQLContext<UserQuery>, any>) =>
+  api.query<UserQuery, UserQueryVariables>(
+    'User',
+    resolver
+  )
+
+/**
+ * @param resolver a function that accepts a captured request and may return a mocked response.
+ * @see https://mswjs.io/docs/basics/response-resolver
+ * @example
+ * mockUpdateUserMutation((req, res, ctx) => {
+ *   return res(
+ *     ctx.data({ name })
+ *   )
+ * })
+ */
+export const mockUpdateUserMutation = (resolver: ResponseResolver<GraphQLRequest<UpdateUserMutationVariables>, GraphQLContext<UpdateUserMutation>, any>) =>
+  api.mutation<UpdateUserMutation, UpdateUserMutationVariables>(
+    'UpdateUser',
+    resolver
+  )
+"
+`;
+
 exports[`msw Should generate mocks based on queries and mutations: content 1`] = `
 "
 /**

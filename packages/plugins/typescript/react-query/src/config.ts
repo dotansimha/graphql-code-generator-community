@@ -2,6 +2,7 @@ import { RawClientSideBasePluginConfig } from '@graphql-codegen/visitor-plugin-c
 
 export type HardcodedFetch = { endpoint: string; fetchParams?: string | Record<string, any> };
 export type CustomFetch = { func: string; isReactHook?: boolean } | string;
+export type GraphQlRequest = 'graphql-request' | { clientImportPath: string };
 
 /**
  * @description This plugin generates `React-Query` Hooks with TypeScript typings.
@@ -34,7 +35,7 @@ export interface ReactQueryRawPluginConfig
    * - `file#identifier` - You can use custom fetcher method that should implement the exported `ReactQueryFetcher` interface. Example: `./my-fetcher#myCustomFetcher`.
    * - `graphql-request`: Will generate each hook with `client` argument, where you should pass your own `GraphQLClient` (created from `graphql-request`).
    */
-  fetcher?: 'fetch' | HardcodedFetch | 'graphql-request' | CustomFetch;
+  fetcher?: 'fetch' | HardcodedFetch | GraphQlRequest | CustomFetch;
 
   /**
    * @default false
@@ -109,8 +110,19 @@ export interface ReactQueryRawPluginConfig
   addInfiniteQuery?: boolean;
 
   /**
-   * @default true
-   * @description If false, it will work with `@tanstack/react-query`, default value is true.
+   * @default false
+   * @description If true, it imports `react-query` not `@tanstack/react-query`, default is false.
    */
   legacyMode?: boolean;
+
+  /**
+   * @default empty
+   * @description Add custom import for react-query.
+   * It can be used to import from `@tanstack/react-query` instead of `react-query`. But make sure it include useQuery, UseQueryOptions, useMutation, UseMutationOptions, useInfiniteQuery, UseInfiniteQueryOptions
+   *
+   * The following options are available to use:
+   *
+   * - "src/your-own-react-query-customized": import { useQuery, UseQueryOptions, useMutation, UseMutationOptions, useInfiniteQuery, UseInfiniteQueryOptions } from your own react-query customized package.
+   */
+  reactQueryImportFrom?: string;
 }

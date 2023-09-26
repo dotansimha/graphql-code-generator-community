@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/jsdoc",
-  "version": "2.3.6",
+  "version": "3.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating JSDoc based types for GraphQL queries, mutations, subscriptions and fragments",
   "repository": {
@@ -42,7 +42,7 @@
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^3.0.0",
     "@graphql-codegen/visitor-plugin-common": "2.13.1",
-    "tslib": "~2.4.0"
+    "tslib": "~2.6.0"
   },
   "devDependencies": {
     "@graphql-codegen/testing": "1.18.0"

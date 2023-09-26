@@ -94,7 +94,6 @@ export const useInfiniteTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      pageParamKey: keyof TestQueryVariables,
       variables?: TestQueryVariables,
       options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
     ) =>
@@ -221,7 +220,6 @@ export const useInfiniteTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      pageParamKey: keyof TestQueryVariables,
       variables?: TestQueryVariables,
       options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
     ) =>
@@ -288,7 +286,6 @@ export const useInfiniteTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      pageParamKey: keyof TTestQueryVariables,
       variables?: TTestQueryVariables,
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) =>{
@@ -350,7 +347,6 @@ export const useInfiniteTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      pageParamKey: keyof TTestQueryVariables,
       variables?: TTestQueryVariables,
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) =>{
@@ -526,6 +522,57 @@ export const useTestMutation = <
     useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
       ['test'],
       (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(client, TestDocument, variables, headers)(),
+      options
+    );"
+`;
+
+exports[`React-Query fetcher: graphql-request with clientImportPath Should generate query correctly with client 1`] = `
+"
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+export const useTestQuery = <
+      TData = TTestQuery,
+      TError = unknown
+    >(
+      variables?: TTestQueryVariables,
+      options?: UseQueryOptions<TTestQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<TTestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables, headers),
+      options
+    );
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+      ['test'],
+      (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables, headers)(),
       options
     );"
 `;

@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/urql-introspection",
-  "version": "2.2.1",
+  "version": "3.0.0",
   "type": "module",
   "description": "graphql-code-generate plugin for generating fragments matcher introspection file",
   "repository": {
@@ -42,7 +42,7 @@
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^3.0.0",
     "@urql/introspection": "^0.3.2",
-    "tslib": "~2.4.0"
+    "tslib": "~2.6.0"
   },
   "devDependencies": {
     "@graphql-codegen/testing": "1.18.0"
