@@ -10,7 +10,10 @@ import {
 import { ReactQueryVisitor } from './visitor.js';
 
 export class HardcodedFetchFetcher implements FetcherRenderer {
-  constructor(private visitor: ReactQueryVisitor, private config: HardcodedFetch) {}
+  constructor(
+    private visitor: ReactQueryVisitor,
+    private config: HardcodedFetch,
+  ) {}
 
   private getEndpoint(): string {
     try {

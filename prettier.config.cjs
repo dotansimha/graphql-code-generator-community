@@ -9,6 +9,7 @@ module.exports = {
       // fixes SyntaxError: Unexpected token (7:23)
       files: '*.flow.js',
       options: {
+        parser: 'flow',
         importOrderParserPlugins: ['flow'],
       },
     },

@@ -73,8 +73,8 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
  * @see https://mswjs.io/docs/basics/response-resolver
  * @example
  * ${handlerName}((req, res, ctx) => {${
-            variables && `\n *   const { ${variables} } = req.variables;`
-          }
+   variables && `\n *   const { ${variables} } = req.variables;`
+ }
  *   return res(
  *     ctx.data({ ${selections} })
  *   )

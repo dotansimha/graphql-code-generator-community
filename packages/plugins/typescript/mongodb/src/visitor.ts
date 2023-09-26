@@ -61,7 +61,10 @@ export class TsMongoVisitor extends BaseVisitor<
   TypeScriptMongoPluginConfig,
   TypeScriptMongoPluginParsedConfig
 > {
-  constructor(private _schema: GraphQLSchema, pluginConfig: TypeScriptMongoPluginConfig) {
+  constructor(
+    private _schema: GraphQLSchema,
+    pluginConfig: TypeScriptMongoPluginConfig,
+  ) {
     super(pluginConfig, {
       dbTypeSuffix: pluginConfig.dbTypeSuffix || 'DbObject',
       dbInterfaceSuffix: pluginConfig.dbInterfaceSuffix || 'DbInterface',
