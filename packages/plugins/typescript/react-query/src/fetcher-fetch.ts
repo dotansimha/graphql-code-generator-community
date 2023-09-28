@@ -1,6 +1,7 @@
 import { OperationDefinitionNode } from 'graphql';
 import { FetcherRenderer } from './fetcher.js';
 import {
+  formatQueryParameters,
   generateInfiniteQueryKey,
   generateMutationKey,
   generateQueryKey,
@@ -94,9 +95,11 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
-      fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables),
-      options
+      ${formatQueryParameters({
+        reactQueryVersion: 4,
+        queryKey: generateQueryKey(node, hasRequiredVariables),
+        queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)`,
+      })}
     );`;
   }
 

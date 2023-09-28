@@ -2,6 +2,7 @@ import { OperationDefinitionNode } from 'graphql';
 import { GraphQlRequest } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
+  formatQueryParameters,
   generateInfiniteQueryKey,
   generateMutationKey,
   generateQueryKey,
@@ -126,9 +127,11 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
-      fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers),
-      options
+      ${formatQueryParameters({
+        reactQueryVersion: 4,
+        queryKey: generateQueryKey(node, hasRequiredVariables),
+        queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)`,
+      })}
     );`
       : `export const use${operationName} = <
       TData = ${operationResultType},
@@ -140,9 +143,11 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
-      fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers),
-      options
+      ${formatQueryParameters({
+        reactQueryVersion: 4,
+        queryKey: generateQueryKey(node, hasRequiredVariables),
+        queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)`,
+      })}
     );`;
   }
 

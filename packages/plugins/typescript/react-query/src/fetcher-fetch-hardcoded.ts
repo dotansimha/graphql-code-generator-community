@@ -2,6 +2,7 @@ import { OperationDefinitionNode } from 'graphql';
 import { HardcodedFetch } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
+  formatQueryParameters,
   generateInfiniteQueryKey,
   generateMutationKey,
   generateQueryKey,
@@ -117,9 +118,11 @@ ${this.getFetchParams()}
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
-      fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables),
-      options
+      ${formatQueryParameters({
+        reactQueryVersion: 4,
+        queryKey: generateQueryKey(node, hasRequiredVariables),
+        queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)`,
+      })}
     );`;
   }
 

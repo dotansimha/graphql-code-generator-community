@@ -6,6 +6,26 @@ export function generateQueryVariablesSignature(
 ): string {
   return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
 }
+
+interface FormatQueryParametersPayload {
+  reactQueryVersion: number;
+  queryKey: string;
+  queryFn: string;
+}
+export function formatQueryParameters(payload: FormatQueryParametersPayload): string {
+  const { reactQueryVersion, queryKey, queryFn } = payload;
+  if (reactQueryVersion <= 4) {
+    return `${queryKey},
+      ${queryFn},
+      options`;
+  }
+  return `{
+    queryKey:${queryKey},
+    queryFn:${queryFn},
+    ...options
+  }`;
+}
+
 export function generateInfiniteQueryKey(
   node: OperationDefinitionNode,
   hasRequiredVariables: boolean,
