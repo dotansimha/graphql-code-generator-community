@@ -7,10 +7,10 @@ import {
 import { CustomFetch } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
-  generateFormattedMutationParameters,
-  generateFormattedQueryParameters,
   generateInfiniteQueryKey,
+  generateMutationFormattedParameters,
   generateMutationKey,
+  generateQueryFormattedParameters,
   generateQueryKey,
 } from './variables-generator.js';
 import { ReactQueryVisitor } from './visitor.js';
@@ -116,7 +116,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateFormattedQueryParameters({
+      ${generateQueryFormattedParameters({
         reactQueryVersion: 4,
         queryKey: generateQueryKey(node, hasRequiredVariables),
         queryFn: impl,
@@ -150,7 +150,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     ${
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateFormattedMutationParameters({
+      ${generateMutationFormattedParameters({
         reactQueryVersion: 4,
         mutationKey: generateMutationKey(node),
         mutationFn: impl,

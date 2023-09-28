@@ -1,10 +1,10 @@
 import { OperationDefinitionNode } from 'graphql';
 import { FetcherRenderer } from './fetcher.js';
 import {
-  generateFormattedMutationParameters,
-  generateFormattedQueryParameters,
   generateInfiniteQueryKey,
+  generateMutationFormattedParameters,
   generateMutationKey,
+  generateQueryFormattedParameters,
   generateQueryKey,
   generateQueryVariablesSignature,
 } from './variables-generator.js';
@@ -96,7 +96,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateFormattedQueryParameters({
+      ${generateQueryFormattedParameters({
         reactQueryVersion: 4,
         queryKey: generateQueryKey(node, hasRequiredVariables),
         queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)`,
@@ -129,7 +129,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     ${
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateFormattedMutationParameters({
+      ${generateMutationFormattedParameters({
         reactQueryVersion: 4,
         mutationKey: generateMutationKey(node),
         mutationFn: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)()`,

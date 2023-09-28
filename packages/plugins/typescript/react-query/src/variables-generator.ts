@@ -68,13 +68,34 @@ export function generateMutationKeyMaker(node: OperationDefinitionNode, operatio
   return `\nuse${operationName}.getKey = () => ${generateMutationKey(node)};\n`;
 }
 
-interface GenerateFormattedQueryParametersPayload {
+interface GenerateInfiniteQueryFormattedParametersPayload {
   reactQueryVersion: number;
   queryKey: string;
   queryFn: string;
 }
-export function generateFormattedQueryParameters(
-  payload: GenerateFormattedQueryParametersPayload,
+export function generateInfiniteQueryFormattedParameters(
+  payload: GenerateInfiniteQueryFormattedParametersPayload,
+) {
+  const { reactQueryVersion, queryKey, queryFn } = payload;
+  if (reactQueryVersion <= 4) {
+    return `${queryKey},
+      ${queryFn},
+      options`;
+  }
+  return `{
+    queryKey:${queryKey},
+    queryFn:${queryFn},
+    ...options
+  }`;
+}
+
+interface GenerateQueryParametersFormattedPayload {
+  reactQueryVersion: number;
+  queryKey: string;
+  queryFn: string;
+}
+export function generateQueryFormattedParameters(
+  payload: GenerateQueryParametersFormattedPayload,
 ): string {
   const { reactQueryVersion, queryKey, queryFn } = payload;
   if (reactQueryVersion <= 4) {
@@ -89,13 +110,13 @@ export function generateFormattedQueryParameters(
   }`;
 }
 
-interface GenerateFormattedMutationParametersPayload {
+interface GenerateMutationFormattedParametersPayload {
   reactQueryVersion: number;
   mutationKey: string;
   mutationFn: string;
 }
-export function generateFormattedMutationParameters(
-  payload: GenerateFormattedMutationParametersPayload,
+export function generateMutationFormattedParameters(
+  payload: GenerateMutationFormattedParametersPayload,
 ): string {
   const { reactQueryVersion, mutationKey, mutationFn } = payload;
   if (reactQueryVersion <= 4) {
