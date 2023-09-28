@@ -116,6 +116,12 @@ export interface ReactQueryRawPluginConfig
   legacyMode?: boolean;
 
   /**
+   * @default 4
+   * @description The version of react-query to use. Default is 4. legacyMode must be false to active this flag.
+   */
+  reactQueryVersion?: 4 | 5;
+
+  /**
    * @default empty
    * @description Add custom import for react-query.
    * It can be used to import from `@tanstack/react-query` instead of `react-query`. But make sure it include useQuery, UseQueryOptions, useMutation, UseMutationOptions, useInfiniteQuery, UseInfiniteQueryOptions

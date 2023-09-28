@@ -83,7 +83,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     ${implHookOuter}
     return ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
       ${generateInfiniteQueryFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         queryKey: generateInfiniteQueryKey(node, hasRequiredVariables),
         queryFn: impl,
       })}
@@ -120,7 +120,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
       ${generateQueryFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         queryKey: generateQueryKey(node, hasRequiredVariables),
         queryFn: impl,
       })}
@@ -154,7 +154,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
       ${generateMutationFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         mutationKey: generateMutationKey(node),
         mutationFn: impl,
       })}

@@ -74,7 +74,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
       ${generateInfiniteQueryFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         queryKey: generateInfiniteQueryKey(node, hasRequiredVariables),
         queryFn: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, [pageParamKey]: metaData.pageParam}, headers)()`,
       })}
@@ -90,7 +90,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
       ${generateInfiniteQueryFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         queryKey: generateInfiniteQueryKey(node, hasRequiredVariables),
         queryFn: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})}, headers)()`,
       })}
@@ -134,7 +134,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
       ${generateQueryFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         queryKey: generateQueryKey(node, hasRequiredVariables),
         queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)`,
       })}
@@ -150,7 +150,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
       ${generateQueryFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         queryKey: generateQueryKey(node, hasRequiredVariables),
         queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)`,
       })}
@@ -188,7 +188,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
       ${generateMutationFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         mutationKey: generateMutationKey(node),
         mutationFn: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)()`,
       })}
@@ -205,7 +205,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
       ${generateMutationFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         mutationKey: generateMutationKey(node),
         mutationFn: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)()`,
       })}

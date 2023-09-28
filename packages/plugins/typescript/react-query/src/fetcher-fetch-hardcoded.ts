@@ -89,7 +89,7 @@ ${this.getFetchParams()}
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
       ${generateInfiniteQueryFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         queryKey: generateInfiniteQueryKey(node, hasRequiredVariables),
         queryFn: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`,
       })}
@@ -123,7 +123,7 @@ ${this.getFetchParams()}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
       ${generateQueryFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         queryKey: generateQueryKey(node, hasRequiredVariables),
         queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)`,
       })}
@@ -153,7 +153,7 @@ ${this.getFetchParams()}
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
       ${generateMutationFormattedParameters({
-        reactQueryVersion: 4,
+        reactQueryVersion: this.visitor.config.reactQueryVersion,
         mutationKey: generateMutationKey(node),
         mutationFn: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)()`,
       })}

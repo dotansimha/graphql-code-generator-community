@@ -32,6 +32,7 @@ export interface ReactQueryPluginConfig extends ClientSideBasePluginConfig {
   exposeFetcher: boolean;
   addInfiniteQuery: boolean;
   legacyMode: boolean;
+  reactQueryVersion: 4 | 5;
   reactQueryImportFrom?: string;
 }
 
@@ -90,8 +91,14 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       exposeFetcher: getConfigValue(rawConfig.exposeFetcher, false),
       addInfiniteQuery: getConfigValue(rawConfig.addInfiniteQuery, false),
       legacyMode: getConfigValue(rawConfig.legacyMode, false),
+      reactQueryVersion: getConfigValue(rawConfig.reactQueryVersion, 4),
       reactQueryImportFrom: getConfigValue(rawConfig.reactQueryImportFrom, ''),
     });
+
+    if (super.config.legacyMode && super.config.reactQueryVersion > 4) {
+      throw new Error('reactQueryVersion cannot more than 4 when legacyMode is true');
+    }
+
     this._externalImportPrefix = this.config.importOperationTypesFrom
       ? `${this.config.importOperationTypesFrom}.`
       : '';

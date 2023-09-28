@@ -3,6 +3,7 @@ import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
+import type { ReactQueryRawPluginConfig } from '../src/config';
 import { plugin } from '../src/index.js';
 
 const validateTypeScript = async (
@@ -117,6 +118,76 @@ export const useTestMutation = <
       options
     );`);
   });
+
+  it('should throw when using v5 config with legacyMode', async () => {
+    const config: ReactQueryRawPluginConfig = {
+      legacyMode: true,
+      reactQueryVersion: 5,
+      addInfiniteQuery: true,
+    };
+    try {
+      plugin(schema, docs, config);
+    } catch (e) {
+      expect(e.message).toBe('reactQueryVersion cannot more than 4 when legacyMode is true');
+    }
+  });
+
+  it('support v5 syntax', async () => {
+    const config: ReactQueryRawPluginConfig = {
+      addInfiniteQuery: true,
+      reactQueryVersion: 5,
+    };
+
+    const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+
+    expect(out.content).toBeSimilarStringTo(`export const useTestQuery = <
+ TData = TestQuery,
+ TError = unknown
+>(
+ dataSource: { endpoint: string, fetchParams?: RequestInit },
+ variables?: TestQueryVariables,
+ options?: UseQueryOptions<TestQuery, TError, TData>
+) =>
+useQuery<TestQuery, TError, TData>(
+  {
+    queryKey:variables === undefined ? ['test'] : ['test', variables],
+    queryFn:fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+    ...options
+  }
+);`);
+
+    expect(out.content).toBeSimilarStringTo(`export const useInfiniteTestQuery = <
+  TData = TestQuery,
+  TError = unknown
+>(
+  dataSource: { endpoint: string, fetchParams?: RequestInit },
+  variables?: TestQueryVariables,
+  options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
+) =>
+useInfiniteQuery<TestQuery, TError, TData>(
+  {
+    queryKey:variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+    queryFn:(metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+    ...options
+  }
+);`);
+
+    expect(out.content).toBeSimilarStringTo(`export const useTestMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  dataSource: { endpoint: string, fetchParams?: RequestInit },
+  options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
+) =>
+useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+  {
+    mutationKey:['test'],
+    mutationFn:(variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+    ...options
+  }
+);`);
+  });
+
   it('Duplicated nested fragments are removed', async () => {
     const schema = buildSchema(/* GraphQL */ `
       schema {
