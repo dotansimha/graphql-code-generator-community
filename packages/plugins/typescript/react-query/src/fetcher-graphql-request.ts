@@ -2,6 +2,7 @@ import { OperationDefinitionNode } from 'graphql';
 import { GraphQlRequest } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
+  generateInfiniteQueryFormattedParameters,
   generateInfiniteQueryKey,
   generateMutationFormattedParameters,
   generateMutationKey,
@@ -72,9 +73,11 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
-      (metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
-      options
+      ${generateInfiniteQueryFormattedParameters({
+        reactQueryVersion: 4,
+        queryKey: generateInfiniteQueryKey(node, hasRequiredVariables),
+        queryFn: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, [pageParamKey]: metaData.pageParam}, headers)()`,
+      })}
     );`
       : `export const useInfinite${operationName} = <
       TData = ${operationResultType},
@@ -86,9 +89,11 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
-      (metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
-      options
+      ${generateInfiniteQueryFormattedParameters({
+        reactQueryVersion: 4,
+        queryKey: generateInfiniteQueryKey(node, hasRequiredVariables),
+        queryFn: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})}, headers)()`,
+      })}
     );`;
   }
 
