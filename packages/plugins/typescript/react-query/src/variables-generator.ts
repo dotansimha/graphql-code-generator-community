@@ -7,25 +7,6 @@ export function generateQueryVariablesSignature(
   return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
 }
 
-interface FormatQueryParametersPayload {
-  reactQueryVersion: number;
-  queryKey: string;
-  queryFn: string;
-}
-export function generateFormattedQueryParameters(payload: FormatQueryParametersPayload): string {
-  const { reactQueryVersion, queryKey, queryFn } = payload;
-  if (reactQueryVersion <= 4) {
-    return `${queryKey},
-      ${queryFn},
-      options`;
-  }
-  return `{
-    queryKey:${queryKey},
-    queryFn:${queryFn},
-    ...options
-  }`;
-}
-
 export function generateInfiniteQueryKey(
   node: OperationDefinitionNode,
   hasRequiredVariables: boolean,
@@ -85,4 +66,46 @@ export function generateMutationKey(node: OperationDefinitionNode): string {
 
 export function generateMutationKeyMaker(node: OperationDefinitionNode, operationName: string) {
   return `\nuse${operationName}.getKey = () => ${generateMutationKey(node)};\n`;
+}
+
+interface GenerateFormattedQueryParametersPayload {
+  reactQueryVersion: number;
+  queryKey: string;
+  queryFn: string;
+}
+export function generateFormattedQueryParameters(
+  payload: GenerateFormattedQueryParametersPayload,
+): string {
+  const { reactQueryVersion, queryKey, queryFn } = payload;
+  if (reactQueryVersion <= 4) {
+    return `${queryKey},
+      ${queryFn},
+      options`;
+  }
+  return `{
+    queryKey:${queryKey},
+    queryFn:${queryFn},
+    ...options
+  }`;
+}
+
+interface GenerateFormattedMutationParametersPayload {
+  reactQueryVersion: number;
+  mutationKey: string;
+  mutationFn: string;
+}
+export function generateFormattedMutationParameters(
+  payload: GenerateFormattedMutationParametersPayload,
+): string {
+  const { reactQueryVersion, mutationKey, mutationFn } = payload;
+  if (reactQueryVersion <= 4) {
+    return `${mutationKey},
+      ${mutationFn},
+      options`;
+  }
+  return `{
+    mutationKey:${mutationKey},
+    mutationFn:${mutationFn},
+    ...options
+  }`;
 }

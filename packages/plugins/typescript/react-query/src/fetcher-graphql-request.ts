@@ -2,6 +2,7 @@ import { OperationDefinitionNode } from 'graphql';
 import { GraphQlRequest } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
+  generateFormattedMutationParameters,
   generateFormattedQueryParameters,
   generateInfiniteQueryKey,
   generateMutationKey,
@@ -181,9 +182,11 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     ${
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateMutationKey(node)},
-      (${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)(),
-      options
+      ${generateFormattedMutationParameters({
+        reactQueryVersion: 4,
+        mutationKey: generateMutationKey(node),
+        mutationFn: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)()`,
+      })}
     );`
       : `export const use${operationName} = <
       TError = ${this.visitor.config.errorType},
@@ -196,9 +199,11 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     ${
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateMutationKey(node)},
-      (${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)(),
-      options
+      ${generateFormattedMutationParameters({
+        reactQueryVersion: 4,
+        mutationKey: generateMutationKey(node),
+        mutationFn: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)()`,
+      })}
     );`;
   }
 

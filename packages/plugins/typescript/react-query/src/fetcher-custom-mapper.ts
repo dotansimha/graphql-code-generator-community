@@ -7,6 +7,7 @@ import {
 import { CustomFetch } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
+  generateFormattedMutationParameters,
   generateFormattedQueryParameters,
   generateInfiniteQueryKey,
   generateMutationKey,
@@ -149,9 +150,11 @@ export class CustomMapperFetcher implements FetcherRenderer {
     ${
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateMutationKey(node)},
-      ${impl},
-      options
+      ${generateFormattedMutationParameters({
+        reactQueryVersion: 4,
+        mutationKey: generateMutationKey(node),
+        mutationFn: impl,
+      })}
     );`;
   }
 
