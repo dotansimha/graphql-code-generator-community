@@ -2,7 +2,7 @@ import { OperationDefinitionNode } from 'graphql';
 import { GraphQlRequest } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
 import {
-  formatQueryParameters,
+  generateFormattedQueryParameters,
   generateInfiniteQueryKey,
   generateMutationKey,
   generateQueryKey,
@@ -127,7 +127,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${formatQueryParameters({
+      ${generateFormattedQueryParameters({
         reactQueryVersion: 4,
         queryKey: generateQueryKey(node, hasRequiredVariables),
         queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)`,
@@ -143,7 +143,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       headers?: RequestInit['headers']
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${formatQueryParameters({
+      ${generateFormattedQueryParameters({
         reactQueryVersion: 4,
         queryKey: generateQueryKey(node, hasRequiredVariables),
         queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)`,

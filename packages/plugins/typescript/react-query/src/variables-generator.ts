@@ -12,7 +12,7 @@ interface FormatQueryParametersPayload {
   queryKey: string;
   queryFn: string;
 }
-export function formatQueryParameters(payload: FormatQueryParametersPayload): string {
+export function generateFormattedQueryParameters(payload: FormatQueryParametersPayload): string {
   const { reactQueryVersion, queryKey, queryFn } = payload;
   if (reactQueryVersion <= 4) {
     return `${queryKey},
