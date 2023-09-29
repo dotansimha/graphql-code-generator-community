@@ -16,7 +16,7 @@ export interface VueApolloPluginConfig extends ClientSideBasePluginConfig {
   vueApolloComposableImportFrom: 'vue' | '@vue/apollo-composable' | string;
   vueCompositionApiImportFrom: 'vue' | '@vue/apollo-composable' | string;
   addDocBlocks: boolean;
-  clientId: string | null;
+  clientId?: string;
 }
 
 interface BuildCompositionFunctions {
