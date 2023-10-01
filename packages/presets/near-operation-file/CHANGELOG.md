@@ -1,18 +1,65 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 3.0.0
+
+### Major Changes
+
+- [#414](https://github.com/dotansimha/graphql-code-generator-community/pull/414)
+  [`02d487c8c`](https://github.com/dotansimha/graphql-code-generator-community/commit/02d487c8c7a8e55da31b43fcb30d48615bc33950)
+  Thanks [@saihaj](https://github.com/saihaj)! - accept skipDocumentsValidation config parameter
+
+  ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
+
+  This is a breaking change since previous versions skips all documents validation and this could
+  raise validation errors while generating types.
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
+  `>= 16`
+
+### Patch Changes
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - dependencies updates:
+
+  - Updated dependency
+    [`@graphql-tools/utils@^10.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/10.0.0)
+    (from `^8.8.0`, in `dependencies`)
+
+- [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
+  [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+
+  - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
+    `~2.4.0`, in `dependencies`)
+
+- [#407](https://github.com/dotansimha/graphql-code-generator-community/pull/407)
+  [`03655cc7c`](https://github.com/dotansimha/graphql-code-generator-community/commit/03655cc7ce680c042650550fcf75183a0ca8bcd5)
+  Thanks [@aboks](https://github.com/aboks)! - Fix duplicate imports with inlineFragmentTypes:
+  combine
+
 ## 2.5.0
 
 ### Minor Changes
 
-- [#24](https://github.com/dotansimha/graphql-code-generator-community/pull/24) [`41b0ae176`](https://github.com/dotansimha/graphql-code-generator-community/commit/41b0ae17626533ae7ba4ebba429634ec2df398bb) Thanks [@gwesseling](https://github.com/gwesseling)! - Added the fileName option for the near-operation-file-preset to force the generated filename
+- [#24](https://github.com/dotansimha/graphql-code-generator-community/pull/24)
+  [`41b0ae176`](https://github.com/dotansimha/graphql-code-generator-community/commit/41b0ae17626533ae7ba4ebba429634ec2df398bb)
+  Thanks [@gwesseling](https://github.com/gwesseling)! - Added the fileName option for the
+  near-operation-file-preset to force the generated filename
 
 ## 2.4.4
 
 ### Patch Changes
 
-- [#8525](https://github.com/dotansimha/graphql-code-generator/pull/8525) [`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127) Thanks [@charlypoly](https://github.com/charlypoly)! - remove `DetailledError`, not supported by Listr renderer
+- [#8525](https://github.com/dotansimha/graphql-code-generator/pull/8525)
+  [`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)
+  Thanks [@charlypoly](https://github.com/charlypoly)! - remove `DetailledError`, not supported by
+  Listr renderer
 
-- Updated dependencies [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
+- Updated dependencies
+  [[`63dc8f205`](https://github.com/dotansimha/graphql-code-generator/commit/63dc8f2054e27b944f7d8dc59db8afa85760a127)]:
   - @graphql-codegen/visitor-plugin-common@2.13.1
   - @graphql-codegen/plugin-helpers@2.7.2
 
@@ -20,23 +67,30 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
+- Updated dependencies
+  [[`a46b8d99c`](https://github.com/dotansimha/graphql-code-generator/commit/a46b8d99c797283d773ec14163c62be9c84d4c2b)]:
   - @graphql-codegen/visitor-plugin-common@2.13.0
 
 ## 2.4.2
 
 ### Patch Changes
 
-- Updated dependencies [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
+- Updated dependencies
+  [[`1bd7f771c`](https://github.com/dotansimha/graphql-code-generator/commit/1bd7f771ccb949a5a37395c7c57cb41c19340714)]:
   - @graphql-codegen/visitor-plugin-common@2.12.2
 
 ## 2.4.1
 
 ### Patch Changes
 
-- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189) [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f) Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with `moduleResolution` `node16` or `nodenext`
+- [#8189](https://github.com/dotansimha/graphql-code-generator/pull/8189)
+  [`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f)
+  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Fix CommonJS TypeScript resolution with
+  `moduleResolution` `node16` or `nodenext`
 
-- Updated dependencies [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f), [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
+- Updated dependencies
+  [[`b408f8238`](https://github.com/dotansimha/graphql-code-generator/commit/b408f8238c00bbb4cd448501093856c06cfde50f),
+  [`47d0a57e2`](https://github.com/dotansimha/graphql-code-generator/commit/47d0a57e27dd0d2334670bfc6c81c45e00ff4e74)]:
   - @graphql-codegen/add@3.2.1
   - @graphql-codegen/visitor-plugin-common@2.12.1
   - @graphql-codegen/plugin-helpers@2.6.2
@@ -45,7 +99,9 @@
 
 ### Minor Changes
 
-- 2cbcbb371: Add new flag to emit legacy common js imports. Default it will be `true` this way it ensure that generated code works with [non-compliant bundlers](https://github.com/dotansimha/graphql-code-generator/issues/8065).
+- 2cbcbb371: Add new flag to emit legacy common js imports. Default it will be `true` this way it
+  ensure that generated code works with
+  [non-compliant bundlers](https://github.com/dotansimha/graphql-code-generator/issues/8065).
 
   You can use the option in your config:
 
@@ -72,7 +128,8 @@
 
 ### Patch Changes
 
-- 525ad580b: Revert breaking change for Next.js applications that are incapable of resolving an import with a `.js` extension.
+- 525ad580b: Revert breaking change for Next.js applications that are incapable of resolving an
+  import with a `.js` extension.
 - Updated dependencies [525ad580b]
   - @graphql-codegen/visitor-plugin-common@2.11.1
 
@@ -80,16 +137,19 @@
 
 ### Minor Changes
 
-- 68bb30e19: Attach `.js` extension to relative file imports for compliance with ESM module resolution. Since in CommonJS the `.js` extension is optional, this is not a breaking change.
+- 68bb30e19: Attach `.js` extension to relative file imports for compliance with ESM module
+  resolution. Since in CommonJS the `.js` extension is optional, this is not a breaking change.
 
-  If you have path configuration within your configuration, consider attaching `.js` if you are migrating to ESM.
+  If you have path configuration within your configuration, consider attaching `.js` if you are
+  migrating to ESM.
 
   ```yml
   mappers:
     MyOtherType: './my-file.js#MyCustomOtherType',
   ```
 
-- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and `"moduleResolution": "node16"`).
+- d84afec09: Support TypeScript ESM modules (`"module": "node16"` and
+  `"moduleResolution": "node16"`).
 
   [More information on the TypeScript Release Notes.](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#ecmascript-module-support-in-node-js)
 
@@ -166,7 +226,8 @@
 
 ### Patch Changes
 
-- 84da6289c: [near-operation-file-preset] Importing root types when a fragment spread a fragment without any field
+- 84da6289c: [near-operation-file-preset] Importing root types when a fragment spread a fragment
+  without any field
 - Updated dependencies [11d05e361]
   - @graphql-codegen/visitor-plugin-common@2.7.2
 
@@ -286,7 +347,8 @@
 
 ### Minor Changes
 
-- 39773f59b: enhance(plugins): use getDocumentNodeFromSchema and other utilities from @graphql-tools/utils
+- 39773f59b: enhance(plugins): use getDocumentNodeFromSchema and other utilities from
+  @graphql-tools/utils
 - 440172cfe: support ESM
 
 ### Patch Changes
@@ -307,7 +369,8 @@
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
-  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no longer supported for Codegen packages.
+  This is a breaking change since Node 10 is no longer supported in `graphql-tools`, and also no
+  longer supported for Codegen packages.
 
 ### Patch Changes
 
@@ -406,7 +469,8 @@
 
 ### Patch Changes
 
-- 29d2ab4f: Improve 'importAllFragmentsFrom' signature by adding the source file that requests the fragment
+- 29d2ab4f: Improve 'importAllFragmentsFrom' signature by adding the source file that requests the
+  fragment
 - Updated dependencies [07f9b1b2]
 - Updated dependencies [35f67120]
   - @graphql-codegen/visitor-plugin-common@1.17.14
@@ -422,7 +486,8 @@
 ### Patch Changes
 
 - 1d7c6432: Bump all packages to allow "^" in deps and fix compatibility issues
-- 1d7c6432: Bump versions of @graphql-tools/ packages to fix issues with loading schemas and SDL comments
+- 1d7c6432: Bump versions of @graphql-tools/ packages to fix issues with loading schemas and SDL
+  comments
 - Updated dependencies [1d7c6432]
 - Updated dependencies [1d7c6432]
 - Updated dependencies [ac067ea0]

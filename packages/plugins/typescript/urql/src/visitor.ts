@@ -121,17 +121,19 @@ export function use${operationName}() {
 };`;
     }
 
-    if (operationType === 'Subscription') {
-      return `
-export function use${operationName}<TData = ${operationResultType}>(options: Omit<Urql.Use${operationType}Args<${operationVariablesTypes}>, 'query'> = {}, handler?: Urql.SubscriptionHandler<${operationResultType}, TData>) {
-  return Urql.use${operationType}<${operationResultType}, TData, ${operationVariablesTypes}>({ query: ${documentVariableName}, ...options }, handler);
-};`;
-    }
-
     const isVariablesRequired = node.variableDefinitions.some(
       variableDef =>
         variableDef.type.kind === Kind.NON_NULL_TYPE && variableDef.defaultValue == null,
     );
+
+    if (operationType === 'Subscription') {
+      return `
+export function use${operationName}<TData = ${operationResultType}>(options${
+        isVariablesRequired ? '' : '?'
+      }: Omit<Urql.Use${operationType}Args<${operationVariablesTypes}>, 'query'>, handler?: Urql.SubscriptionHandler<${operationResultType}, TData>) {
+  return Urql.use${operationType}<${operationResultType}, TData, ${operationVariablesTypes}>({ query: ${documentVariableName}, ...options }, handler);
+};`;
+    }
 
     return `
 export function use${operationName}(options${

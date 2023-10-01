@@ -630,7 +630,38 @@ export function useDefaultValueArgQuery(options?: Omit<Urql.UseQueryArgs<Default
       await validateTypeScript(content, schema, docs, {});
     });
 
-    it('Should generate subscription hooks', async () => {
+    it('Should generate subscription hooks with required arguments', async () => {
+      const documents = parse(/* GraphQL */ `
+        subscription ListenToComments($name: String!) {
+          commentAdded(repoFullName: $name) {
+            id
+          }
+        }
+      `);
+
+      const docs = [{ location: '', document: documents }];
+
+      const content = (await plugin(
+        schema,
+        docs,
+        {
+          withHooks: true,
+          withComponent: false,
+        },
+        {
+          outputFile: 'graphql.tsx',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`
+      export function useListenToCommentsSubscription<TData = ListenToCommentsSubscription>(options: Omit<Urql.UseSubscriptionArgs<ListenToCommentsSubscriptionVariables>, 'query'>, handler?: Urql.SubscriptionHandler<ListenToCommentsSubscription, TData>) {
+        return Urql.useSubscription<ListenToCommentsSubscription, TData, ListenToCommentsSubscriptionVariables>({ query: ListenToCommentsDocument, ...options }, handler);
+      };`);
+      await validateTypeScript(content, schema, docs, {});
+      expect(mergeOutputs([content])).toMatchSnapshot();
+    });
+
+    it('Should generate subscription hooks with optional arguments', async () => {
       const documents = parse(/* GraphQL */ `
         subscription ListenToComments($name: String) {
           commentAdded(repoFullName: $name) {
@@ -654,7 +685,7 @@ export function useDefaultValueArgQuery(options?: Omit<Urql.UseQueryArgs<Default
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-      export function useListenToCommentsSubscription<TData = ListenToCommentsSubscription>(options: Omit<Urql.UseSubscriptionArgs<ListenToCommentsSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<ListenToCommentsSubscription, TData>) {
+      export function useListenToCommentsSubscription<TData = ListenToCommentsSubscription>(options?: Omit<Urql.UseSubscriptionArgs<ListenToCommentsSubscriptionVariables>, 'query'>, handler?: Urql.SubscriptionHandler<ListenToCommentsSubscription, TData>) {
         return Urql.useSubscription<ListenToCommentsSubscription, TData, ListenToCommentsSubscriptionVariables>({ query: ListenToCommentsDocument, ...options }, handler);
       };`);
       await validateTypeScript(content, schema, docs, {});

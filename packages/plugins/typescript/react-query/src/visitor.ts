@@ -32,6 +32,7 @@ export interface ReactQueryPluginConfig extends ClientSideBasePluginConfig {
   exposeFetcher: boolean;
   addInfiniteQuery: boolean;
   legacyMode: boolean;
+  reactQueryImportFrom?: string;
 }
 
 export interface ReactQueryMethodMap {
@@ -89,6 +90,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       exposeFetcher: getConfigValue(rawConfig.exposeFetcher, false),
       addInfiniteQuery: getConfigValue(rawConfig.addInfiniteQuery, false),
       legacyMode: getConfigValue(rawConfig.legacyMode, false),
+      reactQueryImportFrom: getConfigValue(rawConfig.reactQueryImportFrom, ''),
     });
     this._externalImportPrefix = this.config.importOperationTypesFrom
       ? `${this.config.importOperationTypesFrom}.`
@@ -110,8 +112,8 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     if (typeof raw === 'object' && 'endpoint' in raw) {
       return new HardcodedFetchFetcher(this, raw);
     }
-    if (raw === 'graphql-request') {
-      return new GraphQLRequestClientFetcher(this);
+    if (raw === 'graphql-request' || (typeof raw === 'object' && 'clientImportPath' in raw)) {
+      return new GraphQLRequestClientFetcher(this, raw);
     }
 
     return new CustomMapperFetcher(this, raw);
@@ -135,7 +137,11 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       ),
     ];
 
-    const moduleName = this.config.legacyMode ? 'react-query' : '@tanstack/react-query';
+    const moduleName = this.config.reactQueryImportFrom
+      ? this.config.reactQueryImportFrom
+      : this.config.legacyMode
+      ? 'react-query'
+      : '@tanstack/react-query';
 
     return [...baseImports, `import { ${hookAndTypeImports.join(', ')} } from '${moduleName}';`];
   }
