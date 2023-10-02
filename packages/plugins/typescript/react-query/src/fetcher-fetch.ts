@@ -53,7 +53,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
 
-    const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
+    const options = `options: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
 
     return `export const useInfinite${operationName} = <
       TData = ${operationResultType},
