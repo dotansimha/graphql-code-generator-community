@@ -82,11 +82,14 @@ export function generateInfiniteQueryFormattedParameters(
       ${queryFn},
       options`;
   }
-  return `{
-    queryKey:${queryKey},
-    queryFn:${queryFn},
-    ...options
-  }`;
+  return `(() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? ${queryKey},
+      queryFn: ${queryFn},
+      ...restOptions
+    }
+  })()`;
 }
 
 interface GenerateQueryParametersFormattedPayload {
@@ -104,8 +107,8 @@ export function generateQueryFormattedParameters(
       options`;
   }
   return `{
-    queryKey:${queryKey},
-    queryFn:${queryFn},
+    queryKey: ${queryKey},
+    queryFn: ${queryFn},
     ...options
   }`;
 }
@@ -125,8 +128,8 @@ export function generateMutationFormattedParameters(
       options`;
   }
   return `{
-    mutationKey:${mutationKey},
-    mutationFn:${mutationFn},
+    mutationKey: ${mutationKey},
+    mutationFn: ${mutationFn},
     ...options
   }`;
 }
