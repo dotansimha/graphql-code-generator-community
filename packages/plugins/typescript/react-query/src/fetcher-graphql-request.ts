@@ -41,7 +41,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
-    const variables = this.generateQueryVariablesSignature(
+    const variables = this.generateInfiniteQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,
     );
@@ -54,7 +54,10 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
 
-    const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
+    const options = this.generateInfiniteQueryOptionsSignature(
+      hookConfig.infiniteQuery.options,
+      operationResultType,
+    );
 
     return this.clientPath
       ? `export const useInfinite${operationName} = <

@@ -161,8 +161,8 @@ export const useTestMutation = <
     TError = unknown
   >(
     dataSource: { endpoint: string, fetchParams?: RequestInit },
-    variables?: TestQueryVariables,
-    options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
+    variables: TestQueryVariables,
+    options: Omit<UseInfiniteQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<TestQuery, TError, TData>['queryKey'] }
   ) =>
   useInfiniteQuery<TestQuery, TError, TData>(
     (() => {

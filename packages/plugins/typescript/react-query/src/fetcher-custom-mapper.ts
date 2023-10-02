@@ -52,13 +52,19 @@ export class CustomMapperFetcher extends FetcherRenderer {
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
-    const variables = `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
+    const variables = this.generateInfiniteQueryVariablesSignature(
+      hasRequiredVariables,
+      operationVariablesTypes,
+    );
 
     const hookConfig = this.visitor.queryMethodMap;
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
 
-    const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
+    const options = this.generateInfiniteQueryOptionsSignature(
+      hookConfig.infiniteQuery.options,
+      operationResultType,
+    );
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
     const implHookOuter = this._isReactHook

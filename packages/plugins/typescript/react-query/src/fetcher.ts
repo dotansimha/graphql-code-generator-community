@@ -14,6 +14,26 @@ export class BaseFetcherRenderer {
     return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
   }
 
+  generateInfiniteQueryVariablesSignature(
+    hasRequiredVariables: boolean,
+    operationVariablesTypes: string,
+  ): string {
+    if (this.visitor.config.reactQueryVersion <= 4) {
+      return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
+    }
+    return `variables: ${operationVariablesTypes}`;
+  }
+
+  generateInfiniteQueryOptionsSignature(
+    infiniteQueryOptions: string,
+    operationResultType: string,
+  ): string {
+    if (this.visitor.config.reactQueryVersion <= 4) {
+      return `options?: ${infiniteQueryOptions}<${operationResultType}, TError, TData>`;
+    }
+    return `options: Omit<${infiniteQueryOptions}<${operationResultType}, TError, TData>, 'queryKey'> & { queryKey?: ${infiniteQueryOptions}<${operationResultType}, TError, TData>['queryKey'] }`;
+  }
+
   generateInfiniteQueryKey(node: OperationDefinitionNode, hasRequiredVariables: boolean): string {
     if (hasRequiredVariables) return `['${node.name.value}.infinite', variables]`;
     return `variables === undefined ? ['${node.name.value}.infinite'] : ['${node.name.value}.infinite', variables]`;

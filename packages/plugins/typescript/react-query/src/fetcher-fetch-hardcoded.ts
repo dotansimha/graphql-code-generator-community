@@ -65,7 +65,7 @@ ${this.getFetchParams()}
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
-    const variables = this.generateQueryVariablesSignature(
+    const variables = this.generateInfiniteQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,
     );
@@ -73,7 +73,10 @@ ${this.getFetchParams()}
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
 
-    const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
+    const options = this.generateInfiniteQueryOptionsSignature(
+      hookConfig.infiniteQuery.options,
+      operationResultType,
+    );
 
     return `export const useInfinite${operationName} = <
       TData = ${operationResultType},
