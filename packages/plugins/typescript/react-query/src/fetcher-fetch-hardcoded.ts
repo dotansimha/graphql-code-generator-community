@@ -1,19 +1,14 @@
+import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
 import { HardcodedFetch } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
-import {
-  generateInfiniteQueryFormattedParameters,
-  generateInfiniteQueryKey,
-  generateMutationFormattedParameters,
-  generateMutationKey,
-  generateQueryFormattedParameters,
-  generateQueryKey,
-  generateQueryVariablesSignature,
-} from './variables-generator.js';
 import { ReactQueryVisitor } from './visitor.js';
 
-export class HardcodedFetchFetcher implements FetcherRenderer {
-  constructor(private visitor: ReactQueryVisitor, private config: HardcodedFetch) {}
+export class HardcodedFetchFetcher extends FetcherRenderer {
+  constructor(protected visitor: ReactQueryVisitor, private config: HardcodedFetch) {
+    super(visitor);
+    autoBind(this);
+  }
 
   private getEndpoint(): string {
     try {
@@ -70,7 +65,7 @@ ${this.getFetchParams()}
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(
+    const variables = this.generateQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,
     );
@@ -78,7 +73,7 @@ ${this.getFetchParams()}
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
 
-    const options = `options: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
+    const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
 
     return `export const useInfinite${operationName} = <
       TData = ${operationResultType},
@@ -88,11 +83,10 @@ ${this.getFetchParams()}
       ${options}
     ) =>
     ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryFormattedParameters({
-        reactQueryVersion: this.visitor.config.reactQueryVersion,
-        queryKey: generateInfiniteQueryKey(node, hasRequiredVariables),
-        queryFn: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`,
-      })}
+      ${this.generateInfiniteQueryFormattedParameters(
+        this.generateInfiniteQueryKey(node, hasRequiredVariables),
+        `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`,
+      )}
     );`;
   }
 
@@ -104,7 +98,7 @@ ${this.getFetchParams()}
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(
+    const variables = this.generateQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,
     );
@@ -122,11 +116,10 @@ ${this.getFetchParams()}
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryFormattedParameters({
-        reactQueryVersion: this.visitor.config.reactQueryVersion,
-        queryKey: generateQueryKey(node, hasRequiredVariables),
-        queryFn: `fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)`,
-      })}
+      ${this.generateQueryFormattedParameters(
+        this.generateQueryKey(node, hasRequiredVariables),
+        `fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)`,
+      )}
     );`;
   }
 
@@ -152,11 +145,10 @@ ${this.getFetchParams()}
     ${
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateMutationFormattedParameters({
-        reactQueryVersion: this.visitor.config.reactQueryVersion,
-        mutationKey: generateMutationKey(node),
-        mutationFn: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)()`,
-      })}
+      ${this.generateMutationFormattedParameters(
+        this.generateMutationKey(node),
+        `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)()`,
+      )}
     );`;
   }
 
@@ -168,7 +160,7 @@ ${this.getFetchParams()}
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
-    const variables = generateQueryVariablesSignature(
+    const variables = this.generateQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,
     );

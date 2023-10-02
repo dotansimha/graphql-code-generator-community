@@ -1,3 +1,4 @@
+import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
 import {
   buildMapperImport,
@@ -6,26 +7,20 @@ import {
 } from '@graphql-codegen/visitor-plugin-common';
 import { CustomFetch } from './config.js';
 import { FetcherRenderer } from './fetcher.js';
-import {
-  generateInfiniteQueryFormattedParameters,
-  generateInfiniteQueryKey,
-  generateMutationFormattedParameters,
-  generateMutationKey,
-  generateQueryFormattedParameters,
-  generateQueryKey,
-} from './variables-generator.js';
 import { ReactQueryVisitor } from './visitor.js';
 
-export class CustomMapperFetcher implements FetcherRenderer {
+export class CustomMapperFetcher extends FetcherRenderer {
   private _mapper: ParsedMapper;
   private _isReactHook: boolean;
 
-  constructor(private visitor: ReactQueryVisitor, customFetcher: CustomFetch) {
+  constructor(protected visitor: ReactQueryVisitor, customFetcher: CustomFetch) {
+    super(visitor);
     if (typeof customFetcher === 'string') {
       customFetcher = { func: customFetcher };
     }
     this._mapper = parseMapper(customFetcher.func);
     this._isReactHook = customFetcher.isReactHook;
+    autoBind(this);
   }
 
   private getFetcherFnName(operationResultType: string, operationVariablesTypes: string): string {
@@ -63,7 +58,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
     this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
 
-    const options = `options: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
+    const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
     const implHookOuter = this._isReactHook
@@ -82,11 +77,10 @@ export class CustomMapperFetcher implements FetcherRenderer {
     ) =>{
     ${implHookOuter}
     return ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryFormattedParameters({
-        reactQueryVersion: this.visitor.config.reactQueryVersion,
-        queryKey: generateInfiniteQueryKey(node, hasRequiredVariables),
-        queryFn: impl,
-      })}
+      ${this.generateInfiniteQueryFormattedParameters(
+        this.generateInfiniteQueryKey(node, hasRequiredVariables),
+        impl,
+      )}
     )};`;
   }
 
@@ -119,11 +113,10 @@ export class CustomMapperFetcher implements FetcherRenderer {
       ${options}
     ) =>
     ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryFormattedParameters({
-        reactQueryVersion: this.visitor.config.reactQueryVersion,
-        queryKey: generateQueryKey(node, hasRequiredVariables),
-        queryFn: impl,
-      })}
+      ${this.generateQueryFormattedParameters(
+        this.generateQueryKey(node, hasRequiredVariables),
+        impl,
+      )}
     );`;
   }
 
@@ -153,11 +146,7 @@ export class CustomMapperFetcher implements FetcherRenderer {
     ${
       hookConfig.mutation.hook
     }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateMutationFormattedParameters({
-        reactQueryVersion: this.visitor.config.reactQueryVersion,
-        mutationKey: generateMutationKey(node),
-        mutationFn: impl,
-      })}
+      ${this.generateMutationFormattedParameters(this.generateMutationKey(node), impl)}
     );`;
   }
 

@@ -15,13 +15,6 @@ import { HardcodedFetchFetcher } from './fetcher-fetch-hardcoded.js';
 import { FetchFetcher } from './fetcher-fetch.js';
 import { GraphQLRequestClientFetcher } from './fetcher-graphql-request.js';
 import { FetcherRenderer } from './fetcher.js';
-import {
-  generateInfiniteQueryKeyMaker,
-  generateInfiniteQueryRootKeyMaker,
-  generateMutationKeyMaker,
-  generateQueryKeyMaker,
-  generateQueryRootKeyMaker,
-} from './variables-generator.js';
 
 export interface ReactQueryPluginConfig extends ClientSideBasePluginConfig {
   errorType: string;
@@ -202,7 +195,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
         query += `\nuse${operationName}.document = ${documentVariableName};\n`;
       }
       if (this.config.exposeQueryKeys) {
-        query += `\n${generateQueryKeyMaker(
+        query += `\n${this.fetcher.generateQueryKeyMaker(
           node,
           operationName,
           operationVariablesTypes,
@@ -210,7 +203,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
         )}\n`;
       }
       if (this.config.exposeQueryRootKeys) {
-        query += `\n${generateQueryRootKeyMaker(node, operationName)}`;
+        query += `\n${this.fetcher.generateQueryRootKeyMaker(node, operationName)}`;
       }
       if (this.config.addInfiniteQuery) {
         query += `\n${this.fetcher.generateInfiniteQueryHook(
@@ -222,7 +215,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
           hasRequiredVariables,
         )}\n`;
         if (this.config.exposeQueryKeys) {
-          query += `\n${generateInfiniteQueryKeyMaker(
+          query += `\n${this.fetcher.generateInfiniteQueryKeyMaker(
             node,
             operationName,
             operationVariablesTypes,
@@ -230,7 +223,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
           )}\n`;
         }
         if (this.config.exposeQueryRootKeys) {
-          query += `\n${generateInfiniteQueryRootKeyMaker(node, operationName)}`;
+          query += `\n${this.fetcher.generateInfiniteQueryRootKeyMaker(node, operationName)}`;
         }
       }
 
@@ -259,7 +252,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
         hasRequiredVariables,
       );
       if (this.config.exposeMutationKeys) {
-        query += generateMutationKeyMaker(node, operationName);
+        query += this.fetcher.generateMutationKeyMaker(node, operationName);
       }
       if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
         query += this.fetcher.generateFetcherFetch(
