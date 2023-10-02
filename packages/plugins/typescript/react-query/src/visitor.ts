@@ -207,7 +207,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
           operationName,
           operationVariablesTypes,
           hasRequiredVariables,
-        )};\n`;
+        )}\n`;
       }
       if (this.config.exposeQueryRootKeys) {
         query += `\n${generateQueryRootKeyMaker(node, operationName)}`;
@@ -227,7 +227,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
             operationName,
             operationVariablesTypes,
             hasRequiredVariables,
-          )};\n`;
+          )}\n`;
         }
         if (this.config.exposeQueryRootKeys) {
           query += `\n${generateInfiniteQueryRootKeyMaker(node, operationName)}`;

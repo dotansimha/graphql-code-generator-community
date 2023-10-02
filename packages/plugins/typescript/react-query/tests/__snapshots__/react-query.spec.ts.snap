@@ -32,7 +32,7 @@ export const useTestQuery = <
     );
 
 useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];
-;
+
 
 export const TestDocument = \`
     mutation test($name: String) {
@@ -87,7 +87,7 @@ export const useTestQuery = <
     );
 
 useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];
-;
+
 
 export const useInfiniteTestQuery = <
       TData = TestQuery,
@@ -105,7 +105,7 @@ export const useInfiniteTestQuery = <
 
 
 useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];
-;
+
 
 export const TestDocument = \`
     mutation test($name: String) {

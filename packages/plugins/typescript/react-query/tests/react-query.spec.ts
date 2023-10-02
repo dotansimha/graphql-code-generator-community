@@ -141,51 +141,54 @@ export const useTestMutation = <
     const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
     expect(out.content).toBeSimilarStringTo(`export const useTestQuery = <
- TData = TestQuery,
- TError = unknown
->(
- dataSource: { endpoint: string, fetchParams?: RequestInit },
- variables?: TestQueryVariables,
- options?: UseQueryOptions<TestQuery, TError, TData>
-) =>
-useQuery<TestQuery, TError, TData>(
-  {
-    queryKey:variables === undefined ? ['test'] : ['test', variables],
-    queryFn:fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
-    ...options
-  }
-);`);
+    TData = TestQuery,
+    TError = unknown
+  >(
+    dataSource: { endpoint: string, fetchParams?: RequestInit },
+    variables?: TestQueryVariables,
+    options?: UseQueryOptions<TestQuery, TError, TData>
+  ) =>
+  useQuery<TestQuery, TError, TData>(
+    {
+  queryKey: variables === undefined ? ['test'] : ['test', variables],
+  queryFn: fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+  ...options
+}
+  );`);
 
     expect(out.content).toBeSimilarStringTo(`export const useInfiniteTestQuery = <
-  TData = TestQuery,
-  TError = unknown
->(
-  dataSource: { endpoint: string, fetchParams?: RequestInit },
-  variables?: TestQueryVariables,
-  options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
-) =>
-useInfiniteQuery<TestQuery, TError, TData>(
-  {
-    queryKey:variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
-    queryFn:(metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
-    ...options
+    TData = TestQuery,
+    TError = unknown
+  >(
+    dataSource: { endpoint: string, fetchParams?: RequestInit },
+    variables?: TestQueryVariables,
+    options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
+  ) =>
+  useInfiniteQuery<TestQuery, TError, TData>(
+    (() => {
+  const { queryKey: optionsQueryKey, ...restOptions } = options;
+  return {
+    queryKey: optionsQueryKey ?? variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+    queryFn: (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+    ...restOptions
   }
-);`);
+})()
+  );`);
 
     expect(out.content).toBeSimilarStringTo(`export const useTestMutation = <
-  TError = unknown,
-  TContext = unknown
->(
-  dataSource: { endpoint: string, fetchParams?: RequestInit },
-  options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
-) =>
-useMutation<TestMutation, TError, TestMutationVariables, TContext>(
-  {
-    mutationKey:['test'],
-    mutationFn:(variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
-    ...options
-  }
-);`);
+    TError = unknown,
+    TContext = unknown
+  >(
+    dataSource: { endpoint: string, fetchParams?: RequestInit },
+    options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
+  ) =>
+  useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+    {
+  mutationKey: ['test'],
+  mutationFn: (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+  ...options
+}
+  );`);
   });
 
   it('Duplicated nested fragments are removed', async () => {
