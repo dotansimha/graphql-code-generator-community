@@ -499,8 +499,18 @@ export function useCommentLazyQuery(
     options,
   );
 }
+export function useCommentSuspenseQuery(
+  baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<CommentQuery, CommentQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useSuspenseQuery<CommentQuery, CommentQueryVariables>(
+    CommentDocument,
+    options,
+  );
+}
 export type CommentQueryHookResult = ReturnType<typeof useCommentQuery>;
 export type CommentLazyQueryHookResult = ReturnType<typeof useCommentLazyQuery>;
+export type CommentSuspenseQueryHookResult = ReturnType<typeof useCommentSuspenseQuery>;
 export type CommentQueryResult = ApolloReactCommon.QueryResult<CommentQuery, CommentQueryVariables>;
 export const CurrentUserForProfileDocument = gql`
   query CurrentUserForProfile {
@@ -550,9 +560,24 @@ export function useCurrentUserForProfileLazyQuery(
     CurrentUserForProfileQueryVariables
   >(CurrentUserForProfileDocument, options);
 }
+export function useCurrentUserForProfileSuspenseQuery(
+  baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
+    CurrentUserForProfileQuery,
+    CurrentUserForProfileQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useSuspenseQuery<
+    CurrentUserForProfileQuery,
+    CurrentUserForProfileQueryVariables
+  >(CurrentUserForProfileDocument, options);
+}
 export type CurrentUserForProfileQueryHookResult = ReturnType<typeof useCurrentUserForProfileQuery>;
 export type CurrentUserForProfileLazyQueryHookResult = ReturnType<
   typeof useCurrentUserForProfileLazyQuery
+>;
+export type CurrentUserForProfileSuspenseQueryHookResult = ReturnType<
+  typeof useCurrentUserForProfileSuspenseQuery
 >;
 export type CurrentUserForProfileQueryResult = ApolloReactCommon.QueryResult<
   CurrentUserForProfileQuery,
@@ -600,8 +625,15 @@ export function useFeedLazyQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return ApolloReactHooks.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
+export function useFeedSuspenseQuery(
+  baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return ApolloReactHooks.useSuspenseQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
+}
 export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;
 export type FeedLazyQueryHookResult = ReturnType<typeof useFeedLazyQuery>;
+export type FeedSuspenseQueryHookResult = ReturnType<typeof useFeedSuspenseQuery>;
 export type FeedQueryResult = ApolloReactCommon.QueryResult<FeedQuery, FeedQueryVariables>;
 export const SubmitRepositoryDocument = gql`
   mutation submitRepository($repoFullName: String!) {

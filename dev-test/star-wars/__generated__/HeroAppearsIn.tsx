@@ -55,8 +55,18 @@ export function useHeroAppearsInLazyQuery(
     options,
   );
 }
+export function useHeroAppearsInSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
+    HeroAppearsInDocument,
+    options,
+  );
+}
 export type HeroAppearsInQueryHookResult = ReturnType<typeof useHeroAppearsInQuery>;
 export type HeroAppearsInLazyQueryHookResult = ReturnType<typeof useHeroAppearsInLazyQuery>;
+export type HeroAppearsInSuspenseQueryHookResult = ReturnType<typeof useHeroAppearsInSuspenseQuery>;
 export type HeroAppearsInQueryResult = Apollo.QueryResult<
   HeroAppearsInQuery,
   HeroAppearsInQueryVariables

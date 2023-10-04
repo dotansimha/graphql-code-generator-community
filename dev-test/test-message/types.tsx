@@ -139,8 +139,18 @@ export function useGetMessagesLazyQuery(
     options,
   );
 }
+export function useGetMessagesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<GetMessagesQuery, GetMessagesQueryVariables>(
+    Operations.GetMessages,
+    options,
+  );
+}
 export type GetMessagesQueryHookResult = ReturnType<typeof useGetMessagesQuery>;
 export type GetMessagesLazyQueryHookResult = ReturnType<typeof useGetMessagesLazyQuery>;
+export type GetMessagesSuspenseQueryHookResult = ReturnType<typeof useGetMessagesSuspenseQuery>;
 export type GetMessagesQueryResult = Apollo.QueryResult<
   GetMessagesQuery,
   GetMessagesQueryVariables

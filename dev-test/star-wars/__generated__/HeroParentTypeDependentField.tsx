@@ -95,11 +95,26 @@ export function useHeroParentTypeDependentFieldLazyQuery(
     HeroParentTypeDependentFieldQueryVariables
   >(HeroParentTypeDependentFieldDocument, options);
 }
+export function useHeroParentTypeDependentFieldSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >(HeroParentTypeDependentFieldDocument, options);
+}
 export type HeroParentTypeDependentFieldQueryHookResult = ReturnType<
   typeof useHeroParentTypeDependentFieldQuery
 >;
 export type HeroParentTypeDependentFieldLazyQueryHookResult = ReturnType<
   typeof useHeroParentTypeDependentFieldLazyQuery
+>;
+export type HeroParentTypeDependentFieldSuspenseQueryHookResult = ReturnType<
+  typeof useHeroParentTypeDependentFieldSuspenseQuery
 >;
 export type HeroParentTypeDependentFieldQueryResult = Apollo.QueryResult<
   HeroParentTypeDependentFieldQuery,

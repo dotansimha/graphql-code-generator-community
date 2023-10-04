@@ -65,11 +65,26 @@ export function useHeroDetailsWithFragmentLazyQuery(
     options,
   );
 }
+export function useHeroDetailsWithFragmentSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >(HeroDetailsWithFragmentDocument, options);
+}
 export type HeroDetailsWithFragmentQueryHookResult = ReturnType<
   typeof useHeroDetailsWithFragmentQuery
 >;
 export type HeroDetailsWithFragmentLazyQueryHookResult = ReturnType<
   typeof useHeroDetailsWithFragmentLazyQuery
+>;
+export type HeroDetailsWithFragmentSuspenseQueryHookResult = ReturnType<
+  typeof useHeroDetailsWithFragmentSuspenseQuery
 >;
 export type HeroDetailsWithFragmentQueryResult = Apollo.QueryResult<
   HeroDetailsWithFragmentQuery,

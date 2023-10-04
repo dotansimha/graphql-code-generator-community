@@ -78,9 +78,24 @@ export function useHeroAndFriendsNamesLazyQuery(
     options,
   );
 }
+export function useHeroAndFriendsNamesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroAndFriendsNamesQuery,
+    HeroAndFriendsNamesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
+    HeroAndFriendsNamesDocument,
+    options,
+  );
+}
 export type HeroAndFriendsNamesQueryHookResult = ReturnType<typeof useHeroAndFriendsNamesQuery>;
 export type HeroAndFriendsNamesLazyQueryHookResult = ReturnType<
   typeof useHeroAndFriendsNamesLazyQuery
+>;
+export type HeroAndFriendsNamesSuspenseQueryHookResult = ReturnType<
+  typeof useHeroAndFriendsNamesSuspenseQuery
 >;
 export type HeroAndFriendsNamesQueryResult = Apollo.QueryResult<
   HeroAndFriendsNamesQuery,
