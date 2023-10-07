@@ -103,8 +103,8 @@ export class CustomMapperFetcher implements FetcherRenderer {
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
     const impl = this._isReactHook
-      ? `${typedFetcher}(${documentVariableName}).bind(null, variables)`
-      : `${typedFetcher}(${documentVariableName}, variables)`;
+      ? `${typedFetcher}(${documentVariableName}).bind(null, variables, options)`
+      : `${typedFetcher}(${documentVariableName}, variables, options)`;
 
     return `export const use${operationName} = <
       TData = ${operationResultType},
@@ -136,8 +136,8 @@ export class CustomMapperFetcher implements FetcherRenderer {
     const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
     const impl = this._isReactHook
-      ? `${typedFetcher}(${documentVariableName})`
-      : `(${variables}) => ${typedFetcher}(${documentVariableName}, variables)()`;
+      ? `${typedFetcher}(${documentVariableName}, options)`
+      : `(${variables}) => ${typedFetcher}(${documentVariableName}, variables, options)()`;
 
     return `export const use${operationName} = <
       TError = ${this.visitor.config.errorType},
