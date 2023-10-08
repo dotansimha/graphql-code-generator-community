@@ -113,7 +113,7 @@ export const useTestMutation = <
     ) =>
     useMutation<TestMutation, TError, TestMutationVariables, TContext>(
       ['test'],
-      (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+      (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables, options)(),
       options
     );`);
   });
@@ -255,7 +255,7 @@ export const useTestMutation = <
         ) =>
         useQuery<TTestQuery, TError, TData>(
           variables === undefined ? ['test'] : ['test', variables],
-          myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
+          myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables, options),
           options
         );`);
 
@@ -268,7 +268,7 @@ export const useTestMutation = <
     ) =>{
     return useInfiniteQuery<TTestQuery, TError, TData>(
       variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
-      (metaData) => myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      (metaData) => myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, {...variables, ...(metaData.pageParam ?? {})}, options)(),
       options
     )};`);
       expect(out.content).toBeSimilarStringTo(`export const useTestMutation = <
@@ -277,7 +277,7 @@ export const useTestMutation = <
     >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) =>
       useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
         ['test'],
-        (variables?: TTestMutationVariables) => myCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
+        (variables?: TTestMutationVariables) => myCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables, options)(),
         options
       );`);
 
@@ -306,7 +306,7 @@ export const useTestMutation = <
       ) =>
       useQuery<TTestQuery, TError, TData>(
         variables === undefined ? ['test'] : ['test', variables],
-        myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
+        myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables, options),
         options
       );`);
 
@@ -316,7 +316,7 @@ export const useTestMutation = <
       >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) =>
       useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
         ['test'],
-        (variables?: TTestMutationVariables) => myCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
+        (variables?: TTestMutationVariables) => myCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables, options)(),
         options
       );`);
 
@@ -350,7 +350,7 @@ export const useTestMutation = <
         ) =>
         useQuery<TTestQuery, TError, TData>(
           variables === undefined ? ['test'] : ['test', variables],
-          useCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument).bind(null, variables),
+          useCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument).bind(null, variables, options),
           options
         );`);
 
@@ -361,7 +361,7 @@ export const useTestMutation = <
       variables?: TTestQueryVariables,
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) =>{
-      const query = useCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument)
+      const query = useCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, options)
       return useInfiniteQuery<TTestQuery, TError, TData>(
       variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
       (metaData) => query({...variables, ...(metaData.pageParam ?? {})}),
@@ -373,7 +373,7 @@ export const useTestMutation = <
       >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) =>
       useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
         ['test'],
-        useCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument),
+        useCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument, options),
         options
       );`);
 
