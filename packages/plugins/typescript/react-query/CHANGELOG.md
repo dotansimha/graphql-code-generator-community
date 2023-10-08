@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-react-query
 
+## 5.1.0
+
+### Minor Changes
+
+- [`df7683e95`](https://github.com/dotansimha/graphql-code-generator-community/commit/df7683e9549c5317b08d27cb46a8a0bfe2fc3879)
+  Thanks [@saihaj](https://github.com/saihaj)! - Allow fetcher config to accept both `string` and
+  `object`. `object` let's user specify the import path to their `GraphQLClient` instance. So it
+  will make it easier to generated hooks by not passing down GraphQLClient.
+
 ## 5.0.0
 
 ### Major Changes
