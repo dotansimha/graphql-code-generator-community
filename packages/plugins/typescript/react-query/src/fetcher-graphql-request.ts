@@ -1,7 +1,7 @@
 import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
 import { GraphQlRequest } from './config.js';
-import { FetcherRenderer, type GenerateQueryHookConfig } from './fetcher.js';
+import { FetcherRenderer, type GenerateHookConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class GraphQLRequestClientFetcher extends FetcherRenderer {
@@ -33,14 +33,16 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 }`;
   }
 
-  generateInfiniteQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateInfiniteQueryHook(config: GenerateHookConfig): string {
+    const {
+      node,
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      operationName,
+      hasRequiredVariables,
+    } = config;
+
     const variables = this.generateInfiniteQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,
@@ -92,7 +94,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     );`;
   }
 
-  generateQueryHook(config: GenerateQueryHookConfig): string {
+  generateQueryHook(config: GenerateHookConfig): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
@@ -120,14 +122,15 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
         });
   }
 
-  generateMutationHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateMutationHook(config: GenerateHookConfig): string {
+    const {
+      node,
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      operationName,
+    } = config;
+
     const variables = `variables?: ${operationVariablesTypes}`;
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);

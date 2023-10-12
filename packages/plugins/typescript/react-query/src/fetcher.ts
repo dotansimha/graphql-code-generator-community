@@ -2,7 +2,7 @@ import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
 import { ReactQueryVisitor } from './visitor.js';
 
-export interface GenerateQueryHookConfig {
+export interface GenerateHookConfig {
   node: OperationDefinitionNode;
   documentVariableName: string;
   operationName: string;
@@ -16,7 +16,7 @@ export class BaseFetcherRenderer {
     autoBind(this);
   }
 
-  generateQueryHelper(config: GenerateQueryHookConfig) {
+  generateQueryHelper(config: GenerateHookConfig) {
     const {
       node,
       operationName,
@@ -206,23 +206,9 @@ export class BaseFetcherRenderer {
 
 export abstract class FetcherRenderer extends BaseFetcherRenderer {
   abstract generateFetcherImplementation(): string;
-  abstract generateQueryHook(config: GenerateQueryHookConfig): string;
-  abstract generateInfiniteQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string;
-  abstract generateMutationHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string;
+  abstract generateQueryHook(config: GenerateHookConfig): string;
+  abstract generateInfiniteQueryHook(config: GenerateHookConfig): string;
+  abstract generateMutationHook(config: GenerateHookConfig): string;
   abstract generateFetcherFetch(
     node: OperationDefinitionNode,
     documentVariableName: string,

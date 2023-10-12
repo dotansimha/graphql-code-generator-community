@@ -211,14 +211,14 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
         query += `\n${this.fetcher.generateQueryRootKeyMaker(node, operationName)}`;
       }
       if (this.config.addInfiniteQuery) {
-        query += `\n${this.fetcher.generateInfiniteQueryHook(
+        query += `\n${this.fetcher.generateInfiniteQueryHook({
           node,
           documentVariableName,
           operationName,
           operationResultType,
           operationVariablesTypes,
           hasRequiredVariables,
-        )}\n`;
+        })}\n`;
         if (this.config.exposeQueryKeys) {
           query += `\n${this.fetcher.generateInfiniteQueryKeyMaker(
             node,
@@ -248,14 +248,14 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       return query;
     }
     if (operationType === 'Mutation') {
-      let query = this.fetcher.generateMutationHook(
+      let query = this.fetcher.generateMutationHook({
         node,
         documentVariableName,
         operationName,
         operationResultType,
         operationVariablesTypes,
         hasRequiredVariables,
-      );
+      });
       if (this.config.exposeMutationKeys) {
         query += this.fetcher.generateMutationKeyMaker(node, operationName);
       }

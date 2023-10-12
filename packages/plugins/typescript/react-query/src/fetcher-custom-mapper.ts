@@ -6,7 +6,7 @@ import {
   parseMapper,
 } from '@graphql-codegen/visitor-plugin-common';
 import { CustomFetch } from './config.js';
-import { FetcherRenderer, type GenerateQueryHookConfig } from './fetcher.js';
+import { FetcherRenderer, type GenerateHookConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class CustomMapperFetcher extends FetcherRenderer {
@@ -44,14 +44,16 @@ export class CustomMapperFetcher extends FetcherRenderer {
     return null;
   }
 
-  generateInfiniteQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateInfiniteQueryHook(config: GenerateHookConfig): string {
+    const {
+      node,
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      operationName,
+      hasRequiredVariables,
+    } = config;
+
     const variables = this.generateInfiniteQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,
@@ -90,7 +92,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
     )};`;
   }
 
-  generateQueryHook(config: GenerateQueryHookConfig): string {
+  generateQueryHook(config: GenerateHookConfig): string {
     const { generateBaseQueryHook } = this.generateQueryHelper(config);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
@@ -105,14 +107,14 @@ export class CustomMapperFetcher extends FetcherRenderer {
     });
   }
 
-  generateMutationHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateMutationHook(config: GenerateHookConfig): string {
+    const {
+      node,
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      operationName,
+    } = config;
     const variables = `variables?: ${operationVariablesTypes}`;
     const hookConfig = this.visitor.queryMethodMap;
     this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.mutation.hook);
