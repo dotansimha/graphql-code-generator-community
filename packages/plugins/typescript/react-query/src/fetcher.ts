@@ -2,12 +2,72 @@ import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
 import { ReactQueryVisitor } from './visitor.js';
 
+export interface GenerateQueryHookConfig {
+  node: OperationDefinitionNode;
+  documentVariableName: string;
+  operationName: string;
+  operationResultType: string;
+  operationVariablesTypes: string;
+  hasRequiredVariables: boolean;
+}
+
 export class BaseFetcherRenderer {
   constructor(protected visitor: ReactQueryVisitor) {
     autoBind(this);
   }
 
-  generateQueryHelper() {}
+  generateQueryHelper(config: GenerateQueryHookConfig) {
+    const {
+      node,
+      operationName,
+      operationResultType,
+      operationVariablesTypes,
+      hasRequiredVariables,
+    } = config;
+
+    const variables = this.generateQueryVariablesSignature(
+      hasRequiredVariables,
+      operationVariablesTypes,
+    );
+    const hookConfig = this.visitor.queryMethodMap;
+    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.query.hook);
+    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.query.options);
+
+    const options = `options?: ${hookConfig.query.options}<${operationResultType}, TError, TData>`;
+
+    const generateBaseQueryHook = (config: {
+      implArguments?: string;
+      implHookOuter?: string;
+      implFetcher: string;
+    }) => {
+      const { implArguments = '', implHookOuter = '', implFetcher = '' } = config;
+
+      const argumentsResult =
+        implArguments ??
+        `${variables},
+        ${options}`;
+
+      return `export const use${operationName} = <
+      TData = ${operationResultType},
+      TError = ${this.visitor.config.errorType}
+    >(
+      ${argumentsResult}
+    ) => {
+    ${implHookOuter}
+    return ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
+      ${this.generateQueryFormattedParameters(
+        this.generateQueryKey(node, hasRequiredVariables),
+        implFetcher,
+      )}
+    )};`;
+    };
+
+    return {
+      generateBaseQueryHook,
+      variables,
+      options,
+    };
+  }
 
   generateQueryVariablesSignature(
     hasRequiredVariables: boolean,
@@ -143,16 +203,10 @@ export class BaseFetcherRenderer {
   }`;
   }
 }
+
 export abstract class FetcherRenderer extends BaseFetcherRenderer {
   abstract generateFetcherImplementation(): string;
-  abstract generateQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string;
+  abstract generateQueryHook(config: GenerateQueryHookConfig): string;
   abstract generateInfiniteQueryHook(
     node: OperationDefinitionNode,
     documentVariableName: string,

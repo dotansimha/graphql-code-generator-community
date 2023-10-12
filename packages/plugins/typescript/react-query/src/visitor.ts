@@ -188,14 +188,14 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
 
     if (operationType === 'Query') {
-      let query = this.fetcher.generateQueryHook(
+      let query = this.fetcher.generateQueryHook({
         node,
         documentVariableName,
         operationName,
         operationResultType,
         operationVariablesTypes,
         hasRequiredVariables,
-      );
+      });
       if (this.config.exposeDocument) {
         query += `\nuse${operationName}.document = ${documentVariableName};\n`;
       }

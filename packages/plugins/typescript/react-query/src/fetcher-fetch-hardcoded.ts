@@ -1,7 +1,7 @@
 import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
 import { HardcodedFetch } from './config.js';
-import { FetcherRenderer } from './fetcher.js';
+import { FetcherRenderer, type GenerateQueryHookConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class HardcodedFetchFetcher extends FetcherRenderer {
@@ -93,14 +93,16 @@ ${this.getFetchParams()}
     );`;
   }
 
-  generateQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateQueryHook(config: GenerateQueryHookConfig): string {
+    const {
+      node,
+      documentVariableName,
+      operationName,
+      operationResultType,
+      operationVariablesTypes,
+      hasRequiredVariables,
+    } = config;
+
     const variables = this.generateQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,

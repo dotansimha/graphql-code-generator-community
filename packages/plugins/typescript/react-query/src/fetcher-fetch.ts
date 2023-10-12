@@ -1,6 +1,6 @@
 import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
-import { FetcherRenderer } from './fetcher.js';
+import { FetcherRenderer, type GenerateQueryHookConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class FetchFetcher extends FetcherRenderer {
@@ -69,38 +69,17 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     );`;
   }
 
-  generateQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
-    const variables = this.generateQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
-    );
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.query.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.query.options);
+  generateQueryHook(config: GenerateQueryHookConfig): string {
+    const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(config);
 
-    const options = `options?: ${hookConfig.query.options}<${operationResultType}, TError, TData>`;
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    return `export const use${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
+    return generateBaseQueryHook({
+      implArguments: `dataSource: { endpoint: string, fetchParams?: RequestInit },
       ${variables},
-      ${options}
-    ) =>
-    ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${this.generateQueryFormattedParameters(
-        this.generateQueryKey(node, hasRequiredVariables),
-        `fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)`,
-      )}
-    );`;
+      ${options}`,
+      implFetcher: `fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)`,
+    });
   }
 
   generateMutationHook(
