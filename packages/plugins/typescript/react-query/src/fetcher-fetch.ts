@@ -9,7 +9,7 @@ export class FetchFetcher extends FetcherRenderer {
     autoBind(this);
   }
 
-  generateFetcherImplementaion(): string {
+  generateFetcherImplementation(): string {
     return `
 function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
   return async (): Promise<TData> => {

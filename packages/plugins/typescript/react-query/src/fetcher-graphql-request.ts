@@ -13,7 +13,7 @@ export class GraphQLRequestClientFetcher extends FetcherRenderer {
     autoBind(this);
   }
 
-  generateFetcherImplementaion(): string {
+  generateFetcherImplementation(): string {
     return this.clientPath
       ? `
 function fetcher<TData, TVariables extends { [key: string]: any }>(query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {

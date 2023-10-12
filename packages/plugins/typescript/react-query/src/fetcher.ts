@@ -7,6 +7,8 @@ export class BaseFetcherRenderer {
     autoBind(this);
   }
 
+  generateQueryHelper() {}
+
   generateQueryVariablesSignature(
     hasRequiredVariables: boolean,
     operationVariablesTypes: string,
@@ -142,7 +144,7 @@ export class BaseFetcherRenderer {
   }
 }
 export abstract class FetcherRenderer extends BaseFetcherRenderer {
-  abstract generateFetcherImplementaion(): string;
+  abstract generateFetcherImplementation(): string;
   abstract generateQueryHook(
     node: OperationDefinitionNode,
     documentVariableName: string,

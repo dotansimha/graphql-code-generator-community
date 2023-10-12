@@ -152,7 +152,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
   }
 
   public getFetcherImplementation(): string {
-    return this.fetcher.generateFetcherImplementaion();
+    return this.fetcher.generateFetcherImplementation();
   }
 
   private _getHookSuffix(name: string, operationType: string) {

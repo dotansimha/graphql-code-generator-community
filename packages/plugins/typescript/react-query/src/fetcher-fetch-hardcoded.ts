@@ -35,7 +35,7 @@ export class HardcodedFetchFetcher extends FetcherRenderer {
     return `    method: "POST",${fetchParamsPartial}`;
   }
 
-  generateFetcherImplementaion(): string {
+  generateFetcherImplementation(): string {
     return `
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
