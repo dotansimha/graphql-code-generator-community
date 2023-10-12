@@ -9,28 +9,25 @@ import {
   getConfigValue,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import { ReactQueryRawPluginConfig } from './config.js';
+import { BaseReactQueryPluginConfig, ReactQueryRawPluginConfig } from './config.js';
 import { CustomMapperFetcher } from './fetcher-custom-mapper.js';
 import { HardcodedFetchFetcher } from './fetcher-fetch-hardcoded.js';
 import { FetchFetcher } from './fetcher-fetch.js';
 import { GraphQLRequestClientFetcher } from './fetcher-graphql-request.js';
 import { FetcherRenderer } from './fetcher.js';
 
-export interface ReactQueryPluginConfig extends ClientSideBasePluginConfig {
-  errorType: string;
-  exposeDocument: boolean;
-  exposeQueryKeys: boolean;
-  exposeQueryRootKeys: boolean;
-  exposeMutationKeys: boolean;
-  exposeFetcher: boolean;
-  addInfiniteQuery: boolean;
-  legacyMode: boolean;
-  reactQueryVersion: 4 | 5;
-  reactQueryImportFrom?: string;
-}
+export type ReactQueryPluginConfig = BaseReactQueryPluginConfig & ClientSideBasePluginConfig;
 
 export interface ReactQueryMethodMap {
   infiniteQuery: {
+    hook: string;
+    options: string;
+  };
+  suspenseInfiniteQuery: {
+    hook: string;
+    options: string;
+  };
+  suspenseQuery: {
     hook: string;
     options: string;
   };
@@ -57,6 +54,14 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     infiniteQuery: {
       hook: 'useInfiniteQuery',
       options: 'UseInfiniteQueryOptions',
+    },
+    suspenseInfiniteQuery: {
+      hook: 'useSuspenseInfiniteQuery',
+      options: 'UseSuspenseInfiniteQueryOptions',
+    },
+    suspenseQuery: {
+      hook: 'useSuspenseQuery',
+      options: 'UseSuspenseQueryOptions',
     },
     query: {
       hook: 'useQuery',
