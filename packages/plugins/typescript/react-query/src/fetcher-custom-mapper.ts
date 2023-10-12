@@ -91,41 +91,18 @@ export class CustomMapperFetcher extends FetcherRenderer {
   }
 
   generateQueryHook(config: GenerateQueryHookConfig): string {
-    const {
-      node,
-      documentVariableName,
-      operationName,
-      operationResultType,
-      operationVariablesTypes,
-      hasRequiredVariables,
-    } = config;
+    const { generateBaseQueryHook } = this.generateQueryHelper(config);
 
-    const variables = `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
-
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.query.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.query.options);
-
-    const options = `options?: ${hookConfig.query.options}<${operationResultType}, TError, TData>`;
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
     const impl = this._isReactHook
       ? `${typedFetcher}(${documentVariableName}).bind(null, variables)`
       : `${typedFetcher}(${documentVariableName}, variables)`;
 
-    return `export const use${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
-      ${variables},
-      ${options}
-    ) =>
-    ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${this.generateQueryFormattedParameters(
-        this.generateQueryKey(node, hasRequiredVariables),
-        impl,
-      )}
-    );`;
+    return generateBaseQueryHook({
+      implFetcher: impl,
+    });
   }
 
   generateMutationHook(

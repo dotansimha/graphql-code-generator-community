@@ -40,12 +40,12 @@ export class BaseFetcherRenderer {
       implHookOuter?: string;
       implFetcher: string;
     }) => {
-      const { implArguments = '', implHookOuter = '', implFetcher = '' } = config;
+      const { implArguments, implHookOuter = '', implFetcher } = config;
 
       const argumentsResult =
         implArguments ??
         `${variables},
-        ${options}`;
+      ${options}`;
 
       return `export const use${operationName} = <
       TData = ${operationResultType},
