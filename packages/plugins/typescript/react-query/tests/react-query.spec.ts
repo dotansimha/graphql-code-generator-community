@@ -37,19 +37,6 @@ describe('React-Query', () => {
     await validateTypeScript(mergeOutputs(out), schema, docs, config);
   });
 
-  it('should throw when using v5 config with legacyMode', async () => {
-    const config: ReactQueryRawPluginConfig = {
-      legacyMode: true,
-      reactQueryVersion: 5,
-      addInfiniteQuery: true,
-    };
-    try {
-      plugin(schema, docs, config);
-    } catch (e) {
-      expect(e.message).toBe('reactQueryVersion cannot more than 4 when legacyMode is true');
-    }
-  });
-
   it('support v5 syntax', async () => {
     const config: ReactQueryRawPluginConfig = {
       addInfiniteQuery: true,

@@ -33,6 +33,8 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     protected rawConfig: ReactQueryRawPluginConfig,
     documents: Types.DocumentFile[],
   ) {
+    const defaultReactQueryVersion = !rawConfig.reactQueryVersion && rawConfig.legacyMode ? 3 : 4;
+
     super(schema, fragments, rawConfig, {
       documentMode: DocumentMode.string,
       errorType: getConfigValue(rawConfig.errorType, 'unknown'),
@@ -42,14 +44,9 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       exposeMutationKeys: getConfigValue(rawConfig.exposeMutationKeys, false),
       exposeFetcher: getConfigValue(rawConfig.exposeFetcher, false),
       addInfiniteQuery: getConfigValue(rawConfig.addInfiniteQuery, false),
-      legacyMode: getConfigValue(rawConfig.legacyMode, false),
-      reactQueryVersion: getConfigValue(rawConfig.reactQueryVersion, 4),
+      reactQueryVersion: getConfigValue(rawConfig.reactQueryVersion, defaultReactQueryVersion),
       reactQueryImportFrom: getConfigValue(rawConfig.reactQueryImportFrom, ''),
     });
-
-    if (super.config.legacyMode && super.config.reactQueryVersion > 4) {
-      throw new Error('reactQueryVersion cannot more than 4 when legacyMode is true');
-    }
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
       ? `${this.config.importOperationTypesFrom}.`
@@ -98,7 +95,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
 
     const moduleName = this.config.reactQueryImportFrom
       ? this.config.reactQueryImportFrom
-      : this.config.legacyMode
+      : this.config.reactQueryVersion <= 3
       ? 'react-query'
       : '@tanstack/react-query';
 
