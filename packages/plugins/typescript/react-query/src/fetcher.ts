@@ -2,7 +2,7 @@ import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
 import { ReactQueryVisitor } from './visitor.js';
 
-export interface GenerateHookConfig {
+export interface BuildOperationConfig {
   node: OperationDefinitionNode;
   documentVariableName: string;
   operationName: string;
@@ -11,12 +11,18 @@ export interface GenerateHookConfig {
   hasRequiredVariables: boolean;
 }
 
+interface GenerateBaseHookConfig {
+  implArguments?: string;
+  implHookOuter?: string;
+  implFetcher: string;
+}
+
 export class BaseFetcherRenderer {
   constructor(protected visitor: ReactQueryVisitor) {
     autoBind(this);
   }
 
-  generateQueryHelper(config: GenerateHookConfig) {
+  generateQueryHelper(config: BuildOperationConfig) {
     const {
       node,
       operationName,
@@ -35,11 +41,7 @@ export class BaseFetcherRenderer {
 
     const options = `options?: ${hookConfig.query.options}<${operationResultType}, TError, TData>`;
 
-    const generateBaseQueryHook = (config: {
-      implArguments?: string;
-      implHookOuter?: string;
-      implFetcher: string;
-    }) => {
+    const generateBaseQueryHook = (config: GenerateBaseHookConfig) => {
       const { implArguments, implHookOuter = '', implFetcher } = config;
 
       const argumentsResult =
@@ -64,6 +66,42 @@ export class BaseFetcherRenderer {
 
     return {
       generateBaseQueryHook,
+      variables,
+      options,
+    };
+  }
+
+  generateMutationHelper(config: BuildOperationConfig) {
+    const { node, operationResultType, operationVariablesTypes, operationName } = config;
+
+    const variables = `variables?: ${operationVariablesTypes}`;
+    const hookConfig = this.visitor.queryMethodMap;
+    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.mutation.hook);
+    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.mutation.options);
+
+    const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
+
+    const generateBaseMutationHook = (config: GenerateBaseHookConfig) => {
+      const { implArguments, implHookOuter = '', implFetcher } = config;
+
+      const argumentsResult = implArguments ?? `${options}`;
+
+      return `export const use${operationName} = <
+      TError = ${this.visitor.config.errorType},
+      TContext = unknown
+    >(
+      ${argumentsResult}
+    ) => {
+    ${implHookOuter}
+    return ${
+      hookConfig.mutation.hook
+    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
+      ${this.generateMutationFormattedParameters(this.generateMutationKey(node), implFetcher)}
+    )};`;
+    };
+
+    return {
+      generateBaseMutationHook,
       variables,
       options,
     };
@@ -206,9 +244,9 @@ export class BaseFetcherRenderer {
 
 export abstract class FetcherRenderer extends BaseFetcherRenderer {
   abstract generateFetcherImplementation(): string;
-  abstract generateQueryHook(config: GenerateHookConfig): string;
-  abstract generateInfiniteQueryHook(config: GenerateHookConfig): string;
-  abstract generateMutationHook(config: GenerateHookConfig): string;
+  abstract generateQueryHook(config: BuildOperationConfig): string;
+  abstract generateInfiniteQueryHook(config: BuildOperationConfig): string;
+  abstract generateMutationHook(config: BuildOperationConfig): string;
   abstract generateFetcherFetch(
     node: OperationDefinitionNode,
     documentVariableName: string,

@@ -48,12 +48,13 @@ export const useTestMutation = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
-    ) =>
-    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TestMutation, TError, TestMutationVariables, TContext>(
       ['test'],
       (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query exposeQueryKeys: true, addInfiniteQuery: true Should generate getKey for each query - also infinite queries 1`] = `
@@ -122,12 +123,13 @@ export const useTestMutation = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
-    ) =>
-    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TestMutation, TError, TestMutationVariables, TContext>(
       ['test'],
       (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query exposeQueryRootKeys: true Should generate rootKey for each query 1`] = `
@@ -177,12 +179,13 @@ export const useTestMutation = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
-    ) =>
-    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TestMutation, TError, TestMutationVariables, TContext>(
       ['test'],
       (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query exposeQueryRootKeys: true, addInfiniteQuery: true Should generate rootKey for each query - also infinite queries 1`] = `
@@ -249,12 +252,13 @@ export const useTestMutation = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
-    ) =>
-    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TestMutation, TError, TestMutationVariables, TContext>(
       ['test'],
       (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query fetcher: custom-mapper Should generate mutation correctly with lazy variables: content 1`] = `
@@ -494,12 +498,13 @@ export const useTestMutation = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>
-    ) =>
-    useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
       ['test'],
       (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query fetcher: fetch Should generate query and mutation correctly: prepend 1`] = `
@@ -1118,12 +1123,13 @@ export const useTestMutation = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
-    ) =>
-    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TestMutation, TError, TestMutationVariables, TContext>(
       ['test'],
       (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query support v4 syntax: prepend 1`] = `
@@ -1217,12 +1223,13 @@ export const useTestMutation = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
-    ) =>
-    useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TestMutation, TError, TestMutationVariables, TContext>(
       {
     mutationKey: ['test'],
     mutationFn: (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
     ...options
   }
-    );"
+    )};"
 `;

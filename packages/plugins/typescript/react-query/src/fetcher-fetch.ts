@@ -85,36 +85,15 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
   }
 
   generateMutationHook(config: BuildOperationConfig): string {
-    const {
-      node,
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      operationName,
-    } = config;
+    const { generateBaseMutationHook, variables, options } = this.generateMutationHelper(config);
 
-    const variables = `variables?: ${operationVariablesTypes}`;
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.mutation.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.mutation.options);
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
-
-    return `export const use${operationName} = <
-      TError = ${this.visitor.config.errorType},
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      ${options}
-    ) =>
-    ${
-      hookConfig.mutation.hook
-    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${this.generateMutationFormattedParameters(
-        this.generateMutationKey(node),
-        `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)()`,
-      )}
-    );`;
+    return generateBaseMutationHook({
+      implArguments: `dataSource: { endpoint: string, fetchParams?: RequestInit },
+      ${options}`,
+      implFetcher: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)()`,
+    });
   }
 
   generateFetcherFetch(
