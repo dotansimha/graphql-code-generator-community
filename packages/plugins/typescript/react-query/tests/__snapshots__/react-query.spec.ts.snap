@@ -1005,6 +1005,20 @@ export const useTestQuery = <
       fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
       options
     )};
+export const useInfiniteTestQuery = <
+      TData = TTestQuery,
+      TError = unknown
+    >(
+      variables?: TTestQueryVariables,
+      options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
+    ) => {
+    
+    return useInfiniteQuery<TTestQuery, TError, TData>(
+      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      (metaData) => fetcher<TTestQuery, TTestQueryVariables>(TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      options
+    )};
+
 export const TestDocument = \`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
@@ -1026,7 +1040,7 @@ export const useTestMutation = <
 
 exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint: prepend 1`] = `
 [
-  "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
+  "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {

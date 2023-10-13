@@ -596,6 +596,7 @@ describe('React-Query', () => {
         },
         typesPrefix: 'T',
         legacyMode: true,
+        addInfiniteQuery: true,
       };
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
