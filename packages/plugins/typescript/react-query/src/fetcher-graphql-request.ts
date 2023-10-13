@@ -34,64 +34,34 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
   }
 
   generateInfiniteQueryHook(config: BuildOperationConfig): string {
-    const {
-      node,
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      operationName,
-      hasRequiredVariables,
-    } = config;
-
-    const variables = this.generateInfiniteQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
-    );
-
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
 
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
+    const { generateBaseInfiniteQueryHook, variables, options } =
+      this.generateInfiniteQueryHelper(config);
 
-    const options = this.generateInfiniteQueryOptionsSignature(
-      hookConfig.infiniteQuery.options,
-      operationResultType,
-    );
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     return this.clientPath
-      ? `export const useInfinite${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
+      ? generateBaseInfiniteQueryHook({
+          implArguments: `
       pageParamKey: keyof ${operationVariablesTypes},
       ${variables},
       ${options},
       headers?: RequestInit['headers']
-    ) =>
-    ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${this.generateInfiniteQueryFormattedParameters(
-        this.generateInfiniteQueryKey(node, hasRequiredVariables),
-        `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, [pageParamKey]: metaData.pageParam}, headers)()`,
-      )}
-    );`
-      : `export const useInfinite${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
+    `,
+          implFetcher: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, {...variables, [pageParamKey]: metaData.pageParam}, headers)()`,
+        })
+      : generateBaseInfiniteQueryHook({
+          implArguments: `
       client: GraphQLClient,
       ${variables},
       ${options},
       headers?: RequestInit['headers']
-    ) =>
-    ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${this.generateInfiniteQueryFormattedParameters(
-        this.generateInfiniteQueryKey(node, hasRequiredVariables),
-        `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})}, headers)()`,
-      )}
-    );`;
+    `,
+          implFetcher: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})}, headers)()`,
+        });
   }
 
   generateQueryHook(config: BuildOperationConfig): string {

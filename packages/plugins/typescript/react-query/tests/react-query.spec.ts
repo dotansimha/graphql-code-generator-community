@@ -414,6 +414,7 @@ describe('React-Query', () => {
       const config = {
         fetcher: 'graphql-request',
         typesPrefix: 'T',
+        addInfiniteQuery: true,
         legacyMode: true,
       };
 
