@@ -18,8 +18,6 @@ import { FetcherRenderer } from './fetcher.js';
 
 export type ReactQueryPluginConfig = BaseReactQueryPluginConfig & ClientSideBasePluginConfig;
 
-export type ReactQueryMethodMap = { [key: string]: { hook: string; options: string } };
-
 export class ReactQueryVisitor extends ClientSideBaseVisitor<
   ReactQueryRawPluginConfig,
   ReactQueryPluginConfig
@@ -28,29 +26,6 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
   public fetcher: FetcherRenderer;
   public reactQueryHookIdentifiersInUse = new Set<string>();
   public reactQueryOptionsIdentifiersInUse = new Set<string>();
-
-  public queryMethodMap: ReactQueryMethodMap = {
-    infiniteQuery: {
-      hook: 'useInfiniteQuery',
-      options: 'UseInfiniteQueryOptions',
-    },
-    suspenseInfiniteQuery: {
-      hook: 'useSuspenseInfiniteQuery',
-      options: 'UseSuspenseInfiniteQueryOptions',
-    },
-    suspenseQuery: {
-      hook: 'useSuspenseQuery',
-      options: 'UseSuspenseQueryOptions',
-    },
-    query: {
-      hook: 'useQuery',
-      options: 'UseQueryOptions',
-    },
-    mutation: {
-      hook: 'useMutation',
-      options: 'UseMutationOptions',
-    },
-  };
 
   constructor(
     schema: GraphQLSchema,
