@@ -1,6 +1,6 @@
 import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
-import { FetcherRenderer, type GenerateHookConfig } from './fetcher.js';
+import { type BuildOperationConfig, FetcherRenderer } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class FetchFetcher extends FetcherRenderer {
@@ -32,7 +32,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 }`;
   }
 
-  generateInfiniteQueryHook(config: GenerateHookConfig): string {
+  generateInfiniteQueryHook(config: BuildOperationConfig): string {
     const {
       node,
       documentVariableName,
@@ -71,7 +71,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     );`;
   }
 
-  generateQueryHook(config: GenerateHookConfig): string {
+  generateQueryHook(config: BuildOperationConfig): string {
     const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(config);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
@@ -84,7 +84,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     });
   }
 
-  generateMutationHook(config: GenerateHookConfig): string {
+  generateMutationHook(config: BuildOperationConfig): string {
     const {
       node,
       documentVariableName,

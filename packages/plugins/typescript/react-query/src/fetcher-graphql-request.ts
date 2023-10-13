@@ -1,7 +1,7 @@
 import autoBind from 'auto-bind';
 import { OperationDefinitionNode } from 'graphql';
 import { GraphQlRequest } from './config.js';
-import { FetcherRenderer, type GenerateHookConfig } from './fetcher.js';
+import { type BuildOperationConfig, FetcherRenderer } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class GraphQLRequestClientFetcher extends FetcherRenderer {
@@ -33,7 +33,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 }`;
   }
 
-  generateInfiniteQueryHook(config: GenerateHookConfig): string {
+  generateInfiniteQueryHook(config: BuildOperationConfig): string {
     const {
       node,
       documentVariableName,
@@ -94,7 +94,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     );`;
   }
 
-  generateQueryHook(config: GenerateHookConfig): string {
+  generateQueryHook(config: BuildOperationConfig): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
@@ -122,7 +122,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
         });
   }
 
-  generateMutationHook(config: GenerateHookConfig): string {
+  generateMutationHook(config: BuildOperationConfig): string {
     const {
       node,
       documentVariableName,

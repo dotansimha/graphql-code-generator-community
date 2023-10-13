@@ -6,7 +6,7 @@ import {
   parseMapper,
 } from '@graphql-codegen/visitor-plugin-common';
 import { CustomFetch } from './config.js';
-import { FetcherRenderer, type GenerateHookConfig } from './fetcher.js';
+import { type BuildOperationConfig, FetcherRenderer } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class CustomMapperFetcher extends FetcherRenderer {
@@ -44,7 +44,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
     return null;
   }
 
-  generateInfiniteQueryHook(config: GenerateHookConfig): string {
+  generateInfiniteQueryHook(config: BuildOperationConfig): string {
     const {
       node,
       documentVariableName,
@@ -92,7 +92,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
     )};`;
   }
 
-  generateQueryHook(config: GenerateHookConfig): string {
+  generateQueryHook(config: BuildOperationConfig): string {
     const { generateBaseQueryHook } = this.generateQueryHelper(config);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
@@ -107,7 +107,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
     });
   }
 
-  generateMutationHook(config: GenerateHookConfig): string {
+  generateMutationHook(config: BuildOperationConfig): string {
     const {
       node,
       documentVariableName,
