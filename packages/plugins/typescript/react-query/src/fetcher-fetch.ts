@@ -33,42 +33,19 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
   }
 
   generateInfiniteQueryHook(config: BuildOperationConfig): string {
-    const {
-      node,
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      operationName,
-      hasRequiredVariables,
-    } = config;
+    const { generateBaseInfiniteQueryHook, variables, options } =
+      this.generateInfiniteQueryHelper(config);
 
-    const variables = this.generateInfiniteQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
-    );
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    const options = this.generateInfiniteQueryOptionsSignature(
-      hookConfig.infiniteQuery.options,
-      operationResultType,
-    );
-
-    return `export const useInfinite${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
+    return generateBaseInfiniteQueryHook({
+      implArguments: `
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       ${variables},
       ${options}
-    ) =>
-    ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${this.generateInfiniteQueryFormattedParameters(
-        this.generateInfiniteQueryKey(node, hasRequiredVariables),
-        `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`,
-      )}
-    );`;
+    `,
+      implFetcher: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`,
+    });
   }
 
   generateQueryHook(config: BuildOperationConfig): string {
