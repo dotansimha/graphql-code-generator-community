@@ -22,7 +22,7 @@ export class BaseFetcherRenderer {
     autoBind(this);
   }
 
-  generateInfiniteQueryHelper(config: BuildOperationConfig) {
+  protected generateInfiniteQueryHelper(config: BuildOperationConfig) {
     const {
       node,
       operationResultType,
@@ -71,7 +71,7 @@ export class BaseFetcherRenderer {
     return { generateBaseInfiniteQueryHook, variables, options };
   }
 
-  generateQueryHelper(config: BuildOperationConfig) {
+  protected generateQueryHelper(config: BuildOperationConfig) {
     const {
       node,
       operationName,
@@ -89,7 +89,10 @@ export class BaseFetcherRenderer {
       operationVariablesTypes,
     );
 
-    const options = `options?: ${hookConfig.query.options}<${operationResultType}, TError, TData>`;
+    const options = this.generateQueryOptionsSignature(
+      hookConfig.query.options,
+      operationResultType,
+    );
 
     const generateBaseQueryHook = (config: GenerateBaseHookConfig) => {
       const { implArguments, implHookOuter = '', implFetcher } = config;
@@ -121,7 +124,7 @@ export class BaseFetcherRenderer {
     };
   }
 
-  generateMutationHelper(config: BuildOperationConfig) {
+  protected generateMutationHelper(config: BuildOperationConfig) {
     const { node, operationResultType, operationVariablesTypes, operationName } = config;
 
     const hookConfig = this.visitor.queryMethodMap;
@@ -156,14 +159,21 @@ export class BaseFetcherRenderer {
     };
   }
 
-  generateQueryVariablesSignature(
+  protected generateQueryVariablesSignature(
     hasRequiredVariables: boolean,
     operationVariablesTypes: string,
   ): string {
     return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
   }
 
-  generateInfiniteQueryVariablesSignature(
+  private generateQueryOptionsSignature(queryOptions: string, operationResultType: string): string {
+    if (this.visitor.config.reactQueryVersion <= 4) {
+      return `options?: ${queryOptions}<${operationResultType}, TError, TData>`;
+    }
+    return `options?: Omit<${queryOptions}<${operationResultType}, TError, TData>, 'queryKey'> & { queryKey?: ${queryOptions}<${operationResultType}, TError, TData>['queryKey'] }`;
+  }
+
+  private generateInfiniteQueryVariablesSignature(
     hasRequiredVariables: boolean,
     operationVariablesTypes: string,
   ): string {
@@ -173,7 +183,7 @@ export class BaseFetcherRenderer {
     return `variables: ${operationVariablesTypes}`;
   }
 
-  generateInfiniteQueryOptionsSignature(
+  private generateInfiniteQueryOptionsSignature(
     infiniteQueryOptions: string,
     operationResultType: string,
   ): string {
@@ -183,12 +193,15 @@ export class BaseFetcherRenderer {
     return `options: Omit<${infiniteQueryOptions}<${operationResultType}, TError, TData>, 'queryKey'> & { queryKey?: ${infiniteQueryOptions}<${operationResultType}, TError, TData>['queryKey'] }`;
   }
 
-  generateInfiniteQueryKey(node: OperationDefinitionNode, hasRequiredVariables: boolean): string {
+  public generateInfiniteQueryKey(
+    node: OperationDefinitionNode,
+    hasRequiredVariables: boolean,
+  ): string {
     if (hasRequiredVariables) return `['${node.name.value}.infinite', variables]`;
     return `variables === undefined ? ['${node.name.value}.infinite'] : ['${node.name.value}.infinite', variables]`;
   }
 
-  generateInfiniteQueryKeyMaker(
+  public generateInfiniteQueryKeyMaker(
     node: OperationDefinitionNode,
     operationName: string,
     operationVariablesTypes: string,
@@ -204,16 +217,16 @@ export class BaseFetcherRenderer {
     )};\n`;
   }
 
-  generateInfiniteQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
+  public generateInfiniteQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
     return `\nuseInfinite${operationName}.rootKey = '${node.name.value}.infinite';\n`;
   }
 
-  generateQueryKey(node: OperationDefinitionNode, hasRequiredVariables: boolean): string {
+  public generateQueryKey(node: OperationDefinitionNode, hasRequiredVariables: boolean): string {
     if (hasRequiredVariables) return `['${node.name.value}', variables]`;
     return `variables === undefined ? ['${node.name.value}'] : ['${node.name.value}', variables]`;
   }
 
-  generateQueryKeyMaker(
+  public generateQueryKeyMaker(
     node: OperationDefinitionNode,
     operationName: string,
     operationVariablesTypes: string,
@@ -229,26 +242,19 @@ export class BaseFetcherRenderer {
     )};\n`;
   }
 
-  generateQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
+  public generateQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
     return `\nuse${operationName}.rootKey = '${node.name.value}';\n`;
   }
 
-  generateMutationKey(node: OperationDefinitionNode): string {
+  public generateMutationKey(node: OperationDefinitionNode): string {
     return `['${node.name.value}']`;
   }
 
-  generateMutationKeyMaker(node: OperationDefinitionNode, operationName: string) {
+  public generateMutationKeyMaker(node: OperationDefinitionNode, operationName: string) {
     return `\nuse${operationName}.getKey = () => ${this.generateMutationKey(node)};\n`;
   }
 
-  generateInfiniteQueryRequired() {
-    if (this.visitor.config.reactQueryVersion <= 4) {
-      return '?';
-    }
-    return '';
-  }
-
-  generateInfiniteQueryFormattedParameters(queryKey: string, queryFn: string) {
+  private generateInfiniteQueryFormattedParameters(queryKey: string, queryFn: string) {
     if (this.visitor.config.reactQueryVersion <= 4) {
       return `${queryKey},
       ${queryFn},
@@ -264,7 +270,7 @@ export class BaseFetcherRenderer {
   })()`;
   }
 
-  generateQueryFormattedParameters(queryKey: string, queryFn: string): string {
+  private generateQueryFormattedParameters(queryKey: string, queryFn: string): string {
     if (this.visitor.config.reactQueryVersion <= 4) {
       return `${queryKey},
       ${queryFn},
@@ -277,7 +283,7 @@ export class BaseFetcherRenderer {
   }`;
   }
 
-  generateMutationFormattedParameters(mutationKey: string, mutationFn: string): string {
+  private generateMutationFormattedParameters(mutationKey: string, mutationFn: string): string {
     if (this.visitor.config.reactQueryVersion <= 4) {
       return `${mutationKey},
       ${mutationFn},
@@ -292,11 +298,11 @@ export class BaseFetcherRenderer {
 }
 
 export abstract class FetcherRenderer extends BaseFetcherRenderer {
-  abstract generateFetcherImplementation(): string;
-  abstract generateQueryHook(config: BuildOperationConfig): string;
-  abstract generateInfiniteQueryHook(config: BuildOperationConfig): string;
-  abstract generateMutationHook(config: BuildOperationConfig): string;
-  abstract generateFetcherFetch(
+  public abstract generateFetcherImplementation(): string;
+  public abstract generateQueryHook(config: BuildOperationConfig): string;
+  public abstract generateInfiniteQueryHook(config: BuildOperationConfig): string;
+  public abstract generateMutationHook(config: BuildOperationConfig): string;
+  public abstract generateFetcherFetch(
     node: OperationDefinitionNode,
     documentVariableName: string,
     operationName: string,
