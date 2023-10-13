@@ -87,7 +87,7 @@ export abstract class FetcherRenderer {
     ${implHookOuter}
     return ${infiniteQuery.getHook()}<${operationResultType}, TError, TData>(
       ${this.generateInfiniteQueryFormattedParameters(
-        this.generateInfiniteQueryKey(config),
+        this.generateInfiniteQueryKey(config, isSuspense),
         implFetcher,
       )}
     )};`;
@@ -124,7 +124,10 @@ export abstract class FetcherRenderer {
     >(${argumentsResult}) => {
     ${implHookOuter}
     return ${query.getHook()}<${operationResultType}, TError, TData>(
-      ${this.generateQueryFormattedParameters(this.generateQueryKey(config), implFetcher)}
+      ${this.generateQueryFormattedParameters(
+        this.generateQueryKey(config, isSuspense),
+        implFetcher,
+      )}
     )};`;
     };
 
@@ -209,9 +212,11 @@ export abstract class FetcherRenderer {
     return `options: Omit<${infiniteQuery.getOptions()}<${operationResultType}, TError, TData>, 'queryKey'> & { queryKey?: ${infiniteQuery.getOptions()}<${operationResultType}, TError, TData>['queryKey'] }`;
   }
 
-  public generateInfiniteQueryKey(config: GenerateConfig): string {
-    if (config.hasRequiredVariables) return `['${config.node.name.value}.infinite', variables]`;
-    return `variables === undefined ? ['${config.node.name.value}.infinite'] : ['${config.node.name.value}.infinite', variables]`;
+  public generateInfiniteQueryKey(config: GenerateConfig, isSuspense: boolean): string {
+    const identifier = isSuspense ? 'infiniteSuspense' : 'infinite';
+    if (config.hasRequiredVariables)
+      return `['${config.node.name.value}.${identifier}', variables]`;
+    return `variables === undefined ? ['${config.node.name.value}.${identifier}'] : ['${config.node.name.value}.${identifier}', variables]`;
   }
 
   public generateInfiniteQueryOutput(config: GenerateConfig, isSuspense = false) {
@@ -222,14 +227,15 @@ export abstract class FetcherRenderer {
       hook: this.generateInfiniteQueryHook(config, isSuspense),
       getKey: `${infiniteQuery.getHook(
         operationName,
-      )}.getKey = (${signature}) => ${this.generateInfiniteQueryKey(config)};`,
+      )}.getKey = (${signature}) => ${this.generateInfiniteQueryKey(config, isSuspense)};`,
       rootKey: `${infiniteQuery.getHook(operationName)}.rootKey = '${node.name.value}.infinite';`,
     };
   }
 
-  public generateQueryKey(config: GenerateConfig): string {
-    if (config.hasRequiredVariables) return `['${config.node.name.value}', variables]`;
-    return `variables === undefined ? ['${config.node.name.value}'] : ['${config.node.name.value}', variables]`;
+  public generateQueryKey(config: GenerateConfig, isSuspense: boolean): string {
+    const identifier = isSuspense ? `${config.node.name.value}Suspense` : config.node.name.value;
+    if (config.hasRequiredVariables) return `['${identifier}', variables]`;
+    return `variables === undefined ? ['${identifier}'] : ['${identifier}', variables]`;
   }
 
   public generateQueryOutput(config: GenerateConfig, isSuspense = false) {
@@ -241,6 +247,7 @@ export abstract class FetcherRenderer {
       document: `${query.getHook(operationName)}.document = ${documentVariableName};`,
       getKey: `${query.getHook(operationName)}.getKey = (${signature}) => ${this.generateQueryKey(
         config,
+        isSuspense,
       )};`,
       rootKey: `${query.getHook(operationName)}.rootKey = '${node.name.value}';`,
     };
