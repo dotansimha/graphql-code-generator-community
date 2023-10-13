@@ -68,7 +68,7 @@ export abstract class FetcherRenderer {
 
     const variables = this.generateInfiniteQueryVariablesSignature(config);
 
-    const options = this.generateInfiniteQueryOptionsSignature(config);
+    const options = this.generateInfiniteQueryOptionsSignature(config, isSuspense);
 
     const generateBaseInfiniteQueryHook = (hookConfig: GenerateBaseHookConfig) => {
       const { implArguments, implHookOuter = '', implFetcher } = hookConfig;
@@ -106,7 +106,7 @@ export abstract class FetcherRenderer {
 
     const variables = this.generateQueryVariablesSignature(config);
 
-    const options = this.generateQueryOptionsSignature(config);
+    const options = this.generateQueryOptionsSignature(config, isSuspense);
 
     const generateBaseQueryHook = (hookConfig: GenerateBaseHookConfig) => {
       const { implArguments, implHookOuter = '', implFetcher } = hookConfig;
@@ -181,7 +181,7 @@ export abstract class FetcherRenderer {
 
   private generateQueryOptionsSignature(
     { operationResultType }: GenerateConfig,
-    isSuspense = false,
+    isSuspense: boolean,
   ): string {
     const { query } = this.createQueryMethodMap(isSuspense);
 
@@ -202,7 +202,7 @@ export abstract class FetcherRenderer {
 
   private generateInfiniteQueryOptionsSignature(
     { operationResultType }: GenerateConfig,
-    isSuspense = false,
+    isSuspense: boolean,
   ): string {
     const { infiniteQuery } = this.createQueryMethodMap(isSuspense);
 

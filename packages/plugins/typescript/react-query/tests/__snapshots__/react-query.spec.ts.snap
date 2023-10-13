@@ -1314,7 +1314,7 @@ export const useSuspenseTestQuery = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       variables?: TestQueryVariables,
-      options?: Omit<UseQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<TestQuery, TError, TData>['queryKey'] }
+      options?: Omit<UseSuspenseQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<TestQuery, TError, TData>['queryKey'] }
     ) => {
     
     return useSuspenseQuery<TestQuery, TError, TData>(
@@ -1351,7 +1351,7 @@ export const useSuspenseInfiniteTestQuery = <
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       variables: TestQueryVariables,
-      options: Omit<UseInfiniteQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<TestQuery, TError, TData>['queryKey'] }
+      options: Omit<UseSuspenseInfiniteQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseInfiniteQueryOptions<TestQuery, TError, TData>['queryKey'] }
     ) => {
     
     return useSuspenseInfiniteQuery<TestQuery, TError, TData>(
