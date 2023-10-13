@@ -1,7 +1,6 @@
 import autoBind from 'auto-bind';
-import { OperationDefinitionNode } from 'graphql';
 import { GraphQlRequest } from './config.js';
-import { type BuildOperationConfig, FetcherRenderer } from './fetcher.js';
+import { FetcherRenderer, type GenerateConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class GraphQLRequestClientFetcher extends FetcherRenderer {
@@ -33,7 +32,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 }`;
   }
 
-  generateInfiniteQueryHook(config: BuildOperationConfig): string {
+  generateInfiniteQueryHook(config: GenerateConfig): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
@@ -64,7 +63,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
         });
   }
 
-  generateQueryHook(config: BuildOperationConfig): string {
+  generateQueryHook(config: GenerateConfig): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
@@ -96,7 +95,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
         });
   }
 
-  generateMutationHook(config: BuildOperationConfig): string {
+  generateMutationHook(config: GenerateConfig): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
@@ -123,14 +122,15 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
         });
   }
 
-  generateFetcherFetch(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateFetcherFetch(config: GenerateConfig): string {
+    const {
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      hasRequiredVariables,
+      operationName,
+    } = config;
+
     const variables = this.generateQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,

@@ -1,6 +1,5 @@
 import autoBind from 'auto-bind';
-import { OperationDefinitionNode } from 'graphql';
-import { type BuildOperationConfig, FetcherRenderer } from './fetcher.js';
+import { FetcherRenderer, type GenerateConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class FetchFetcher extends FetcherRenderer {
@@ -32,7 +31,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 }`;
   }
 
-  generateInfiniteQueryHook(config: BuildOperationConfig): string {
+  generateInfiniteQueryHook(config: GenerateConfig): string {
     const { generateBaseInfiniteQueryHook, variables, options } =
       this.generateInfiniteQueryHelper(config);
 
@@ -48,7 +47,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     });
   }
 
-  generateQueryHook(config: BuildOperationConfig): string {
+  generateQueryHook(config: GenerateConfig): string {
     const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(config);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
@@ -63,7 +62,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     });
   }
 
-  generateMutationHook(config: BuildOperationConfig): string {
+  generateMutationHook(config: GenerateConfig): string {
     const { generateBaseMutationHook, variables, options } = this.generateMutationHelper(config);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
@@ -77,14 +76,15 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     });
   }
 
-  generateFetcherFetch(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateFetcherFetch(config: GenerateConfig): string {
+    const {
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      hasRequiredVariables,
+      operationName,
+    } = config;
+
     const variables = this.generateQueryVariablesSignature(
       hasRequiredVariables,
       operationVariablesTypes,

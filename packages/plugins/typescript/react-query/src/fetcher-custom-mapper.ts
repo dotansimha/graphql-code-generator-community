@@ -1,12 +1,11 @@
 import autoBind from 'auto-bind';
-import { OperationDefinitionNode } from 'graphql';
 import {
   buildMapperImport,
   ParsedMapper,
   parseMapper,
 } from '@graphql-codegen/visitor-plugin-common';
 import { CustomFetch } from './config.js';
-import { type BuildOperationConfig, FetcherRenderer } from './fetcher.js';
+import { FetcherRenderer, type GenerateConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class CustomMapperFetcher extends FetcherRenderer {
@@ -44,7 +43,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
     return null;
   }
 
-  generateInfiniteQueryHook(config: BuildOperationConfig): string {
+  generateInfiniteQueryHook(config: GenerateConfig): string {
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
@@ -63,7 +62,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
     });
   }
 
-  generateQueryHook(config: BuildOperationConfig): string {
+  generateQueryHook(config: GenerateConfig): string {
     const { generateBaseQueryHook } = this.generateQueryHelper(config);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
@@ -78,7 +77,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
     });
   }
 
-  generateMutationHook(config: BuildOperationConfig): string {
+  generateMutationHook(config: GenerateConfig): string {
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     const { generateBaseMutationHook, variables } = this.generateMutationHelper(config);
@@ -93,14 +92,15 @@ export class CustomMapperFetcher extends FetcherRenderer {
     });
   }
 
-  generateFetcherFetch(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateFetcherFetch(config: GenerateConfig): string {
+    const {
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      hasRequiredVariables,
+      operationName,
+    } = config;
+
     // We can't generate a fetcher field since we can't call react hooks outside of a React Fucntion Component
     // Related: https://reactjs.org/docs/hooks-rules.html
     if (this._isReactHook) return '';
