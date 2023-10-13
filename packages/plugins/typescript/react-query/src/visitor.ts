@@ -18,28 +18,7 @@ import { FetcherRenderer } from './fetcher.js';
 
 export type ReactQueryPluginConfig = BaseReactQueryPluginConfig & ClientSideBasePluginConfig;
 
-export interface ReactQueryMethodMap {
-  infiniteQuery: {
-    hook: string;
-    options: string;
-  };
-  suspenseInfiniteQuery: {
-    hook: string;
-    options: string;
-  };
-  suspenseQuery: {
-    hook: string;
-    options: string;
-  };
-  query: {
-    hook: string;
-    options: string;
-  };
-  mutation: {
-    hook: string;
-    options: string;
-  };
-}
+export type ReactQueryMethodMap = { [key: string]: { hook: string; options: string } };
 
 export class ReactQueryVisitor extends ClientSideBaseVisitor<
   ReactQueryRawPluginConfig,
