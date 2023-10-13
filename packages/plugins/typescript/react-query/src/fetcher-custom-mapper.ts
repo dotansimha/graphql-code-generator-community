@@ -43,7 +43,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
     return null;
   }
 
-  generateInfiniteQueryHook(config: GenerateConfig): string {
+  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
@@ -54,7 +54,7 @@ export class CustomMapperFetcher extends FetcherRenderer {
       ? `(metaData) => query({...variables, ...(metaData.pageParam ?? {})})`
       : `(metaData) => ${typedFetcher}(${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`;
 
-    const { generateBaseInfiniteQueryHook } = this.generateInfiniteQueryHelper(config);
+    const { generateBaseInfiniteQueryHook } = this.generateInfiniteQueryHelper(config, isSuspense);
 
     return generateBaseInfiniteQueryHook({
       implHookOuter,
@@ -62,8 +62,8 @@ export class CustomMapperFetcher extends FetcherRenderer {
     });
   }
 
-  generateQueryHook(config: GenerateConfig): string {
-    const { generateBaseQueryHook } = this.generateQueryHelper(config);
+  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { generateBaseQueryHook } = this.generateQueryHelper(config, isSuspense);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 

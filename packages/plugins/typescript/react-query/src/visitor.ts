@@ -35,12 +35,6 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
   ) {
     const defaultReactQueryVersion = !rawConfig.reactQueryVersion && rawConfig.legacyMode ? 3 : 4;
 
-    if (rawConfig.reactQueryVersion !== 5 && rawConfig.addSuspenseQuery) {
-      throw new Error(
-        `Suspense queries are only supported in react-query@5. Please upgrade your react-query version.`,
-      );
-    }
-
     super(schema, fragments, rawConfig, {
       documentMode: DocumentMode.string,
       errorType: getConfigValue(rawConfig.errorType, 'unknown'),
@@ -157,42 +151,36 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     const queries: string[] = [];
 
     if (operationType === 'Query') {
-      queries.push(this.fetcher.generateQueryHook(generateConfig));
-      if (this.config.exposeDocument) {
-        queries.push(`use${operationName}.document = ${documentVariableName};`);
-      }
-      if (this.config.exposeQueryKeys) {
-        queries.push(this.fetcher.generateQueryKeyMaker(generateConfig));
-      }
-      if (this.config.exposeQueryRootKeys) {
-        queries.push(this.fetcher.generateQueryRootKeyMaker(generateConfig));
-      }
-      if (this.config.addInfiniteQuery) {
-        queries.push(
-          this.fetcher.generateInfiniteQueryHook({
-            node,
-            documentVariableName,
-            operationName,
-            operationResultType,
-            operationVariablesTypes,
-            hasRequiredVariables,
-          }),
+      const addQuery = (generateConfig: GenerateConfig, isSuspense = false) => {
+        const { hook, getKey, rootKey, document } = this.fetcher.generateQueryOutput(
+          generateConfig,
+          isSuspense,
         );
-        if (this.config.exposeQueryKeys) {
-          queries.push(this.fetcher.generateInfiniteQueryKeyMaker(generateConfig));
-        }
-        if (this.config.exposeQueryRootKeys) {
-          queries.push(this.fetcher.generateInfiniteQueryRootKeyMaker(generateConfig));
-        }
-      }
-      if (this.config.addSuspenseQuery) {
-        const generateSuspenseConfig: GenerateConfig = { ...generateConfig, isSuspense: true };
-        queries.push(this.fetcher.generateInfiniteQueryHook(generateSuspenseConfig));
-        if (this.config.exposeQueryKeys) {
-          queries.push(this.fetcher.generateInfiniteQueryKeyMaker(generateSuspenseConfig));
-        }
-        if (this.config.exposeQueryRootKeys) {
-          queries.push(this.fetcher.generateInfiniteQueryRootKeyMaker(generateSuspenseConfig));
+        queries.push(hook);
+        if (this.config.exposeDocument) queries.push(document);
+        if (this.config.exposeQueryKeys) queries.push(getKey);
+        if (this.config.exposeQueryRootKeys) queries.push(rootKey);
+      };
+
+      addQuery(generateConfig);
+
+      if (this.config.addSuspenseQuery) addQuery(generateConfig, true);
+
+      if (this.config.addInfiniteQuery) {
+        const addInfiniteQuery = (generateConfig: GenerateConfig, isSuspense = false) => {
+          const { hook, getKey, rootKey } = this.fetcher.generateInfiniteQueryOutput(
+            generateConfig,
+            isSuspense,
+          );
+          queries.push(hook);
+          if (this.config.exposeQueryKeys) queries.push(getKey);
+          if (this.config.exposeQueryRootKeys) queries.push(rootKey);
+        };
+
+        addInfiniteQuery(generateConfig);
+
+        if (this.config.addSuspenseQuery) {
+          addInfiniteQuery(generateConfig, true);
         }
       }
       // The reason we're looking at the private field of the CustomMapperFetcher to see if it's a react hook
@@ -204,10 +192,9 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       return `\n${queries.join('\n\n')}\n`;
     }
     if (operationType === 'Mutation') {
-      queries.push(this.fetcher.generateMutationHook(generateConfig));
-      if (this.config.exposeMutationKeys) {
-        queries.push(this.fetcher.generateMutationKeyMaker(generateConfig));
-      }
+      const { hook, getKey } = this.fetcher.generateMutationOutput(generateConfig);
+      queries.push(hook);
+      if (this.config.exposeMutationKeys) queries.push(getKey);
       if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
         queries.push(this.fetcher.generateFetcherFetch(generateConfig));
       }

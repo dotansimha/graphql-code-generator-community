@@ -56,8 +56,8 @@ ${this.getFetchParams()}
 }`;
   }
 
-  generateInfiniteQueryHook(config: GenerateConfig): string {
-    const { generateBaseInfiniteQueryHook } = this.generateInfiniteQueryHelper(config);
+  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { generateBaseInfiniteQueryHook } = this.generateInfiniteQueryHelper(config, isSuspense);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
@@ -66,8 +66,8 @@ ${this.getFetchParams()}
     });
   }
 
-  generateQueryHook(config: GenerateConfig): string {
-    const { generateBaseQueryHook } = this.generateQueryHelper(config);
+  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { generateBaseQueryHook } = this.generateQueryHelper(config, isSuspense);
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
@@ -87,18 +87,10 @@ ${this.getFetchParams()}
   }
 
   generateFetcherFetch(config: GenerateConfig): string {
-    const {
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      hasRequiredVariables,
-      operationName,
-    } = config;
+    const { documentVariableName, operationResultType, operationVariablesTypes, operationName } =
+      config;
 
-    const variables = this.generateQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
-    );
+    const variables = this.generateQueryVariablesSignature(config);
 
     return `\nuse${operationName}.fetcher = (${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables);`;
   }

@@ -31,9 +31,11 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 }`;
   }
 
-  generateInfiniteQueryHook(config: GenerateConfig): string {
-    const { generateBaseInfiniteQueryHook, variables, options } =
-      this.generateInfiniteQueryHelper(config);
+  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { generateBaseInfiniteQueryHook, variables, options } = this.generateInfiniteQueryHelper(
+      config,
+      isSuspense,
+    );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
@@ -47,8 +49,11 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     });
   }
 
-  generateQueryHook(config: GenerateConfig): string {
-    const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(config);
+  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(
+      config,
+      isSuspense,
+    );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
@@ -77,18 +82,10 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
   }
 
   generateFetcherFetch(config: GenerateConfig): string {
-    const {
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      hasRequiredVariables,
-      operationName,
-    } = config;
+    const { documentVariableName, operationResultType, operationVariablesTypes, operationName } =
+      config;
 
-    const variables = this.generateQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
-    );
+    const variables = this.generateQueryVariablesSignature(config);
 
     return `\nuse${operationName}.fetcher = (dataSource: { endpoint: string, fetchParams?: RequestInit }, ${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables);`;
   }

@@ -53,11 +53,17 @@ export const plugin: PluginFunction<ReactQueryRawPluginConfig, Types.ComplexPlug
 export const validate: PluginValidateFn<any> = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: ReactQueryVisitor,
+  config: ReactQueryRawPluginConfig,
   outputFile: string,
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "typescript-react-query" requires extension to be ".ts" or ".tsx"!`);
+  }
+
+  if (config.reactQueryVersion !== 5 && config.addSuspenseQuery) {
+    throw new Error(
+      `Suspense queries are only supported in react-query@5. Please upgrade your react-query version.`,
+    );
   }
 };
 

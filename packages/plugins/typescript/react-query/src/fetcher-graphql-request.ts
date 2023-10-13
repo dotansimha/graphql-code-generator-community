@@ -32,13 +32,15 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 }`;
   }
 
-  generateInfiniteQueryHook(config: GenerateConfig): string {
+  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
 
-    const { generateBaseInfiniteQueryHook, variables, options } =
-      this.generateInfiniteQueryHelper(config);
+    const { generateBaseInfiniteQueryHook, variables, options } = this.generateInfiniteQueryHelper(
+      config,
+      isSuspense,
+    );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
@@ -63,7 +65,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
         });
   }
 
-  generateQueryHook(config: GenerateConfig): string {
+  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
@@ -71,7 +73,10 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       `${typeImport} { RequestInit } from 'graphql-request/dist/types.dom';`,
     );
 
-    const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(config);
+    const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(
+      config,
+      isSuspense,
+    );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
@@ -123,18 +128,10 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
   }
 
   generateFetcherFetch(config: GenerateConfig): string {
-    const {
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      hasRequiredVariables,
-      operationName,
-    } = config;
+    const { documentVariableName, operationResultType, operationVariablesTypes, operationName } =
+      config;
 
-    const variables = this.generateQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
-    );
+    const variables = this.generateQueryVariablesSignature(config);
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(

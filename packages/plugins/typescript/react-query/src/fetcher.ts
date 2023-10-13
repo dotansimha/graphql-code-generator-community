@@ -9,7 +9,6 @@ export interface GenerateConfig {
   operationResultType: string;
   operationVariablesTypes: string;
   hasRequiredVariables: boolean;
-  isSuspense?: boolean;
 }
 
 interface GenerateBaseHookConfig {
@@ -20,41 +19,52 @@ interface GenerateBaseHookConfig {
 
 type ReactQueryMethodMap = {
   [key: string]: {
-    getHook: (config?: { isSuspense?: boolean; operationName?: string }) => string;
-    getOptions: (config?: { isSuspense?: boolean }) => string;
+    getHook: (operationName?: string) => string;
+    getOptions: () => string;
   };
 };
 
-export class BaseFetcherRenderer {
+export abstract class FetcherRenderer {
   constructor(protected visitor: ReactQueryVisitor) {
     autoBind(this);
   }
 
-  private queryMethodMap: ReactQueryMethodMap = {
-    infiniteQuery: {
-      getHook: ({ isSuspense = false, operationName = 'Query' } = {}) =>
-        `use${isSuspense ? 'Suspense' : ''}Infinite${operationName}`,
-      getOptions: ({ isSuspense = false } = {}) =>
-        `Use${isSuspense ? 'Suspense' : ''}InfiniteQueryOptions`,
-    },
-    query: {
-      getHook: ({ isSuspense = false, operationName = 'Query' } = {}) =>
-        `use${isSuspense ? 'Suspense' : ''}${operationName}`,
-      getOptions: ({ isSuspense = false } = {}) => `Use${isSuspense ? 'Suspense' : ''}QueryOptions`,
-    },
-    mutation: {
-      getHook: ({ operationName = 'Mutation' } = {}) => `use${operationName}`,
-      getOptions: () => `UseMutationOptions`,
-    },
-  };
+  public abstract generateFetcherImplementation(): string;
+  public abstract generateFetcherFetch(config: GenerateConfig): string;
+  protected abstract generateQueryHook(config: GenerateConfig, isSuspense?: boolean): string;
+  protected abstract generateInfiniteQueryHook(
+    config: GenerateConfig,
+    isSuspense?: boolean,
+  ): string;
+  protected abstract generateMutationHook(config: GenerateConfig): string;
 
-  protected generateInfiniteQueryHelper(config: GenerateConfig) {
+  public createQueryMethodMap(isSuspense = false) {
+    const queryMethodMap: ReactQueryMethodMap = {
+      infiniteQuery: {
+        getHook: (operationName = 'Query') =>
+          `use${isSuspense ? 'Suspense' : ''}Infinite${operationName}`,
+        getOptions: () => `Use${isSuspense ? 'Suspense' : ''}InfiniteQueryOptions`,
+      },
+      query: {
+        getHook: (operationName = 'Query') => `use${isSuspense ? 'Suspense' : ''}${operationName}`,
+        getOptions: () => `Use${isSuspense ? 'Suspense' : ''}QueryOptions`,
+      },
+      mutation: {
+        getHook: (operationName = 'Mutation') => `use${operationName}`,
+        getOptions: () => `UseMutationOptions`,
+      },
+    };
+
+    return queryMethodMap;
+  }
+
+  protected generateInfiniteQueryHelper(config: GenerateConfig, isSuspense: boolean) {
     const { operationResultType, operationName } = config;
 
-    this.visitor.reactQueryHookIdentifiersInUse.add(this.queryMethodMap.infiniteQuery.getHook());
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(
-      this.queryMethodMap.infiniteQuery.getOptions(),
-    );
+    const { infiniteQuery } = this.createQueryMethodMap(isSuspense);
+
+    this.visitor.reactQueryHookIdentifiersInUse.add(infiniteQuery.getHook());
+    this.visitor.reactQueryOptionsIdentifiersInUse.add(infiniteQuery.getOptions());
 
     const variables = this.generateInfiniteQueryVariablesSignature(config);
 
@@ -70,12 +80,12 @@ export class BaseFetcherRenderer {
       ${options}
     `;
 
-      return `export const useInfinite${operationName} = <
+      return `export const ${infiniteQuery.getHook(operationName)} = <
       TData = ${operationResultType},
       TError = ${this.visitor.config.errorType}
     >(${argumentsResult}) => {
     ${implHookOuter}
-    return ${this.queryMethodMap.infiniteQuery.getHook()}<${operationResultType}, TError, TData>(
+    return ${infiniteQuery.getHook()}<${operationResultType}, TError, TData>(
       ${this.generateInfiniteQueryFormattedParameters(
         this.generateInfiniteQueryKey(config),
         implFetcher,
@@ -86,19 +96,17 @@ export class BaseFetcherRenderer {
     return { generateBaseInfiniteQueryHook, variables, options };
   }
 
-  protected generateQueryHelper(config: GenerateConfig) {
-    const { operationName, operationResultType, operationVariablesTypes, hasRequiredVariables } =
-      config;
+  protected generateQueryHelper(config: GenerateConfig, isSuspense: boolean) {
+    const { operationName, operationResultType } = config;
 
-    this.visitor.reactQueryHookIdentifiersInUse.add(this.queryMethodMap.query.getHook());
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(this.queryMethodMap.query.getOptions());
+    const { query } = this.createQueryMethodMap(isSuspense);
 
-    const variables = this.generateQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
-    );
+    this.visitor.reactQueryHookIdentifiersInUse.add(query.getHook());
+    this.visitor.reactQueryOptionsIdentifiersInUse.add(query.getOptions());
 
-    const options = this.generateQueryOptionsSignature(operationResultType);
+    const variables = this.generateQueryVariablesSignature(config);
+
+    const options = this.generateQueryOptionsSignature(config);
 
     const generateBaseQueryHook = (hookConfig: GenerateBaseHookConfig) => {
       const { implArguments, implHookOuter = '', implFetcher } = hookConfig;
@@ -110,12 +118,12 @@ export class BaseFetcherRenderer {
       ${options}
     `;
 
-      return `export const use${operationName} = <
+      return `export const ${query.getHook(operationName)} = <
       TData = ${operationResultType},
       TError = ${this.visitor.config.errorType}
     >(${argumentsResult}) => {
     ${implHookOuter}
-    return ${this.queryMethodMap.query.getHook()}<${operationResultType}, TError, TData>(
+    return ${query.getHook()}<${operationResultType}, TError, TData>(
       ${this.generateQueryFormattedParameters(this.generateQueryKey(config), implFetcher)}
     )};`;
     };
@@ -130,24 +138,26 @@ export class BaseFetcherRenderer {
   protected generateMutationHelper(config: GenerateConfig) {
     const { operationResultType, operationVariablesTypes, operationName } = config;
 
-    this.visitor.reactQueryHookIdentifiersInUse.add(this.queryMethodMap.mutation.getHook());
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(this.queryMethodMap.mutation.getOptions());
+    const { mutation } = this.createQueryMethodMap();
+
+    this.visitor.reactQueryHookIdentifiersInUse.add(mutation.getHook());
+    this.visitor.reactQueryOptionsIdentifiersInUse.add(mutation.getOptions());
 
     const variables = `variables?: ${operationVariablesTypes}`;
 
-    const options = `options?: ${this.queryMethodMap.mutation.getOptions()}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
+    const options = `options?: ${mutation.getOptions()}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
 
     const generateBaseMutationHook = (hookConfig: GenerateBaseHookConfig) => {
       const { implArguments, implHookOuter = '', implFetcher } = hookConfig;
 
       const argumentsResult = implArguments ?? `${options}`;
 
-      return `export const use${operationName} = <
+      return `export const ${mutation.getHook(operationName)} = <
       TError = ${this.visitor.config.errorType},
       TContext = unknown
     >(${argumentsResult}) => {
     ${implHookOuter}
-    return ${this.queryMethodMap.mutation.getHook()}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
+    return ${mutation.getHook()}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
       ${this.generateMutationFormattedParameters(this.generateMutationKey(config), implFetcher)}
     )};`;
     };
@@ -159,18 +169,23 @@ export class BaseFetcherRenderer {
     };
   }
 
-  protected generateQueryVariablesSignature(
-    hasRequiredVariables: boolean,
-    operationVariablesTypes: string,
-  ): string {
+  protected generateQueryVariablesSignature({
+    hasRequiredVariables,
+    operationVariablesTypes,
+  }: GenerateConfig): string {
     return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
   }
 
-  private generateQueryOptionsSignature(operationResultType: string): string {
+  private generateQueryOptionsSignature(
+    { operationResultType }: GenerateConfig,
+    isSuspense = false,
+  ): string {
+    const { query } = this.createQueryMethodMap(isSuspense);
+
     if (this.visitor.config.reactQueryVersion <= 4) {
-      return `options?: ${this.queryMethodMap.query.getOptions()}<${operationResultType}, TError, TData>`;
+      return `options?: ${query.getOptions()}<${operationResultType}, TError, TData>`;
     }
-    return `options?: Omit<${this.queryMethodMap.query.getOptions()}<${operationResultType}, TError, TData>, 'queryKey'> & { queryKey?: ${this.queryMethodMap.query.getOptions()}<${operationResultType}, TError, TData>['queryKey'] }`;
+    return `options?: Omit<${query.getOptions()}<${operationResultType}, TError, TData>, 'queryKey'> & { queryKey?: ${query.getOptions()}<${operationResultType}, TError, TData>['queryKey'] }`;
   }
 
   private generateInfiniteQueryVariablesSignature(config: GenerateConfig): string {
@@ -182,17 +197,16 @@ export class BaseFetcherRenderer {
     return `variables: ${config.operationVariablesTypes}`;
   }
 
-  private generateInfiniteQueryOptionsSignature(config: GenerateConfig): string {
+  private generateInfiniteQueryOptionsSignature(
+    { operationResultType }: GenerateConfig,
+    isSuspense = false,
+  ): string {
+    const { infiniteQuery } = this.createQueryMethodMap(isSuspense);
+
     if (this.visitor.config.reactQueryVersion <= 4) {
-      return `options?: ${this.queryMethodMap.infiniteQuery.getOptions()}<${
-        config.operationResultType
-      }, TError, TData>`;
+      return `options?: ${infiniteQuery.getOptions()}<${operationResultType}, TError, TData>`;
     }
-    return `options: Omit<${this.queryMethodMap.infiniteQuery.getOptions()}<${
-      config.operationResultType
-    }, TError, TData>, 'queryKey'> & { queryKey?: ${this.queryMethodMap.infiniteQuery.getOptions()}<${
-      config.operationResultType
-    }, TError, TData>['queryKey'] }`;
+    return `options: Omit<${infiniteQuery.getOptions()}<${operationResultType}, TError, TData>, 'queryKey'> & { queryKey?: ${infiniteQuery.getOptions()}<${operationResultType}, TError, TData>['queryKey'] }`;
   }
 
   public generateInfiniteQueryKey(config: GenerateConfig): string {
@@ -200,18 +214,17 @@ export class BaseFetcherRenderer {
     return `variables === undefined ? ['${config.node.name.value}.infinite'] : ['${config.node.name.value}.infinite', variables]`;
   }
 
-  public generateInfiniteQueryKeyMaker(config: GenerateConfig) {
-    const signature = this.generateQueryVariablesSignature(
-      config.hasRequiredVariables,
-      config.operationVariablesTypes,
-    );
-    return `useInfinite${
-      config.operationName
-    }.getKey = (${signature}) => ${this.generateInfiniteQueryKey(config)};`;
-  }
-
-  public generateInfiniteQueryRootKeyMaker(config: GenerateConfig) {
-    return `useInfinite${config.operationName}.rootKey = '${config.node.name.value}.infinite';`;
+  public generateInfiniteQueryOutput(config: GenerateConfig, isSuspense = false) {
+    const { infiniteQuery } = this.createQueryMethodMap(isSuspense);
+    const signature = this.generateQueryVariablesSignature(config);
+    const { operationName, node } = config;
+    return {
+      hook: this.generateInfiniteQueryHook(config, isSuspense),
+      getKey: `${infiniteQuery.getHook(
+        operationName,
+      )}.getKey = (${signature}) => ${this.generateInfiniteQueryKey(config)};`,
+      rootKey: `${infiniteQuery.getHook(operationName)}.rootKey = '${node.name.value}.infinite';`,
+    };
   }
 
   public generateQueryKey(config: GenerateConfig): string {
@@ -219,26 +232,33 @@ export class BaseFetcherRenderer {
     return `variables === undefined ? ['${config.node.name.value}'] : ['${config.node.name.value}', variables]`;
   }
 
-  public generateQueryKeyMaker(config: GenerateConfig) {
-    const signature = this.generateQueryVariablesSignature(
-      config.hasRequiredVariables,
-      config.operationVariablesTypes,
-    );
-    return `use${config.operationName}.getKey = (${signature}) => ${this.generateQueryKey(
-      config,
-    )};`;
-  }
-
-  public generateQueryRootKeyMaker({ operationName, node }: GenerateConfig) {
-    return `use${operationName}.rootKey = '${node.name.value}';`;
+  public generateQueryOutput(config: GenerateConfig, isSuspense = false) {
+    const { query } = this.createQueryMethodMap(isSuspense);
+    const signature = this.generateQueryVariablesSignature(config);
+    const { operationName, node, documentVariableName } = config;
+    return {
+      hook: this.generateQueryHook(config, isSuspense),
+      document: `${query.getHook(operationName)}.document = ${documentVariableName};`,
+      getKey: `${query.getHook(operationName)}.getKey = (${signature}) => ${this.generateQueryKey(
+        config,
+      )};`,
+      rootKey: `${query.getHook(operationName)}.rootKey = '${node.name.value}';`,
+    };
   }
 
   public generateMutationKey({ node }: GenerateConfig): string {
     return `['${node.name.value}']`;
   }
 
-  public generateMutationKeyMaker(config: GenerateConfig) {
-    return `use${config.operationName}.getKey = () => ${this.generateMutationKey(config)};`;
+  public generateMutationOutput(config: GenerateConfig) {
+    const { mutation } = this.createQueryMethodMap();
+    const { operationName } = config;
+    return {
+      hook: this.generateMutationHook(config),
+      getKey: `${mutation.getHook(operationName)}.getKey = () => ${this.generateMutationKey(
+        config,
+      )};`,
+    };
   }
 
   private generateInfiniteQueryFormattedParameters(queryKey: string, queryFn: string) {
@@ -282,12 +302,4 @@ export class BaseFetcherRenderer {
     ...options
   }`;
   }
-}
-
-export abstract class FetcherRenderer extends BaseFetcherRenderer {
-  public abstract generateFetcherImplementation(): string;
-  public abstract generateQueryHook(config: GenerateConfig): string;
-  public abstract generateInfiniteQueryHook(config: GenerateConfig): string;
-  public abstract generateMutationHook(config: GenerateConfig): string;
-  public abstract generateFetcherFetch(config: GenerateConfig): string;
 }

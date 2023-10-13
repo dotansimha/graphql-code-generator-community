@@ -39,8 +39,9 @@ describe('React-Query', () => {
 
   it('support v5 syntax', async () => {
     const config: ReactQueryRawPluginConfig = {
-      addInfiniteQuery: true,
       reactQueryVersion: 5,
+      addInfiniteQuery: true,
+      addSuspenseQuery: true,
     };
 
     const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
