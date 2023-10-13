@@ -579,12 +579,13 @@ export const useTestMutation = <
       client: GraphQLClient,
       options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>,
       headers?: RequestInit['headers']
-    ) =>
-    useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
       ['test'],
       (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(client, TestDocument, variables, headers)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query fetcher: graphql-request Should generate query correctly with client: prepend 1`] = `
@@ -647,12 +648,13 @@ export const useTestMutation = <
     >(
       options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>,
       headers?: RequestInit['headers']
-    ) =>
-    useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+    ) => {
+    
+    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
       ['test'],
       (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables, headers)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query fetcher: graphql-request with clientImportPath Should generate query correctly with client: prepend 1`] = `

@@ -127,57 +127,30 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
   }
 
   generateMutationHook(config: BuildOperationConfig): string {
-    const {
-      node,
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      operationName,
-    } = config;
-
-    const variables = `variables?: ${operationVariablesTypes}`;
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
 
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.mutation.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.mutation.options);
+    const { generateBaseMutationHook, variables, options } = this.generateMutationHelper(config);
 
-    const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     return this.clientPath
-      ? `export const use${operationName} = <
-      TError = ${this.visitor.config.errorType},
-      TContext = unknown
-    >(
+      ? generateBaseMutationHook({
+          implArguments: `
       ${options},
       headers?: RequestInit['headers']
-    ) =>
-    ${
-      hookConfig.mutation.hook
-    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${this.generateMutationFormattedParameters(
-        this.generateMutationKey(node),
-        `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)()`,
-      )}
-    );`
-      : `export const use${operationName} = <
-      TError = ${this.visitor.config.errorType},
-      TContext = unknown
-    >(
+    `,
+          implFetcher: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)()`,
+        })
+      : generateBaseMutationHook({
+          implArguments: `
       client: GraphQLClient,
       ${options},
       headers?: RequestInit['headers']
-    ) =>
-    ${
-      hookConfig.mutation.hook
-    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${this.generateMutationFormattedParameters(
-        this.generateMutationKey(node),
-        `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)()`,
-      )}
-    );`;
+    `,
+          implFetcher: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)()`,
+        });
   }
 
   generateFetcherFetch(
