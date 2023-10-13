@@ -46,15 +46,15 @@ export class BaseFetcherRenderer {
 
       const argumentsResult =
         implArguments ??
-        `${variables},
-      ${options}`;
+        `
+      ${variables},
+      ${options}
+    `;
 
       return `export const use${operationName} = <
       TData = ${operationResultType},
       TError = ${this.visitor.config.errorType}
-    >(
-      ${argumentsResult}
-    ) => {
+    >(${argumentsResult}) => {
     ${implHookOuter}
     return ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
       ${this.generateQueryFormattedParameters(
@@ -89,9 +89,7 @@ export class BaseFetcherRenderer {
       return `export const use${operationName} = <
       TError = ${this.visitor.config.errorType},
       TContext = unknown
-    >(
-      ${argumentsResult}
-    ) => {
+    >(${argumentsResult}) => {
     ${implHookOuter}
     return ${
       hookConfig.mutation.hook

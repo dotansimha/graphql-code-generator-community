@@ -106,33 +106,13 @@ ${this.getFetchParams()}
   }
 
   generateMutationHook(config: BuildOperationConfig): string {
-    const {
-      node,
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      operationName,
-    } = config;
+    const { generateBaseMutationHook, variables } = this.generateMutationHelper(config);
 
-    const variables = `variables?: ${operationVariablesTypes}`;
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.mutation.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.mutation.options);
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
-
-    return `export const use${operationName} = <
-      TError = ${this.visitor.config.errorType},
-      TContext = unknown
-    >(${options}) =>
-    ${
-      hookConfig.mutation.hook
-    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${this.generateMutationFormattedParameters(
-        this.generateMutationKey(node),
-        `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)()`,
-      )}
-    );`;
+    return generateBaseMutationHook({
+      implFetcher: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables)()`,
+    });
   }
 
   generateFetcherFetch(

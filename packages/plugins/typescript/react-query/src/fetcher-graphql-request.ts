@@ -108,16 +108,20 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 
     return this.clientPath
       ? generateBaseQueryHook({
-          implArguments: `${variables},
+          implArguments: `
+      ${variables},
       ${options},
-      headers?: RequestInit['headers']`,
+      headers?: RequestInit['headers']
+    `,
           implFetcher: `fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers)`,
         })
       : generateBaseQueryHook({
-          implArguments: `client: GraphQLClient,
+          implArguments: `
+      client: GraphQLClient,
       ${variables},
       ${options},
-      headers?: RequestInit['headers']`,
+      headers?: RequestInit['headers']
+    `,
           implFetcher: `fetcher<${operationResultType}, ${operationVariablesTypes}>(client, ${documentVariableName}, variables, headers)`,
         });
   }

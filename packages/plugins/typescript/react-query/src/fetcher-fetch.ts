@@ -77,9 +77,11 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     return generateBaseQueryHook({
-      implArguments: `dataSource: { endpoint: string, fetchParams?: RequestInit },
+      implArguments: `
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
       ${variables},
-      ${options}`,
+      ${options}
+    `,
       implFetcher: `fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)`,
     });
   }
@@ -90,8 +92,10 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     return generateBaseMutationHook({
-      implArguments: `dataSource: { endpoint: string, fetchParams?: RequestInit },
-      ${options}`,
+      implArguments: `
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      ${options}
+    `,
       implFetcher: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)()`,
     });
   }
