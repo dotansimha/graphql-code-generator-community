@@ -460,12 +460,13 @@ export const CommentDocument = `
   }
 }
     ${CommentsPageCommentFragmentDoc}`;
+
 export const useCommentQuery = <TData = CommentQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   variables: CommentQueryVariables,
   options?: UseQueryOptions<CommentQuery, TError, TData>,
-) =>
-  useQuery<CommentQuery, TError, TData>(
+) => {
+  return useQuery<CommentQuery, TError, TData>(
     ['Comment', variables],
     fetcher<CommentQuery, CommentQueryVariables>(
       dataSource.endpoint,
@@ -475,12 +476,14 @@ export const useCommentQuery = <TData = CommentQuery, TError = unknown>(
     ),
     options,
   );
+};
+
 export const useInfiniteCommentQuery = <TData = CommentQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   variables: CommentQueryVariables,
   options?: UseInfiniteQueryOptions<CommentQuery, TError, TData>,
-) =>
-  useInfiniteQuery<CommentQuery, TError, TData>(
+) => {
+  return useInfiniteQuery<CommentQuery, TError, TData>(
     ['Comment.infinite', variables],
     metaData =>
       fetcher<CommentQuery, CommentQueryVariables>(
@@ -491,6 +494,7 @@ export const useInfiniteCommentQuery = <TData = CommentQuery, TError = unknown>(
       )(),
     options,
   );
+};
 
 export const CurrentUserForProfileDocument = `
     query CurrentUserForProfile {
@@ -500,6 +504,7 @@ export const CurrentUserForProfileDocument = `
   }
 }
     `;
+
 export const useCurrentUserForProfileQuery = <TData = CurrentUserForProfileQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   variables?: CurrentUserForProfileQueryVariables,
@@ -550,6 +555,7 @@ export const FeedDocument = `
   }
 }
     ${FeedEntryFragmentDoc}`;
+
 export const useFeedQuery = <TData = FeedQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   variables: FeedQueryVariables,
@@ -592,6 +598,7 @@ export const SubmitRepositoryDocument = `
   }
 }
     `;
+
 export const useSubmitRepositoryMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   options?: UseMutationOptions<
@@ -621,6 +628,7 @@ export const SubmitCommentDocument = `
   }
 }
     ${CommentsPageCommentFragmentDoc}`;
+
 export const useSubmitCommentMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   options?: UseMutationOptions<
@@ -654,6 +662,7 @@ export const VoteDocument = `
   }
 }
     `;
+
 export const useVoteMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
   options?: UseMutationOptions<VoteMutation, TError, VoteMutationVariables, TContext>,

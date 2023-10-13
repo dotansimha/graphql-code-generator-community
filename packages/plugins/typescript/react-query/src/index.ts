@@ -33,6 +33,7 @@ export const plugin: PluginFunction<ReactQueryRawPluginConfig, Types.ComplexPlug
     return {
       prepend: [...visitor.getImports(), visitor.getFetcherImplementation()],
       content: [
+        '',
         visitor.fragments,
         ...visitorResult.definitions.filter(t => typeof t === 'string'),
       ].join('\n'),
@@ -42,6 +43,7 @@ export const plugin: PluginFunction<ReactQueryRawPluginConfig, Types.ComplexPlug
   return {
     prepend: [...visitor.getImports()],
     content: [
+      '',
       visitor.fragments,
       ...visitorResult.definitions.filter(t => typeof t === 'string'),
     ].join('\n'),

@@ -224,14 +224,14 @@ export class BaseFetcherRenderer {
       hasRequiredVariables,
       operationVariablesTypes,
     );
-    return `\nuseInfinite${operationName}.getKey = (${signature}) => ${this.generateInfiniteQueryKey(
+    return `useInfinite${operationName}.getKey = (${signature}) => ${this.generateInfiniteQueryKey(
       node,
       hasRequiredVariables,
-    )};\n`;
+    )};`;
   }
 
   public generateInfiniteQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
-    return `\nuseInfinite${operationName}.rootKey = '${node.name.value}.infinite';\n`;
+    return `useInfinite${operationName}.rootKey = '${node.name.value}.infinite';`;
   }
 
   public generateQueryKey(node: OperationDefinitionNode, hasRequiredVariables: boolean): string {
@@ -249,14 +249,14 @@ export class BaseFetcherRenderer {
       hasRequiredVariables,
       operationVariablesTypes,
     );
-    return `\nuse${operationName}.getKey = (${signature}) => ${this.generateQueryKey(
+    return `use${operationName}.getKey = (${signature}) => ${this.generateQueryKey(
       node,
       hasRequiredVariables,
-    )};\n`;
+    )};`;
   }
 
   public generateQueryRootKeyMaker(node: OperationDefinitionNode, operationName: string) {
-    return `\nuse${operationName}.rootKey = '${node.name.value}';\n`;
+    return `use${operationName}.rootKey = '${node.name.value}';`;
   }
 
   public generateMutationKey(node: OperationDefinitionNode): string {
@@ -264,7 +264,7 @@ export class BaseFetcherRenderer {
   }
 
   public generateMutationKeyMaker(node: OperationDefinitionNode, operationName: string) {
-    return `\nuse${operationName}.getKey = () => ${this.generateMutationKey(node)};\n`;
+    return `use${operationName}.getKey = () => ${this.generateMutationKey(node)};`;
   }
 
   private generateInfiniteQueryFormattedParameters(queryKey: string, queryFn: string) {

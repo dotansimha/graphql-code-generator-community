@@ -141,48 +141,58 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     operationResultType = this._externalImportPrefix + operationResultType;
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
 
+    const queries: string[] = [];
+
     if (operationType === 'Query') {
-      let query = this.fetcher.generateQueryHook({
-        node,
-        documentVariableName,
-        operationName,
-        operationResultType,
-        operationVariablesTypes,
-        hasRequiredVariables,
-      });
-      if (this.config.exposeDocument) {
-        query += `\nuse${operationName}.document = ${documentVariableName};\n`;
-      }
-      if (this.config.exposeQueryKeys) {
-        query += `\n${this.fetcher.generateQueryKeyMaker(
-          node,
-          operationName,
-          operationVariablesTypes,
-          hasRequiredVariables,
-        )}\n`;
-      }
-      if (this.config.exposeQueryRootKeys) {
-        query += `\n${this.fetcher.generateQueryRootKeyMaker(node, operationName)}`;
-      }
-      if (this.config.addInfiniteQuery) {
-        query += `\n${this.fetcher.generateInfiniteQueryHook({
+      queries.push(
+        this.fetcher.generateQueryHook({
           node,
           documentVariableName,
           operationName,
           operationResultType,
           operationVariablesTypes,
           hasRequiredVariables,
-        })}\n`;
-        if (this.config.exposeQueryKeys) {
-          query += `\n${this.fetcher.generateInfiniteQueryKeyMaker(
+        }),
+      );
+      if (this.config.exposeDocument) {
+        queries.push(`use${operationName}.document = ${documentVariableName};`);
+      }
+      if (this.config.exposeQueryKeys) {
+        queries.push(
+          this.fetcher.generateQueryKeyMaker(
             node,
             operationName,
             operationVariablesTypes,
             hasRequiredVariables,
-          )}\n`;
+          ),
+        );
+      }
+      if (this.config.exposeQueryRootKeys) {
+        queries.push(this.fetcher.generateQueryRootKeyMaker(node, operationName));
+      }
+      if (this.config.addInfiniteQuery) {
+        queries.push(
+          this.fetcher.generateInfiniteQueryHook({
+            node,
+            documentVariableName,
+            operationName,
+            operationResultType,
+            operationVariablesTypes,
+            hasRequiredVariables,
+          }),
+        );
+        if (this.config.exposeQueryKeys) {
+          queries.push(
+            this.fetcher.generateInfiniteQueryKeyMaker(
+              node,
+              operationName,
+              operationVariablesTypes,
+              hasRequiredVariables,
+            ),
+          );
         }
         if (this.config.exposeQueryRootKeys) {
-          query += `\n${this.fetcher.generateInfiniteQueryRootKeyMaker(node, operationName)}`;
+          queries.push(this.fetcher.generateInfiniteQueryRootKeyMaker(node, operationName));
         }
       }
 
@@ -190,40 +200,46 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       // is to prevent calling generateFetcherFetch for each query since all the queries won't be able to generate
       // a fetcher field anyways.
       if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
-        query += this.fetcher.generateFetcherFetch(
-          node,
-          documentVariableName,
-          operationName,
-          operationResultType,
-          operationVariablesTypes,
-          hasRequiredVariables,
+        queries.push(
+          this.fetcher.generateFetcherFetch(
+            node,
+            documentVariableName,
+            operationName,
+            operationResultType,
+            operationVariablesTypes,
+            hasRequiredVariables,
+          ),
         );
       }
-      return query;
+      return `\n${queries.join('\n\n')}\n`;
     }
     if (operationType === 'Mutation') {
-      let query = this.fetcher.generateMutationHook({
-        node,
-        documentVariableName,
-        operationName,
-        operationResultType,
-        operationVariablesTypes,
-        hasRequiredVariables,
-      });
-      if (this.config.exposeMutationKeys) {
-        query += this.fetcher.generateMutationKeyMaker(node, operationName);
-      }
-      if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
-        query += this.fetcher.generateFetcherFetch(
+      queries.push(
+        this.fetcher.generateMutationHook({
           node,
           documentVariableName,
           operationName,
           operationResultType,
           operationVariablesTypes,
           hasRequiredVariables,
+        }),
+      );
+      if (this.config.exposeMutationKeys) {
+        queries.push(this.fetcher.generateMutationKeyMaker(node, operationName));
+      }
+      if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
+        queries.push(
+          this.fetcher.generateFetcherFetch(
+            node,
+            documentVariableName,
+            operationName,
+            operationResultType,
+            operationVariablesTypes,
+            hasRequiredVariables,
+          ),
         );
       }
-      return query;
+      return `\n${queries.join('\n\n')}\n`;
     }
     if (operationType === 'Subscription') {
       // eslint-disable-next-line no-console
