@@ -149,6 +149,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
 
     const queries: string[] = [];
+    const getOutputFromQueries = () => `\n${queries.join('\n\n')}\n`;
 
     if (operationType === 'Query') {
       const addQuery = (generateConfig: GenerateConfig, isSuspense = false) => {
@@ -189,7 +190,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
         queries.push(this.fetcher.generateFetcherFetch(generateConfig));
       }
-      return `\n${queries.join('\n\n')}\n`;
+      return getOutputFromQueries();
     }
     if (operationType === 'Mutation') {
       const { hook, getKey } = this.fetcher.generateMutationOutput(generateConfig);
@@ -198,7 +199,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
         queries.push(this.fetcher.generateFetcherFetch(generateConfig));
       }
-      return `\n${queries.join('\n\n')}\n`;
+      return getOutputFromQueries();
     }
     if (operationType === 'Subscription') {
       // eslint-disable-next-line no-console
