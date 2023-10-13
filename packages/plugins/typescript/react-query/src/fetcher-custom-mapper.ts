@@ -98,43 +98,28 @@ export class CustomMapperFetcher extends FetcherRenderer {
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
-    const impl = this._isReactHook
+    const implFetcher = this._isReactHook
       ? `${typedFetcher}(${documentVariableName}).bind(null, variables)`
       : `${typedFetcher}(${documentVariableName}, variables)`;
 
     return generateBaseQueryHook({
-      implFetcher: impl,
+      implFetcher,
     });
   }
 
   generateMutationHook(config: BuildOperationConfig): string {
-    const {
-      node,
-      documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
-      operationName,
-    } = config;
-    const variables = `variables?: ${operationVariablesTypes}`;
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.mutation.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.mutation.options);
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
+    const { generateBaseMutationHook, variables } = this.generateMutationHelper(config);
+
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
-    const impl = this._isReactHook
+    const implFetcher = this._isReactHook
       ? `${typedFetcher}(${documentVariableName})`
       : `(${variables}) => ${typedFetcher}(${documentVariableName}, variables)()`;
 
-    return `export const use${operationName} = <
-      TError = ${this.visitor.config.errorType},
-      TContext = unknown
-    >(${options}) =>
-    ${
-      hookConfig.mutation.hook
-    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${this.generateMutationFormattedParameters(this.generateMutationKey(node), impl)}
-    );`;
+    return generateBaseMutationHook({
+      implFetcher,
+    });
   }
 
   generateFetcherFetch(

@@ -315,12 +315,13 @@ export const TestDocument = \`
 export const useTestMutation = <
       TError = unknown,
       TContext = unknown
-    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) =>
-    useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
+    
+    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
       ['test'],
       useCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query fetcher: custom-mapper Should generate mutation correctly with lazy variables: prepend 1`] = `
@@ -384,12 +385,13 @@ export const TestDocument = \`
 export const useTestMutation = <
       TError = unknown,
       TContext = unknown
-    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) =>
-    useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
+    
+    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
       ['test'],
       (variables?: TTestMutationVariables) => myCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query fetcher: custom-mapper Should generate query correctly with external mapper: prepend 1`] = `
@@ -439,12 +441,13 @@ export const TestDocument = \`
 export const useTestMutation = <
       TError = unknown,
       TContext = unknown
-    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) =>
-    useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
+    
+    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
       ['test'],
       (variables?: TTestMutationVariables) => myCustomFetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
       options
-    );"
+    )};"
 `;
 
 exports[`React-Query fetcher: custom-mapper Should generate query correctly with internal mapper: prepend 1`] = `
