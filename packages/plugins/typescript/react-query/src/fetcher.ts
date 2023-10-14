@@ -39,15 +39,15 @@ export abstract class FetcherRenderer {
   protected abstract generateMutationHook(config: GenerateConfig): string;
 
   public createQueryMethodMap(isSuspense = false) {
+    const suspenseText = isSuspense ? 'Suspense' : '';
     const queryMethodMap: ReactQueryMethodMap = {
       infiniteQuery: {
-        getHook: (operationName = 'Query') =>
-          `use${isSuspense ? 'Suspense' : ''}Infinite${operationName}`,
-        getOptions: () => `Use${isSuspense ? 'Suspense' : ''}InfiniteQueryOptions`,
+        getHook: (operationName = 'Query') => `use${suspenseText}Infinite${operationName}`,
+        getOptions: () => `Use${suspenseText}InfiniteQueryOptions`,
       },
       query: {
-        getHook: (operationName = 'Query') => `use${isSuspense ? 'Suspense' : ''}${operationName}`,
-        getOptions: () => `Use${isSuspense ? 'Suspense' : ''}QueryOptions`,
+        getHook: (operationName = 'Query') => `use${suspenseText}${operationName}`,
+        getOptions: () => `Use${suspenseText}QueryOptions`,
       },
       mutation: {
         getHook: (operationName = 'Mutation') => `use${operationName}`,
