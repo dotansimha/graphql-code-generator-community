@@ -67,7 +67,6 @@ export abstract class FetcherRenderer {
     this.visitor.reactQueryOptionsIdentifiersInUse.add(infiniteQuery.getOptions());
 
     const variables = this.generateInfiniteQueryVariablesSignature(config);
-
     const options = this.generateInfiniteQueryOptionsSignature(config, isSuspense);
 
     const generateBaseInfiniteQueryHook = (hookConfig: GenerateBaseHookConfig) => {
@@ -105,7 +104,6 @@ export abstract class FetcherRenderer {
     this.visitor.reactQueryOptionsIdentifiersInUse.add(query.getOptions());
 
     const variables = this.generateQueryVariablesSignature(config);
-
     const options = this.generateQueryOptionsSignature(config, isSuspense);
 
     const generateBaseQueryHook = (hookConfig: GenerateBaseHookConfig) => {
@@ -147,7 +145,6 @@ export abstract class FetcherRenderer {
     this.visitor.reactQueryOptionsIdentifiersInUse.add(mutation.getOptions());
 
     const variables = `variables?: ${operationVariablesTypes}`;
-
     const options = `options?: ${mutation.getOptions()}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
 
     const generateBaseMutationHook = (hookConfig: GenerateBaseHookConfig) => {
