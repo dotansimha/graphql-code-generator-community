@@ -21,6 +21,7 @@ type ReactQueryMethodMap = {
   [key: string]: {
     getHook: (operationName?: string) => string;
     getOptions: () => string;
+    getOtherTypes?: () => { [key: string]: string };
   };
 };
 
@@ -44,6 +45,7 @@ export abstract class FetcherRenderer {
       infiniteQuery: {
         getHook: (operationName = 'Query') => `use${suspenseText}Infinite${operationName}`,
         getOptions: () => `Use${suspenseText}InfiniteQueryOptions`,
+        getOtherTypes: () => ({ infiniteData: 'InfiniteData' }),
       },
       query: {
         getHook: (operationName = 'Query') => `use${suspenseText}${operationName}`,
@@ -63,8 +65,15 @@ export abstract class FetcherRenderer {
 
     const { infiniteQuery } = this.createQueryMethodMap(isSuspense);
 
+    const isNextVersion = this.visitor.config.reactQueryVersion >= 5;
+
     this.visitor.reactQueryHookIdentifiersInUse.add(infiniteQuery.getHook());
     this.visitor.reactQueryOptionsIdentifiersInUse.add(infiniteQuery.getOptions());
+    if (isNextVersion) {
+      this.visitor.reactQueryOptionsIdentifiersInUse.add(
+        infiniteQuery.getOtherTypes().infiniteData,
+      );
+    }
 
     const variables = this.generateInfiniteQueryVariablesSignature(config);
     const options = this.generateInfiniteQueryOptionsSignature(config, isSuspense);
@@ -80,7 +89,11 @@ export abstract class FetcherRenderer {
     `;
 
       return `export const ${infiniteQuery.getHook(operationName)} = <
-      TData = ${operationResultType},
+      TData = ${
+        isNextVersion
+          ? `${infiniteQuery.getOtherTypes().infiniteData}<${operationResultType}>`
+          : operationResultType
+      },
       TError = ${this.visitor.config.errorType}
     >(${argumentsResult}) => {
     ${implHookOuter}

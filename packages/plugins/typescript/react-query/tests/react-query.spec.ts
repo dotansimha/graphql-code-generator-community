@@ -46,7 +46,8 @@ describe('React-Query', () => {
 
     const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
-    expect(out.content).toMatchSnapshot();
+    expect(out.prepend).toMatchSnapshot('prepend');
+    expect(out.content).toMatchSnapshot('content');
     await validateTypeScript(mergeOutputs(out), schema, docs, config);
   });
 

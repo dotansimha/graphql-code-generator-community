@@ -1272,7 +1272,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 ]
 `;
 
-exports[`React-Query support v5 syntax 1`] = `
+exports[`React-Query support v5 syntax: content 1`] = `
 "
 
 export const TestDocument = \`
@@ -1326,7 +1326,7 @@ export const useSuspenseTestQuery = <
     )};
 
 export const useInfiniteTestQuery = <
-      TData = TestQuery,
+      TData = InfiniteData<TestQuery>,
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
@@ -1346,7 +1346,7 @@ export const useInfiniteTestQuery = <
     )};
 
 export const useSuspenseInfiniteTestQuery = <
-      TData = TestQuery,
+      TData = InfiniteData<TestQuery>,
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
@@ -1389,4 +1389,30 @@ export const useTestMutation = <
   }
     )};
 "
+`;
+
+exports[`React-Query support v5 syntax: prepend 1`] = `
+[
+  "import { useQuery, useSuspenseQuery, useInfiniteQuery, useSuspenseInfiniteQuery, useMutation, UseQueryOptions, UseSuspenseQueryOptions, UseInfiniteQueryOptions, InfiniteData, UseSuspenseInfiniteQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
+  "
+function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
+  return async (): Promise<TData> => {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      ...requestInit,
+      body: JSON.stringify({ query, variables }),
+    });
+
+    const json = await res.json();
+
+    if (json.errors) {
+      const { message } = json.errors[0];
+
+      throw new Error(message);
+    }
+
+    return json.data;
+  }
+}",
+]
 `;
