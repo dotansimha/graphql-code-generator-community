@@ -24,13 +24,23 @@ function getOperationFragmentsRecursively(
   operationDefinition: OperationDefinitionNode,
   fragmentDefinitions: FragmentDefinitionNode[],
   documentLocation: string,
+  config: HasuraAllowListPluginConfig,
 ): FragmentDefinitionNode[] {
   const requiredFragmentNames = new Set<string>();
 
   getRequiredFragments(operationDefinition);
 
-  // note: we first get a list of required fragments names, then filter the original list.
-  // this means order of fragments is preserved.
+  // note: we should choose fragmentsOrder config that is compatible with other graphql-codegen plugins we use.
+  const order = config.fragmentsOrder ?? 'global';
+
+  // order of fragments is determined by the order they are defined in the document.
+  if (order === 'document') {
+    return Array.from(requiredFragmentNames).map(name =>
+      fragmentDefinitions.find(definition => definition.name.value === name),
+    );
+  }
+
+  //  order is determined by the global fragments definition order.
   return fragmentDefinitions.filter(definition => requiredFragmentNames.has(definition.name.value));
 
   /**
@@ -147,6 +157,7 @@ export const plugin: PluginFunction<HasuraAllowListPluginConfig> = async (
         operation,
         fragments,
         document.location,
+        config,
       );
 
       // insert the operation and any fragments to our queries definition.

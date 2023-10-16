@@ -349,6 +349,50 @@ describe('Hasura allow list', () => {
 
     expect(content).toBe(expectedContent);
   });
+  it('with globalFragments enabled and fragmentsOrder set to document, should define fragment by the order they are defined in the document.', async () => {
+    const expectedContent = `- name: allowed-queries
+  definition:
+    queries:
+      - name: MyQuery1
+        query: |-
+          query MyQuery1 {
+            field
+            ...MyOtherFragment
+            ...MyFragment
+          }
+          fragment MyOtherFragment on Query {
+            field
+          }
+          fragment MyFragment on Query {
+            field
+          }
+`;
+    const document1 = parse(/* GraphQL */ `
+      query MyQuery1 {
+        field
+        ...MyOtherFragment
+        ...MyFragment
+      }
+      fragment MyFragment on Query {
+        field
+      }
+    `);
+    const document2 = parse(/* GraphQL */ `
+      fragment MyOtherFragment on Query {
+        field
+      }
+    `);
+    const content = await plugin(
+      null,
+      [
+        { document: document1, location: '/dummy/location1' },
+        { document: document2, location: '/dummy/location2' },
+      ],
+      { globalFragments: true, fragmentsOrder: 'document' },
+    );
+
+    expect(content).toBe(expectedContent);
+  });
   it('with globalFragments enabled, should error on missing fragments', async () => {
     const document1 = parse(/* GraphQL */ `
       query MyQuery1 {
