@@ -100,4 +100,27 @@ export interface VueApolloRawPluginConfig extends RawClientSideBasePluginConfig 
    * ```
    */
   addDocBlocks?: boolean;
+  /**
+   * @description Allows you to set the clientId in the composition functions when using multiple apollo clients.
+   * @default null
+   *
+   * @exampleMarkdown
+   * ```ts filename="codegen.ts"
+   *  import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   *  const config: CodegenConfig = {
+   *    // ...
+   *    generates: {
+   *      'path/to/file.ts': {
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-vue-apollo'],
+   *        config: {
+   *          clientId: 'customClient'
+   *        },
+   *      },
+   *    },
+   *  };
+   *  export default config;
+   * ```
+   */
+  clientId?: string;
 }
