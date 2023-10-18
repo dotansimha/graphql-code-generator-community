@@ -2589,10 +2589,10 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/pluralize@0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@types/pluralize/-/pluralize-0.0.31.tgz#9e7408526c28e265795e83454a141ec8375d3508"
-  integrity sha512-MQh69PPwFlYAL2qz/Mw5Zc34VTdt7pTck0Xbb6pbPSzdt5oaLB87iyJJxEMS5Dco/s7lXHunEezAvQurZZdrsQ==
+"@types/pluralize@0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@types/pluralize/-/pluralize-0.0.32.tgz#1af92c5ab3bb92a4c365ded7d733f9009ade2834"
+  integrity sha512-exDkoRIkWJlbRDRmtYDbI3ZUE28HwBwHe5VKn4mvpvMW7qIRDHO6URItErBsBSX7J8/PrDLSOHCcbUMFXwA6CA==
 
 "@types/prettier@^2.1.5":
   version "2.6.3"
