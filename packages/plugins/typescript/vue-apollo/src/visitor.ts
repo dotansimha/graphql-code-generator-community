@@ -16,6 +16,7 @@ export interface VueApolloPluginConfig extends ClientSideBasePluginConfig {
   vueApolloComposableImportFrom: 'vue' | '@vue/apollo-composable' | string;
   vueCompositionApiImportFrom: 'vue' | '@vue/apollo-composable' | string;
   addDocBlocks: boolean;
+  clientId?: string;
 }
 
 interface BuildCompositionFunctions {
@@ -56,6 +57,7 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
         '@vue/composition-api',
       ),
       addDocBlocks: getConfigValue(rawConfig.addDocBlocks, true),
+      clientId: getConfigValue(rawConfig.clientId, null),
     });
 
     this.externalImportPrefix = this.config.importOperationTypesFrom
@@ -281,32 +283,34 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
           operationHasNonNullableVariable ? '' : ' = {}'
         }, `
       : '';
-
+    const options = `${
+      this.config.clientId ? `{ clientId: '${this.config.clientId}', ...options}` : 'options'
+    }`;
     switch (operationType) {
       case 'Query': {
         return `export function use${operationName}(${variables}options: VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
   return VueApolloComposable.useQuery<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, ${
           operationHasVariables ? 'variables' : '{}'
-        }, options);
+        }, ${options});
 }`;
       }
       case 'LazyQuery': {
         return `export function use${operationName}(${variables}options: VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
   return VueApolloComposable.useLazyQuery<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, ${
           operationHasVariables ? 'variables' : '{}'
-        }, options);
+        }, ${options});
 }`;
       }
       case 'Mutation': {
         return `export function use${operationName}(options: VueApolloComposable.UseMutationOptions<${operationResultType}, ${operationVariablesTypes}> | ReactiveFunction<VueApolloComposable.UseMutationOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
-  return VueApolloComposable.useMutation<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, options);
+  return VueApolloComposable.useMutation<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, ${options});
 }`;
       }
       case 'Subscription': {
         return `export function use${operationName}(${variables}options: VueApolloComposable.UseSubscriptionOptions<${operationResultType}, ${operationVariablesTypes}> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<${operationResultType}, ${operationVariablesTypes}>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
   return VueApolloComposable.useSubscription<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, ${
           operationHasVariables ? 'variables' : '{}'
-        }, options);
+        }, ${options});
 }`;
       }
     }

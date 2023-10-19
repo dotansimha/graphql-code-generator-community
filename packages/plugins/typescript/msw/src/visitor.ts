@@ -13,6 +13,7 @@ export interface MSWPluginConfig extends ClientSideBasePluginConfig {
   link?: {
     endpoint: string;
     name: string;
+    withSuffix?: boolean;
   };
 }
 
@@ -55,10 +56,13 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
     }
 
     const suffix = pascalCase(link?.name || '');
+    const withSuffix = link?.withSuffix ?? true;
     const operations = this._operationsToInclude.map(
       ({ node, operationType, operationResultType, operationVariablesTypes }) => {
         if (operationType === 'Query' || operationType === 'Mutation') {
-          const handlerName = `mock${pascalCase(node.name.value)}${operationType}${suffix}`;
+          const handlerName = `mock${pascalCase(node.name.value)}${operationType}${
+            withSuffix ? suffix : ''
+          }`;
 
           /** @ts-expect-error name DOES exist on @type{import('graphql').SelectionNode} */
           const selections = node.selectionSet.selections.map(sel => sel.name.value).join(', ');

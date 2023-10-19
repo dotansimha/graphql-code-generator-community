@@ -477,7 +477,6 @@ export const useCommentQuery = <TData = CommentQuery, TError = unknown>(
   );
 export const useInfiniteCommentQuery = <TData = CommentQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
-  pageParamKey: keyof CommentQueryVariables,
   variables: CommentQueryVariables,
   options?: UseInfiniteQueryOptions<CommentQuery, TError, TData>,
 ) =>
@@ -521,7 +520,6 @@ export const useInfiniteCurrentUserForProfileQuery = <
   TError = unknown,
 >(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
-  pageParamKey: keyof CurrentUserForProfileQueryVariables,
   variables?: CurrentUserForProfileQueryVariables,
   options?: UseInfiniteQueryOptions<CurrentUserForProfileQuery, TError, TData>,
 ) =>
@@ -566,7 +564,6 @@ export const useFeedQuery = <TData = FeedQuery, TError = unknown>(
   );
 export const useInfiniteFeedQuery = <TData = FeedQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
-  pageParamKey: keyof FeedQueryVariables,
   variables: FeedQueryVariables,
   options?: UseInfiniteQueryOptions<FeedQuery, TError, TData>,
 ) =>

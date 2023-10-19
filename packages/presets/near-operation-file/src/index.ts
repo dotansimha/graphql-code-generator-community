@@ -311,6 +311,27 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         });
       }
 
+      // Merge multiple fragment imports from the same file
+      const fragmentImportsByImportSource: Record<string, ImportDeclaration<FragmentImport>> = {};
+      fragmentImportsArr.forEach(fi => {
+        if (!fragmentImportsByImportSource[fi.importSource.path]) {
+          fragmentImportsByImportSource[fi.importSource.path] = fi;
+        } else {
+          const mergedIdentifiersByName = {};
+          fragmentImportsByImportSource[fi.importSource.path].importSource.identifiers.forEach(
+            identifier => {
+              mergedIdentifiersByName[identifier.name] = identifier;
+            },
+          );
+          fi.importSource.identifiers.forEach(identifier => {
+            mergedIdentifiersByName[identifier.name] = identifier;
+          });
+          fragmentImportsByImportSource[fi.importSource.path].importSource.identifiers =
+            Object.values(mergedIdentifiersByName);
+        }
+      });
+      fragmentImportsArr = Object.values(fragmentImportsByImportSource);
+
       const plugins = [
         // TODO/NOTE I made globalNamespace include schema types - is that correct?
         ...(options.config.globalNamespace
@@ -343,6 +364,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       }
 
       artifacts.push({
+        ...options,
         filename,
         documents: [combinedSource],
         plugins,
@@ -351,9 +373,9 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         schema: options.schema,
         schemaAst: schemaObject,
         skipDocumentsValidation:
-          typeof options.skipDocumentsValidation === 'undefined'
+          typeof options.config.skipDocumentsValidation === 'undefined'
             ? { skipDuplicateValidation: true }
-            : options.skipDocumentsValidation,
+            : options.config.skipDocumentsValidation,
       });
     }
 

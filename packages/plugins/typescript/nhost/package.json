@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-nhost",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "GraphQL Code Generator plugin for the Typescript Nhost SDK",
   "repository": {
@@ -44,10 +44,10 @@
     "@graphql-codegen/typescript": "^3.0.0",
     "@graphql-codegen/visitor-plugin-common": "3.0.0",
     "@urql/introspection": "^1.0.0",
-    "tslib": "~2.5.0"
+    "tslib": "~2.6.0"
   },
   "devDependencies": {
-    "graphql": "16.6.0"
+    "graphql": "16.8.1"
   },
   "publishConfig": {
     "directory": "dist",

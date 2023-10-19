@@ -36,6 +36,7 @@ export interface MSWConfig {
   link?: {
     endpoint: string;
     name: string;
+    withSuffix?: boolean;
   };
 }
 

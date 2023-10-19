@@ -112,8 +112,8 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     if (typeof raw === 'object' && 'endpoint' in raw) {
       return new HardcodedFetchFetcher(this, raw);
     }
-    if (raw === 'graphql-request') {
-      return new GraphQLRequestClientFetcher(this);
+    if (raw === 'graphql-request' || (typeof raw === 'object' && 'clientImportPath' in raw)) {
+      return new GraphQLRequestClientFetcher(this, raw);
     }
 
     return new CustomMapperFetcher(this, raw);

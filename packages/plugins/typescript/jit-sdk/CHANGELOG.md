@@ -4,19 +4,34 @@
 
 ### Major Changes
 
-- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
-  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
-  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
   `>= 16`
 
 ### Patch Changes
 
-- [#352](https://github.com/dotansimha/graphql-code-generator-community/pull/352)
-  [`fd3e6e42f`](https://github.com/dotansimha/graphql-code-generator-community/commit/fd3e6e42f2d50707760b22dba422d6fc0e085b5f)
-  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - dependencies updates:
+
   - Updated dependency
     [`@graphql-tools/utils@^8.8.0 || ^10.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/8.8.0)
     (from `^8.8.0`, in `peerDependencies`)
+
+- [#421](https://github.com/dotansimha/graphql-code-generator-community/pull/421)
+  [`1b819d387`](https://github.com/dotansimha/graphql-code-generator-community/commit/1b819d387d9721987587bd0b2993887c0c8a8886)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+
+  - Updated dependency
+    [`graphql-jit@^0.6.0 || ^0.7.0 || ^0.8.0` ↗︎](https://www.npmjs.com/package/graphql-jit/v/0.6.0)
+    (from `^0.6.0 || ^0.7.0`, in `peerDependencies`)
+
+- [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
+  [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+  - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
+    `~2.4.0`, in `dependencies`)
 
 ## 2.1.6
 

@@ -411,7 +411,7 @@ export const OnCommentAddedDocument = gql`
 `;
 
 export function useOnCommentAddedSubscription<TData = OnCommentAddedSubscription>(
-  options: Omit<Urql.UseSubscriptionArgs<OnCommentAddedSubscriptionVariables>, 'query'> = {},
+  options: Omit<Urql.UseSubscriptionArgs<OnCommentAddedSubscriptionVariables>, 'query'>,
   handler?: Urql.SubscriptionHandler<OnCommentAddedSubscription, TData>,
 ) {
   return Urql.useSubscription<
@@ -1225,6 +1225,14 @@ export type GraphCacheOptimisticUpdaters = {
 };
 
 export type GraphCacheUpdaters = {
+  Query?: {
+    currentUser?: GraphCacheUpdateResolver<
+      { currentUser: Maybe<WithTypename<User>> },
+      Record<string, never>
+    >;
+    entry?: GraphCacheUpdateResolver<{ entry: Maybe<WithTypename<Entry>> }, QueryEntryArgs>;
+    feed?: GraphCacheUpdateResolver<{ feed: Maybe<Array<WithTypename<Entry>>> }, QueryFeedArgs>;
+  };
   Mutation?: {
     submitComment?: GraphCacheUpdateResolver<
       { submitComment: Maybe<WithTypename<Comment>> },
@@ -1241,6 +1249,47 @@ export type GraphCacheUpdaters = {
       { commentAdded: Maybe<WithTypename<Comment>> },
       SubscriptionCommentAddedArgs
     >;
+  };
+  Comment?: {
+    content?: GraphCacheUpdateResolver<Maybe<WithTypename<Comment>>, Record<string, never>>;
+    createdAt?: GraphCacheUpdateResolver<Maybe<WithTypename<Comment>>, Record<string, never>>;
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Comment>>, Record<string, never>>;
+    postedBy?: GraphCacheUpdateResolver<Maybe<WithTypename<Comment>>, Record<string, never>>;
+    repoName?: GraphCacheUpdateResolver<Maybe<WithTypename<Comment>>, Record<string, never>>;
+  };
+  Entry?: {
+    commentCount?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, Record<string, never>>;
+    comments?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, EntryCommentsArgs>;
+    createdAt?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, Record<string, never>>;
+    hotScore?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, Record<string, never>>;
+    id?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, Record<string, never>>;
+    postedBy?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, Record<string, never>>;
+    repository?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, Record<string, never>>;
+    score?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, Record<string, never>>;
+    vote?: GraphCacheUpdateResolver<Maybe<WithTypename<Entry>>, Record<string, never>>;
+  };
+  Repository?: {
+    description?: GraphCacheUpdateResolver<Maybe<WithTypename<Repository>>, Record<string, never>>;
+    full_name?: GraphCacheUpdateResolver<Maybe<WithTypename<Repository>>, Record<string, never>>;
+    html_url?: GraphCacheUpdateResolver<Maybe<WithTypename<Repository>>, Record<string, never>>;
+    name?: GraphCacheUpdateResolver<Maybe<WithTypename<Repository>>, Record<string, never>>;
+    open_issues_count?: GraphCacheUpdateResolver<
+      Maybe<WithTypename<Repository>>,
+      Record<string, never>
+    >;
+    owner?: GraphCacheUpdateResolver<Maybe<WithTypename<Repository>>, Record<string, never>>;
+    stargazers_count?: GraphCacheUpdateResolver<
+      Maybe<WithTypename<Repository>>,
+      Record<string, never>
+    >;
+  };
+  User?: {
+    avatar_url?: GraphCacheUpdateResolver<Maybe<WithTypename<User>>, Record<string, never>>;
+    html_url?: GraphCacheUpdateResolver<Maybe<WithTypename<User>>, Record<string, never>>;
+    login?: GraphCacheUpdateResolver<Maybe<WithTypename<User>>, Record<string, never>>;
+  };
+  Vote?: {
+    vote_value?: GraphCacheUpdateResolver<Maybe<WithTypename<Vote>>, Record<string, never>>;
   };
 };
 

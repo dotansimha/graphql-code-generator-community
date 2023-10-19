@@ -4,29 +4,41 @@
 
 ### Major Changes
 
-- [#383](https://github.com/dotansimha/graphql-code-generator-community/pull/383)
-  [`9a692da46`](https://github.com/dotansimha/graphql-code-generator-community/commit/9a692da461f7f682c16333d2926c0c9174bc11f4)
-  Thanks [@sachalifs](https://github.com/sachalifs)! - accept skipDocumentsValidation config
-  parameter
+- [#414](https://github.com/dotansimha/graphql-code-generator-community/pull/414)
+  [`02d487c8c`](https://github.com/dotansimha/graphql-code-generator-community/commit/02d487c8c7a8e55da31b43fcb30d48615bc33950)
+  Thanks [@saihaj](https://github.com/saihaj)! - accept skipDocumentsValidation config parameter
 
   ‼️ ‼️ ‼️ Please note ‼️ ‼️ ‼️:
 
   This is a breaking change since previous versions skips all documents validation and this could
   raise validation errors while generating types.
 
-- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
-  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
-  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
   `>= 16`
 
 ### Patch Changes
 
-- [#352](https://github.com/dotansimha/graphql-code-generator-community/pull/352)
-  [`fd3e6e42f`](https://github.com/dotansimha/graphql-code-generator-community/commit/fd3e6e42f2d50707760b22dba422d6fc0e085b5f)
-  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - dependencies updates:
+
   - Updated dependency
     [`@graphql-tools/utils@^10.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/10.0.0)
     (from `^8.8.0`, in `dependencies`)
+
+- [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
+  [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+
+  - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
+    `~2.4.0`, in `dependencies`)
+
+- [#407](https://github.com/dotansimha/graphql-code-generator-community/pull/407)
+  [`03655cc7c`](https://github.com/dotansimha/graphql-code-generator-community/commit/03655cc7ce680c042650550fcf75183a0ca8bcd5)
+  Thanks [@aboks](https://github.com/aboks)! - Fix duplicate imports with inlineFragmentTypes:
+  combine
 
 ## 2.5.0
 
