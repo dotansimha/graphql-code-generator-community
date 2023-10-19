@@ -16,4 +16,9 @@ export interface HasuraAllowListPluginConfig {
    * @description Whether to source fragments per-document, or globally. If set, will enforce fragment name uniqueness
    */
   globalFragments?: boolean;
+  /**
+   * @default definition
+   * @description Whether to order fragments by global definition order, or by definition order in the document
+   */
+  fragmentsOrder?: 'global' | 'document';
 }
