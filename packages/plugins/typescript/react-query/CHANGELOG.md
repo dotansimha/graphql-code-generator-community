@@ -4,23 +4,39 @@
 
 ### Major Changes
 
-- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
-  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
-  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+- [#324](https://github.com/dotansimha/graphql-code-generator-community/pull/324)
+  [`d6f48354b`](https://github.com/dotansimha/graphql-code-generator-community/commit/d6f48354be4ed7e9853c235002b65b0fba978de2)
+  Thanks [@giubatt](https://github.com/giubatt)! - removed unused pageParamKey parameter from
+  infinite queries hook call
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
   `>= 16`
 
 ### Minor Changes
 
-- [#327](https://github.com/dotansimha/graphql-code-generator-community/pull/327)
-  [`88ea4459c`](https://github.com/dotansimha/graphql-code-generator-community/commit/88ea4459cc645221242197331cf13299afef7781)
-  Thanks [@kambing86](https://github.com/kambing86)! - add exposeQueryRootKeys
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - add exposeQueryRootKeys
 
 ### Patch Changes
 
-- [#369](https://github.com/dotansimha/graphql-code-generator-community/pull/369)
-  [`9d6a3881a`](https://github.com/dotansimha/graphql-code-generator-community/commit/9d6a3881ab5b62f8aa853cff3155514a3b65621a)
-  Thanks [@vctqs1](https://github.com/vctqs1)! - Provide reactQueryImportFrom field to custom
+- [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
+  [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+
+  - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
+    `~2.4.0`, in `dependencies`)
+
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Provide reactQueryImportFrom field to custom
   react-query import from
+
+- [#391](https://github.com/dotansimha/graphql-code-generator-community/pull/391)
+  [`14dcc7603`](https://github.com/dotansimha/graphql-code-generator-community/commit/14dcc7603735514668a51603b85c6fb2b3fe6a8a)
+  Thanks [@AlanSl](https://github.com/AlanSl)! - Correct default value in legacyMode docs comment
 
 ## 4.1.0
 

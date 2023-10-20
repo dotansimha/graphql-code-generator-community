@@ -57,7 +57,6 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
       TError = ${this.visitor.config.errorType}
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      pageParamKey: keyof ${operationVariablesTypes},
       ${variables},
       ${options}
     ) =>

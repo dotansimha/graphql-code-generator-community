@@ -4,9 +4,9 @@
 
 ### Major Changes
 
-- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
-  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
-  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
   `>= 16`
 
 ## 2.3.6

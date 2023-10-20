@@ -4,10 +4,35 @@
 
 ### Major Changes
 
-- [#348](https://github.com/dotansimha/graphql-code-generator-community/pull/348)
-  [`9b6f8a648`](https://github.com/dotansimha/graphql-code-generator-community/commit/9b6f8a648492adf2584cbbbb721bd94277084413)
-  Thanks [@n1ru4l](https://github.com/n1ru4l)! - Drop support for Node.js 12 and 14. Require Node.js
+- [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
+  [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
+  Thanks [@saihaj](https://github.com/saihaj)! - Drop support for Node.js 12 and 14. Require Node.js
   `>= 16`
+
+### Minor Changes
+
+- [#267](https://github.com/dotansimha/graphql-code-generator-community/pull/267)
+  [`57892778f`](https://github.com/dotansimha/graphql-code-generator-community/commit/57892778fa4cf30d73b7a903e4a98424b56e6682)
+  Thanks [@DominicGBauer](https://github.com/DominicGBauer)! - feat(typescript-rtk-query): add
+  addTransformResponse to config
+
+  You can now add the optional `addTransformResponse` boolean config to automatically generate
+  `transformResponse` in injectedApi endpoint. e.g.
+
+  ```
+      Feed: build.query<FeedQuery, FeedQueryVariables>({
+        query: (variables) => ({ document: FeedDocument, variables })
+        transformResponse: (response: FeedQuery) => response <---
+      }),
+  ```
+
+### Patch Changes
+
+- [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
+  [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+  - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
+    `~2.4.0`, in `dependencies`)
 
 ## 2.4.1
 
