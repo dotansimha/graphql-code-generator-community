@@ -53,8 +53,12 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
       `${typeImport} { GraphQLClientRequestHeaders } from 'graphql-request/build/${buildPath}/types${fileExtension}';`,
     );
 
-    if (this.config.rawRequest && this.config.documentMode !== DocumentMode.string) {
-      this._additionalImports.push(`import { print } from 'graphql'`);
+    if (this.config.rawRequest) {
+      if (this.config.documentMode !== DocumentMode.string) {
+        this._additionalImports.push(`import { GraphQLError, print } from 'graphql'`);
+      } else {
+        this._additionalImports.push(`import { GraphQLError } from 'graphql'`);
+      }
     }
 
     this._externalImportPrefix = this.config.importOperationTypesFrom

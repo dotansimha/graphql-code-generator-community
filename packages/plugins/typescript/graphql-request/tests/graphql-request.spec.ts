@@ -283,6 +283,36 @@ async function test() {
       expect(output).toMatchSnapshot();
     });
 
+    it('Should only import GraphQLError when rawRequest is true and documentMode = "string"', async () => {
+      const config = { rawRequest: true, documentMode: DocumentMode.string };
+      const docs = [{ location: '', document: basicDoc }];
+      const result = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
+
+      const usage = `
+async function test() {
+  const Client = require('graphql-request').GraphQLClient;
+  const client = new Client('');
+  const sdk = getSdk(client);
+
+  await sdk.feed();
+  await sdk.feed3();
+  await sdk.feed4();
+
+  const result = await sdk.feed2({ v: "1" });
+
+  if (result.feed) {
+    if (result.feed[0]) {
+      const id = result.feed[0].id
+    }
+  }
+}`;
+      const output = await validate(result, config, docs, schema, usage);
+
+      expect(output).toMatchSnapshot();
+    });
+
     it('Should support extensionType when rawRequest is true and documentMode = "DocumentNode"', async () => {
       const config = { rawRequest: true, extensionsType: 'unknown' };
       const docs = [{ location: '', document: basicDoc }];
