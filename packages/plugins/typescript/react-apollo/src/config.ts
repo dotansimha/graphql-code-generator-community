@@ -242,7 +242,7 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    */
   addDocBlocks?: boolean;
 
-  defaultBaseOptions?: { [key: string]: string };
+  defaultBaseOptions?: { [key: string]: any };
 
   hooksSuffix?: string;
 }

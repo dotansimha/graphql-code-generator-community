@@ -30,7 +30,7 @@ export interface ReactApolloPluginConfig extends ClientSideBasePluginConfig {
   withResultType: boolean;
   withMutationOptionsType: boolean;
   addDocBlocks: boolean;
-  defaultBaseOptions: { [key: string]: string };
+  defaultBaseOptions: { [key: string]: any };
   hooksSuffix: string;
 }
 
