@@ -44,7 +44,11 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
       return [];
     }
 
-    return [`import { graphql, ResponseResolver, GraphQLRequest, GraphQLContext } from 'msw'`];
+    return [
+      this.config.useTypeImports
+        ? `import { graphql, type ResponseResolver, GraphQLRequest, type GraphQLContext } from 'msw'`
+        : `import { graphql, ResponseResolver, GraphQLRequest, GraphQLContext } from 'msw'`,
+    ];
   }
 
   public getContent() {

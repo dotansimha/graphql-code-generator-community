@@ -101,4 +101,11 @@ describe('msw', () => {
       'content with types configured via importOperationTypesFrom',
     );
   });
+
+  it('Should use the "useTypeImports" setting', async () => {
+    const resultWithTypeImports = await plugin(null, documents, { useTypeImports: true });
+    expect(resultWithTypeImports.prepend[0]).toContain(`type`);
+    const resultWithoutTypeImports = await plugin(null, documents, { useTypeImports: false });
+    expect(resultWithoutTypeImports.prepend[0]).not.toContain(`type`);
+  });
 });
