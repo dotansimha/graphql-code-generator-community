@@ -1,5 +1,13 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 6.0.1
+
+### Patch Changes
+
+- [#462](https://github.com/dotansimha/graphql-code-generator-community/pull/462)
+  [`f7170557e`](https://github.com/dotansimha/graphql-code-generator-community/commit/f7170557ed325af4224447ec041fc10f04ccc5b1)
+  Thanks [@yshrsmz](https://github.com/yshrsmz)! - fix(graphql-request): add import for GraphQLError
+
 ## 6.0.0
 
 ### Major Changes

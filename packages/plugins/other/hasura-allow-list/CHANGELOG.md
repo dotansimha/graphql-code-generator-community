@@ -1,5 +1,14 @@
 # @graphql-codegen/hasura-allow-list
 
+## 3.1.0
+
+### Minor Changes
+
+- [#452](https://github.com/dotansimha/graphql-code-generator-community/pull/452)
+  [`0fea1a83e`](https://github.com/dotansimha/graphql-code-generator-community/commit/0fea1a83eaf42f56ea68ed5f763fe00f2df7417a)
+  Thanks [@shoma-mano](https://github.com/shoma-mano)! - add config to change fragments definition
+  order
+
 ## 3.0.0
 
 ### Major Changes
