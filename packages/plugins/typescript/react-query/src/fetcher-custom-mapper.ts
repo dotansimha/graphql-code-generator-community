@@ -1,35 +1,32 @@
-import { OperationDefinitionNode } from 'graphql';
+import autoBind from 'auto-bind';
 import {
   buildMapperImport,
   ParsedMapper,
   parseMapper,
 } from '@graphql-codegen/visitor-plugin-common';
 import { CustomFetch } from './config.js';
-import { FetcherRenderer } from './fetcher.js';
-import {
-  generateInfiniteQueryKey,
-  generateMutationKey,
-  generateQueryKey,
-} from './variables-generator.js';
+import { FetcherRenderer, type GenerateConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
-export class CustomMapperFetcher implements FetcherRenderer {
+export class CustomMapperFetcher extends FetcherRenderer {
   private _mapper: ParsedMapper;
   private _isReactHook: boolean;
 
-  constructor(private visitor: ReactQueryVisitor, customFetcher: CustomFetch) {
+  constructor(protected visitor: ReactQueryVisitor, customFetcher: CustomFetch) {
+    super(visitor);
     if (typeof customFetcher === 'string') {
       customFetcher = { func: customFetcher };
     }
     this._mapper = parseMapper(customFetcher.func);
     this._isReactHook = customFetcher.isReactHook;
+    autoBind(this);
   }
 
   private getFetcherFnName(operationResultType: string, operationVariablesTypes: string): string {
     return `${this._mapper.type}<${operationResultType}, ${operationVariablesTypes}>`;
   }
 
-  generateFetcherImplementaion(): string {
+  generateFetcherImplementation(): string {
     if (this._mapper.isExternal) {
       return buildMapperImport(
         this._mapper.source,
@@ -46,120 +43,64 @@ export class CustomMapperFetcher implements FetcherRenderer {
     return null;
   }
 
-  generateInfiniteQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
-    const variables = `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
-
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
-
-    const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
+  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
     const implHookOuter = this._isReactHook
       ? `const query = ${typedFetcher}(${documentVariableName})`
       : '';
-    const impl = this._isReactHook
+    const implFetcher = this._isReactHook
       ? `(metaData) => query({...variables, ...(metaData.pageParam ?? {})})`
       : `(metaData) => ${typedFetcher}(${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`;
 
-    return `export const useInfinite${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
-      ${variables},
-      ${options}
-    ) =>{
-    ${implHookOuter}
-    return ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
-      ${impl},
-      options
-    )};`;
+    const { generateBaseInfiniteQueryHook } = this.generateInfiniteQueryHelper(config, isSuspense);
+
+    return generateBaseInfiniteQueryHook({
+      implHookOuter,
+      implFetcher,
+    });
   }
 
-  generateQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
-    const variables = `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
+  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { generateBaseQueryHook } = this.generateQueryHelper(config, isSuspense);
 
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.query.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.query.options);
-
-    const options = `options?: ${hookConfig.query.options}<${operationResultType}, TError, TData>`;
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
-    const impl = this._isReactHook
+    const implFetcher = this._isReactHook
       ? `${typedFetcher}(${documentVariableName}).bind(null, variables)`
       : `${typedFetcher}(${documentVariableName}, variables)`;
 
-    return `export const use${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
-      ${variables},
-      ${options}
-    ) =>
-    ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
-      ${impl},
-      options
-    );`;
+    return generateBaseQueryHook({
+      implFetcher,
+    });
   }
 
-  generateMutationHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
-    const variables = `variables?: ${operationVariablesTypes}`;
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.mutation.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.mutation.options);
+  generateMutationHook(config: GenerateConfig): string {
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
+    const { generateBaseMutationHook, variables } = this.generateMutationHelper(config);
+
     const typedFetcher = this.getFetcherFnName(operationResultType, operationVariablesTypes);
-    const impl = this._isReactHook
+    const implFetcher = this._isReactHook
       ? `${typedFetcher}(${documentVariableName})`
       : `(${variables}) => ${typedFetcher}(${documentVariableName}, variables)()`;
 
-    return `export const use${operationName} = <
-      TError = ${this.visitor.config.errorType},
-      TContext = unknown
-    >(${options}) =>
-    ${
-      hookConfig.mutation.hook
-    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateMutationKey(node)},
-      ${impl},
-      options
-    );`;
+    return generateBaseMutationHook({
+      implFetcher,
+    });
   }
 
-  generateFetcherFetch(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
+  generateFetcherFetch(config: GenerateConfig): string {
+    const {
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      hasRequiredVariables,
+      operationName,
+    } = config;
+
     // We can't generate a fetcher field since we can't call react hooks outside of a React Fucntion Component
     // Related: https://reactjs.org/docs/hooks-rules.html
     if (this._isReactHook) return '';

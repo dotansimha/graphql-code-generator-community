@@ -4,38 +4,12 @@ export type HardcodedFetch = { endpoint: string; fetchParams?: string | Record<s
 export type CustomFetch = { func: string; isReactHook?: boolean } | string;
 export type GraphQlRequest = 'graphql-request' | { clientImportPath: string };
 
-/**
- * @description This plugin generates `React-Query` Hooks with TypeScript typings.
- *
- * It extends the basic TypeScript plugins: `@graphql-codegen/typescript`, `@graphql-codegen/typescript-operations` - and thus shares a similar configuration.
- *
- * > **If you are using the `react-query` package instead of the `@tanstack/react-query` package in your project, please set the `legacyMode` option to `true`.**
- *
- */
-export interface ReactQueryRawPluginConfig
-  extends Omit<
-    RawClientSideBasePluginConfig,
-    | 'documentMode'
-    | 'noGraphQLTag'
-    | 'gqlImport'
-    | 'documentNodeImport'
-    | 'noExport'
-    | 'importOperationTypesFrom'
-    | 'importDocumentNodeExternallyFrom'
-    | 'useTypeImports'
-    | 'legacyMode'
-  > {
+export interface BaseReactQueryPluginConfig {
   /**
-   * @description Customize the fetcher you wish to use in the generated file. React-Query is agnostic to the data-fetching layer, so you should provide it, or use a custom one.
-   *
-   * The following options are available to use:
-   *
-   * - 'fetch' - requires you to specify endpoint and headers on each call, and uses `fetch` to do the actual http call.
-   * - `{ endpoint: string, fetchParams: RequestInit }`: hardcode your endpoint and fetch options into the generated output, using the environment `fetch` method. You can also use `process.env.MY_VAR` as endpoint or header value.
-   * - `file#identifier` - You can use custom fetcher method that should implement the exported `ReactQueryFetcher` interface. Example: `./my-fetcher#myCustomFetcher`.
-   * - `graphql-request`: Will generate each hook with `client` argument, where you should pass your own `GraphQLClient` (created from `graphql-request`).
+   * @default unknown
+   * @description Changes the default "TError" generic type.
    */
-  fetcher?: 'fetch' | HardcodedFetch | GraphQlRequest | CustomFetch;
+  errorType?: string;
 
   /**
    * @default false
@@ -98,12 +72,6 @@ export interface ReactQueryRawPluginConfig
   exposeFetcher?: boolean;
 
   /**
-   * @default unknown
-   * @description Changes the default "TError" generic type.
-   */
-  errorType?: string;
-
-  /**
    * @default false
    * @description Adds an Infinite Query along side the standard one
    */
@@ -111,9 +79,22 @@ export interface ReactQueryRawPluginConfig
 
   /**
    * @default false
+   * @description Adds a Suspense Query along side the standard one
+   */
+  addSuspenseQuery?: boolean;
+
+  /**
+   * @default false
    * @description If true, it imports `react-query` not `@tanstack/react-query`, default is false.
+   * @deprecated Please use `reactQueryVersion` instead.
    */
   legacyMode?: boolean;
+
+  /**
+   * @default 4
+   * @description The version of react-query to use. Will override the legacyMode option.
+   */
+  reactQueryVersion?: 3 | 4 | 5;
 
   /**
    * @default empty
@@ -125,4 +106,39 @@ export interface ReactQueryRawPluginConfig
    * - "src/your-own-react-query-customized": import { useQuery, UseQueryOptions, useMutation, UseMutationOptions, useInfiniteQuery, UseInfiniteQueryOptions } from your own react-query customized package.
    */
   reactQueryImportFrom?: string;
+}
+
+/**
+ * @description This plugin generates `React-Query` Hooks with TypeScript typings.
+ *
+ * It extends the basic TypeScript plugins: `@graphql-codegen/typescript`, `@graphql-codegen/typescript-operations` - and thus shares a similar configuration.
+ *
+ * > **If you are using the `react-query` package instead of the `@tanstack/react-query` package in your project, please set the `legacyMode` option to `true`.**
+ *
+ */
+export interface ReactQueryRawPluginConfig
+  extends Omit<
+      RawClientSideBasePluginConfig,
+      | 'documentMode'
+      | 'noGraphQLTag'
+      | 'gqlImport'
+      | 'documentNodeImport'
+      | 'noExport'
+      | 'importOperationTypesFrom'
+      | 'importDocumentNodeExternallyFrom'
+      | 'useTypeImports'
+      | 'legacyMode'
+    >,
+    BaseReactQueryPluginConfig {
+  /**
+   * @description Customize the fetcher you wish to use in the generated file. React-Query is agnostic to the data-fetching layer, so you should provide it, or use a custom one.
+   *
+   * The following options are available to use:
+   *
+   * - 'fetch' - requires you to specify endpoint and headers on each call, and uses `fetch` to do the actual http call.
+   * - `{ endpoint: string, fetchParams: RequestInit }`: hardcode your endpoint and fetch options into the generated output, using the environment `fetch` method. You can also use `process.env.MY_VAR` as endpoint or header value.
+   * - `file#identifier` - You can use custom fetcher method that should implement the exported `ReactQueryFetcher` interface. Example: `./my-fetcher#myCustomFetcher`.
+   * - `graphql-request`: Will generate each hook with `client` argument, where you should pass your own `GraphQLClient` (created from `graphql-request`).
+   */
+  fetcher?: 'fetch' | HardcodedFetch | GraphQlRequest | CustomFetch;
 }

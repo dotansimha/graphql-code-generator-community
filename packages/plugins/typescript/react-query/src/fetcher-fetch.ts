@@ -1,17 +1,14 @@
-import { OperationDefinitionNode } from 'graphql';
-import { FetcherRenderer } from './fetcher.js';
-import {
-  generateInfiniteQueryKey,
-  generateMutationKey,
-  generateQueryKey,
-  generateQueryVariablesSignature,
-} from './variables-generator.js';
+import autoBind from 'auto-bind';
+import { FetcherRenderer, type GenerateConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
-export class FetchFetcher implements FetcherRenderer {
-  constructor(private visitor: ReactQueryVisitor) {}
+export class FetchFetcher extends FetcherRenderer {
+  constructor(protected visitor: ReactQueryVisitor) {
+    super(visitor);
+    autoBind(this);
+  }
 
-  generateFetcherImplementaion(): string {
+  generateFetcherImplementation(): string {
     return `
 function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
@@ -34,115 +31,61 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 }`;
   }
 
-  generateInfiniteQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
-    const variables = generateQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
+  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { generateBaseInfiniteQueryHook, variables, options } = this.generateInfiniteQueryHelper(
+      config,
+      isSuspense,
     );
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.infiniteQuery.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.infiniteQuery.options);
 
-    const options = `options?: ${hookConfig.infiniteQuery.options}<${operationResultType}, TError, TData>`;
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    return `export const useInfinite${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
+    return generateBaseInfiniteQueryHook({
+      implArguments: `
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       ${variables},
       ${options}
-    ) =>
-    ${hookConfig.infiniteQuery.hook}<${operationResultType}, TError, TData>(
-      ${generateInfiniteQueryKey(node, hasRequiredVariables)},
-      (metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})(),
-      options
-    );`;
+    `,
+      implFetcher: `(metaData) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, {...variables, ...(metaData.pageParam ?? {})})()`,
+    });
   }
 
-  generateQueryHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
-    const variables = generateQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
+  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
+    const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(
+      config,
+      isSuspense,
     );
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.query.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.query.options);
 
-    const options = `options?: ${hookConfig.query.options}<${operationResultType}, TError, TData>`;
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    return `export const use${operationName} = <
-      TData = ${operationResultType},
-      TError = ${this.visitor.config.errorType}
-    >(
+    return generateBaseQueryHook({
+      implArguments: `
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       ${variables},
       ${options}
-    ) =>
-    ${hookConfig.query.hook}<${operationResultType}, TError, TData>(
-      ${generateQueryKey(node, hasRequiredVariables)},
-      fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables),
-      options
-    );`;
+    `,
+      implFetcher: `fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)`,
+    });
   }
 
-  generateMutationHook(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
-    const variables = `variables?: ${operationVariablesTypes}`;
-    const hookConfig = this.visitor.queryMethodMap;
-    this.visitor.reactQueryHookIdentifiersInUse.add(hookConfig.mutation.hook);
-    this.visitor.reactQueryOptionsIdentifiersInUse.add(hookConfig.mutation.options);
+  generateMutationHook(config: GenerateConfig): string {
+    const { generateBaseMutationHook, variables, options } = this.generateMutationHelper(config);
 
-    const options = `options?: ${hookConfig.mutation.options}<${operationResultType}, TError, ${operationVariablesTypes}, TContext>`;
+    const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
-    return `export const use${operationName} = <
-      TError = ${this.visitor.config.errorType},
-      TContext = unknown
-    >(
+    return generateBaseMutationHook({
+      implArguments: `
       dataSource: { endpoint: string, fetchParams?: RequestInit },
       ${options}
-    ) =>
-    ${
-      hookConfig.mutation.hook
-    }<${operationResultType}, TError, ${operationVariablesTypes}, TContext>(
-      ${generateMutationKey(node)},
-      (${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)(),
-      options
-    );`;
+    `,
+      implFetcher: `(${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables)()`,
+    });
   }
 
-  generateFetcherFetch(
-    node: OperationDefinitionNode,
-    documentVariableName: string,
-    operationName: string,
-    operationResultType: string,
-    operationVariablesTypes: string,
-    hasRequiredVariables: boolean,
-  ): string {
-    const variables = generateQueryVariablesSignature(
-      hasRequiredVariables,
-      operationVariablesTypes,
-    );
+  generateFetcherFetch(config: GenerateConfig): string {
+    const { documentVariableName, operationResultType, operationVariablesTypes, operationName } =
+      config;
+
+    const variables = this.generateQueryVariablesSignature(config);
 
     return `\nuse${operationName}.fetcher = (dataSource: { endpoint: string, fetchParams?: RequestInit }, ${variables}) => fetcher<${operationResultType}, ${operationVariablesTypes}>(dataSource.endpoint, dataSource.fetchParams || {}, ${documentVariableName}, variables);`;
   }

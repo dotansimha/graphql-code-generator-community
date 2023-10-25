@@ -9,46 +9,14 @@ import {
   getConfigValue,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import { ReactQueryRawPluginConfig } from './config.js';
+import { BaseReactQueryPluginConfig, ReactQueryRawPluginConfig } from './config.js';
 import { CustomMapperFetcher } from './fetcher-custom-mapper.js';
 import { HardcodedFetchFetcher } from './fetcher-fetch-hardcoded.js';
 import { FetchFetcher } from './fetcher-fetch.js';
 import { GraphQLRequestClientFetcher } from './fetcher-graphql-request.js';
-import { FetcherRenderer } from './fetcher.js';
-import {
-  generateInfiniteQueryKeyMaker,
-  generateInfiniteQueryRootKeyMaker,
-  generateMutationKeyMaker,
-  generateQueryKeyMaker,
-  generateQueryRootKeyMaker,
-} from './variables-generator.js';
+import { FetcherRenderer, type GenerateConfig } from './fetcher.js';
 
-export interface ReactQueryPluginConfig extends ClientSideBasePluginConfig {
-  errorType: string;
-  exposeDocument: boolean;
-  exposeQueryKeys: boolean;
-  exposeQueryRootKeys: boolean;
-  exposeMutationKeys: boolean;
-  exposeFetcher: boolean;
-  addInfiniteQuery: boolean;
-  legacyMode: boolean;
-  reactQueryImportFrom?: string;
-}
-
-export interface ReactQueryMethodMap {
-  infiniteQuery: {
-    hook: string;
-    options: string;
-  };
-  query: {
-    hook: string;
-    options: string;
-  };
-  mutation: {
-    hook: string;
-    options: string;
-  };
-}
+export type ReactQueryPluginConfig = BaseReactQueryPluginConfig & ClientSideBasePluginConfig;
 
 export class ReactQueryVisitor extends ClientSideBaseVisitor<
   ReactQueryRawPluginConfig,
@@ -59,27 +27,14 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
   public reactQueryHookIdentifiersInUse = new Set<string>();
   public reactQueryOptionsIdentifiersInUse = new Set<string>();
 
-  public queryMethodMap: ReactQueryMethodMap = {
-    infiniteQuery: {
-      hook: 'useInfiniteQuery',
-      options: 'UseInfiniteQueryOptions',
-    },
-    query: {
-      hook: 'useQuery',
-      options: 'UseQueryOptions',
-    },
-    mutation: {
-      hook: 'useMutation',
-      options: 'UseMutationOptions',
-    },
-  };
-
   constructor(
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
     protected rawConfig: ReactQueryRawPluginConfig,
     documents: Types.DocumentFile[],
   ) {
+    const defaultReactQueryVersion = !rawConfig.reactQueryVersion && rawConfig.legacyMode ? 3 : 4;
+
     super(schema, fragments, rawConfig, {
       documentMode: DocumentMode.string,
       errorType: getConfigValue(rawConfig.errorType, 'unknown'),
@@ -89,9 +44,11 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       exposeMutationKeys: getConfigValue(rawConfig.exposeMutationKeys, false),
       exposeFetcher: getConfigValue(rawConfig.exposeFetcher, false),
       addInfiniteQuery: getConfigValue(rawConfig.addInfiniteQuery, false),
-      legacyMode: getConfigValue(rawConfig.legacyMode, false),
+      addSuspenseQuery: getConfigValue(rawConfig.addSuspenseQuery, false),
+      reactQueryVersion: getConfigValue(rawConfig.reactQueryVersion, defaultReactQueryVersion),
       reactQueryImportFrom: getConfigValue(rawConfig.reactQueryImportFrom, ''),
     });
+
     this._externalImportPrefix = this.config.importOperationTypesFrom
       ? `${this.config.importOperationTypesFrom}.`
       : '';
@@ -139,7 +96,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
 
     const moduleName = this.config.reactQueryImportFrom
       ? this.config.reactQueryImportFrom
-      : this.config.legacyMode
+      : this.config.reactQueryVersion <= 3
       ? 'react-query'
       : '@tanstack/react-query';
 
@@ -147,7 +104,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
   }
 
   public getFetcherImplementation(): string {
-    return this.fetcher.generateFetcherImplementaion();
+    return this.fetcher.generateFetcherImplementation();
   }
 
   private _getHookSuffix(name: string, operationType: string) {
@@ -179,92 +136,70 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       useTypesSuffix: false,
     });
 
+    const generateConfig: GenerateConfig = {
+      node,
+      documentVariableName,
+      operationResultType,
+      operationVariablesTypes,
+      hasRequiredVariables,
+      operationName,
+    };
+
     operationResultType = this._externalImportPrefix + operationResultType;
     operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
 
-    if (operationType === 'Query') {
-      let query = this.fetcher.generateQueryHook(
-        node,
-        documentVariableName,
-        operationName,
-        operationResultType,
-        operationVariablesTypes,
-        hasRequiredVariables,
-      );
-      if (this.config.exposeDocument) {
-        query += `\nuse${operationName}.document = ${documentVariableName};\n`;
-      }
-      if (this.config.exposeQueryKeys) {
-        query += `\n${generateQueryKeyMaker(
-          node,
-          operationName,
-          operationVariablesTypes,
-          hasRequiredVariables,
-        )};\n`;
-      }
-      if (this.config.exposeQueryRootKeys) {
-        query += `\n${generateQueryRootKeyMaker(node, operationName)}`;
-      }
-      if (this.config.addInfiniteQuery) {
-        query += `\n${this.fetcher.generateInfiniteQueryHook(
-          node,
-          documentVariableName,
-          operationName,
-          operationResultType,
-          operationVariablesTypes,
-          hasRequiredVariables,
-        )}\n`;
-        if (this.config.exposeQueryKeys) {
-          query += `\n${generateInfiniteQueryKeyMaker(
-            node,
-            operationName,
-            operationVariablesTypes,
-            hasRequiredVariables,
-          )};\n`;
-        }
-        if (this.config.exposeQueryRootKeys) {
-          query += `\n${generateInfiniteQueryRootKeyMaker(node, operationName)}`;
-        }
-      }
+    const queries: string[] = [];
+    const getOutputFromQueries = () => `\n${queries.join('\n\n')}\n`;
 
+    if (operationType === 'Query') {
+      const addQuery = (generateConfig: GenerateConfig, isSuspense = false) => {
+        const { hook, getKey, rootKey, document } = this.fetcher.generateQueryOutput(
+          generateConfig,
+          isSuspense,
+        );
+        queries.push(hook);
+        if (this.config.exposeDocument) queries.push(document);
+        if (this.config.exposeQueryKeys) queries.push(getKey);
+        if (this.config.exposeQueryRootKeys) queries.push(rootKey);
+      };
+
+      addQuery(generateConfig);
+
+      if (this.config.addSuspenseQuery) addQuery(generateConfig, true);
+
+      if (this.config.addInfiniteQuery) {
+        const addInfiniteQuery = (generateConfig: GenerateConfig, isSuspense = false) => {
+          const { hook, getKey, rootKey } = this.fetcher.generateInfiniteQueryOutput(
+            generateConfig,
+            isSuspense,
+          );
+          queries.push(hook);
+          if (this.config.exposeQueryKeys) queries.push(getKey);
+          if (this.config.exposeQueryRootKeys) queries.push(rootKey);
+        };
+
+        addInfiniteQuery(generateConfig);
+
+        if (this.config.addSuspenseQuery) {
+          addInfiniteQuery(generateConfig, true);
+        }
+      }
       // The reason we're looking at the private field of the CustomMapperFetcher to see if it's a react hook
       // is to prevent calling generateFetcherFetch for each query since all the queries won't be able to generate
       // a fetcher field anyways.
       if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
-        query += this.fetcher.generateFetcherFetch(
-          node,
-          documentVariableName,
-          operationName,
-          operationResultType,
-          operationVariablesTypes,
-          hasRequiredVariables,
-        );
+        queries.push(this.fetcher.generateFetcherFetch(generateConfig));
       }
-      return query;
+      return getOutputFromQueries();
     }
     if (operationType === 'Mutation') {
-      let query = this.fetcher.generateMutationHook(
-        node,
-        documentVariableName,
-        operationName,
-        operationResultType,
-        operationVariablesTypes,
-        hasRequiredVariables,
-      );
-      if (this.config.exposeMutationKeys) {
-        query += generateMutationKeyMaker(node, operationName);
-      }
+      const { hook, getKey } = this.fetcher.generateMutationOutput(generateConfig);
+      queries.push(hook);
+      if (this.config.exposeMutationKeys) queries.push(getKey);
       if (this.config.exposeFetcher && !(this.fetcher as any)._isReactHook) {
-        query += this.fetcher.generateFetcherFetch(
-          node,
-          documentVariableName,
-          operationName,
-          operationResultType,
-          operationVariablesTypes,
-          hasRequiredVariables,
-        );
+        queries.push(this.fetcher.generateFetcherFetch(generateConfig));
       }
-      return query;
+      return getOutputFromQueries();
     }
     if (operationType === 'Subscription') {
       // eslint-disable-next-line no-console
