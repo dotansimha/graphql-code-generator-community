@@ -60,8 +60,18 @@ export function useHeroDetailsLazyQuery(
     options,
   );
 }
+export function useHeroDetailsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(
+    HeroDetailsDocument,
+    options,
+  );
+}
 export type HeroDetailsQueryHookResult = ReturnType<typeof useHeroDetailsQuery>;
 export type HeroDetailsLazyQueryHookResult = ReturnType<typeof useHeroDetailsLazyQuery>;
+export type HeroDetailsSuspenseQueryHookResult = ReturnType<typeof useHeroDetailsSuspenseQuery>;
 export type HeroDetailsQueryResult = Apollo.QueryResult<
   HeroDetailsQuery,
   HeroDetailsQueryVariables

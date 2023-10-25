@@ -418,6 +418,25 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
       hookResults.push(
         `export type ${lazyOperationName}HookResult = ReturnType<typeof use${lazyOperationName}>;`,
       );
+
+      const suspenseOperationName: string =
+        this.convertName(nodeName, {
+          suffix: pascalCase('SuspenseQuery'),
+          useTypesPrefix: false,
+        }) + this.config.hooksSuffix;
+
+      hookFns.push(
+        `export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ${this.getApolloReactHooksIdentifier()}.useSuspenseQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
+          node,
+          documentVariableName,
+        )}, options);
+        }`,
+      );
+      hookResults.push(
+        `export type ${suspenseOperationName}HookResult = ReturnType<typeof use${suspenseOperationName}>;`,
+      );
     }
 
     return [...hookFns, ...hookResults].join('\n');

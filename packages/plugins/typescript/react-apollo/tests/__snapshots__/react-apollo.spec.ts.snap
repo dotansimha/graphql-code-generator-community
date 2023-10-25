@@ -190,8 +190,13 @@ export function useGet_SomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>(Get_SomethingDocument, options);
         }
+export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>(Get_SomethingDocument, options);
+        }
 export type Get_SomethingQueryHookResult = ReturnType<typeof useGet_SomethingQuery>;
 export type Get_SomethingLazyQueryHookResult = ReturnType<typeof useGet_SomethingLazyQuery>;
+export type Get_SomethingSuspenseQueryHookResult = ReturnType<typeof useGet_SomethingSuspenseQuery>;
 export type Get_SomethingQueryResult = Apollo.QueryResult<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>;"
 `;
 
@@ -385,8 +390,13 @@ export function useGet_SomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>(Get_SomethingDocument, options);
         }
+export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>(Get_SomethingDocument, options);
+        }
 export type Get_SomethingQueryHookResult = ReturnType<typeof useGet_SomethingQuery>;
 export type Get_SomethingLazyQueryHookResult = ReturnType<typeof useGet_SomethingLazyQuery>;
+export type Get_SomethingSuspenseQueryHookResult = ReturnType<typeof useGet_SomethingSuspenseQuery>;
 export type Get_SomethingQueryResult = Apollo.QueryResult<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>;"
 `;
 
@@ -580,8 +590,13 @@ export function useGetSomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
         }
+export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
+        }
 export type GetSomethingQueryHookResult = ReturnType<typeof useGetSomethingQuery>;
 export type GetSomethingLazyQueryHookResult = ReturnType<typeof useGetSomethingLazyQuery>;
+export type GetSomethingSuspenseQueryHookResult = ReturnType<typeof useGetSomethingSuspenseQuery>;
 export type GetSomethingQueryResult = Apollo.QueryResult<GetSomethingQuery, GetSomethingQueryVariables>;"
 `;
 
@@ -775,8 +790,13 @@ export function useGetSomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
         }
+export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
+        }
 export type GetSomethingQueryHookResult = ReturnType<typeof useGetSomethingQuery>;
 export type GetSomethingLazyQueryHookResult = ReturnType<typeof useGetSomethingLazyQuery>;
+export type GetSomethingSuspenseQueryHookResult = ReturnType<typeof useGetSomethingSuspenseQuery>;
 export type GetSomethingQueryResult = Apollo.QueryResult<GetSomethingQuery, GetSomethingQueryVariables>;"
 `;
 

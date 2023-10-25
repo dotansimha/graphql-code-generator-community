@@ -72,11 +72,26 @@ export function useHeroNameConditionalInclusionLazyQuery(
     HeroNameConditionalInclusionQueryVariables
   >(HeroNameConditionalInclusionDocument, options);
 }
+export function useHeroNameConditionalInclusionSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >(HeroNameConditionalInclusionDocument, options);
+}
 export type HeroNameConditionalInclusionQueryHookResult = ReturnType<
   typeof useHeroNameConditionalInclusionQuery
 >;
 export type HeroNameConditionalInclusionLazyQueryHookResult = ReturnType<
   typeof useHeroNameConditionalInclusionLazyQuery
+>;
+export type HeroNameConditionalInclusionSuspenseQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalInclusionSuspenseQuery
 >;
 export type HeroNameConditionalInclusionQueryResult = Apollo.QueryResult<
   HeroNameConditionalInclusionQuery,
@@ -131,11 +146,26 @@ export function useHeroNameConditionalExclusionLazyQuery(
     HeroNameConditionalExclusionQueryVariables
   >(HeroNameConditionalExclusionDocument, options);
 }
+export function useHeroNameConditionalExclusionSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >(HeroNameConditionalExclusionDocument, options);
+}
 export type HeroNameConditionalExclusionQueryHookResult = ReturnType<
   typeof useHeroNameConditionalExclusionQuery
 >;
 export type HeroNameConditionalExclusionLazyQueryHookResult = ReturnType<
   typeof useHeroNameConditionalExclusionLazyQuery
+>;
+export type HeroNameConditionalExclusionSuspenseQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalExclusionSuspenseQuery
 >;
 export type HeroNameConditionalExclusionQueryResult = Apollo.QueryResult<
   HeroNameConditionalExclusionQuery,

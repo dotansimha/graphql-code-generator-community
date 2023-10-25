@@ -1437,6 +1437,10 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       `);
 
       expect(content.content).toBeSimilarStringTo(`
+      export type FeedSuspenseQueryHookResult = ReturnType<typeof useFeedSuspenseQuery>;
+      `);
+
+      expect(content.content).toBeSimilarStringTo(`
       export type SubmitRepositoryMutationHookResult = ReturnType<typeof useSubmitRepositoryMutation>;
       `);
       await validateTypeScript(content, schema, docs, {});
@@ -1719,6 +1723,40 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       }`);
       await validateTypeScript(content, schema, docs, {});
     });
+    it('should generate suspense query hooks', async () => {
+      const documents = parse(/* GraphQL */ `
+        query feed {
+          feed {
+            id
+            commentCount
+            repository {
+              full_name
+              html_url
+              owner {
+                avatar_url
+              }
+            }
+          }
+        }
+      `);
+      const docs = [{ location: '', document: documents }];
+
+      const content = (await plugin(
+        schema,
+        docs,
+        { withHooks: true, withComponent: false, withHOC: false },
+        {
+          outputFile: 'graphql.tsx',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`
+      export function useFeedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSuspenseQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
+      }`);
+      await validateTypeScript(content, schema, docs, {});
+    });
     it('should generate lazy query hooks with proper hooksSuffix', async () => {
       const documents = parse(/* GraphQL */ `
         query feed {
@@ -1750,6 +1788,40 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       export function useFeedLazyQueryMySuffix(baseOptions?: Apollo.LazyQueryHookOptions<FeedQuery, FeedQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
+      }`);
+      await validateTypeScript(content, schema, docs, {});
+    });
+    it('should generate suspense query hooks with proper hooksSuffix', async () => {
+      const documents = parse(/* GraphQL */ `
+        query feed {
+          feed {
+            id
+            commentCount
+            repository {
+              full_name
+              html_url
+              owner {
+                avatar_url
+              }
+            }
+          }
+        }
+      `);
+      const docs = [{ location: '', document: documents }];
+
+      const content = (await plugin(
+        schema,
+        docs,
+        { withHooks: true, withComponent: false, withHOC: false, hooksSuffix: 'MySuffix' },
+        {
+          outputFile: 'graphql.tsx',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`
+      export function useFeedSuspenseQueryMySuffix(baseOptions?: Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSuspenseQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
       }`);
       await validateTypeScript(content, schema, docs, {});
     });
@@ -2176,7 +2248,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       await validateTypeScript(content, schema, docs, {});
     });
 
-    it('should import Operations from one external file and use it in useQuery and useLazyQuery', async () => {
+    it('should import Operations from one external file and use it in useQuery, useLazyQuery and useSuspenseQuery', async () => {
       const config: ReactApolloRawPluginConfig = {
         documentMode: DocumentMode.external,
         importDocumentNodeExternallyFrom: 'path/to/documents',
@@ -2202,6 +2274,12 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       export function useTestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestQuery, TestQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useLazyQuery<TestQuery, TestQueryVariables>(Operations.test, options);
+      }
+      `);
+      expect(content.content).toBeSimilarStringTo(`
+      export function useTestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSuspenseQuery<TestQuery, TestQueryVariables>(Operations.test, options);
       }
       `);
       await validateTypeScript(content, schema, docs, {});
@@ -2457,6 +2535,12 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
+      export function useTestOneSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSuspenseQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
+      }
+      `);
+      expect(content.content).toBeSimilarStringTo(`
       export function useTestTwoMutation(baseOptions?: Apollo.MutationHookOptions<TestTwoMutation, TestTwoMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<TestTwoMutation, TestTwoMutationVariables>(Operations.testTwo, options);
@@ -2550,7 +2634,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       await validateTypeScript(content, schema, docs, {});
     });
 
-    it('should import Operations from near operation file for useQuery and useLazyQuery', async () => {
+    it('should import Operations from near operation file for useQuery, useLazyQuery and useSuspenseQuery', async () => {
       const config: ReactApolloRawPluginConfig = {
         documentMode: DocumentMode.external,
         importDocumentNodeExternallyFrom: 'near-operation-file',
@@ -2576,6 +2660,12 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       export function useTestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestQuery, TestQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useLazyQuery<TestQuery, TestQueryVariables>(Operations.test, options);
+      }
+      `);
+      expect(content.content).toBeSimilarStringTo(`
+      export function useTestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSuspenseQuery<TestQuery, TestQueryVariables>(Operations.test, options);
       }
       `);
       await validateTypeScript(content, schema, docs, {});
@@ -2826,6 +2916,12 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       export function useTestOneLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useLazyQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
+      }
+      `);
+      expect(content.content).toBeSimilarStringTo(`
+      export function useTestOneSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSuspenseQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
