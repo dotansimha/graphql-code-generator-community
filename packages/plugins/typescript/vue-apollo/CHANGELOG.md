@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-vue-apollo
 
+## 4.1.0
+
+### Minor Changes
+
+- [#363](https://github.com/dotansimha/graphql-code-generator-community/pull/363)
+  [`8e829d54c`](https://github.com/dotansimha/graphql-code-generator-community/commit/8e829d54c4017ee03184795395911894424dc0c4)
+  Thanks [@swunderlich](https://github.com/swunderlich)! - Possibility to add a clientId for the use
+  of multiple apollo clients
+
 ## 4.0.0
 
 ### Major Changes

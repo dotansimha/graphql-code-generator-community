@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-rtk-query
 
+## 3.1.0
+
+### Minor Changes
+
+- [#449](https://github.com/dotansimha/graphql-code-generator-community/pull/449)
+  [`62420e5eb`](https://github.com/dotansimha/graphql-code-generator-community/commit/62420e5eb5a0f0085d9c630cfa4dd570d0e95599)
+  Thanks [@colinsullivan](https://github.com/colinsullivan)! - Allows versions `6.x` of
+  `graphql-request`
+
 ## 3.0.0
 
 ### Major Changes
