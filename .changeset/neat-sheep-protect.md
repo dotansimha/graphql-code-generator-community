@@ -1,5 +1,5 @@
 ---
-"@graphql-codegen/typescript-react-apollo": patch
+"@graphql-codegen/typescript-react-apollo": minor
 ---
 
 feat: support useSuspenseQuery
