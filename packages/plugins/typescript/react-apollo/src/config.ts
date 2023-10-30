@@ -241,8 +241,21 @@ export interface ReactApolloRawPluginConfig extends RawClientSideBasePluginConfi
    * ```
    */
   addDocBlocks?: boolean;
-
-  defaultBaseOptions?: { [key: string]: any };
+  /**
+   * @description Configure default mutation and query hook options.
+   */
+  defaultBaseOptions?: ReactApolloPluginConfigDefaultBaseOptions;
 
   hooksSuffix?: string;
+}
+
+export interface ReactApolloPluginConfigDefaultBaseOptions {
+  awaitRefetchQueries?: boolean;
+  errorPolicy?: string;
+  fetchPolicy?: string;
+  ignoreResults?: boolean;
+  notifyOnNetworkStatusChange?: boolean;
+  returnPartialData?: boolean;
+  ssr?: boolean;
+  [key: string]: any;
 }
