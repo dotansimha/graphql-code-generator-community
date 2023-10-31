@@ -166,7 +166,7 @@ describe('urql graphcache', () => {
     const result = mergeOutputs([await plugin(schema, [], { useTypeImports: true })]);
 
     expect(result).toBeSimilarStringTo(`\
-import { offlineExchange } from '@urql/exchange-graphcache';
+import { cacheExchange } from '@urql/exchange-graphcache';
 import type { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 `);
   });
