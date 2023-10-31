@@ -1,11 +1,11 @@
 import { IntrospectionQuery } from 'graphql';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
-import { offlineExchange } from '@urql/exchange-graphcache';
 import {
   OptimisticMutationResolver as GraphCacheOptimisticMutationResolver,
   Resolver as GraphCacheResolver,
   UpdateResolver as GraphCacheUpdateResolver,
+  offlineExchange,
 } from '@urql/exchange-graphcache';
 
 export type Maybe<T> = T | null;
