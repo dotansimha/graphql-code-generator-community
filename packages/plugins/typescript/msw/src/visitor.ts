@@ -81,8 +81,8 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
  * })
  */
 export const ${handlerName} = (resolver: Parameters<typeof ${
-  link?.name || 'graphql'
-}.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>>[1]) =>
+            link?.name || 'graphql'
+          }.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>>[1]) =>
   ${
     link?.name || 'graphql'
   }.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>(
