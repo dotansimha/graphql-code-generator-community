@@ -51,7 +51,7 @@ exports[`msw Should generate a link with an endpoint when passed a link variable
  *   )
  * })
  */
-export const mockUserQueryApi = (resolver: Parameters<typeof graphql.query<UserQuery, UserQueryVariables>>[1]) =>
+export const mockUserQueryApi = (resolver: Parameters<typeof api.query<UserQuery, UserQueryVariables>>[1]) =>
   api.query<UserQuery, UserQueryVariables>(
     'User',
     resolver
@@ -150,7 +150,7 @@ export const mockUpdateUserMutation = (resolver: Parameters<typeof graphql.mutat
 
 exports[`msw Should generate mocks based on queries and mutations: imports 1`] = `
 [
-  "import { graphql, ResponseResolver, GraphQLRequest, GraphQLContext } from 'msw'",
+  "import { graphql } from 'msw'",
 ]
 `;
 
