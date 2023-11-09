@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-msw
 
+## 2.1.0
+
+### Minor Changes
+
+- [#484](https://github.com/dotansimha/graphql-code-generator-community/pull/484)
+  [`1f056e99c`](https://github.com/dotansimha/graphql-code-generator-community/commit/1f056e99c18d36557fac4f3c75a52ee9c2a7bfb2)
+  Thanks [@netanelgilad](https://github.com/netanelgilad)! - future proof types for generated mock
+  functions - this also adds support for `msw@2`.
+
 ## 2.0.0
 
 ### Major Changes
