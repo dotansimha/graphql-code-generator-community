@@ -13,7 +13,7 @@ exports[`msw Should generate JSDoc documentation with variables and selection fr
  *   )
  * })
  */
-export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<UserQueryVariables>, GraphQLContext<UserQuery>, any>) =>
+export const mockUserQuery = (resolver: Parameters<typeof graphql.query<UserQuery, UserQueryVariables>>[1]) =>
   graphql.query<UserQuery, UserQueryVariables>(
     'User',
     resolver
@@ -30,7 +30,7 @@ export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<UserQuer
  *   )
  * })
  */
-export const mockUpdateUserMutation = (resolver: ResponseResolver<GraphQLRequest<UpdateUserMutationVariables>, GraphQLContext<UpdateUserMutation>, any>) =>
+export const mockUpdateUserMutation = (resolver: Parameters<typeof graphql.mutation<UpdateUserMutation, UpdateUserMutationVariables>>[1]) =>
   graphql.mutation<UpdateUserMutation, UpdateUserMutationVariables>(
     'UpdateUser',
     resolver
@@ -51,7 +51,7 @@ exports[`msw Should generate a link with an endpoint when passed a link variable
  *   )
  * })
  */
-export const mockUserQueryApi = (resolver: ResponseResolver<GraphQLRequest<UserQueryVariables>, GraphQLContext<UserQuery>, any>) =>
+export const mockUserQueryApi = (resolver: Parameters<typeof api.query<UserQuery, UserQueryVariables>>[1]) =>
   api.query<UserQuery, UserQueryVariables>(
     'User',
     resolver
@@ -67,7 +67,7 @@ export const mockUserQueryApi = (resolver: ResponseResolver<GraphQLRequest<UserQ
  *   )
  * })
  */
-export const mockUpdateUserMutationApi = (resolver: ResponseResolver<GraphQLRequest<UpdateUserMutationVariables>, GraphQLContext<UpdateUserMutation>, any>) =>
+export const mockUpdateUserMutationApi = (resolver: Parameters<typeof api.mutation<UpdateUserMutation, UpdateUserMutationVariables>>[1]) =>
   api.mutation<UpdateUserMutation, UpdateUserMutationVariables>(
     'UpdateUser',
     resolver
@@ -88,7 +88,7 @@ exports[`msw Should generate handlerNames without suffix when withSuffix is fals
  *   )
  * })
  */
-export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<UserQueryVariables>, GraphQLContext<UserQuery>, any>) =>
+export const mockUserQuery = (resolver: Parameters<typeof api.query<UserQuery, UserQueryVariables>>[1]) =>
   api.query<UserQuery, UserQueryVariables>(
     'User',
     resolver
@@ -104,7 +104,7 @@ export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<UserQuer
  *   )
  * })
  */
-export const mockUpdateUserMutation = (resolver: ResponseResolver<GraphQLRequest<UpdateUserMutationVariables>, GraphQLContext<UpdateUserMutation>, any>) =>
+export const mockUpdateUserMutation = (resolver: Parameters<typeof api.mutation<UpdateUserMutation, UpdateUserMutationVariables>>[1]) =>
   api.mutation<UpdateUserMutation, UpdateUserMutationVariables>(
     'UpdateUser',
     resolver
@@ -124,7 +124,7 @@ exports[`msw Should generate mocks based on queries and mutations: content 1`] =
  *   )
  * })
  */
-export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<UserQueryVariables>, GraphQLContext<UserQuery>, any>) =>
+export const mockUserQuery = (resolver: Parameters<typeof graphql.query<UserQuery, UserQueryVariables>>[1]) =>
   graphql.query<UserQuery, UserQueryVariables>(
     'User',
     resolver
@@ -140,7 +140,7 @@ export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<UserQuer
  *   )
  * })
  */
-export const mockUpdateUserMutation = (resolver: ResponseResolver<GraphQLRequest<UpdateUserMutationVariables>, GraphQLContext<UpdateUserMutation>, any>) =>
+export const mockUpdateUserMutation = (resolver: Parameters<typeof graphql.mutation<UpdateUserMutation, UpdateUserMutationVariables>>[1]) =>
   graphql.mutation<UpdateUserMutation, UpdateUserMutationVariables>(
     'UpdateUser',
     resolver
@@ -150,7 +150,7 @@ export const mockUpdateUserMutation = (resolver: ResponseResolver<GraphQLRequest
 
 exports[`msw Should generate mocks based on queries and mutations: imports 1`] = `
 [
-  "import { graphql, ResponseResolver, GraphQLRequest, GraphQLContext } from 'msw'",
+  "import { graphql } from 'msw'",
 ]
 `;
 
@@ -166,7 +166,7 @@ exports[`msw Should use the "importOperationTypesFrom" setting: content with typ
  *   )
  * })
  */
-export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<Types.UserQueryVariables>, GraphQLContext<Types.UserQuery>, any>) =>
+export const mockUserQuery = (resolver: Parameters<typeof graphql.query<Types.UserQuery, Types.UserQueryVariables>>[1]) =>
   graphql.query<Types.UserQuery, Types.UserQueryVariables>(
     'User',
     resolver
@@ -182,7 +182,7 @@ export const mockUserQuery = (resolver: ResponseResolver<GraphQLRequest<Types.Us
  *   )
  * })
  */
-export const mockUpdateUserMutation = (resolver: ResponseResolver<GraphQLRequest<Types.UpdateUserMutationVariables>, GraphQLContext<Types.UpdateUserMutation>, any>) =>
+export const mockUpdateUserMutation = (resolver: Parameters<typeof graphql.mutation<Types.UpdateUserMutation, Types.UpdateUserMutationVariables>>[1]) =>
   graphql.mutation<Types.UpdateUserMutation, Types.UpdateUserMutationVariables>(
     'UpdateUser',
     resolver

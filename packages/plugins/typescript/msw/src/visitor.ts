@@ -44,7 +44,7 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
       return [];
     }
 
-    return [`import { graphql, ResponseResolver, GraphQLRequest, GraphQLContext } from 'msw'`];
+    return [`import { graphql } from 'msw'`];
   }
 
   public getContent() {
@@ -80,7 +80,9 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
  *   )
  * })
  */
-export const ${handlerName} = (resolver: ResponseResolver<GraphQLRequest<${operationVariablesTypes}>, GraphQLContext<${operationResultType}>, any>) =>
+export const ${handlerName} = (resolver: Parameters<typeof ${
+            link?.name || 'graphql'
+          }.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>>[1]) =>
   ${
     link?.name || 'graphql'
   }.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>(

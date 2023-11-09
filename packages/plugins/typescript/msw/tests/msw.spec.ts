@@ -87,14 +87,16 @@ describe('msw', () => {
     // handler variable and result type
     const queryVariablesType = `${importOperationTypesFrom}.${queryName}QueryVariables`;
     const queryType = `${importOperationTypesFrom}.${queryName}Query`;
-    expect(result.content).toContain(`GraphQLRequest<${queryVariablesType}>`);
-    expect(result.content).toContain(`GraphQLContext<${queryType}>`);
+    expect(result.content).toContain(
+      `Parameters<typeof graphql.query<${queryType}, ${queryVariablesType}>>[1]`,
+    );
     expect(result.content).toContain(`graphql.query<${queryType}, ${queryVariablesType}>`);
 
     const mutationVariablesType = `${importOperationTypesFrom}.${mutationName}MutationVariables`;
     const mutationType = `${importOperationTypesFrom}.${mutationName}Mutation`;
-    expect(result.content).toContain(`GraphQLRequest<${mutationVariablesType}>`);
-    expect(result.content).toContain(`GraphQLContext<${mutationType}>`);
+    expect(result.content).toContain(
+      `Parameters<typeof graphql.mutation<${mutationType}, ${mutationVariablesType}>>[1]`,
+    );
     expect(result.content).toContain(`graphql.mutation<${mutationType}, ${mutationVariablesType}>`);
 
     expect(result.content).toMatchSnapshot(
