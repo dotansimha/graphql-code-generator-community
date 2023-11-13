@@ -524,7 +524,7 @@ export function useSubmitRepositoryMutation() {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-      export function useListenToCommentsSubscription<R = ListenToCommentsSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, ListenToCommentsSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandlerArg<ListenToCommentsSubscription, R>) {
+      export function useListenToCommentsSubscription<R = ListenToCommentsSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, ListenToCommentsSubscriptionVariables>, 'query'>, handler?: Urql.SubscriptionHandlerArg<ListenToCommentsSubscription, R>) {
         return Urql.useSubscription<ListenToCommentsSubscription, R, ListenToCommentsSubscriptionVariables>({ query: ListenToCommentsDocument, ...options }, handler);
       };`);
       await validateTypeScript(content, schema, docs, {});

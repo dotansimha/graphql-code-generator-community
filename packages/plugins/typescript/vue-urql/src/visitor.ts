@@ -92,7 +92,7 @@ export function use${operationName}() {
 
     if (operationType === 'Subscription') {
       return `
-export function use${operationName}<R = ${operationResultType}>(options: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes}>, 'query'> = {}, handler?: Urql.SubscriptionHandlerArg<${operationResultType}, R>) {
+export function use${operationName}<R = ${operationResultType}>(options: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes}>, 'query'>, handler?: Urql.SubscriptionHandlerArg<${operationResultType}, R>) {
   return Urql.use${operationType}<${operationResultType}, R, ${operationVariablesTypes}>({ query: ${documentVariableName}, ...options }, handler);
 };`;
     }
