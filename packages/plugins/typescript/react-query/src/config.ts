@@ -135,10 +135,11 @@ export interface ReactQueryRawPluginConfig
    *
    * The following options are available to use:
    *
+   * - 'amplify-graphql' - requires you to install @aws-amplify/api.
    * - 'fetch' - requires you to specify endpoint and headers on each call, and uses `fetch` to do the actual http call.
    * - `{ endpoint: string, fetchParams: RequestInit }`: hardcode your endpoint and fetch options into the generated output, using the environment `fetch` method. You can also use `process.env.MY_VAR` as endpoint or header value.
    * - `file#identifier` - You can use custom fetcher method that should implement the exported `ReactQueryFetcher` interface. Example: `./my-fetcher#myCustomFetcher`.
    * - `graphql-request`: Will generate each hook with `client` argument, where you should pass your own `GraphQLClient` (created from `graphql-request`).
    */
-  fetcher?: 'fetch' | HardcodedFetch | GraphQlRequest | CustomFetch;
+  fetcher?: 'amplify-graphql' | 'fetch' | HardcodedFetch | GraphQlRequest | CustomFetch;
 }
