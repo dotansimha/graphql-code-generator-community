@@ -16,7 +16,7 @@ export interface GraphQLRequestPluginConfig extends ClientSideBasePluginConfig {
 }
 
 const additionalExportedTypes = `
-export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 `;
 
 export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
@@ -138,7 +138,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
           }; headers: Headers; status: number; }> {
     return withWrapper((wrappedRequestHeaders) => client.rawRequest<${
       o.operationResultType
-    }>(${docArg}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}');
+    }>(${docArg}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}', variables);
 }`;
         }
         return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
@@ -146,7 +146,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
         }, requestHeaders?: GraphQLClientRequestHeaders): Promise<${o.operationResultType}> {
   return withWrapper((wrappedRequestHeaders) => client.request<${
     o.operationResultType
-  }>(${docVarName}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}');
+  }>(${docVarName}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}', variables);
 }`;
       })
       .filter(Boolean)
@@ -154,7 +154,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
     return `${additionalExportedTypes}
 
-const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType, variables) => action();
 ${extraVariables.join('\n')}
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
