@@ -3414,6 +3414,16 @@ change-case-all@1.0.15:
     upper-case "^2.0.2"
     upper-case-first "^2.0.2"
 
+change-case-all@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/change-case-all/-/change-case-all-2.0.1.tgz#0fc25ef5c3521317de975da2de8c24b72cc033ba"
+  integrity sha512-g0R2kg7VJCXu2X1COIZY6+sFuoNUUrM5+IL5d5UL3/ipDurVW048PIFdb4o4LpBcn4jRcWO6jDpC5CPPLPvD/A==
+  dependencies:
+    change-case "^5.2.0"
+    sponge-case "^2.0.2"
+    swap-case "^3.0.2"
+    title-case "^3.0.3"
+
 change-case@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/change-case/-/change-case-4.1.2.tgz#fedfc5f136045e2398c0410ee441f95704641e12"
@@ -3431,6 +3441,11 @@ change-case@^4.1.2:
     sentence-case "^3.0.4"
     snake-case "^3.0.4"
     tslib "^2.0.3"
+
+change-case@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/change-case/-/change-case-5.2.0.tgz#6054e5400194d1a19fd90e136c2007daba62668d"
+  integrity sha512-L6VzznESnMIKKdKhVzCG+KPz4+x1FWbjOs1AdhoHStV3qo8aySMRGPUoqC0aL1ThKaQNGhAu6ZfHL/QAyQRuiw==
 
 char-regex@^1.0.2:
   version "1.0.2"
@@ -7352,6 +7367,11 @@ sponge-case@^1.0.1:
   dependencies:
     tslib "^2.0.3"
 
+sponge-case@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/sponge-case/-/sponge-case-2.0.2.tgz#6b03436a040abe362aceab28b74b9831ce890abe"
+  integrity sha512-LBnE+y0zs+ajPFa0Fn/wGhCqigua+AxYf4MZFO3l83e/rAEdtTxiXf/0u6+9VzLClVEHrow9Vpj5FycAtaHNcA==
+
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
@@ -7532,6 +7552,11 @@ swap-case@^2.0.2:
   integrity sha512-kc6S2YS/2yXbtkSMunBtKdah4VFETZ8Oh6ONSmSd9bRxhqTrtARUCBUiWXH3xVPpvR7tz2CSnkuXVE42EcGnMw==
   dependencies:
     tslib "^2.0.3"
+
+swap-case@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/swap-case/-/swap-case-3.0.2.tgz#2eab9e818b0c69a48dc21d7d489c86509ca0f8b1"
+  integrity sha512-1tJUDXK5JZTVg04yDTMQnz1c9KFoTGQQo4QZuNbj5olv0ahyQK0R+OIU0KsbjmUhul+wg5iJFGfVRtilC5/GtQ==
 
 symbol-observable@^4.0.0:
   version "4.0.0"
