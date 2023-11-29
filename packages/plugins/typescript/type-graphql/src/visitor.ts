@@ -177,7 +177,7 @@ export class TypeGraphQLVisitor<
     const decoratorOptions: DecoratorOptions = {};
 
     if (node.description) {
-      // Add description as TypeGraphQL description instead of comment
+      // Add description as lib description instead of comment
       decoratorOptions.description = escapeString(node.description as unknown as string);
       (node as any).description = undefined;
     }
@@ -238,7 +238,7 @@ export class TypeGraphQLVisitor<
     } else {
       declarationBlock = this.getObjectTypeDeclarationBlock(node, originalNode);
 
-      // Add type-graphql ObjectType decorator
+      // Add lib ObjectType decorator
       const interfaces = originalNode.interfaces.map(i => this.convertName(i));
       if (interfaces.length > 1) {
         decoratorOptions.implements = `[${interfaces.join(', ')}]`;
@@ -266,7 +266,7 @@ export class TypeGraphQLVisitor<
 
     let declarationBlock = this.getInputObjectDeclarationBlock(node);
 
-    // Add type-graphql InputType decorator
+    // Add lib InputType decorator
     declarationBlock = declarationBlock.withDecorator(
       `@${this.libName}.${typeDecorator}(${formatDecoratorOptions(decoratorOptions)})`,
     );
@@ -296,7 +296,7 @@ export class TypeGraphQLVisitor<
 
     let declarationBlock = this.getArgumentsObjectDeclarationBlock(node, name, field);
 
-    // Add type-graphql Args decorator
+    // Add lib Args decorator
     declarationBlock = declarationBlock.withDecorator(`@${this.libName}.${typeDecorator}()`);
 
     return declarationBlock.string;
