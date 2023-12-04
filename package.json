@@ -16,8 +16,9 @@
     "ci:lint": "eslint --ext .ts . --output-file eslint_report.json --format json",
     "clean": "rimraf node_modules/",
     "generate:examples": "yarn generate:examples:cjs",
-    "generate:examples:cjs": "graphql-codegen --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
+    "generate:examples:cjs": "graphql-codegen --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env && graphql-codegen --require dotenv/config --config ./dev-test/sequential-codegen.ts dotenv_config_path=dev-test/.env",
     "generate:examples:esm": "graphql-codegen-esm --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
+    "justforme": "graphql-codegen --require dotenv/config --config ./dev-test/sequential-codegen.ts dotenv_config_path=dev-test/.env",
     "lint": "eslint --ext .ts .",
     "postinstall": "patch-package && husky install",
     "prebuild": "rimraf dist/ .bob/ tsconfig.tsbuildinfo",
@@ -26,6 +27,7 @@
     "prettier:check": "prettier --check .",
     "release": "changeset publish",
     "test": "jest --forceExit --no-watchman",
+    "testme": "jest --forceExit --no-watchman graceful-graphql-interfaces.spec.ts",
     "test-and-build": "yarn build && yarn test",
     "types:check": "tsc --noEmit",
     "watch-build": "npx tsc-watch --project tsconfig.json --onSuccess \"bob build\""

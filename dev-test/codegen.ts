@@ -139,6 +139,11 @@ const config: CodegenConfig = {
       plugins: ['typescript', 'typescript-react-apollo'],
       config: { withRefetchFn: true },
     },
+    './dev-test/star-wars/types.graceful-graphql-interfaces.tsx': {
+      schema: './dev-test/star-wars/schema.json',
+      documents: './dev-test/star-wars/**/*.graphql',
+      plugins: ['typescript', 'typescript-operations'],
+    },
     './dev-test/test-message/types.tsx': {
       schema: './dev-test/test-message/schema.graphql',
       documents: './dev-test/test-message/documents.ts',

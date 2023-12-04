@@ -43,6 +43,9 @@
       "@graphql-codegen/typescript-generic-sdk": [
         "packages/plugins/typescript/generic-sdk/src/index.ts"
       ],
+      "@graphql-codegen/typescript-graceful-graphql-interfaces": [
+        "packages/plugins/typescript/graceful-graphql-interfaces/src/index.ts"
+      ],
       "@graphql-codegen/typescript-graphql-files-modules": [
         "packages/plugins/typescript/graphql-files-modules/src/index.ts"
       ],
