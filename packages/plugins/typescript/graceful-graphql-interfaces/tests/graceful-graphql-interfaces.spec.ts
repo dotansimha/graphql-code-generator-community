@@ -55,9 +55,6 @@ describe('Graceful graphql interfaces', () => {
       )) as Types.PluginOutput,
     ]);
 
-    fs.writeFileSync(PATH + 'debug.tsx', '');
-    fs.appendFileSync(PATH + 'debug.tsx', content);
-
     expect(content).toBeDefined();
     expect(content).toContain(
       'const isEntityOfType = <T,>(entity: any, typename: string): entity is T => entity.__typename === typename;',
