@@ -88,7 +88,7 @@ describe('Graceful graphql interfaces', () => {
     expect(content).toContain('export const isCharacterOfHeroDetailsQueryDroid');
   });
 
-  xit('should not include type guards if configured', async () => {
+  it('should not include type guards if configured', async () => {
     const docs = [{ location: '', document: basicDoc }];
 
     const content = mergeOutputs([
