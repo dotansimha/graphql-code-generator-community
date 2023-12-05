@@ -40,7 +40,7 @@ export type ColorInput = {
 };
 
 /** An autonomous mechanical character in the Star Wars universe */
-type Droid = Character & {
+ type Droid = Character & {
     __typename?: 'Droid';
     /** The movies this droid appears in */
     appearsIn: Array<Maybe<Episode>>;
@@ -95,7 +95,7 @@ export type FriendsEdge = {
 };
 
 /** A humanoid creature from the Star Wars universe */
-type Human = Character & {
+ type Human = Character & {
     __typename?: 'Human';
     /** The movies this human appears in */
     appearsIn: Array<Maybe<Episode>>;
@@ -350,7 +350,7 @@ export type HeroParentTypeDependentFieldQueryVariables = Exact<{
 }>;
 
 export type HeroParentTypeDependentFieldQuery = {
-    __typename?: 'Query';__queryName: 'HeroParentTypeDependentFieldQuery',
+    __typename?: 'Query';
     hero?:
         | {
         __typename?: 'Droid';
@@ -378,7 +378,7 @@ export type HeroTypeDependentAliasedFieldQueryVariables = Exact<{
 }>;
 
 export type HeroTypeDependentAliasedFieldQuery = {
-    __typename?: 'Query';__queryName: 'HeroTypeDependentAliasedFieldQuery',
+    __typename?: 'Query';
     hero?:
         | { __typename?: 'Droid'; property?: string | null }
         | { __typename?: 'Human'; property?: string | null }
@@ -410,7 +410,8 @@ const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {
     if (isEntityOfType<T>(item, typename)) {
       return [...filteredEntities, item];
     }
-    return filteredEntities;}, []);
+    return filteredEntities;
+  }, []);
 };
 
 

@@ -41,9 +41,8 @@ type TypeSelection = {
 };
 
 // TODO: #1 write logic that selects the union or interface that is of highest ancestory
-// TODO: #5 check if the NonNullable logic covers all cases (probably not)
-// TODO: #4 maybe Omit<Type, __queryName> from the type that gets exposed outside?
-// TODO: #5 support fragments too!
+// TODO: #2 check if the NonNullable logic covers all cases (probably not)
+// TODO: #3 support fragments too!
 export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
   TypeGuardRawPluginConfig,
   TypeGuardPluginConfig
@@ -543,7 +542,8 @@ const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {
     if (isEntityOfType<T>(item, typename)) {
       return [...filteredEntities, item];
     }
-    return filteredEntities;}, []);
+    return filteredEntities;
+  }, []);
 };
 `,
     ];
