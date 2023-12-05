@@ -403,28 +403,46 @@ export type TwoHeroesQuery = {
 };
 
 
-        const isEntityOfType = <T,>(entity: any, typename: string): entity is T => entity.__typename === typename;
+const isEntityOfType = <T,>(entity: any, typename: string): entity is T => entity.__typename === typename;
 
-        const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {
-          return entities.reduce<T[]>((filteredEntities, item) => {
-              if (isEntityOfType<T>(item, typename)) {
-                return [...filteredEntities, item];
-              }
-              return filteredEntities;}, []);
-          };
-    
-
-
-      export type CharacterType = Character & { __typename?: string };
+const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {
+  return entities.reduce<T[]>((filteredEntities, item) => {
+    if (isEntityOfType<T>(item, typename)) {
+      return [...filteredEntities, item];
+    }
+    return filteredEntities;}, []);
+};
 
 
-      
-      type HeroStateTemplate<QueryType, TypeName> = QueryType extends {
-              hero: (infer CharacterType)[];
-          }
-          ? Extract<CharacterType, { __typename: TypeName }>
-          : never;
+export type CharacterType = Character & { __typename?: string };
 
+
+type HeroStateTemplate<QueryType, TypeName> = QueryType extends {
+  hero: (infer CharacterType)[];
+}
+  ? Extract<CharacterType, { __typename: TypeName }>
+  : never;
+
+
+type CharacterStateTemplate<QueryType, TypeName> = QueryType extends {
+  character: (infer CharacterType)[];
+}
+  ? Extract<CharacterType, { __typename: TypeName }>
+  : never;
+
+
+type FriendsStateTemplate<QueryType, TypeName> = QueryType extends {
+  friends: (infer CharacterType)[];
+}
+  ? Extract<CharacterType, { __typename: TypeName }>
+  : never;
+
+
+type NodeStateTemplate<QueryType, TypeName> = QueryType extends {
+  node: (infer CharacterType)[];
+}
+  ? Extract<CharacterType, { __typename: TypeName }>
+  : never;
 
 
 export type HumanOfHeroDetailsQuery = HeroStateTemplate<HeroDetailsQuery, 'Human'>;
@@ -432,24 +450,28 @@ export type HumanOfHeroDetailsQuery = HeroStateTemplate<HeroDetailsQuery, 'Human
        
 export type DroidOfHeroDetailsQuery = HeroStateTemplate<HeroDetailsQuery, 'Droid'>;
 
-       export type HeroOfHeroDetailsQuery = HeroDetailsQuery['hero'];
+       
+export type HeroOfHeroDetailsQuery = HeroDetailsQuery['hero'];
     
-    export const isCharacterOfHeroDetailsQueryHuman = (entity: HeroOfHeroDetailsQuery):
-                entity is HumanOfHeroDetailsQuery => isEntityOfType<HumanOfHeroDetailsQuery>(entity, 'Human');
+    
+export const isCharacterOfHeroDetailsQueryHuman = (
+  entity: HeroOfHeroDetailsQuery
+): entity is HumanOfHeroDetailsQuery => 
+  isEntityOfType<HumanOfHeroDetailsQuery>(entity, 'Human');
 
-          
-export const isCharacterOfHeroDetailsQueryDroid = (entity: HeroOfHeroDetailsQuery):
-                entity is DroidOfHeroDetailsQuery => isEntityOfType<DroidOfHeroDetailsQuery>(entity, 'Droid');
 
-          export const getHumanOfHeroDetailsQueryOfCharacters = (characters?: HeroOfHeroDetailsQuery[]): HumanOfHeroDetailsQuery[] => {
-                if (!characters) return [];
-                return getEntitiesByType<HumanOfHeroDetailsQuery>(characters, 'Human');
-          };
+export const isCharacterOfHeroDetailsQueryDroid = (
+  entity: HeroOfHeroDetailsQuery
+): entity is DroidOfHeroDetailsQuery => 
+  isEntityOfType<DroidOfHeroDetailsQuery>(entity, 'Droid');
 
-          
+export const getHumanOfHeroDetailsQueryOfCharacters = (characters?: HeroOfHeroDetailsQuery[]): HumanOfHeroDetailsQuery[] => {
+  if (!characters) return [];
+  return getEntitiesByType<HumanOfHeroDetailsQuery>(characters, 'Human');
+};
+
+
 export const getDroidOfHeroDetailsQueryOfCharacters = (characters?: HeroOfHeroDetailsQuery[]): DroidOfHeroDetailsQuery[] => {
-                if (!characters) return [];
-                return getEntitiesByType<DroidOfHeroDetailsQuery>(characters, 'Droid');
-          };
-
-          
+  if (!characters) return [];
+  return getEntitiesByType<DroidOfHeroDetailsQuery>(characters, 'Droid');
+};

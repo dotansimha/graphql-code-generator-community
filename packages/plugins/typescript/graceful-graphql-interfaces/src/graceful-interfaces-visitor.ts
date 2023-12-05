@@ -151,7 +151,6 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
       return false;
     });
 
-
     if (!typeAlias) throw Error(`Could not find type alias ${typeName}`);
     return typeAlias;
   }
@@ -170,10 +169,11 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
   }
 
   private modifyTypeInFile(typeName: string, configuredInterface: string): void {
-    if (!this.config.withQueryNameDiscriminator) return;
     try {
       const project = new Project();
       this.sourceFile = project.addSourceFileAtPath(this._outputFilePath);
+
+      if (!this.config.withQueryNameDiscriminator) return;
 
       const typeNode = this.getTypeNode(typeName);
 
@@ -266,8 +266,7 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
 
   private generateTemplateType(configuredInterface: string): string {
     return `
-
-      export type ${configuredInterface}Type = ${configuredInterface} & { __typename?: string };
+export type ${configuredInterface}Type = ${configuredInterface} & { __typename?: string };
 `;
   }
 
@@ -275,13 +274,11 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
     const lowerCaseQueriedType = queriedType.charAt(0).toLowerCase() + queriedType.slice(1);
 
     return `
-      
-      type ${queriedType}StateTemplate<QueryType, TypeName> = QueryType extends {
-              ${lowerCaseQueriedType}: (infer ${configuredInterface}Type)[];
-          }
-          ? Extract<${configuredInterface}Type, { __typename: TypeName }>
-          : never;
-
+type ${queriedType}StateTemplate<QueryType, TypeName> = QueryType extends {
+  ${lowerCaseQueriedType}: (infer ${configuredInterface}Type)[];
+}
+  ? Extract<${configuredInterface}Type, { __typename: TypeName }>
+  : never;
 `;
   }
 
@@ -357,12 +354,13 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
 
     for (const type of queriedTypes) {
       const templateType = `${type}Of${queryName}`;
-      const helperFunction = `export const get${type}Of${queryName}Of${interfaceName}s = (${lowerCaseInterface}?: ${inputType}[]): ${templateType}[] => {
-                if (!${lowerCaseInterface}) return [];
-                return getEntitiesByType<${templateType}>(${lowerCaseInterface}, '${type}');
-          };
-
-          `;
+      const helperFunction =
+`
+export const get${type}Of${queryName}Of${interfaceName}s = (${lowerCaseInterface}?: ${inputType}[]): ${templateType}[] => {
+  if (!${lowerCaseInterface}) return [];
+  return getEntitiesByType<${templateType}>(${lowerCaseInterface}, '${type}');
+};
+`;
       result.push(helperFunction);
     }
     return result;
@@ -379,10 +377,13 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
 
     for (const type of queriedTypes) {
       const templateType = `${type}Of${queryName}`;
-      const typeGuard = `export const is${interfaceName}Of${queryName}${type} = (entity: ${inputType}):
-                entity is ${templateType} => isEntityOfType<${templateType}>(entity, '${type}');
-
-          `;
+      const typeGuard =
+`
+export const is${interfaceName}Of${queryName}${type} = (
+  entity: ${inputType}
+): entity is ${templateType} => 
+  isEntityOfType<${templateType}>(entity, '${type}');
+`;
       result.push(typeGuard);
     }
     return result;
@@ -445,7 +446,6 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
         if (isNullable) {
           nullableTypeName = `NonNullableTypeOf${queryName}`;
           typeWithOptionals = `
-            
             type ${nullableTypeName} = NonNullable<${queryName}['${parentName}']>;`;
           // If we have found and populated the optionalType we need to skip selecting the following node
           continue;
@@ -536,16 +536,16 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
   public buildTemplates(): string {
     const templates: string[] = [
       `
-        const isEntityOfType = <T,>(entity: any, typename: string): entity is T => entity.__typename === typename;
+const isEntityOfType = <T,>(entity: any, typename: string): entity is T => entity.__typename === typename;
 
-        const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {
-          return entities.reduce<T[]>((filteredEntities, item) => {
-              if (isEntityOfType<T>(item, typename)) {
-                return [...filteredEntities, item];
-              }
-              return filteredEntities;}, []);
-          };
-    `,
+const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {
+  return entities.reduce<T[]>((filteredEntities, item) => {
+    if (isEntityOfType<T>(item, typename)) {
+      return [...filteredEntities, item];
+    }
+    return filteredEntities;}, []);
+};
+`,
     ];
 
     for (const configuredInterface of this.config.forEntities) {
@@ -617,7 +617,8 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
               parentType.typeName,
             ).join('\n');
 
-            result.push(`${templateTypes}${parentType.fullType}${typeGuards}${helperFunctions}`);
+            result.push(`${templateTypes}
+${parentType.fullType}${typeGuards}${helperFunctions}`);
           } catch (e) {
             console.error(e);
             throw e;
