@@ -41,8 +41,8 @@
     "@graphql-codegen/plugin-helpers": "5.0.0",
     "@graphql-codegen/schema-ast": "^4.0.0",
     "@graphql-codegen/visitor-plugin-common": "4.0.1",
-    "ts-morph": "^19.0.0",
-    "lodash": "4.17.21"
+    "lodash": "4.17.21",
+    "ts-morph": "^19.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/import-types-preset": "2.2.6",

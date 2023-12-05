@@ -50,7 +50,11 @@ export const plugin: PluginFunction = (
   }
 
   return {
-    content: [visitor.getSourceFile(), visitor.buildTemplates(), visitor.getSourceFile().includes(parsedResult) ? '' : parsedResult].join('\n'),
+    content: [
+      visitor.getSourceFile(),
+      visitor.buildTemplates(),
+      visitor.getSourceFile().includes(parsedResult) ? '' : parsedResult,
+    ].join('\n'),
   };
 };
 

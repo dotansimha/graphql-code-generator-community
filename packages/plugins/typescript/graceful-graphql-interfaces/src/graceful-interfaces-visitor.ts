@@ -1,7 +1,12 @@
-import {introspectionFromSchema, Kind, TokenKind} from 'graphql/index';
-import {OperationDefinitionNode, OperationTypeNode, SelectionNode, Token,} from 'graphql/language/ast';
-import {GraphQLSchema} from 'graphql/type';
-import {uniq} from 'lodash';
+import { introspectionFromSchema, Kind, TokenKind } from 'graphql/index';
+import {
+  OperationDefinitionNode,
+  OperationTypeNode,
+  SelectionNode,
+  Token,
+} from 'graphql/language/ast';
+import { GraphQLSchema } from 'graphql/type';
+import { uniq } from 'lodash';
 import {
   ArrayTypeNode,
   Node,
@@ -12,15 +17,15 @@ import {
   TypeReferenceNode,
   UnionTypeNode,
 } from 'ts-morph';
-import {ModifierFlags} from 'typescript';
-import {Types} from '@graphql-codegen/plugin-helpers';
+import { ModifierFlags } from 'typescript';
+import { Types } from '@graphql-codegen/plugin-helpers';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
   getConfigValue,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
-import {TypeGuardRawPluginConfig} from './config';
+import { TypeGuardRawPluginConfig } from './config';
 
 export interface TypeGuardPluginConfig extends ClientSideBasePluginConfig {
   forEntities: string[];
@@ -86,9 +91,11 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
     const lowercaseInterface =
       configuredInterface.charAt(0).toLowerCase() + configuredInterface.slice(1);
     const properties = node.getDescendantsOfKind(SyntaxKind.PropertySignature);
-    const queryNameProperty = properties.find(prop => prop.getNameNode().getText() === '__queryName');
+    const queryNameProperty = properties.find(
+      prop => prop.getNameNode().getText() === '__queryName',
+    );
     if (queryNameProperty) {
-        return;
+      return;
     }
     const typenameProperty = properties.find(prop => prop.getNameNode().getText() === '__typename');
     if (typenameProperty) {
@@ -229,7 +236,9 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
       for (const propertyName of propertyNames) {
         const entry: { [key: string]: string } = {};
         entry[configuredInterface] = propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
-        const isDuplicate = result.some(obj => obj[configuredInterface] === entry[configuredInterface]);
+        const isDuplicate = result.some(
+          obj => obj[configuredInterface] === entry[configuredInterface],
+        );
         if (isDuplicate) continue;
         result.push(entry);
       }
@@ -353,8 +362,7 @@ type ${queriedType}StateTemplate<QueryType, TypeName> = QueryType extends {
 
     for (const type of queriedTypes) {
       const templateType = `${type}Of${queryName}`;
-      const helperFunction =
-`
+      const helperFunction = `
 export const get${type}Of${queryName}Of${interfaceName}s = (${lowerCaseInterface}?: ${inputType}[]): ${templateType}[] => {
   if (!${lowerCaseInterface}) return [];
   return getEntitiesByType<${templateType}>(${lowerCaseInterface}, '${type}');
@@ -376,8 +384,7 @@ export const get${type}Of${queryName}Of${interfaceName}s = (${lowerCaseInterface
 
     for (const type of queriedTypes) {
       const templateType = `${type}Of${queryName}`;
-      const typeGuard =
-`
+      const typeGuard = `
 export const is${interfaceName}Of${queryName}${type} = (
   entity: ${inputType}
 ): entity is ${templateType} => 

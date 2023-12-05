@@ -27,8 +27,8 @@
     "prettier:check": "prettier --check .",
     "release": "changeset publish",
     "test": "jest --forceExit --no-watchman",
-    "testme": "jest --forceExit --no-watchman graceful-graphql-interfaces.spec.ts",
     "test-and-build": "yarn build && yarn test",
+    "testme": "jest --forceExit --no-watchman graceful-graphql-interfaces.spec.ts",
     "types:check": "tsc --noEmit",
     "watch-build": "npx tsc-watch --project tsconfig.json --onSuccess \"bob build\""
   },

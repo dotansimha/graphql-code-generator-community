@@ -40,7 +40,7 @@ export type ColorInput = {
 };
 
 /** An autonomous mechanical character in the Star Wars universe */
- type Droid = Character & {
+type Droid = Character & {
   __typename?: 'Droid';
   /** The movies this droid appears in */
   appearsIn: Array<Maybe<Episode>>;
@@ -95,7 +95,7 @@ export type FriendsEdge = {
 };
 
 /** A humanoid creature from the Star Wars universe */
- type Human = Character & {
+type Human = Character & {
   __typename?: 'Human';
   /** The movies this human appears in */
   appearsIn: Array<Maybe<Episode>>;
@@ -287,7 +287,8 @@ export type HeroDetailsQueryVariables = Exact<{
 }>;
 
 export type HeroDetailsQuery = {
-  __typename?: 'Query';__queryName: 'HeroDetailsQuery',
+  __typename?: 'Query';
+  __queryName: 'HeroDetailsQuery';
   hero?:
     | { __typename?: 'Droid'; primaryFunction?: string | null; name: string }
     | { __typename?: 'Human'; height?: number | null; name: string }
@@ -350,7 +351,8 @@ export type HeroParentTypeDependentFieldQueryVariables = Exact<{
 }>;
 
 export type HeroParentTypeDependentFieldQuery = {
-  __typename?: 'Query';__queryName: 'HeroParentTypeDependentFieldQuery',
+  __typename?: 'Query';
+  __queryName: 'HeroParentTypeDependentFieldQuery';
   hero?:
     | {
         __typename?: 'Droid';
@@ -378,7 +380,8 @@ export type HeroTypeDependentAliasedFieldQueryVariables = Exact<{
 }>;
 
 export type HeroTypeDependentAliasedFieldQuery = {
-  __typename?: 'Query';__queryName: 'HeroTypeDependentAliasedFieldQuery',
+  __typename?: 'Query';
+  __queryName: 'HeroTypeDependentAliasedFieldQuery';
   hero?:
     | { __typename?: 'Droid'; property?: string | null }
     | { __typename?: 'Human'; property?: string | null }

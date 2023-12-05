@@ -1,16 +1,16 @@
 # This file was generated. Do not edit manually.
 
 schema {
-    query: Query
+  query: Query
 }
 
 type Query {
-    allUsers: [User]!
-    userById(id: Int!): User
+  allUsers: [User]!
+  userById(id: Int!): User
 }
 
 type User {
-    email: String!
-    id: Int!
-    name: String!
+  email: String!
+  id: Int!
+  name: String!
 }
