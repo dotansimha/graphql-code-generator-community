@@ -294,6 +294,14 @@ export type HeroDetailsQuery = {
     | null;
 };
 
+export type SearchDetailQuery = {
+  __typename?: 'Query';
+  search?:
+    | { __typename?: 'Droid'; primaryFunction?: string | null; name: string }
+    | { __typename?: 'Human'; height?: number | null; name: string }
+    | null;
+};
+
 type HeroDetails_Droid_Fragment = {
   __typename?: 'Droid';
   primaryFunction?: string | null;

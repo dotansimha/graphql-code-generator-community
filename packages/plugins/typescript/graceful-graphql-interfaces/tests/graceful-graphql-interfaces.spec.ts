@@ -1,9 +1,22 @@
 import * as fs from 'fs';
-import { buildClientSchema, parse } from 'graphql/index';
+import { readFileSync } from 'fs';
+import { buildASTSchema, DocumentNode } from 'graphql';
+import { parse } from 'graphql/index';
 import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { plugin } from '../src/index';
 
 const PATH = 'packages/plugins/typescript/graceful-graphql-interfaces/tests/';
+const SCHEMA_PATH = 'dev-test/graceful-interfaces/schema.graphql';
+
+const convertGraphQLToAST = (filepath: string): DocumentNode => {
+  try {
+    const graphqlContent = readFileSync(filepath, 'utf8');
+    return parse(graphqlContent);
+  } catch (error) {
+    console.error('Error during conversion:', error);
+  }
+  throw new Error('Error during conversion');
+};
 
 describe('Graceful graphql interfaces', () => {
   let spyConsoleError: jest.SpyInstance;
@@ -37,9 +50,7 @@ describe('Graceful graphql interfaces', () => {
     spyConsoleError.mockRestore();
   });
 
-  const schema = buildClientSchema(
-    require('../../../../../dev-test/graceful-interfaces/schema.json'),
-  );
+  const schema = buildASTSchema(convertGraphQLToAST(SCHEMA_PATH));
 
   it('should include all templates', async () => {
     const docs = [{ location: '', document: basicDoc }];
@@ -230,8 +241,49 @@ describe('Graceful graphql interfaces', () => {
         },
       )) as Types.PluginOutput,
     ]);
-
     expect(content).not.toContain("__queryName: 'HeroDetailsQuery',");
+  });
+
+  it('should work for union types as well', async () => {
+    const searchDoc = parse(/* GraphQL */ `
+      query SearchDetail($episode: Episode) {
+        search {
+          ... on Human {
+            height
+          }
+          ... on Droid {
+            primaryFunction
+          }
+        }
+      }
+    `);
+    const docs = [{ location: '', document: searchDoc }];
+
+    const content = mergeOutputs([
+      (await plugin(
+        schema,
+        docs,
+        { forEntities: ['SearchResult'] },
+        {
+          outputFile: PATH + 'output.tsx',
+        },
+      )) as Types.PluginOutput,
+    ]);
+
+    expect(content).toBeDefined();
+    expect(content).toContain(
+      'const isEntityOfType = <T,>(entity: any, typename: string): entity is T => entity.__typename === typename;',
+    );
+    expect(content).toContain('return entities.reduce<T[]>((filteredEntities, item) => {\n');
+    expect(content).toContain(
+      'const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {',
+    );
+    expect(content).toContain(
+      'export type SearchResultType = SearchResult & { __typename?: string };',
+    );
+    expect(content).toContain(
+      'type SearchStateTemplate<QueryType, TypeName> = QueryType extends {',
+    );
   });
 
   // TODO: add tests for typeDepth config

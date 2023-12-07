@@ -56,6 +56,10 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
   protected sourceFile: SourceFile;
   private modifications: { position: number; text: string }[] = [];
   private _outputFilePath: string;
+  private isNullable: boolean;
+  private isArrayType: boolean;
+  private __typenameIsOptional: boolean;
+  private queryIsOptional: boolean;
 
   constructor(
     schema: GraphQLSchema,
@@ -175,19 +179,15 @@ export class GracefulInterfacesVisitor extends ClientSideBaseVisitor<
   }
 
   private modifyTypeInFile(typeName: string, configuredInterface: string): void {
-    try {
-      const project = new Project();
-      this.sourceFile = project.addSourceFileAtPath(this._outputFilePath);
+    const project = new Project();
+    this.sourceFile = project.addSourceFileAtPath(this._outputFilePath);
 
-      if (!this.config.withQueryNameDiscriminator) return;
+    if (!this.config.withQueryNameDiscriminator) return;
 
-      const typeNode = this.getTypeNode(typeName);
+    const typeNode = this.getTypeNode(typeName);
 
-      this.addQueryNameProperty(typeNode, typeName, configuredInterface);
-      this.applyModifications();
-    } catch (e) {
-      console.log(e);
-    }
+    this.addQueryNameProperty(typeNode, typeName, configuredInterface);
+    this.applyModifications();
   }
 
   private removeExportModifiersFromFile(typeNames: string[]): void {
@@ -283,9 +283,15 @@ export type ${configuredInterface}Type = ${configuredInterface} & { __typename?:
 
     return `
 type ${queriedType}StateTemplate<QueryType, TypeName> = QueryType extends {
-  ${lowerCaseQueriedType}: (infer ${configuredInterface}Type)[];
+  ${lowerCaseQueriedType}${this.queryIsOptional ? '?' : ''}: ${
+      this.isArrayType
+        ? `(infer ${configuredInterface}Type)[]`
+        : `infer ${configuredInterface}Type | null`
+    };
 }
-  ? Extract<${configuredInterface}Type, { __typename: TypeName }>
+  ? Extract<${configuredInterface}Type, { __typename${
+      this.__typenameIsOptional ? '?' : ''
+    }: TypeName }>
   : never;
 `;
   }
@@ -437,27 +443,54 @@ export const is${interfaceName}Of${queryName}${type} = (
     const typeNode = this.getTypeNode(queryName);
     for (const parentName of parentNames) {
       let isArrayType = false;
-      let isNullable = false;
       const parentType = this.findTypeByTypeName(typeNode, parentName);
-      if (!parentType) throw Error(`Could not find type for ${parentName}`);
-      if (parentType.getKind() === SyntaxKind.TypeReference) {
-        const typeRef = parentType as TypeReferenceNode;
-        if (typeRef.getTypeName().getText() === 'Array') {
-          isArrayType = true;
+      if (parentType) {
+        if (parentType.getKind() === SyntaxKind.TypeReference) {
+          const typeRef = parentType as TypeReferenceNode;
+          if (typeRef.getTypeName().getText() === 'Array') {
+            this.isArrayType = true;
+            isArrayType = true;
+          }
         }
-      }
-      if (parentType.getKind() === SyntaxKind.UnionType) {
-        const unionTypes = (parentType as UnionTypeNode).getTypeNodes();
-        isNullable = unionTypes.some(type => type.getKind() === SyntaxKind.UndefinedKeyword);
-        if (isNullable) {
-          nullableTypeName = `NonNullableTypeOf${queryName}`;
-          typeWithOptionals = `
+        if (parentType.getKind() === SyntaxKind.UnionType) {
+          const unionTypes = (parentType as UnionTypeNode).getTypeNodes();
+          for (const unionType of unionTypes) {
+            const type = unionType.getType();
+
+            parentType
+              .getParent()
+              .forEachChildAsArray()
+              .find(child => {
+                if (child.getKind() === SyntaxKind.Identifier) {
+                  const nextSibling = child.getNextSibling().getText();
+
+                  if (nextSibling === '?') {
+                    this.queryIsOptional = true;
+                  }
+                }
+              });
+
+            const properties = type.getProperties();
+            properties.forEach(property => {
+              if (property.getName() === '__typename') {
+                this.__typenameIsOptional = property.getDeclarations().some(declaration => {
+                  return declaration.getKind() === SyntaxKind.PropertySignature;
+                });
+              }
+            });
+          }
+          // TODO: find way to check if selected field is optional. maybe from typedefs?
+          this.isNullable = unionTypes.some(type => type.getKind() === SyntaxKind.UndefinedKeyword);
+          if (this.isNullable) {
+            nullableTypeName = `NonNullableTypeOf${queryName}`;
+            typeWithOptionals = `
             type ${nullableTypeName} = NonNullable<${queryName}['${parentName}']>;`;
-          // If we have found and populated the optionalType we need to skip selecting the following node
-          continue;
+            // If we have found and populated the optionalType we need to skip selecting the following node
+            continue;
+          }
         }
+        typeWithNoOptionals += `['${parentName}']${isArrayType ? '[number]' : ''}`;
       }
-      typeWithNoOptionals += `['${parentName}']${isArrayType ? '[number]' : ''}`;
     }
     return {
       parentNames: typeWithNoOptionals,
@@ -627,8 +660,7 @@ const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {
             result.push(`${templateTypes}
 ${parentType.fullType}${typeGuards}${helperFunctions}`);
           } catch (e) {
-            console.error(e);
-            throw e;
+            throw new Error(e);
           }
         }
       }
