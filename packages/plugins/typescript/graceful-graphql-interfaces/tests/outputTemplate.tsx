@@ -162,6 +162,7 @@ export type Query = {
   character?: Maybe<Character>;
   droid?: Maybe<Droid>;
   hero?: Maybe<Character>;
+  heroes?: Maybe<Array<Maybe<Character>>>;
   human?: Maybe<Human>;
   reviews?: Maybe<Array<Maybe<Review>>>;
   search?: Maybe<Array<Maybe<SearchResult>>>;
@@ -190,6 +191,11 @@ export type QueryHumanArgs = {
 
 /** The query type, represents all of the entry points into our object graph */
 export type QueryReviewsArgs = {
+  episode: Episode;
+};
+
+/** The query type, represents all of the entry points into our object graph */
+export type QueryHeroesArgs = {
   episode: Episode;
 };
 
@@ -322,6 +328,15 @@ export type HeroDetailsWithFragmentQuery = {
     | { __typename?: 'Droid'; primaryFunction?: string | null; name: string }
     | { __typename?: 'Human'; height?: number | null; name: string }
     | null;
+};
+
+export type HeroesQuery = {
+  __typename?: 'Query';
+  heroes?: Array<
+    | { __typename?: 'Droid'; primaryFunction?: string | null; name: string }
+    | { __typename?: 'Human'; height?: number | null; name: string }
+    | null
+  > | null;
 };
 
 export type HeroNameQueryVariables = Exact<{

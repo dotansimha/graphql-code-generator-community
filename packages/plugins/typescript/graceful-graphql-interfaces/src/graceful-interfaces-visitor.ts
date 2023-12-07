@@ -462,6 +462,9 @@ export const is${interfaceName}Of${queryName}${type} = (
           }
         }
         if (parentType.getKind() === SyntaxKind.UnionType) {
+          if (parentType.getText().startsWith('Array<')) {
+            this.isArrayType = true;
+          }
           const unionTypes = (parentType as UnionTypeNode).getTypeNodes();
           for (const unionType of unionTypes) {
             const type = unionType.getType();

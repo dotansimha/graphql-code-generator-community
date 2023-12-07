@@ -182,10 +182,10 @@ describe('Graceful graphql interfaces', () => {
     ]);
 
     expect(content).toContain(
-      'export const getHumanOfHeroDetailsQueryOfCharacters = (characters?: HeroOfHeroDetailsQuery[]): HumanOfHeroDetailsQuery[] => {',
+      'export const getHumanOfHeroDetailsQueryOfCharacter = (character?: HeroOfHeroDetailsQuery): HumanOfHeroDetailsQuery | null => {',
     );
     expect(content).toContain(
-      'export const getDroidOfHeroDetailsQueryOfCharacters = (characters?: HeroOfHeroDetailsQuery[]): DroidOfHeroDetailsQuery[] => {',
+      'export const getDroidOfHeroDetailsQueryOfCharacter = (character?: HeroOfHeroDetailsQuery): DroidOfHeroDetailsQuery | null => {',
     );
   });
 
@@ -204,10 +204,10 @@ describe('Graceful graphql interfaces', () => {
     ]);
 
     expect(content).not.toContain(
-      'export const getHumanOfHeroDetailsQueryOfCharacters = (characters?: HeroOfHeroDetailsQuery[]): HumanOfHeroDetailsQuery[] => {',
+      'export const getHumanOfHeroDetailsQueryOfCharacter = (character?: HeroOfHeroDetailsQuery): HumanOfHeroDetailsQuery | null  => {',
     );
     expect(content).not.toContain(
-      'export const getDroidOfHeroDetailsQueryOfCharacters = (characters?: HeroOfHeroDetailsQuery[]): DroidOfHeroDetailsQuery[] => {',
+      'export const getDroidOfHeroDetailsQueryOfCharacter = (character?: HeroOfHeroDetailsQuery): DroidOfHeroDetailsQuery | null  => {',
     );
   });
 
@@ -283,6 +283,41 @@ describe('Graceful graphql interfaces', () => {
     );
     expect(content).toContain(
       'type SearchStateTemplate<QueryType, TypeName> = QueryType extends {',
+    );
+  });
+
+  it('should support array queries', async () => {
+    const searchDoc = parse(/* GraphQL */ `
+      query Heroes($episode: Episode) {
+        heroes(episode: $episode) {
+          ... on Human {
+            height
+          }
+          ... on Droid {
+            primaryFunction
+          }
+        }
+      }
+    `);
+    const docs = [{ location: '', document: searchDoc }];
+
+    const content = mergeOutputs([
+      (await plugin(
+        schema,
+        docs,
+        { forEntities: ['Character'] },
+        {
+          outputFile: PATH + 'output.tsx',
+        },
+      )) as Types.PluginOutput,
+    ]);
+
+    expect(content).toBeDefined();
+    expect(content).toContain(
+      'export const getHumanOfHeroesQueryOfCharacters = (characters?: HeroeOfHeroesQuery[]): HumanOfHeroesQuery[] => {',
+    );
+    expect(content).toContain(
+      'export const getDroidOfHeroesQueryOfCharacters = (characters?: HeroeOfHeroesQuery[]): DroidOfHeroesQuery[] => {',
     );
   });
 

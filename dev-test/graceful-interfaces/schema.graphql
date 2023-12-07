@@ -94,6 +94,7 @@ type Query {
   character(id: ID!): Character
   droid(id: ID!): Droid
   hero(episode: Episode): Character
+  heroes(episode: Episode): [Character]
   human(id: ID!): Human
   reviews(episode: Episode!): [Review]
   search(text: String): [SearchResult]
