@@ -364,14 +364,23 @@ type ${queriedType}StateTemplate<QueryType, TypeName> = QueryType extends {
   ): string[] {
     if (!this.config.withHelperFunctions) return [];
     const result: string[] = [];
-    const lowerCaseInterface = interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1) + 's';
+    const lowerCaseInterface = `${interfaceName.charAt(0).toLowerCase()}${interfaceName.slice(1)}${
+      this.isArrayType ? 's' : ''
+    }`;
 
     for (const type of queriedTypes) {
       const templateType = `${type}Of${queryName}`;
-      const helperFunction = `
+      const helperFunction = this.isArrayType
+        ? `
 export const get${type}Of${queryName}Of${interfaceName}s = (${lowerCaseInterface}?: ${inputType}[]): ${templateType}[] => {
   if (!${lowerCaseInterface}) return [];
   return getEntitiesByType<${templateType}>(${lowerCaseInterface}, '${type}');
+};
+`
+        : `
+export const get${type}Of${queryName}Of${interfaceName} = (${lowerCaseInterface}?: ${inputType}): ${templateType} | null => {
+  if (!${lowerCaseInterface}) return null;
+  return getEntityByType<${templateType}>(${lowerCaseInterface}, '${type}');
 };
 `;
       result.push(helperFunction);
@@ -585,6 +594,13 @@ const getEntitiesByType = <T,>(entities: any[], typename: string): T[] => {
     return filteredEntities;
   }, []);
 };
+
+const getEntityByType = <T,>(entity: any, typename: string): T | null => {
+    if (isEntityOfType<T>(entity, typename)) {
+        return entity as T;
+    }
+    return null;
+}
 `,
     ];
 
