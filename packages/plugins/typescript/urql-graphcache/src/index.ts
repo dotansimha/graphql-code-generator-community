@@ -327,7 +327,9 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
         `${typeUpdateResolvers.join(',\n')}` +
         ',\n};',
 
-      'export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {\n' +
+      `export type GraphCacheConfig = Parameters<typeof ${
+        config.offlineExchange ? 'offlineExchange' : 'cacheExchange'
+      }>[0] & {\n` +
         '  updates?: GraphCacheUpdaters,\n' +
         '  keys?: GraphCacheKeysConfig,\n' +
         '  optimistic?: GraphCacheOptimisticUpdaters,\n' +
