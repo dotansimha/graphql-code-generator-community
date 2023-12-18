@@ -1,5 +1,16 @@
 # @graphql-codegen/typescript-rtk-query
 
+## 3.1.1
+
+### Patch Changes
+
+- [#530](https://github.com/dotansimha/graphql-code-generator-community/pull/530)
+  [`3c50226`](https://github.com/dotansimha/graphql-code-generator-community/commit/3c50226beade86d50c2b8c37855b0e54f51d026f)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+  - Updated dependency
+    [`@reduxjs/toolkit@^1.6.0 || ^2.0.0` ↗︎](https://www.npmjs.com/package/@reduxjs/toolkit/v/1.6.0)
+    (from `^1.6.0`, in `peerDependencies`)
+
 ## 3.1.0
 
 ### Minor Changes

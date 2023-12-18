@@ -1,5 +1,20 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 6.1.0
+
+### Minor Changes
+
+- [#512](https://github.com/dotansimha/graphql-code-generator-community/pull/512)
+  [`34cdb37`](https://github.com/dotansimha/graphql-code-generator-community/commit/34cdb37247fdf8002176b0e63e8c5bce32f02f24)
+  Thanks [@axe-me](https://github.com/axe-me)! - pass variables to wrapper function
+
+### Patch Changes
+
+- [#517](https://github.com/dotansimha/graphql-code-generator-community/pull/517)
+  [`bcd2324`](https://github.com/dotansimha/graphql-code-generator-community/commit/bcd232493d205d21b57e98b8ce83e74b081ad13f)
+  Thanks [@benjie](https://github.com/benjie)! - Add `.mts` and `.cts` as allowable extensions to
+  graphql-request
+
 ## 6.0.1
 
 ### Patch Changes
