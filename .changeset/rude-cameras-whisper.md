@@ -1,5 +1,5 @@
 ---
-"@graphql-codegen/typescript-graphql-request": patch
+"@graphql-codegen/typescript-graphql-request": minor
 ---
 
 pass variables to wrapper function
