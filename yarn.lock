@@ -2378,15 +2378,15 @@
     tiny-glob "^0.2.9"
     tslib "^2.4.0"
 
-"@reduxjs/toolkit@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.0.0.tgz#30ada2052693c23118331bb2d9495666ffb9a468"
-  integrity sha512-Kq/a+aO28adYdPoNEu9p800MYPKoUc0tlkYfv035Ief9J7MPq8JvmT7UdpYhvXsoMtOdt567KwZjc9H3Rf8yjg==
+"@reduxjs/toolkit@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.0.1.tgz#0a5233c1e35c1941b03aece39cceade3467a1062"
+  integrity sha512-fxIjrR9934cmS8YXIGd9e7s1XRsEU++aFc9DVNMFMRTM5Vtsg2DCRMj21eslGtDt43IUf9bJL3h5bwUlZleibA==
   dependencies:
     immer "^10.0.3"
     redux "^5.0.0"
-    redux-thunk "^3.0.1"
-    reselect "^5.0.0"
+    redux-thunk "^3.1.0"
+    reselect "^5.0.1"
 
 "@rtk-query/graphql-request-base-query@2.2.0":
   version "2.2.0"
@@ -6894,10 +6894,10 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redux-thunk@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-3.0.1.tgz#1022e8c21f1f9ecead282fc59b415f7dab82a1c9"
-  integrity sha512-otjYlnsVhrubBi0OPGpmVVaIRAeF1j3TprEzU+iIPMN2aAnA8S+nMRbGPBmSAfwLXy1j5iUj2Z5wC+BaLMmFBw==
+redux-thunk@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-3.1.0.tgz#94aa6e04977c30e14e892eae84978c1af6058ff3"
+  integrity sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==
 
 redux@^5.0.0:
   version "5.0.0"
@@ -6995,10 +6995,10 @@ require-main-filename@^2.0.0:
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
   integrity sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==
 
-reselect@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/reselect/-/reselect-5.0.0.tgz#36344481f36b5852de3a862c51e2152c9c67b2d2"
-  integrity sha512-8YRuy8VJoLZ2+qtfVylxMLQOpx7uPH9KPtgPNoSKFeYMmiKKrvRX7Z/E3ouHqrcWlLqfyzDY6WUD96dSUKk06A==
+reselect@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/reselect/-/reselect-5.0.1.tgz#587cdaaeb4e0e8927cff80ebe2bbef05f74b1648"
+  integrity sha512-D72j2ubjgHpvuCiORWkOUxndHJrxDaSolheiz5CO+roz8ka97/4msh2E8F5qay4GawR5vzBt5MkbDHT+Rdy/Wg==
 
 resolve-cwd@^3.0.0:
   version "3.0.0"
