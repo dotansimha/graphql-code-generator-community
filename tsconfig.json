@@ -85,7 +85,8 @@
       "@graphql-codegen/typescript-react-query": [
         "packages/plugins/typescript/react-query/src/index.ts"
       ],
-      "@graphql-codegen/typescript-msw": ["packages/plugins/typescript/msw/src/index.ts"]
+      "@graphql-codegen/typescript-msw": ["packages/plugins/typescript/msw/src/index.ts"],
+      "@graphql-codegen/typescript-nest": ["packages/plugins/typescript/nest/src/index.ts"]
     }
   },
   "include": ["packages"],
