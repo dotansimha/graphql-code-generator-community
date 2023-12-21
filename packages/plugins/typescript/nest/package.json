@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-nest",
-  "version": "3.0.0",
+  "version": "0.0.0",
   "description": "GraphQL Code Generator plugin for generating NestJS compatible types",
   "repository": {
     "type": "git",
