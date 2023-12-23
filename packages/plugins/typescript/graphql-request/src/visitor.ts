@@ -45,12 +45,9 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     autoBind(this);
 
     const typeImport = this.config.useTypeImports ? 'import type' : 'import';
-    const fileExtension = this.config.emitLegacyCommonJSImports ? '' : '.js';
-    const buildPath = this.config.emitLegacyCommonJSImports ? 'cjs' : 'esm';
 
-    this._additionalImports.push(`${typeImport} { GraphQLClient } from 'graphql-request';`);
     this._additionalImports.push(
-      `${typeImport} { GraphQLClientRequestHeaders } from 'graphql-request/build/${buildPath}/types${fileExtension}';`,
+      `${typeImport} { GraphQLClient, RequestOptions } from 'graphql-request';`,
     );
 
     if (this.config.rawRequest) {
@@ -60,6 +57,10 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
         this._additionalImports.push(`import { GraphQLError } from 'graphql'`);
       }
     }
+
+    this._additionalImports.push(
+      `type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];`,
+    );
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
       ? `${this.config.importOperationTypesFrom}.`
