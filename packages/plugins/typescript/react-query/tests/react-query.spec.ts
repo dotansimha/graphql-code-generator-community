@@ -52,7 +52,7 @@ describe('React-Query', () => {
   });
 
   it('support import-type preset in v4', async () => {
-    const config: ReactQueryRawPluginConfig & { importOperationTypesFrom: string } = {
+    const config: ReactQueryRawPluginConfig = {
       importOperationTypesFrom: 'Types',
     };
 
@@ -63,7 +63,7 @@ describe('React-Query', () => {
   });
 
   it('support import-type preset in v5', async () => {
-    const config: ReactQueryRawPluginConfig & { importOperationTypesFrom: string } = {
+    const config: ReactQueryRawPluginConfig = {
       reactQueryVersion: 5,
       importOperationTypesFrom: 'Types',
     };
