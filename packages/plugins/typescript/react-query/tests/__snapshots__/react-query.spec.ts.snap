@@ -1173,6 +1173,126 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 ]
 `;
 
+exports[`React-Query support import-type preset in v4: content 1`] = `
+"
+
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+
+export const useTestQuery = <
+      TData = Types.TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: Types.TestQueryVariables,
+      options?: UseQueryOptions<Types.TestQuery, TError, TData>
+    ) => {
+    
+    return useQuery<Types.TestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<Types.TestQuery, Types.TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+      options
+    )};
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<Types.TestMutation, TError, Types.TestMutationVariables, TContext>
+    ) => {
+    
+    return useMutation<Types.TestMutation, TError, Types.TestMutationVariables, TContext>(
+      ['test'],
+      (variables?: Types.TestMutationVariables) => fetcher<Types.TestMutation, Types.TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+      options
+    )};
+"
+`;
+
+exports[`React-Query support import-type preset in v5: content 1`] = `
+"
+
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+
+export const useTestQuery = <
+      TData = Types.TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: Types.TestQueryVariables,
+      options?: Omit<UseQueryOptions<Types.TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<Types.TestQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<Types.TestQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['test'] : ['test', variables],
+    queryFn: fetcher<Types.TestQuery, Types.TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+    ...options
+  }
+    )};
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<Types.TestMutation, TError, Types.TestMutationVariables, TContext>
+    ) => {
+    
+    return useMutation<Types.TestMutation, TError, Types.TestMutationVariables, TContext>(
+      {
+    mutationKey: ['test'],
+    mutationFn: (variables?: Types.TestMutationVariables) => fetcher<Types.TestMutation, Types.TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+    ...options
+  }
+    )};
+"
+`;
+
 exports[`React-Query support v4 syntax: content 1`] = `
 "
 

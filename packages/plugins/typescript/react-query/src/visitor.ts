@@ -139,14 +139,11 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     const generateConfig: GenerateConfig = {
       node,
       documentVariableName,
-      operationResultType,
-      operationVariablesTypes,
+      operationResultType: this._externalImportPrefix + operationResultType,
+      operationVariablesTypes: this._externalImportPrefix + operationVariablesTypes,
       hasRequiredVariables,
       operationName,
     };
-
-    operationResultType = this._externalImportPrefix + operationResultType;
-    operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
 
     const queries: string[] = [];
     const getOutputFromQueries = () => `\n${queries.join('\n\n')}\n`;
