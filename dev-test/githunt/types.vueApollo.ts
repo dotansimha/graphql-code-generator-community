@@ -524,7 +524,7 @@ export function useCommentLazyQuery(
   variables:
     | CommentQueryVariables
     | VueCompositionApi.Ref<CommentQueryVariables>
-    | ReactiveFunction<CommentQueryVariables>,
+    | ReactiveFunction<CommentQueryVariables> = {},
   options:
     | VueApolloComposable.UseQueryOptions<CommentQuery, CommentQueryVariables>
     | VueCompositionApi.Ref<
@@ -667,7 +667,7 @@ export function useFeedLazyQuery(
   variables:
     | FeedQueryVariables
     | VueCompositionApi.Ref<FeedQueryVariables>
-    | ReactiveFunction<FeedQueryVariables>,
+    | ReactiveFunction<FeedQueryVariables> = {},
   options:
     | VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>
     | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>>

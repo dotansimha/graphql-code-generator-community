@@ -245,15 +245,13 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
         useTypesPrefix: false,
       });
 
-      const lazyOperationType = 'LazyQuery';
-
       compositionFunctions.push(
         this.buildCompositionFunction({
           operationName: lazyOperationName,
-          operationType: lazyOperationType,
+          operationType: 'LazyQuery',
           operationResultType,
           operationVariablesTypes,
-          operationHasNonNullableVariable,
+          operationHasNonNullableVariable: false,
           operationHasVariables,
           documentNodeVariable,
         }),
