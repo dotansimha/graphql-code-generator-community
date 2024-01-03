@@ -277,7 +277,9 @@ function getOptimisticUpdatersConfig(
 
 function getImports(config: UrqlGraphCacheConfig): string {
   return [
-    "import { offlineExchange } from '@urql/exchange-graphcache';",
+    `import { ${
+      config.offlineExchange ? 'offlineExchange' : 'cacheExchange'
+    } } from '@urql/exchange-graphcache';`,
     `${
       config.useTypeImports ? 'import type' : 'import'
     } { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';\n`,
@@ -325,7 +327,9 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
         `${typeUpdateResolvers.join(',\n')}` +
         ',\n};',
 
-      'export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {\n' +
+      `export type GraphCacheConfig = Parameters<typeof ${
+        config.offlineExchange ? 'offlineExchange' : 'cacheExchange'
+      }>[0] & {\n` +
         '  updates?: GraphCacheUpdaters,\n' +
         '  keys?: GraphCacheKeysConfig,\n' +
         '  optimistic?: GraphCacheOptimisticUpdaters,\n' +

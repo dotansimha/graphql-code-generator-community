@@ -1,7 +1,7 @@
 import { IntrospectionQuery } from 'graphql';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
-import { offlineExchange } from '@urql/exchange-graphcache';
+import { cacheExchange } from '@urql/exchange-graphcache';
 import {
   OptimisticMutationResolver as GraphCacheOptimisticMutationResolver,
   Resolver as GraphCacheResolver,
@@ -1293,7 +1293,7 @@ export type GraphCacheUpdaters = {
   };
 };
 
-export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
+export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
   updates?: GraphCacheUpdaters;
   keys?: GraphCacheKeysConfig;
   optimistic?: GraphCacheOptimisticUpdaters;

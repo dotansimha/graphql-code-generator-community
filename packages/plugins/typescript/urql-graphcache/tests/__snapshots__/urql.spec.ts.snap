@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`urql graphcache Should correctly name GraphCacheResolvers & GraphCacheOptimisticUpdaters with nonstandard mutationType names 1`] = `
-"import { offlineExchange } from '@urql/exchange-graphcache';
+"import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
@@ -40,7 +40,7 @@ export type GraphCacheUpdaters = {
   },
 };
 
-export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
+export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
   updates?: GraphCacheUpdaters,
   keys?: GraphCacheKeysConfig,
   optimistic?: GraphCacheOptimisticUpdaters,
@@ -49,7 +49,7 @@ export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
 `;
 
 exports[`urql graphcache Should correctly output GraphCacheOptimisticUpdaters when there are no mutations 1`] = `
-"import { offlineExchange } from '@urql/exchange-graphcache';
+"import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
@@ -84,7 +84,7 @@ export type GraphCacheUpdaters = {
   },
 };
 
-export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
+export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
   updates?: GraphCacheUpdaters,
   keys?: GraphCacheKeysConfig,
   optimistic?: GraphCacheOptimisticUpdaters,
@@ -93,7 +93,7 @@ export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
 `;
 
 exports[`urql graphcache Should output the cache-generic correctly (with interfaces) 1`] = `
-"import { offlineExchange } from '@urql/exchange-graphcache';
+"import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
@@ -156,7 +156,7 @@ export type GraphCacheUpdaters = {
   },
 };
 
-export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
+export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
   updates?: GraphCacheUpdaters,
   keys?: GraphCacheKeysConfig,
   optimistic?: GraphCacheOptimisticUpdaters,
@@ -165,7 +165,7 @@ export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
 `;
 
 exports[`urql graphcache Should output the cache-generic correctly (with typesPrefix and typesSuffix) 1`] = `
-"import { offlineExchange } from '@urql/exchange-graphcache';
+"import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
@@ -227,7 +227,7 @@ export type GraphCacheUpdaters = {
   },
 };
 
-export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
+export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
   updates?: GraphCacheUpdaters,
   keys?: GraphCacheKeysConfig,
   optimistic?: GraphCacheOptimisticUpdaters,
@@ -236,7 +236,7 @@ export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
 `;
 
 exports[`urql graphcache Should output the cache-generic correctly (with unions) 1`] = `
-"import { offlineExchange } from '@urql/exchange-graphcache';
+"import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
@@ -286,7 +286,7 @@ export type GraphCacheUpdaters = {
   },
 };
 
-export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
+export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
   updates?: GraphCacheUpdaters,
   keys?: GraphCacheKeysConfig,
   optimistic?: GraphCacheOptimisticUpdaters,
@@ -295,7 +295,7 @@ export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
 `;
 
 exports[`urql graphcache Should output the cache-generic correctly 1`] = `
-"import { offlineExchange } from '@urql/exchange-graphcache';
+"import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
@@ -357,7 +357,7 @@ export type GraphCacheUpdaters = {
   },
 };
 
-export type GraphCacheConfig = Parameters<typeof offlineExchange>[0] & {
+export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
   updates?: GraphCacheUpdaters,
   keys?: GraphCacheKeysConfig,
   optimistic?: GraphCacheOptimisticUpdaters,
