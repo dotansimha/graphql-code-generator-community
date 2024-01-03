@@ -876,7 +876,7 @@ query MyFeed {
 
       // lazy query with optional variables, see https://github.com/dotansimha/graphql-code-generator-community/issues/438
       expect(content.content).toBeSimilarStringTo(
-        `export function useFeedLazyQuery(variables: FeedQueryVariables | VueCompositionApi.Ref<FeedQueryVariables> | ReactiveFunction<FeedQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>> = {}) {
+        `export function useFeedLazyQuery(variables?: FeedQueryVariables | VueCompositionApi.Ref<FeedQueryVariables> | ReactiveFunction<FeedQueryVariables>, options: VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<FeedQuery, FeedQueryVariables>> = {}) {
            return VueApolloComposable.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options);
         }`,
       );
