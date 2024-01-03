@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-urql-graphcache
 
+## 3.1.0
+
+### Minor Changes
+
+- [#476](https://github.com/dotansimha/graphql-code-generator-community/pull/476)
+  [`9bdae5d`](https://github.com/dotansimha/graphql-code-generator-community/commit/9bdae5d75e6e5276e8319d8397940d6f6d5b1e52)
+  Thanks [@JoviDeCroock](https://github.com/JoviDeCroock)! - Add setting to choose for the
+  offlineExchange, otherwise this bugs out the types for folks not using the offlineExchange
+
 ## 3.0.0
 
 ### Major Changes
