@@ -73,8 +73,8 @@ describe('msw', () => {
 
     const result = await plugin(null, documents, {});
 
-    expect(result.content).toContain(`const { ${variables.join(', ')} } = req.variables`);
-    expect(result.content).toContain(`ctx.data({ ${selection} })`);
+    expect(result.content).toContain(`const { ${variables.join(', ')} } = variables`);
+    expect(result.content).toContain(`data: { ${selection} }`);
     expect(result.content).toMatchSnapshot(
       'content with variables and selection JSDoc documentation',
     );
@@ -88,14 +88,14 @@ describe('msw', () => {
     const queryVariablesType = `${importOperationTypesFrom}.${queryName}QueryVariables`;
     const queryType = `${importOperationTypesFrom}.${queryName}Query`;
     expect(result.content).toContain(
-      `Parameters<typeof graphql.query<${queryType}, ${queryVariablesType}>>[1]`,
+      `GraphQLResponseResolver<${queryType}, ${queryVariablesType}>`,
     );
     expect(result.content).toContain(`graphql.query<${queryType}, ${queryVariablesType}>`);
 
     const mutationVariablesType = `${importOperationTypesFrom}.${mutationName}MutationVariables`;
     const mutationType = `${importOperationTypesFrom}.${mutationName}Mutation`;
     expect(result.content).toContain(
-      `Parameters<typeof graphql.mutation<${mutationType}, ${mutationVariablesType}>>[1]`,
+      `GraphQLResponseResolver<${mutationType}, ${mutationVariablesType}>`,
     );
     expect(result.content).toContain(`graphql.mutation<${mutationType}, ${mutationVariablesType}>`);
 
