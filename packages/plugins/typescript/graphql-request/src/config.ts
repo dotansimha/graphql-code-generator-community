@@ -53,4 +53,29 @@ export interface RawGraphQLRequestPluginConfig extends RawClientSideBasePluginCo
    * ```
    */
   extensionsType?: string;
+
+  /**
+   * @description Set to true if you want to use web-socket client
+   * @default false
+   *
+   * @exampleMarkdown
+   * ```ts filename="codegen.ts"
+   *  import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   *  const config: CodegenConfig = {
+   *    // ...
+   *    generates: {
+   *      'path/to/file.ts': {
+   *        plugins: ['typescript', 'typescript-operations', 'typescript-graphql-request'],
+   *        config: {
+   *          rawRequest: true,
+   *          useWebSocketClient: true
+   *        },
+   *      },
+   *    },
+   *  };
+   *  export default config;
+   * ```
+   */
+  useWebSocketClient?: boolean;
 }
