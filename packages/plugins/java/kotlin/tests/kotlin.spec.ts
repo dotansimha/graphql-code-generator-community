@@ -23,6 +23,7 @@ describe('Kotlin', () => {
       username: String
       email: String
       name: String
+      role: UserRole = USER
       sort: ResultSort
       metadata: MetadataSearch
     }
@@ -154,6 +155,49 @@ describe('Kotlin', () => {
         }
       }`);
     });
+
+    it('Should omit typesPrefix/typesSuffix in enum names if the option is set', async () => {
+      const result = await plugin(
+        schema,
+        [],
+        { typesPrefix: 'Graphql', typesSuffix: 'Type' },
+        { outputFile: OUTPUT_FILE },
+      );
+
+      // language=kotlin
+      expect(result).toBeSimilarStringTo(`    enum class GraphqlUserRoleType(val label: String) {
+          Admin("ADMIN"),
+          User("USER"),
+          Editor("EDITOR");
+        
+        companion object {
+          @JvmStatic
+          fun valueOfLabel(label: String): GraphqlUserRoleType? {
+            return values().find { it.label == label }
+          }
+        }
+    }`);
+
+      // language=kotlin
+      expect(result).toBeSimilarStringTo(`data class GraphqlSearchUserTypeInput(
+    val username: String? = null,
+    val email: String? = null,
+    val name: String? = null,
+    val role: GraphqlUserRoleType? = GraphqlUserRoleType.USER,
+    val sort: GraphqlResultSortType? = null,
+    val metadata: GraphqlMetadataSearchTypeInput? = null
+  ) {
+    @Suppress("UNCHECKED_CAST")
+    constructor(args: Map<String, Any>) : this(
+        args["username"] as String?,
+        args["email"] as String?,
+        args["name"] as String?,
+        args["role"] as GraphqlUserRoleType? ?: GraphqlUserRoleType.USER,
+        args["sort"] as GraphqlResultSortType?,
+        args["metadata"]?.let { GraphqlMetadataSearchTypeInput(it as Map<String, Any>) }
+    )
+  }`);
+    });
   });
 
   describe('Input Types / Arguments', () => {
@@ -243,6 +287,7 @@ describe('Kotlin', () => {
           val username: String? = null,
           val email: String? = null,
           val name: String? = null,
+          val role: UserRole? = UserRole.USER,
           val sort: ResultSort? = null,
           val metadata: MetadataSearchInput? = null
         ) {
@@ -251,6 +296,7 @@ describe('Kotlin', () => {
               args["username"] as String?,
               args["email"] as String?,
               args["name"] as String?,
+              args["role"] as UserRole? ?: UserRole.USER,
               args["sort"] as ResultSort?,
               args["metadata"]?.let { MetadataSearchInput(it as Map<String, Any>) }
           )
