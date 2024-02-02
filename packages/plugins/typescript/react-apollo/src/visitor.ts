@@ -10,7 +10,7 @@ import {
   LoadedFragment,
   OMIT_TYPE,
 } from '@graphql-codegen/visitor-plugin-common';
-import { ReactApolloRawPluginConfig } from './config.js';
+import { ReactApolloPluginConfigDefaultBaseOptions, ReactApolloRawPluginConfig } from './config.js';
 
 const APOLLO_CLIENT_3_UNIFIED_PACKAGE = `@apollo/client`;
 const GROUPED_APOLLO_CLIENT_3_IDENTIFIER = 'Apollo';
@@ -31,7 +31,7 @@ export interface ReactApolloPluginConfig extends ClientSideBasePluginConfig {
   withResultType: boolean;
   withMutationOptionsType: boolean;
   addDocBlocks: boolean;
-  defaultBaseOptions: { [key: string]: string };
+  defaultBaseOptions: ReactApolloPluginConfigDefaultBaseOptions;
   hooksSuffix: string;
 }
 
