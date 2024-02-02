@@ -124,7 +124,6 @@ export interface ReactQueryRawPluginConfig
       | 'gqlImport'
       | 'documentNodeImport'
       | 'noExport'
-      | 'importOperationTypesFrom'
       | 'importDocumentNodeExternallyFrom'
       | 'useTypeImports'
       | 'legacyMode'

@@ -51,6 +51,29 @@ describe('React-Query', () => {
     await validateTypeScript(mergeOutputs(out), schema, docs, config);
   });
 
+  it('support import-type preset in v4', async () => {
+    const config: ReactQueryRawPluginConfig = {
+      importOperationTypesFrom: 'Types',
+    };
+
+    const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+
+    expect(out.content).toMatchSnapshot('content');
+    await validateTypeScript(mergeOutputs(out), schema, docs, config);
+  });
+
+  it('support import-type preset in v5', async () => {
+    const config: ReactQueryRawPluginConfig = {
+      reactQueryVersion: 5,
+      importOperationTypesFrom: 'Types',
+    };
+
+    const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+
+    expect(out.content).toMatchSnapshot('content');
+    await validateTypeScript(mergeOutputs(out), schema, docs, config);
+  });
+
   it('Duplicated nested fragments are removed', async () => {
     const schema = buildSchema(/* GraphQL */ `
       schema {
