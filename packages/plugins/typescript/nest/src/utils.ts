@@ -1,4 +1,4 @@
-import { DecoratorOptions, Type } from './types';
+import { DecoratorOptions, Type } from './types.js';
 
 export const isDefinitionInterface = definition => definition.includes('@Nest.InterfaceType()');
 

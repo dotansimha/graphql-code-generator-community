@@ -1,5 +1,5 @@
 import { TypeScriptPluginConfig } from '@graphql-codegen/typescript';
-import { DecoratorConfig } from './types';
+import { DecoratorConfig } from './types.js';
 
 export interface NestPluginConfig extends TypeScriptPluginConfig {
   /**

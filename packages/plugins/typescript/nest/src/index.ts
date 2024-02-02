@@ -9,10 +9,10 @@ import {
   includeIntrospectionTypesDefinitions,
   TsIntrospectionVisitor,
 } from '@graphql-codegen/typescript';
-import { NestPluginConfig } from './config';
-import { NEST_IMPORT } from './constants';
-import { isDefinitionInterface } from './utils';
-import { NestVisitor } from './visitor';
+import { NestPluginConfig } from './config.js';
+import { NEST_IMPORT } from './constants.js';
+import { isDefinitionInterface } from './utils.js';
+import { NestVisitor } from './visitor.js';
 
 export const plugin: PluginFunction<Partial<NestPluginConfig>, Types.ComplexPluginOutput> = (
   schema: GraphQLSchema,

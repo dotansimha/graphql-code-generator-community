@@ -17,7 +17,7 @@ import {
   TypeScriptPluginParsedConfig,
 } from '@graphql-codegen/typescript';
 import { DeclarationBlock, getConfigValue, indent } from '@graphql-codegen/visitor-plugin-common';
-import { NestPluginConfig } from './config';
+import { NestPluginConfig } from './config.js';
 import {
   ARRAY_REGEX,
   FIX_DECORATOR_SIGNATURE,
@@ -27,15 +27,15 @@ import {
   NEST_SCALARS,
   SCALAR_REGEX,
   SCALARS,
-} from './constants';
-import { DecoratorConfig, DecoratorOptions, Type } from './types';
+} from './constants.js';
+import { DecoratorConfig, DecoratorOptions, Type } from './types.js';
 import {
   buildTypeString,
   escapeString,
   fixDecorator,
   formatDecoratorOptions,
   getNestNullableValue,
-} from './utils';
+} from './utils.js';
 
 export interface NestPluginParsedConfig extends TypeScriptPluginParsedConfig {
   disableDescriptions: boolean;
