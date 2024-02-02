@@ -245,12 +245,10 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
         useTypesPrefix: false,
       });
 
-      const lazyOperationType = 'LazyQuery';
-
       compositionFunctions.push(
         this.buildCompositionFunction({
           operationName: lazyOperationName,
-          operationType: lazyOperationType,
+          operationType: 'LazyQuery',
           operationResultType,
           operationVariablesTypes,
           operationHasNonNullableVariable,
@@ -278,8 +276,10 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
     operationHasVariables,
     documentNodeVariable,
   }: BuildCompositionFunctions): string {
+    const operationVariablesOptionalModifier =
+      operationType === 'LazyQuery' && operationHasNonNullableVariable ? '?' : '';
     const variables = operationHasVariables
-      ? `variables: ${operationVariablesTypes} | VueCompositionApi.Ref<${operationVariablesTypes}> | ReactiveFunction<${operationVariablesTypes}>${
+      ? `variables${operationVariablesOptionalModifier}: ${operationVariablesTypes} | VueCompositionApi.Ref<${operationVariablesTypes}> | ReactiveFunction<${operationVariablesTypes}>${
           operationHasNonNullableVariable ? '' : ' = {}'
         }, `
       : '';

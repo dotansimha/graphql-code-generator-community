@@ -521,7 +521,7 @@ export function useCommentQuery(
   );
 }
 export function useCommentLazyQuery(
-  variables:
+  variables?:
     | CommentQueryVariables
     | VueCompositionApi.Ref<CommentQueryVariables>
     | ReactiveFunction<CommentQueryVariables>,
@@ -664,7 +664,7 @@ export function useFeedQuery(
   );
 }
 export function useFeedLazyQuery(
-  variables:
+  variables?:
     | FeedQueryVariables
     | VueCompositionApi.Ref<FeedQueryVariables>
     | ReactiveFunction<FeedQueryVariables>,
