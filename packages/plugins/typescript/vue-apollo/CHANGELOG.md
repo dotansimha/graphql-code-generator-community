@@ -1,5 +1,13 @@
 # @graphql-codegen/typescript-vue-apollo
 
+## 4.1.1
+
+### Patch Changes
+
+- [#557](https://github.com/dotansimha/graphql-code-generator-community/pull/557)
+  [`c2b4a1b`](https://github.com/dotansimha/graphql-code-generator-community/commit/c2b4a1b6f13808745860c814ae38667cfee8e0b9)
+  Thanks [@FloEdelmann](https://github.com/FloEdelmann)! - Make lazy query's variables optional
+
 ## 4.1.0
 
 ### Minor Changes

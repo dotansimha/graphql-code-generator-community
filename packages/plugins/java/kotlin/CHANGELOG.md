@@ -1,5 +1,14 @@
 # @graphql-codegen/kotlin
 
+## 3.0.1
+
+### Patch Changes
+
+- [#606](https://github.com/dotansimha/graphql-code-generator-community/pull/606)
+  [`926f515`](https://github.com/dotansimha/graphql-code-generator-community/commit/926f515e242e128d3bc82fa010cf8b2a01c20c7c)
+  Thanks [@tristanlins](https://github.com/tristanlins)! - fix(kotlin) Omit typesSuffix in enum
+  names.
+
 ## 3.0.0
 
 ### Major Changes

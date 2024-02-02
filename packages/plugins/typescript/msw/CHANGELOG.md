@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-msw
 
+## 3.0.0
+
+### Major Changes
+
+- [#594](https://github.com/dotansimha/graphql-code-generator-community/pull/594)
+  [`40f3676`](https://github.com/dotansimha/graphql-code-generator-community/commit/40f3676ae8799b61fb564cf4f1f51a6724e6dea8)
+  Thanks [@lachieh](https://github.com/lachieh)! - Corrected compatibility with `msw@^2`. Types used
+  are incompatible with `msw@^1`.
+
 ## 2.1.0
 
 ### Minor Changes
