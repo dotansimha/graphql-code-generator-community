@@ -70,6 +70,16 @@ describe('React Apollo', () => {
     }
   `);
 
+  const fragmentDoc = parse(/* GraphQL */ `
+    fragment RepositoryFields on Repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  `);
+
   const validateTypeScript = async (
     output: Types.PluginOutput,
     testSchema: GraphQLSchema,
@@ -2722,6 +2732,40 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       export const TestComponent = (props: TestComponentProps) => (
         <ApolloReactComponents.Mutation<TestMutation, TestMutationVariables> mutation={Operations.test} {...props} />
       );`);
+      await validateTypeScript(content, schema, docs, {});
+    });
+
+    it('should import fragments from near operation file for useFragment', async () => {
+      const config: ReactApolloRawPluginConfig = {
+        documentMode: DocumentMode.external,
+        importDocumentNodeExternallyFrom: 'near-operation-file',
+        withComponent: false,
+        withHooks: true,
+        withHOC: false,
+        withFragmentHooks: true,
+      };
+
+      const docs = [{ location: 'path/to/document.graphql', document: fragmentDoc }];
+
+      const content = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.tsx',
+      })) as Types.ComplexPluginOutput;
+
+      expect(content.prepend[0]).toBeSimilarStringTo(`import * as Apollo from '@apollo/client';`);
+
+      expect(content.content).toBeSimilarStringTo(`
+      export function useRepositoryFieldsFragment<F = { id: string }>(identifiers: F) {
+        return Apollo.useFragment<RepositoryFieldsFragment>({
+          fragment: RepositoryFieldsFragmentDoc,
+          fragmentName: "RepositoryFields",
+          from: {
+            __typename: "Repository",
+            ...identifiers,
+          },
+        });
+      }
+      export type RepositoryFieldsFragmentHookResult = ReturnType<typeof useRepositoryFieldsFragment>;
+      `);
       await validateTypeScript(content, schema, docs, {});
     });
 

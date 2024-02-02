@@ -44,7 +44,15 @@ const config: CodegenConfig = {
     './dev-test/githunt/types.reactApollo.hooks.tsx': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
+      plugins: [
+        'typescript',
+        'typescript-operations',
+        {
+          'typescript-react-apollo': {
+            withFragmentHooks: true,
+          },
+        },
+      ],
     },
     './dev-test/githunt/types.react-query.ts': {
       schema: './dev-test/githunt/schema.json',

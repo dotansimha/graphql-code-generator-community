@@ -389,6 +389,52 @@ export const FeedEntryFragmentDoc = gql`
   ${VoteButtonsFragmentDoc}
   ${RepoInfoFragmentDoc}
 `;
+export function useCommentsPageCommentFragment<F = { id: string }>(identifiers: F) {
+  return Apollo.useFragment<CommentsPageCommentFragment>({
+    fragment: CommentsPageCommentFragmentDoc,
+    fragmentName: 'CommentsPageComment',
+    from: {
+      __typename: 'Comment',
+      ...identifiers,
+    },
+  });
+}
+export type CommentsPageCommentFragmentHookResult = ReturnType<
+  typeof useCommentsPageCommentFragment
+>;
+export function useFeedEntryFragment<F = { id: string }>(identifiers: F) {
+  return Apollo.useFragment<FeedEntryFragment>({
+    fragment: FeedEntryFragmentDoc,
+    fragmentName: 'FeedEntry',
+    from: {
+      __typename: 'Entry',
+      ...identifiers,
+    },
+  });
+}
+export type FeedEntryFragmentHookResult = ReturnType<typeof useFeedEntryFragment>;
+export function useRepoInfoFragment<F = { id: string }>(identifiers: F) {
+  return Apollo.useFragment<RepoInfoFragment>({
+    fragment: RepoInfoFragmentDoc,
+    fragmentName: 'RepoInfo',
+    from: {
+      __typename: 'Entry',
+      ...identifiers,
+    },
+  });
+}
+export type RepoInfoFragmentHookResult = ReturnType<typeof useRepoInfoFragment>;
+export function useVoteButtonsFragment<F = { id: string }>(identifiers: F) {
+  return Apollo.useFragment<VoteButtonsFragment>({
+    fragment: VoteButtonsFragmentDoc,
+    fragmentName: 'VoteButtons',
+    from: {
+      __typename: 'Entry',
+      ...identifiers,
+    },
+  });
+}
+export type VoteButtonsFragmentHookResult = ReturnType<typeof useVoteButtonsFragment>;
 export const OnCommentAddedDocument = gql`
   subscription onCommentAdded($repoFullName: String!) {
     commentAdded(repoFullName: $repoFullName) {
