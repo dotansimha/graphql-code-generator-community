@@ -88,6 +88,7 @@ export class KotlinResolversVisitor extends BaseVisitor<
       return indent(
         `${this.convertName(node, {
           useTypesPrefix: false,
+          useTypesSuffix: false,
           transformUnderscore: true,
         })}("${this.getEnumValue(enumName, node.name.value)}")`,
       );
