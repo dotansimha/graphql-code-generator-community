@@ -1,5 +1,21 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 6.2.0
+
+### Minor Changes
+
+- [#549](https://github.com/dotansimha/graphql-code-generator-community/pull/549)
+  [`ad8258c`](https://github.com/dotansimha/graphql-code-generator-community/commit/ad8258c66edd732a1b5ef2536021f06e44219daa)
+  Thanks [@pentla](https://github.com/pentla)! - Fix TypeScript error when moduleResolution is
+  "nodenext" or "bundler"
+
+### Patch Changes
+
+- [#559](https://github.com/dotansimha/graphql-code-generator-community/pull/559)
+  [`64c2c10`](https://github.com/dotansimha/graphql-code-generator-community/commit/64c2c10e82b1efe6a8ea7a3c4d9ed5b340945503)
+  Thanks [@mtlewis](https://github.com/mtlewis)! - Fix unused parameter in generated code which
+  caused TS errors for users of the package.
+
 ## 6.1.0
 
 ### Minor Changes

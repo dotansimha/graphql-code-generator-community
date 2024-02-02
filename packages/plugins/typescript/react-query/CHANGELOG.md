@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-react-query
 
+## 6.1.0
+
+### Minor Changes
+
+- [#552](https://github.com/dotansimha/graphql-code-generator-community/pull/552)
+  [`b403529`](https://github.com/dotansimha/graphql-code-generator-community/commit/b403529bb2805c58285707e4615532140c7e4156)
+  Thanks [@neil585456525](https://github.com/neil585456525)! - Fix importOperationTypesFrom missing
+  prefix
+
 ## 6.0.0
 
 ### Major Changes

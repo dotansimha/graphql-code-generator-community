@@ -1,5 +1,19 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 4.2.0
+
+### Minor Changes
+
+- [#483](https://github.com/dotansimha/graphql-code-generator-community/pull/483)
+  [`ba7e551`](https://github.com/dotansimha/graphql-code-generator-community/commit/ba7e551bd1b9827ceefa05b4b11a900200f3668d)
+  Thanks [@rickdunkin](https://github.com/rickdunkin)! - Apollo Client `useFragment` hook
+
+### Patch Changes
+
+- [#464](https://github.com/dotansimha/graphql-code-generator-community/pull/464)
+  [`fa53f8f`](https://github.com/dotansimha/graphql-code-generator-community/commit/fa53f8f63dea02912fdf4153f32c7f2ae28dae83)
+  Thanks [@namoscato](https://github.com/namoscato)! - fix: loosen defaultBaseOptions type
+
 ## 4.1.0
 
 ### Minor Changes
