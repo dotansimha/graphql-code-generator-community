@@ -44,7 +44,9 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
       return [];
     }
 
-    return [`import { graphql } from 'msw'`];
+    return [
+      `import { graphql, type GraphQLResponseResolver, type RequestHandlerOptions } from 'msw'`,
+    ];
   }
 
   public getContent() {
@@ -69,25 +71,30 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
           const variables = node.variableDefinitions.map(def => def.variable.name.value).join(', ');
 
           return `/**
- * @param resolver a function that accepts a captured request and may return a mocked response.
+ * @param resolver A function that accepts [resolver arguments](https://mswjs.io/docs/api/graphql#resolver-argument) and must always return the instruction on what to do with the intercepted request. ([see more](https://mswjs.io/docs/concepts/response-resolver#resolver-instructions))
+ * @param options Options object to customize the behavior of the mock. ([see more](https://mswjs.io/docs/api/graphql#handler-options))
  * @see https://mswjs.io/docs/basics/response-resolver
  * @example
- * ${handlerName}((req, res, ctx) => {${
-            variables && `\n *   const { ${variables} } = req.variables;`
-          }
- *   return res(
- *     ctx.data({ ${selections} })
- *   )
- * })
+ * ${handlerName}(
+ *   ({ query, variables }) => {${
+   variables &&
+   `
+ *     const { ${variables} } = variables;`
+ }
+ *     return HttpResponse.json({
+ *       data: { ${selections} }
+ *     })
+ *   },
+ *   requestOptions
+ * )
  */
-export const ${handlerName} = (resolver: Parameters<typeof ${
-            link?.name || 'graphql'
-          }.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>>[1]) =>
+export const ${handlerName} = (resolver: GraphQLResponseResolver<${operationResultType}, ${operationVariablesTypes}>, options?: RequestHandlerOptions) =>
   ${
     link?.name || 'graphql'
   }.${operationType.toLowerCase()}<${operationResultType}, ${operationVariablesTypes}>(
     '${node.name.value}',
-    resolver
+    resolver,
+    options
   )\n`;
         }
         return '';
