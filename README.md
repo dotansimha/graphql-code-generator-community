@@ -61,6 +61,8 @@ plugins:
   `@graphql-codegen/java-resolvers`
 - [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fjava-apollo-android.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fjava-apollo-android) -
   `@graphql-codegen/java-apollo-android`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-nest.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-nest) -
+  `@graphql-codegen/typescript-nest`
 
 ### Getting started with codegen
 
