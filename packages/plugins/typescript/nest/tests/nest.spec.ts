@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { buildSchema } from 'graphql';
 import { Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
@@ -835,6 +836,28 @@ describe('nest', () => {
 
          @Nest.Field(type => Nest.ID, { nullable: true })
          optionalId?: Maybe<Scalars['ID']>;
+       };`);
+  });
+
+  it('correctly generates descriptions for annotated arguments apostrophes', async () => {
+    const schema = buildSchema(/* GraphQL */ `
+      type Query {
+        query(
+          """
+          Description with apostrophe's
+          """
+          namedId: ID!
+        ): Boolean!
+      }
+    `);
+
+    const result = await plugin(schema, [], {}, { outputFile: '' });
+
+    expect(result.content).toBeSimilarStringTo(` @Nest.ArgsType()
+       export class QueryQueryArgs {
+
+         @Nest.Field(type => Nest.ID, { description: 'Description with apostrophe\'s' })
+         namedId!: Scalars['ID'];
        };`);
   });
 });

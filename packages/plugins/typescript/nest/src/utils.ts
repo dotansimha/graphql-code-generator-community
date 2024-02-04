@@ -6,7 +6,8 @@ export const escapeString = (str: string) =>
   "'" +
   String(str || '')
     .replace(/\\/g, '\\\\')
-    .replace(/'/g, "\\'") +
+    // eslint-disable-next-line no-useless-escape
+    .replace(/'/g, "'") +
   "'";
 
 export const formatDecoratorOptions = (options: DecoratorOptions, isFirstArgument = true) => {
