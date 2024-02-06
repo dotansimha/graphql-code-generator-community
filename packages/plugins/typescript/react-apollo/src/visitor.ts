@@ -375,6 +375,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
   ): string {
     const nodeName = node.name?.value ?? '';
     const suffix = this._getHookSuffix(nodeName, operationType);
+    const shouldEnforceRequiredVariables = hasRequiredVariables && operationType !== 'Mutation';
     const operationName: string =
       this.convertName(nodeName, {
         suffix,
@@ -385,11 +386,12 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     this.imports.add(this.getApolloReactCommonImport(true));
     this.imports.add(this.getApolloReactHooksImport(false));
     this.imports.add(this.getDefaultOptions());
-
     const hookFns = [
       `export function use${operationName}(baseOptions${
-        hasRequiredVariables && operationType !== 'Mutation' ? '' : '?'
-      }: ${this.getApolloReactHooksIdentifier()}.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>) {
+        shouldEnforceRequiredVariables ? '' : '?'
+      }: ${this.getApolloReactHooksIdentifier()}.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>${
+        !shouldEnforceRequiredVariables ? '' : ` & { variables: ${operationVariablesTypes} }`
+      }) {
         const options = {...defaultOptions, ...baseOptions}
         return ${this.getApolloReactHooksIdentifier()}.use${operationType}<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
         node,

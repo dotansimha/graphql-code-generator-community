@@ -1296,6 +1296,33 @@ export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOpt
       await validateTypeScript(content, schema, docs, {});
     });
 
+    it('Should have variables as required if query contains required variables', async () => {
+      const documents = parse(/* GraphQL */ `
+        query feed($id: String!) {
+          feed(id: $id) {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: documents }];
+
+      const content = (await plugin(
+        schema,
+        docs,
+        {},
+        {
+          outputFile: 'graphql.tsx',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`
+export function useFeedQuery(baseOptions: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables> & { variables: FeedQueryVariables }) {
+  const options = {...defaultOptions, ...baseOptions}
+  return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
+}`);
+      await validateTypeScript(content, schema, docs, {});
+    });
+
     it('Should generate deduped hooks for query and mutation', async () => {
       const documents = parse(/* GraphQL */ `
         query FeedQuery {
