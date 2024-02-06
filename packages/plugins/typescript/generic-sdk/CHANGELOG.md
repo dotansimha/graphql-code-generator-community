@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-generic-sdk
 
+## 4.0.1
+
+### Patch Changes
+
+- [#613](https://github.com/dotansimha/graphql-code-generator-community/pull/613)
+  [`ae45d38`](https://github.com/dotansimha/graphql-code-generator-community/commit/ae45d38eb0cd32743fda855d131bc4ea8b117568)
+  Thanks [@j0k3r](https://github.com/j0k3r)! - Fix unused parameter in generated code which caused
+  TS errors for users of the package.
+
 ## 4.0.0
 
 ### Major Changes
