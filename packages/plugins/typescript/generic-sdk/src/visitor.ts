@@ -137,13 +137,23 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
 
     const documentNodeType =
       this.config.documentMode === DocumentMode.string ? 'string' : 'DocumentNode';
-    const resultData = this.config.rawRequest ? 'ExecutionResult<R, E>' : 'R';
-    const returnType = `Promise<${resultData}> | ${
-      usingObservable ? 'Observable' : 'AsyncIterable'
-    }<${resultData}>`;
 
-    return `export type Requester<C = {}, E = unknown> = <R, V>(doc: ${documentNodeType}, vars?: V, options?: C) => ${returnType}
+    if (this.config.rawRequest) {
+      return `export type Requester<C = {}, E = unknown> = <R, V>(doc: ${documentNodeType}, vars?: V, options?: C) => Promise<ExecutionResult<R, E>> | ${
+        usingObservable ? 'Observable' : 'AsyncIterable'
+      }<ExecutionResult<R, E>>
 export function getSdk<C, E>(requester: Requester<C, E>) {
+  return {
+${allPossibleActions.join(',\n')}
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;`;
+    }
+
+    return `export type Requester<C = {}> = <R, V>(doc: ${documentNodeType}, vars?: V, options?: C) => Promise<R> | ${
+      usingObservable ? 'Observable' : 'AsyncIterable'
+    }<R>
+export function getSdk<C>(requester: Requester<C>) {
   return {
 ${allPossibleActions.join(',\n')}
   };
