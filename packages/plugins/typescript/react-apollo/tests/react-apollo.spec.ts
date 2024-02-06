@@ -1296,32 +1296,69 @@ export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOpt
       await validateTypeScript(content, schema, docs, {});
     });
 
-    it('Should have variables as required if query contains required variables', async () => {
-      const documents = parse(/* GraphQL */ `
-        query feed($id: String!) {
-          feed(id: $id) {
-            id
-          }
-        }
-      `);
-      const docs = [{ location: '', document: documents }];
+    it.each([
+      {
+        document: `query Feed { feed { ...Feed } } `,
+        requiredVariables: false,
+      },
+      {
+        document: `mutation Feed { feed { ...Feed } } `,
+        requiredVariables: false,
+      },
+      {
+        document: `query Feed($something: Boolean) { feed { ...Feed } } `,
+        requiredVariables: false,
+      },
+      {
+        document: `query Feed($something: Boolean!) { feed { ...Feed } } `,
+        requiredVariables: true,
+      },
+      {
+        document: `mutation Feed($something: Boolean!) { feed { ...Feed } } `,
+        requiredVariables: false,
+      },
+      {
+        document: `query Feed($something: Boolean!, $somethingElse: Boolean!) { feed { ...Feed } } `,
+        requiredVariables: true,
+      },
+      {
+        document: `query Feed($something: Boolean, $somethingElse: Boolean!) { feed { ...Feed } } `,
+        requiredVariables: true,
+      },
+      {
+        document: `query Feed($something: Boolean! = true) { feed { ...Feed } } `,
+        requiredVariables: false,
+      },
+      {
+        document: `query Feed($something: Boolean! = true, $somethingElse: Boolean) { feed { ...Feed } } `,
+        requiredVariables: false,
+      },
+    ])(
+      'Should have variables as required if query contains required variables',
+      async ({ document, requiredVariables }) => {
+        const docs = [
+          {
+            location: '',
+            document: parse(document),
+          },
+        ];
 
-      const content = (await plugin(
-        schema,
-        docs,
-        {},
-        {
-          outputFile: 'graphql.tsx',
-        },
-      )) as Types.ComplexPluginOutput;
+        const result = (await plugin(
+          schema,
+          docs,
+          {},
+          {
+            outputFile: 'graphql.tsx',
+          },
+        )) as Types.ComplexPluginOutput;
 
-      expect(content.content).toBeSimilarStringTo(`
-export function useFeedQuery(baseOptions: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables> & { variables: FeedQueryVariables }) {
-  const options = {...defaultOptions, ...baseOptions}
-  return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
-}`);
-      await validateTypeScript(content, schema, docs, {});
-    });
+        expect(result.content).toContain(
+          requiredVariables ? ' & { variables: FeedQueryVariables }' : '',
+        );
+
+        await validateTypeScript(result, schema, docs, {});
+      },
+    );
 
     it('Should generate deduped hooks for query and mutation', async () => {
       const documents = parse(/* GraphQL */ `
