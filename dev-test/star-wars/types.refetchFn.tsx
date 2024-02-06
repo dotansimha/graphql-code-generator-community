@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 
@@ -296,7 +297,7 @@ export function useCreateReviewForEpisodeMutation(
     CreateReviewForEpisodeMutationVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<
     CreateReviewForEpisodeMutation,
     CreateReviewForEpisodeMutationVariables
@@ -344,7 +345,7 @@ export function useHeroAndFriendsNamesQuery(
     HeroAndFriendsNamesQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
     HeroAndFriendsNamesDocument,
     options,
@@ -356,7 +357,7 @@ export function useHeroAndFriendsNamesLazyQuery(
     HeroAndFriendsNamesQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
     HeroAndFriendsNamesDocument,
     options,
@@ -415,7 +416,7 @@ export const HeroAppearsInDocument = gql`
 export function useHeroAppearsInQuery(
   baseOptions?: Apollo.QueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
     HeroAppearsInDocument,
     options,
@@ -424,7 +425,7 @@ export function useHeroAppearsInQuery(
 export function useHeroAppearsInLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
     HeroAppearsInDocument,
     options,
@@ -482,13 +483,13 @@ export const HeroDetailsDocument = gql`
 export function useHeroDetailsQuery(
   baseOptions?: Apollo.QueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(HeroDetailsDocument, options);
 }
 export function useHeroDetailsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(
     HeroDetailsDocument,
     options,
@@ -544,7 +545,7 @@ export function useHeroDetailsWithFragmentQuery(
     HeroDetailsWithFragmentQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>(
     HeroDetailsWithFragmentDocument,
     options,
@@ -556,7 +557,7 @@ export function useHeroDetailsWithFragmentLazyQuery(
     HeroDetailsWithFragmentQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<HeroDetailsWithFragmentQuery, HeroDetailsWithFragmentQueryVariables>(
     HeroDetailsWithFragmentDocument,
     options,
@@ -619,13 +620,13 @@ export const HeroNameDocument = gql`
 export function useHeroNameQuery(
   baseOptions?: Apollo.QueryHookOptions<HeroNameQuery, HeroNameQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<HeroNameQuery, HeroNameQueryVariables>(HeroNameDocument, options);
 }
 export function useHeroNameLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<HeroNameQuery, HeroNameQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<HeroNameQuery, HeroNameQueryVariables>(HeroNameDocument, options);
 }
 export function useHeroNameSuspenseQuery(
@@ -672,7 +673,7 @@ export function useHeroNameConditionalInclusionQuery(
     HeroNameConditionalInclusionQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
@@ -684,7 +685,7 @@ export function useHeroNameConditionalInclusionLazyQuery(
     HeroNameConditionalInclusionQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
@@ -751,7 +752,7 @@ export function useHeroNameConditionalExclusionQuery(
     HeroNameConditionalExclusionQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables
@@ -763,7 +764,7 @@ export function useHeroNameConditionalExclusionLazyQuery(
     HeroNameConditionalExclusionQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables
@@ -845,7 +846,7 @@ export function useHeroParentTypeDependentFieldQuery(
     HeroParentTypeDependentFieldQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<
     HeroParentTypeDependentFieldQuery,
     HeroParentTypeDependentFieldQueryVariables
@@ -857,7 +858,7 @@ export function useHeroParentTypeDependentFieldLazyQuery(
     HeroParentTypeDependentFieldQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<
     HeroParentTypeDependentFieldQuery,
     HeroParentTypeDependentFieldQueryVariables
@@ -928,7 +929,7 @@ export function useHeroTypeDependentAliasedFieldQuery(
     HeroTypeDependentAliasedFieldQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<
     HeroTypeDependentAliasedFieldQuery,
     HeroTypeDependentAliasedFieldQueryVariables
@@ -940,7 +941,7 @@ export function useHeroTypeDependentAliasedFieldLazyQuery(
     HeroTypeDependentAliasedFieldQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<
     HeroTypeDependentAliasedFieldQuery,
     HeroTypeDependentAliasedFieldQueryVariables
@@ -1006,7 +1007,7 @@ export function useHumanWithNullHeightQuery(
     HumanWithNullHeightQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
     HumanWithNullHeightDocument,
     options,
@@ -1018,7 +1019,7 @@ export function useHumanWithNullHeightLazyQuery(
     HumanWithNullHeightQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
     HumanWithNullHeightDocument,
     options,
@@ -1079,13 +1080,13 @@ export const TwoHeroesDocument = gql`
 export function useTwoHeroesQuery(
   baseOptions?: Apollo.QueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
 export function useTwoHeroesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
 export function useTwoHeroesSuspenseQuery(

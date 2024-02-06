@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 
@@ -425,7 +426,7 @@ export function useOnCommentAddedSubscription(
     OnCommentAddedSubscriptionVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useSubscription<
     OnCommentAddedSubscriptionMyOperation,
     OnCommentAddedSubscriptionVariables
@@ -486,13 +487,13 @@ export const CommentDocument = gql`
 export function useCommentQuery(
   baseOptions: Apollo.QueryHookOptions<CommentQueryMyOperation, CommentQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<CommentQueryMyOperation, CommentQueryVariables>(CommentDocument, options);
 }
 export function useCommentLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<CommentQueryMyOperation, CommentQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<CommentQueryMyOperation, CommentQueryVariables>(
     CommentDocument,
     options,
@@ -541,7 +542,7 @@ export function useCurrentUserForProfileQuery(
     CurrentUserForProfileQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<
     CurrentUserForProfileQueryMyOperation,
     CurrentUserForProfileQueryVariables
@@ -553,7 +554,7 @@ export function useCurrentUserForProfileLazyQuery(
     CurrentUserForProfileQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<
     CurrentUserForProfileQueryMyOperation,
     CurrentUserForProfileQueryVariables
@@ -615,13 +616,13 @@ export const FeedDocument = gql`
 export function useFeedQuery(
   baseOptions: Apollo.QueryHookOptions<FeedQueryMyOperation, FeedQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<FeedQueryMyOperation, FeedQueryVariables>(FeedDocument, options);
 }
 export function useFeedLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<FeedQueryMyOperation, FeedQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<FeedQueryMyOperation, FeedQueryVariables>(FeedDocument, options);
 }
 export function useFeedSuspenseQuery(
@@ -669,7 +670,7 @@ export function useSubmitRepositoryMutation(
     SubmitRepositoryMutationVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<SubmitRepositoryMutationMyOperation, SubmitRepositoryMutationVariables>(
     SubmitRepositoryDocument,
     options,
@@ -719,7 +720,7 @@ export function useSubmitCommentMutation(
     SubmitCommentMutationVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<SubmitCommentMutationMyOperation, SubmitCommentMutationVariables>(
     SubmitCommentDocument,
     options,
@@ -768,7 +769,7 @@ export type VoteMutationFn = Apollo.MutationFunction<
 export function useVoteMutation(
   baseOptions?: Apollo.MutationHookOptions<VoteMutationMyOperation, VoteMutationVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<VoteMutationMyOperation, VoteMutationVariables>(VoteDocument, options);
 }
 export type VoteMutationHookResult = ReturnType<typeof useVoteMutation>;

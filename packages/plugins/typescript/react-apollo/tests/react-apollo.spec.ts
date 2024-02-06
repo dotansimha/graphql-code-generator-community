@@ -1284,13 +1284,13 @@ query MyFeed {
 
       expect(content.content).toBeSimilarStringTo(`
 export function useFeedQuery(baseOptions?: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables>) {
-  const options = {...defaultOptions, ...baseOptions}
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }`);
 
       expect(content.content).toBeSimilarStringTo(`
 export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOptions<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>) {
-  const options = {...defaultOptions, ...baseOptions}
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useMutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>(SubmitRepositoryDocument, options);
 }`);
       await validateTypeScript(content, schema, docs, {});
@@ -1332,13 +1332,13 @@ export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOpt
 
       expect(content.content).toBeSimilarStringTo(`
       export function useFeedQuery(baseOptions?: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables>) {
-       const options = {...defaultOptions, ...baseOptions}
+       const options = mergeDeep(defaultOptions, baseOptions ?? {});
       return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedQueryDocument, options);
     }`);
 
       expect(content.content).toBeSimilarStringTo(`
       export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOptions<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
       return Apollo.useMutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>(SubmitRepositoryMutationDocument, options);
     }`);
       await validateTypeScript(content, schema, docs, config);
@@ -1385,7 +1385,7 @@ export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOpt
 
       expect(content.content).toBeSimilarStringTo(`
 export function useListenToCommentsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<ListenToCommentsSubscription, ListenToCommentsSubscriptionVariables>) {
-  const options = {...defaultOptions, ...baseOptions}
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useSubscription<ListenToCommentsSubscription, ListenToCommentsSubscriptionVariables>(ListenToCommentsDocument, options);
 }`);
       await validateTypeScript(content, schema, docs, {});
@@ -1728,7 +1728,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
 
       expect(content.content).toBeSimilarStringTo(`
       export function useFeedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeedQuery, FeedQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
       }`);
       await validateTypeScript(content, schema, docs, {});
@@ -1796,7 +1796,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
 
       expect(content.content).toBeSimilarStringTo(`
       export function useFeedLazyQueryMySuffix(baseOptions?: Apollo.LazyQueryHookOptions<FeedQuery, FeedQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
       }`);
       await validateTypeScript(content, schema, docs, {});
@@ -2276,13 +2276,13 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend).toContain(`import * as Operations from 'path/to/documents';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestQuery(baseOptions?: Apollo.QueryHookOptions<TestQuery, TestQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useQuery<TestQuery, TestQueryVariables>(Operations.test, options);
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestQuery, TestQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useLazyQuery<TestQuery, TestQueryVariables>(Operations.test, options);
       }
       `);
@@ -2367,7 +2367,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend).toContain(`import * as Operations from 'path/to/documents';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestMutation(baseOptions?: Apollo.MutationHookOptions<TestMutation, TestMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useMutation<TestMutation, TestMutationVariables>(Operations.test, options);
       }
       `);
@@ -2446,7 +2446,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend).toContain(`import * as Operations from 'path/to/documents';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestSubscription(baseOptions?: Apollo.SubscriptionHookOptions<TestSubscription, TestSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useSubscription<TestSubscription, TestSubscriptionVariables>(Operations.test, options);
       }
       `);
@@ -2534,13 +2534,13 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend).toContain(`import * as Operations from 'path/to/documents';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestOneQuery(baseOptions?: Apollo.QueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestOneLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useLazyQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
       }
       `);
@@ -2552,14 +2552,14 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       `);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestTwoMutation(baseOptions?: Apollo.MutationHookOptions<TestTwoMutation, TestTwoMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useMutation<TestTwoMutation, TestTwoMutationVariables>(Operations.testTwo, options);
       }
       `);
 
       expect(content.content).toBeSimilarStringTo(`
       export function useTestThreeSubscription(baseOptions?: Apollo.SubscriptionHookOptions<TestThreeSubscription, TestThreeSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useSubscription<TestThreeSubscription, TestThreeSubscriptionVariables>(Operations.testThree, options);
       }`);
 
@@ -2662,13 +2662,13 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestQuery(baseOptions?: Apollo.QueryHookOptions<TestQuery, TestQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useQuery<TestQuery, TestQueryVariables>(Operations.test, options);
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestQuery, TestQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useLazyQuery<TestQuery, TestQueryVariables>(Operations.test, options);
       }
       `);
@@ -2787,7 +2787,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestMutation(baseOptions?: Apollo.MutationHookOptions<TestMutation, TestMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useMutation<TestMutation, TestMutationVariables>(Operations.test, options);
       }`);
       await validateTypeScript(content, schema, docs, {});
@@ -2865,7 +2865,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestSubscription(baseOptions?: Apollo.SubscriptionHookOptions<TestSubscription, TestSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useSubscription<TestSubscription, TestSubscriptionVariables>(Operations.test, options);
       }`);
       await validateTypeScript(content, schema, docs, {});
@@ -2952,13 +2952,13 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestOneQuery(baseOptions?: Apollo.QueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestOneLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useLazyQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
       }
       `);
@@ -2970,13 +2970,13 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       `);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestTwoMutation(baseOptions?: Apollo.MutationHookOptions<TestTwoMutation, TestTwoMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useMutation<TestTwoMutation, TestTwoMutationVariables>(Operations.testTwo, options);
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestThreeSubscription(baseOptions?: Apollo.SubscriptionHookOptions<TestThreeSubscription, TestThreeSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useSubscription<TestThreeSubscription, TestThreeSubscriptionVariables>(Operations.testThree, options);
       }`);
 

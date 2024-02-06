@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
@@ -54,7 +55,7 @@ export function useHeroNameConditionalInclusionQuery(
     HeroNameConditionalInclusionQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
@@ -66,7 +67,7 @@ export function useHeroNameConditionalInclusionLazyQuery(
     HeroNameConditionalInclusionQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
@@ -128,7 +129,7 @@ export function useHeroNameConditionalExclusionQuery(
     HeroNameConditionalExclusionQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables
@@ -140,7 +141,7 @@ export function useHeroNameConditionalExclusionLazyQuery(
     HeroNameConditionalExclusionQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables

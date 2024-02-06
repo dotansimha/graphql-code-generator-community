@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import gql from 'graphql-tag';
 import * as ApolloReactCommon from '@apollo/react-common';
 import * as ApolloReactHooks from '@apollo/react-hooks';
@@ -426,7 +427,7 @@ export function useOnCommentAddedSubscription(
     OnCommentAddedSubscriptionVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useSubscription<
     OnCommentAddedSubscription,
     OnCommentAddedSubscriptionVariables
@@ -487,13 +488,13 @@ export const CommentDocument = gql`
 export function useCommentQuery(
   baseOptions: ApolloReactHooks.QueryHookOptions<CommentQuery, CommentQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
 }
 export function useCommentLazyQuery(
   baseOptions?: ApolloReactHooks.LazyQueryHookOptions<CommentQuery, CommentQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useLazyQuery<CommentQuery, CommentQueryVariables>(
     CommentDocument,
     options,
@@ -542,7 +543,7 @@ export function useCurrentUserForProfileQuery(
     CurrentUserForProfileQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useQuery<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
     CurrentUserForProfileDocument,
     options,
@@ -554,7 +555,7 @@ export function useCurrentUserForProfileLazyQuery(
     CurrentUserForProfileQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useLazyQuery<
     CurrentUserForProfileQuery,
     CurrentUserForProfileQueryVariables
@@ -616,13 +617,13 @@ export const FeedDocument = gql`
 export function useFeedQuery(
   baseOptions: ApolloReactHooks.QueryHookOptions<FeedQuery, FeedQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
 export function useFeedLazyQuery(
   baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FeedQuery, FeedQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
 export function useFeedSuspenseQuery(
@@ -670,7 +671,7 @@ export function useSubmitRepositoryMutation(
     SubmitRepositoryMutationVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useMutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>(
     SubmitRepositoryDocument,
     options,
@@ -720,7 +721,7 @@ export function useSubmitCommentMutation(
     SubmitCommentMutationVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useMutation<SubmitCommentMutation, SubmitCommentMutationVariables>(
     SubmitCommentDocument,
     options,
@@ -769,7 +770,7 @@ export type VoteMutationFn = ApolloReactCommon.MutationFunction<
 export function useVoteMutation(
   baseOptions?: ApolloReactHooks.MutationHookOptions<VoteMutation, VoteMutationVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return ApolloReactHooks.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument, options);
 }
 export type VoteMutationHookResult = ReturnType<typeof useVoteMutation>;

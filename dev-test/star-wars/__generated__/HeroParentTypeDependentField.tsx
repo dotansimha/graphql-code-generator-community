@@ -1,3 +1,4 @@
+import mergeDeep from 'deepmerge';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
@@ -77,7 +78,7 @@ export function useHeroParentTypeDependentFieldQuery(
     HeroParentTypeDependentFieldQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useQuery<
     HeroParentTypeDependentFieldQuery,
     HeroParentTypeDependentFieldQueryVariables
@@ -89,7 +90,7 @@ export function useHeroParentTypeDependentFieldLazyQuery(
     HeroParentTypeDependentFieldQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = mergeDeep(defaultOptions, baseOptions ?? {});
   return Apollo.useLazyQuery<
     HeroParentTypeDependentFieldQuery,
     HeroParentTypeDependentFieldQueryVariables

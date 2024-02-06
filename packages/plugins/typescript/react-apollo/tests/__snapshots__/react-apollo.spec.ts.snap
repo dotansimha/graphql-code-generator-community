@@ -8,6 +8,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import mergeDeep from 'deepmerge';
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -183,11 +184,11 @@ export const Get_SomethingDocument = gql\`
 }
     \`;
 export function useGet_SomethingQuery(baseOptions?: Apollo.QueryHookOptions<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useQuery<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>(Get_SomethingDocument, options);
       }
 export function useGet_SomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+          const options = mergeDeep(defaultOptions, baseOptions ?? {});
           return Apollo.useLazyQuery<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>(Get_SomethingDocument, options);
         }
 export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>) {
@@ -208,6 +209,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import mergeDeep from 'deepmerge';
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -383,11 +385,11 @@ export const Get_SomethingDocument = gql\`
 }
     \`;
 export function useGet_SomethingQuery(baseOptions?: Apollo.QueryHookOptions<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useQuery<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>(Get_SomethingDocument, options);
       }
 export function useGet_SomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+          const options = mergeDeep(defaultOptions, baseOptions ?? {});
           return Apollo.useLazyQuery<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>(Get_SomethingDocument, options);
         }
 export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>) {
@@ -408,6 +410,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import mergeDeep from 'deepmerge';
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -583,11 +586,11 @@ export const GetSomethingDocument = gql\`
 }
     \`;
 export function useGetSomethingQuery(baseOptions?: Apollo.QueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
       }
 export function useGetSomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+          const options = mergeDeep(defaultOptions, baseOptions ?? {});
           return Apollo.useLazyQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
         }
 export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
@@ -608,6 +611,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import mergeDeep from 'deepmerge';
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -783,11 +787,11 @@ export const GetSomethingDocument = gql\`
 }
     \`;
 export function useGetSomethingQuery(baseOptions?: Apollo.QueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+        const options = mergeDeep(defaultOptions, baseOptions ?? {});
         return Apollo.useQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
       }
 export function useGetSomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+          const options = mergeDeep(defaultOptions, baseOptions ?? {});
           return Apollo.useLazyQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
         }
 export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
