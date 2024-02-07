@@ -122,7 +122,9 @@ export type EscalateMutation = {
  * });
  */
 export function useGetMessagesQuery(
-  baseOptions: Apollo.QueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
+  baseOptions: Apollo.QueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables> & {
+    variables: GetMessagesQueryVariables;
+  },
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<GetMessagesQuery, GetMessagesQueryVariables>(
