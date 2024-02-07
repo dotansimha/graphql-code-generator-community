@@ -56,6 +56,33 @@ export interface RTKConfig {
   importBaseApiAlternateName?: string;
 
   /**
+   * @name exportApiAlternateName
+   * @description Change the export name of the generated api from default 'api'
+   * @default 'api'
+   *
+
+   * @exampleMarkdown
+   * ```ts filename="codegen.ts"
+   *  import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   *  const config: CodegenConfig = {
+   *    // ...
+   *    generates: {
+   *      'path/to/file.ts': {
+   *        plugins: ['typescript', 'typescript-resolvers', 'typescript-rtk-query'],
+   *        config: {
+   *          importBaseApiFrom: 'src/app/api/baseApi',
+   *          exportApiAlternateName: 'alternateApiName'
+   *        },
+   *      },
+   *    },
+   *  };
+   *  export default config;
+   * ```
+   */
+  exportApiAlternateName?: string;
+
+  /**
    * @name exportHooks
    * @description Whether to export React Hooks from the generated api. Enable only when using the `"@reduxjs/toolkit/query/react"` import of `createApi`
    * @default false

@@ -116,6 +116,28 @@ describe('RTK Query', () => {
     expect(content.content).toMatchSnapshot();
   });
 
+  test('With exportApiAlternateName', async () => {
+    const documents = parse(gql.commentQuery + gql.feedQuery + gql.newEntryMutation);
+    const docs = [{ location: '', document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {
+        importBaseApiFrom: './baseApi',
+        exportApiAlternateName: 'alternateApiName',
+      },
+      {
+        outputFile: 'graphql.ts',
+      },
+    )) as Types.ComplexPluginOutput;
+
+    expect(content.prepend).toContain("import { api } from './baseApi';");
+    expect(content.content).toContain('export { injectedRtkApi as alternateApiName };');
+
+    expect(content.content).toMatchSnapshot();
+  });
+
   test('With addTransformResponse', async () => {
     const documents = parse(gql.commentQuery + gql.feedQuery + gql.newEntryMutation);
     const docs = [{ location: '', document: documents }];
