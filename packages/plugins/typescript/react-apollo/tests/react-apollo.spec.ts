@@ -1352,7 +1352,8 @@ export function useSubmitRepositoryMutation(baseOptions?: Apollo.MutationHookOpt
           },
         )) as Types.ComplexPluginOutput;
 
-        const requiredVariableString = ' & { variables: FeedQueryVariables }';
+        const requiredVariableString =
+          ' & ({ variables: FeedQueryVariables; skip?: boolean; } | { skip: boolean; }) ';
 
         if (requiredVariables) {
           expect(result.content).toContain(requiredVariableString);

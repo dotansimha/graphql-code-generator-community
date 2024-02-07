@@ -390,7 +390,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
       `export function use${operationName}(baseOptions${
         shouldEnforceRequiredVariables ? '' : '?'
       }: ${this.getApolloReactHooksIdentifier()}.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>${
-        !shouldEnforceRequiredVariables ? '' : ` & { variables: ${operationVariablesTypes} }`
+        !shouldEnforceRequiredVariables
+          ? ''
+          : ` & ({ variables: ${operationVariablesTypes}; skip?: boolean; } | { skip: boolean; }) `
       }) {
         const options = {...defaultOptions, ...baseOptions}
         return ${this.getApolloReactHooksIdentifier()}.use${operationType}<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(

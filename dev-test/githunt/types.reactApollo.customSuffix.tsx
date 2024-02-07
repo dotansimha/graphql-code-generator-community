@@ -423,7 +423,8 @@ export function useOnCommentAddedSubscription(
   baseOptions: Apollo.SubscriptionHookOptions<
     OnCommentAddedSubscriptionMyOperation,
     OnCommentAddedSubscriptionVariables
-  > & { variables: OnCommentAddedSubscriptionVariables },
+  > &
+    ({ variables: OnCommentAddedSubscriptionVariables; skip?: boolean } | { skip: boolean }),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSubscription<
@@ -484,9 +485,8 @@ export const CommentDocument = gql`
  * });
  */
 export function useCommentQuery(
-  baseOptions: Apollo.QueryHookOptions<CommentQueryMyOperation, CommentQueryVariables> & {
-    variables: CommentQueryVariables;
-  },
+  baseOptions: Apollo.QueryHookOptions<CommentQueryMyOperation, CommentQueryVariables> &
+    ({ variables: CommentQueryVariables; skip?: boolean } | { skip: boolean }),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<CommentQueryMyOperation, CommentQueryVariables>(CommentDocument, options);
@@ -615,9 +615,8 @@ export const FeedDocument = gql`
  * });
  */
 export function useFeedQuery(
-  baseOptions: Apollo.QueryHookOptions<FeedQueryMyOperation, FeedQueryVariables> & {
-    variables: FeedQueryVariables;
-  },
+  baseOptions: Apollo.QueryHookOptions<FeedQueryMyOperation, FeedQueryVariables> &
+    ({ variables: FeedQueryVariables; skip?: boolean } | { skip: boolean }),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<FeedQueryMyOperation, FeedQueryVariables>(FeedDocument, options);
