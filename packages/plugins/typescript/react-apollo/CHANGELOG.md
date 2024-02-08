@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 4.3.0
+
+### Minor Changes
+
+- [#620](https://github.com/dotansimha/graphql-code-generator-community/pull/620)
+  [`3e2c8de`](https://github.com/dotansimha/graphql-code-generator-community/commit/3e2c8de259d2fcb5330c4427a2404375aeb7cec1)
+  Thanks [@tomaskukk](https://github.com/tomaskukk)! - Improved type-safety: when a query contains
+  required variables, passing the variables object to the useQuery hook is enforced
+
 ## 4.2.0
 
 ### Minor Changes
