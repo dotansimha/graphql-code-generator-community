@@ -469,7 +469,8 @@ export function useOnCommentAddedSubscription(
   baseOptions: Apollo.SubscriptionHookOptions<
     OnCommentAddedSubscription,
     OnCommentAddedSubscriptionVariables
-  >,
+  > &
+    ({ variables: OnCommentAddedSubscriptionVariables; skip?: boolean } | { skip: boolean }),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSubscription<OnCommentAddedSubscription, OnCommentAddedSubscriptionVariables>(
@@ -530,7 +531,8 @@ export const CommentDocument = gql`
  * });
  */
 export function useCommentQuery(
-  baseOptions: Apollo.QueryHookOptions<CommentQuery, CommentQueryVariables>,
+  baseOptions: Apollo.QueryHookOptions<CommentQuery, CommentQueryVariables> &
+    ({ variables: CommentQueryVariables; skip?: boolean } | { skip: boolean }),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
@@ -652,7 +654,10 @@ export const FeedDocument = gql`
  *   },
  * });
  */
-export function useFeedQuery(baseOptions: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables>) {
+export function useFeedQuery(
+  baseOptions: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables> &
+    ({ variables: FeedQueryVariables; skip?: boolean } | { skip: boolean }),
+) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }

@@ -52,7 +52,8 @@ export function useHeroNameConditionalInclusionQuery(
   baseOptions: Apollo.QueryHookOptions<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
-  >,
+  > &
+    ({ variables: HeroNameConditionalInclusionQueryVariables; skip?: boolean } | { skip: boolean }),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -126,7 +127,8 @@ export function useHeroNameConditionalExclusionQuery(
   baseOptions: Apollo.QueryHookOptions<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables
-  >,
+  > &
+    ({ variables: HeroNameConditionalExclusionQueryVariables; skip?: boolean } | { skip: boolean }),
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
