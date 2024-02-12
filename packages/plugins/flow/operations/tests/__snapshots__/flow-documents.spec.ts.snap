@@ -8,20 +8,20 @@ type $Pick<Origin: Object, Keys: Object> = $ObjMapi<Keys, <Key>(k: Key) => $Elem
 export type NotificationsQueryVariables = {};
 
 
-export type NotificationsQuery = ({
+export type NotificationsQuery = ({|
     ...{ __typename?: 'Query' },
-  ...{| notifications: Array<({
+  ...{| notifications: Array<({|
       ...{ __typename?: 'TextNotification' },
     ...$Pick<Types.TextNotification, {| text: *, id: * |}>
-  }) | ({
+  |}) | ({|
       ...{ __typename?: 'ImageNotification' },
     ...$Pick<Types.ImageNotification, {| imageUrl: *, id: * |}>,
-    ...{| metadata: ({
+    ...{| metadata: ({|
         ...{ __typename?: 'ImageMetadata' },
       ...$Pick<Types.ImageMetadata, {| createdBy: * |}>
-    }) |}
-  })> |}
-});
+    |}) |}
+  |})> |}
+|});
 "
 `;
 
@@ -31,11 +31,11 @@ exports[`Flow Operations Plugin Output options Should respect flow option useFlo
 export type CurrentUserQueryVariables = {};
 
 
-export type CurrentUserQuery = {| +me?: ?({
+export type CurrentUserQuery = {| +me?: ?({|
       ...$Pick<User, {| +id: *, +username: * |}>,
     ...{| +adminRole?: $ElementType<User, 'role'> |},
     ...{| +profile?: ?$Pick<Profile, {| +age?: * |}> |}
-  }) |};
+  |}) |};
 "
 `;
 
@@ -44,18 +44,18 @@ exports[`Flow Operations Plugin Selection Set Should support fragment spread wit
 
 type $Pick<Origin: Object, Keys: Object> = $ObjMapi<Keys, <Key>(k: Key) => $ElementType<Origin, Key>>;
 
-export type UserFieldsFragment = ({
+export type UserFieldsFragment = ({|
     ...$Pick<User, {| id: *, username: *, role?: * |}>,
   ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-});
+|});
 
 export type MeQueryVariables = {};
 
 
-export type MeQuery = {| me?: ?({
+export type MeQuery = {| me?: ?({|
       ...$Pick<User, {| id: *, username: *, role?: * |}>,
     ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-  }) |};
+  |}) |};
 "
 `;
 

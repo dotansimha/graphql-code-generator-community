@@ -108,20 +108,20 @@ describe('Flow Operations Plugin', () => {
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type notificationsquery = ({
+      export type notificationsquery = ({|
         ...{ __typename?: 'Query' },
-      ...{| notifications: Array<({
+      ...{| notifications: Array<({|
           ...{ __typename?: 'TextNotification' },
         ...$Pick<textnotification, {| text: *, id: * |}>
-      }) | ({
+      |}) | ({|
           ...{ __typename?: 'ImageNotification' },
         ...$Pick<imagenotification, {| imageUrl: *, id: * |}>,
-        ...{| metadata: ({
+        ...{| metadata: ({|
             ...{ __typename?: 'ImageMetadata' },
           ...$Pick<imagemetadata, {| createdBy: * |}>
-        }) |}
-      })> |}
-    });
+        |}) |}
+      |})> |}
+    |});
       `);
       validateFlow(result);
     });
@@ -161,20 +161,20 @@ describe('Flow Operations Plugin', () => {
 
       expect(result).toBeSimilarStringTo(`export type inotificationsqueryvariables = {};`);
       expect(result).toBeSimilarStringTo(`
-      export type inotificationsquery = ({
+      export type inotificationsquery = ({|
         ...{ __typename?: 'Query' },
-      ...{| notifications: Array<({
+      ...{| notifications: Array<({|
           ...{ __typename?: 'TextNotification' },
         ...$Pick<itextnotification, {| text: *, id: * |}>
-      }) | ({
+      |}) | ({|
           ...{ __typename?: 'ImageNotification' },
         ...$Pick<iimagenotification, {| imageUrl: *, id: * |}>,
-        ...{| metadata: ({
+        ...{| metadata: ({|
             ...{ __typename?: 'ImageMetadata' },
           ...$Pick<iimagemetadata, {| createdBy: * |}>
-        }) |}
-      })> |}
-    });
+        |}) |}
+      |})> |}
+    |});
       `);
       validateFlow(result);
     });
@@ -259,10 +259,10 @@ describe('Flow Operations Plugin', () => {
         ),
       ]);
       expect(result).toBeSimilarStringTo(`
-      export type Unnamed_1_Query = ({
+      export type Unnamed_1_Query = ({|
         ...{ __typename: 'Query' },
       ...$Pick<Query, {| dummy?: * |}>
-    });
+    |});
       `);
       validateFlow(result);
     });
@@ -287,10 +287,10 @@ describe('Flow Operations Plugin', () => {
         ),
       ]);
       expect(result).toBeSimilarStringTo(`
-      export type Unnamed_1_Query = ({
+      export type Unnamed_1_Query = ({|
         ...{ __typename?: 'Query' },
       ...$Pick<Query, {| dummy?: * |}>
-    });
+    |});
       `);
       validateFlow(result);
     });
@@ -316,10 +316,10 @@ describe('Flow Operations Plugin', () => {
         ),
       ]);
       expect(result).toBeSimilarStringTo(`
-      export type Unnamed_1_Query = ({
+      export type Unnamed_1_Query = ({|
         ...{ __typename: 'Query' },
       ...$Pick<Query, {| dummy?: * |}>
-    });
+    |});
       `);
       validateFlow(result);
     });
@@ -353,16 +353,16 @@ describe('Flow Operations Plugin', () => {
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type UnionTestQuery = ({
+      export type UnionTestQuery = ({|
         ...{ __typename?: 'Query' },
-      ...{| unionTest?: ?({
+      ...{| unionTest?: ?({|
           ...{ __typename?: 'User' },
         ...$Pick<User, {| id: * |}>
-      }) | ({
+      |}) | ({|
           ...{ __typename?: 'Profile' },
         ...$Pick<Profile, {| age?: * |}>
-      }) |}
-    });
+      |}) |}
+    |});
       `);
       validateFlow(result);
     });
@@ -396,16 +396,16 @@ describe('Flow Operations Plugin', () => {
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type UnionTestQuery = ({
+      export type UnionTestQuery = ({|
         ...{ __typename: 'Query' },
-      ...{| unionTest?: ?({
+      ...{| unionTest?: ?({|
           ...{ __typename: 'User' },
         ...$Pick<User, {| id: * |}>
-      }) | ({
+      |}) | ({|
           ...{ __typename: 'Profile' },
         ...$Pick<Profile, {| age?: * |}>
-      }) |}
-    });
+      |}) |}
+    |});
       `);
       validateFlow(result);
     });
@@ -443,20 +443,20 @@ describe('Flow Operations Plugin', () => {
         ),
       ]);
       expect(result).toBeSimilarStringTo(`
-      export type NotificationsQuery = ({
+      export type NotificationsQuery = ({|
         ...{ __typename?: 'Query' },
-      ...{| notifications: Array<({
+      ...{| notifications: Array<({|
           ...{ __typename?: 'TextNotification' },
         ...$Pick<TextNotification, {| text: *, id: * |}>
-      }) | ({
+      |}) | ({|
           ...{ __typename?: 'ImageNotification' },
         ...$Pick<ImageNotification, {| imageUrl: *, id: * |}>,
-        ...{| metadata: ({
+        ...{| metadata: ({|
             ...{ __typename?: 'ImageMetadata' },
           ...$Pick<ImageMetadata, {| createdBy: * |}>
-        }) |}
-      })> |}
-    });
+        |}) |}
+      |})> |}
+    |});
       `);
       validateFlow(result);
     });
@@ -562,18 +562,18 @@ describe('Flow Operations Plugin', () => {
 
 type $Pick<Origin: Object, Keys: Object> = $ObjMapi<Keys, <Key>(k: Key) => $ElementType<Origin, Key>>;
 
-export type UserFieldsFragment = ({
+export type UserFieldsFragment = ({|
     ...$Pick<User, {| id: *, username: *, role?: * |}>,
   ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-});
+|});
 
 export type MeQueryVariables = {};
 
 
-export type MeQuery = {| me?: ?({
+export type MeQuery = {| me?: ?({|
       ...$Pick<User, {| id: *, username: *, role?: * |}>,
     ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-  }) |};
+  |}) |};
 "
 `);
       validateFlow(result);
@@ -680,10 +680,10 @@ export type MeQuery = {| me?: ?({
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type MeQuery = {| me?: ?({
+      export type MeQuery = {| me?: ?({|
             ...$Pick<User, {| username: *, id: * |}>,
           ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-        }) |};
+        |}) |};
       `);
       validateFlow(result);
     });
@@ -724,10 +724,10 @@ export type MeQuery = {| me?: ?({
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type MeQuery = {| me?: ?({
+      export type MeQuery = {| me?: ?({|
         ...$Pick<User, {| username: *, id: * |}>,
       ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-      }) |};
+      |}) |};
       `);
       validateFlow(result);
     });
@@ -766,10 +766,10 @@ export type MeQuery = {| me?: ?({
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type NotificationsQuery = {| notifications: Array<$Pick<TextNotification, {| text: *, id: * |}> | ({
+      export type NotificationsQuery = {| notifications: Array<$Pick<TextNotification, {| text: *, id: * |}> | ({|
         ...$Pick<ImageNotification, {| imageUrl: *, id: * |}>,
       ...{| metadata: $Pick<ImageMetadata, {| createdBy: * |}> |}
-    })> |};
+    |})> |};
       `);
       validateFlow(result);
     });
@@ -837,10 +837,10 @@ export type MeQuery = {| me?: ?({
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type CurrentUserQuery = {| me?: ?({
+      export type CurrentUserQuery = {| me?: ?({|
         ...$Pick<User, {| username: *, id: * |}>,
       ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-    }) |};
+    |}) |};
       `);
       validateFlow(result);
     });
@@ -881,10 +881,10 @@ export type MeQuery = {| me?: ?({
         };`,
       );
       expect(result).toBeSimilarStringTo(`
-      export type MeQuery = {| currentUser?: ?$Pick<User, {| login: *, html_url: * |}>, entry?: ?({
+      export type MeQuery = {| currentUser?: ?$Pick<User, {| login: *, html_url: * |}>, entry?: ?({|
         ...$Pick<Entry, {| id: *, createdAt: * |}>,
       ...{| postedBy: $Pick<User, {| login: *, html_url: * |}> |}
-    }) |};
+    |}) |};
       `);
       validateFlow(result);
     });
@@ -936,10 +936,10 @@ export type MeQuery = {| me?: ?({
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type DummyQuery = ({
+      export type DummyQuery = ({|
         ...{| customName?: $ElementType<Query, 'dummy'> |},
       ...{| customName2?: ?$Pick<Profile, {| age?: * |}> |}
-    });
+    |});
       `);
       validateFlow(result);
     });
@@ -972,10 +972,10 @@ export type MeQuery = {| me?: ?({
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type CurrentUserQuery = {| me?: ?({
+      export type CurrentUserQuery = {| me?: ?({|
         ...$Pick<User, {| id: *, username: *, role?: * |}>,
       ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-    }) |};
+    |}) |};
       `);
 
       validateFlow(result);
@@ -1008,10 +1008,10 @@ export type MeQuery = {| me?: ?({
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type UserFieldsFragment = ({
+      export type UserFieldsFragment = ({|
         ...$Pick<User, {| id: *, username: * |}>,
       ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-    });
+    |});
       `);
       validateFlow(result);
     });
@@ -1045,10 +1045,10 @@ export type MeQuery = {| me?: ?({
       ]);
 
       expect(result).toBeSimilarStringTo(`
-      export type LoginMutation = {| login?: ?({
+      export type LoginMutation = {| login?: ?({|
         ...$Pick<User, {| id: *, username: * |}>,
       ...{| profile?: ?$Pick<Profile, {| age?: * |}> |}
-    }) |};
+    |}) |};
       `);
       validateFlow(result);
     });
@@ -1228,11 +1228,11 @@ export type MeQuery = {| me?: ?({
       )) as Types.ComplexPluginOutput;
       expect(result.content).toMatchSnapshot();
       expect(result.content).toBeSimilarStringTo(`
-      export type CurrentUserQuery = {| +me?: ?({
+      export type CurrentUserQuery = {| +me?: ?({|
         ...$Pick<User, {| +id: *, +username: * |}>,
         ...{| +adminRole?: $ElementType<User, 'role'> |},
         ...{| +profile?: ?$Pick<Profile, {| +age?: * |}> |}
-    }) |};
+    |}) |};
       `);
 
       validateFlow(result);
