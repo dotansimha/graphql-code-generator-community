@@ -1,5 +1,14 @@
 # @graphql-codegen/flow-operations
 
+## 3.0.1
+
+### Patch Changes
+
+- [#15](https://github.com/dotansimha/graphql-code-generator-community/pull/15)
+  [`d13f6cc`](https://github.com/dotansimha/graphql-code-generator-community/commit/d13f6cc85aa19337e29b0d964e57aa3a67b9f62f)
+  Thanks [@Athelian](https://github.com/Athelian)! - Flow types computed by graphql operations now
+  adhere to flow exact configuration specified by the user
+
 ## 3.0.0
 
 ### Major Changes
