@@ -48,7 +48,7 @@
     "tslib": "~2.6.0"
   },
   "devDependencies": {
-    "@apollo/client": "3.9.4",
+    "@apollo/client": "3.9.5",
     "@graphql-codegen/core": "2.6.3",
     "@graphql-codegen/testing": "1.18.0",
     "@graphql-codegen/typescript-operations": "2.5.6",
