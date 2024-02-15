@@ -55,7 +55,7 @@
     "tslib": "~2.6.0"
   },
   "devDependencies": {
-    "@reduxjs/toolkit": "2.2.0",
+    "@reduxjs/toolkit": "2.2.1",
     "@rtk-query/graphql-request-base-query": "2.2.0",
     "graphql-request": "^4.0.0"
   },
