@@ -1,5 +1,13 @@
 # @graphql-codegen/java
 
+## 4.0.1
+
+### Patch Changes
+
+- [#638](https://github.com/dotansimha/graphql-code-generator-community/pull/638)
+  [`d13334e`](https://github.com/dotansimha/graphql-code-generator-community/commit/d13334e76599f5d74129f4b113f02468490442c3)
+  Thanks [@optionsome](https://github.com/optionsome)! - Add null validation for enum arguments
+
 ## 4.0.0
 
 ### Major Changes
