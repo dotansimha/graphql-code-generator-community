@@ -252,7 +252,7 @@ export class JavaResolversVisitor extends BaseVisitor<
           return indentMultiline(
             `if (args.get("${arg.name.value}") instanceof ${typeToUse.typeName}) {
   this.${this.config.classMembersPrefix}${arg.name.value} = (${typeToUse.typeName}) args.get("${arg.name.value}");
-} else {
+} else if (args.get("${arg.name.value}") != null) {
   this.${this.config.classMembersPrefix}${arg.name.value} = ${typeToUse.typeName}.valueOf((String) args.get("${arg.name.value}"));
 }`,
             3,
