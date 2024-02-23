@@ -242,7 +242,7 @@ describe('Java', () => {
       const result = await plugin(schema, [], {}, { outputFile: OUTPUT_FILE });
       expect(result).toBeSimilarStringTo(`if (args.get("sort") instanceof ResultSort) {
         this.sort = (ResultSort) args.get("sort");
-      } else {
+      } else if (args.get("sort") != null) {
         this.sort = ResultSort.valueOf((String) args.get("sort"));
       }`);
     });
@@ -289,7 +289,7 @@ describe('Java', () => {
             this.dateOfBirth = (Object) args.get("dateOfBirth");
             if (args.get("sort") instanceof ResultSort) {
               this.sort = (ResultSort) args.get("sort");
-            } else {
+            } else if (args.get("sort") != null) {
               this.sort = ResultSort.valueOf((String) args.get("sort"));
             }
             this.metadata = new MetadataSearchInput((Map<String, Object>) args.get("metadata"));
@@ -422,7 +422,7 @@ describe('Java', () => {
     //   const result = await plugin(schema, [], {}, { outputFile: OUTPUT_FILE });
     //   expect(result).toBeSimilarStringTo(`if (args.get("sort") instanceof ResultSort) {
     //     this.sort = (ResultSort) args.get("sort");
-    //   } else {
+    //   } else if (args.get("sort") != null) {
     //     this.sort = ResultSort.valueOf((String) args.get("sort"));
     //   }`);
     // });
