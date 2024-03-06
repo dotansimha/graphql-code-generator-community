@@ -1,5 +1,15 @@
 # @graphql-codegen/typescript-vue-urql
 
+## 3.1.0
+
+### Minor Changes
+
+- [#494](https://github.com/dotansimha/graphql-code-generator-community/pull/494)
+  [`b79e1a0`](https://github.com/dotansimha/graphql-code-generator-community/commit/b79e1a0f348d743b061f3d5f3cfae5636c504b35)
+  Thanks [@mlesin](https://github.com/mlesin)! - Generate explicit type for variables used in a
+  subscription to work with urql v4 Possibly a breaking change - now it requires to define empty
+  object for variables argument if no variables are used in subscription
+
 ## 3.0.0
 
 ### Major Changes
