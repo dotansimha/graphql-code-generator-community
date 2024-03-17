@@ -4,8 +4,8 @@ exports[`urql Composition Should generate subscription hooks 1`] = `
 "import gql from 'graphql-tag';
 import * as Urql from '@urql/vue';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-type AllowReactiveInput<T> = {
-  [K in keyof T]: T[K] extends object ? AllowReactiveInput<T[K]> | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]> : T[K] | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]>;
+type VueReactiveInput<T> = {
+  [K in keyof T]: T[K] extends object ? VueReactiveInput<T[K]> | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]> : T[K] | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]>;
 };
 
 export const ListenToCommentsDocument = gql\`
@@ -25,12 +25,12 @@ exports[`urql Composition should allow importing operations and documents from a
 "import * as Operations from '@myproject/generated';
 import * as Urql from '@urql/vue';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-type AllowReactiveInput<T> = {
-  [K in keyof T]: T[K] extends object ? AllowReactiveInput<T[K]> | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]> : T[K] | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]>;
+type VueReactiveInput<T> = {
+  [K in keyof T]: T[K] extends object ? VueReactiveInput<T[K]> | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]> : T[K] | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]>;
 };
 
 
-export function useTestQuery(options: Omit<Urql.UseQueryArgs<never, AllowReactiveInput<Operations.TestQueryVariables>>, 'query'>) {
-  return Urql.useQuery<Operations.TestQuery, AllowReactiveInput<Operations.TestQueryVariables>>({ query: Operations.TestDocument, ...options });
+export function useTestQuery(options: Omit<Urql.UseQueryArgs<never, VueReactiveInput<Operations.TestQueryVariables>>, 'query'>) {
+  return Urql.useQuery<Operations.TestQuery, VueReactiveInput<Operations.TestQueryVariables>>({ query: Operations.TestDocument, ...options });
 };"
 `;

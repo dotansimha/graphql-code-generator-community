@@ -16,8 +16,8 @@ export interface UrqlPluginConfig extends ClientSideBasePluginConfig {
   urqlImportFrom: string;
 }
 
-export const ALLOW_REACTIVE_SIGNATURE = `type AllowReactiveInput<T> = {
-  [K in keyof T]: T[K] extends object ? AllowReactiveInput<T[K]> | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]> : T[K] | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]>;
+export const VUE_REACTIVE_INPUT_SIGNATURE = `type VueReactiveInput<T> = {
+  [K in keyof T]: T[K] extends object ? VueReactiveInput<T[K]> | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]> : T[K] | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]>;
 };`;
 
 export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, UrqlPluginConfig> {
@@ -80,7 +80,7 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
   }
 
   public getAllowReactiveDefinition(): string {
-    return `${ALLOW_REACTIVE_SIGNATURE}`;
+    return `${VUE_REACTIVE_INPUT_SIGNATURE}`;
   }
 
   private _buildCompositionFn(
@@ -110,8 +110,8 @@ export function use${operationName}<R = ${operationResultType}>(options: Omit<Ur
     }
 
     return `
-export function use${operationName}(options: Omit<Urql.Use${operationType}Args<never, AllowReactiveInput<${operationVariablesTypes}>>, 'query'>) {
-  return Urql.use${operationType}<${operationResultType}, AllowReactiveInput<${operationVariablesTypes}>>({ query: ${documentVariableName}, ...options });
+export function use${operationName}(options: Omit<Urql.Use${operationType}Args<never, VueReactiveInput<${operationVariablesTypes}>>, 'query'>) {
+  return Urql.use${operationType}<${operationResultType}, VueReactiveInput<${operationVariablesTypes}>>({ query: ${documentVariableName}, ...options });
 };`;
   }
 
