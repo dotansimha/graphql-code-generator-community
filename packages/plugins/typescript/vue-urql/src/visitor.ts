@@ -56,13 +56,6 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
 
     autoBind(this);
   }
-  public getWrapperDefinitions(): string[] {
-    return [ALLOW_REACTIVE_SIGNATURE];
-  }
-
-  public getAllowReactiveDefinition(): string {
-    return `${this.getExportPrefix()}${ALLOW_REACTIVE_SIGNATURE}`;
-  }
 
   public getImports(): string[] {
     const baseImports = super.getImports();
@@ -80,6 +73,14 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
     imports.push(OMIT_TYPE);
 
     return [...baseImports, ...imports];
+  }
+
+  public getWrapperDefinitions(): string[] {
+    return [this.getAllowReactiveDefinition()];
+  }
+
+  public getAllowReactiveDefinition(): string {
+    return `${ALLOW_REACTIVE_SIGNATURE}`;
   }
 
   private _buildCompositionFn(
