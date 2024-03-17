@@ -28,7 +28,7 @@ export const plugin: PluginFunction<VueUrqlRawPluginConfig, Types.ComplexPluginO
   const visitorResult = oldVisit(allAst, { leave: visitor });
 
   return {
-    prepend: [visitor.getImports(), visitor.getWrapperDefinitions()],
+    prepend: [...visitor.getImports(), ...visitor.getWrapperDefinitions()],
     content: [
       visitor.fragments,
       ...visitorResult.definitions.filter(t => typeof t === 'string'),
