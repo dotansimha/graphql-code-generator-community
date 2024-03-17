@@ -16,6 +16,10 @@ export interface UrqlPluginConfig extends ClientSideBasePluginConfig {
   urqlImportFrom: string;
 }
 
+export const ALLOW_REACTIVE_SIGNATURE = `type AllowReactiveInput<T> = {
+  [K in keyof T]: T[K] extends object ? AllowReactiveInput<T[K]> | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]> : T[K] | Ref<T[K]> | ComputedRef<T[K]> | Reactive<T[K]>;
+};`;
+
 export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, UrqlPluginConfig> {
   private _externalImportPrefix = '';
 
@@ -51,6 +55,13 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
     }
 
     autoBind(this);
+  }
+  public getWrapperDefinitions(): string[] {
+    return [ALLOW_REACTIVE_SIGNATURE];
+  }
+
+  public getAllowReactiveDefinition(): string {
+    return `${this.getExportPrefix()}${ALLOW_REACTIVE_SIGNATURE}`;
   }
 
   public getImports(): string[] {
