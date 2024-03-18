@@ -477,8 +477,8 @@ query MyFeed {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-export function useFeedQuery(options: Omit<Urql.UseQueryArgs<never, VueReactiveInput<FeedQueryVariables>>, 'query'>) {
-  return Urql.useQuery<FeedQuery, VueReactiveInput<FeedQueryVariables>>({ query: FeedDocument, ...options });
+export function useFeedQuery(options: Omit<Urql.UseQueryArgs<never, WrapRefs<FeedQueryVariables>>, 'query'>) {
+  return Urql.useQuery<FeedQuery, WrapRefs<FeedQueryVariables>>({ query: FeedDocument, ...options });
 };`);
 
       expect(content.content).toBeSimilarStringTo(`
