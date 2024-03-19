@@ -35,11 +35,27 @@ type GraphQLOperationArgs = {
 };
 
 // https://github.com/graphql/graphql-over-http/blob/main/spec/GraphQLOverHTTP.md#legacy-watershed
-const Accept = 'application/graphql-response+json; charset=utf-8, application/json; charset=utf-8';
+const headers = {
+  Accept:
+    "application/graphql-response+json; charset=utf-8, application/json; charset=utf-8",
+  "Content-Type": "application/json",
+};
 
-const makeGraphQLClient = Http.client.mapRequest(
-  Http.request.setHeaders({ Accept, 'Content-Type': 'application/json' }),
-);
+const makeGraphQLClient = <Data>() =>
+  Effect.map(Http.client.Client, client =>
+    Http.client.mapRequest(client, Http.request.setHeaders(headers)).pipe(
+      Http.client.filterStatusOk,
+      Http.client.mapEffectScoped(res =>
+        Effect.flatMap(res.json, _ => {
+          const result = { body: _ as ExecutionResult<Data>, headers: res.headers };
+
+          return result.body.data
+            ? Effect.succeed(result as GraphQLSuccessResponse<Data>)
+            : Effect.fail(new MissingDataGraphQLResponseError(result));
+        }),
+      ),
+    ),
+  );
 
 const makeGraphQLOperation =
   <Vars, Data>({ document, fallbackOperationName }: GraphQLOperationArgs) =>
@@ -47,31 +63,14 @@ const makeGraphQLOperation =
     const operationName = opts?.preferredOpName ?? fallbackOperationName;
     const query = ${documentMode === DocumentMode.string ? 'document' : 'print(document)'};
 
-    return Effect.flatMap(Http.client.Client, client =>
+    return Effect.flatMap(makeGraphQLClient<Data>(), client =>
       Http.request.post('').pipe(
         Http.request.jsonBody({
           query,
           operationName,
           variables,
         }),
-        Effect.flatMap(Http.client.filterStatusOk(makeGraphQLClient(client))),
-        Effect.flatMap(
-          Http.response.schemaJson(
-            S.struct({
-              body: S.any,
-              headers: S.record(S.string, S.string),
-            }),
-          ),
-        ),
-        Effect.flatMap(res => {
-          const body = res.body as ExecutionResult<Data>;
-          const { headers } = res;
-
-          if (body.data) return Effect.succeed(res as GraphQLSuccessResponse<Data>);
-
-          return Effect.fail(new MissingDataGraphQLResponseError({ body, headers }));
-        }),
-        Effect.scoped,
+        Effect.flatMap(client),
       ),
     );
   };
@@ -128,7 +127,6 @@ export class EffectVisitor extends ClientSideBaseVisitor<
         'graphql',
       ),
       createNamesaceImport('Http', '@effect/platform/HttpClient'),
-      createNamesaceImport('S', '@effect/schema/Schema'),
     ].forEach(_ => this._additionalImports.push(_));
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
