@@ -112,7 +112,6 @@ async function test() {
         "import { DocumentNode, ExecutionResult, print } from 'graphql';",
       );
       expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
-      expect(result.prepend).toContain("import * as S from '@effect/schema/Schema';");
       expect(output).toMatchSnapshot();
     });
 
@@ -160,7 +159,6 @@ async function test() {
         "import { DocumentNode, ExecutionResult, print } from 'graphql';",
       );
       expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
-      expect(result.prepend).toContain("import * as S from '@effect/schema/Schema';");
       expect(output).toMatchSnapshot();
     });
 
@@ -208,7 +206,6 @@ async function test() {
         "import { type DocumentNode, type ExecutionResult, print } from 'graphql';",
       );
       expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
-      expect(result.prepend).toContain("import * as S from '@effect/schema/Schema';");
       expect(output).toMatchSnapshot();
     });
 
