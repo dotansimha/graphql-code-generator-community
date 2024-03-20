@@ -10,21 +10,71 @@ import {
 
 export interface EffectPluginConfig extends ClientSideBasePluginConfig {}
 
-const additionalStaticContent = (documentMode: DocumentMode) => `
-export type GraphQLSuccessResponse<A> = {
-  body: ExecutionResult & { data: A };
-  headers: Record<string, string>;
+const clientCode = `export type GraphQLSuccessResponse<A = any> = Pick<
+  Http.response.ClientResponse,
+  'status' | 'headers'
+> & {
+  readonly body: ExecutionResult & { readonly data: A };
 };
 
-export type GraphQLErrorResponse = {
-  body: Omit<ExecutionResult, 'data'>;
-  headers: Record<string, string>;
+export type GraphQLErrorResponse = Pick<Http.response.ClientResponse, 'status' | 'headers'> & {
+  readonly body: Pick<ExecutionResult, 'errors' | 'extensions'>;
 };
 
 export class MissingDataGraphQLResponseError extends Data.TaggedError(
   'MissingDataGraphQLResponseError',
 )<GraphQLErrorResponse> {}
 
+const headers = {
+  // https://github.com/graphql/graphql-over-http/blob/main/spec/GraphQLOverHTTP.md#legacy-watershed
+  Accept: 'application/graphql-response+json; charset=utf-8, application/json; charset=utf-8',
+  'Content-Type': 'application/json',
+};
+
+export class GraphQLClient extends Context.Tag('GraphQLClient')<
+  GraphQLClient,
+  Http.client.Client<
+    never,
+    Http.error.HttpClientError | MissingDataGraphQLResponseError,
+    GraphQLSuccessResponse
+  >
+>() {
+  static fromDefaultClient(client: Http.client.Client.Default): Layer.Layer<GraphQLClient> {
+    return Layer.succeed(
+      GraphQLClient,
+      client.pipe(
+        Http.client.mapRequest(Http.request.setHeaders(headers)),
+        Http.client.filterStatusOk,
+        Http.client.mapEffectScoped(res =>
+          Effect.flatMap(res.json, _ => {
+            const body = _ as ExecutionResult;
+            return body.data
+              ? Effect.succeed({ ...res, body: { ...body, data: body.data } })
+              : Effect.fail(new MissingDataGraphQLResponseError({ ...res, body }));
+          }),
+        ),
+      ),
+    );
+  }
+
+  static Live: Layer.Layer<GraphQLClient, never, Http.client.Client.Default> = Layer.unwrapEffect(
+    Effect.map(Http.client.Client, GraphQLClient.fromDefaultClient),
+  );
+
+  static fromEndpoint(
+    endpoint: string,
+  ): Layer.Layer<GraphQLClient, never, Http.client.Client.Default> {
+    return Layer.unwrapEffect(
+      Effect.map(Http.client.Client, client =>
+        GraphQLClient.fromDefaultClient(
+          Http.client.mapRequest(client, Http.request.prependUrl(endpoint)),
+        ),
+      ),
+    );
+  }
+}`;
+
+const additionalStaticContent = (documentMode: DocumentMode) => `
 export type GraphQLOperationOptions = {
   preferredOpName?: string;
 };
@@ -34,28 +84,7 @@ type GraphQLOperationArgs = {
   fallbackOperationName: string;
 };
 
-// https://github.com/graphql/graphql-over-http/blob/main/spec/GraphQLOverHTTP.md#legacy-watershed
-const headers = {
-  Accept:
-    "application/graphql-response+json; charset=utf-8, application/json; charset=utf-8",
-  "Content-Type": "application/json",
-};
-
-const makeGraphQLClient = <Data>() =>
-  Effect.map(Http.client.Client, client =>
-    Http.client.mapRequest(client, Http.request.setHeaders(headers)).pipe(
-      Http.client.filterStatusOk,
-      Http.client.mapEffectScoped(res =>
-        Effect.flatMap(res.json, _ => {
-          const result = { body: _ as ExecutionResult<Data>, headers: res.headers };
-
-          return result.body.data
-            ? Effect.succeed(result as GraphQLSuccessResponse<Data>)
-            : Effect.fail(new MissingDataGraphQLResponseError(result));
-        }),
-      ),
-    ),
-  );
+${clientCode}
 
 const makeGraphQLOperation =
   <Vars, Data>({ document, fallbackOperationName }: GraphQLOperationArgs) =>
@@ -63,7 +92,7 @@ const makeGraphQLOperation =
     const operationName = opts?.preferredOpName ?? fallbackOperationName;
     const query = ${documentMode === DocumentMode.string ? 'document' : 'print(document)'};
 
-    return Effect.flatMap(makeGraphQLClient<Data>(), client =>
+    return Effect.flatMap(GraphQLClient, client =>
       Http.request.post('').pipe(
         Http.request.jsonBody({
           query,
@@ -71,6 +100,7 @@ const makeGraphQLOperation =
           variables,
         }),
         Effect.flatMap(client),
+        Effect.map(_ => _ as GraphQLSuccessResponse<Data>),
       ),
     );
   };
@@ -113,8 +143,10 @@ export class EffectVisitor extends ClientSideBaseVisitor<
     [
       createNamedImport(
         [
+          ['Context', 'value'],
           ['Data', 'value'],
           ['Effect', 'value'],
+          ['Layer', 'value'],
         ],
         'effect',
       ),
