@@ -5,17 +5,17 @@ import {
   type PluginValidateFn,
   type Types,
 } from '@graphql-codegen/plugin-helpers';
-import {
-  type LoadedFragment,
-  type RawClientSideBasePluginConfig,
-} from '@graphql-codegen/visitor-plugin-common';
+import type { LoadedFragment } from '@graphql-codegen/visitor-plugin-common';
+import type { RawEffectPluginConfig } from './config.js';
 import { EffectVisitor } from './visitor.js';
 
-export const plugin: PluginFunction<{}> = (
+export const plugin: PluginFunction<RawEffectPluginConfig> = (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: RawClientSideBasePluginConfig,
+  config: RawEffectPluginConfig,
 ) => {
+  if (config.mode === 'client-only') return EffectVisitor.clientContent();
+
   const allAst = concatAST(documents.map(v => v.document));
   const allFragments: LoadedFragment[] = [
     ...(
@@ -46,6 +46,15 @@ export const plugin: PluginFunction<{}> = (
 export const validate: PluginValidateFn<any> = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: RawClientSideBasePluginConfig,
+  config: RawEffectPluginConfig,
   outputFile: string,
-) => {};
+) => {
+  if (
+    config.mode === 'operations-only' &&
+    (!config.relativeClientImportPath || config.relativeClientImportPath.length === 0)
+  ) {
+    throw new Error(
+      `Plugin "typescript-effect" requires the "relativeClientImportPath" configuration option to be a non-empty string when "mode" is set to "operations-only"!`,
+    );
+  }
+};
