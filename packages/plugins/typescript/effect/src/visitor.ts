@@ -4,11 +4,21 @@ import {
   type ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
   DocumentMode,
+  getConfigValue,
   LoadedFragment,
-  type RawClientSideBasePluginConfig,
 } from '@graphql-codegen/visitor-plugin-common';
+import type { RawEffectPluginConfig } from './config.js';
 
-export interface EffectPluginConfig extends ClientSideBasePluginConfig {}
+export type EffectPluginConfig = ClientSideBasePluginConfig &
+  (
+    | {
+        mode?: 'client-only' | 'mixed';
+      }
+    | {
+        mode: 'operations-only';
+        relativeClientImportPath: string;
+      }
+  );
 
 const clientCode = `export type GraphQLSuccessResponse<A = any> = Pick<
   Http.response.ClientResponse,
@@ -74,23 +84,21 @@ export class GraphQLClient extends Context.Tag('GraphQLClient')<
   }
 }`;
 
-const additionalStaticContent = (documentMode: DocumentMode) => `
+const additionalStaticContent = (config: EffectPluginConfig) => `
 export type GraphQLOperationOptions = {
   preferredOpName?: string;
 };
 
 type GraphQLOperationArgs = {
-  document: ${documentMode === DocumentMode.string ? 'string' : 'DocumentNode'};
+  document: ${config.documentMode === DocumentMode.string ? 'string' : 'DocumentNode'};
   fallbackOperationName: string;
 };
-
-${clientCode}
-
+${config.mode === 'operations-only' ? '' : `\n${clientCode}\n`}
 const makeGraphQLOperation =
   <Vars, Data>({ document, fallbackOperationName }: GraphQLOperationArgs) =>
   (variables: Vars, opts?: GraphQLOperationOptions) => {
     const operationName = opts?.preferredOpName ?? fallbackOperationName;
-    const query = ${documentMode === DocumentMode.string ? 'document' : 'print(document)'};
+    const query = ${config.documentMode === DocumentMode.string ? 'document' : 'print(document)'};
 
     return Effect.flatMap(GraphQLClient, client =>
       Http.request.post('').pipe(
@@ -107,7 +115,7 @@ const makeGraphQLOperation =
 `;
 
 export class EffectVisitor extends ClientSideBaseVisitor<
-  RawClientSideBasePluginConfig,
+  RawEffectPluginConfig,
   EffectPluginConfig
 > {
   private _externalImportPrefix: string;
@@ -122,9 +130,12 @@ export class EffectVisitor extends ClientSideBaseVisitor<
   constructor(
     schema: GraphQLSchema,
     fragments: LoadedFragment[],
-    rawConfig: RawClientSideBasePluginConfig,
+    rawConfig: RawEffectPluginConfig,
   ) {
-    super(schema, fragments, rawConfig, {});
+    super(schema, fragments, rawConfig, {
+      mode: getConfigValue(rawConfig.mode, 'mixed'),
+      relativeClientImportPath: getConfigValue(rawConfig.relativeClientImportPath, undefined),
+    });
 
     autoBind(this);
 
@@ -141,29 +152,59 @@ export class EffectVisitor extends ClientSideBaseVisitor<
       `import ${type === 'type' ? 'type ' : ''}* as ${namespace} from '${from}';`;
 
     [
-      createNamedImport(
-        [
-          ['Context', 'value'],
-          ['Data', 'value'],
-          ['Effect', 'value'],
-          ['Layer', 'value'],
-        ],
-        'effect',
-      ),
-      createNamedImport(
-        [
-          ['DocumentNode', 'type'],
-          ['ExecutionResult', 'type'],
-          ['print', 'value'],
-        ],
-        'graphql',
-      ),
+      this.config.mode === 'operations-only'
+        ? createNamedImport([['Effect', 'value']], 'effect')
+        : createNamedImport(
+            [
+              ['Context', 'value'],
+              ['Data', 'value'],
+              ['Effect', 'value'],
+              ['Layer', 'value'],
+            ],
+            'effect',
+          ),
+      this.config.mode === 'operations-only'
+        ? createNamedImport(
+            [
+              ['DocumentNode', 'type'],
+              ['print', 'value'],
+            ],
+            'graphql',
+          )
+        : createNamedImport(
+            [
+              ['DocumentNode', 'type'],
+              ['ExecutionResult', 'type'],
+              ['print', 'value'],
+            ],
+            'graphql',
+          ),
       createNamesaceImport('Http', '@effect/platform/HttpClient'),
-    ].forEach(_ => this._additionalImports.push(_));
+      this.config.mode === 'operations-only'
+        ? createNamedImport(
+            [
+              ['GraphQLClient', 'value'],
+              ['GraphQLSuccessResponse', 'type'],
+            ],
+            this.config.relativeClientImportPath,
+          )
+        : [],
+    ]
+      .flat()
+      .forEach(_ => this._additionalImports.push(_));
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
       ? `${this.config.importOperationTypesFrom}.`
       : '';
+  }
+
+  static clientContent(): string {
+    return `import { Context, Data, Effect, Layer } from 'effect';
+import type { ExecutionResult } from 'graphql';
+import * as Http from '@effect/platform/HttpClient';
+
+${clientCode}
+`;
   }
 
   public OperationDefinition(node: OperationDefinitionNode) {
@@ -210,6 +251,13 @@ export class EffectVisitor extends ClientSideBaseVisitor<
   }
 
   public get sdkContent(): string {
+    if (this.config.mode === 'client-only') {
+      // absurd code path
+      throw new Error(
+        `Plugin "typescript-effect": unexpected call to "sdkContent". Please, report this issue in https://github.com/dotansimha/graphql-code-generator-community.`,
+      );
+    }
+
     const allPossibleOperations = this._operationsToInclude.map(
       ({ node, documentVariableName, operationResultType, operationVariablesTypes }) => {
         const operationName = node.name.value;
@@ -221,8 +269,6 @@ export class EffectVisitor extends ClientSideBaseVisitor<
       },
     );
 
-    return `${additionalStaticContent(this.config.documentMode)}\n${allPossibleOperations.join(
-      '\n',
-    )}\n`;
+    return `${additionalStaticContent(this.config)}\n${allPossibleOperations.join('\n')}\n`;
   }
 }

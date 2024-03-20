@@ -6,10 +6,8 @@ import {
   plugin as tsDocumentsPlugin,
   type TypeScriptDocumentsPluginConfig,
 } from '@graphql-codegen/typescript-operations';
-import {
-  DocumentMode,
-  type RawClientSideBasePluginConfig,
-} from '@graphql-codegen/visitor-plugin-common';
+import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
+import { RawEffectPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
 
 describe('effect', () => {
@@ -48,9 +46,7 @@ describe('effect', () => {
 
   const validate = async (
     content: Types.PluginOutput,
-    config: TypeScriptPluginConfig &
-      TypeScriptDocumentsPluginConfig &
-      RawClientSideBasePluginConfig,
+    config: TypeScriptPluginConfig & TypeScriptDocumentsPluginConfig & RawEffectPluginConfig,
     docs: Types.DocumentFile[],
     pluginSchema: GraphQLSchema,
     usage: string,
@@ -68,7 +64,9 @@ describe('effect', () => {
   };
 
   describe('sdk', () => {
-    const usage = `
+    describe('with (default) mode:mixed configuration', () => {
+      const baseConfig = {};
+      const usage = `
 import { NodeHttpClient } from '@effect/platform-node';
 import { flow } from 'effect';
 
@@ -93,55 +91,132 @@ async function test() {
   }
 }
 `;
-    it('Should generate the correct content', async () => {
-      const config = {};
-      const docs = [{ location: '', document: basicDoc }];
-      const result = (await plugin(schema, docs, config, {
-        outputFile: 'graphql.ts',
-      })) as Types.ComplexPluginOutput;
+      it('Should generate the correct content', async () => {
+        const config = baseConfig;
+        const docs = [{ location: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
 
-      const output = await validate(result, config, docs, schema, usage);
+        const output = await validate(result, config, docs, schema, usage);
 
-      expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
-      expect(result.prepend).toContain(
-        "import { DocumentNode, ExecutionResult, print } from 'graphql';",
-      );
-      expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
-      expect(output).toMatchSnapshot();
+        expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
+        expect(result.prepend).toContain(
+          "import { DocumentNode, ExecutionResult, print } from 'graphql';",
+        );
+        expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
+        expect(output).toMatchSnapshot();
+      });
+
+      it('Should generate the correct content with documentMode=string', async () => {
+        const config = { ...baseConfig, documentMode: DocumentMode.string };
+        const docs = [{ location: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
+
+        const output = await validate(result, config, docs, schema, usage);
+
+        expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
+        expect(result.prepend).toContain(
+          "import { DocumentNode, ExecutionResult, print } from 'graphql';",
+        );
+        expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
+        expect(output).toMatchSnapshot();
+      });
+
+      it('Should support useTypeImports', async () => {
+        const config = { ...baseConfig, useTypeImports: true };
+        const docs = [{ location: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
+
+        const output = await validate(result, config, docs, schema, usage);
+
+        expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
+        expect(result.prepend).toContain(
+          "import { type DocumentNode, type ExecutionResult, print } from 'graphql';",
+        );
+        expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
+        expect(output).toMatchSnapshot();
+      });
     });
 
-    it('Should generate the correct content with documentMode=string', async () => {
-      const config = { documentMode: DocumentMode.string };
-      const docs = [{ location: '', document: basicDoc }];
-      const result = (await plugin(schema, docs, config, {
-        outputFile: 'graphql.ts',
-      })) as Types.ComplexPluginOutput;
+    describe('with mode:operations-only configuration', () => {
+      const baseConfig = {
+        mode: 'operations-only',
+        relativeClientImportPath: './client.js',
+      } as const;
+      const usage = '';
 
-      const output = await validate(result, config, docs, schema, usage);
+      it('Should generate the correct content', async () => {
+        const config = baseConfig;
+        const docs = [{ location: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
 
-      expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
-      expect(result.prepend).toContain(
-        "import { DocumentNode, ExecutionResult, print } from 'graphql';",
-      );
-      expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
-      expect(output).toMatchSnapshot();
+        const output = await validate(result, config, docs, schema, usage);
+
+        expect(result.prepend).toContain("import { Effect } from 'effect';");
+        expect(result.prepend).toContain("import { DocumentNode, print } from 'graphql';");
+        expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
+        expect(result.prepend).toContain(
+          "import { GraphQLClient, GraphQLSuccessResponse } from './client.js';",
+        );
+        expect(output).toMatchSnapshot();
+      });
+
+      it('Should generate the correct content with documentMode=string', async () => {
+        const config = { ...baseConfig, documentMode: DocumentMode.string };
+        const docs = [{ location: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
+
+        const output = await validate(result, config, docs, schema, usage);
+
+        expect(result.prepend).toContain("import { Effect } from 'effect';");
+        expect(result.prepend).toContain("import { DocumentNode, print } from 'graphql';");
+        expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
+        expect(result.prepend).toContain(
+          "import { GraphQLClient, GraphQLSuccessResponse } from './client.js';",
+        );
+        expect(output).toMatchSnapshot();
+      });
+
+      it('Should support useTypeImports', async () => {
+        const config = { ...baseConfig, useTypeImports: true };
+        const docs = [{ location: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
+
+        const output = await validate(result, config, docs, schema, usage);
+
+        expect(result.prepend).toContain("import { Effect } from 'effect';");
+        expect(result.prepend).toContain("import { type DocumentNode, print } from 'graphql';");
+        expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
+        expect(result.prepend).toContain(
+          "import { GraphQLClient, type GraphQLSuccessResponse } from './client.js';",
+        );
+        expect(output).toMatchSnapshot();
+      });
     });
 
-    it('Should support useTypeImports', async () => {
-      const config = { useTypeImports: true };
-      const docs = [{ location: '', document: basicDoc }];
-      const result = (await plugin(schema, docs, config, {
-        outputFile: 'graphql.ts',
-      })) as Types.ComplexPluginOutput;
+    describe('with mode:client-only configuration', () => {
+      const baseConfig = { mode: 'client-only' } as const;
 
-      const output = await validate(result, config, docs, schema, usage);
+      it('Should generate the correct content', async () => {
+        const config = baseConfig;
+        const docs = [{ location: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql-client.ts',
+        })) as Types.ComplexPluginOutput;
 
-      expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
-      expect(result.prepend).toContain(
-        "import { type DocumentNode, type ExecutionResult, print } from 'graphql';",
-      );
-      expect(result.prepend).toContain("import * as Http from '@effect/platform/HttpClient';");
-      expect(output).toMatchSnapshot();
+        expect(result).toMatchSnapshot();
+      });
     });
 
     it('Should log a warning when an operation is anonymous', async () => {
