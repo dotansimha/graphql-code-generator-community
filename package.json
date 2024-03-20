@@ -11,6 +11,7 @@
     "packages/plugins/other/*",
     "packages/presets/*"
   ],
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "build": "bob build",
     "ci:lint": "eslint --ext .ts . --output-file eslint_report.json --format json",
