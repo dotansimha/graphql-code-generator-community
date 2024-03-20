@@ -1459,20 +1459,20 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@effect/platform-node-shared@^0.3.12":
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/@effect/platform-node-shared/-/platform-node-shared-0.3.12.tgz#a2c4e199e63579604176e536d49fe0dc140a1be1"
-  integrity sha512-sbjA6lW4mTN5cSVNzm9rGuObYY61AQzGxzbdtV/J8ATWK5jBLZMh5M5/1vAjiStF1hMI5koF8ZBUZ3p3vyNF0g==
+"@effect/platform-node-shared@^0.3.13":
+  version "0.3.13"
+  resolved "https://registry.yarnpkg.com/@effect/platform-node-shared/-/platform-node-shared-0.3.13.tgz#fcad21159ab77dd9f0c146a04351a13f02b72507"
+  integrity sha512-DW0xLaYH7PyXbLaTzve9iOUc0F+T3kPE/j5UeOm3wu1MffgwA31HzWhiwvbvjF+qLPqTrthYIZlhFEFC/zjOZg==
   dependencies:
     "@parcel/watcher" "^2.4.1"
     multipasta "^0.1.21"
 
 "@effect/platform-node@~0.45.14":
-  version "0.45.14"
-  resolved "https://registry.yarnpkg.com/@effect/platform-node/-/platform-node-0.45.14.tgz#cc353e7ddff99955fe0e1b1c307ab14d0d43c614"
-  integrity sha512-HveyfM+UrUjOOfmstyvXII4QlYUvYIuMgptw79h3VzmAPhTDa6fS6S/3MpDtE+8INFzNjHuo/1DKB/BF0rDFNg==
+  version "0.45.15"
+  resolved "https://registry.yarnpkg.com/@effect/platform-node/-/platform-node-0.45.15.tgz#d5cdc52d0bea097acf554f94029104d5b0bd35be"
+  integrity sha512-cXxDLIpEEgLO0v4YXK8JHS63x3/mGaAoR/QYueu4+DAIwVc0BykurYQh+n1PMKJvvHHprDK8G0xndRWwP0/Neg==
   dependencies:
-    "@effect/platform-node-shared" "^0.3.12"
+    "@effect/platform-node-shared" "^0.3.13"
     mime "^3.0.0"
     ws "^8.16.0"
 

@@ -68,27 +68,16 @@ describe('effect', () => {
   };
 
   describe('sdk', () => {
-    it('Should generate the correct content', async () => {
-      const config = {};
-      const docs = [{ location: '', document: basicDoc }];
-      const result = (await plugin(schema, docs, config, {
-        outputFile: 'graphql.ts',
-      })) as Types.ComplexPluginOutput;
-
-      const usage = `
-import { Layer } from 'effect';
+    const usage = `
 import { NodeHttpClient } from '@effect/platform-node';
+import { flow } from 'effect';
 
-const HttpClientLive = Layer.effect(
-  Http.client.Client,
-  Effect.map(
-    Http.client.Client,
-    Http.client.mapRequest(Http.request.prependUrl('http://localhost:4000/graphql')),
+const run = flow(
+  Effect.provide(
+    GraphQLClient.fromEndpoint('http://localhost:4000/graphql').pipe(Layer.provide(NodeHttpClient.layer)),
   ),
-).pipe(Layer.provide(NodeHttpClient.layer));
-
-const run = <A, E>(e: Effect.Effect<A, E, Http.client.Client.Default>) =>
-  e.pipe(Effect.provide(HttpClientLive), Effect.runPromise);
+  Effect.runPromise
+);
 
 async function test() {
   await run(feed({}));
@@ -104,10 +93,16 @@ async function test() {
   }
 }
 `;
+    it('Should generate the correct content', async () => {
+      const config = {};
+      const docs = [{ location: '', document: basicDoc }];
+      const result = (await plugin(schema, docs, config, {
+        outputFile: 'graphql.ts',
+      })) as Types.ComplexPluginOutput;
 
       const output = await validate(result, config, docs, schema, usage);
 
-      expect(result.prepend).toContain("import { Data, Effect } from 'effect';");
+      expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
       expect(result.prepend).toContain(
         "import { DocumentNode, ExecutionResult, print } from 'graphql';",
       );
@@ -122,39 +117,9 @@ async function test() {
         outputFile: 'graphql.ts',
       })) as Types.ComplexPluginOutput;
 
-      const usage = `
-import { Layer } from 'effect';
-import { NodeHttpClient } from '@effect/platform-node';
-
-const HttpClientLive = Layer.effect(
-  Http.client.Client,
-  Effect.map(
-    Http.client.Client,
-    Http.client.mapRequest(Http.request.prependUrl('http://localhost:4000/graphql')),
-  ),
-).pipe(Layer.provide(NodeHttpClient.layer));
-
-const run = <A, E>(e: Effect.Effect<A, E, Http.client.Client.Default>) =>
-  e.pipe(Effect.provide(HttpClientLive), Effect.runPromise);
-
-async function test() {
-  await run(feed({}));
-  await run(feed3({}));
-  await run(feed4({}));
-
-  const { body: { data } } = await run(feed2({}));
-
-  if (data.feed) {
-    if (data.feed[0]) {
-      const id = data.feed[0].id
-    }
-  }
-}
-`;
-
       const output = await validate(result, config, docs, schema, usage);
 
-      expect(result.prepend).toContain("import { Data, Effect } from 'effect';");
+      expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
       expect(result.prepend).toContain(
         "import { DocumentNode, ExecutionResult, print } from 'graphql';",
       );
@@ -169,39 +134,9 @@ async function test() {
         outputFile: 'graphql.ts',
       })) as Types.ComplexPluginOutput;
 
-      const usage = `
-import { Layer } from 'effect';
-import { NodeHttpClient } from '@effect/platform-node';
-
-const HttpClientLive = Layer.effect(
-  Http.client.Client,
-  Effect.map(
-    Http.client.Client,
-    Http.client.mapRequest(Http.request.prependUrl('http://localhost:4000/graphql')),
-  ),
-).pipe(Layer.provide(NodeHttpClient.layer));
-
-const run = <A, E>(e: Effect.Effect<A, E, Http.client.Client.Default>) =>
-  e.pipe(Effect.provide(HttpClientLive), Effect.runPromise);
-
-async function test() {
-  await run(feed({}));
-  await run(feed3({}));
-  await run(feed4({}));
-
-  const { body: { data } } = await run(feed2({}));
-
-  if (data.feed) {
-    if (data.feed[0]) {
-      const id = data.feed[0].id
-    }
-  }
-}
-`;
-
       const output = await validate(result, config, docs, schema, usage);
 
-      expect(result.prepend).toContain("import { Data, Effect } from 'effect';");
+      expect(result.prepend).toContain("import { Context, Data, Effect, Layer } from 'effect';");
       expect(result.prepend).toContain(
         "import { type DocumentNode, type ExecutionResult, print } from 'graphql';",
       );
