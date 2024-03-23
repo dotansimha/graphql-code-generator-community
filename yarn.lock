@@ -2736,9 +2736,9 @@
   integrity sha512-dbszrDgTyTM1ndvdTe4X7RUciVi2zXxjHhTIrWOSvU3FODX4+90uSVtdn5bXwTuwqM4bxVEc1ekaLYEUeiNLsg==
 
 "@urql/introspection@^1.0.0":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@urql/introspection/-/introspection-1.0.2.tgz#220769ab8b8a18737a45dda89ee9b5abf37fe0c5"
-  integrity sha512-vPuX+DjbmL5EUsvwgAMV8dkxc7JKuuNTzDfsNvtCuVmbAED4Nx39p08HImjTWAewSatjyzZZs+fAhU7z/4P+UQ==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@urql/introspection/-/introspection-1.0.3.tgz#e35ffe8aa03e91df7472b07d7d730d8bb029ec10"
+  integrity sha512-5zgnfUDV10c3qudqYvfZ/rOtWVB2QvqanmoDMttqpt+TCCPkSUZdb2qcLCEB6DL7ph8mQRTZhXI29J57nTnqKg==
 
 "@whatwg-node/fetch@^0.3.0":
   version "0.3.2"
