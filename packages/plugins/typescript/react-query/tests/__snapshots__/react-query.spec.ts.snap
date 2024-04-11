@@ -648,7 +648,6 @@ export const useTestMutation = <
 exports[`React-Query fetcher: graphql-request Should generate query correctly with client: prepend 1`] = `
 [
   "import { GraphQLClient } from 'graphql-request';",
-  "import { RequestInit } from 'graphql-request/dist/types.dom';",
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "
 function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
@@ -723,7 +722,6 @@ exports[`React-Query fetcher: graphql-request with clientImportPath Should gener
 [
   "import { client as graphqlClient } from 'client.ts';",
   "import { GraphQLClient } from 'graphql-request';",
-  "import { RequestInit } from 'graphql-request/dist/types.dom';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
   "
 function fetcher<TData, TVariables extends { [key: string]: any }>(query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
