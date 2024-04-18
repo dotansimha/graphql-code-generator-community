@@ -363,12 +363,12 @@ export function useHeroAndFriendsNamesLazyQuery(
   );
 }
 export function useHeroAndFriendsNamesSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroAndFriendsNamesQuery,
-    HeroAndFriendsNamesQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
     HeroAndFriendsNamesDocument,
     options,
@@ -431,9 +431,12 @@ export function useHeroAppearsInLazyQuery(
   );
 }
 export function useHeroAppearsInSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<HeroAppearsInQuery, HeroAppearsInQueryVariables>(
     HeroAppearsInDocument,
     options,
@@ -495,9 +498,12 @@ export function useHeroDetailsLazyQuery(
   );
 }
 export function useHeroDetailsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(
     HeroDetailsDocument,
     options,
@@ -563,12 +569,15 @@ export function useHeroDetailsWithFragmentLazyQuery(
   );
 }
 export function useHeroDetailsWithFragmentSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroDetailsWithFragmentQuery,
-    HeroDetailsWithFragmentQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        HeroDetailsWithFragmentQuery,
+        HeroDetailsWithFragmentQueryVariables
+      >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroDetailsWithFragmentQuery,
     HeroDetailsWithFragmentQueryVariables
@@ -629,9 +638,12 @@ export function useHeroNameLazyQuery(
   return Apollo.useLazyQuery<HeroNameQuery, HeroNameQueryVariables>(HeroNameDocument, options);
 }
 export function useHeroNameSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<HeroNameQuery, HeroNameQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HeroNameQuery, HeroNameQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<HeroNameQuery, HeroNameQueryVariables>(HeroNameDocument, options);
 }
 export type HeroNameQueryHookResult = ReturnType<typeof useHeroNameQuery>;
@@ -692,12 +704,15 @@ export function useHeroNameConditionalInclusionLazyQuery(
   >(HeroNameConditionalInclusionDocument, options);
 }
 export function useHeroNameConditionalInclusionSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroNameConditionalInclusionQuery,
-    HeroNameConditionalInclusionQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        HeroNameConditionalInclusionQuery,
+        HeroNameConditionalInclusionQueryVariables
+      >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
@@ -772,12 +787,15 @@ export function useHeroNameConditionalExclusionLazyQuery(
   >(HeroNameConditionalExclusionDocument, options);
 }
 export function useHeroNameConditionalExclusionSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroNameConditionalExclusionQuery,
-    HeroNameConditionalExclusionQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        HeroNameConditionalExclusionQuery,
+        HeroNameConditionalExclusionQueryVariables
+      >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables
@@ -866,12 +884,15 @@ export function useHeroParentTypeDependentFieldLazyQuery(
   >(HeroParentTypeDependentFieldDocument, options);
 }
 export function useHeroParentTypeDependentFieldSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroParentTypeDependentFieldQuery,
-    HeroParentTypeDependentFieldQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        HeroParentTypeDependentFieldQuery,
+        HeroParentTypeDependentFieldQueryVariables
+      >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroParentTypeDependentFieldQuery,
     HeroParentTypeDependentFieldQueryVariables
@@ -949,12 +970,15 @@ export function useHeroTypeDependentAliasedFieldLazyQuery(
   >(HeroTypeDependentAliasedFieldDocument, options);
 }
 export function useHeroTypeDependentAliasedFieldSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroTypeDependentAliasedFieldQuery,
-    HeroTypeDependentAliasedFieldQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        HeroTypeDependentAliasedFieldQuery,
+        HeroTypeDependentAliasedFieldQueryVariables
+      >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroTypeDependentAliasedFieldQuery,
     HeroTypeDependentAliasedFieldQueryVariables
@@ -1027,12 +1051,12 @@ export function useHumanWithNullHeightLazyQuery(
   );
 }
 export function useHumanWithNullHeightSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HumanWithNullHeightQuery,
-    HumanWithNullHeightQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
     HumanWithNullHeightDocument,
     options,
@@ -1091,9 +1115,12 @@ export function useTwoHeroesLazyQuery(
   return Apollo.useLazyQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
 export function useTwoHeroesSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(
     TwoHeroesDocument,
     options,

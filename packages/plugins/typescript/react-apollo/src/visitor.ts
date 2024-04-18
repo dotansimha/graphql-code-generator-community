@@ -436,8 +436,8 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
         }) + this.config.hooksSuffix;
 
       hookFns.push(
-        `export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
-          const options = {...defaultOptions, ...baseOptions}
+        `export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SkipToken | ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
+          const options = baseOptions === ${this.getApolloReactHooksIdentifier()}.skipToken ? ${this.getApolloReactHooksIdentifier()}.skipToken : {...defaultOptions, ...baseOptions}
           return ${this.getApolloReactHooksIdentifier()}.useSuspenseQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
           node,
           documentVariableName,

@@ -79,12 +79,12 @@ export function useHeroAndFriendsNamesLazyQuery(
   );
 }
 export function useHeroAndFriendsNamesSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroAndFriendsNamesQuery,
-    HeroAndFriendsNamesQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
     HeroAndFriendsNamesDocument,
     options,

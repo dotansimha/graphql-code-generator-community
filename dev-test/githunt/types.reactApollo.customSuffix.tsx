@@ -501,9 +501,12 @@ export function useCommentLazyQuery(
   );
 }
 export function useCommentSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<CommentQueryMyOperation, CommentQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<CommentQueryMyOperation, CommentQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<CommentQueryMyOperation, CommentQueryVariables>(
     CommentDocument,
     options,
@@ -562,12 +565,15 @@ export function useCurrentUserForProfileLazyQuery(
   >(CurrentUserForProfileDocument, options);
 }
 export function useCurrentUserForProfileSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    CurrentUserForProfileQueryMyOperation,
-    CurrentUserForProfileQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        CurrentUserForProfileQueryMyOperation,
+        CurrentUserForProfileQueryVariables
+      >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     CurrentUserForProfileQueryMyOperation,
     CurrentUserForProfileQueryVariables
@@ -628,9 +634,12 @@ export function useFeedLazyQuery(
   return Apollo.useLazyQuery<FeedQueryMyOperation, FeedQueryVariables>(FeedDocument, options);
 }
 export function useFeedSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<FeedQueryMyOperation, FeedQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<FeedQueryMyOperation, FeedQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<FeedQueryMyOperation, FeedQueryVariables>(FeedDocument, options);
 }
 export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;

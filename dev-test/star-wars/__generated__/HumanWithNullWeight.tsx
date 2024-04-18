@@ -60,12 +60,12 @@ export function useHumanWithNullHeightLazyQuery(
   );
 }
 export function useHumanWithNullHeightSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HumanWithNullHeightQuery,
-    HumanWithNullHeightQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
     HumanWithNullHeightDocument,
     options,

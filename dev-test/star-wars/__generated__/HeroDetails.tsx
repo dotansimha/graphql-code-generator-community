@@ -61,9 +61,12 @@ export function useHeroDetailsLazyQuery(
   );
 }
 export function useHeroDetailsSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? Apollo.skipToken : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(
     HeroDetailsDocument,
     options,
