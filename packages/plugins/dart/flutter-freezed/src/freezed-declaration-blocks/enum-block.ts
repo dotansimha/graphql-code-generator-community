@@ -7,7 +7,7 @@ import {
   APPLIES_ON_ENUM_VALUE,
   FlutterFreezedPluginConfig,
 } from '../config/plugin-config.js';
-import { atJsonKeyDecorator, stringIsNotEmpty } from '../utils.js';
+import { atJsonValueDecorator, stringIsNotEmpty } from '../utils.js';
 import { Block } from './index.js';
 
 export class EnumBlock {
@@ -65,13 +65,12 @@ export class EnumBlock {
         );
 
         const comment = Block.buildComment(enumValue);
-        const jsonKey = atJsonKeyDecorator({
-          name: fieldName.value !== enumValueName ? fieldName.value : undefined,
+        const jsonValue = atJsonValueDecorator({
+          value: fieldName.value !== enumValueName ? fieldName.value : undefined,
         });
-        //TODO: @next-version: const jsonValue = @JsonValue(String|int)
         const decorators = [
-          jsonKey,
-          // jsonValue
+          // jsonKey,
+          jsonValue,
         ].join('');
 
         return [comment, decorators, `${enumValueName},\n`]

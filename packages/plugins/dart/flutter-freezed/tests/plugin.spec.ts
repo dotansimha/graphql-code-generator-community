@@ -39,33 +39,33 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         part 'app_models.g.dart';
 
         enum Episode {
-          @JsonKey(name: 'NEWHOPE')
+          @JsonValue('NEWHOPE')
           newhope,
-          @JsonKey(name: 'EMPIRE')
+          @JsonValue('EMPIRE')
           empire,
-          @JsonKey(name: 'JEDI')
+          @JsonValue('JEDI')
           jedi,
-          @JsonKey(name: 'VOID')
+          @JsonValue('VOID')
           void_,
-          @JsonKey(name: 'void')
+          @JsonValue('void')
           void_,
-          @JsonKey(name: 'IN')
+          @JsonValue('IN')
           in_,
-          @JsonKey(name: 'in')
+          @JsonValue('in')
           in_,
-          @JsonKey(name: 'String')
+          @JsonValue('String')
           string,
-          @JsonKey(name: 'ELSE')
+          @JsonValue('ELSE')
           else_,
-          @JsonKey(name: 'else')
+          @JsonValue('else')
           else_,
-          @JsonKey(name: 'SWITCH')
+          @JsonValue('SWITCH')
           switch_,
-          @JsonKey(name: 'switch')
+          @JsonValue('switch')
           switch_,
-          @JsonKey(name: 'FACTORY')
+          @JsonValue('FACTORY')
           factory_,
-          @JsonKey(name: 'factory')
+          @JsonValue('factory')
           factory_,
         }"
       `);
@@ -85,21 +85,21 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
           EMPIRE,
           JEDI,
           VOID,
-          @JsonKey(name: 'void')
+          @JsonValue('void')
           void_,
           IN,
-          @JsonKey(name: 'in')
+          @JsonValue('in')
           in_,
-          @JsonKey(name: 'String')
+          @JsonValue('String')
           String_,
           ELSE,
-          @JsonKey(name: 'else')
+          @JsonValue('else')
           else_,
           SWITCH,
-          @JsonKey(name: 'switch')
+          @JsonValue('switch')
           switch_,
           FACTORY,
-          @JsonKey(name: 'factory')
+          @JsonValue('factory')
           factory_,
         }"
       `);
@@ -115,33 +115,33 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         part 'app_models.g.dart';
 
         enum Episode {
-          @JsonKey(name: 'NEWHOPE')
+          @JsonValue('NEWHOPE')
           Newhope,
-          @JsonKey(name: 'EMPIRE')
+          @JsonValue('EMPIRE')
           Empire,
-          @JsonKey(name: 'JEDI')
+          @JsonValue('JEDI')
           Jedi,
-          @JsonKey(name: 'VOID')
+          @JsonValue('VOID')
           Void,
-          @JsonKey(name: 'void')
+          @JsonValue('void')
           Void,
-          @JsonKey(name: 'IN')
+          @JsonValue('IN')
           In,
-          @JsonKey(name: 'in')
+          @JsonValue('in')
           In,
-          @JsonKey(name: 'String')
+          @JsonValue('String')
           String_,
-          @JsonKey(name: 'ELSE')
+          @JsonValue('ELSE')
           Else,
-          @JsonKey(name: 'else')
+          @JsonValue('else')
           Else,
-          @JsonKey(name: 'SWITCH')
+          @JsonValue('SWITCH')
           Switch,
-          @JsonKey(name: 'switch')
+          @JsonValue('switch')
           Switch,
-          @JsonKey(name: 'FACTORY')
+          @JsonValue('FACTORY')
           Factory,
-          @JsonKey(name: 'factory')
+          @JsonValue('factory')
           Factory,
         }"
       `);
@@ -373,11 +373,11 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         part 'app_models.g.dart';
 
         enum Episode {
-          @JsonKey(name: 'NEWHOPE')
+          @JsonValue('NEWHOPE')
           newhope,
-          @JsonKey(name: 'EMPIRE')
+          @JsonValue('EMPIRE')
           empire,
-          @JsonKey(name: 'JEDI')
+          @JsonValue('JEDI')
           jedi,
         }
 
@@ -665,11 +665,11 @@ describe('The Flutter Freezed plugin produces Freezed models using a GraphQL Sch
         part 'app_models.g.dart';
 
         enum Episode {
-          @JsonKey(name: 'NEWHOPE')
+          @JsonValue('NEWHOPE')
           newhope,
-          @JsonKey(name: 'EMPIRE')
+          @JsonValue('EMPIRE')
           empire,
-          @JsonKey(name: 'JEDI')
+          @JsonValue('JEDI')
           jedi,
         }
 
