@@ -11,9 +11,9 @@
     "packages/plugins/other/*",
     "packages/presets/*"
   ],
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "yarn@4.2.2",
   "scripts": {
-    "build": "bob build",
+    "build": "rimraf dist/ .bob/ tsconfig.tsbuildinfo && bob build",
     "ci:lint": "eslint --ext .ts . --output-file eslint_report.json --format json",
     "clean": "rimraf node_modules/",
     "generate:examples": "yarn generate:examples:cjs",
@@ -21,15 +21,13 @@
     "generate:examples:esm": "graphql-codegen-esm --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
     "lint": "eslint --ext .ts .",
     "postinstall": "patch-package && husky install",
-    "prebuild": "rimraf dist/ .bob/ tsconfig.tsbuildinfo",
-    "prerelease": "yarn build",
     "prettier": "prettier --write --list-different .",
     "prettier:check": "prettier --check .",
-    "release": "changeset publish",
+    "release": "yarn build && changeset publish",
     "test": "jest --forceExit --no-watchman",
     "test-and-build": "yarn build && yarn test",
     "types:check": "tsc --noEmit",
-    "watch-build": "npx tsc-watch --project tsconfig.json --onSuccess \"bob build\""
+    "watch-build": "yarn dlx -p typescript -p tsc-watch tsc-watch --project tsconfig.json --onSuccess \"bob build\""
   },
   "devDependencies": {
     "@babel/core": "7.24.7",
@@ -37,6 +35,7 @@
     "@babel/preset-typescript": "7.24.7",
     "@changesets/changelog-github": "0.5.0",
     "@changesets/cli": "2.27.5",
+    "@graphql-codegen/cli": "^5.0.2",
     "@theguild/prettier-config": "1.1.2",
     "@types/jest": "28.1.8",
     "@types/node": "20.14.7",
@@ -76,7 +75,7 @@
       "prettier --write"
     ],
     "yarn.lock": [
-      "npx yarn-deduplicate"
+      "yarn dedupe"
     ]
   }
 }

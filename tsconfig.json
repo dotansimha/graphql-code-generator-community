@@ -22,6 +22,7 @@
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "ignoreDeprecations": "5.0",
     "paths": {
       "@graphql-codegen/flow": ["packages/plugins/flow/flow/src/index.ts"],
       "@graphql-codegen/flow-operations": ["packages/plugins/flow/operations/src/index.ts"],
