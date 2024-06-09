@@ -2823,8 +2823,18 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       expect(content.prepend[0]).toBeSimilarStringTo(`import * as Apollo from '@apollo/client';`);
 
       expect(content.content).toBeSimilarStringTo(`
-      export function useRepositoryFieldsFragment<F = { id: string }>(identifiers: F) {
+      export function useRepositoryFieldsFragment<F = { id: string }>(
+        identifiers: F,
+        options?: Omit<
+          Apollo.UseFragmentOptions<
+            RepositoryFieldsFragment,
+            Apollo.OperationVariables
+          >,
+          'fragment' | 'fragmentName' | 'from'
+        >,
+      ) {
         return Apollo.useFragment<RepositoryFieldsFragment>({
+          ...options,
           fragment: RepositoryFieldsFragmentDoc,
           fragmentName: "RepositoryFields",
           from: {
