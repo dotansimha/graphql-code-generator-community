@@ -20,11 +20,11 @@ module.exports = ({ dirname, projectMode = true }) => {
     moduleNameMapper: pathsToModuleNameMapper(tsconfig.compilerOptions.paths, {
       prefix: `${ROOT_DIR}/`,
     }),
-    cacheDirectory: resolve(ROOT_DIR, `${CI ? '' : 'node_modules/'}.cache/jest`),
+    cacheDirectory: resolve(ROOT_DIR, `.cache/jest`),
     setupFiles: [`${ROOT_DIR}/dev-test/setup.js`],
     collectCoverage: false,
     testTimeout: 20000,
-    resolver: './node_modules/bob-the-bundler/jest-resolver.cjs',
+    resolver: require.resolve('bob-the-bundler/jest-resolver'),
     snapshotFormat: {
       escapeString: false,
       printBasicPrototype: false,

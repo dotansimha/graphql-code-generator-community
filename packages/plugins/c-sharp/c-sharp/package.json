@@ -33,7 +33,8 @@
     "test": "jest --no-watchman"
   },
   "peerDependencies": {
-    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
+    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0",
+    "graphql-tag": "2.12.6"
   },
   "dependencies": {
     "@graphql-codegen/c-sharp-common": "1.0.0",
@@ -44,7 +45,8 @@
     "unixify": "^1.0.0"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "1.18.0"
+    "@graphql-codegen/testing": "1.18.0",
+    "jest-each": "^28.1.3"
   },
   "publishConfig": {
     "directory": "dist",
