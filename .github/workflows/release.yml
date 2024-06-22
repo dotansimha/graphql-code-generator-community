@@ -8,6 +8,7 @@ jobs:
   stable:
     uses: the-guild-org/shared-config/.github/workflows/release-stable.yml@main
     with:
+      packageManagerVersion: 4.2.2
       releaseScript: release
       nodeVersion: 18
     secrets:
