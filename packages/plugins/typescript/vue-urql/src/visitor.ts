@@ -14,7 +14,16 @@ import { VueUrqlRawPluginConfig } from './config.js';
 export interface UrqlPluginConfig extends ClientSideBasePluginConfig {
   withComposition: boolean;
   urqlImportFrom: string;
+  vueCompositionApiImportFrom: string;
 }
+
+/**
+ *  WrapRefs<T> is a utility type that wraps both T and all children of type Object in `T | Ref<T> | ComputedRef<T>` recursively.
+ *  @urql/vue's useQuery allows for reactive input variables based on Vue's reactivity system.
+ */
+export const VUE_REACTIVE_INPUT_SIGNATURE = `type WrapRefs<T> = {
+  [K in keyof T]: T[K] extends object ? WrapRefs<T[K]> | Ref<T[K]> | ComputedRef<T[K]> : T[K] | Ref<T[K]> | ComputedRef<T[K]>;
+};`;
 
 export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, UrqlPluginConfig> {
   private _externalImportPrefix = '';
@@ -27,6 +36,7 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
     super(schema, fragments, rawConfig, {
       withComposition: getConfigValue(rawConfig.withComposition, true),
       urqlImportFrom: getConfigValue(rawConfig.urqlImportFrom, '@urql/vue'),
+      vueCompositionApiImportFrom: getConfigValue(rawConfig.vueCompositionApiImportFrom, 'vue'),
     });
 
     if (this.config.importOperationTypesFrom) {
@@ -64,11 +74,29 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
 
     if (this.config.withComposition) {
       imports.push(`import * as Urql from '${this.config.urqlImportFrom}';`);
+      imports.push(
+        `import ${this.config.useTypeImports ? 'type ' : ''}{ Ref, ComputedRef } from '${
+          this.config.vueCompositionApiImportFrom
+        }';`,
+      );
     }
 
     imports.push(OMIT_TYPE);
 
     return [...baseImports, ...imports];
+  }
+
+  public getWrapperDefinitions(): string[] {
+    const definitions = [];
+
+    if (this.config.withComposition) {
+      definitions.push(this.getAllowReactiveDefinition());
+    }
+    return definitions;
+  }
+
+  public getAllowReactiveDefinition(): string {
+    return `${VUE_REACTIVE_INPUT_SIGNATURE}`;
   }
 
   private _buildCompositionFn(
@@ -96,6 +124,9 @@ export function use${operationName}<R = ${operationResultType}>(options: Omit<Ur
   return Urql.use${operationType}<${operationResultType}, R, ${operationVariablesTypes}>({ query: ${documentVariableName}, ...options }, handler);
 };`;
     }
+
+    // For queries, wrap the input variables to accept Vue reactive state
+    operationVariablesTypes = `WrapRefs<${operationVariablesTypes}>`;
 
     return `
 export function use${operationName}(options: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes}>, 'query'>) {
