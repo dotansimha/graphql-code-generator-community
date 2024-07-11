@@ -24,6 +24,11 @@ export interface NamedOperationsObjectPluginConfig {
    * @default false
    */
   useConsts?: boolean;
+  /**
+   * @description Throws an error if a duplicate operation name is found.
+   * @default false
+   */
+  throwOnDuplicate?: boolean;
 }
 
 export const plugin: PluginFunction<NamedOperationsObjectPluginConfig, string> = (
@@ -43,10 +48,16 @@ export const plugin: PluginFunction<NamedOperationsObjectPluginConfig, string> =
     fragment: new Set(),
   };
 
+  const duplicateOperationNames = [];
+
   oldVisit(allAst, {
     enter: {
       OperationDefinition: node => {
         if (node.name?.value) {
+          if (allOperationsNames[node.operation].has(node.name.value)) {
+            duplicateOperationNames.push(node.name.value);
+            return;
+          }
           allOperationsNames[node.operation].add(node.name.value);
         }
       },
@@ -55,6 +66,10 @@ export const plugin: PluginFunction<NamedOperationsObjectPluginConfig, string> =
       },
     },
   });
+
+  if (config.throwOnDuplicate && duplicateOperationNames.length > 0) {
+    throw new Error(`Duplicated operation name(s): ${duplicateOperationNames.join(', ')}`);
+  }
 
   const objectItems = Object.keys(allOperationsNames)
     .map(operationType => {
