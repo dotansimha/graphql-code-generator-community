@@ -1,5 +1,14 @@
 # @graphql-codegen/named-operations-object
 
+## 3.1.0
+
+### Minor Changes
+
+- [#775](https://github.com/dotansimha/graphql-code-generator-community/pull/775)
+  [`c33e9ac`](https://github.com/dotansimha/graphql-code-generator-community/commit/c33e9acac270fd15afe99285e50fecd1ca816286)
+  Thanks [@JonathanWbn](https://github.com/JonathanWbn)! - add option to throw on duplicate
+  operation names
+
 ## 3.0.0
 
 ### Major Changes
