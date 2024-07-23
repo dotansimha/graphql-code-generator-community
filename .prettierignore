@@ -4,7 +4,8 @@ packages/plugins/flow/flow/tests/flow.js
 packages/presets/gql-tag-operations/tests/fixtures/crlf-operation.ts
 dist/
 .next/
-.bob
+.bob/
 CHANGELOG.md
 .husky/_/
 .changeset/*.md
+dev-test/githunt/types.urql.tsx
