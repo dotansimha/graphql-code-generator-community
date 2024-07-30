@@ -283,6 +283,31 @@ describe('C#', () => {
       const result = await plugin(schema, [], {}, { outputFile: '' });
       expect(result).toContain('public class User {');
     });
+    it('Should generate a C# class with pascal case property names for type', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+          chosenName: String
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        {
+          namingConvention: 'change-case-all#pascalCase',
+        },
+        {
+          outputFile: '',
+        },
+      );
+      expect(result).toBeSimilarStringTo(`
+          [JsonProperty("id")]
+          public int? Id { get; set; }
+
+          [JsonProperty("chosenName")]
+          public string ChosenName { get; set; }
+          `);
+    });
     it('Should generate C# record for type', async () => {
       const schema = buildSchema(/* GraphQL */ `
         type User {
@@ -339,6 +364,7 @@ describe('C#', () => {
         `);
         const config: CSharpResolversPluginRawConfig = {
           jsonAttributesSource: source,
+          namingConvention: 'change-case-all#pascalCase',
         };
         const result = await plugin(schema, [], config, { outputFile: '' });
         const jsonConfig = getJsonAttributeSourceConfiguration(source);
