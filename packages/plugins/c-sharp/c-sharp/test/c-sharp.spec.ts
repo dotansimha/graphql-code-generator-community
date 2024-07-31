@@ -294,7 +294,7 @@ describe('C#', () => {
         schema,
         [],
         {
-          namingConvention: 'change-case-all#pascalCase',
+          fieldNameConvention: 'pascalCase',
         },
         {
           outputFile: '',

@@ -110,4 +110,20 @@ export interface CSharpResolversPluginRawConfig extends RawConfig {
    * ```
    */
   jsonAttributesSource?: JsonAttributesSource;
+
+  /**
+   * @default GraphQLCodeGen
+   * @description Allow you to customize the naming convention for interface/class/record fields.
+   *
+   * @exampleMarkdown
+   * ```yaml
+   * generates:
+   *   src/main/c-sharp/my-org/my-app/MyTypes.cs:
+   *     plugins:
+   *       - c-sharp
+   *     config:
+   *       fieldNameConvention: pascalCase
+   * ```
+   */
+  fieldNameConvention?: 'camelCase' | 'pascalCase';
 }

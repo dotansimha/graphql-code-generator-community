@@ -38,6 +38,7 @@ import {
   ParsedConfig,
 } from '@graphql-codegen/visitor-plugin-common';
 import { CSharpResolversPluginRawConfig } from './config.js';
+import { FieldNamingFunction, getFieldNamingFunction } from './field-naming.js';
 import {
   getJsonAttributeSourceConfiguration,
   JsonAttributesSource,
@@ -52,6 +53,7 @@ export interface CSharpResolverParsedConfig extends ParsedConfig {
   emitRecords: boolean;
   emitJsonAttributes: boolean;
   jsonAttributesSource: JsonAttributesSource;
+  fieldNamingFunction: FieldNamingFunction;
 }
 
 export class CSharpResolversVisitor extends BaseVisitor<
@@ -70,6 +72,7 @@ export class CSharpResolversVisitor extends BaseVisitor<
       emitJsonAttributes: rawConfig.emitJsonAttributes ?? true,
       jsonAttributesSource: rawConfig.jsonAttributesSource || 'Newtonsoft.Json',
       scalars: buildScalarsFromConfig(_schema, rawConfig, C_SHARP_SCALARS),
+      fieldNamingFunction: getFieldNamingFunction(rawConfig),
     });
 
     if (this._parsedConfig.emitJsonAttributes) {
@@ -324,10 +327,10 @@ ${recordMembers}
     const classMembers = inputValueArray
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
-        const fieldHeader = this.getFieldHeader(arg, fieldType);
-        const fieldName = convertSafeName(arg.name);
+        const fieldAttribute = this.getFieldHeader(arg, fieldType);
+        const fieldName = convertSafeName(this._parsedConfig.fieldNamingFunction(arg.name));
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
-        return fieldHeader + indent(`public ${csharpFieldType} ${fieldName} { get; set; }`);
+        return fieldAttribute + indent(`public ${csharpFieldType} ${fieldName} { get; set; }`);
       })
       .join('\n\n');
 
@@ -360,6 +363,7 @@ ${classMembers}
           fieldName = convertSafeName(pascalCase(this.convertName(arg.name)));
           getterSetter = '{ get; }';
         } else {
+          // ToDo: maybe just use pascalCase here, like the field names for records are created
           // class
           fieldName = convertSafeName(arg.name);
           getterSetter = '{ get; set; }';
