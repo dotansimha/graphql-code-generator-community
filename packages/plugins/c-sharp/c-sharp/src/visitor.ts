@@ -287,7 +287,9 @@ export class CSharpResolversVisitor extends BaseVisitor<
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
         const fieldHeader = this.getFieldHeader(arg, fieldType);
-        const fieldName = convertSafeName(pascalCase(this.convertName(arg.name)));
+        const fieldName = convertSafeName(
+          this._parsedConfig.memberNamingFunction(this.convertName(arg.name)),
+        );
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
         return (
           fieldHeader +
@@ -298,7 +300,9 @@ export class CSharpResolversVisitor extends BaseVisitor<
     const recordInitializer = inputValueArray
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
-        const fieldName = convertSafeName(pascalCase(this.convertName(arg.name)));
+        const fieldName = convertSafeName(
+          this._parsedConfig.memberNamingFunction(this.convertName(arg.name)),
+        );
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
         return `${csharpFieldType} ${fieldName}`;
       })

@@ -340,7 +340,35 @@ describe('C#', () => {
         }
       `);
       const result = await plugin(schema, [], { emitRecords: true }, { outputFile: '' });
+      expect(result).toContain('public record User(int? id) {');
+    });
+    it('Should generate C# record with pascal case property names', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { emitRecords: true, memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      );
       expect(result).toContain('public record User(int? Id) {');
+    });
+    it('Should generate C# record with camel case property names', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { emitRecords: true, memberNameConvention: 'camelCase' },
+        { outputFile: '' },
+      );
+      expect(result).toContain('public record User(int? id) {');
     });
     it('Should wrap generated classes in Type class', async () => {
       const schema = buildSchema(/* GraphQL */ `
