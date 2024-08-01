@@ -218,17 +218,41 @@ describe('C#', () => {
       expect(result).toContain('public class UserInput {');
     });
 
-    it('Should generate properties for input type fields', async () => {
+    it('Should generate camelCase properties for input type fields', async () => {
       const schema = buildSchema(/* GraphQL */ `
         input UserInput {
           id: Int
           email: String
         }
       `);
-      const result = await plugin(schema, [], {}, { outputFile: '' });
+      const result = await plugin(
+        schema,
+        [],
+        { memberNameConvention: 'camelCase' },
+        { outputFile: '' },
+      );
       expect(result).toBeSimilarStringTo(`
         public int? id { get; set; }
         public string email { get; set; }
+      `);
+    });
+
+    it('Should generate pascalCase properties for input type fields', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        input UserInput {
+          id: Int
+          email: String
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      );
+      expect(result).toBeSimilarStringTo(`
+        public int? Id { get; set; }
+        public string Email { get; set; }
       `);
     });
 

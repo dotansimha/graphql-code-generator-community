@@ -395,7 +395,7 @@ ${classMembers}
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type, !!arg.defaultValue);
         const fieldHeader = this.getFieldHeader(arg, fieldType);
-        const fieldName = convertSafeName(arg.name);
+        const fieldName = convertSafeName(this._parsedConfig.memberNamingFunction(arg.name));
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
         return fieldHeader + indent(`public ${csharpFieldType} ${fieldName} { get; set; }`);
       })
