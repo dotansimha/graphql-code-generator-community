@@ -364,12 +364,12 @@ ${classMembers}
 
         if (this.config.emitRecords) {
           // record
-          fieldName = convertSafeName(pascalCase(this.convertName(arg.name)));
+          fieldName = convertSafeName(
+            this._parsedConfig.memberNamingFunction(this.convertName(arg.name)),
+          );
           getterSetter = '{ get; }';
         } else {
-          // ToDo: maybe just use pascalCase here, like the field names for records are created
-          // class
-          fieldName = convertSafeName(arg.name);
+          fieldName = convertSafeName(this._parsedConfig.memberNamingFunction(arg.name));
           getterSetter = '{ get; set; }';
         }
 

@@ -547,6 +547,43 @@ describe('C#', () => {
       expect(result).toContain('public interface Node {');
     });
 
+    it('Should generate C# interface with pascalCase properties', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        interface Node {
+          id: ID!
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      );
+
+      expect(result).toBeSimilarStringTo(`public interface Node {
+          [JsonProperty("id")]
+          string Id { get; set; }
+        }`);
+    });
+    it('Should generate C# interface with camelCase properties', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        interface Node {
+          id: ID!
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { memberNameConvention: 'camelCase' },
+        { outputFile: '' },
+      );
+
+      expect(result).toBeSimilarStringTo(`public interface Node {
+        [JsonProperty("id")]
+        string id { get; set; }
+      }`);
+    });
+
     it('Should generate C# class that implements given interfaces', async () => {
       const schema = buildSchema(/* GraphQL */ `
         interface INode {
