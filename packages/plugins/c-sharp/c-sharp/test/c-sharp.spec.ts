@@ -283,6 +283,31 @@ describe('C#', () => {
       const result = await plugin(schema, [], {}, { outputFile: '' });
       expect(result).toContain('public class User {');
     });
+    it('Should generate a C# class with camel case property names for type', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+          chosenName: String
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        {
+          memberNameConvention: 'camelCase',
+        },
+        {
+          outputFile: '',
+        },
+      );
+      expect(result).toBeSimilarStringTo(`
+          [JsonProperty("id")]
+          public int? id { get; set; }
+
+          [JsonProperty("chosenName")]
+          public string chosenName { get; set; }
+          `);
+    });
     it('Should generate a C# class with pascal case property names for type', async () => {
       const schema = buildSchema(/* GraphQL */ `
         type User {
