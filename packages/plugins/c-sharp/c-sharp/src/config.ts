@@ -112,8 +112,9 @@ export interface CSharpResolversPluginRawConfig extends RawConfig {
   jsonAttributesSource?: JsonAttributesSource;
 
   /**
-   * @default GraphQLCodeGen
-   * @description Allow you to customize the naming convention for interface/class/record fields.
+   * @default camelCase
+   * Supported: camelCase, pascalCase
+   * @description Allow you to customize the naming convention for interface/class/record members.
    *
    * @exampleMarkdown
    * ```yaml
@@ -125,5 +126,5 @@ export interface CSharpResolversPluginRawConfig extends RawConfig {
    *       fieldNameConvention: pascalCase
    * ```
    */
-  fieldNameConvention?: 'camelCase' | 'pascalCase';
+  memberNameConvention?: 'camelCase' | 'pascalCase';
 }

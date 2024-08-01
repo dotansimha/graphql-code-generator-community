@@ -38,12 +38,12 @@ import {
   ParsedConfig,
 } from '@graphql-codegen/visitor-plugin-common';
 import { CSharpResolversPluginRawConfig } from './config.js';
-import { FieldNamingFunction, getFieldNamingFunction } from './field-naming.js';
 import {
   getJsonAttributeSourceConfiguration,
   JsonAttributesSource,
   JsonAttributesSourceConfiguration,
 } from './json-attributes.js';
+import { getMemberNamingFunction, MemberNamingFn } from './member-naming.js';
 
 export interface CSharpResolverParsedConfig extends ParsedConfig {
   namespaceName: string;
@@ -53,7 +53,7 @@ export interface CSharpResolverParsedConfig extends ParsedConfig {
   emitRecords: boolean;
   emitJsonAttributes: boolean;
   jsonAttributesSource: JsonAttributesSource;
-  fieldNamingFunction: FieldNamingFunction;
+  memberNamingFunction: MemberNamingFn;
 }
 
 export class CSharpResolversVisitor extends BaseVisitor<
@@ -72,7 +72,7 @@ export class CSharpResolversVisitor extends BaseVisitor<
       emitJsonAttributes: rawConfig.emitJsonAttributes ?? true,
       jsonAttributesSource: rawConfig.jsonAttributesSource || 'Newtonsoft.Json',
       scalars: buildScalarsFromConfig(_schema, rawConfig, C_SHARP_SCALARS),
-      fieldNamingFunction: getFieldNamingFunction(rawConfig),
+      memberNamingFunction: getMemberNamingFunction(rawConfig),
     });
 
     if (this._parsedConfig.emitJsonAttributes) {
@@ -328,7 +328,7 @@ ${recordMembers}
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
         const fieldAttribute = this.getFieldHeader(arg, fieldType);
-        const fieldName = convertSafeName(this._parsedConfig.fieldNamingFunction(arg.name));
+        const fieldName = convertSafeName(this._parsedConfig.memberNamingFunction(arg.name));
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
         return fieldAttribute + indent(`public ${csharpFieldType} ${fieldName} { get; set; }`);
       })
