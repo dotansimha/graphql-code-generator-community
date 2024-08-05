@@ -218,17 +218,41 @@ describe('C#', () => {
       expect(result).toContain('public class UserInput {');
     });
 
-    it('Should generate properties for input type fields', async () => {
+    it('Should generate camelCase properties for input type fields', async () => {
       const schema = buildSchema(/* GraphQL */ `
         input UserInput {
           id: Int
           email: String
         }
       `);
-      const result = await plugin(schema, [], {}, { outputFile: '' });
+      const result = await plugin(
+        schema,
+        [],
+        { memberNameConvention: 'camelCase' },
+        { outputFile: '' },
+      );
       expect(result).toBeSimilarStringTo(`
         public int? id { get; set; }
         public string email { get; set; }
+      `);
+    });
+
+    it('Should generate pascalCase properties for input type fields', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        input UserInput {
+          id: Int
+          email: String
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      );
+      expect(result).toBeSimilarStringTo(`
+        public int? Id { get; set; }
+        public string Email { get; set; }
       `);
     });
 
@@ -283,6 +307,56 @@ describe('C#', () => {
       const result = await plugin(schema, [], {}, { outputFile: '' });
       expect(result).toContain('public class User {');
     });
+    it('Should generate a C# class with camel case property names for type', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+          chosenName: String
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        {
+          memberNameConvention: 'camelCase',
+        },
+        {
+          outputFile: '',
+        },
+      );
+      expect(result).toBeSimilarStringTo(`
+          [JsonProperty("id")]
+          public int? id { get; set; }
+
+          [JsonProperty("chosenName")]
+          public string chosenName { get; set; }
+          `);
+    });
+    it('Should generate a C# class with pascal case property names for type', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+          chosenName: String
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        {
+          memberNameConvention: 'pascalCase',
+        },
+        {
+          outputFile: '',
+        },
+      );
+      expect(result).toBeSimilarStringTo(`
+          [JsonProperty("id")]
+          public int? Id { get; set; }
+
+          [JsonProperty("chosenName")]
+          public string ChosenName { get; set; }
+          `);
+    });
     it('Should generate C# record for type', async () => {
       const schema = buildSchema(/* GraphQL */ `
         type User {
@@ -290,7 +364,35 @@ describe('C#', () => {
         }
       `);
       const result = await plugin(schema, [], { emitRecords: true }, { outputFile: '' });
+      expect(result).toContain('public record User(int? id) {');
+    });
+    it('Should generate C# record with pascal case property names', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { emitRecords: true, memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      );
       expect(result).toContain('public record User(int? Id) {');
+    });
+    it('Should generate C# record with camel case property names', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { emitRecords: true, memberNameConvention: 'camelCase' },
+        { outputFile: '' },
+      );
+      expect(result).toContain('public record User(int? id) {');
     });
     it('Should wrap generated classes in Type class', async () => {
       const schema = buildSchema(/* GraphQL */ `
@@ -339,6 +441,7 @@ describe('C#', () => {
         `);
         const config: CSharpResolversPluginRawConfig = {
           jsonAttributesSource: source,
+          namingConvention: 'change-case-all#pascalCase',
         };
         const result = await plugin(schema, [], config, { outputFile: '' });
         const jsonConfig = getJsonAttributeSourceConfiguration(source);
@@ -442,6 +545,43 @@ describe('C#', () => {
       const result = await plugin(schema, [], {}, { outputFile: '' });
 
       expect(result).toContain('public interface Node {');
+    });
+
+    it('Should generate C# interface with pascalCase properties', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        interface Node {
+          id: ID!
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      );
+
+      expect(result).toBeSimilarStringTo(`public interface Node {
+          [JsonProperty("id")]
+          string Id { get; set; }
+        }`);
+    });
+    it('Should generate C# interface with camelCase properties', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        interface Node {
+          id: ID!
+        }
+      `);
+      const result = await plugin(
+        schema,
+        [],
+        { memberNameConvention: 'camelCase' },
+        { outputFile: '' },
+      );
+
+      expect(result).toBeSimilarStringTo(`public interface Node {
+        [JsonProperty("id")]
+        string id { get; set; }
+      }`);
     });
 
     it('Should generate C# class that implements given interfaces', async () => {

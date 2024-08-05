@@ -110,4 +110,21 @@ export interface CSharpResolversPluginRawConfig extends RawConfig {
    * ```
    */
   jsonAttributesSource?: JsonAttributesSource;
+
+  /**
+   * @default camelCase
+   * Supported: camelCase, pascalCase
+   * @description Allows you to customize the naming convention for interface/class/record members.
+   *
+   * @exampleMarkdown
+   * ```yaml
+   * generates:
+   *   src/main/c-sharp/my-org/my-app/MyTypes.cs:
+   *     plugins:
+   *       - c-sharp
+   *     config:
+   *       fieldNameConvention: pascalCase
+   * ```
+   */
+  memberNameConvention?: 'camelCase' | 'pascalCase';
 }
