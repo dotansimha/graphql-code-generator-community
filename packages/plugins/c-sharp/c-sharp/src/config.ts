@@ -114,7 +114,7 @@ export interface CSharpResolversPluginRawConfig extends RawConfig {
   /**
    * @default camelCase
    * Supported: camelCase, pascalCase
-   * @description Allow you to customize the naming convention for interface/class/record members.
+   * @description Allows you to customize the naming convention for interface/class/record members.
    *
    * @exampleMarkdown
    * ```yaml
