@@ -1,4 +1,3 @@
-import { pascalCase } from 'change-case-all';
 import {
   DirectiveNode,
   EnumTypeDefinitionNode,
