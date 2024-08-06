@@ -23,7 +23,9 @@ import {
   CSharpFieldType,
   getListInnerTypeNode,
   getListTypeField,
+  getMemberNamingFunction,
   isValueType,
+  MemberNamingFn,
   transformComment,
   wrapFieldType,
 } from '@graphql-codegen/c-sharp-common';
@@ -42,7 +44,6 @@ import {
   JsonAttributesSource,
   JsonAttributesSourceConfiguration,
 } from './json-attributes.js';
-import { getMemberNamingFunction, MemberNamingFn } from './member-naming.js';
 
 export interface CSharpResolverParsedConfig extends ParsedConfig {
   namespaceName: string;

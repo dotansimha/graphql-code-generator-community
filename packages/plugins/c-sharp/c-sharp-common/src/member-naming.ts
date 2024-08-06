@@ -1,6 +1,6 @@
 import { camelCase, pascalCase } from 'change-case-all';
 import { NameNode } from 'graphql';
-import { CSharpResolversPluginRawConfig } from './config';
+import { CSharpResolversPluginRawConfig } from '../../c-sharp/src/config';
 
 type MemberNamingFunctionInput = string | NameNode;
 
