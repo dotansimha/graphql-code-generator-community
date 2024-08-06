@@ -1,10 +1,11 @@
+import { MemberNameConventionConfig } from '@graphql-codegen/c-sharp-common';
 import { EnumValuesMap, RawConfig } from '@graphql-codegen/visitor-plugin-common';
 import { JsonAttributesSource } from './json-attributes.js';
 
 /**
  * @description This plugin generates C# `class` identifier for your schema types.
  */
-export interface CSharpResolversPluginRawConfig extends RawConfig {
+export interface CSharpResolversPluginRawConfig extends RawConfig, MemberNameConventionConfig {
   /**
    * @description Overrides the default value of enum values declared in your GraphQL schema.
    * @exampleMarkdown
@@ -110,21 +111,4 @@ export interface CSharpResolversPluginRawConfig extends RawConfig {
    * ```
    */
   jsonAttributesSource?: JsonAttributesSource;
-
-  /**
-   * @default camelCase
-   * Supported: camelCase, pascalCase
-   * @description Allows you to customize the naming convention for interface/class/record members.
-   *
-   * @exampleMarkdown
-   * ```yaml
-   * generates:
-   *   src/main/c-sharp/my-org/my-app/MyTypes.cs:
-   *     plugins:
-   *       - c-sharp
-   *     config:
-   *       fieldNameConvention: pascalCase
-   * ```
-   */
-  memberNameConvention?: 'camelCase' | 'pascalCase';
 }
