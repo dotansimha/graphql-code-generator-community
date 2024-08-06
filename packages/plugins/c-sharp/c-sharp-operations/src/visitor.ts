@@ -26,7 +26,9 @@ import {
   getListInnerTypeNode,
   getListTypeDepth,
   getListTypeField,
+  getMemberNamingFunction,
   isValueType,
+  MemberNamingFn,
   wrapFieldType,
 } from '@graphql-codegen/c-sharp-common';
 import { getCachedDocumentNodeFromSchema, Types } from '@graphql-codegen/plugin-helpers';
@@ -56,6 +58,7 @@ export interface CSharpOperationsPluginConfig extends ClientSideBasePluginConfig
   mutationSuffix: string;
   subscriptionSuffix: string;
   typesafeOperation: boolean;
+  memberNamingFunction: MemberNamingFn;
 }
 
 export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
@@ -90,6 +93,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         subscriptionSuffix: rawConfig.subscriptionSuffix || defaultSuffix,
         scalars: buildScalarsFromConfig(schema, rawConfig, C_SHARP_SCALARS),
         typesafeOperation: rawConfig.typesafeOperation || false,
+        memberNamingFunction: getMemberNamingFunction(rawConfig),
       },
       documents,
     );
@@ -614,7 +618,11 @@ ${this._getOperationMethod(node)}
       .access('public')
       .asKind('enum')
       .withName(convertSafeName(this.convertName(node.name)))
-      .withBlock(indentMultiline(node.values?.map(v => v.name.value).join(',\n'))).string;
+      .withBlock(
+        indentMultiline(
+          node.values?.map(v => this._parsedConfig.memberNamingFunction(v.name.value)).join(',\n'),
+        ),
+      ).string;
 
     return indentMultiline(enumDefinition, 2);
   }

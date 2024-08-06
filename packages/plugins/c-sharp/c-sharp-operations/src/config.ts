@@ -1,9 +1,12 @@
+import { MemberNameConventionConfig } from '@graphql-codegen/c-sharp-common';
 import { RawClientSideBasePluginConfig } from '@graphql-codegen/visitor-plugin-common';
 
 /**
  * @description This plugin generates C# `class` based on your GraphQL operations.
  */
-export interface CSharpOperationsRawPluginConfig extends RawClientSideBasePluginConfig {
+export interface CSharpOperationsRawPluginConfig
+  extends RawClientSideBasePluginConfig,
+    MemberNameConventionConfig {
   /**
    * @default GraphQLCodeGen
    * @description Allow you to customize the namespace name.
