@@ -1904,10 +1904,10 @@
     value-or-promise "^1.0.11"
     ws "^8.3.0"
 
-"@graphql-tools/utils@10.3.3", "@graphql-tools/utils@^10.0.0", "@graphql-tools/utils@^10.0.13", "@graphql-tools/utils@^10.2.1":
-  version "10.3.3"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-10.3.3.tgz#506ff99cb231bf83df6277f79e4860adc3aedf7b"
-  integrity sha512-p0zCctE+kXsXb5FCJmA3DoucQmB5eSkrtyBAaEcjbnz8OVbriSJx2WNEyzttiHv2qanBe/AK/YiyHD/5Nsj76Q==
+"@graphql-tools/utils@10.3.4", "@graphql-tools/utils@^10.0.0", "@graphql-tools/utils@^10.0.13", "@graphql-tools/utils@^10.2.1":
+  version "10.3.4"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-10.3.4.tgz#676e76e759893192a309719e21735a49f28169d5"
+  integrity sha512-5xUXVsp1Yh1ttYHYDLJscoyv2LcW1BjpbcooIAkGUzINftD/qRBw9zvVmALx+oQWr/9MSIYghHHZzbYHsVO0/A==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     cross-inspect "1.0.1"
