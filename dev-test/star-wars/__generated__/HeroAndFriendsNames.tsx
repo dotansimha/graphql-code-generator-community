@@ -90,12 +90,37 @@ export function useHeroAndFriendsNamesSuspenseQuery(
     options,
   );
 }
+export function useHeroAndFriendsNamesBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<
+    HeroAndFriendsNamesQuery,
+    HeroAndFriendsNamesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
+    HeroAndFriendsNamesDocument,
+    options,
+  );
+}
+export function useHeroAndFriendsNamesLoadableQuery(baseOptions?: Apollo.LoadableQueryHookOptions) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>(
+    HeroAndFriendsNamesDocument,
+    options,
+  );
+}
 export type HeroAndFriendsNamesQueryHookResult = ReturnType<typeof useHeroAndFriendsNamesQuery>;
 export type HeroAndFriendsNamesLazyQueryHookResult = ReturnType<
   typeof useHeroAndFriendsNamesLazyQuery
 >;
 export type HeroAndFriendsNamesSuspenseQueryHookResult = ReturnType<
   typeof useHeroAndFriendsNamesSuspenseQuery
+>;
+export type HeroAndFriendsNamesBackgroundQueryHookResult = ReturnType<
+  typeof useHeroAndFriendsNamesBackgroundQuery
+>;
+export type HeroAndFriendsNamesLoadableQueryHookResult = ReturnType<
+  typeof useHeroAndFriendsNamesLoadableQuery
 >;
 export type HeroAndFriendsNamesQueryResult = Apollo.QueryResult<
   HeroAndFriendsNamesQuery,

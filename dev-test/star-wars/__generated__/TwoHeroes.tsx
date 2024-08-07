@@ -58,7 +58,25 @@ export function useTwoHeroesSuspenseQuery(
     options,
   );
 }
+export function useTwoHeroesBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(
+    TwoHeroesDocument,
+    options,
+  );
+}
+export function useTwoHeroesLoadableQuery(baseOptions?: Apollo.LoadableQueryHookOptions) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(
+    TwoHeroesDocument,
+    options,
+  );
+}
 export type TwoHeroesQueryHookResult = ReturnType<typeof useTwoHeroesQuery>;
 export type TwoHeroesLazyQueryHookResult = ReturnType<typeof useTwoHeroesLazyQuery>;
 export type TwoHeroesSuspenseQueryHookResult = ReturnType<typeof useTwoHeroesSuspenseQuery>;
+export type TwoHeroesBackgroundQueryHookResult = ReturnType<typeof useTwoHeroesBackgroundQuery>;
+export type TwoHeroesLoadableQueryHookResult = ReturnType<typeof useTwoHeroesLoadableQuery>;
 export type TwoHeroesQueryResult = Apollo.QueryResult<TwoHeroesQuery, TwoHeroesQueryVariables>;

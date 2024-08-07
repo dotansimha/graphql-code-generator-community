@@ -80,6 +80,27 @@ export function useHeroTypeDependentAliasedFieldSuspenseQuery(
     HeroTypeDependentAliasedFieldQueryVariables
   >(HeroTypeDependentAliasedFieldDocument, options);
 }
+export function useHeroTypeDependentAliasedFieldBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >(HeroTypeDependentAliasedFieldDocument, options);
+}
+export function useHeroTypeDependentAliasedFieldLoadableQuery(
+  baseOptions?: Apollo.LoadableQueryHookOptions,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >(HeroTypeDependentAliasedFieldDocument, options);
+}
 export type HeroTypeDependentAliasedFieldQueryHookResult = ReturnType<
   typeof useHeroTypeDependentAliasedFieldQuery
 >;
@@ -88,6 +109,12 @@ export type HeroTypeDependentAliasedFieldLazyQueryHookResult = ReturnType<
 >;
 export type HeroTypeDependentAliasedFieldSuspenseQueryHookResult = ReturnType<
   typeof useHeroTypeDependentAliasedFieldSuspenseQuery
+>;
+export type HeroTypeDependentAliasedFieldBackgroundQueryHookResult = ReturnType<
+  typeof useHeroTypeDependentAliasedFieldBackgroundQuery
+>;
+export type HeroTypeDependentAliasedFieldLoadableQueryHookResult = ReturnType<
+  typeof useHeroTypeDependentAliasedFieldLoadableQuery
 >;
 export type HeroTypeDependentAliasedFieldQueryResult = Apollo.QueryResult<
   HeroTypeDependentAliasedFieldQuery,

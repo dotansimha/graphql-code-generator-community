@@ -71,12 +71,37 @@ export function useHumanWithNullHeightSuspenseQuery(
     options,
   );
 }
+export function useHumanWithNullHeightBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<
+    HumanWithNullHeightQuery,
+    HumanWithNullHeightQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
+    HumanWithNullHeightDocument,
+    options,
+  );
+}
+export function useHumanWithNullHeightLoadableQuery(baseOptions?: Apollo.LoadableQueryHookOptions) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>(
+    HumanWithNullHeightDocument,
+    options,
+  );
+}
 export type HumanWithNullHeightQueryHookResult = ReturnType<typeof useHumanWithNullHeightQuery>;
 export type HumanWithNullHeightLazyQueryHookResult = ReturnType<
   typeof useHumanWithNullHeightLazyQuery
 >;
 export type HumanWithNullHeightSuspenseQueryHookResult = ReturnType<
   typeof useHumanWithNullHeightSuspenseQuery
+>;
+export type HumanWithNullHeightBackgroundQueryHookResult = ReturnType<
+  typeof useHumanWithNullHeightBackgroundQuery
+>;
+export type HumanWithNullHeightLoadableQueryHookResult = ReturnType<
+  typeof useHumanWithNullHeightLoadableQuery
 >;
 export type HumanWithNullHeightQueryResult = Apollo.QueryResult<
   HumanWithNullHeightQuery,
