@@ -434,7 +434,6 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
           suffix: pascalCase('SuspenseQuery'),
           useTypesPrefix: false,
         }) + this.config.hooksSuffix;
-
       hookFns.push(
         `export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
           const options = {...defaultOptions, ...baseOptions}
@@ -446,6 +445,42 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
       );
       hookResults.push(
         `export type ${suspenseOperationName}HookResult = ReturnType<typeof use${suspenseOperationName}>;`,
+      );
+
+      const backgroundOperationName: string =
+        this.convertName(nodeName, {
+          suffix: pascalCase('BackgroundQuery'),
+          useTypesPrefix: false,
+        }) + this.config.hooksSuffix;
+      hookFns.push(
+        `export function use${backgroundOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.BackgroundQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ${this.getApolloReactHooksIdentifier()}.useBackgroundQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
+          node,
+          documentVariableName,
+        )}, options);
+        }`,
+      );
+      hookResults.push(
+        `export type ${backgroundOperationName}HookResult = ReturnType<typeof use${backgroundOperationName}>;`,
+      );
+
+      const loadableOperationName: string =
+        this.convertName(nodeName, {
+          suffix: pascalCase('LoadableQuery'),
+          useTypesPrefix: false,
+        }) + this.config.hooksSuffix;
+      hookFns.push(
+        `export function use${loadableOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.LoadableQueryHookOptions) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ${this.getApolloReactHooksIdentifier()}.useLoadableQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
+          node,
+          documentVariableName,
+        )}, options);
+        }`,
+      );
+      hookResults.push(
+        `export type ${loadableOperationName}HookResult = ReturnType<typeof use${loadableOperationName}>;`,
       );
     }
 

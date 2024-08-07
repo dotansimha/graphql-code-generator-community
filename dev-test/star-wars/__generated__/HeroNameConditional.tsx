@@ -85,6 +85,27 @@ export function useHeroNameConditionalInclusionSuspenseQuery(
     HeroNameConditionalInclusionQueryVariables
   >(HeroNameConditionalInclusionDocument, options);
 }
+export function useHeroNameConditionalInclusionBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >(HeroNameConditionalInclusionDocument, options);
+}
+export function useHeroNameConditionalInclusionLoadableQuery(
+  baseOptions?: Apollo.LoadableQueryHookOptions,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >(HeroNameConditionalInclusionDocument, options);
+}
 export type HeroNameConditionalInclusionQueryHookResult = ReturnType<
   typeof useHeroNameConditionalInclusionQuery
 >;
@@ -93,6 +114,12 @@ export type HeroNameConditionalInclusionLazyQueryHookResult = ReturnType<
 >;
 export type HeroNameConditionalInclusionSuspenseQueryHookResult = ReturnType<
   typeof useHeroNameConditionalInclusionSuspenseQuery
+>;
+export type HeroNameConditionalInclusionBackgroundQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalInclusionBackgroundQuery
+>;
+export type HeroNameConditionalInclusionLoadableQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalInclusionLoadableQuery
 >;
 export type HeroNameConditionalInclusionQueryResult = Apollo.QueryResult<
   HeroNameConditionalInclusionQuery,
@@ -160,6 +187,27 @@ export function useHeroNameConditionalExclusionSuspenseQuery(
     HeroNameConditionalExclusionQueryVariables
   >(HeroNameConditionalExclusionDocument, options);
 }
+export function useHeroNameConditionalExclusionBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >(HeroNameConditionalExclusionDocument, options);
+}
+export function useHeroNameConditionalExclusionLoadableQuery(
+  baseOptions?: Apollo.LoadableQueryHookOptions,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >(HeroNameConditionalExclusionDocument, options);
+}
 export type HeroNameConditionalExclusionQueryHookResult = ReturnType<
   typeof useHeroNameConditionalExclusionQuery
 >;
@@ -168,6 +216,12 @@ export type HeroNameConditionalExclusionLazyQueryHookResult = ReturnType<
 >;
 export type HeroNameConditionalExclusionSuspenseQueryHookResult = ReturnType<
   typeof useHeroNameConditionalExclusionSuspenseQuery
+>;
+export type HeroNameConditionalExclusionBackgroundQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalExclusionBackgroundQuery
+>;
+export type HeroNameConditionalExclusionLoadableQueryHookResult = ReturnType<
+  typeof useHeroNameConditionalExclusionLoadableQuery
 >;
 export type HeroNameConditionalExclusionQueryResult = Apollo.QueryResult<
   HeroNameConditionalExclusionQuery,

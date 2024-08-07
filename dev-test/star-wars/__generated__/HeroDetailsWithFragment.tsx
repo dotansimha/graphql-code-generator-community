@@ -77,6 +77,27 @@ export function useHeroDetailsWithFragmentSuspenseQuery(
     HeroDetailsWithFragmentQueryVariables
   >(HeroDetailsWithFragmentDocument, options);
 }
+export function useHeroDetailsWithFragmentBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >(HeroDetailsWithFragmentDocument, options);
+}
+export function useHeroDetailsWithFragmentLoadableQuery(
+  baseOptions?: Apollo.LoadableQueryHookOptions,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >(HeroDetailsWithFragmentDocument, options);
+}
 export type HeroDetailsWithFragmentQueryHookResult = ReturnType<
   typeof useHeroDetailsWithFragmentQuery
 >;
@@ -85,6 +106,12 @@ export type HeroDetailsWithFragmentLazyQueryHookResult = ReturnType<
 >;
 export type HeroDetailsWithFragmentSuspenseQueryHookResult = ReturnType<
   typeof useHeroDetailsWithFragmentSuspenseQuery
+>;
+export type HeroDetailsWithFragmentBackgroundQueryHookResult = ReturnType<
+  typeof useHeroDetailsWithFragmentBackgroundQuery
+>;
+export type HeroDetailsWithFragmentLoadableQueryHookResult = ReturnType<
+  typeof useHeroDetailsWithFragmentLoadableQuery
 >;
 export type HeroDetailsWithFragmentQueryResult = Apollo.QueryResult<
   HeroDetailsWithFragmentQuery,
