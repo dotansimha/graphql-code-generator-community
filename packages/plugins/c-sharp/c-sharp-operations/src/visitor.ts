@@ -327,10 +327,13 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
             responseType.listType,
             'System.Collections.Generic.List',
           );
+          const propertyName = convertSafeName(
+            this._parsedConfig.memberNamingFunction(node.name.value),
+          );
           return indentMultiline(
             [
               `[JsonProperty("${node.name.value}")]`,
-              `public ${responseTypeName} ${convertSafeName(node.name.value)} { get; set; }`,
+              `public ${responseTypeName} ${propertyName} { get; set; }`,
             ].join('\n') + '\n',
           );
         }
@@ -363,11 +366,14 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
                 })
                 .join('\n'),
           ).string;
+        const propertyName = convertSafeName(
+          this._parsedConfig.memberNamingFunction(node.name.value),
+        );
         return indentMultiline(
           [
             innerClassDefinition,
             `[JsonProperty("${node.name.value}")]`,
-            `public ${selectionTypeName} ${convertSafeName(node.name.value)} { get; set; }`,
+            `public ${selectionTypeName} ${propertyName} { get; set; }`,
           ].join('\n') + '\n',
         );
       }
@@ -416,10 +422,13 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
                 inputType.listType,
                 'System.Collections.Generic.List',
               );
+              const propertyName = convertSafeName(
+                this._parsedConfig.memberNamingFunction(v.variable.name.value),
+              );
               return indentMultiline(
                 [
                   `[JsonProperty("${v.variable.name.value}")]`,
-                  `public ${inputTypeName} ${convertSafeName(v.variable.name.value)} { get; set; }`,
+                  `public ${inputTypeName} ${propertyName} { get; set; }`,
                 ].join('\n') + '\n',
               );
             })
@@ -595,10 +604,13 @@ ${this._getOperationMethod(node)}
                 inputType.listType,
                 'System.Collections.Generic.List',
               );
+              const propertyName = convertSafeName(
+                this._parsedConfig.memberNamingFunction(f.name.value),
+              );
               return indentMultiline(
                 [
                   `[JsonProperty("${f.name.value}")]`,
-                  `public ${inputTypeName} ${convertSafeName(f.name.value)} { get; set; }`,
+                  `public ${inputTypeName} ${propertyName} { get; set; }`,
                 ].join('\n') + '\n',
               );
             })

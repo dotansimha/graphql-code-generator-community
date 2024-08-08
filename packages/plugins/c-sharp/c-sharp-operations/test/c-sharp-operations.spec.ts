@@ -1299,6 +1299,80 @@ describe('C# Operations', () => {
         }
         `);
     });
+
+    it('Should generate input classes with pascal case property names', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type Query {
+          myQuery(filter: MyQueryFilter): [MyData]
+        }
+        type MyData {
+          id: ID!
+          name: String!
+        }
+        input MyQueryFilter {
+          nameFilter: String!
+        }
+      `);
+      const operation = parse(/* GraphQL */ `
+        query GetMyQuery {
+          myQuery
+        }
+      `);
+
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: operation }],
+        { typesafeOperation: true, memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      )) as Types.ComplexPluginOutput;
+      expect(result.content).toBeSimilarStringTo(`
+        public class MyQueryFilter {
+          [JsonProperty("nameFilter")]
+          public string NameFilter { get; set; }
+        }
+        `);
+    });
+
+    it('Should generate output classes with pascal case property names', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type Query {
+          myQuery: [MyData]
+        }
+        type MyData {
+          id: ID!
+          firstName: String!
+          lastName: String!
+        }
+      `);
+      const operation = parse(/* GraphQL */ `
+        query GetMyQuery {
+          myQuery {
+            id
+            firstName
+            lastName
+          }
+        }
+      `);
+
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: operation }],
+        { typesafeOperation: true, memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      )) as Types.ComplexPluginOutput;
+      expect(result.content).toBeSimilarStringTo(`
+        public class MyDataSelection {
+          [JsonProperty("id")]
+          public string Id { get; set; }
+
+          [JsonProperty("firstName")]
+          public string FirstName { get; set; }
+
+          [JsonProperty("lastName")]
+          public string LastName { get; set; }
+        }
+        `);
+    });
   });
 
   describe('Issues', () => {
