@@ -92,14 +92,14 @@ export function use${operationName}() {
 
     if (operationType === 'Subscription') {
       return `
-export function use${operationName}<R = ${operationResultType}>(options: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes}>, 'query'>, handler?: Urql.SubscriptionHandlerArg<${operationResultType}, R>) {
-  return Urql.use${operationType}<${operationResultType}, R, ${operationVariablesTypes}>({ query: ${documentVariableName}, ...options }, handler);
+export function use${operationName}<R = ${operationResultType}>(options?: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes} | undefined>, 'query'>, handler?: Urql.SubscriptionHandlerArg<${operationResultType}, R>) {
+  return Urql.use${operationType}<${operationResultType}, R, ${operationVariablesTypes} | undefined>({ query: ${documentVariableName}, variables: undefined, ...options }, handler);
 };`;
     }
 
     return `
-export function use${operationName}(options: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes}>, 'query'>) {
-  return Urql.use${operationType}<${operationResultType}, ${operationVariablesTypes}>({ query: ${documentVariableName}, ...options });
+export function use${operationName}(options?: Omit<Urql.Use${operationType}Args<never, ${operationVariablesTypes} | undefined>, 'query'>) {
+  return Urql.use${operationType}<${operationResultType}, ${operationVariablesTypes} | undefined>({ query: ${documentVariableName}, variables: undefined, ...options });
 };`;
   }
 
