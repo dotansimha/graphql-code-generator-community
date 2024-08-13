@@ -196,7 +196,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     const name = variable.variable.name.value;
     const baseType = !isScalarType(schemaType)
       ? innerType.name.value
-      : this.scalars[schemaType.name] || 'object';
+      : this.scalars[schemaType.name].input || 'object';
 
     const listType = getListTypeField(typeNode);
     const required = getListInnerTypeNode(typeNode).kind === Kind.NON_NULL_TYPE;
