@@ -5289,10 +5289,10 @@ jackspeak@^4.0.1:
   optionalDependencies:
     "@pkgjs/parseargs" "^0.11.0"
 
-java-ast@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/java-ast/-/java-ast-0.4.0.tgz#0c901ad2983368f1def3b3afeeb909f4502bcf59"
-  integrity sha512-tXZToBinWyM+6Tkgs3ZIfNmT7xOEvNBTa+RaABF8IepZ0rqPs4K0OVDZpAyv2BRDolaMVWTsQNO57pFyku9LQA==
+java-ast@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/java-ast/-/java-ast-0.4.1.tgz#80b48278a6c97764d85908eab36c1ac40a912650"
+  integrity sha512-aKKgVD8nfKIbohyTuyHM60Es8vXRu+JlvGAMqY6qx5kKZYLjpALZ0zQi4RokJtE4rg3hEil7h3ASYAOuhpw+Bg==
   dependencies:
     antlr4ts "^0.5.0-alpha.4"
 
