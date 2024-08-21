@@ -477,8 +477,8 @@ query MyFeed {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-export function useFeedQuery(options: Omit<Urql.UseQueryArgs<never, FeedQueryVariables>, 'query'>) {
-  return Urql.useQuery<FeedQuery, FeedQueryVariables>({ query: FeedDocument, ...options });
+export function useFeedQuery(options?: Omit<Urql.UseQueryArgs<never, FeedQueryVariables | undefined>, 'query'>) {
+  return Urql.useQuery<FeedQuery, FeedQueryVariables | undefined>({ query: FeedDocument, variables: undefined, ...options });
 };`);
 
       expect(content.content).toBeSimilarStringTo(`
@@ -524,8 +524,8 @@ export function useSubmitRepositoryMutation() {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-      export function useListenToCommentsSubscription<R = ListenToCommentsSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, ListenToCommentsSubscriptionVariables>, 'query'>, handler?: Urql.SubscriptionHandlerArg<ListenToCommentsSubscription, R>) {
-        return Urql.useSubscription<ListenToCommentsSubscription, R, ListenToCommentsSubscriptionVariables>({ query: ListenToCommentsDocument, ...options }, handler);
+      export function useListenToCommentsSubscription<R = ListenToCommentsSubscription>(options?: Omit<Urql.UseSubscriptionArgs<never, ListenToCommentsSubscriptionVariables | undefined>, 'query'>, handler?: Urql.SubscriptionHandlerArg<ListenToCommentsSubscription, R>) {
+        return Urql.useSubscription<ListenToCommentsSubscription, R, ListenToCommentsSubscriptionVariables | undefined>({ query: ListenToCommentsDocument, variables: undefined, ...options }, handler);
       };`);
       await validateTypeScript(content, schema, docs, {});
       expect(mergeOutputs([content])).toMatchSnapshot();
