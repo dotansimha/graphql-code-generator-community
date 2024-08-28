@@ -74,6 +74,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
   }[] = [];
 
   private _schemaAST: DocumentNode;
+  private readonly _fragmentList: LoadedFragment[];
 
   constructor(
     schema: GraphQLSchema,
@@ -102,6 +103,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     autoBind(this);
 
     this._schemaAST = getCachedDocumentNodeFromSchema(schema);
+    this._fragmentList = fragments;
   }
 
   // Some settings aren't supported with C#, overruled here
@@ -161,7 +163,12 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
   }
 
   protected _gql(node: OperationDefinitionNode): string {
-    const fragments = this._transformFragments(node);
+    const includeNestedFragments =
+      this.config.documentMode === DocumentMode.documentNode ||
+      this.config.documentMode === DocumentMode.string ||
+      (this.config.dedupeFragments && node.kind === 'OperationDefinition');
+    const fragmentNames = this._extractFragments(node, includeNestedFragments);
+    const fragments = this._transformFragments(fragmentNames);
     const doc = this._prepareDocument(
       [print(node), this._includeFragments(fragments, node.kind)].join('\n'),
     );
@@ -189,7 +196,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     const name = variable.variable.name.value;
     const baseType = !isScalarType(schemaType)
       ? innerType.name.value
-      : this.scalars[schemaType.name] || 'object';
+      : this.scalars[schemaType.name].input || 'object';
 
     const listType = getListTypeField(typeNode);
     const required = getListInnerTypeNode(typeNode).kind === Kind.NON_NULL_TYPE;
@@ -239,9 +246,9 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         const baseType = this.scalars[schemaType.name];
         result = new CSharpFieldType({
           baseType: {
-            type: baseType,
+            type: baseType.output,
             required,
-            valueType: isValueType(baseType),
+            valueType: isValueType(baseType.output),
           },
           listType,
         });
@@ -378,7 +385,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         );
       }
       case Kind.FRAGMENT_SPREAD: {
-        const fragmentSchema = this._fragments.find(f => f.name === node.name.value);
+        const fragmentSchema = this._fragmentList.find(f => f.name === node.name.value);
         if (!fragmentSchema) {
           throw new Error(`Fragment schema not found; ${node.name.value}`);
         }

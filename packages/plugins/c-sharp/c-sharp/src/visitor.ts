@@ -219,9 +219,9 @@ export class CSharpResolversVisitor extends BaseVisitor<
         const baseType = this.scalars[schemaType.name];
         result = new CSharpFieldType({
           baseType: {
-            type: baseType,
+            type: baseType.input,
             required,
-            valueType: isValueType(baseType),
+            valueType: isValueType(baseType.input),
           },
           listType,
         });
