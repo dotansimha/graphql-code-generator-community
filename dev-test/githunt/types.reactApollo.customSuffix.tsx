@@ -509,9 +509,27 @@ export function useCommentSuspenseQuery(
     options,
   );
 }
+export function useCommentBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<CommentQueryMyOperation, CommentQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<CommentQueryMyOperation, CommentQueryVariables>(
+    CommentDocument,
+    options,
+  );
+}
+export function useCommentLoadableQuery(baseOptions?: Apollo.LoadableQueryHookOptions) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<CommentQueryMyOperation, CommentQueryVariables>(
+    CommentDocument,
+    options,
+  );
+}
 export type CommentQueryHookResult = ReturnType<typeof useCommentQuery>;
 export type CommentLazyQueryHookResult = ReturnType<typeof useCommentLazyQuery>;
 export type CommentSuspenseQueryHookResult = ReturnType<typeof useCommentSuspenseQuery>;
+export type CommentBackgroundQueryHookResult = ReturnType<typeof useCommentBackgroundQuery>;
+export type CommentLoadableQueryHookResult = ReturnType<typeof useCommentLoadableQuery>;
 export type CommentQueryResult = Apollo.QueryResult<CommentQueryMyOperation, CommentQueryVariables>;
 export const CurrentUserForProfileDocument = gql`
   query CurrentUserForProfile {
@@ -573,12 +591,39 @@ export function useCurrentUserForProfileSuspenseQuery(
     CurrentUserForProfileQueryVariables
   >(CurrentUserForProfileDocument, options);
 }
+export function useCurrentUserForProfileBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<
+    CurrentUserForProfileQueryMyOperation,
+    CurrentUserForProfileQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<
+    CurrentUserForProfileQueryMyOperation,
+    CurrentUserForProfileQueryVariables
+  >(CurrentUserForProfileDocument, options);
+}
+export function useCurrentUserForProfileLoadableQuery(
+  baseOptions?: Apollo.LoadableQueryHookOptions,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<
+    CurrentUserForProfileQueryMyOperation,
+    CurrentUserForProfileQueryVariables
+  >(CurrentUserForProfileDocument, options);
+}
 export type CurrentUserForProfileQueryHookResult = ReturnType<typeof useCurrentUserForProfileQuery>;
 export type CurrentUserForProfileLazyQueryHookResult = ReturnType<
   typeof useCurrentUserForProfileLazyQuery
 >;
 export type CurrentUserForProfileSuspenseQueryHookResult = ReturnType<
   typeof useCurrentUserForProfileSuspenseQuery
+>;
+export type CurrentUserForProfileBackgroundQueryHookResult = ReturnType<
+  typeof useCurrentUserForProfileBackgroundQuery
+>;
+export type CurrentUserForProfileLoadableQueryHookResult = ReturnType<
+  typeof useCurrentUserForProfileLoadableQuery
 >;
 export type CurrentUserForProfileQueryResult = Apollo.QueryResult<
   CurrentUserForProfileQueryMyOperation,
@@ -633,9 +678,21 @@ export function useFeedSuspenseQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<FeedQueryMyOperation, FeedQueryVariables>(FeedDocument, options);
 }
+export function useFeedBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<FeedQueryMyOperation, FeedQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<FeedQueryMyOperation, FeedQueryVariables>(FeedDocument, options);
+}
+export function useFeedLoadableQuery(baseOptions?: Apollo.LoadableQueryHookOptions) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<FeedQueryMyOperation, FeedQueryVariables>(FeedDocument, options);
+}
 export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;
 export type FeedLazyQueryHookResult = ReturnType<typeof useFeedLazyQuery>;
 export type FeedSuspenseQueryHookResult = ReturnType<typeof useFeedSuspenseQuery>;
+export type FeedBackgroundQueryHookResult = ReturnType<typeof useFeedBackgroundQuery>;
+export type FeedLoadableQueryHookResult = ReturnType<typeof useFeedLoadableQuery>;
 export type FeedQueryResult = Apollo.QueryResult<FeedQueryMyOperation, FeedQueryVariables>;
 export const SubmitRepositoryDocument = gql`
   mutation submitRepository($repoFullName: String!) {

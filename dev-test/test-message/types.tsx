@@ -149,9 +149,27 @@ export function useGetMessagesSuspenseQuery(
     options,
   );
 }
+export function useGetMessagesBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<GetMessagesQuery, GetMessagesQueryVariables>(
+    Operations.GetMessages,
+    options,
+  );
+}
+export function useGetMessagesLoadableQuery(baseOptions?: Apollo.LoadableQueryHookOptions) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<GetMessagesQuery, GetMessagesQueryVariables>(
+    Operations.GetMessages,
+    options,
+  );
+}
 export type GetMessagesQueryHookResult = ReturnType<typeof useGetMessagesQuery>;
 export type GetMessagesLazyQueryHookResult = ReturnType<typeof useGetMessagesLazyQuery>;
 export type GetMessagesSuspenseQueryHookResult = ReturnType<typeof useGetMessagesSuspenseQuery>;
+export type GetMessagesBackgroundQueryHookResult = ReturnType<typeof useGetMessagesBackgroundQuery>;
+export type GetMessagesLoadableQueryHookResult = ReturnType<typeof useGetMessagesLoadableQuery>;
 export type GetMessagesQueryResult = Apollo.QueryResult<
   GetMessagesQuery,
   GetMessagesQueryVariables

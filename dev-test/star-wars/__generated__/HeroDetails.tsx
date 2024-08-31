@@ -69,9 +69,27 @@ export function useHeroDetailsSuspenseQuery(
     options,
   );
 }
+export function useHeroDetailsBackgroundQuery(
+  baseOptions?: Apollo.BackgroundQueryHookOptions<HeroDetailsQuery, HeroDetailsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useBackgroundQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(
+    HeroDetailsDocument,
+    options,
+  );
+}
+export function useHeroDetailsLoadableQuery(baseOptions?: Apollo.LoadableQueryHookOptions) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLoadableQuery<HeroDetailsQuery, HeroDetailsQueryVariables>(
+    HeroDetailsDocument,
+    options,
+  );
+}
 export type HeroDetailsQueryHookResult = ReturnType<typeof useHeroDetailsQuery>;
 export type HeroDetailsLazyQueryHookResult = ReturnType<typeof useHeroDetailsLazyQuery>;
 export type HeroDetailsSuspenseQueryHookResult = ReturnType<typeof useHeroDetailsSuspenseQuery>;
+export type HeroDetailsBackgroundQueryHookResult = ReturnType<typeof useHeroDetailsBackgroundQuery>;
+export type HeroDetailsLoadableQueryHookResult = ReturnType<typeof useHeroDetailsLoadableQuery>;
 export type HeroDetailsQueryResult = Apollo.QueryResult<
   HeroDetailsQuery,
   HeroDetailsQueryVariables
