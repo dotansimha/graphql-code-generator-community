@@ -1,5 +1,33 @@
 # @graphql-codegen/c-sharp
 
+## 5.1.0
+
+### Minor Changes
+
+- [#816](https://github.com/dotansimha/graphql-code-generator-community/pull/816)
+  [`b1ec118`](https://github.com/dotansimha/graphql-code-generator-community/commit/b1ec1187507089362301b874546bf08dd4c8aec3)
+  Thanks [@mariusmuntean](https://github.com/mariusmuntean)! - Added support for the new
+  configuration option `memberNameConvention` to the c-sharp-operations plugin. Now both C# plugins
+  can generate C# code with standard member casing. The default is still camel case, to avoid
+  generating code that breaks user's existing code base.
+
+- [#806](https://github.com/dotansimha/graphql-code-generator-community/pull/806)
+  [`d1d6d6e`](https://github.com/dotansimha/graphql-code-generator-community/commit/d1d6d6e2cc06b547ff132514ab3e697517438179)
+  Thanks [@mariusmuntean](https://github.com/mariusmuntean)! - Added `memberNameConvention` which
+  allows you to customize the naming convention for interface/class/record members.
+
+### Patch Changes
+
+- [#820](https://github.com/dotansimha/graphql-code-generator-community/pull/820)
+  [`581e733`](https://github.com/dotansimha/graphql-code-generator-community/commit/581e733d6ede02261f89c332c1e3fd4621d34ddc)
+  Thanks [@mariusmuntean](https://github.com/mariusmuntean)! - upgrade dependencies and fix type
+  errors
+
+- Updated dependencies
+  [[`581e733`](https://github.com/dotansimha/graphql-code-generator-community/commit/581e733d6ede02261f89c332c1e3fd4621d34ddc),
+  [`b1ec118`](https://github.com/dotansimha/graphql-code-generator-community/commit/b1ec1187507089362301b874546bf08dd4c8aec3)]:
+  - @graphql-codegen/c-sharp-common@1.1.0
+
 ## 5.0.0
 
 ### Major Changes

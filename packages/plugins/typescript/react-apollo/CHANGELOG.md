@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 4.3.1
+
+### Patch Changes
+
+- [#805](https://github.com/dotansimha/graphql-code-generator-community/pull/805)
+  [`7df8028`](https://github.com/dotansimha/graphql-code-generator-community/commit/7df8028191c4b956ef3801816ad56a127221e658)
+  Thanks [@scottopherson](https://github.com/scottopherson)! - Move `graphql-tag` to
+  `devDependencies` from `peerDependencies`.
+
 ## 4.3.0
 
 ### Minor Changes
