@@ -1,8 +1,8 @@
 import { IntrospectionQuery } from 'graphql';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
-import { cacheExchange } from '@urql/exchange-graphcache';
 import {
+  cacheExchange,
   OptimisticMutationResolver as GraphCacheOptimisticMutationResolver,
   Resolver as GraphCacheResolver,
   UpdateResolver as GraphCacheUpdateResolver,

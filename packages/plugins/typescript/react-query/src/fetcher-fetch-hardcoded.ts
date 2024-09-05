@@ -4,7 +4,10 @@ import { FetcherRenderer, type GenerateConfig } from './fetcher.js';
 import { ReactQueryVisitor } from './visitor.js';
 
 export class HardcodedFetchFetcher extends FetcherRenderer {
-  constructor(protected visitor: ReactQueryVisitor, private config: HardcodedFetch) {
+  constructor(
+    protected visitor: ReactQueryVisitor,
+    private config: HardcodedFetch,
+  ) {
     super(visitor);
     autoBind(this);
   }

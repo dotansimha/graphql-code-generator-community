@@ -159,12 +159,12 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
      : ''
  }
  * @param options that will be passed into the ${operationType.toLowerCase()}, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/${
-      operationType === 'Mutation'
-        ? 'mutation'
-        : operationType === 'Subscription'
-        ? 'subscription'
-        : 'query'
-    }.html#options;
+   operationType === 'Mutation'
+     ? 'mutation'
+     : operationType === 'Subscription'
+       ? 'subscription'
+       : 'query'
+ }.html#options;
  *
  * @example${operationType === 'Mutation' ? mutationExample : queryExample}
  */`;
@@ -290,15 +290,15 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
       case 'Query': {
         return `export function use${operationName}(${variables}options: VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
   return VueApolloComposable.useQuery<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, ${
-          operationHasVariables ? 'variables' : '{}'
-        }, ${options});
+    operationHasVariables ? 'variables' : '{}'
+  }, ${options});
 }`;
       }
       case 'LazyQuery': {
         return `export function use${operationName}(${variables}options: VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
   return VueApolloComposable.useLazyQuery<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, ${
-          operationHasVariables ? 'variables' : '{}'
-        }, ${options});
+    operationHasVariables ? 'variables' : '{}'
+  }, ${options});
 }`;
       }
       case 'Mutation': {
@@ -309,8 +309,8 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
       case 'Subscription': {
         return `export function use${operationName}(${variables}options: VueApolloComposable.UseSubscriptionOptions<${operationResultType}, ${operationVariablesTypes}> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<${operationResultType}, ${operationVariablesTypes}>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<${operationResultType}, ${operationVariablesTypes}>> = {}) {
   return VueApolloComposable.useSubscription<${operationResultType}, ${operationVariablesTypes}>(${documentNodeVariable}, ${
-          operationHasVariables ? 'variables' : '{}'
-        }, ${options});
+    operationHasVariables ? 'variables' : '{}'
+  }, ${options});
 }`;
       }
     }

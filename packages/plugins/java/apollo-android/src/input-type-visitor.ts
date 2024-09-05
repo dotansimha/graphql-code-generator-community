@@ -210,8 +210,8 @@ ${allMarshallers.join('\n')}
           isNonNull ? '' : '@Nullable '
         }${fieldType}) {
   this.${field.name.value} = ${
-          isNonNull ? field.name.value : `Input.fromNullable(${field.name.value})`
-        };
+    isNonNull ? field.name.value : `Input.fromNullable(${field.name.value})`
+  };
   return this;
 }`;
       })

@@ -18,7 +18,7 @@ function buildArrayDefinition(e: GraphQLEnumType, config: EnumArrayPluginConfig)
   const convert = convertFactory(config);
 
   const enumName = convert(e.astNode, {
-    prefix: config.enumPrefix ?? true ? config.typesPrefix : undefined,
+    prefix: (config.enumPrefix ?? true) ? config.typesPrefix : undefined,
     suffix: config.typesSuffix,
   });
 

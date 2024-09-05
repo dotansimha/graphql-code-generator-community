@@ -97,8 +97,8 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     const moduleName = this.config.reactQueryImportFrom
       ? this.config.reactQueryImportFrom
       : this.config.reactQueryVersion <= 3
-      ? 'react-query'
-      : '@tanstack/react-query';
+        ? 'react-query'
+        : '@tanstack/react-query';
 
     return [...baseImports, `import { ${hookAndTypeImports.join(', ')} } from '${moduleName}';`];
   }

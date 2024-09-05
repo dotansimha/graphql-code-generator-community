@@ -6,7 +6,10 @@ import { SolidQueryVisitor } from './visitor.js';
 export class GraphQLRequestClientFetcher extends FetcherRenderer {
   private clientPath: string | null;
 
-  constructor(protected visitor: SolidQueryVisitor, config: GraphQlRequest) {
+  constructor(
+    protected visitor: SolidQueryVisitor,
+    config: GraphQlRequest,
+  ) {
     super(visitor);
     this.clientPath = typeof config === 'object' ? config.clientImportPath : null;
     autoBind(this);

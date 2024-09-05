@@ -514,8 +514,8 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
       this.config.dedupeOperationSuffix && node.name.value.toLowerCase().endsWith(node.operation)
         ? ''
         : !operationType
-        ? ''
-        : operationType;
+          ? ''
+          : operationType;
 
     const operationResultType: string = this.convertName(node, {
       suffix: operationTypeSuffix + this._parsedConfig.operationResultSuffix,
@@ -569,11 +569,11 @@ ${this._getOperationMethod(node)}
         return new GraphQLRequest {
           Query = ${this._getDocumentNodeVariable(node, documentVariableName)},
           OperationName = "${node.name.value}"${
-      hasInputArgs
-        ? `,
+            hasInputArgs
+              ? `,
           Variables = variables`
-        : ''
-    }
+              : ''
+          }
         };
       }
 

@@ -12,7 +12,10 @@ export class CustomMapperFetcher extends FetcherRenderer {
   private _mapper: ParsedMapper;
   private _isSolidHook: boolean;
 
-  constructor(protected visitor: SolidQueryVisitor, customFetcher: CustomFetch) {
+  constructor(
+    protected visitor: SolidQueryVisitor,
+    customFetcher: CustomFetch,
+  ) {
     super(visitor);
     if (typeof customFetcher === 'string') {
       customFetcher = { func: customFetcher };

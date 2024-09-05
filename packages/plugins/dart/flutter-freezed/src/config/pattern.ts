@@ -222,8 +222,8 @@ export class Pattern {
     return patternType === 'TypeNamePattern'
       ? baseNamesForTypeNamePattern
       : patternType === 'FieldNamePattern'
-      ? baseNamesForFieldNamePattern
-      : [...baseNamesForTypeNamePattern, ...baseNamesForFieldNamePattern];
+        ? baseNamesForFieldNamePattern
+        : [...baseNamesForTypeNamePattern, ...baseNamesForFieldNamePattern];
   };
   //#endregion
 
