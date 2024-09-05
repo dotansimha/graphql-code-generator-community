@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
+import { CommentsPageCommentFragmentDoc } from './comments-page-comment.fragment.stencil-component.js';
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
-import { CommentsPageCommentFragmentDoc } from './comments-page-comment.fragment.stencil-component.js';
 
 declare global {
   export type CommentQueryVariables = Types.Exact<{
