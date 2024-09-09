@@ -498,9 +498,12 @@ export function useCommentLazyQuery(
   return Apollo.useLazyQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
 }
 export function useCommentSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<CommentQuery, CommentQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<CommentQuery, CommentQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
 }
 export type CommentQueryHookResult = ReturnType<typeof useCommentQuery>;
@@ -556,12 +559,15 @@ export function useCurrentUserForProfileLazyQuery(
   );
 }
 export function useCurrentUserForProfileSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    CurrentUserForProfileQuery,
-    CurrentUserForProfileQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        CurrentUserForProfileQuery,
+        CurrentUserForProfileQueryVariables
+      >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
     CurrentUserForProfileDocument,
     options,
@@ -622,9 +628,10 @@ export function useFeedLazyQuery(
   return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
 export function useFeedSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>,
+  baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
 export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;
