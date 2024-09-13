@@ -1,4 +1,3 @@
-import { pascalCase } from 'change-case-all';
 import {
   DirectiveNode,
   EnumTypeDefinitionNode,
@@ -24,7 +23,9 @@ import {
   CSharpFieldType,
   getListInnerTypeNode,
   getListTypeField,
+  getMemberNamingFunction,
   isValueType,
+  MemberNamingFn,
   transformComment,
   wrapFieldType,
 } from '@graphql-codegen/c-sharp-common';
@@ -52,6 +53,7 @@ export interface CSharpResolverParsedConfig extends ParsedConfig {
   emitRecords: boolean;
   emitJsonAttributes: boolean;
   jsonAttributesSource: JsonAttributesSource;
+  memberNamingFunction: MemberNamingFn;
 }
 
 export class CSharpResolversVisitor extends BaseVisitor<
@@ -60,7 +62,10 @@ export class CSharpResolversVisitor extends BaseVisitor<
 > {
   private readonly jsonAttributesConfiguration: JsonAttributesSourceConfiguration;
 
-  constructor(rawConfig: CSharpResolversPluginRawConfig, private _schema: GraphQLSchema) {
+  constructor(
+    rawConfig: CSharpResolversPluginRawConfig,
+    private _schema: GraphQLSchema,
+  ) {
     super(rawConfig, {
       enumValues: rawConfig.enumValues || {},
       listType: rawConfig.listType || 'List',
@@ -70,6 +75,7 @@ export class CSharpResolversVisitor extends BaseVisitor<
       emitJsonAttributes: rawConfig.emitJsonAttributes ?? true,
       jsonAttributesSource: rawConfig.jsonAttributesSource || 'Newtonsoft.Json',
       scalars: buildScalarsFromConfig(_schema, rawConfig, C_SHARP_SCALARS),
+      memberNamingFunction: getMemberNamingFunction(rawConfig),
     });
 
     if (this._parsedConfig.emitJsonAttributes) {
@@ -216,9 +222,9 @@ export class CSharpResolversVisitor extends BaseVisitor<
         const baseType = this.scalars[schemaType.name];
         result = new CSharpFieldType({
           baseType: {
-            type: baseType,
+            type: baseType.input,
             required,
-            valueType: isValueType(baseType),
+            valueType: isValueType(baseType.input),
           },
           listType,
         });
@@ -284,7 +290,9 @@ export class CSharpResolversVisitor extends BaseVisitor<
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
         const fieldHeader = this.getFieldHeader(arg, fieldType);
-        const fieldName = convertSafeName(pascalCase(this.convertName(arg.name)));
+        const fieldName = convertSafeName(
+          this._parsedConfig.memberNamingFunction(this.convertName(arg.name)),
+        );
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
         return (
           fieldHeader +
@@ -295,7 +303,9 @@ export class CSharpResolversVisitor extends BaseVisitor<
     const recordInitializer = inputValueArray
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
-        const fieldName = convertSafeName(pascalCase(this.convertName(arg.name)));
+        const fieldName = convertSafeName(
+          this._parsedConfig.memberNamingFunction(this.convertName(arg.name)),
+        );
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
         return `${csharpFieldType} ${fieldName}`;
       })
@@ -324,10 +334,10 @@ ${recordMembers}
     const classMembers = inputValueArray
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type);
-        const fieldHeader = this.getFieldHeader(arg, fieldType);
-        const fieldName = convertSafeName(arg.name);
+        const fieldAttribute = this.getFieldHeader(arg, fieldType);
+        const fieldName = convertSafeName(this._parsedConfig.memberNamingFunction(arg.name));
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
-        return fieldHeader + indent(`public ${csharpFieldType} ${fieldName} { get; set; }`);
+        return fieldAttribute + indent(`public ${csharpFieldType} ${fieldName} { get; set; }`);
       })
       .join('\n\n');
 
@@ -357,11 +367,12 @@ ${classMembers}
 
         if (this.config.emitRecords) {
           // record
-          fieldName = convertSafeName(pascalCase(this.convertName(arg.name)));
+          fieldName = convertSafeName(
+            this._parsedConfig.memberNamingFunction(this.convertName(arg.name)),
+          );
           getterSetter = '{ get; }';
         } else {
-          // class
-          fieldName = convertSafeName(arg.name);
+          fieldName = convertSafeName(this._parsedConfig.memberNamingFunction(arg.name));
           getterSetter = '{ get; set; }';
         }
 
@@ -387,7 +398,7 @@ ${classMembers}
       .map(arg => {
         const fieldType = this.resolveInputFieldType(arg.type, !!arg.defaultValue);
         const fieldHeader = this.getFieldHeader(arg, fieldType);
-        const fieldName = convertSafeName(arg.name);
+        const fieldName = convertSafeName(this._parsedConfig.memberNamingFunction(arg.name));
         const csharpFieldType = wrapFieldType(fieldType, fieldType.listType, this.config.listType);
         return fieldHeader + indent(`public ${csharpFieldType} ${fieldName} { get; set; }`);
       })

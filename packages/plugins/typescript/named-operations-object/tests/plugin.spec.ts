@@ -223,4 +223,60 @@ describe('named-operations-object', () => {
       }
     }`);
   });
+
+  it('Should not throw on duplicate operations', async () => {
+    const result = await plugin(
+      null,
+      [
+        {
+          document: parse(/* GraphQL */ `
+            query myQuery {
+              id
+            }
+          `),
+        },
+        {
+          document: parse(/* GraphQL */ `
+            query myQuery {
+              id
+            }
+          `),
+        },
+      ],
+      {},
+    );
+
+    expect(result).toBeSimilarStringTo(`export const namedOperations = {
+      Query: {
+        myQuery: 'myQuery'
+      }
+    }`);
+  });
+
+  it('Should throw on duplicate operations when config.throwOnDuplicate is set', async () => {
+    expect(() =>
+      plugin(
+        null,
+        [
+          {
+            document: parse(/* GraphQL */ `
+              query myQuery {
+                id
+              }
+            `),
+          },
+          {
+            document: parse(/* GraphQL */ `
+              query myQuery {
+                id
+              }
+            `),
+          },
+        ],
+        {
+          throwOnDuplicate: true,
+        },
+      ),
+    ).toThrowErrorMatchingInlineSnapshot(`"Duplicated operation name(s): myQuery"`);
+  });
 });

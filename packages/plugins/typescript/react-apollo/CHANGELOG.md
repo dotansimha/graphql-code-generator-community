@@ -1,5 +1,22 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 4.3.2
+
+### Patch Changes
+
+- [#835](https://github.com/dotansimha/graphql-code-generator-community/pull/835)
+  [`ea83cf4`](https://github.com/dotansimha/graphql-code-generator-community/commit/ea83cf4b3207d4afe642e68148d7ed145446e3ab)
+  Thanks [@jefrydco](https://github.com/jefrydco)! - feat: support skip token for useSuspenseQuery
+
+## 4.3.1
+
+### Patch Changes
+
+- [#805](https://github.com/dotansimha/graphql-code-generator-community/pull/805)
+  [`7df8028`](https://github.com/dotansimha/graphql-code-generator-community/commit/7df8028191c4b956ef3801816ad56a127221e658)
+  Thanks [@scottopherson](https://github.com/scottopherson)! - Move `graphql-tag` to
+  `devDependencies` from `peerDependencies`.
+
 ## 4.3.0
 
 ### Minor Changes

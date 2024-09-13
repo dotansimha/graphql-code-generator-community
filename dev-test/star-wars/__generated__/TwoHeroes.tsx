@@ -50,9 +50,12 @@ export function useTwoHeroesLazyQuery(
   return Apollo.useLazyQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
 export function useTwoHeroesSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(
     TwoHeroesDocument,
     options,

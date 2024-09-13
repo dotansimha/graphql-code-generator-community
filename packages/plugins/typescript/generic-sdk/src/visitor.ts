@@ -129,8 +129,8 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
           o.operationVariablesTypes
         }, options?: C): ${returnType}<${resultData}> {
   return requester<${o.operationResultType}, ${
-          o.operationVariablesTypes
-        }>(${docVarName}, variables, options) as ${returnType}<${resultData}>;
+    o.operationVariablesTypes
+  }>(${docVarName}, variables, options) as ${returnType}<${resultData}>;
 }`;
       })
       .map(s => indentMultiline(s, 2));

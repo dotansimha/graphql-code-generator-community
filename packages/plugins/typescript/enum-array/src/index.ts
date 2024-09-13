@@ -1,4 +1,4 @@
-import { GraphQLEnumType, GraphQLSchema } from 'graphql';
+import { buildSchema, GraphQLEnumType, GraphQLSchema, printSchema } from 'graphql';
 import { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import { convertFactory } from '@graphql-codegen/visitor-plugin-common';
 import { EnumArrayPluginConfig } from './config.js';
@@ -18,7 +18,7 @@ function buildArrayDefinition(e: GraphQLEnumType, config: EnumArrayPluginConfig)
   const convert = convertFactory(config);
 
   const enumName = convert(e.astNode, {
-    prefix: config.enumPrefix ?? true ? config.typesPrefix : undefined,
+    prefix: (config.enumPrefix ?? true) ? config.typesPrefix : undefined,
     suffix: config.typesSuffix,
   });
 
@@ -54,7 +54,8 @@ export const plugin: PluginFunction<EnumArrayPluginConfig> = (
   _documents: Types.DocumentFile[],
   config: EnumArrayPluginConfig,
 ): Types.PluginOutput => {
-  const enums = getEnumTypeMap(schema);
+  // https://github.com/graphql/graphql-js/issues/1575#issuecomment-454978897
+  const enums = getEnumTypeMap(buildSchema(printSchema(schema)));
   const content = enums.map(e => buildArrayDefinition(e, config)).join('\n');
   const result: Types.PluginOutput = { content };
   if (config.importFrom) {

@@ -12,7 +12,10 @@ export class CustomMapperFetcher extends FetcherRenderer {
   private _mapper: ParsedMapper;
   private _isReactHook: boolean;
 
-  constructor(protected visitor: ReactQueryVisitor, customFetcher: CustomFetch) {
+  constructor(
+    protected visitor: ReactQueryVisitor,
+    customFetcher: CustomFetch,
+  ) {
     super(visitor);
     if (typeof customFetcher === 'string') {
       customFetcher = { func: customFetcher };

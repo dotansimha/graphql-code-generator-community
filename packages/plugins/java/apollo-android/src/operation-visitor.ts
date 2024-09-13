@@ -740,8 +740,8 @@ ${childFields
   @Override
   public void write(Object value, ResponseWriter.ListItemWriter listItemWriter) {
     listItemWriter.${writerMethod.name}(((${f.className}) value)${
-          writerMethod.useMarshaller ? '.marshaller()' : ''
-        });
+      writerMethod.useMarshaller ? '.marshaller()' : ''
+    });
   }
 });`,
         2,

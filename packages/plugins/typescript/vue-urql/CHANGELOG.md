@@ -1,5 +1,13 @@
 # @graphql-codegen/typescript-vue-urql
 
+## 3.2.0
+
+### Minor Changes
+
+- [#801](https://github.com/dotansimha/graphql-code-generator-community/pull/801)
+  [`6970825`](https://github.com/dotansimha/graphql-code-generator-community/commit/69708250bfd21fb847bf6524e26109efbbace29b)
+  Thanks [@yurks](https://github.com/yurks)! - Fix types for variables used in a query/subscription
+
 ## 3.1.0
 
 ### Minor Changes

@@ -1,10 +1,11 @@
+import { MemberNameConventionConfig } from '@graphql-codegen/c-sharp-common';
 import { EnumValuesMap, RawConfig } from '@graphql-codegen/visitor-plugin-common';
 import { JsonAttributesSource } from './json-attributes.js';
 
 /**
  * @description This plugin generates C# `class` identifier for your schema types.
  */
-export interface CSharpResolversPluginRawConfig extends RawConfig {
+export interface CSharpResolversPluginRawConfig extends RawConfig, MemberNameConventionConfig {
   /**
    * @description Overrides the default value of enum values declared in your GraphQL schema.
    * @exampleMarkdown

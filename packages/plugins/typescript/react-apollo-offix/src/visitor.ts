@@ -78,9 +78,9 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
       hookFns.push(
         `export function useOffline${operationName}(baseOptions?: OffixReactHooks.${operationType}HookOptions<${operationResultType}, ${operationVariablesTypes}>) {
     return OffixReactHooks.useOfflineMutation<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
-          node,
-          documentVariableName,
-        )}, baseOptions);
+      node,
+      documentVariableName,
+    )}, baseOptions);
 }`,
       );
     }

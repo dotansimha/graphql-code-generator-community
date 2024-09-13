@@ -26,7 +26,9 @@ import {
   getListInnerTypeNode,
   getListTypeDepth,
   getListTypeField,
+  getMemberNamingFunction,
   isValueType,
+  MemberNamingFn,
   wrapFieldType,
 } from '@graphql-codegen/c-sharp-common';
 import { getCachedDocumentNodeFromSchema, Types } from '@graphql-codegen/plugin-helpers';
@@ -56,6 +58,7 @@ export interface CSharpOperationsPluginConfig extends ClientSideBasePluginConfig
   mutationSuffix: string;
   subscriptionSuffix: string;
   typesafeOperation: boolean;
+  memberNamingFunction: MemberNamingFn;
 }
 
 export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
@@ -71,6 +74,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
   }[] = [];
 
   private _schemaAST: DocumentNode;
+  private readonly _fragmentList: LoadedFragment[];
 
   constructor(
     schema: GraphQLSchema,
@@ -90,6 +94,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         subscriptionSuffix: rawConfig.subscriptionSuffix || defaultSuffix,
         scalars: buildScalarsFromConfig(schema, rawConfig, C_SHARP_SCALARS),
         typesafeOperation: rawConfig.typesafeOperation || false,
+        memberNamingFunction: getMemberNamingFunction(rawConfig),
       },
       documents,
     );
@@ -98,6 +103,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     autoBind(this);
 
     this._schemaAST = getCachedDocumentNodeFromSchema(schema);
+    this._fragmentList = fragments;
   }
 
   // Some settings aren't supported with C#, overruled here
@@ -157,7 +163,12 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
   }
 
   protected _gql(node: OperationDefinitionNode): string {
-    const fragments = this._transformFragments(node);
+    const includeNestedFragments =
+      this.config.documentMode === DocumentMode.documentNode ||
+      this.config.documentMode === DocumentMode.string ||
+      (this.config.dedupeFragments && node.kind === 'OperationDefinition');
+    const fragmentNames = this._extractFragments(node, includeNestedFragments);
+    const fragments = this._transformFragments(fragmentNames);
     const doc = this._prepareDocument(
       [print(node), this._includeFragments(fragments, node.kind)].join('\n'),
     );
@@ -185,7 +196,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     const name = variable.variable.name.value;
     const baseType = !isScalarType(schemaType)
       ? innerType.name.value
-      : this.scalars[schemaType.name] || 'object';
+      : this.scalars[schemaType.name].input || 'object';
 
     const listType = getListTypeField(typeNode);
     const required = getListInnerTypeNode(typeNode).kind === Kind.NON_NULL_TYPE;
@@ -235,9 +246,9 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         const baseType = this.scalars[schemaType.name];
         result = new CSharpFieldType({
           baseType: {
-            type: baseType,
+            type: baseType.output,
             required,
-            valueType: isValueType(baseType),
+            valueType: isValueType(baseType.output),
           },
           listType,
         });
@@ -323,10 +334,13 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
             responseType.listType,
             'System.Collections.Generic.List',
           );
+          const propertyName = convertSafeName(
+            this._parsedConfig.memberNamingFunction(node.name.value),
+          );
           return indentMultiline(
             [
               `[JsonProperty("${node.name.value}")]`,
-              `public ${responseTypeName} ${convertSafeName(node.name.value)} { get; set; }`,
+              `public ${responseTypeName} ${propertyName} { get; set; }`,
             ].join('\n') + '\n',
           );
         }
@@ -359,16 +373,19 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
                 })
                 .join('\n'),
           ).string;
+        const propertyName = convertSafeName(
+          this._parsedConfig.memberNamingFunction(node.name.value),
+        );
         return indentMultiline(
           [
             innerClassDefinition,
             `[JsonProperty("${node.name.value}")]`,
-            `public ${selectionTypeName} ${convertSafeName(node.name.value)} { get; set; }`,
+            `public ${selectionTypeName} ${propertyName} { get; set; }`,
           ].join('\n') + '\n',
         );
       }
       case Kind.FRAGMENT_SPREAD: {
-        const fragmentSchema = this._fragments.find(f => f.name === node.name.value);
+        const fragmentSchema = this._fragmentList.find(f => f.name === node.name.value);
         if (!fragmentSchema) {
           throw new Error(`Fragment schema not found; ${node.name.value}`);
         }
@@ -412,10 +429,13 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
                 inputType.listType,
                 'System.Collections.Generic.List',
               );
+              const propertyName = convertSafeName(
+                this._parsedConfig.memberNamingFunction(v.variable.name.value),
+              );
               return indentMultiline(
                 [
                   `[JsonProperty("${v.variable.name.value}")]`,
-                  `public ${inputTypeName} ${convertSafeName(v.variable.name.value)} { get; set; }`,
+                  `public ${inputTypeName} ${propertyName} { get; set; }`,
                 ].join('\n') + '\n',
               );
             })
@@ -494,8 +514,8 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
       this.config.dedupeOperationSuffix && node.name.value.toLowerCase().endsWith(node.operation)
         ? ''
         : !operationType
-        ? ''
-        : operationType;
+          ? ''
+          : operationType;
 
     const operationResultType: string = this.convertName(node, {
       suffix: operationTypeSuffix + this._parsedConfig.operationResultSuffix,
@@ -549,11 +569,11 @@ ${this._getOperationMethod(node)}
         return new GraphQLRequest {
           Query = ${this._getDocumentNodeVariable(node, documentVariableName)},
           OperationName = "${node.name.value}"${
-      hasInputArgs
-        ? `,
+            hasInputArgs
+              ? `,
           Variables = variables`
-        : ''
-    }
+              : ''
+          }
         };
       }
 
@@ -591,10 +611,13 @@ ${this._getOperationMethod(node)}
                 inputType.listType,
                 'System.Collections.Generic.List',
               );
+              const propertyName = convertSafeName(
+                this._parsedConfig.memberNamingFunction(f.name.value),
+              );
               return indentMultiline(
                 [
                   `[JsonProperty("${f.name.value}")]`,
-                  `public ${inputTypeName} ${convertSafeName(f.name.value)} { get; set; }`,
+                  `public ${inputTypeName} ${propertyName} { get; set; }`,
                 ].join('\n') + '\n',
               );
             })
@@ -614,7 +637,11 @@ ${this._getOperationMethod(node)}
       .access('public')
       .asKind('enum')
       .withName(convertSafeName(this.convertName(node.name)))
-      .withBlock(indentMultiline(node.values?.map(v => v.name.value).join(',\n'))).string;
+      .withBlock(
+        indentMultiline(
+          node.values?.map(v => this._parsedConfig.memberNamingFunction(v.name.value)).join(',\n'),
+        ),
+      ).string;
 
     return indentMultiline(enumDefinition, 2);
   }

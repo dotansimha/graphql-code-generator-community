@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-react-apollo",
-  "version": "4.3.0",
+  "version": "4.3.2",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating a ready-to-use React Components/HOC/Hooks based on GraphQL operations",
   "repository": {
@@ -37,8 +37,7 @@
     "test": "jest --no-watchman --config ../../../../jest.config.js --forceExit"
   },
   "peerDependencies": {
-    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0",
-    "graphql-tag": "^2.0.0"
+    "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"
   },
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^3.0.0",
@@ -48,7 +47,8 @@
     "tslib": "~2.6.0"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "1.18.0"
+    "@graphql-codegen/testing": "1.18.0",
+    "graphql-tag": "^2.12.6"
   },
   "publishConfig": {
     "directory": "dist",

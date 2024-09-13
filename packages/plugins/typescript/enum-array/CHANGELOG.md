@@ -1,5 +1,13 @@
 # @graphql-codegen/typescript-enum-array
 
+## 3.1.0
+
+### Minor Changes
+
+- [#751](https://github.com/dotansimha/graphql-code-generator-community/pull/751)
+  [`4547e62`](https://github.com/dotansimha/graphql-code-generator-community/commit/4547e629b029a22fe16bff2a4351ceec132422c6)
+  Thanks [@hjoelh](https://github.com/hjoelh)! - support introspection result
+
 ## 3.0.0
 
 ### Major Changes

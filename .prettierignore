@@ -8,3 +8,5 @@ dist/
 CHANGELOG.md
 .husky/_/
 .changeset/*.md
+# Ignore all flow files cause it is just hard to maintain them
+*.flow.js

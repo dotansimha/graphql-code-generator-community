@@ -1830,8 +1830,8 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-      export function useFeedSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+      export function useFeedSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>) {
+        const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
         return Apollo.useSuspenseQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
       }`);
       await validateTypeScript(content, schema, docs, {});
@@ -1898,8 +1898,8 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-      export function useFeedSuspenseQueryMySuffix(baseOptions?: Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+      export function useFeedSuspenseQueryMySuffix(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>) {
+        const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
         return Apollo.useSuspenseQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
       }`);
       await validateTypeScript(content, schema, docs, {});
@@ -2356,8 +2356,8 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
-      export function useTestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+      export function useTestSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>) {
+        const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
         return Apollo.useSuspenseQuery<TestQuery, TestQueryVariables>(Operations.test, options);
       }
       `);
@@ -2614,8 +2614,8 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
-      export function useTestOneSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+      export function useTestOneSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
+        const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
         return Apollo.useSuspenseQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
       }
       `);
@@ -2742,8 +2742,8 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
-      export function useTestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+      export function useTestSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>) {
+        const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
         return Apollo.useSuspenseQuery<TestQuery, TestQueryVariables>(Operations.test, options);
       }
       `);
@@ -3042,8 +3042,8 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
       }
       `);
       expect(content.content).toBeSimilarStringTo(`
-      export function useTestOneSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
+      export function useTestOneSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
+        const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
         return Apollo.useSuspenseQuery<TestOneQuery, TestOneQueryVariables>(Operations.testOne, options);
       }
       `);

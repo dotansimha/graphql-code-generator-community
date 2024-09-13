@@ -4,7 +4,10 @@ import { FetcherRenderer, type GenerateConfig } from './fetcher.js';
 import { SolidQueryVisitor } from './visitor.js';
 
 export class HardcodedFetchFetcher extends FetcherRenderer {
-  constructor(protected visitor: SolidQueryVisitor, private config: HardcodedFetch) {
+  constructor(
+    protected visitor: SolidQueryVisitor,
+    private config: HardcodedFetch,
+  ) {
     super(visitor);
     autoBind(this);
   }

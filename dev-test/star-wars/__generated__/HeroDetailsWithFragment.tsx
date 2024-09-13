@@ -66,12 +66,15 @@ export function useHeroDetailsWithFragmentLazyQuery(
   );
 }
 export function useHeroDetailsWithFragmentSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroDetailsWithFragmentQuery,
-    HeroDetailsWithFragmentQueryVariables
-  >,
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        HeroDetailsWithFragmentQuery,
+        HeroDetailsWithFragmentQueryVariables
+      >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options =
+    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroDetailsWithFragmentQuery,
     HeroDetailsWithFragmentQueryVariables

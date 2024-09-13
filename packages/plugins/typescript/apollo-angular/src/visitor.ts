@@ -398,8 +398,8 @@ ${camelCase(o.node.name.value)}Watch(variables${
     const providedIn = this.config.serviceProvidedIn
       ? `{ providedIn: ${this._parseNgModule(this.config.serviceProvidedIn).module} }`
       : this.config.serviceProvidedInRoot === false
-      ? ''
-      : `{ providedIn: 'root' }`;
+        ? ''
+        : `{ providedIn: 'root' }`;
 
     // Generate these types only if they're going to be used,
     // to avoid "unused variable" compile errors in generated code

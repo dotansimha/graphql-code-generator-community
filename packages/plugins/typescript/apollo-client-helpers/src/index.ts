@@ -25,39 +25,42 @@ function generateTypePoliciesSignature(
 ): Types.ComplexPluginOutput {
   const typeMap = schema.getTypeMap();
   const perTypePolicies: string[] = [];
-  const typedTypePolicies = Object.keys(typeMap).reduce((prev, typeName) => {
-    const type = typeMap[typeName];
+  const typedTypePolicies = Object.keys(typeMap).reduce(
+    (prev, typeName) => {
+      const type = typeMap[typeName];
 
-    if (!typeName.startsWith('__') && (isObjectType(type) || isInterfaceType(type))) {
-      const fieldsNames = Object.keys(type.getFields()).filter(f => !f.startsWith('__'));
-      const keySpecifierVarName = `${typeName}KeySpecifier`;
-      const fieldPolicyVarName = `${typeName}FieldPolicy`;
+      if (!typeName.startsWith('__') && (isObjectType(type) || isInterfaceType(type))) {
+        const fieldsNames = Object.keys(type.getFields()).filter(f => !f.startsWith('__'));
+        const keySpecifierVarName = `${typeName}KeySpecifier`;
+        const fieldPolicyVarName = `${typeName}FieldPolicy`;
 
-      perTypePolicies.push(
-        `export type ${keySpecifierVarName} = (${fieldsNames
-          .map(f => `'${f}'`)
-          .join(' | ')} | ${keySpecifierVarName})[];`,
-      );
+        perTypePolicies.push(
+          `export type ${keySpecifierVarName} = (${fieldsNames
+            .map(f => `'${f}'`)
+            .join(' | ')} | ${keySpecifierVarName})[];`,
+        );
 
-      perTypePolicies.push(`export type ${fieldPolicyVarName} = {
+        perTypePolicies.push(`export type ${fieldPolicyVarName} = {
 ${fieldsNames
   .map(fieldName => `\t${fieldName}?: FieldPolicy<any> | FieldReadFunction<any>`)
   .join(',\n')}
 };`);
 
-      return {
-        ...prev,
-        [typeName]: `Omit<TypePolicy, "fields" | "keyFields"> & {
+        return {
+          ...prev,
+          [typeName]: `Omit<TypePolicy, "fields" | "keyFields"> & {
 \t\tkeyFields${
-          config.requireKeyFields ? '' : '?'
-        }: false | ${keySpecifierVarName} | (() => undefined | ${keySpecifierVarName}),
+            config.requireKeyFields ? '' : '?'
+          }: false | ${keySpecifierVarName} | (() => undefined | ${keySpecifierVarName}),
 \t\tfields?: ${fieldPolicyVarName},
 \t}`,
-      };
-    }
+        };
+      }
 
-    return prev;
-  }, {} as Record<string, string>);
+      return prev;
+    },
+    {} as Record<string, string>,
+  );
 
   const rootTypes = [
     schema.getQueryType()?.name,

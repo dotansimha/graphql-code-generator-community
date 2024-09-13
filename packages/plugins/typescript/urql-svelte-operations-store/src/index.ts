@@ -13,8 +13,8 @@ function getOperationSuffix(
   return omitOperationSuffix
     ? ''
     : dedupeOperationSuffix && operationName.toLowerCase().endsWith(operationType.toLowerCase())
-    ? ''
-    : operationType;
+      ? ''
+      : operationType;
 }
 
 export const plugin: PluginFunction<Record<string, any>, Types.ComplexPluginOutput> = (
