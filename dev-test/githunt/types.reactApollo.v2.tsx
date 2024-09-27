@@ -502,14 +502,9 @@ export function useCommentLazyQuery(
   );
 }
 export function useCommentSuspenseQuery(
-  baseOptions?:
-    | ApolloReactHooks.SkipToken
-    | ApolloReactHooks.SuspenseQueryHookOptions<CommentQuery, CommentQueryVariables>,
+  baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<CommentQuery, CommentQueryVariables>,
 ) {
-  const options =
-    baseOptions === ApolloReactHooks.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions };
   return ApolloReactHooks.useSuspenseQuery<CommentQuery, CommentQueryVariables>(
     CommentDocument,
     options,
@@ -568,17 +563,12 @@ export function useCurrentUserForProfileLazyQuery(
   >(CurrentUserForProfileDocument, options);
 }
 export function useCurrentUserForProfileSuspenseQuery(
-  baseOptions?:
-    | ApolloReactHooks.SkipToken
-    | ApolloReactHooks.SuspenseQueryHookOptions<
-        CurrentUserForProfileQuery,
-        CurrentUserForProfileQueryVariables
-      >,
+  baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
+    CurrentUserForProfileQuery,
+    CurrentUserForProfileQueryVariables
+  >,
 ) {
-  const options =
-    baseOptions === ApolloReactHooks.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions };
   return ApolloReactHooks.useSuspenseQuery<
     CurrentUserForProfileQuery,
     CurrentUserForProfileQueryVariables
@@ -639,14 +629,9 @@ export function useFeedLazyQuery(
   return ApolloReactHooks.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
 export function useFeedSuspenseQuery(
-  baseOptions?:
-    | ApolloReactHooks.SkipToken
-    | ApolloReactHooks.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>,
+  baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>,
 ) {
-  const options =
-    baseOptions === ApolloReactHooks.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions };
   return ApolloReactHooks.useSuspenseQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
 export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;

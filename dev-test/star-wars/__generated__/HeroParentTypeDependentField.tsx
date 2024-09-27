@@ -96,15 +96,12 @@ export function useHeroParentTypeDependentFieldLazyQuery(
   >(HeroParentTypeDependentFieldDocument, options);
 }
 export function useHeroParentTypeDependentFieldSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        HeroParentTypeDependentFieldQuery,
-        HeroParentTypeDependentFieldQueryVariables
-      >,
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroParentTypeDependentFieldQuery,
+    HeroParentTypeDependentFieldQueryVariables
+  >,
 ) {
-  const options =
-    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroParentTypeDependentFieldQuery,
     HeroParentTypeDependentFieldQueryVariables
