@@ -44,7 +44,7 @@
     "@graphql-codegen/typescript": "^3.0.0",
     "@graphql-codegen/visitor-plugin-common": "3.0.0",
     "@urql/introspection": "^1.0.0",
-    "tslib": "~2.6.0"
+    "tslib": "~2.7.0"
   },
   "devDependencies": {
     "graphql": "16.9.0"

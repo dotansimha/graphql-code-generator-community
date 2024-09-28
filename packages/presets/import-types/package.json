@@ -43,7 +43,7 @@
     "@graphql-codegen/add": "^3.2.1",
     "@graphql-codegen/plugin-helpers": "^3.0.0",
     "@graphql-codegen/visitor-plugin-common": "2.13.1",
-    "tslib": "~2.6.0"
+    "tslib": "~2.7.0"
   },
   "publishConfig": {
     "directory": "dist",

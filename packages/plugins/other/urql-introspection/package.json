@@ -42,7 +42,7 @@
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^3.0.0",
     "@urql/introspection": "^0.3.2",
-    "tslib": "~2.6.0"
+    "tslib": "~2.7.0"
   },
   "devDependencies": {
     "@graphql-codegen/testing": "1.18.0"
