@@ -13,11 +13,12 @@ export interface FlowDocumentsPluginConfig extends RawDocumentsConfig {
    * @default true
    *
    * @exampleMarkdown
-   * ```yaml {6}
+   * ```yaml {7}
    * generates:
-   *   path/to/file.ts:
+   *   path/to/file.js:
    *     plugins:
    *       - flow
+   *       - flow-operations
    *     config:
    *       useFlowExactObjects: false
    * ```
@@ -28,11 +29,12 @@ export interface FlowDocumentsPluginConfig extends RawDocumentsConfig {
    * @default false
    *
    * @exampleMarkdown
-   * ```yaml {6}
+   * ```yaml {7}
    * generates:
-   *   path/to/file.ts:
+   *   path/to/file.js:
    *     plugins:
    *       - flow
+   *       - flow-operations
    *     config:
    *       useFlowReadOnlyTypes: true
    * ```
@@ -45,10 +47,10 @@ export interface FlowDocumentsPluginConfig extends RawDocumentsConfig {
    * @exampleMarkdown
    * ```yaml {7}
    * generates:
-   *   path/to/file.ts:
+   *   path/to/file.js:
    *     plugins:
-   *       - typescript
-   *       - typescript-operations
+   *       - flow
+   *       - flow-operations
    *     config:
    *       flattenGeneratedTypes: true
    * ```
