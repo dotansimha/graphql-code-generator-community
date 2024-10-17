@@ -186,7 +186,7 @@ export abstract class FetcherRenderer {
     hasRequiredVariables,
     operationVariablesTypes,
   }: GenerateConfig): string {
-    return `variables${hasRequiredVariables ? '' : '?'}: ${operationVariablesTypes}`;
+    return `variables: ${operationVariablesTypes}${hasRequiredVariables ? '' : ' = {}'}`;
   }
 
   private generateQueryOptionsSignature(
@@ -203,9 +203,7 @@ export abstract class FetcherRenderer {
 
   private generateInfiniteQueryVariablesSignature(config: GenerateConfig): string {
     if (this.visitor.config.reactQueryVersion <= 4) {
-      return `variables${config.hasRequiredVariables ? '' : '?'}: ${
-        config.operationVariablesTypes
-      }`;
+      return `variables: ${config.operationVariablesTypes}${config.hasRequiredVariables ? '' : ' = {}'}`;
     }
     return `variables: ${config.operationVariablesTypes}`;
   }
@@ -224,9 +222,7 @@ export abstract class FetcherRenderer {
 
   public generateInfiniteQueryKey(config: GenerateConfig, isSuspense: boolean): string {
     const identifier = isSuspense ? 'infiniteSuspense' : 'infinite';
-    if (config.hasRequiredVariables)
-      return `['${config.node.name.value}.${identifier}', variables]`;
-    return `variables === undefined ? ['${config.node.name.value}.${identifier}'] : ['${config.node.name.value}.${identifier}', variables]`;
+    return `['${config.node.name.value}.${identifier}', variables]`;
   }
 
   public generateInfiniteQueryOutput(config: GenerateConfig, isSuspense = false) {
@@ -244,8 +240,7 @@ export abstract class FetcherRenderer {
 
   public generateQueryKey(config: GenerateConfig, isSuspense: boolean): string {
     const identifier = isSuspense ? `${config.node.name.value}Suspense` : config.node.name.value;
-    if (config.hasRequiredVariables) return `['${identifier}', variables]`;
-    return `variables === undefined ? ['${identifier}'] : ['${identifier}', variables]`;
+    return `['${identifier}', variables]`;
   }
 
   public generateQueryOutput(config: GenerateConfig, isSuspense = false) {
