@@ -2311,12 +2311,12 @@
     redux-thunk "^3.1.0"
     reselect "^5.1.0"
 
-"@rtk-query/graphql-request-base-query@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@rtk-query/graphql-request-base-query/-/graphql-request-base-query-2.2.0.tgz#e1e5e44793a234ea4c180619e469ed0e1890b2aa"
-  integrity sha512-zBGaTJUHsE1UJWkQGxPfdIteysbd+4Ivx4nkuy6Xgd2kn6zOd849YdR48B1fUh7QA2CXj/F1d+jrCETULp7hnA==
+"@rtk-query/graphql-request-base-query@2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@rtk-query/graphql-request-base-query/-/graphql-request-base-query-2.3.1.tgz#edfb2873705c4c6b05b171b6233c590de4572739"
+  integrity sha512-D8R+YLPGpP3xLQ9JmNK2jgBWmcsIQm3u4kCjW6vRACBaGEey4WbjanYmtRPv16WbW+NcA7yXicVTuExuSXSi4A==
   dependencies:
-    graphql-request "^4.0.0"
+    graphql-request "^4.0.0 || ^5.0.0 || ^6.0.0"
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -4625,7 +4625,7 @@ graphql-language-service-utils@^2.7.1:
     graphql-language-service-types "^1.8.7"
     nullthrows "^1.0.0"
 
-graphql-request@6.0.0:
+graphql-request@6.0.0, "graphql-request@^4.0.0 || ^5.0.0 || ^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-6.0.0.tgz#9c8b6a0c341f289e049936d03cc9205300faae1c"
   integrity sha512-2BmHTuglonjZvmNVw6ZzCfFlW/qkIPds0f+Qdi/Lvjsl3whJg2uvHmSvHnLWhUTEw6zcxPYAHiZoPvSVKOZ7Jw==
