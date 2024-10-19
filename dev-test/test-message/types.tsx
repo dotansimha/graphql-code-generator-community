@@ -141,12 +141,9 @@ export function useGetMessagesLazyQuery(
   );
 }
 export function useGetMessagesSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
+  baseOptions?: Apollo.SuspenseQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
 ) {
-  const options =
-    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<GetMessagesQuery, GetMessagesQueryVariables>(
     Operations.GetMessages,
     options,
