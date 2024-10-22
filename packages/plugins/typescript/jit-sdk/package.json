@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@graphql-tools/utils": "10.5.5",
-    "graphql-jit": "0.8.6"
+    "graphql-jit": "0.8.7"
   },
   "publishConfig": {
     "directory": "dist",
