@@ -64,7 +64,7 @@ describe('GraphQL Request Integration', () => {
       host: 'http://localhost:4000',
       path: '/graphql',
     });
-    const { runExampleQuery } = require('./test-files/run-example-query');
+    const { runExampleQuery } = await import('./test-files/run-example-query.js');
     const queryResult = await runExampleQuery(2, 3);
     expect(queryResult?.add).toBe(5);
     mockServer.done();

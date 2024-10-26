@@ -1,7 +1,7 @@
 import { buildSchema } from 'graphql';
 import { Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
-import { plugin } from '../src/index';
+import { plugin } from '../src/index.js';
 
 describe('nest', () => {
   it('should expose Maybe', async () => {

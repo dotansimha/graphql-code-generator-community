@@ -6,5 +6,5 @@ export const client = new GraphQLClient('/graphql');
 
 export const api = createApi({
   baseQuery: graphqlRequestBaseQuery({ client }),
-  endpoints: () => ({}),
+  endpoints: builder => ({}),
 });

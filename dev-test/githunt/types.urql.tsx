@@ -1,5 +1,5 @@
 import { IntrospectionQuery } from 'graphql';
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import * as Urql from 'urql';
 import {
   cacheExchange,
