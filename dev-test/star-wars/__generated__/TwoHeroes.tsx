@@ -49,6 +49,15 @@ export function useTwoHeroesLazyQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<TwoHeroesQuery, TwoHeroesQueryVariables>(TwoHeroesDocument, options);
 }
+// @ts-ignore
+export function useTwoHeroesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
+): Apollo.UseSuspenseQueryResult<TwoHeroesQuery, TwoHeroesQueryVariables>;
+export function useTwoHeroesSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<TwoHeroesQuery, TwoHeroesQueryVariables>,
+): Apollo.UseSuspenseQueryResult<TwoHeroesQuery | undefined, TwoHeroesQueryVariables>;
 export function useTwoHeroesSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken

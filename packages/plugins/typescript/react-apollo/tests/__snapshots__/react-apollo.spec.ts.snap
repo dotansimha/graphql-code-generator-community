@@ -190,6 +190,9 @@ export function useGet_SomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>(Get_SomethingDocument, options);
         }
+// @ts-ignore
+export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>): Apollo.UseSuspenseQueryResult<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>;
+export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>): Apollo.UseSuspenseQueryResult<Types.Get_SomethingQuery | undefined, Types.Get_SomethingQueryVariables>;
 export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>(Get_SomethingDocument, options);
@@ -390,6 +393,9 @@ export function useGet_SomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>(Get_SomethingDocument, options);
         }
+// @ts-ignore
+export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>): Apollo.UseSuspenseQueryResult<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>;
+export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>): Apollo.UseSuspenseQueryResult<GQLGet_SomethingQuery | undefined, GQLGet_SomethingQueryVariables>;
 export function useGet_SomethingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>(Get_SomethingDocument, options);
@@ -590,6 +596,9 @@ export function useGetSomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
         }
+// @ts-ignore
+export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>): Apollo.UseSuspenseQueryResult<GetSomethingQuery, GetSomethingQueryVariables>;
+export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>): Apollo.UseSuspenseQueryResult<GetSomethingQuery | undefined, GetSomethingQueryVariables>;
 export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
@@ -790,6 +799,9 @@ export function useGetSomethingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);
         }
+// @ts-ignore
+export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>): Apollo.UseSuspenseQueryResult<GetSomethingQuery, GetSomethingQueryVariables>;
+export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>): Apollo.UseSuspenseQueryResult<GetSomethingQuery | undefined, GetSomethingQueryVariables>;
 export function useGetSomethingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSomethingQuery, GetSomethingQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<GetSomethingQuery, GetSomethingQueryVariables>(GetSomethingDocument, options);

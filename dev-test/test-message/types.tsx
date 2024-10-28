@@ -140,6 +140,15 @@ export function useGetMessagesLazyQuery(
     options,
   );
 }
+// @ts-ignore
+export function useGetMessagesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
+): Apollo.UseSuspenseQueryResult<GetMessagesQuery, GetMessagesQueryVariables>;
+export function useGetMessagesSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>,
+): Apollo.UseSuspenseQueryResult<GetMessagesQuery | undefined, GetMessagesQueryVariables>;
 export function useGetMessagesSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
