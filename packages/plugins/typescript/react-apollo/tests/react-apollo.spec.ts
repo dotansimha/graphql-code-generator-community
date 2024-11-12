@@ -1,5 +1,5 @@
 import { buildASTSchema, buildClientSchema, buildSchema, GraphQLSchema, parse } from 'graphql';
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import { extract } from 'jest-docblock';
 import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';

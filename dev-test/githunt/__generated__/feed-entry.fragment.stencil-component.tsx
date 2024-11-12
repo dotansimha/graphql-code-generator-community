@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import { RepoInfoFragmentDoc } from './repo-info.fragment.stencil-component.js';
 import { VoteButtonsFragmentDoc } from './vote-buttons.fragment.stencil-component.js';
 

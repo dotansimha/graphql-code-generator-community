@@ -3,7 +3,7 @@ import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
-import type { ReactQueryRawPluginConfig } from '../src/config';
+import type { ReactQueryRawPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
 
 const validateTypeScript = async (

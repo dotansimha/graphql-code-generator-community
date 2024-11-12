@@ -1,7 +1,7 @@
 import { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import { plugin as typescriptPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
 import { getIntrospectedSchema, minifyIntrospectionQuery } from '@urql/introspection';
-import { NhostPluginConfig } from './config';
+import { NhostPluginConfig } from './config.js';
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 

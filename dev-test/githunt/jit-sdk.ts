@@ -1,6 +1,6 @@
 import { ExecutionResult, GraphQLSchema } from 'graphql';
 import { compileQuery, CompilerOptions, isCompiledQuery } from 'graphql-jit';
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import { AggregateError, isAsyncIterable, mapAsyncIterator } from '@graphql-tools/utils';
 
 export type Maybe<T> = T | null;

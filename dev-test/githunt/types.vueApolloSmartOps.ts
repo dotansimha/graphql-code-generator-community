@@ -1,5 +1,5 @@
 import { ApolloError } from 'apollo-client';
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import {
   createMutationFunction,
   createSmartQueryOptionsFunction,

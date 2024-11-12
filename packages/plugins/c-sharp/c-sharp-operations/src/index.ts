@@ -1,6 +1,6 @@
 import { extname } from 'path';
 import { concatAST, FragmentDefinitionNode, GraphQLSchema, Kind } from 'graphql';
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import {
   getCachedDocumentNodeFromSchema,
   oldVisit,

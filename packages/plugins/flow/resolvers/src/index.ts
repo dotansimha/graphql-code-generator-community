@@ -6,7 +6,7 @@ import {
   PluginFunction,
   Types,
 } from '@graphql-codegen/plugin-helpers';
-import { FlowResolversPluginConfig } from './config';
+import { FlowResolversPluginConfig } from './config.js';
 import { FlowResolversVisitor } from './visitor.js';
 
 export const plugin: PluginFunction<FlowResolversPluginConfig, Types.ComplexPluginOutput> = (

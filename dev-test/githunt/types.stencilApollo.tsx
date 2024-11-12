@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import * as StencilApollo from 'stencil-apollo';
 import { h } from '@stencil/core';
 

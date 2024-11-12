@@ -1,5 +1,5 @@
 import { buildClientSchema, GraphQLSchema, parse } from 'graphql';
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';

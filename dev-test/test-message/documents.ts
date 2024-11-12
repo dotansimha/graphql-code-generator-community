@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 
 // tslint:disable-next-line:variable-name
 export const GetMessages = gql`

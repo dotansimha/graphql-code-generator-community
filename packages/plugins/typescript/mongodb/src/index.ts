@@ -1,6 +1,6 @@
 import { extname } from 'path';
 import { GraphQLSchema } from 'graphql';
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 import {
   getCachedDocumentNodeFromSchema,
   oldVisit,
