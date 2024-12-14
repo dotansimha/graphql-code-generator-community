@@ -695,10 +695,6 @@ export default {
         {
           "kind": "SCALAR",
           "name": "Boolean"
-        },
-        {
-          "kind": "SCALAR",
-          "name": "Any"
         }
       ],
       "directives": []
