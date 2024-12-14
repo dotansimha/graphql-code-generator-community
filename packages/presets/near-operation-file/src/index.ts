@@ -15,6 +15,7 @@ import {
   resolveDocumentImports,
 } from './resolve-document-imports.js';
 import { appendFileNameToFilePath, defineFilepathSubfolder } from './utils.js';
+import { generateDocumentHash, normalizeAndPrintDocumentNode } from './persisted-documents.js';
 
 export { resolveDocumentImports, DocumentImportResolverOptions };
 
@@ -200,6 +201,61 @@ export type NearOperationFileConfig = {
    * ```
    */
   importTypesNamespace?: string;
+  /**
+   * @description Optional, enables persisted operations support.
+   * When enabled, it will generate a persisted-documents.json file containing operation hashes.
+   * @default false
+   *
+   * @exampleMarkdown
+   * ```ts filename="codegen.ts" { 11 }
+   *  import type { CodegenConfig } from '@graphql-codegen/cli';
+   *
+   *  const config: CodegenConfig = {
+   *    // ...
+   *    generates: {
+   *      'path/to/file.ts': {
+   *        preset: 'near-operation-file',
+   *        plugins: ['typescript-operations'],
+   *        presetConfig: {
+   *          baseTypesPath: 'types.ts',
+   *          persistedDocuments: {
+   *            hashPropertyName: 'hash',
+   *            mode: 'embedHashInDocument',
+   *            hashAlgorithm: 'sha256'
+   *          }
+   *        },
+   *      },
+   *    },
+   *  };
+   *  export default config;
+   * ```
+   */
+  persistedDocuments?:
+    | boolean
+    | {
+        /**
+         * @description Behavior for the output file.
+         * @default 'embedHashInDocument'
+         * "embedHashInDocument" will add a property within the `DocumentNode` with the hash of the operation.
+         * "replaceDocumentWithHash" will fully drop the document definition.
+         */
+        mode?: 'embedHashInDocument' | 'replaceDocumentWithHash';
+        /**
+         * @description Name of the property that will be added to the `DocumentNode` with the hash of the operation.
+         */
+        hashPropertyName?: string;
+        /**
+         * @description Algorithm or function used to generate the hash, could be useful if your server expects something specific (e.g., Apollo Server expects `sha256`).
+         *
+         * A custom hash function can be provided to generate the hash if the preset algorithms don't fit your use case. The function receives the operation and should return the hash string.
+         *
+         * The algorithm parameter is typed with known algorithms and as a string rather than a union because it solely depends on Crypto's algorithms supported
+         * by the version of OpenSSL on the platform.
+         *
+         * @default `sha1`
+         */
+        hashAlgorithm?: 'sha1' | 'sha256' | (string & {}) | ((operation: string) => string);
+      };
 };
 
 export type FragmentNameToFile = {
@@ -293,6 +349,24 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
     }
 
     const artifacts: Array<Types.GenerateOptions> = [];
+    const persistedDocumentsMap = new Map<string, string>();
+
+    // Handle persisted documents configuration
+    const persistedDocuments = options.presetConfig.persistedDocuments
+      ? {
+          hashPropertyName:
+            (typeof options.presetConfig.persistedDocuments === 'object' &&
+              options.presetConfig.persistedDocuments.hashPropertyName) ||
+            'hash',
+          omitDefinitions:
+            (typeof options.presetConfig.persistedDocuments === 'object' &&
+              options.presetConfig.persistedDocuments.mode) === 'replaceDocumentWithHash' || false,
+          hashAlgorithm:
+            (typeof options.presetConfig.persistedDocuments === 'object' &&
+              options.presetConfig.persistedDocuments.hashAlgorithm) ||
+            'sha1',
+        }
+      : null;
 
     for (const [filename, record] of filePathsMap.entries()) {
       let fragmentImportsArr = record.fragmentImports;
@@ -363,6 +437,25 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         (combinedSource.document.definitions as any).push(...source.document.definitions);
       }
 
+      // Handle persisted documents
+      if (persistedDocuments) {
+        const documentString = normalizeAndPrintDocumentNode(combinedSource.document);
+        const hash = generateDocumentHash(documentString, persistedDocuments.hashAlgorithm);
+        persistedDocumentsMap.set(hash, documentString);
+
+        if (!persistedDocuments.omitDefinitions) {
+          // Add hash to document
+          (combinedSource.document as any)[persistedDocuments.hashPropertyName] = hash;
+        } else {
+          // Replace document with hash
+          combinedSource.document = {
+            kind: Kind.DOCUMENT,
+            definitions: [],
+            [persistedDocuments.hashPropertyName]: hash,
+          };
+        }
+      }
+
       artifacts.push({
         ...options,
         filename,
@@ -376,6 +469,32 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
           typeof options.config.skipDocumentsValidation === 'undefined'
             ? { skipDuplicateValidation: true }
             : options.config.skipDocumentsValidation,
+      });
+    }
+
+    // Add persisted-documents.json if enabled
+    if (persistedDocuments && persistedDocumentsMap.size > 0) {
+      artifacts.push({
+        filename: join(options.baseOutputDir, 'persisted-documents.json'),
+        plugins: [
+          {
+            [`persisted-operations`]: {},
+          },
+        ],
+        pluginMap: {
+          [`persisted-operations`]: {
+            plugin: async () => {
+              //await tdnFinished.promise;
+              return {
+                content: JSON.stringify(Object.fromEntries(persistedDocumentsMap.entries()), null, 2),
+              };
+            },
+          },
+        },
+        schema: options.schema,
+        config: {},
+        documents: [],
+        skipDocumentsValidation: true,
       });
     }
 
