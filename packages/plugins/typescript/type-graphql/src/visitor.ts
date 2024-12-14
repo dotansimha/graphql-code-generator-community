@@ -228,8 +228,10 @@ export class TypeGraphQLVisitor<
 
     let declarationBlock: DeclarationBlock;
     if (isGraphQLType) {
+      // @ts-expect-error - Types have separate declarations of a private property '_config'.
       declarationBlock = this.typescriptVisitor.getObjectTypeDeclarationBlock(node, originalNode);
     } else {
+      // @ts-expect-error - Types have separate declarations of a private property '_config'.
       declarationBlock = this.getObjectTypeDeclarationBlock(node, originalNode);
 
       // Add type-graphql ObjectType decorator
@@ -268,6 +270,7 @@ export class TypeGraphQLVisitor<
     return declarationBlock.string;
   }
 
+  // @ts-expect-error - Types have separate declarations of a private property '_config'.
   getArgumentsObjectDeclarationBlock(
     node: InterfaceTypeDefinitionNode | ObjectTypeDefinitionNode,
     name: string,
