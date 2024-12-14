@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const prettierConfig = require('@theguild/prettier-config');
+import prettierConfig from '@theguild/prettier-config';
 
-module.exports = {
+export default {
   ...prettierConfig,
   overrides: [
     ...prettierConfig.overrides,
