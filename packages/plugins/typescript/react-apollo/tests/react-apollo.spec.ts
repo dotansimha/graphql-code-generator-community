@@ -2705,7 +2705,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
         export const TestComponent = (props: TestComponentProps) => (
           <ApolloReactComponents.Query<TestQuery, TestQueryVariables> query={Operations.test} {...props} />
@@ -2728,7 +2728,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestQuery(baseOptions?: Apollo.QueryHookOptions<TestQuery, TestQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
@@ -2765,7 +2765,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export function withTest<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
         TProps,
@@ -2796,7 +2796,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export const TestComponent = (props: TestComponentProps) => (
         <ApolloReactComponents.Mutation<TestMutation, TestMutationVariables> mutation={Operations.test} {...props} />
@@ -2853,7 +2853,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestMutation(baseOptions?: Apollo.MutationHookOptions<TestMutation, TestMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
@@ -2877,7 +2877,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export function withTest<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
         TProps,
@@ -2908,7 +2908,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export const TestComponent = (props: TestComponentProps) => (
         <ApolloReactComponents.Subscription<TestSubscription, TestSubscriptionVariables> subscription={Operations.test} {...props} />
@@ -2931,7 +2931,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestSubscription(baseOptions?: Apollo.SubscriptionHookOptions<TestSubscription, TestSubscriptionVariables>) {
         const options = {...defaultOptions, ...baseOptions}
@@ -2955,7 +2955,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export function withTest<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
         TProps,
@@ -2986,7 +2986,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export const TestOneComponent = (props: TestOneComponentProps) => (
         <ApolloReactComponents.Query<TestOneQuery, TestOneQueryVariables> query={Operations.testOne} {...props} />
@@ -3018,7 +3018,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export function useTestOneQuery(baseOptions?: Apollo.QueryHookOptions<TestOneQuery, TestOneQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
@@ -3067,7 +3067,7 @@ export function useListenToCommentsSubscription(baseOptions?: Apollo.Subscriptio
         outputFile: 'graphql.tsx',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`
       export function withTestOne<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
         TProps,
