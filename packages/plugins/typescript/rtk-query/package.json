@@ -57,7 +57,7 @@
   "devDependencies": {
     "@reduxjs/toolkit": "2.5.0",
     "@rtk-query/graphql-request-base-query": "2.3.1",
-    "graphql-request": "^4.0.0"
+    "graphql-request": "^6.0.0"
   },
   "publishConfig": {
     "directory": "dist",
