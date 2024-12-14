@@ -232,7 +232,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
 
   protected resolveFieldType(
     typeNode: TypeNode,
-    hasDefaultValue: Boolean = false,
+    hasDefaultValue: boolean = false,
   ): CSharpFieldType {
     const innerType = getBaseTypeNode(typeNode);
     const schemaType = this._schema.getType(innerType.name.value);

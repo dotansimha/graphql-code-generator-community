@@ -24,6 +24,8 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
     "no-lonely-if": "error",
     "import/no-extraneous-dependencies": [
       "error",
@@ -49,5 +51,5 @@
       }
     }
   ],
-  "ignorePatterns": ["dist", "node_modules", "dev-test", "test-files"]
+  "ignorePatterns": ["dist", "node_modules", "dev-test", "test-files", "flow.js", "jest.project.js"]
 }

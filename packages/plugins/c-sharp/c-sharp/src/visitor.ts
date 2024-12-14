@@ -208,7 +208,7 @@ export class CSharpResolversVisitor extends BaseVisitor<
 
   protected resolveInputFieldType(
     typeNode: TypeNode,
-    hasDefaultValue: Boolean = false,
+    hasDefaultValue: boolean = false,
   ): CSharpFieldType {
     const innerType = getBaseTypeNode(typeNode);
     const schemaType = this._schema.getType(innerType.name.value);
