@@ -597,7 +597,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
   public get fragments(): string {
     const fragments = super.fragments;
 
-    if (this._fragments.length === 0 || !this.config.withFragmentHooks) {
+    if (this['_fragments'].length === 0 || !this.config.withFragmentHooks) {
       return fragments;
     }
 
@@ -605,7 +605,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
 
     const hookFns: string[] = [fragments];
 
-    for (const fragment of this._fragments.values()) {
+    for (const fragment of this['_fragments'].values()) {
       if (fragment.isExternal) {
         continue;
       }

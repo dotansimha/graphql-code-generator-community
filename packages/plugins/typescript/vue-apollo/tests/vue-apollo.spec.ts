@@ -1341,7 +1341,7 @@ query MyFeed {
         outputFile: 'graphql.ts',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`export function useTestQuery`);
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1358,7 +1358,7 @@ query MyFeed {
         outputFile: 'graphql.ts',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`export function useTestMutation`);
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1375,7 +1375,7 @@ query MyFeed {
         outputFile: 'graphql.ts',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`export function useTestSubscription`);
       await validateTypeScript(content, schema, docs, {});
     });
@@ -1392,7 +1392,7 @@ query MyFeed {
         outputFile: 'graphql.ts',
       })) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Operations from './document.graphql.js';`);
+      expect(content.prepend).toContain(`import * as Operations from './document.graphql';`);
       expect(content.content).toBeSimilarStringTo(`export function useTestOneQuery`);
       expect(content.content).toBeSimilarStringTo(`export function useTestTwoMutation`);
       expect(content.content).toBeSimilarStringTo(`export function useTestThreeSubscription`);

@@ -181,10 +181,8 @@ export class NestVisitor<
 
     let declarationBlock: DeclarationBlock;
     if (isGraphQLType) {
-      // @ts-expect-error - Types have separate declarations of a private property '_config'.
       declarationBlock = this.typescriptVisitor.getObjectTypeDeclarationBlock(node, originalNode);
     } else {
-      // @ts-expect-error - Types have separate declarations of a private property '_config'.
       declarationBlock = this.getObjectTypeDeclarationBlock(node, originalNode);
 
       // Add decorator
@@ -222,7 +220,6 @@ export class NestVisitor<
     return declarationBlock.string;
   }
 
-  // @ts-expect-error - Types have separate declarations of a private property '_config'.
   getArgumentsObjectDeclarationBlock(
     node: ObjectTypeDefinitionNode | InterfaceTypeDefinitionNode,
     name: string,
