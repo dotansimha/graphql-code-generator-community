@@ -6,8 +6,16 @@ const TSCONFIG = resolve(ROOT_DIR, 'tsconfig.json');
 const tsconfig = require(TSCONFIG);
 const CI = !!process.env.CI;
 
+const { versionInfo } = require('graphql');
+
 module.exports = ({ dirname, projectMode = true }) => {
   const pkg = require(resolve(dirname, 'package.json'));
+
+  const testMatch = ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'];
+
+  if (versionInfo.major >= 16) {
+    testMatch.push('**/nhost/**');
+  }
 
   return {
     ...(CI || !projectMode ? {} : { displayName: pkg.name.replace('@graphql-codegen/', '') }),
@@ -24,6 +32,7 @@ module.exports = ({ dirname, projectMode = true }) => {
     setupFiles: [`${ROOT_DIR}/dev-test/setup.js`],
     collectCoverage: false,
     testTimeout: 20000,
+    testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)', '!**/nhost/**'],
     resolver: './node_modules/bob-the-bundler/jest-resolver.cjs',
     snapshotFormat: {
       escapeString: false,
