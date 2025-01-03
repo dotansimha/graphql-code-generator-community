@@ -16,7 +16,7 @@
     "build": "bob build",
     "ci:lint": "cross-env \"ESLINT_USE_FLAT_CONFIG=false\" eslint --cache --ignore-path .gitignore --output-file eslint_report.json --format json .",
     "clean": "rimraf node_modules/",
-    "generate:examples": "yarn generate:examples:cjs",
+    "generate:examples": "yarn generate:examples:cjs && yarn generate:examples:esm",
     "generate:examples:cjs": "graphql-codegen --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
     "generate:examples:esm": "graphql-codegen-esm --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
     "lint": "cross-env \"ESLINT_USE_FLAT_CONFIG=false\" eslint --cache --ignore-path .gitignore .",
@@ -47,7 +47,7 @@
     "cross-env": "7.0.3",
     "eslint": "9.17.0",
     "eslint-plugin-import": "2.31.0",
-    "graphql": "16.9.0",
+    "graphql": "16.10.0",
     "husky": "9.1.7",
     "jest": "28.1.3",
     "jest-docblock": "28.1.1",
@@ -63,7 +63,7 @@
   },
   "resolutions": {
     "babel-jest": "28.1.3",
-    "graphql": "16.9.0",
+    "graphql": "16.10.0",
     "graphql-language-service-interface": "2.10.2",
     "jest-runner": "28.1.3",
     "ts-node": "10.9.2"

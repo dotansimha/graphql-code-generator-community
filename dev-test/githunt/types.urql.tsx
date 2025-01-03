@@ -533,12 +533,15 @@ export default {
   __schema: {
     queryType: {
       name: 'Query',
+      kind: 'OBJECT',
     },
     mutationType: {
       name: 'Mutation',
+      kind: 'OBJECT',
     },
     subscriptionType: {
       name: 'Subscription',
+      kind: 'OBJECT',
     },
     types: [
       {
