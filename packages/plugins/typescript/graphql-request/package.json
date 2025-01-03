@@ -42,13 +42,13 @@
     "graphql-tag": "^2.0.0"
   },
   "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^3.0.0",
-    "@graphql-codegen/visitor-plugin-common": "2.13.8",
+    "@graphql-codegen/plugin-helpers": "^5.0.0",
+    "@graphql-codegen/visitor-plugin-common": "5.6.0",
     "auto-bind": "~4.0.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "1.18.3",
+    "@graphql-codegen/testing": "3.0.4",
     "@graphql-tools/schema": "10.0.15",
     "graphql-request": "6.0.0"
   },
