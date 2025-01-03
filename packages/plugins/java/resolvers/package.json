@@ -41,12 +41,12 @@
   },
   "dependencies": {
     "@graphql-codegen/java-common": "^3.0.0",
-    "@graphql-codegen/plugin-helpers": "^3.0.0",
-    "@graphql-codegen/visitor-plugin-common": "2.13.8",
+    "@graphql-codegen/plugin-helpers": "^5.0.0",
+    "@graphql-codegen/visitor-plugin-common": "5.6.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "1.18.3"
+    "@graphql-codegen/testing": "3.0.4"
   },
   "publishConfig": {
     "directory": "dist",
