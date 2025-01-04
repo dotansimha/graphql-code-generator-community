@@ -4546,7 +4546,14 @@ graphql-language-service-utils@^2.7.1:
     graphql-language-service-types "^1.8.7"
     nullthrows "^1.0.0"
 
-graphql-request@6.0.0, "graphql-request@^4.0.0 || ^5.0.0 || ^6.0.0", graphql-request@^6.0.0:
+graphql-request@7.1.2, graphql-request@^7.0.0:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-7.1.2.tgz#52d7fd6d8d08c9f0b00c84a091376ce9fbdfa945"
+  integrity sha512-+XE3iuC55C2di5ZUrB4pjgwe+nIQBuXVIK9J98wrVwojzDW3GMdSBZfxUk8l4j9TieIpjpggclxhNEU9ebGF8w==
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.2.0"
+
+"graphql-request@^4.0.0 || ^5.0.0 || ^6.0.0", graphql-request@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-6.0.0.tgz#9c8b6a0c341f289e049936d03cc9205300faae1c"
   integrity sha512-2BmHTuglonjZvmNVw6ZzCfFlW/qkIPds0f+Qdi/Lvjsl3whJg2uvHmSvHnLWhUTEw6zcxPYAHiZoPvSVKOZ7Jw==
