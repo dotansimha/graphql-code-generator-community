@@ -52,7 +52,7 @@
     "@graphql-codegen/core": "2.6.8",
     "@graphql-codegen/testing": "1.18.3",
     "@graphql-codegen/typescript-operations": "2.5.13",
-    "@graphql-tools/schema": "10.0.15",
+    "@graphql-tools/schema": "10.0.16",
     "cross-fetch": "3.2.0",
     "react": "19.0.0"
   },
