@@ -1,11 +1,11 @@
 {
-  "name": "@graphql-codegen/typescript-react-query",
+  "name": "@alumbo/typescript-react-query",
   "version": "6.1.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating a ready-to-use React-Query Hooks based on GraphQL operations",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
+    "url": "git+https://github.com/dotansimha/graphql-code-generator-community.git",
     "directory": "packages/plugins/typescript/react-query"
   },
   "license": "MIT",
@@ -52,5 +52,15 @@
   },
   "typescript": {
     "definition": "dist/typings/index.d.ts"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "author": "Matthieu Chavigny",
+  "bugs": {
+    "url": "https://github.com/dotansimha/graphql-code-generator-community/issues"
+  },
+  "homepage": "https://github.com/dotansimha/graphql-code-generator-community#readme",
+  "keywords": [],
+  "devDependencies": {}
 }
