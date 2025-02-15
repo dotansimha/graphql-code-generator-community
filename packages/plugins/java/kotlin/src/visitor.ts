@@ -40,6 +40,7 @@ export interface KotlinResolverParsedConfig extends ParsedConfig {
   listType: string;
   enumValues: EnumValuesMap;
   withTypes: boolean;
+  serializable: boolean;
   omitJvmStatic: boolean;
 }
 
@@ -61,6 +62,7 @@ export class KotlinResolversVisitor extends BaseVisitor<
       enumValues: rawConfig.enumValues || {},
       listType: rawConfig.listType || 'Iterable',
       withTypes: rawConfig.withTypes || false,
+      serializable: rawConfig.serializable || false,
       package: rawConfig.package || defaultPackageName,
       scalars: buildScalarsFromConfig(_schema, rawConfig, KOTLIN_SCALARS),
       omitJvmStatic: rawConfig.omitJvmStatic || false,
@@ -85,12 +87,13 @@ export class KotlinResolversVisitor extends BaseVisitor<
 
   EnumValueDefinition(node: EnumValueDefinitionNode): (enumName: string) => string {
     return (enumName: string) => {
+      const enumValue = this.getEnumValue(enumName, node.name.value);
       return indent(
-        `${this.convertName(node, {
+        `${this.buildEnumAnnotation(enumValue)}${this.convertName(node, {
           useTypesPrefix: false,
           useTypesSuffix: false,
           transformUnderscore: true,
-        })}("${this.getEnumValue(enumName, node.name.value)}")`,
+        })}("${enumValue}")`,
       );
     };
   }
@@ -102,8 +105,9 @@ export class KotlinResolversVisitor extends BaseVisitor<
       node.values.map(enumValue => (enumValue as any)(node.name.value)).join(',\n') + ';',
       2,
     );
+    const typeAnnotations = this.buildTypeAnnotations();
 
-    return `${comment}enum class ${enumName}(val label: String) {
+    return `${comment}${typeAnnotations}enum class ${enumName}(val label: String) {
 ${enumValues}
         
   companion object {
@@ -230,15 +234,25 @@ ${enumValues}
         return indent(`${typeToUse.typeName}(args["${arg.name.value}"] as Map<String, Any>)`, 3);
       })
       .join(',\n');
+    const typeAnnotations = this.buildTypeAnnotations();
 
     // language=kotlin
-    return `data class ${name}(
+    return `${typeAnnotations}data class ${name}(
 ${classMembers}
 ) {
   ${suppress}constructor(args: Map<String, Any>) : this(
 ${ctorSet}
   )
 }`;
+  }
+
+  private buildTypeAnnotations() {
+    return this.config.serializable ? indent('@kotlinx.serialization.Serializable ', 0) : '';
+  }
+  private buildEnumAnnotation(label: string) {
+    return this.config.serializable
+      ? indent(`@kotlinx.serialization.SerialName("${label}") `, 0)
+      : '';
   }
 
   protected buildTypeTransfomer(
@@ -258,9 +272,9 @@ ${ctorSet}
         );
       })
       .join(',\n');
-
+    const typeAnnotations = this.buildTypeAnnotations();
     // language=kotlin
-    return `data class ${name}(
+    return `${typeAnnotations}data class ${name}(
 ${classMembers}
 )`;
   }
