@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@graphql-codegen/testing": "1.18.3",
-    "@graphql-tools/schema": "10.0.18",
+    "@graphql-tools/schema": "10.0.19",
     "graphql-request": "6.0.0"
   },
   "publishConfig": {
