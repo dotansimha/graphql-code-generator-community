@@ -1,5 +1,16 @@
 # @graphql-codegen/typescript-react-offix
 
+## 3.0.1
+
+### Patch Changes
+
+- [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
+  [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@2.13.8` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/2.13.8)
+    (from `2.13.1`, in `dependencies`)
+
 ## 3.0.0
 
 ### Major Changes
