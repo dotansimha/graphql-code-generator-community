@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@graphql-codegen/testing": "1.18.3",
-    "@types/lodash": "4.17.14"
+    "@types/lodash": "4.17.16"
   },
   "publishConfig": {
     "directory": "dist",
