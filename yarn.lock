@@ -1767,12 +1767,12 @@
     tslib "^2.4.0"
 
 "@graphql-tools/relay-operation-optimizer@^7.0.0":
-  version "7.0.15"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/relay-operation-optimizer/-/relay-operation-optimizer-7.0.15.tgz#ab4ca0e7cd179ad1265e411a7ad02a2d9c7a94d9"
-  integrity sha512-4epkPTWbXBH7OrA3wvjcWtqHirBAkgga3rLt0ehUzhN9dbAEpD53DtkN0P+WIofSIJtAiN46217PdB+O27EuSg==
+  version "7.0.16"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/relay-operation-optimizer/-/relay-operation-optimizer-7.0.16.tgz#0562584edc2373d11a69c882d9ce2f6bb1a8a558"
+  integrity sha512-uE17qf/uhXAFTmDe5ghHC4Y9N51aCNgyPrSwFpgWxfckZvW1idi5MR5cCl8jC1w9129+XDI5WGfFXx1b2GR1Ow==
   dependencies:
     "@ardatan/relay-compiler" "^12.0.1"
-    "@graphql-tools/utils" "^10.8.2"
+    "@graphql-tools/utils" "^10.8.3"
     tslib "^2.4.0"
 
 "@graphql-tools/schema@10.0.20":
@@ -1813,7 +1813,7 @@
     value-or-promise "^1.0.11"
     ws "^8.12.0"
 
-"@graphql-tools/utils@10.8.3", "@graphql-tools/utils@^10.0.0", "@graphql-tools/utils@^10.8.2", "@graphql-tools/utils@^10.8.3":
+"@graphql-tools/utils@10.8.3", "@graphql-tools/utils@^10.0.0", "@graphql-tools/utils@^10.8.3":
   version "10.8.3"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-10.8.3.tgz#bbe80a7bee4255e5188d6dee6e23c5f4399c571c"
   integrity sha512-4QCvx3SWRsbH7wnktl51mBek+zE9hsjsv796XVlJlOUdWpAghJmA3ID2P7/Vwuy7BivVNfuAKe4ucUdE1fG7vA==
@@ -2662,9 +2662,9 @@
     tslib "^2.3.1"
 
 "@whatwg-node/promise-helpers@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@whatwg-node/promise-helpers/-/promise-helpers-1.0.0.tgz#f50a2f64f88db491e07899e6748c9497e10a0040"
-  integrity sha512-6cJoRLP6/0Bf4k2i36R1f9lisId6fIYEOQ5CUHSPRCmiJfo+HGAm8P/5Qoy28lvYngw3SKBLJ5YqtGWjUaMA6g==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/promise-helpers/-/promise-helpers-1.2.1.tgz#835006411e6f656159bc1ecc7e2475721feb5307"
+  integrity sha512-+faGtJlS4U8NSaSzRVN37xAprPdhoobYzUSUo4DgH8APtfFyizmNxp0ckwKcURoL8cy2B+bKxOWU/VIH2nFeLg==
   dependencies:
     tslib "^2.6.3"
 
@@ -3140,7 +3140,7 @@ braces@^3.0.2, braces@^3.0.3, braces@~3.0.2:
   dependencies:
     fill-range "^7.1.1"
 
-browserslist@^4.24.0, browserslist@^4.24.3:
+browserslist@^4.24.0, browserslist@^4.24.4:
   version "4.24.4"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.24.4.tgz#c6b2865a3f08bcb860a0e827389003b9fe686e4b"
   integrity sha512-KDi1Ny1gSePi1vm0q4oxSF8b4DR44GF4BbmS2YdhPLOEqd8pDviZOGH/GsmRwoWJ2+5Lr085X7naowMwKHDG1A==
@@ -3234,9 +3234,9 @@ camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001688:
-  version "1.0.30001700"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001700.tgz#26cd429cf09b4fd4e745daf4916039c794d720f6"
-  integrity sha512-2S6XIXwaE7K7erT8dY+kLQcpa5ms63XlRkMkReXjle+kf6c5g38vyMl+Z5y8dSxOFDhcFe+nxnn261PLxBSQsQ==
+  version "1.0.30001701"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001701.tgz#ad9c90301f7153cf6b3314d16cc30757285bf9e7"
+  integrity sha512-faRs/AW3jA9nTwmJBSO1PQ6L/EOgsB5HMQQq4iCu5zhPgVVgO/pZRHlmatwijZKetFw8/Pr4q6dEN8sJuq8qTw==
 
 capital-case@^1.0.4:
   version "1.0.4"
@@ -3471,11 +3471,11 @@ convert-source-map@^2.0.0:
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
 
 core-js-compat@^3.40.0:
-  version "3.40.0"
-  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.40.0.tgz#7485912a5a4a4315c2fdb2cbdc623e6881c88b38"
-  integrity sha512-0XEDpr5y5mijvw8Lbc6E5AkjrHfp7eEoPlu36SWeAbcL8fn1G1ANe8DBlo2XoNN89oVpxWwOjYIPVzR4ZvsKCQ==
+  version "3.41.0"
+  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.41.0.tgz#4cdfce95f39a8f27759b667cf693d96e5dda3d17"
+  integrity sha512-RFsU9LySVue9RTwdDVX/T0e2Y6jRYWXERKElIjpuEOEnxaXffI0X7RUwVzfYLfzuLXSNJDYoRYUAmRUcyln20A==
   dependencies:
-    browserslist "^4.24.3"
+    browserslist "^4.24.4"
 
 cosmiconfig-typescript-loader@^4.3.0:
   version "4.4.0"
@@ -3529,7 +3529,7 @@ cross-inspect@1.0.1:
   dependencies:
     tslib "^2.4.0"
 
-cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.3, cross-spawn@^7.0.5, cross-spawn@^7.0.6:
+cross-spawn@^7.0.1, cross-spawn@^7.0.3, cross-spawn@^7.0.5, cross-spawn@^7.0.6:
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.6.tgz#8a58fe78f00dcd70c370451759dfbfaf03e8ee9f"
   integrity sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==
@@ -3716,9 +3716,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.5.73:
-  version "1.5.103"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.103.tgz#3d02025bc16e96e5edb3ed3ffa2538a11ae682dc"
-  integrity sha512-P6+XzIkfndgsrjROJWfSvVEgNHtPgbhVyTkwLjUM2HU/h7pZRORgaTlHqfAikqxKmdJMLW8fftrdGWbd/Ds0FA==
+  version "1.5.109"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.109.tgz#905a573d2b4cbb31412a2de6267fb22cf45e097e"
+  integrity sha512-AidaH9JETVRr9DIPGfp1kAarm/W6hRJTPuCnkF+2MqhF4KaAgRIcBc8nvjk+YMXZhwfISof/7WG29eS4iGxQLQ==
 
 emittery@^0.10.2:
   version "0.10.2"
@@ -4171,9 +4171,9 @@ fast-url-parser@^1.1.3:
     punycode "^1.3.2"
 
 fastq@^1.6.0:
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.19.0.tgz#a82c6b7c2bb4e44766d865f07997785fecfdcb89"
-  integrity sha512-7SFSRCNjBQIZH/xZR3iy5iQYR8aGBE0h3VG6/cwlbrpdciNYBMotQav8c1XI3HjHH+NikUpP53nPdlZSdWmFzA==
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.19.1.tgz#d50eaba803c8846a883c16492821ebcd2cda55f5"
+  integrity sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==
   dependencies:
     reusify "^1.0.4"
 
@@ -4267,11 +4267,11 @@ for-each@^0.3.3:
     is-callable "^1.2.7"
 
 foreground-child@^3.1.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/foreground-child/-/foreground-child-3.3.0.tgz#0ac8644c06e431439f8561db8ecf29a7b5519c77"
-  integrity sha512-Ld2g8rrAyMYFXBhEqMz8ZAHBi4J4uS1i/CxGMDnjyFWddMXLVcDp051DZfu+t7+ab7Wv6SMqpWmyFIj5UbfFvg==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/foreground-child/-/foreground-child-3.3.1.tgz#32e8e9ed1b68a3497befb9ac2b6adf92a638576f"
+  integrity sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==
   dependencies:
-    cross-spawn "^7.0.0"
+    cross-spawn "^7.0.6"
     signal-exit "^4.0.1"
 
 fs-extra@^11.1.0:
@@ -6291,9 +6291,11 @@ package-json-from-dist@^1.0.0:
   integrity sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==
 
 package-manager-detector@^0.2.0:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/package-manager-detector/-/package-manager-detector-0.2.9.tgz#20990785afa69d38b4520ccc83b34e9f69cb970f"
-  integrity sha512-+vYvA/Y31l8Zk8dwxHhL3JfTuHPm6tlxM2A3GeQyl7ovYnSp1+mzAxClxaOr0qO1TtPxbQxetI7v5XqKLJZk7Q==
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/package-manager-detector/-/package-manager-detector-0.2.11.tgz#3af0b34f99d86d24af0a0620603d2e1180d05c9c"
+  integrity sha512-BEnLolu+yuz22S56CU1SUKq3XC3PkwD5wv4ikR4MfGvnRVcmzXR9DwSlW2fEamyTPyXHomBJRzgapeuBvRNzJQ==
+  dependencies:
+    quansync "^0.2.7"
 
 param-case@^3.0.4:
   version "3.0.4"
@@ -6547,6 +6549,11 @@ pvutils@^1.1.3:
   resolved "https://registry.yarnpkg.com/pvutils/-/pvutils-1.1.3.tgz#f35fc1d27e7cd3dfbd39c0826d173e806a03f5a3"
   integrity sha512-pMpnA0qRdFp32b1sJl1wOJNxZLQ2cbQx+k6tjNtZ8CpvVhNqEPRgivZ2WOUev2YMajecdH7ctUPDvEe87nariQ==
 
+quansync@^0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/quansync/-/quansync-0.2.7.tgz#d6f6249ab52e4a61e78ebf0e195e5836aaf9e7dd"
+  integrity sha512-KZDFlN9/Si3CgKHZsIfLBsrjWKFjqu9KA0zDGJEQoQzPm5HWNDEFc2mkLeYUBBOwEJtxNBSMaNLE/GlvArIEfQ==
+
 queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
@@ -6779,9 +6786,9 @@ restore-cursor@^5.0.0:
     signal-exit "^4.1.0"
 
 reusify@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
-  integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.1.0.tgz#0fe13b9522e1473f51b558ee796e08f11f9b489f"
+  integrity sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==
 
 rfdc@^1.2.0, rfdc@^1.3.0, rfdc@^1.4.1:
   version "1.4.1"
@@ -7567,9 +7574,9 @@ unixify@^1.0.0:
     normalize-path "^2.1.1"
 
 update-browserslist-db@^1.1.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.1.2.tgz#97e9c96ab0ae7bcac08e9ae5151d26e6bc6b5580"
-  integrity sha512-PPypAm5qvlD7XMZC3BujecnaOxwhrtoFR+Dqkk5Aa/6DssiH0ibKoketaj9w8LP7Bont1rYeoV5plxD7RTEPRg==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.1.3.tgz#348377dd245216f9e7060ff50b15a1b740b75420"
+  integrity sha512-UxhIZQ+QInVdunkDAaiazvvT/+fXL5Osr0JZlJulepYu6Jd7qJtDZjlur0emRlT71EN3ScPoE7gvsuIKKNavKw==
   dependencies:
     escalade "^3.2.0"
     picocolors "^1.1.1"
