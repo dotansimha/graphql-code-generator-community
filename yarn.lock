@@ -2605,9 +2605,9 @@
   integrity sha512-tekSLLqWnusfV6V7xaEnLJQSdXOD/lWy7f8JYQwrX+88Md+voGSCSx5WJXI7KLBN3Tat2OV08tAr8UROykls4Q==
 
 "@urql/introspection@^1.0.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@urql/introspection/-/introspection-1.2.0.tgz#d52ed8a65937f43e8731b4db495d1b6564b945d0"
-  integrity sha512-Mrc7YM/G4yV7NkmmHBFkRKANj8fnZIVTth23/Poo1ASErwjG3j7LERbE/wqOmzTHIkbqOw4yhe8/kimtXFMU/Q==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@urql/introspection/-/introspection-1.2.1.tgz#4d864c681ef540d13322d31b67b45394f2f32d83"
+  integrity sha512-U9FTSISz69EEK3bHWDsqux9JqOeiLzr3eDFBQ5DmHuTLaBsd5mjPdtLRzzzmb9nW1Ygd6IR8YcuM7zeNqQ5lCQ==
 
 "@whatwg-node/events@^0.0.2":
   version "0.0.2"
