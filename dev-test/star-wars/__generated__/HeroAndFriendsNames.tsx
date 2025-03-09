@@ -78,6 +78,21 @@ export function useHeroAndFriendsNamesLazyQuery(
     options,
   );
 }
+// @ts-ignore
+export function useHeroAndFriendsNamesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroAndFriendsNamesQuery,
+    HeroAndFriendsNamesQueryVariables
+  >,
+): Apollo.UseSuspenseQueryResult<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>;
+export function useHeroAndFriendsNamesSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HeroAndFriendsNamesQuery, HeroAndFriendsNamesQueryVariables>,
+): Apollo.UseSuspenseQueryResult<
+  HeroAndFriendsNamesQuery | undefined,
+  HeroAndFriendsNamesQueryVariables
+>;
 export function useHeroAndFriendsNamesSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
