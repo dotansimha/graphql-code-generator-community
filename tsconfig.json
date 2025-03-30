@@ -88,7 +88,8 @@
       "@graphql-codegen/typescript-nest": ["packages/plugins/typescript/nest/src/index.ts"],
       "@graphql-codegen/scala": ["packages/plugins/scala/scala/src/index.ts"],
       "@graphql-codegen/scalajs": ["packages/plugins/scala/scalajs/src/index.ts"],
-      "@graphql-codegen/scala-common": ["packages/plugins/scala/common/src/index.ts"]
+      "@graphql-codegen/scala-common": ["packages/plugins/scala/common/src/index.ts"],
+      "@graphql-codegen/scala-resolvers": ["packages/plugins/scala/resolvers/src/index.ts"]
     }
   },
   "include": ["packages"],

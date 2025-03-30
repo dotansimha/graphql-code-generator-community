@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Scala Resolvers Snapshot should match snapshot 1`] = `
+"package com.example.blog
+import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
+import sangria.schema.TypeResolver
+import sangria.schema._
+import scala.concurrent.Future
+
+trait Types {
+    // This is needed to implement type class instances for resolvers
+  given ExecutionContext = scala.concurrent.ExecutionContext.global
+trait QueryResolvers {
+    def user(context: Context, value: Value): Future[User]
+
+  def posts(context: Context, value: Value): Future[List[Post]]
+}
+
+trait MutationResolvers {
+    def createPost(context: Context, value: Value): Future[Post]
+}
+
+trait UserResolvers {
+    def id(context: Context, value: Value): Future[String]
+
+  def name(context: Context, value: Value): Future[String]
+
+  def email(context: Context, value: Value): Future[String]
+
+  def posts(context: Context, value: Value): Future[List[Post]]
+}
+
+trait PostResolvers {
+    def id(context: Context, value: Value): Future[String]
+
+  def title(context: Context, value: Value): Future[String]
+
+  def content(context: Context, value: Value): Future[String]
+
+  def author(context: Context, value: Value): Future[User]
+
+  def comments(context: Context, value: Value): Future[List[Comment]]
+
+  def createdAt(context: Context, value: Value): Future[java.time.LocalDateTime]
+}
+
+trait CommentResolvers {
+    def id(context: Context, value: Value): Future[String]
+
+  def text(context: Context, value: Value): Future[String]
+
+  def author(context: Context, value: Value): Future[User]
+
+  def post(context: Context, value: Value): Future[Post]
+}
+
+trait NodeResolver {
+  def resolveType(value: Any): Option[ObjectType[Any, Any]]
+    def id(context: Context, value: Value): Future[String]{
+    // Default implementation
+    throw new NotImplementedError("id resolver not implemented")
+  }
+}
+
+trait SearchResultResolver {
+  def resolveType(value: Any): Option[ObjectType[Any, Any]]
+}
+
+case class PostInput(
+title: String,
+content: String,
+authorId: String
+)
+
+object PostInput:
+
+type DateTime = java.time.LocalDateTime
+}"
+`;
+
+exports[`Scala Resolvers Snapshot should match snapshot with ZIO support 1`] = `
+"package com.example.zio
+import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
+import sangria.schema._
+import zio._
+
+trait Types {
+    // This is needed to implement type class instances for resolvers
+  given ExecutionContext = scala.concurrent.ExecutionContext.global
+trait QueryResolvers {
+    def user(context: Context, value: Value): ZIO[Any, Throwable, User]
+}
+
+trait UserResolvers {
+    def id(context: Context, value: Value): ZIO[Any, Throwable, String]
+
+  def name(context: Context, value: Value): ZIO[Any, Throwable, String]
+}
+}"
+`;
+
+exports[`Scala Resolvers Snapshot should match snapshot with custom mappers and options 1`] = `
+"package com.example.custom
+import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
+import sangria.schema._
+
+trait Types {
+    // This is needed to implement type class instances for resolvers
+  given ExecutionContext = scala.concurrent.ExecutionContext.global
+trait QueryResolvers {
+    def user(context: Context, value: Value): Option[com.example.models.UserEntity]
+}
+
+trait UserResolvers {
+    def id(context: Context, value: Value): String
+
+  def name(context: Context, value: Value): Option[String]
+
+  def email(context: Context, value: Value): String
+}
+}"
+`;

@@ -49,7 +49,6 @@ export class ScalaBaseVisitor<
     rawConfig?: { outputFile?: string },
     defaultParsedConfig?: Partial<TParsedConfig>,
   ) {
-    // Define default scalars
     const defaultScalars = {
       ID: 'String',
       String: 'String',
@@ -59,10 +58,8 @@ export class ScalaBaseVisitor<
       DateTime: 'java.time.LocalDateTime',
     };
 
-    // Create a scalars map with the parsed format
     const scalarsMap: Record<string, any> = {};
 
-    // Add default scalars
     for (const scalarName in defaultScalars) {
       if (Object.prototype.hasOwnProperty.call(defaultScalars, scalarName)) {
         scalarsMap[scalarName] = {
@@ -72,7 +69,6 @@ export class ScalaBaseVisitor<
       }
     }
 
-    // Add custom scalars from config
     if (config.scalars) {
       const customScalars = config.scalars as Record<string, string | Record<string, any>>;
       for (const scalarName in customScalars) {
@@ -146,7 +142,6 @@ export class ScalaBaseVisitor<
 
     if (this.config.useOptions) {
       const typeName = this.getScalaTypeForName(node.name.value);
-      // Check if the type is already an Option to avoid nesting
       if (typeName.startsWith('Option[')) {
         return typeName;
       }
@@ -226,7 +221,7 @@ export class ScalaBaseVisitor<
   public ScalarTypeDefinition(node: ScalarTypeDefinitionNode): string {
     const name = node.name.value;
 
-    if (this.config.scalars && this.config.scalars[name]) {
+    if (this.config.scalars && name in this.config.scalars) {
       const scalar = this.config.scalars[name];
       if (typeof scalar === 'string') {
         return `type ${name} = ${scalar}`;
@@ -240,6 +235,8 @@ export class ScalaBaseVisitor<
       }
     }
 
+    // For any scalar that hasn't been explicitly configured,
+    // return the default scalar mapping if it's a known type
     if (name === 'DateTime') {
       return `type ${name} = java.time.LocalDateTime`;
     }
@@ -395,7 +392,6 @@ object ${scalarName}:
     const isNullable = field.type.kind !== 'NonNullType';
 
     if (isNullable && this.config.useOptions) {
-      // Check if the type is already an Option to avoid nesting
       if (fieldType.startsWith('Option[')) {
         return `${prefix || ''}${fieldName}: ${fieldType}`;
       }
@@ -429,7 +425,6 @@ object ${scalarName}:
     const isNullable = field.type.kind !== 'NonNullType';
 
     if (isNullable && this.config.useOptions) {
-      // Check if the type is already an Option to avoid nesting
       if (fieldType.startsWith('Option[')) {
         return `${prefix || ''}${fieldName}: ${fieldType}`;
       }

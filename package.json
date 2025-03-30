@@ -79,5 +79,8 @@
     "yarn.lock": [
       "npx yarn-deduplicate"
     ]
+  },
+  "dependencies": {
+    "@graphql-codegen/scala-resolvers": "^1.0.0"
   }
 }

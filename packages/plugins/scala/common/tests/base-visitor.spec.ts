@@ -282,7 +282,7 @@ describe('ScalaBaseVisitor', () => {
       }
 
       expect(visitor.ScalarTypeDefinition(dateTimeType.astNode as any)).toBe(
-        'type DateTime = java.time.LocalDateTime',
+        'type DateTime = java.util.Date',
       );
     });
   });

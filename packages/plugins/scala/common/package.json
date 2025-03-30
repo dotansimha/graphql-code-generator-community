@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/scala-common",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "GraphQL Code Generator utils library for developing Scala plugins",
   "repository": {
