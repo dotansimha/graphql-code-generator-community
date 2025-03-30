@@ -8,6 +8,7 @@
     "packages/plugins/c-sharp/*",
     "packages/plugins/dart/*",
     "packages/plugins/typescript/*",
+    "packages/plugins/scala/*",
     "packages/plugins/other/*",
     "packages/presets/*"
   ],

@@ -65,6 +65,9 @@ body:
         - '@graphql-codegen/typescript-vue-urql'
         - '@graphql-codegen/import-types-preset'
         - '@graphql-codegen/near-operation-file-preset'
+        - '@graphql-codegen/scala'
+        - '@graphql-codegen/scalajs'
+        - '@graphql-codegen/scala-common'
     validations:
       required: false
   - type: textarea
