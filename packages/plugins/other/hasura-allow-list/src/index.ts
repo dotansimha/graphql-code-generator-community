@@ -26,7 +26,7 @@ function getOperationFragmentsRecursively(
   documentLocation: string,
   config: HasuraAllowListPluginConfig,
 ): FragmentDefinitionNode[] {
-  const requiredFragments: { name: string; key: string | number }[] = [];
+  const requiredFragments: { name: string; key: string | number; level: number }[] = [];
 
   getRequiredFragments(operationDefinition);
 
@@ -36,7 +36,21 @@ function getOperationFragmentsRecursively(
   // order of fragments is determined by the order they are defined in the document.
   if (order === 'document') {
     return requiredFragments
-      .sort((a, b) => (a.key === b.key ? 0 : a.key < b.key ? -1 : 1))
+      .sort((a, b) => {
+        if (a.key === b.key && a.level === b.level) {
+          return 0;
+        }
+
+        if (a.key < b.key) {
+          return -1;
+        }
+
+        if (a.level > b.level) {
+          return -1;
+        }
+
+        return 1;
+      })
       .map(({ name }) => fragmentDefinitions.find(definition => definition.name.value === name));
   }
 
@@ -49,15 +63,15 @@ function getOperationFragmentsRecursively(
    * Given a definition adds required fragments to requieredFragmentsNames, recursively.
    * @param definition either an operation definition or a fragment definition.
    */
-  function getRequiredFragments(definition: ExecutableDefinitionNode) {
+  function getRequiredFragments(definition: ExecutableDefinitionNode, level: number = 0) {
     visit(definition, {
-      FragmentSpread(fragmentSpreadNode, key) {
+      FragmentSpread(fragmentSpreadNode, key, parent, path, ancestors) {
         const fragmentName = fragmentSpreadNode.name.value;
 
         // added this check to prevent infinite recursion on recursive fragment definition (which itself isn't legal graphql)
         // it seems graphql crashes anyways if a recursive fragment is defined, so maybe remove this check?
         if (!requiredFragments.some(fragment => fragment.name === fragmentName)) {
-          requiredFragments.push({ name: fragmentName, key });
+          requiredFragments.push({ name: fragmentName, key, level });
 
           const fragmentDefinition = fragmentDefinitions.find(
             definition => definition.name.value === fragmentName,
@@ -70,7 +84,7 @@ function getOperationFragmentsRecursively(
               } ${definition.name.value} in file ${documentLocation}`,
             );
           } else {
-            getRequiredFragments(fragmentDefinition);
+            getRequiredFragments(fragmentDefinition, level + 1);
           }
         }
         return fragmentSpreadNode;
