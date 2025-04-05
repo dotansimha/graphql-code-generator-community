@@ -1,5 +1,30 @@
 # @graphql-codegen/typescript-nhost
 
+## 0.0.3
+
+### Patch Changes
+
+- [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
+  [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@3.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/3.1.1)
+    (from `3.0.0`, in `dependencies`)
+
+- [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
+  [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+
+  - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
+    `~2.8.0`, in `dependencies`)
+
+- [#828](https://github.com/dotansimha/graphql-code-generator-community/pull/828)
+  [`0c551ba`](https://github.com/dotansimha/graphql-code-generator-community/commit/0c551baf81b9d146a644a88e78bfc714894a9ab2)
+  Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
+  - Updated dependency [`tslib@~2.8.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.0) (from
+    `~2.6.0`, in `dependencies`)
+
 ## 0.0.2
 
 ### Patch Changes
@@ -56,16 +81,16 @@
   ```
 
   ```ts filename="src/main.ts"
-  import { NhostClient } from '@nhost/nhost-js';
-  import schema from './schema';
+  import { NhostClient } from '@nhost/nhost-js'
+  import schema from './schema'
 
-  const nhost = new NhostClient({ subdomain: 'localhost', schema });
+  const nhost = new NhostClient({ subdomain: 'localhost', schema })
   ```
 
   A GraphQL query named `todos` will then be accessible through:
 
   ```ts
-  const todos = await nhost.graphql.query.todos({ select: { contents: true } });
+  const todos = await nhost.graphql.query.todos({ select: { contents: true } })
   ```
 
   The `todos` object will be strongly typed based on the GraphQL schema, and the fields that would
