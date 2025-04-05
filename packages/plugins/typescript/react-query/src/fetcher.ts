@@ -226,7 +226,7 @@ export abstract class FetcherRenderer {
     const identifier = isSuspense ? 'infiniteSuspense' : 'infinite';
     if (config.hasRequiredVariables)
       return `['${config.node.name.value}.${identifier}', variables]`;
-    return `variables === undefined ? ['${config.node.name.value}.${identifier}'] : ['${config.node.name.value}.${identifier}', variables]`;
+    return `variables === undefined ? ['${config.node.name.value}.${identifier}', {}] : ['${config.node.name.value}.${identifier}', variables]`;
   }
 
   public generateInfiniteQueryOutput(config: GenerateConfig, isSuspense = false) {
@@ -245,7 +245,7 @@ export abstract class FetcherRenderer {
   public generateQueryKey(config: GenerateConfig, isSuspense: boolean): string {
     const identifier = isSuspense ? `${config.node.name.value}Suspense` : config.node.name.value;
     if (config.hasRequiredVariables) return `['${identifier}', variables]`;
-    return `variables === undefined ? ['${identifier}'] : ['${identifier}', variables]`;
+    return `variables === undefined ? ['${identifier}', {}] : ['${identifier}', variables]`;
   }
 
   public generateQueryOutput(config: GenerateConfig, isSuspense = false) {
