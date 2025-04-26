@@ -47,7 +47,7 @@
     "cross-env": "7.0.3",
     "eslint": "9.25.1",
     "eslint-plugin-import": "2.31.0",
-    "graphql": "16.10.0",
+    "graphql": "16.11.0",
     "husky": "9.1.7",
     "jest": "28.1.3",
     "jest-docblock": "28.1.1",
@@ -63,7 +63,7 @@
   },
   "resolutions": {
     "babel-jest": "28.1.3",
-    "graphql": "16.10.0",
+    "graphql": "16.11.0",
     "graphql-language-service-interface": "2.10.2",
     "jest-runner": "28.1.3",
     "ts-node": "10.9.2"
