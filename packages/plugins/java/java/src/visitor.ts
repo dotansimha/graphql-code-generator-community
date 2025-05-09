@@ -237,7 +237,15 @@ export class JavaResolversVisitor extends BaseVisitor<
           }
           return indentMultiline(
             `if (args.get("${arg.name.value}") != null) {
-		this.${arg.name.value} = (${this.config.listType}<${typeToUse.baseType}>) args.get("${arg.name.value}");
+  this.${arg.name.value} = new ArrayList<${typeToUse.baseType}>();
+  for (var o : (${this.config.listType}) args.get("${arg.name.value}")) {
+    if (o != null) {
+      this.${arg.name.value}.add(new ${typeToUse.baseType}(o));
+    }
+    else {
+      this.${arg.name.value}.add(null);
+    }
+  }
 }`,
             3,
           );
