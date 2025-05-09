@@ -159,7 +159,7 @@ describe('Java', () => {
             this.f = (Iterable<String>) args.get("f");
             if (args.get("g") != null) {
               this.g = new ArrayList<SearchUserInput>();
-              for (var o : (Iterable) args.get("g")) {
+              for (var o : (Iterable<Map<String, Object>>) args.get("g")) {
                 if (o != null) {
                   this.g.add(new SearchUserInput(o));
                 }
