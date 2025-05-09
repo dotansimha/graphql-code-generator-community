@@ -627,9 +627,19 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
 
       const IDType = this.scalars.ID ?? 'string';
 
-      const hook = `export function use${fragmentName}<F = { id: ${IDType} }>(identifiers: F) {
+      const hook = `export function use${fragmentName}<F = { id: ${IDType} }>(
+  identifiers: F,
+  options?: Omit<
+    ${this.getApolloReactHooksIdentifier()}.UseFragmentOptions<
+      ${operationResultType},
+      ${this.getApolloReactHooksIdentifier()}.OperationVariables
+    >,
+    'fragment' | 'fragmentName' | 'from'
+  >,
+) {
   return ${this.getApolloReactHooksIdentifier()}.use${operationType}<${operationResultType}>({
-    fragment: ${nodeName}${this.config.fragmentVariableSuffix},
+    ...options,
+    fragment: ${this.convertName(nodeName)}${this.config.fragmentVariableSuffix},
     fragmentName: "${nodeName}",
     from: {
       __typename: "${fragment.onType}",
