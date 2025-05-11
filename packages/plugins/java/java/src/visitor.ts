@@ -73,7 +73,6 @@ export class JavaResolversVisitor extends BaseVisitor<
     }
 
     if (this._addListImport) {
-      allImports.push(`java.util.ArrayList`);
       allImports.push(`java.util.List`);
       allImports.push(`java.util.stream.Collectors`);
     }
@@ -238,15 +237,9 @@ export class JavaResolversVisitor extends BaseVisitor<
           }
           return indentMultiline(
             `if (args.get("${arg.name.value}") != null) {
-  this.${arg.name.value} = new ArrayList<${typeToUse.baseType}>();
-  for (var o : (${this.config.listType}<Map<String, Object>>) args.get("${arg.name.value}")) {
-    if (o != null) {
-      this.${arg.name.value}.add(new ${typeToUse.baseType}(o));
-    }
-    else {
-      this.${arg.name.value}.add(null);
-    }
-  }
+  this.${arg.name.value} = ((${this.config.listType}<Map<String, Object>>) args.get("${arg.name.value}")).stream()
+    .map(o -> o == null ? null : new ${typeToUse.baseType}(o))
+    .collect(Collectors.toList());
 }`,
             3,
           );
