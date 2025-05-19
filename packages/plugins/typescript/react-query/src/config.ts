@@ -84,6 +84,13 @@ export interface BaseReactQueryPluginConfig {
   addSuspenseQuery?: boolean;
 
   /**
+   * @default true
+   * @description Whether suspense queries have unique keys compared to standard queries.
+   * If true a suspense query will have "Suspense" appended to its query key, otherwise it will have the same query key as it's standard query variant.
+   */
+  uniqueSuspenseQueryKeys?: boolean;
+
+  /**
    * @default false
    * @description If true, it imports `react-query` not `@tanstack/react-query`, default is false.
    * @deprecated Please use `reactQueryVersion` instead.

@@ -31,10 +31,15 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 }`;
   }
 
-  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
+  generateInfiniteQueryHook(
+    config: GenerateConfig,
+    isSuspense = false,
+    uniqueSuspenseQueryKeys: boolean,
+  ): string {
     const { generateBaseInfiniteQueryHook, variables, options } = this.generateInfiniteQueryHelper(
       config,
       isSuspense,
+      uniqueSuspenseQueryKeys,
     );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
@@ -49,10 +54,15 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     });
   }
 
-  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
+  generateQueryHook(
+    config: GenerateConfig,
+    isSuspense = false,
+    uniqueSuspenseQueryKeys: boolean,
+  ): string {
     const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(
       config,
       isSuspense,
+      uniqueSuspenseQueryKeys,
     );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
