@@ -50,7 +50,7 @@
   "devDependencies": {
     "@graphql-codegen/testing": "1.18.3",
     "@graphql-tools/schema": "10.0.23",
-    "graphql-request": "7.0.0"
+    "graphql-request": "7.1.2"
   },
   "publishConfig": {
     "directory": "dist",
