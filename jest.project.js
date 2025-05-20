@@ -19,7 +19,8 @@ module.exports = ({ dirname, projectMode = true }) => {
 
   return {
     ...(CI || !projectMode ? {} : { displayName: pkg.name.replace('@graphql-codegen/', '') }),
-    transform: { '^.+\\.tsx?$': 'babel-jest' },
+    transform: { '^.+\\.[tj]sx?$': 'babel-jest' },
+    transformIgnorePatterns: ['/node_modules/(?!(graphql-request)/)'],
     testEnvironment: 'node',
     rootDir: dirname,
     restoreMocks: true,
