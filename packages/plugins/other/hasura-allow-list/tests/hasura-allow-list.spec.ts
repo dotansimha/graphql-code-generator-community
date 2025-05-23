@@ -393,6 +393,57 @@ describe('Hasura allow list', () => {
 
     expect(content).toBe(expectedContent);
   });
+  it('with globalFragments enabled and fragmentsOrder set to document, should define fragment by the order they are defined in the document across documents.', async () => {
+    const expectedContent = `- name: allowed-queries
+  definition:
+    queries:
+      - name: MyQuery1
+        query: |-
+          query MyQuery1 {
+            field
+            ...MyFragment
+          }
+          fragment MyOtherFragment on OtherQuery {
+            otherField
+          }
+          fragment MyFragment on Query {
+            field
+            other {
+              ...MyOtherFragment
+            }
+          }
+`;
+    const document1 = parse(/* GraphQL */ `
+      query MyQuery1 {
+        field
+        ...MyFragment
+      }
+    `);
+    const document2 = parse(/* GraphQL */ `
+      fragment MyFragment on Query {
+        field
+        other {
+          ...MyOtherFragment
+        }
+      }
+    `);
+    const document3 = parse(/* GraphQL */ `
+      fragment MyOtherFragment on OtherQuery {
+        otherField
+      }
+    `);
+    const content = await plugin(
+      null,
+      [
+        { document: document1, location: '/dummy/location1' },
+        { document: document2, location: '/dummy/location2' },
+        { document: document3, location: '/dummy/location3' },
+      ],
+      { globalFragments: true, fragmentsOrder: 'document' },
+    );
+
+    expect(content).toBe(expectedContent);
+  });
   it('with globalFragments enabled, should error on missing fragments', async () => {
     const document1 = parse(/* GraphQL */ `
       query MyQuery1 {

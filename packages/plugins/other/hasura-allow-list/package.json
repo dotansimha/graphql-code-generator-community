@@ -1,11 +1,11 @@
 {
-  "name": "@graphql-codegen/hasura-allow-list",
-  "version": "3.1.0",
+  "name": "@voldern/hasura-allow-list",
+  "version": "3.1.2",
   "type": "module",
   "description": "GraphQL Code Generator plugin to generate hasura allow liste metadata from graphql files",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
+    "url": "https://github.com/voldern/graphql-code-generator-community.git",
     "directory": "packages/plugins/other/hasura-allow-list"
   },
   "license": "MIT",

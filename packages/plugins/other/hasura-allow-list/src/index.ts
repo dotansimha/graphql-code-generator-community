@@ -26,7 +26,7 @@ function getOperationFragmentsRecursively(
   documentLocation: string,
   config: HasuraAllowListPluginConfig,
 ): FragmentDefinitionNode[] {
-  const requiredFragmentNames = new Set<string>();
+  const requiredFragments: { name: string; key: string | number; level: number }[] = [];
 
   getRequiredFragments(operationDefinition);
 
@@ -35,28 +35,46 @@ function getOperationFragmentsRecursively(
 
   // order of fragments is determined by the order they are defined in the document.
   if (order === 'document') {
-    return Array.from(requiredFragmentNames).map(name =>
-      fragmentDefinitions.find(definition => definition.name.value === name),
-    );
+    return requiredFragments
+      .sort((a, b) => {
+        if (a.key === b.key && a.level === b.level) {
+          return 0;
+        }
+
+        if (a.key < b.key) {
+          return -1;
+        }
+
+        if (a.level > b.level) {
+          return -1;
+        }
+
+        return 1;
+      })
+      .map(({ name }) => fragmentDefinitions.find(definition => definition.name.value === name));
   }
 
   //  order is determined by the global fragments definition order.
-  return fragmentDefinitions.filter(definition => requiredFragmentNames.has(definition.name.value));
+  return fragmentDefinitions.filter(definition =>
+    requiredFragments.map(({ name }) => name).includes(definition.name.value),
+  );
 
   /**
    * Given a definition adds required fragments to requieredFragmentsNames, recursively.
    * @param definition either an operation definition or a fragment definition.
    */
-  function getRequiredFragments(definition: ExecutableDefinitionNode) {
+  function getRequiredFragments(definition: ExecutableDefinitionNode, level: number = 0) {
     visit(definition, {
-      FragmentSpread(fragmentSpreadNode) {
+      FragmentSpread(fragmentSpreadNode, key, parent, path, ancestors) {
+        const fragmentName = fragmentSpreadNode.name.value;
+
         // added this check to prevent infinite recursion on recursive fragment definition (which itself isn't legal graphql)
         // it seems graphql crashes anyways if a recursive fragment is defined, so maybe remove this check?
-        if (!requiredFragmentNames.has(fragmentSpreadNode.name.value)) {
-          requiredFragmentNames.add(fragmentSpreadNode.name.value);
+        if (!requiredFragments.some(fragment => fragment.name === fragmentName)) {
+          requiredFragments.push({ name: fragmentName, key, level });
 
           const fragmentDefinition = fragmentDefinitions.find(
-            definition => definition.name.value === fragmentSpreadNode.name.value,
+            definition => definition.name.value === fragmentName,
           );
 
           if (!fragmentDefinition) {
@@ -66,7 +84,7 @@ function getOperationFragmentsRecursively(
               } ${definition.name.value} in file ${documentLocation}`,
             );
           } else {
-            getRequiredFragments(fragmentDefinition);
+            getRequiredFragments(fragmentDefinition, level + 1);
           }
         }
         return fragmentSpreadNode;
