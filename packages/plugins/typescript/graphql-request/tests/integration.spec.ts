@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { remove, writeFile } from 'fs-extra';
-import { parse } from 'graphql';
+// @ts-ignore
+import { OperationTypeNode, parse } from 'graphql';
 import { codegen } from '@graphql-codegen/core';
 import { mockGraphQLServer } from '@graphql-codegen/testing';
 import * as TypeScriptPlugin from '@graphql-codegen/typescript';
@@ -10,6 +11,16 @@ import * as GraphQLRequestPlugin from '../src/index.js';
 
 describe('GraphQL Request Integration', () => {
   it('should send requests correctly', async () => {
+    // @ts-ignore
+    if (!OperationTypeNode) {
+      // `OperationTypeNode` is a type in `graphql@15`, but it is a native TS enum in `graphql@16`.
+      // `graphql-request@7` uses `OperationTypeNode` enum to analyse document.
+      // So, `graphql-request@7` does not work with `graphql@15`.
+      //
+      // This block is a hacky way to skip running this test for `graphql@15`.
+      return;
+    }
+
     const sdkFileName = 'graphql-request-sdk.ts';
     const sdkFilePath = join(__dirname, './test-files', sdkFileName);
     const typeDefs = parse(/* GraphQL */ `
