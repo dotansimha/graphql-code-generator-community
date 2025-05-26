@@ -144,10 +144,10 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
         }
         return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
           o.operationVariablesTypes
-        }, requestHeaders?: GraphQLClientRequestHeaders): Promise<${o.operationResultType}> {
+        }, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<${o.operationResultType}> {
   return withWrapper((wrappedRequestHeaders) => client.request<${
     o.operationResultType
-  }>(${docVarName}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}', variables);
+  }>({ document: ${docVarName}, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), '${operationName}', '${operationType}', variables);
 }`;
       })
       .filter(Boolean)
