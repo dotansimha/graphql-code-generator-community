@@ -93,7 +93,7 @@ async function test() {
       const output = await validate(result, config, docs, schema, usage);
 
       expect(result.content).toContain(
-        `(FeedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query', variables);`,
+        `({ document: FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);`,
       );
       expect(output).toMatchSnapshot();
     });
@@ -407,13 +407,13 @@ async function test() {
 
       expect(output).toContain(`import * as Operations from './operations';`);
       expect(output).toContain(
-        `(Operations.FeedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query', variables);`,
+        `({ document: Operations.FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);`,
       );
       expect(output).toContain(
-        `(Operations.Feed2Document, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed2', 'query', variables);`,
+        `({ document: Operations.Feed2Document, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed2', 'query', variables);`,
       );
       expect(output).toContain(
-        `(Operations.Feed3Document, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed3', 'query', variables);`,
+        `({ document: Operations.Feed3Document, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed3', 'query', variables);`,
       );
     });
 
