@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 6.3.0
+
+### Minor Changes
+
+- [#1116](https://github.com/dotansimha/graphql-code-generator-community/pull/1116)
+  [`32a5a00`](https://github.com/dotansimha/graphql-code-generator-community/commit/32a5a00bb921b42280f7fd879ff800a36e36e973)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Allow sending signal as the 3rd param in each
+  SDK call
+
 ## 6.2.1
 
 ### Patch Changes
