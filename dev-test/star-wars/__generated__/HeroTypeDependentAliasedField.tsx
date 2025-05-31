@@ -68,6 +68,27 @@ export function useHeroTypeDependentAliasedFieldLazyQuery(
     HeroTypeDependentAliasedFieldQueryVariables
   >(HeroTypeDependentAliasedFieldDocument, options);
 }
+// @ts-ignore
+export function useHeroTypeDependentAliasedFieldSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroTypeDependentAliasedFieldQuery,
+    HeroTypeDependentAliasedFieldQueryVariables
+  >,
+): Apollo.UseSuspenseQueryResult<
+  HeroTypeDependentAliasedFieldQuery,
+  HeroTypeDependentAliasedFieldQueryVariables
+>;
+export function useHeroTypeDependentAliasedFieldSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        HeroTypeDependentAliasedFieldQuery,
+        HeroTypeDependentAliasedFieldQueryVariables
+      >,
+): Apollo.UseSuspenseQueryResult<
+  HeroTypeDependentAliasedFieldQuery | undefined,
+  HeroTypeDependentAliasedFieldQueryVariables
+>;
 export function useHeroTypeDependentAliasedFieldSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken

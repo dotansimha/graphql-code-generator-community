@@ -65,6 +65,27 @@ export function useHeroDetailsWithFragmentLazyQuery(
     options,
   );
 }
+// @ts-ignore
+export function useHeroDetailsWithFragmentSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroDetailsWithFragmentQuery,
+    HeroDetailsWithFragmentQueryVariables
+  >,
+): Apollo.UseSuspenseQueryResult<
+  HeroDetailsWithFragmentQuery,
+  HeroDetailsWithFragmentQueryVariables
+>;
+export function useHeroDetailsWithFragmentSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<
+        HeroDetailsWithFragmentQuery,
+        HeroDetailsWithFragmentQueryVariables
+      >,
+): Apollo.UseSuspenseQueryResult<
+  HeroDetailsWithFragmentQuery | undefined,
+  HeroDetailsWithFragmentQueryVariables
+>;
 export function useHeroDetailsWithFragmentSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
