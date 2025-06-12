@@ -45,6 +45,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
       exposeFetcher: getConfigValue(rawConfig.exposeFetcher, false),
       addInfiniteQuery: getConfigValue(rawConfig.addInfiniteQuery, false),
       addSuspenseQuery: getConfigValue(rawConfig.addSuspenseQuery, false),
+      uniqueSuspenseQueryKeys: getConfigValue(rawConfig.uniqueSuspenseQueryKeys, true),
       reactQueryVersion: getConfigValue(rawConfig.reactQueryVersion, defaultReactQueryVersion),
       reactQueryImportFrom: getConfigValue(rawConfig.reactQueryImportFrom, ''),
     });
@@ -149,10 +150,15 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     const getOutputFromQueries = () => `\n${queries.join('\n\n')}\n`;
 
     if (operationType === 'Query') {
-      const addQuery = (generateConfig: GenerateConfig, isSuspense = false) => {
+      const addQuery = (
+        generateConfig: GenerateConfig,
+        isSuspense = false,
+        uniqueSuspenseQueryKeys: boolean = true,
+      ) => {
         const { hook, getKey, rootKey, document } = this.fetcher.generateQueryOutput(
           generateConfig,
           isSuspense,
+          uniqueSuspenseQueryKeys,
         );
         queries.push(hook);
         if (this.config.exposeDocument) queries.push(document);
@@ -162,13 +168,19 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
 
       addQuery(generateConfig);
 
-      if (this.config.addSuspenseQuery) addQuery(generateConfig, true);
+      if (this.config.addSuspenseQuery)
+        addQuery(generateConfig, true, this.config.uniqueSuspenseQueryKeys);
 
       if (this.config.addInfiniteQuery) {
-        const addInfiniteQuery = (generateConfig: GenerateConfig, isSuspense = false) => {
+        const addInfiniteQuery = (
+          generateConfig: GenerateConfig,
+          isSuspense = false,
+          uniqueSuspenseQueryKeys: boolean = true,
+        ) => {
           const { hook, getKey, rootKey } = this.fetcher.generateInfiniteQueryOutput(
             generateConfig,
             isSuspense,
+            uniqueSuspenseQueryKeys,
           );
           queries.push(hook);
           if (this.config.exposeQueryKeys) queries.push(getKey);
@@ -178,7 +190,7 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
         addInfiniteQuery(generateConfig);
 
         if (this.config.addSuspenseQuery) {
-          addInfiniteQuery(generateConfig, true);
+          addInfiniteQuery(generateConfig, true, this.config.uniqueSuspenseQueryKeys);
         }
       }
       // The reason we're looking at the private field of the CustomMapperFetcher to see if it's a react hook
