@@ -66,7 +66,7 @@ function buildFragmentRegistry(
         fragmentImports.push({
           name: baseVisitor.convertName(name, {
             useTypesPrefix: true,
-            suffix: `_${typeName}_${fragmentSuffix}`,
+            suffix: `_${typeName}${fragmentSuffix ? `_${fragmentSuffix}` : ''}`,
           }),
           kind: 'type',
         });
