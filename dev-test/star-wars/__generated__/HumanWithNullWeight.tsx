@@ -59,6 +59,21 @@ export function useHumanWithNullHeightLazyQuery(
     options,
   );
 }
+// @ts-ignore
+export function useHumanWithNullHeightSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HumanWithNullHeightQuery,
+    HumanWithNullHeightQueryVariables
+  >,
+): Apollo.UseSuspenseQueryResult<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>;
+export function useHumanWithNullHeightSuspenseQuery(
+  baseOptions?:
+    | Apollo.SkipToken
+    | Apollo.SuspenseQueryHookOptions<HumanWithNullHeightQuery, HumanWithNullHeightQueryVariables>,
+): Apollo.UseSuspenseQueryResult<
+  HumanWithNullHeightQuery | undefined,
+  HumanWithNullHeightQueryVariables
+>;
 export function useHumanWithNullHeightSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
