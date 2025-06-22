@@ -1476,6 +1476,70 @@ describe('near-operation-file preset', () => {
       `import { AuthorFragmentDoc, AuthorFragment, AddressFragmentDoc, AddressFragment } from './author';`,
     );
   });
+
+  it('#1112 - should import only interface types that are in use', async () => {
+    const result = await executeCodegen({
+      schema: [
+        /* GraphQL */ `
+          type Query {
+            dogs: [Dog!]!
+            cats: [Cat!]!
+          }
+
+          interface IAnimal {
+            name: String!
+          }
+
+          type Cat implements IAnimal {
+            name: String!
+          }
+
+          type Dog implements IAnimal {
+            name: String!
+          }
+        `,
+      ],
+      documents: [
+        path.join(__dirname, 'fixtures/issue-1112-interface.ts'),
+        path.join(__dirname, 'fixtures/issue-1112-operation.ts'),
+      ],
+      generates: {
+        'out1.ts': {
+          preset,
+          presetConfig: {
+            baseTypesPath: 'types.ts',
+          },
+          plugins: ['typescript-operations'],
+        },
+      },
+      config: {
+        inlineFragmentTypes: 'combine',
+        dedupeOperationSuffix: true,
+      },
+    });
+
+    const interfaceContent = result.find(generatedDoc =>
+      generatedDoc.filename.match(/issue-1112-interface/),
+    ).content;
+
+    const operationContent = result.find(generatedDoc =>
+      generatedDoc.filename.match(/issue-1112-operation/),
+    ).content;
+
+    expect(interfaceContent).toContain(
+      "export type AnimalFragment_Cat = { __typename?: 'Cat', name: string };",
+    );
+    expect(interfaceContent).toContain(
+      "export type AnimalFragment_Dog = { __typename?: 'Dog', name: string };",
+    );
+    expect(interfaceContent).toContain(
+      'export type AnimalFragment = AnimalFragment_Cat | AnimalFragment_Dog;',
+    );
+
+    expect(operationContent).toContain(
+      "import { AnimalFragment_Cat } from './issue-1112-interface.generated'",
+    );
+  });
 });
 
 const getFragmentImportsFromResult = (result: Types.GenerateOptions[], index = 0) =>

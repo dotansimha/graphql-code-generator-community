@@ -60,7 +60,7 @@ export type QueryMessagesArgs = {
 };
 
 export type GetMessagesQueryVariables = Exact<{
-  tab: Scalars['String'];
+  tab: Scalars['String']['input'];
 }>;
 
 export type GetMessagesQuery = {
@@ -78,8 +78,8 @@ export type CreateMessageMutation = {
 };
 
 export type DeclineMutationVariables = Exact<{
-  id: Scalars['ID'];
-  reason: Scalars['String'];
+  id: Scalars['ID']['input'];
+  reason: Scalars['String']['input'];
 }>;
 
 export type DeclineMutation = {
@@ -88,7 +88,7 @@ export type DeclineMutation = {
 };
 
 export type ApproveMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 export type ApproveMutation = {
@@ -97,7 +97,7 @@ export type ApproveMutation = {
 };
 
 export type EscalateMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 }>;
 
 export type EscalateMutation = {

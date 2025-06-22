@@ -5,8 +5,8 @@ import { Component, h, Prop } from '@stencil/core';
 
 declare global {
   export type SubmitCommentMutationVariables = Types.Exact<{
-    repoFullName: Types.Scalars['String'];
-    commentContent: Types.Scalars['String'];
+    repoFullName: Types.Scalars['String']['input'];
+    commentContent: Types.Scalars['String']['input'];
   }>;
 
   export type SubmitCommentMutation = {

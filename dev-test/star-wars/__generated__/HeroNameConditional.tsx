@@ -5,7 +5,7 @@ import * as Types from '../types.d.js';
 const defaultOptions = {} as const;
 export type HeroNameConditionalInclusionQueryVariables = Types.Exact<{
   episode?: Types.InputMaybe<Types.Episode>;
-  includeName: Types.Scalars['Boolean'];
+  includeName: Types.Scalars['Boolean']['input'];
 }>;
 
 export type HeroNameConditionalInclusionQuery = {
@@ -15,7 +15,7 @@ export type HeroNameConditionalInclusionQuery = {
 
 export type HeroNameConditionalExclusionQueryVariables = Types.Exact<{
   episode?: Types.InputMaybe<Types.Episode>;
-  skipName: Types.Scalars['Boolean'];
+  skipName: Types.Scalars['Boolean']['input'];
 }>;
 
 export type HeroNameConditionalExclusionQuery = {
