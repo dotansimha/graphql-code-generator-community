@@ -4,7 +4,7 @@ import { Component, h, Prop } from '@stencil/core';
 
 declare global {
   export type SubmitRepositoryMutationVariables = Types.Exact<{
-    repoFullName: Types.Scalars['String'];
+    repoFullName: Types.Scalars['String']['input'];
   }>;
 
   export type SubmitRepositoryMutation = {
