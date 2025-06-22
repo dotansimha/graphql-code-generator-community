@@ -1,5 +1,14 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 3.1.0
+
+### Minor Changes
+
+- [#1113](https://github.com/dotansimha/graphql-code-generator-community/pull/1113)
+  [`5e4a3a8`](https://github.com/dotansimha/graphql-code-generator-community/commit/5e4a3a8f90a3f84eaeebfafccd96b04d3161ef3c)
+  Thanks [@wassim-k](https://github.com/wassim-k)! - Only import interface types that are used in
+  the document.
+
 ## 3.0.1
 
 ### Patch Changes
