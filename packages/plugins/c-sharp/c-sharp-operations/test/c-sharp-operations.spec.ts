@@ -273,12 +273,12 @@ describe('C# Operations', () => {
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
-          public class PersonSelection {
+          public class MeSelection {
             [JsonProperty("friendIds")]
             public System.Collections.Generic.List<int> friendIds { get; set; }
           }
           [JsonProperty("me")]
-          public PersonSelection me { get; set; }
+          public MeSelection me { get; set; }
         }
       `);
     });
@@ -380,12 +380,12 @@ describe('C# Operations', () => {
           public string @record { get; set; }
         }
         public class Response {
-          public class CourtCaseSelection {
+          public class CaseSelection {
             [JsonProperty("operator")]
             public string @operator { get; set; }
           }
           [JsonProperty("case")]
-          public CourtCaseSelection @case { get; set; }
+          public CaseSelection @case { get; set; }
         }
       `);
     });
@@ -574,12 +574,12 @@ describe('C# Operations', () => {
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
-          public class PersonSelection {
+          public class MeSelection {
             [JsonProperty("friendIds")]
             public System.Collections.Generic.List<int> friendIds { get; set; }
           }
           [JsonProperty("me")]
-          public PersonSelection me { get; set; }
+          public MeSelection me { get; set; }
         }
       `);
     });
@@ -683,12 +683,12 @@ describe('C# Operations', () => {
           public string @record { get; set; }
         }
         public class Response {
-          public class CourtCaseSelection {
+          public class CaseSelection {
             [JsonProperty("operator")]
             public string @operator { get; set; }
           }
           [JsonProperty("case")]
-          public CourtCaseSelection @case { get; set; }
+          public CaseSelection @case { get; set; }
         }
       `);
     });
@@ -883,12 +883,12 @@ describe('C# Operations', () => {
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
-          public class PersonSelection {
+          public class YouSelection {
             [JsonProperty("friendIds")]
             public System.Collections.Generic.List<int> friendIds { get; set; }
           }
           [JsonProperty("you")]
-          public PersonSelection you { get; set; }
+          public YouSelection you { get; set; }
         }
       `);
     });
@@ -998,12 +998,12 @@ describe('C# Operations', () => {
           public string @record { get; set; }
         }
         public class Response {
-          public class CourtCaseSelection {
+          public class CaseSelection {
             [JsonProperty("operator")]
             public string @operator { get; set; }
           }
           [JsonProperty("case")]
-          public CourtCaseSelection @case { get; set; }
+          public CaseSelection @case { get; set; }
         }
       `);
     });
@@ -1105,24 +1105,108 @@ describe('C# Operations', () => {
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
         public class Response {
-          public class PersonSelection {
+          public class MeSelection {
             [JsonProperty("name")]
             public string name { get; set; }
             [JsonProperty("age")]
             public int age { get; set; }
 
-            public class FriendSelection {
+            public class FriendsSelection {
               [JsonProperty("id")]
               public int id { get; set; }
             }
 
             [JsonProperty("friends")]
-            public System.Collections.Generic.List<FriendSelection> friends { get; set; }
+            public System.Collections.Generic.List<FriendsSelection> friends { get; set; }
           }
 
           [JsonProperty("me")]
-          public PersonSelection me { get; set; }
+          public MeSelection me { get; set; }
         }
+      `);
+    });
+
+    it('Should generate for duplicate fragments for same type', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type Query {
+          gearSetup: GearSetup!
+        }
+        type GearSetup {
+          name: String!
+          primaryWeapon: Item!
+          secondaryWeapon: Item
+          classItem: Item
+        }
+        type Item {
+          id: Int!
+          name: String!
+        }
+      `);
+      const operation = parse(/* GraphQL */ `
+        fragment ItemFields on Item {
+          id
+          name
+        }
+
+        query Gear {
+          gearSetup {
+            primaryWeapon {
+              ...ItemFields
+            }
+            secondaryWeapon {
+              ...ItemFields
+            }
+            classItem {
+              ...ItemFields
+            }
+          }
+        }
+      `);
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: operation }],
+        { typesafeOperation: true, memberNameConvention: 'pascalCase' },
+        { outputFile: '' },
+      )) as Types.ComplexPluginOutput;
+      expect(result.content).toBeSimilarStringTo(`
+        public class GearSetupSelection {
+          public class PrimaryWeaponSelection {
+            [JsonProperty("id")]
+            public int Id { get; set; }
+
+            [JsonProperty("name")]
+            public string Name { get; set; }
+          }
+
+          [JsonProperty("primaryWeapon")]
+          public PrimaryWeaponSelection PrimaryWeapon { get; set; }
+
+          public class SecondaryWeaponSelection {
+            [JsonProperty("id")]
+            public int Id { get; set; }
+
+            [JsonProperty("name")]
+            public string Name { get; set; }
+          }
+
+          [JsonProperty("secondaryWeapon")]
+          public SecondaryWeaponSelection SecondaryWeapon { get; set; }
+
+          public class ClassItemSelection {
+            [JsonProperty("id")]
+            public int Id { get; set; }
+
+            [JsonProperty("name")]
+            public string Name { get; set; }
+          }
+
+          [JsonProperty("classItem")]
+          public ClassItemSelection ClassItem { get; set; }
+        }
+
+        [JsonProperty("gearSetup")]
+        public GearSetupSelection GearSetup { get; set; }
+      }
       `);
     });
 
@@ -1164,7 +1248,7 @@ describe('C# Operations', () => {
           public string @record { get; set; }
         }
         public class Response {
-          public class CourtCaseSelection {
+          public class CaseSelection {
             [JsonProperty("private")]
             public string @private { get; set; }
             [JsonProperty("public")]
@@ -1173,7 +1257,7 @@ describe('C# Operations', () => {
             public string @operator { get; set; }
           }
           [JsonProperty("case")]
-          public CourtCaseSelection @case { get; set; }
+          public CaseSelection @case { get; set; }
         }
       `);
     });
@@ -1405,7 +1489,7 @@ describe('C# Operations', () => {
         { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
-        public class MyDataSelection {
+        public class MyQuerySelection {
           [JsonProperty("id")]
           public string Id { get; set; }
 

@@ -355,7 +355,10 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
             ].join('\n') + '\n',
           );
         }
-        const selectionBaseTypeName = `${responseType.baseType.type}Selection`;
+        let selectionBaseTypeName = `${node.name.value}Selection`;
+        // Ensure PascalCase
+        selectionBaseTypeName =
+          selectionBaseTypeName.charAt(0).toUpperCase() + selectionBaseTypeName.slice(1);
         const selectionType = Object.assign(new CSharpFieldType(responseType), {
           baseType: { type: selectionBaseTypeName },
         });
