@@ -23,11 +23,13 @@ import {
   convertSafeName,
   CSharpDeclarationBlock,
   CSharpFieldType,
+  getJsonAttributeSourceConfiguration,
   getListInnerTypeNode,
   getListTypeDepth,
   getListTypeField,
   getMemberNamingFunction,
   isValueType,
+  JsonAttributesSourceConfiguration,
   MemberNamingFn,
   wrapFieldType,
 } from '@graphql-codegen/c-sharp-common';
@@ -58,6 +60,7 @@ export interface CSharpOperationsPluginConfig extends ClientSideBasePluginConfig
   mutationSuffix: string;
   subscriptionSuffix: string;
   typesafeOperation: boolean;
+  jsonAttributesConfiguration: JsonAttributesSourceConfiguration;
   memberNamingFunction: MemberNamingFn;
 }
 
@@ -92,6 +95,9 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         querySuffix: rawConfig.querySuffix || defaultSuffix,
         mutationSuffix: rawConfig.mutationSuffix || defaultSuffix,
         subscriptionSuffix: rawConfig.subscriptionSuffix || defaultSuffix,
+        jsonAttributesConfiguration: getJsonAttributeSourceConfiguration(
+          rawConfig.jsonAttributesSource || 'Newtonsoft.Json',
+        ),
         scalars: buildScalarsFromConfig(schema, rawConfig, C_SHARP_SCALARS),
         typesafeOperation: rawConfig.typesafeOperation || false,
         memberNamingFunction: getMemberNamingFunction(rawConfig),
@@ -211,7 +217,12 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
 
   public getCSharpImports(): string {
     return (
-      ['System', 'Newtonsoft.Json', 'GraphQL', 'GraphQL.Client.Abstractions']
+      [
+        'System',
+        this.config.jsonAttributesConfiguration.namespace,
+        'GraphQL',
+        'GraphQL.Client.Abstractions',
+      ]
         .map(i => `using ${i};`)
         .join('\n') + '\n'
     );
@@ -339,7 +350,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
           );
           return indentMultiline(
             [
-              `[JsonProperty("${node.name.value}")]`,
+              `[${this.config.jsonAttributesConfiguration.propertyAttribute}("${node.name.value}")]`,
               `public ${responseTypeName} ${propertyName} { get; set; }`,
             ].join('\n') + '\n',
           );
@@ -379,7 +390,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         return indentMultiline(
           [
             innerClassDefinition,
-            `[JsonProperty("${node.name.value}")]`,
+            `[${this.config.jsonAttributesConfiguration.propertyAttribute}("${node.name.value}")]`,
             `public ${selectionTypeName} ${propertyName} { get; set; }`,
           ].join('\n') + '\n',
         );
@@ -434,7 +445,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
               );
               return indentMultiline(
                 [
-                  `[JsonProperty("${v.variable.name.value}")]`,
+                  `[${this.config.jsonAttributesConfiguration.propertyAttribute}("${v.variable.name.value}")]`,
                   `public ${inputTypeName} ${propertyName} { get; set; }`,
                 ].join('\n') + '\n',
               );
@@ -616,7 +627,7 @@ ${this._getOperationMethod(node)}
               );
               return indentMultiline(
                 [
-                  `[JsonProperty("${f.name.value}")]`,
+                  `[${this.config.jsonAttributesConfiguration.propertyAttribute}("${f.name.value}")]`,
                   `public ${inputTypeName} ${propertyName} { get; set; }`,
                 ].join('\n') + '\n',
               );
@@ -642,13 +653,13 @@ ${this._getOperationMethod(node)}
           node.values
             ?.map(
               v =>
-                `[EnumMember(Value = "${v.name.value}")]\n${this._parsedConfig.memberNamingFunction(v.name.value)}`,
+                `${this.config.jsonAttributesConfiguration.enumConfiguration.enumMemberAttribute(v.name.value)}\n${this._parsedConfig.memberNamingFunction(v.name.value)}`,
             )
             .join(',\n'),
         ),
       );
 
-    const enumWithAttributes = `[DataContract]\n[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]\n${enumDefinition.string}`;
+    const enumWithAttributes = `${this.config.jsonAttributesConfiguration.enumConfiguration.decorator}\n${enumDefinition.string}`;
 
     return indentMultiline(enumWithAttributes, 2);
   }

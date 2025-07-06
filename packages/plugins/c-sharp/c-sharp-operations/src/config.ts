@@ -1,4 +1,4 @@
-import { MemberNameConventionConfig } from '@graphql-codegen/c-sharp-common';
+import { JsonAttributesSource, MemberNameConventionConfig } from '@graphql-codegen/c-sharp-common';
 import { RawClientSideBasePluginConfig } from '@graphql-codegen/visitor-plugin-common';
 
 /**
@@ -72,4 +72,16 @@ export interface CSharpOperationsRawPluginConfig
    * ```
    */
   typesafeOperation?: boolean;
+
+  /**
+   * @default Newtonsoft.Json
+   * @description Library that should be used to emit JSON attributes.
+   *
+   * @exampleMarkdown
+   * ```yaml
+   * config:
+   *   jsonAttributesSource: System.Text.Json
+   * ```
+   */
+  jsonAttributesSource?: JsonAttributesSource;
 }
