@@ -1,6 +1,6 @@
-import { buildSchema, parse } from 'graphql';
 import { Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
+import { buildSchema, parse } from 'graphql';
 import { CSharpOperationsRawPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
 
@@ -1276,6 +1276,7 @@ describe('C# Operations', () => {
           value2
           anotherValue
           LastValue
+          SHOUTY_SNAKE_VALUE
         }
       `);
       const operation = parse(/* GraphQL */ `
@@ -1291,11 +1292,19 @@ describe('C# Operations', () => {
         { outputFile: '' },
       )) as Types.ComplexPluginOutput;
       expect(result.content).toBeSimilarStringTo(`
+        [DataContract]
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public enum MyEnum {
-           Value1,
-           Value2,
-           AnotherValue,
-           LastValue
+          [EnumMember(Value = "Value1")]
+          Value1,
+          [EnumMember(Value = "value2")]
+          Value2,
+          [EnumMember(Value = "anotherValue")]
+          AnotherValue,
+          [EnumMember(Value = "LastValue")]
+          LastValue,
+          [EnumMember(Value = "SHOUTY_SNAKE_VALUE")]
+          ShoutySnakeValue
         }
         `);
     });

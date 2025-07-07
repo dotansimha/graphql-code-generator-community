@@ -639,10 +639,17 @@ ${this._getOperationMethod(node)}
       .withName(convertSafeName(this.convertName(node.name)))
       .withBlock(
         indentMultiline(
-          node.values?.map(v => this._parsedConfig.memberNamingFunction(v.name.value)).join(',\n'),
+          node.values
+            ?.map(
+              v =>
+                `[EnumMember(Value = "${v.name.value}")]\n${this._parsedConfig.memberNamingFunction(v.name.value)}`,
+            )
+            .join(',\n'),
         ),
-      ).string;
+      );
 
-    return indentMultiline(enumDefinition, 2);
+    const enumWithAttributes = `[DataContract]\n[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]\n${enumDefinition.string}`;
+
+    return indentMultiline(enumWithAttributes, 2);
   }
 }
