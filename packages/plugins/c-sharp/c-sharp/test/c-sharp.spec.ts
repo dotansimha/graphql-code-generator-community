@@ -1,9 +1,9 @@
+import { getJsonAttributeSourceConfiguration } from '@graphql-codegen/c-sharp-common';
+import '@graphql-codegen/testing';
 import { buildSchema } from 'graphql';
 import each from 'jest-each';
-import '@graphql-codegen/testing';
 import { CSharpResolversPluginRawConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
-import { getJsonAttributeSourceConfiguration } from '../src/json-attributes.js';
 
 describe('C#', () => {
   describe('Using directives', () => {

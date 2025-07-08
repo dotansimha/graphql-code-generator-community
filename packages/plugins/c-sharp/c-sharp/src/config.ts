@@ -1,6 +1,5 @@
-import { MemberNameConventionConfig } from '@graphql-codegen/c-sharp-common';
+import { JsonAttributesSource, MemberNameConventionConfig } from '@graphql-codegen/c-sharp-common';
 import { EnumValuesMap, RawConfig } from '@graphql-codegen/visitor-plugin-common';
-import { JsonAttributesSource } from './json-attributes.js';
 
 /**
  * @description This plugin generates C# `class` identifier for your schema types.

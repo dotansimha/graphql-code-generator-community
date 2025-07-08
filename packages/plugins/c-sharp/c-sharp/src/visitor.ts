@@ -21,10 +21,13 @@ import {
   convertSafeName,
   CSharpDeclarationBlock,
   CSharpFieldType,
+  getJsonAttributeSourceConfiguration,
   getListInnerTypeNode,
   getListTypeField,
   getMemberNamingFunction,
   isValueType,
+  JsonAttributesSource,
+  JsonAttributesSourceConfiguration,
   MemberNamingFn,
   transformComment,
   wrapFieldType,
@@ -39,11 +42,6 @@ import {
   ParsedConfig,
 } from '@graphql-codegen/visitor-plugin-common';
 import { CSharpResolversPluginRawConfig } from './config.js';
-import {
-  getJsonAttributeSourceConfiguration,
-  JsonAttributesSource,
-  JsonAttributesSourceConfiguration,
-} from './json-attributes.js';
 
 export interface CSharpResolverParsedConfig extends ParsedConfig {
   namespaceName: string;
