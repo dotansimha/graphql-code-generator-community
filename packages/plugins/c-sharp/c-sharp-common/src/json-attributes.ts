@@ -34,8 +34,8 @@ const newtonsoftConfiguration = new JsonAttributesSourceConfiguration(
   'JsonRequired',
   {
     decorator:
-      '[DataContract]\n[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]',
-    enumMemberAttribute: value => `[EnumMember(Value = "${value}")]`,
+      '[System.Runtime.Serialization.DataContract]\n[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]',
+    enumMemberAttribute: value => `[System.Runtime.Serialization.EnumMember(Value = "${value}")]`,
   },
 );
 
