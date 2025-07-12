@@ -1,5 +1,19 @@
 # @graphql-codegen/c-sharp-common
 
+## 1.2.0
+
+### Minor Changes
+
+- [#1160](https://github.com/dotansimha/graphql-code-generator-community/pull/1160)
+  [`dcbb0ef`](https://github.com/dotansimha/graphql-code-generator-community/commit/dcbb0ef50a25d784fbb405816e93dc060de1c5ed)
+  Thanks [@ocdi](https://github.com/ocdi)! - Support output of System.Text.Json attributes
+
+### Patch Changes
+
+- [#1158](https://github.com/dotansimha/graphql-code-generator-community/pull/1158)
+  [`d6c8b90`](https://github.com/dotansimha/graphql-code-generator-community/commit/d6c8b90335ce30c792c61fcf9106adecf83f8a01)
+  Thanks [@ocdi](https://github.com/ocdi)! - Fully qualify enum attributes
+
 ## 1.1.1
 
 ### Patch Changes
@@ -7,7 +21,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
