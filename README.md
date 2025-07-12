@@ -1,6 +1,6 @@
 [![CodeGen](./logo.svg)](https://graphql-code-generator.com)
 
-# GraphQL Code Generator: Community plugins
+# GraphQL Code Generator: Community plugins (test)
 
 This repository is owned by the GraphQL Code Generator community and is home to the community
 plugins:
