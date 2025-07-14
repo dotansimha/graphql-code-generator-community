@@ -1,4 +1,5 @@
 import autoBind from 'auto-bind';
+import { pascalCase } from 'change-case-all';
 import {
   DirectiveNode,
   DocumentNode,
@@ -313,9 +314,11 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
   private _getResponseFieldRecursive(
     node: OperationDefinitionNode | FieldNode | FragmentSpreadNode | DirectiveNode,
     parentSchema: ObjectTypeDefinitionNode,
+    seenClasses: undefined | Set<string>,
   ): string {
     switch (node.kind) {
       case Kind.OPERATION_DEFINITION: {
+        const classes = new Set<string>();
         return new CSharpDeclarationBlock()
           .access('public')
           .asKind('class')
@@ -327,7 +330,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
                   if (opr.kind !== Kind.FIELD) {
                     throw new Error(`Unknown kind; ${opr.kind} in OperationDefinitionNode`);
                   }
-                  return this._getResponseFieldRecursive(opr, parentSchema);
+                  return this._getResponseFieldRecursive(opr, parentSchema, classes);
                 })
                 .join('\n'),
           ).string;
@@ -355,10 +358,17 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
             ].join('\n') + '\n',
           );
         }
-        let selectionBaseTypeName = `${node.name.value}Selection`;
-        // Ensure PascalCase
-        selectionBaseTypeName =
-          selectionBaseTypeName.charAt(0).toUpperCase() + selectionBaseTypeName.slice(1);
+
+        // Earlier versions of this codegen generated a class name based on the
+        // base type for each selection set.
+        // Subsequent classes will use the selection name to prevent duplicates.
+        const baseTypeSelectionName = `${responseType.baseType.type}Selection`;
+        const selectionBaseTypeName = seenClasses?.has(baseTypeSelectionName)
+          ? pascalCase(`${node.name.value}Selection`)
+          : baseTypeSelectionName;
+
+        seenClasses.add(selectionBaseTypeName);
+
         const selectionType = Object.assign(new CSharpFieldType(responseType), {
           baseType: { type: selectionBaseTypeName },
         });
@@ -372,6 +382,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
             d.kind === Kind.OBJECT_TYPE_DEFINITION && d.name.value === responseType.baseType.type,
         ) as ObjectTypeDefinitionNode;
 
+        const classes = new Set<string>();
         const innerClassDefinition = new CSharpDeclarationBlock()
           .access('public')
           .asKind('class')
@@ -383,7 +394,7 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
                   if (s.kind === Kind.INLINE_FRAGMENT) {
                     throw new Error(`Unsupported kind; ${node.name} ${s.kind}`);
                   }
-                  return this._getResponseFieldRecursive(s, innerClassSchema);
+                  return this._getResponseFieldRecursive(s, innerClassSchema, classes);
                 })
                 .join('\n'),
           ).string;
@@ -403,12 +414,13 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
         if (!fragmentSchema) {
           throw new Error(`Fragment schema not found; ${node.name.value}`);
         }
+        const classes = new Set<string>();
         return fragmentSchema.node.selectionSet.selections
           .map(s => {
             if (s.kind === Kind.INLINE_FRAGMENT) {
               throw new Error(`Unsupported kind; ${node.name} ${s.kind}`);
             }
-            return this._getResponseFieldRecursive(s, parentSchema);
+            return this._getResponseFieldRecursive(s, parentSchema, classes);
           })
           .join('\n');
       }
@@ -422,7 +434,11 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     const operationSchema = this._schemaAST.definitions.find(
       s => s.kind === Kind.OBJECT_TYPE_DEFINITION && s.name.value.toLowerCase() === node.operation,
     );
-    return this._getResponseFieldRecursive(node, operationSchema as ObjectTypeDefinitionNode);
+    return this._getResponseFieldRecursive(
+      node,
+      operationSchema as ObjectTypeDefinitionNode,
+      undefined,
+    );
   }
 
   private _getVariablesClass(node: OperationDefinitionNode): string {
