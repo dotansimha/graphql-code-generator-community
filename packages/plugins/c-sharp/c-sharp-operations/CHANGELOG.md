@@ -1,5 +1,35 @@
 # @graphql-codegen/c-sharp-operations
 
+## 3.2.0
+
+### Minor Changes
+
+- [#1158](https://github.com/dotansimha/graphql-code-generator-community/pull/1158)
+  [`d6c8b90`](https://github.com/dotansimha/graphql-code-generator-community/commit/d6c8b90335ce30c792c61fcf9106adecf83f8a01)
+  Thanks [@ocdi](https://github.com/ocdi)! - Prevent duplicate class generation by using the
+  property name (instead of the GQL type name) as the basis for class name generation
+
+- [#1160](https://github.com/dotansimha/graphql-code-generator-community/pull/1160)
+  [`dcbb0ef`](https://github.com/dotansimha/graphql-code-generator-community/commit/dcbb0ef50a25d784fbb405816e93dc060de1c5ed)
+  Thanks [@ocdi](https://github.com/ocdi)! - Support output of System.Text.Json attributes
+
+### Patch Changes
+
+- [#1162](https://github.com/dotansimha/graphql-code-generator-community/pull/1162)
+  [`065c774`](https://github.com/dotansimha/graphql-code-generator-community/commit/065c77415881136ae121fcda366d71cea75cad5b)
+  Thanks [@ocdi](https://github.com/ocdi)! - Enhance accuracy of enum values by preserving schema
+  case
+
+- [#1172](https://github.com/dotansimha/graphql-code-generator-community/pull/1172)
+  [`8cbce90`](https://github.com/dotansimha/graphql-code-generator-community/commit/8cbce9029dd8ce3f079d8d5d5c98e4e861c5e3f5)
+  Thanks [@ocdi](https://github.com/ocdi)! - Restore original naming for selections for first
+  instance of duplicates
+
+- Updated dependencies
+  [[`d6c8b90`](https://github.com/dotansimha/graphql-code-generator-community/commit/d6c8b90335ce30c792c61fcf9106adecf83f8a01),
+  [`dcbb0ef`](https://github.com/dotansimha/graphql-code-generator-community/commit/dcbb0ef50a25d784fbb405816e93dc060de1c5ed)]:
+  - @graphql-codegen/c-sharp-common@1.2.0
+
 ## 3.1.1
 
 ### Patch Changes
@@ -7,7 +37,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/plugin-helpers@5.1.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/5.1.0)
     (from `5.0.4`, in `dependencies`)
@@ -15,7 +44,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
