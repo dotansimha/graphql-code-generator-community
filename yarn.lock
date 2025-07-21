@@ -1807,12 +1807,12 @@
     tslib "^2.4.0"
 
 "@graphql-tools/relay-operation-optimizer@^7.0.0":
-  version "7.0.19"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/relay-operation-optimizer/-/relay-operation-optimizer-7.0.19.tgz#f04bd099877dc470b9ed4c65a5375a1a3e2335f1"
-  integrity sha512-xnjLpfzw63yIX1bo+BVh4j1attSwqEkUbpJ+HAhdiSUa3FOQFfpWgijRju+3i87CwhjBANqdTZbcsqLT1hEXig==
+  version "7.0.20"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/relay-operation-optimizer/-/relay-operation-optimizer-7.0.20.tgz#62ca02cf931b1d88cb6f985f46205047f2492798"
+  integrity sha512-8xl03O/xwME4oRP7BEQEI8OI+ph3oDqQapNEV3X5UIxxLwAj6EKtpXR0mr2LSN9Ico6phrj8cEwVY+hBqAMo0w==
   dependencies:
     "@ardatan/relay-compiler" "^12.0.3"
-    "@graphql-tools/utils" "^10.8.6"
+    "@graphql-tools/utils" "^10.9.0"
     tslib "^2.4.0"
 
 "@graphql-tools/schema@10.0.24":
@@ -1853,7 +1853,7 @@
     value-or-promise "^1.0.11"
     ws "^8.12.0"
 
-"@graphql-tools/utils@10.9.0", "@graphql-tools/utils@^10.0.0", "@graphql-tools/utils@^10.8.6", "@graphql-tools/utils@^10.9.0":
+"@graphql-tools/utils@10.9.0", "@graphql-tools/utils@^10.0.0", "@graphql-tools/utils@^10.9.0":
   version "10.9.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-10.9.0.tgz#93fbda5d87a7298c7b91ac5518b3f4a758a5f585"
   integrity sha512-LzFlJHNajdohRM+0pHTwcF9tZ0q7z5iZW0lwnTNJp7O6GYFcSvCQE5ijTQcXVQ/5WQf3SHn+Gpr56TR5XHmPtg==
@@ -2303,11 +2303,11 @@
     tslib "^2.6.2"
 
 "@peculiar/asn1-schema@^2.3.13", "@peculiar/asn1-schema@^2.3.8":
-  version "2.3.15"
-  resolved "https://registry.yarnpkg.com/@peculiar/asn1-schema/-/asn1-schema-2.3.15.tgz#e926bfdeed51945a06f38be703499e7d8341a5d3"
-  integrity sha512-QPeD8UA8axQREpgR5UTAfu2mqQmm97oUqahDtNdBcfj3qAnoXzFdQW+aNf/tD2WVXF8Fhmftxoj0eMIT++gX2w==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@peculiar/asn1-schema/-/asn1-schema-2.4.0.tgz#e3aa7917d433b4c3fcfa1fcb57eac233b1c38787"
+  integrity sha512-umbembjIWOrPSOzEGG5vxFLkeM8kzIhLkgigtsOrfLKnuzxWxejAcUX+q/SoZCdemlODOcr5WiYa7+dIEzBXZQ==
   dependencies:
-    asn1js "^3.0.5"
+    asn1js "^3.0.6"
     pvtsutils "^1.3.6"
     tslib "^2.8.1"
 
@@ -2997,7 +2997,7 @@ asap@~2.0.3:
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
   integrity sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==
 
-asn1js@^3.0.5:
+asn1js@^3.0.5, asn1js@^3.0.6:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/asn1js/-/asn1js-3.0.6.tgz#53e002ebe00c5f7fd77c1c047c3557d7c04dce25"
   integrity sha512-UOCGPYbl0tv8+006qks/dTgV9ajs97X2p0FAbyS2iyCRrmLSRolDaHdp+v/CLgnzHc3fVB+CwYiUmei7ndFcgA==
@@ -3804,9 +3804,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.5.173:
-  version "1.5.182"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.182.tgz#4ab73104f893938acb3ab9c28d7bec170c116b3e"
-  integrity sha512-Lv65Btwv9W4J9pyODI6EWpdnhfvrve/us5h1WspW8B2Fb0366REPtY3hX7ounk1CkV/TBjWCEvCBBbYbmV0qCA==
+  version "1.5.187"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.187.tgz#8c58854e065962351dc87e95614dd78d50425966"
+  integrity sha512-cl5Jc9I0KGUoOoSbxvTywTa40uspGJt/BDBoDLoxJRSBpWh4FFXBsjNRHfQrONsV/OoEjDfHUmZQa2d6Ze4YgA==
 
 emittery@^0.10.2:
   version "0.10.2"
