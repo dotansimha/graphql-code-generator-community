@@ -56,3 +56,5 @@ export const validate: PluginValidateFn<any> = async (
 };
 
 export { ReactApolloVisitor };
+
+export type { ReactApolloRawPluginConfig };
