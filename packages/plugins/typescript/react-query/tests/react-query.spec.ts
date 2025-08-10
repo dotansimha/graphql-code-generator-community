@@ -965,7 +965,7 @@ describe('React-Query', () => {
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toMatchSnapshot();
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`,
+        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test', {}] : ['test', variables];`,
       );
     });
   });
@@ -980,10 +980,10 @@ describe('React-Query', () => {
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toMatchSnapshot();
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`,
+        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test', {}] : ['test', variables];`,
       );
       expect(out.content).toBeSimilarStringTo(
-        `useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];`,
+        `useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite', {}] : ['test.infinite', variables];`,
       );
     });
   });
