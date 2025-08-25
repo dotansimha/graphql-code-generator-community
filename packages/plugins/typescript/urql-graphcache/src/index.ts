@@ -276,14 +276,9 @@ function getOptimisticUpdatersConfig(
 }
 
 function getImports(config: UrqlGraphCacheConfig): string {
-  return [
-    `import { ${
-      config.offlineExchange ? 'offlineExchange' : 'cacheExchange'
-    } } from '@urql/exchange-graphcache';`,
-    `${
-      config.useTypeImports ? 'import type' : 'import'
-    } { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';\n`,
-  ].join('\n');
+  return `${config.useTypeImports ? 'import type' : 'import'} { ${
+    config.offlineExchange ? 'offlineExchange' : 'cacheExchange'
+  }, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';\n`;
 }
 
 export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOutput> = (
@@ -305,24 +300,24 @@ export const plugin: PluginFunction<UrqlGraphCacheConfig, Types.ComplexPluginOut
   return {
     prepend: [imports],
     content: [
-      `export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };`,
+      `export type WithTypename<T extends { __typename?: ${config.defaultScalarType || 'any'} }> = Partial<T> & { __typename: NonNullable<T['__typename']> };`,
 
       keys,
 
       'export type GraphCacheResolvers = {\n' + resolvers.join(',\n') + '\n};',
 
       'export type GraphCacheOptimisticUpdaters = ' +
-        (optimisticUpdaters ? '{\n  ' + optimisticUpdaters.join(',\n  ') + '\n};' : '{};'),
+        (optimisticUpdaters ? '{\n  ' + optimisticUpdaters.join(',\n  ') + '\n};' : 'object;'),
 
       'export type GraphCacheUpdaters = {\n' +
         `  ${(queryType && queryType.name) || 'Mutation'}?: ` +
-        (queryUpdaters ? `{\n    ${queryUpdaters.join(',\n    ')}\n  }` : '{}') +
+        (queryUpdaters ? `{\n    ${queryUpdaters.join(',\n    ')}\n  }` : 'object') +
         ',\n' +
         `  ${(mutationType && mutationType.name) || 'Mutation'}?: ` +
-        (mutationUpdaters ? `{\n    ${mutationUpdaters.join(',\n    ')}\n  }` : '{}') +
+        (mutationUpdaters ? `{\n    ${mutationUpdaters.join(',\n    ')}\n  }` : 'object') +
         ',\n' +
         `  ${(subscriptionType && subscriptionType.name) || 'Subscription'}?: ` +
-        (subscriptionUpdaters ? `{\n    ${subscriptionUpdaters.join(',\n    ')}\n  }` : '{}') +
+        (subscriptionUpdaters ? `{\n    ${subscriptionUpdaters.join(',\n    ')}\n  }` : 'object') +
         ',\n' +
         `${typeUpdateResolvers.join(',\n')}` +
         ',\n};',
