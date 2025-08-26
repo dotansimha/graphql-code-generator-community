@@ -436,7 +436,10 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
         }) + this.config.hooksSuffix;
 
       hookFns.push(
-        `export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SkipToken | ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
+        `// @ts-ignore
+export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>): ${this.getApolloReactHooksIdentifier()}.UseSuspenseQueryResult<${operationResultType}, ${operationVariablesTypes}>;
+export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SkipToken | ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>): ${this.getApolloReactHooksIdentifier()}.UseSuspenseQueryResult<${operationResultType} | undefined, ${operationVariablesTypes}>;
+export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactHooksIdentifier()}.SkipToken | ${this.getApolloReactHooksIdentifier()}.SuspenseQueryHookOptions<${operationResultType}, ${operationVariablesTypes}>) {
           const options = baseOptions === ${this.getApolloReactHooksIdentifier()}.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return ${this.getApolloReactHooksIdentifier()}.useSuspenseQuery<${operationResultType}, ${operationVariablesTypes}>(${this.getDocumentNodeVariable(
             node,
