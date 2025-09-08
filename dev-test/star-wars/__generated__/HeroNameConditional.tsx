@@ -74,15 +74,12 @@ export function useHeroNameConditionalInclusionLazyQuery(
   >(HeroNameConditionalInclusionDocument, options);
 }
 export function useHeroNameConditionalInclusionSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        HeroNameConditionalInclusionQuery,
-        HeroNameConditionalInclusionQueryVariables
-      >,
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroNameConditionalInclusionQuery,
+    HeroNameConditionalInclusionQueryVariables
+  >,
 ) {
-  const options =
-    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroNameConditionalInclusionQuery,
     HeroNameConditionalInclusionQueryVariables
@@ -152,15 +149,12 @@ export function useHeroNameConditionalExclusionLazyQuery(
   >(HeroNameConditionalExclusionDocument, options);
 }
 export function useHeroNameConditionalExclusionSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        HeroNameConditionalExclusionQuery,
-        HeroNameConditionalExclusionQueryVariables
-      >,
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    HeroNameConditionalExclusionQuery,
+    HeroNameConditionalExclusionQueryVariables
+  >,
 ) {
-  const options =
-    baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSuspenseQuery<
     HeroNameConditionalExclusionQuery,
     HeroNameConditionalExclusionQueryVariables
