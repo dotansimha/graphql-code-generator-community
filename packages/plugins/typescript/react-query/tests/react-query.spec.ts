@@ -458,7 +458,7 @@ describe('React-Query', () => {
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.fetcher = (client: GraphQLClient, variables?: TestQueryVariables, headers?: RequestInit['headers']) => fetcher<TestQuery, TestQueryVariables>(client, TestDocument, variables, headers);`,
+        `useTestQuery.fetcher = (client: GraphQLClient, variables: TestQueryVariables = {}, headers?: RequestInit['headers']) => fetcher<TestQuery, TestQueryVariables>(client, TestDocument, variables, headers);`,
       );
     });
     it(`tests for dedupeOperationSuffix`, async () => {
@@ -596,7 +596,7 @@ describe('React-Query', () => {
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.fetcher = (variables?: TestQueryVariables, headers?: RequestInit['headers']) => fetcher<TestQuery, TestQueryVariables>(TestDocument, variables, headers);`,
+        `useTestQuery.fetcher = (variables: TestQueryVariables = {}, headers?: RequestInit['headers']) => fetcher<TestQuery, TestQueryVariables>(TestDocument, variables, headers);`,
       );
     });
   });
@@ -699,7 +699,7 @@ describe('React-Query', () => {
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.fetcher = (variables?: TestQueryVariables) => fetcher<TestQuery, TestQueryVariables>(TestDocument, variables);`,
+        `useTestQuery.fetcher = (variables: TestQueryVariables = {}) => fetcher<TestQuery, TestQueryVariables>(TestDocument, variables);`,
       );
     });
 
@@ -834,7 +834,7 @@ describe('React-Query', () => {
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.fetcher = (dataSource: { endpoint: string, fetchParams?: RequestInit }, variables?: TestQueryVariables) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables);`,
+        `useTestQuery.fetcher = (dataSource: { endpoint: string, fetchParams?: RequestInit }, variables: TestQueryVariables = {}) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables);`,
       );
     });
 
@@ -965,7 +965,7 @@ describe('React-Query', () => {
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toMatchSnapshot();
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`,
+        `useTestQuery.getKey = (variables: TestQueryVariables = {}) => ['test', variables];`,
       );
     });
   });
@@ -980,10 +980,10 @@ describe('React-Query', () => {
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
       expect(out.content).toMatchSnapshot();
       expect(out.content).toBeSimilarStringTo(
-        `useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];`,
+        `useTestQuery.getKey = (variables: TestQueryVariables = {}) => ['test', variables];`,
       );
       expect(out.content).toBeSimilarStringTo(
-        `useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];`,
+        `useInfiniteTestQuery.getKey = (variables: TestQueryVariables = {}) => ['test.infinite', variables];`,
       );
     });
   });
