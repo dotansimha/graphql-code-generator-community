@@ -186,7 +186,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     documentVariableName: string,
   ): string {
     return this.config.documentMode === DocumentMode.external
-      ? `Operations.${node.name?.value ?? ''}`
+      ? `Operations.${node.name?.value ?? ''}${this.config.documentVariableSuffix}`
       : documentVariableName;
   }
 
