@@ -136,4 +136,47 @@ describe('TypeScript', () => {
       `);
     });
   });
+
+  describe('with asNonEmptyTuple', () => {
+    it('Should declare the array as a non-empty tuple', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        "custom enum"
+        enum MyEnum {
+          "this is a"
+          A
+          "this is b"
+          B
+        }
+      `);
+      const result = (await plugin(schema, [], {
+        asNonEmptyTuple: true,
+      })) as Types.ComplexPluginOutput;
+
+      expect(result.prepend).toBeSimilarStringTo(``);
+      expect(result.content).toBeSimilarStringTo(`
+        export const MY_ENUM: [MyEnum, ...MyEnum[]] = ['A', 'B'];
+      `);
+    });
+
+    it('Should be ignored when constArrays is true', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        "custom enum"
+        enum MyEnum {
+          "this is a"
+          A
+          "this is b"
+          B
+        }
+      `);
+      const result = (await plugin(schema, [], {
+        asNonEmptyTuple: true,
+        constArrays: true,
+      })) as Types.ComplexPluginOutput;
+
+      expect(result.prepend).toBeSimilarStringTo(``);
+      expect(result.content).toBeSimilarStringTo(`
+        export const MY_ENUM = ['A', 'B'] as const;
+      `);
+    });
+  });
 });
