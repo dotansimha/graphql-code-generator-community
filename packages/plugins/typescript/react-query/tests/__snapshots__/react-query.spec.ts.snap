@@ -24,17 +24,17 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: UseQueryOptions<TestQuery, TError, TData>
     ) => {
     
     return useQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
       options
     )};
 
-useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];
+useTestQuery.getKey = (variables: TestQueryVariables = {}) => ['test', variables];
 
 export const TestDocument = \`
     mutation test($name: String) {
@@ -84,34 +84,34 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: UseQueryOptions<TestQuery, TError, TData>
     ) => {
     
     return useQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
       options
     )};
 
-useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];
+useTestQuery.getKey = (variables: TestQueryVariables = {}) => ['test', variables];
 
 export const useInfiniteTestQuery = <
       TData = TestQuery,
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
     ) => {
     
     return useInfiniteQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      ['test.infinite', variables],
       (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       options
     )};
 
-useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];
+useInfiniteTestQuery.getKey = (variables: TestQueryVariables = {}) => ['test.infinite', variables];
 
 export const TestDocument = \`
     mutation test($name: String) {
@@ -161,12 +161,12 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: UseQueryOptions<TestQuery, TError, TData>
     ) => {
     
     return useQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
       options
     )};
@@ -221,12 +221,12 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: UseQueryOptions<TestQuery, TError, TData>
     ) => {
     
     return useQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
       options
     )};
@@ -238,12 +238,12 @@ export const useInfiniteTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
     ) => {
     
     return useInfiniteQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      ['test.infinite', variables],
       (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       options
     )};
@@ -297,12 +297,12 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       useCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument).bind(null, variables),
       options
     )};
@@ -311,12 +311,12 @@ export const useInfiniteTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) => {
     const query = useCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument)
     return useInfiniteQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      ['test.infinite', variables],
       (metaData) => query({...variables, ...(metaData.pageParam ?? {})}),
       options
     )};
@@ -372,12 +372,12 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
       options
     )};
@@ -386,12 +386,12 @@ export const useInfiniteTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useInfiniteQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      ['test.infinite', variables],
       (metaData) => myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       options
     )};
@@ -447,12 +447,12 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       myCustomFetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
       options
     )};
@@ -509,12 +509,12 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TTestQuery, TTestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
       options
     )};
@@ -593,13 +593,13 @@ export const useTestQuery = <
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TTestQuery, TTestQueryVariables>(client, TestDocument, variables, headers),
       options
     )};
@@ -609,13 +609,13 @@ export const useInfiniteTestQuery = <
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) => {
     
     return useInfiniteQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      ['test.infinite', variables],
       (metaData) => fetcher<TTestQuery, TTestQueryVariables>(client, TestDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     )};
@@ -684,13 +684,13 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables, headers),
       options
     )};
@@ -759,12 +759,12 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
       options
     )};
@@ -839,12 +839,12 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
       options
     )};
@@ -919,12 +919,12 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
       options
     )};
@@ -998,12 +998,12 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
       options
     )};
@@ -1077,12 +1077,12 @@ export const useTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
       options
     )};
@@ -1091,12 +1091,12 @@ export const useInfiniteTestQuery = <
       TData = TTestQuery,
       TError = unknown
     >(
-      variables?: TTestQueryVariables,
+      variables: TTestQueryVariables = {},
       options?: UseInfiniteQueryOptions<TTestQuery, TError, TData>
     ) => {
     
     return useInfiniteQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      ['test.infinite', variables],
       (metaData) => fetcher<TTestQuery, TTestQueryVariables>(TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       options
     )};
@@ -1197,12 +1197,12 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: Types.TestQueryVariables,
+      variables: Types.TestQueryVariables = {},
       options?: UseQueryOptions<Types.TestQuery, TError, TData>
     ) => {
     
     return useQuery<Types.TestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<Types.TestQuery, Types.TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
       options
     )};
@@ -1255,13 +1255,13 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: Types.TestQueryVariables,
+      variables: Types.TestQueryVariables = {},
       options?: Omit<UseQueryOptions<Types.TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<Types.TestQuery, TError, TData>['queryKey'] }
     ) => {
     
     return useQuery<Types.TestQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['test'] : ['test', variables],
+    queryKey: ['test', variables],
     queryFn: fetcher<Types.TestQuery, Types.TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
     ...options
   }
@@ -1317,12 +1317,12 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: UseQueryOptions<TestQuery, TError, TData>
     ) => {
     
     return useQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
+      ['test', variables],
       fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
       options
     )};
@@ -1332,12 +1332,12 @@ export const useInfiniteTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: UseInfiniteQueryOptions<TestQuery, TError, TData>
     ) => {
     
     return useInfiniteQuery<TestQuery, TError, TData>(
-      variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      ['test.infinite', variables],
       (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       options
     )};
@@ -1416,13 +1416,13 @@ export const useTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: Omit<UseQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<TestQuery, TError, TData>['queryKey'] }
     ) => {
     
     return useQuery<TestQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['test'] : ['test', variables],
+    queryKey: ['test', variables],
     queryFn: fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
     ...options
   }
@@ -1433,13 +1433,13 @@ export const useSuspenseTestQuery = <
       TError = unknown
     >(
       dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: TestQueryVariables,
+      variables: TestQueryVariables = {},
       options?: Omit<UseSuspenseQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<TestQuery, TError, TData>['queryKey'] }
     ) => {
     
     return useSuspenseQuery<TestQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['testSuspense'] : ['testSuspense', variables],
+    queryKey: ['testSuspense', variables],
     queryFn: fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
     ...options
   }
@@ -1458,7 +1458,7 @@ export const useInfiniteTestQuery = <
       (() => {
     const { queryKey: optionsQueryKey, ...restOptions } = options;
     return {
-      queryKey: optionsQueryKey ?? variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      queryKey: optionsQueryKey ?? ['test.infinite', variables],
       queryFn: (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
@@ -1478,7 +1478,7 @@ export const useSuspenseInfiniteTestQuery = <
       (() => {
     const { queryKey: optionsQueryKey, ...restOptions } = options;
     return {
-      queryKey: optionsQueryKey ?? variables === undefined ? ['test.infiniteSuspense'] : ['test.infiniteSuspense', variables],
+      queryKey: optionsQueryKey ?? ['test.infiniteSuspense', variables],
       queryFn: (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
