@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`graphql-request sdk Should allow passing wrapper arg to generated getSdk 1`] = `
 "export type Maybe<T> = T | null;

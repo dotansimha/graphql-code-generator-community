@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`msw Should generate JSDoc documentation with variables and selection from the operations themselves: content with variables and selection JSDoc documentation 1`] = `
 "

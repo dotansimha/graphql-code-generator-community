@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Flow Plugin Arguments Should add custom prefix for mutation arguments 1`] = `
 "/** All built-in and custom scalars, mapped to their actual values */
