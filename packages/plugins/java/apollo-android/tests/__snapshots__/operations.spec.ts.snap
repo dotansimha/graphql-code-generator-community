@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Operations Visitor Should handle Query correctly 1`] = `
 "package app.test.generated.graphql;

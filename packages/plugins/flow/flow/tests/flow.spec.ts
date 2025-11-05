@@ -748,7 +748,7 @@ describe('Flow Plugin', () => {
       const result = await plugin(schema, [], {}, { outputFile: '' });
 
       expect(result.content).toMatchSnapshot();
-      expect(result).not.toContain('export type A = any;');
+      expect(result.content).not.toContain('export type A = any;');
 
       validateFlow(result);
     });
@@ -969,10 +969,10 @@ describe('Flow Plugin', () => {
       }
     `);
 
-    const content = await plugin(schema, [], { skipTypename: true }, { outputFile: '' });
-    expect(content).not.toContain('__typename');
+    const result = await plugin(schema, [], { skipTypename: true }, { outputFile: '' });
+    expect(result.content).not.toContain('__typename');
 
-    validateFlow(content);
+    validateFlow(result);
   });
 
   it('should generate arguments types correctly with args', async () => {

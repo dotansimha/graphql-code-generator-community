@@ -277,6 +277,6 @@ describe('named-operations-object', () => {
           throwOnDuplicate: true,
         },
       ),
-    ).toThrowErrorMatchingInlineSnapshot(`"Duplicated operation name(s): myQuery"`);
+    ).toThrow('Duplicated operation name(s): myQuery');
   });
 });

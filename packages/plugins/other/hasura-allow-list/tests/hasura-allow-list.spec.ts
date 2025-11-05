@@ -461,17 +461,17 @@ describe('Hasura allow list', () => {
     };
     const error1 = `[hasura allow list plugin] Configuration error: configuration property config_version has been renamed configVersion. Please update your configuration accordingly.`;
     // test for renamed config_version config option
-    await expect(
-      plugin(null, documents, config1 as HasuraAllowListPluginConfig),
-    ).rejects.toThrowError(error1);
+    await expect(plugin(null, documents, config1 as HasuraAllowListPluginConfig)).rejects.toThrow(
+      error1,
+    );
 
     const config2 = {
       collection_name: 'custom_name',
     };
     // test for renamed collection_name config option
     const error2 = `[hasura allow list plugin] Configuration error: configuration property collection_name has been renamed collectionName. Please update your configuration accordingly.`;
-    await expect(
-      plugin(null, documents, config2 as HasuraAllowListPluginConfig),
-    ).rejects.toThrowError(error2);
+    await expect(plugin(null, documents, config2 as HasuraAllowListPluginConfig)).rejects.toThrow(
+      error2,
+    );
   });
 });

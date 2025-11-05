@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`jit-sdk sdk Should generate a correct wrap method 1`] = `
 "export type Maybe<T> = T | null;
