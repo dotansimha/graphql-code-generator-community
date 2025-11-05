@@ -1,5 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
-import fetch from 'node-fetch'; // FIXME: using `node-fetch` temporarily because `graphql-request@7` uses native fetch, which `nock@13.4` from `@graphql-codegen/testing` does not support
+import { fetch } from '@whatwg-node/fetch'; // FIXME: using `node-fetch` temporarily because `graphql-request@7` uses native fetch, which `nock@13.4` from `@graphql-codegen/testing` does not support
 import { getSdk } from './graphql-request-sdk.js';
 
 export function runExampleQuery(x: number, y: number) {
