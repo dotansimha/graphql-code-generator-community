@@ -206,7 +206,8 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    query feed {
+    """description (becomes JSDoc)"""
+query feed {
   feed {
     id
     commentCount
@@ -277,6 +278,7 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
     }
 
   return {
+    /** description (becomes JSDoc) */
     async feed(variables?: FeedQueryVariables, context?: TOperationContext, root?: TOperationRoot): Promise<FeedQuery> {
       const result = await feedCompiled.query({
         ...globalRoot,
@@ -991,7 +993,8 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = \`
-    query feed {
+    """description (becomes JSDoc)"""
+query feed {
   feed {
     id
     commentCount
@@ -1062,6 +1065,7 @@ export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContex
     }
 
   return {
+    /** description (becomes JSDoc) */
     async feed(variables?: FeedQueryVariables, context?: TOperationContext, root?: TOperationRoot): Promise<FeedQuery> {
       const result = await feedCompiled.query({
         ...globalRoot,
