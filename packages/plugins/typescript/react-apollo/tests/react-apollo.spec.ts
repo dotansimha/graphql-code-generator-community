@@ -23,6 +23,7 @@ describe('React Apollo', () => {
   const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
 
   const basicDoc = parse(/* GraphQL */ `
+    """description for feed"""
     query test {
       feed {
         id
@@ -917,7 +918,8 @@ query MyFeed {
 
       expect(content.content).toBeSimilarStringTo(`
           export const TestDocument = gql\`
-          query test {
+          """description for feed"""
+      query test {
             feed {
               id
               commentCount
