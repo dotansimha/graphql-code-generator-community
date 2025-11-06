@@ -6,6 +6,7 @@ import {
   DocumentMode,
   getConfigValue,
   indentMultiline,
+  transformComment,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RawGraphQLRequestPluginConfig } from './config.js';
@@ -116,6 +117,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
       .map(o => {
         const operationType = o.node.operation;
         const operationName = o.node.name.value;
+        const operationDocComment = transformComment(o.node.description);
         const optionalVariables =
           !o.node.variableDefinitions ||
           o.node.variableDefinitions.length === 0 ||
@@ -130,7 +132,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
             docArg = `${docVarName}String`;
             extraVariables.push(`const ${docArg} = print(${docVarName});`);
           }
-          return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
+          return `${operationDocComment}${operationName}(variables${optionalVariables ? '?' : ''}: ${
             o.operationVariablesTypes
           }, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ${
             o.operationResultType
@@ -142,7 +144,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     }>(${docArg}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}', variables);
 }`;
         }
-        return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
+        return `${operationDocComment}${operationName}(variables${optionalVariables ? '?' : ''}: ${
           o.operationVariablesTypes
         }, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<${o.operationResultType}> {
   return withWrapper((wrappedRequestHeaders) => client.request<${
