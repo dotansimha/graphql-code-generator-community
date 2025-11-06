@@ -204,7 +204,8 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    query feed {
+    """description (becomes JSDoc)"""
+query feed {
   feed {
     id
     commentCount
@@ -240,6 +241,7 @@ export const Feed4Document = gql\`
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, options?: C): Promise<FeedQuery> {
       return requester<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options) as Promise<FeedQuery>;
     },
@@ -945,7 +947,8 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = \`
-    query feed {
+    """description (becomes JSDoc)"""
+query feed {
   feed {
     id
     commentCount
@@ -981,6 +984,7 @@ export const Feed4Document = \`
 export type Requester<C = {}> = <R, V>(doc: string, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, options?: C): Promise<FeedQuery> {
       return requester<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options) as Promise<FeedQuery>;
     },
@@ -1218,7 +1222,8 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    query feed {
+    """description (becomes JSDoc)"""
+query feed {
   feed {
     id
     commentCount
@@ -1254,6 +1259,7 @@ export const Feed4Document = gql\`
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<ExecutionResult<R, E>> | AsyncIterable<ExecutionResult<R, E>>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
+    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, options?: C): Promise<ExecutionResult<FeedQuery, E>> {
       return requester<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options) as Promise<ExecutionResult<FeedQuery, E>>;
     },
