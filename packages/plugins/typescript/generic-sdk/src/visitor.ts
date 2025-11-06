@@ -6,6 +6,7 @@ import {
   DocumentMode,
   getConfigValue,
   indentMultiline,
+  transformComment,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RawGenericSdkPluginConfig } from './config.js';
@@ -110,6 +111,7 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
     const allPossibleActions = this._operationsToInclude
       .map(o => {
         const operationName = o.node.name.value;
+        const operationDocComment = transformComment(o.node.description);
         const optionalVariables =
           !o.node.variableDefinitions ||
           o.node.variableDefinitions.length === 0 ||
@@ -125,7 +127,7 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
         const resultData = this.config.rawRequest
           ? `ExecutionResult<${o.operationResultType}, E>`
           : o.operationResultType;
-        return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
+        return `${operationDocComment}${operationName}(variables${optionalVariables ? '?' : ''}: ${
           o.operationVariablesTypes
         }, options?: C): ${returnType}<${resultData}> {
   return requester<${o.operationResultType}, ${
