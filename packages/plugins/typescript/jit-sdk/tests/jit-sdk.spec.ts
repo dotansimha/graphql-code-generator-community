@@ -12,6 +12,7 @@ import { plugin } from '../src/index.js';
 
 const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
 const basicDoc = parse(/* GraphQL */ `
+  """description (becomes JSDoc)"""
   query feed {
     feed {
       id
