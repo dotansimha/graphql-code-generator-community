@@ -7,6 +7,7 @@ import {
   ClientSideBaseVisitor,
   DocumentMode,
   getConfigValue,
+  transformComment,
   LoadedFragment,
   OMIT_TYPE,
 } from '@graphql-codegen/visitor-plugin-common';
@@ -526,10 +527,11 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
         suffix: this._getHookSuffix(nodeName, operationType),
         useTypesPrefix: false,
       }) + this.config.hooksSuffix;
+    const operationDocComment = transformComment(node.description);
 
     const optional = hasRequiredVariables(node) ? '' : '?';
 
-    return `export function refetch${operationName}(variables${optional}: ${operationVariablesTypes}) {
+    return `${operationDocComment}export function refetch${operationName}(variables${optional}: ${operationVariablesTypes}) {
       return { query: ${this.getDocumentNodeVariable(
         node,
         documentVariableName,
