@@ -59,8 +59,16 @@ ${this.getFetchParams()}
 }`;
   }
 
-  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
-    const { generateBaseInfiniteQueryHook } = this.generateInfiniteQueryHelper(config, isSuspense);
+  generateInfiniteQueryHook(
+    config: GenerateConfig,
+    isSuspense = false,
+    uniqueSuspenseQueryKeys: boolean,
+  ): string {
+    const { generateBaseInfiniteQueryHook } = this.generateInfiniteQueryHelper(
+      config,
+      isSuspense,
+      uniqueSuspenseQueryKeys,
+    );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
@@ -69,8 +77,16 @@ ${this.getFetchParams()}
     });
   }
 
-  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
-    const { generateBaseQueryHook } = this.generateQueryHelper(config, isSuspense);
+  generateQueryHook(
+    config: GenerateConfig,
+    isSuspense = false,
+    uniqueSuspenseQueryKeys: boolean,
+  ): string {
+    const { generateBaseQueryHook } = this.generateQueryHelper(
+      config,
+      isSuspense,
+      uniqueSuspenseQueryKeys,
+    );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
 
