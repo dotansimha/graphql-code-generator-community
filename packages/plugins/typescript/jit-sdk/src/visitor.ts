@@ -5,6 +5,7 @@ import {
   ClientSideBaseVisitor,
   DocumentMode,
   indentMultiline,
+  transformComment,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RawJitSdkPluginConfig } from './config.js';
@@ -83,6 +84,7 @@ export class JitSdkVisitor extends ClientSideBaseVisitor<
     let hasSubscription = false;
     for (const o of this._operationsToInclude) {
       const operationName = o.node.name.value;
+      const operationDocComment = transformComment(o.node.description);
       const compiledQueryVariableName = `${operationName}Compiled`;
       compiledQueries.push(
         indentMultiline(
@@ -115,7 +117,7 @@ if(!(isCompiledQuery(${compiledQueryVariableName}))) {
       }
       sdkMethods.push(
         indentMultiline(
-          `async ${operationName}(variables${optionalVariables ? '?' : ''}: ${
+          `${operationDocComment}async ${operationName}(variables${optionalVariables ? '?' : ''}: ${
             o.operationVariablesTypes
           }, context?: TOperationContext, root?: TOperationRoot): Promise<${returnType}> {
   const result = await ${compiledQueryVariableName}.${methodName}({
