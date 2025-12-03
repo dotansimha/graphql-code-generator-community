@@ -88,6 +88,7 @@ export function resolveDocumentImports<T>(
         const schemaTypesImportStatement = generateImportStatement({
           baseDir,
           emitLegacyCommonJSImports: presetOptions.config.emitLegacyCommonJSImports,
+          importExtension: presetOptions.config.importExtension,
           importSource: resolveImportSource(schemaTypesSource),
           baseOutputDir,
           outputPath: generatedFilePath,
