@@ -1,5 +1,14 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 4.0.0
+
+### Major Changes
+
+- [#1307](https://github.com/dotansimha/graphql-code-generator-community/pull/1307)
+  [`ea5d0ee`](https://github.com/dotansimha/graphql-code-generator-community/commit/ea5d0eef2911016899f303f0f3f37747d2c5ffa0)
+  Thanks [@Georgegriff](https://github.com/Georgegriff)! - updated dependency
+  @graphql-codegen/visitor-plugin-common to 6.2.1
+
 ## 3.1.0
 
 ### Minor Changes
@@ -16,7 +25,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/visitor-plugin-common@2.13.8` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/2.13.8)
     (from `2.13.1`, in `dependencies`)
@@ -24,7 +32,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
@@ -57,7 +64,6 @@
 - [#411](https://github.com/dotansimha/graphql-code-generator-community/pull/411)
   [`218778010`](https://github.com/dotansimha/graphql-code-generator-community/commit/2187780109269543d9024a9ee929dca215c5f406)
   Thanks [@saihaj](https://github.com/saihaj)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-tools/utils@^10.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/10.0.0)
     (from `^8.8.0`, in `dependencies`)
@@ -65,7 +71,6 @@
 - [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
   [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
     `~2.4.0`, in `dependencies`)
 
