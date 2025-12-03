@@ -406,7 +406,7 @@ describe('near-operation-file preset', () => {
       });
 
       expect(result[0].content).toMatchInlineSnapshot(`
-       "import * as Types from '../../out1.ts/types';
+       "import * as Types from '../../../../../out1.ts/types';
 
        export type AQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
