@@ -26,6 +26,10 @@ import {
   transformComment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { KotlinResolversPluginRawConfig } from './config.js';
+import {
+  VALIDATION_DIRECTIVES,
+  parseDirectiveArgs,
+} from './directive-mapping.js';
 
 export const KOTLIN_SCALARS = {
   ID: 'Any',
@@ -41,6 +45,7 @@ export interface KotlinResolverParsedConfig extends ParsedConfig {
   enumValues: EnumValuesMap;
   withTypes: boolean;
   omitJvmStatic: boolean;
+  validationAnnotations?: boolean;
 }
 
 export interface FieldDefinitionReturnType {
@@ -64,6 +69,7 @@ export class KotlinResolversVisitor extends BaseVisitor<
       package: rawConfig.package || defaultPackageName,
       scalars: buildScalarsFromConfig(_schema, rawConfig, KOTLIN_SCALARS),
       omitJvmStatic: rawConfig.omitJvmStatic || false,
+      validationAnnotations: rawConfig.validationAnnotations || false,
     });
   }
 
@@ -177,6 +183,110 @@ ${enumValues}
     return result;
   }
 
+  /**
+   * Extract validation annotations from field directives
+   */
+  private extractValidationAnnotations(field: InputValueDefinitionNode): string[] {
+    if (!field.directives || field.directives.length === 0) {
+      return [];
+    }
+
+    const annotations: string[] = [];
+
+    for (const directive of field.directives) {
+      const directiveName = `@${directive.name.value}`;
+
+      // Check if it's a validation directive
+      if (VALIDATION_DIRECTIVES[directiveName]) {
+        const annotationName = VALIDATION_DIRECTIVES[directiveName];
+
+        // Parse directive arguments
+        let annotationParams = '';
+        if (directive.arguments && directive.arguments.length > 0) {
+          const params = parseDirectiveArgs(directiveName, Array.from(directive.arguments));
+          annotationParams = `(${params.join(', ')})`;
+        }
+
+        annotations.push(`${annotationName}${annotationParams}`);
+      }
+    }
+
+    return annotations;
+  }
+
+  /**
+   * Format validation annotations
+   */
+  private formatValidationAnnotations(annotations: string[]): string[] {
+    // All validation annotations need @field: prefix because they are field annotations, not class annotations
+    const prefix = '@field:';
+    return annotations.map(annotation => `${prefix}${annotation}`);
+  }
+
+  /**
+   * Add validation annotations to field
+   */
+  private addValidationAnnotations(
+    field: InputValueDefinitionNode,
+    _typeInfo: { nullable: boolean }
+  ): string[] {
+    const annotations = this.extractValidationAnnotations(field);
+
+    if (annotations.length === 0) {
+      return [];
+    }
+
+    return this.formatValidationAnnotations(annotations);
+  }
+
+  /**
+   * Extract validation annotations from object type field directives
+   */
+  private extractValidationAnnotationsForField(field: FieldDefinitionNode): string[] {
+    if (!field.directives || field.directives.length === 0) {
+      return [];
+    }
+
+    const annotations: string[] = [];
+
+    for (const directive of field.directives) {
+      const directiveName = `@${directive.name.value}`;
+
+      // Check if it's a validation directive
+      if (VALIDATION_DIRECTIVES[directiveName]) {
+        const annotationName = VALIDATION_DIRECTIVES[directiveName];
+
+        // Parse directive arguments
+        let annotationParams = '';
+        if (directive.arguments && directive.arguments.length > 0) {
+          const params = parseDirectiveArgs(directiveName, Array.from(directive.arguments));
+          annotationParams = `(${params.join(', ')})`;
+        }
+
+        annotations.push(`${annotationName}${annotationParams}`);
+      }
+    }
+
+    return annotations;
+  }
+
+  /**
+   * Add validation annotations to object type field constructor parameters
+   */
+  private addValidationAnnotationsForField(
+    field: FieldDefinitionNode,
+    _typeInfo: { nullable: boolean }
+  ): string[] {
+    const annotations = this.extractValidationAnnotationsForField(field);
+
+    if (annotations.length === 0) {
+      return [];
+    }
+
+    // For object type fields, annotations are added directly to constructor parameters
+    return annotations;
+  }
+
   protected buildInputTransfomer(
     name: string,
     inputValueArray: ReadonlyArray<InputValueDefinitionNode>,
@@ -187,10 +297,24 @@ ${enumValues}
         const initialValue = this.initialValue(typeToUse.typeName, arg.defaultValue);
         const initial = initialValue ? ` = ${initialValue}` : typeToUse.nullable ? ' = null' : '';
 
-        return indent(
+        // Get validation annotations if enabled
+        const validationAnnotations = this.config.validationAnnotations ?
+          this.addValidationAnnotations(arg, typeToUse) : [];
+
+        // Build field declaration, including annotations
+        let fieldDeclaration = '';
+        if (validationAnnotations.length > 0) {
+          // Add validation annotations
+          fieldDeclaration += validationAnnotations.map(ann => indent(ann, 2)).join('\n') + '\n';
+        }
+
+        // Add field declaration
+        fieldDeclaration += indent(
           `val ${arg.name.value}: ${typeToUse.typeName}${typeToUse.nullable ? '?' : ''}${initial}`,
           2,
         );
+
+        return fieldDeclaration;
       })
       .join(',\n');
     let suppress = '';
@@ -252,10 +376,24 @@ ${ctorSet}
         }
         const typeToUse = this.resolveInputFieldType(arg.type);
 
-        return indent(
+        // Get validation annotations if enabled
+        const validationAnnotations = this.config.validationAnnotations ?
+          this.addValidationAnnotationsForField(arg, typeToUse) : [];
+
+        // Build field declaration, including annotations
+        let fieldDeclaration = '';
+        if (validationAnnotations.length > 0) {
+          // Add validation annotations
+          fieldDeclaration += validationAnnotations.map(ann => indent(ann, 2)).join('\n') + '\n';
+        }
+
+        // Add field declaration
+        fieldDeclaration += indent(
           `val ${arg.name.value}: ${typeToUse.typeName}${typeToUse.nullable ? '?' : ''}`,
           2,
         );
+
+        return fieldDeclaration;
       })
       .join(',\n');
 
