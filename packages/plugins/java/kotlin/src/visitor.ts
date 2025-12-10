@@ -29,7 +29,13 @@ import { KotlinResolversPluginRawConfig } from './config.js';
 import {
   VALIDATION_DIRECTIVES,
   parseDirectiveArgs,
+  DirectiveArgument,
 } from './directive-mapping.js';
+
+export interface ValidationAnnotation {
+  name: string;
+  params?: DirectiveArgument[];
+}
 
 export const KOTLIN_SCALARS = {
   ID: 'Any',
@@ -186,12 +192,12 @@ ${enumValues}
   /**
    * Extract validation annotations from field directives
    */
-  private extractValidationAnnotations(field: InputValueDefinitionNode): string[] {
+  private extractValidationAnnotations(field: InputValueDefinitionNode): ValidationAnnotation[] {
     if (!field.directives || field.directives.length === 0) {
       return [];
     }
 
-    const annotations: string[] = [];
+    const annotations: ValidationAnnotation[] = [];
 
     for (const directive of field.directives) {
       const directiveName = `@${directive.name.value}`;
@@ -201,13 +207,15 @@ ${enumValues}
         const annotationName = VALIDATION_DIRECTIVES[directiveName];
 
         // Parse directive arguments
-        let annotationParams = '';
+        let annotationParams: DirectiveArgument[] | undefined;
         if (directive.arguments && directive.arguments.length > 0) {
-          const params = parseDirectiveArgs(directiveName, Array.from(directive.arguments));
-          annotationParams = `(${params.join(', ')})`;
+          annotationParams = parseDirectiveArgs(directiveName, Array.from(directive.arguments));
         }
 
-        annotations.push(`${annotationName}${annotationParams}`);
+        annotations.push({
+          name: annotationName,
+          params: annotationParams
+        });
       }
     }
 
@@ -217,10 +225,15 @@ ${enumValues}
   /**
    * Format validation annotations
    */
-  private formatValidationAnnotations(annotations: string[]): string[] {
+  private formatValidationAnnotations(annotations: ValidationAnnotation[]): string[] {
     // All validation annotations need @field: prefix because they are field annotations, not class annotations
     const prefix = '@field:';
-    return annotations.map(annotation => `${prefix}${annotation}`);
+    return annotations.map(annotation => {
+      const annotationString = annotation.params
+        ? `${annotation.name}(${annotation.params.map(param => `${param.name} = ${param.value}`).join(', ')})`
+        : annotation.name;
+      return `${prefix}${annotationString}`;
+    });
   }
 
   /**
@@ -242,12 +255,12 @@ ${enumValues}
   /**
    * Extract validation annotations from object type field directives
    */
-  private extractValidationAnnotationsForField(field: FieldDefinitionNode): string[] {
+  private extractValidationAnnotationsForField(field: FieldDefinitionNode): ValidationAnnotation[] {
     if (!field.directives || field.directives.length === 0) {
       return [];
     }
 
-    const annotations: string[] = [];
+    const annotations: ValidationAnnotation[] = [];
 
     for (const directive of field.directives) {
       const directiveName = `@${directive.name.value}`;
@@ -257,13 +270,15 @@ ${enumValues}
         const annotationName = VALIDATION_DIRECTIVES[directiveName];
 
         // Parse directive arguments
-        let annotationParams = '';
+        let annotationParams: DirectiveArgument[] | undefined;
         if (directive.arguments && directive.arguments.length > 0) {
-          const params = parseDirectiveArgs(directiveName, Array.from(directive.arguments));
-          annotationParams = `(${params.join(', ')})`;
+          annotationParams = parseDirectiveArgs(directiveName, Array.from(directive.arguments));
         }
 
-        annotations.push(`${annotationName}${annotationParams}`);
+        annotations.push({
+          name: annotationName,
+          params: annotationParams
+        });
       }
     }
 
@@ -283,8 +298,12 @@ ${enumValues}
       return [];
     }
 
-    // For object type fields, annotations are added directly to constructor parameters
-    return annotations;
+    // For object type fields, format annotations without @field: prefix since they're constructor parameters
+    return annotations.map(annotation => {
+      return annotation.params
+        ? `@${annotation.name}(${annotation.params.map(param => `${param.name} = ${param.value}`).join(', ')})`
+        : `@${annotation.name}`;
+    });
   }
 
   protected buildInputTransfomer(

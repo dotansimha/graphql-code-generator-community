@@ -2,6 +2,11 @@
  * GraphQL validation directives to Jakarta Validation annotations mapping
  */
 
+export interface DirectiveArgument {
+  name: string;
+  value: string;
+}
+
 export const VALIDATION_DIRECTIVES: Record<string, string> = {
   '@notBlank': 'NotBlank',
   '@size': 'Size',
@@ -66,13 +71,16 @@ export const VALIDATION_PARAM_MAPPING: Record<string, Record<string, string>> = 
 export function parseDirectiveArgs(
   directiveName: string,
   args: any[]
-): string[] {
+): DirectiveArgument[] {
   const paramMapping = VALIDATION_PARAM_MAPPING[directiveName] || {};
   return args.map(arg => {
     const argName = arg.name.value;
     const mappedArgName = paramMapping[argName] || argName;
     const value = formatArgValue(arg.value);
-    return `${mappedArgName} = ${value}`;
+    return {
+      name: mappedArgName,
+      value: value
+    };
   });
 }
 
