@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`urql graphcache Should correctly name GraphCacheResolvers & GraphCacheOptimisticUpdaters with nonstandard mutationType names 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -32,7 +31,7 @@ export type GraphCacheUpdaters = {
   Mutation_Root?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<Todo> }, Mutation_RootToggleTodoArgs>
   },
-  Subscription?: {},
+  Subscription?: object,
   Todo?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
     text?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
@@ -49,8 +48,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 `;
 
 exports[`urql graphcache Should correctly output GraphCacheOptimisticUpdaters when there are no mutations 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -69,14 +67,14 @@ export type GraphCacheResolvers = {
   }
 };
 
-export type GraphCacheOptimisticUpdaters = {};
+export type GraphCacheOptimisticUpdaters = object;
 
 export type GraphCacheUpdaters = {
   Query_Root?: {
     todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<Todo>>> }, Record<string, never>>
   },
-  Mutation?: {},
-  Subscription?: {},
+  Mutation?: object,
+  Subscription?: object,
   Todo?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
     text?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
@@ -93,8 +91,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 `;
 
 exports[`urql graphcache Should output the cache-generic correctly (with interfaces) 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -128,14 +125,14 @@ export type GraphCacheResolvers = {
   }
 };
 
-export type GraphCacheOptimisticUpdaters = {};
+export type GraphCacheOptimisticUpdaters = object;
 
 export type GraphCacheUpdaters = {
   Query?: {
     schoolBooks?: GraphCacheUpdateResolver<{ schoolBooks: Maybe<Array<WithTypename<Textbook>>> }, Record<string, never>>
   },
-  Mutation?: {},
-  Subscription?: {},
+  Mutation?: object,
+  Subscription?: object,
   Author?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
     name?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
@@ -165,8 +162,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 `;
 
 exports[`urql graphcache Should output the cache-generic correctly (with typesPrefix and typesSuffix) 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -212,7 +208,7 @@ export type GraphCacheUpdaters = {
     toggleTodosOptionalEntity?: GraphCacheUpdateResolver<{ toggleTodosOptionalEntity: Array<WithTypename<PrefixTodoSuffix>> }, PrefixMutationToggleTodosOptionalEntityArgsSuffix>,
     toggleTodosOptional?: GraphCacheUpdateResolver<{ toggleTodosOptional: Maybe<Array<WithTypename<PrefixTodoSuffix>>> }, PrefixMutationToggleTodosOptionalArgsSuffix>
   },
-  Subscription?: {},
+  Subscription?: object,
   Author?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixAuthorSuffix>>, Record<string, never>>,
     name?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixAuthorSuffix>>, Record<string, never>>,
@@ -236,8 +232,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 `;
 
 exports[`urql graphcache Should output the cache-generic correctly (with unions) 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -273,7 +268,7 @@ export type GraphCacheUpdaters = {
   Mutation?: {
     updateMedia?: GraphCacheUpdateResolver<{ updateMedia: Maybe<WithTypename<Media>> }, MutationUpdateMediaArgs>
   },
-  Subscription?: {},
+  Subscription?: object,
   Book?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Book>>, Record<string, never>>,
     title?: GraphCacheUpdateResolver<Maybe<WithTypename<Book>>, Record<string, never>>,
@@ -295,8 +290,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 `;
 
 exports[`urql graphcache Should output the cache-generic correctly 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -342,7 +336,7 @@ export type GraphCacheUpdaters = {
     toggleTodosOptionalEntity?: GraphCacheUpdateResolver<{ toggleTodosOptionalEntity: Array<WithTypename<Todo>> }, MutationToggleTodosOptionalEntityArgs>,
     toggleTodosOptional?: GraphCacheUpdateResolver<{ toggleTodosOptional: Maybe<Array<WithTypename<Todo>>> }, MutationToggleTodosOptionalArgs>
   },
-  Subscription?: {},
+  Subscription?: object,
   Author?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
     name?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
