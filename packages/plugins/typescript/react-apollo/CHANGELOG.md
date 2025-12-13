@@ -1,5 +1,13 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 4.3.4
+
+### Patch Changes
+
+- [#878](https://github.com/dotansimha/graphql-code-generator-community/pull/878)
+  [`78ff366`](https://github.com/dotansimha/graphql-code-generator-community/commit/78ff366cfda124b8e519d44d619bfceb5f44c31b)
+  Thanks [@nekocode](https://github.com/nekocode)! - fix return type of useSuspenseQuery
+
 ## 4.3.3
 
 ### Patch Changes
@@ -7,7 +15,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/visitor-plugin-common@2.13.8` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/2.13.8)
     (from `2.13.1`, in `dependencies`)
@@ -15,7 +22,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
