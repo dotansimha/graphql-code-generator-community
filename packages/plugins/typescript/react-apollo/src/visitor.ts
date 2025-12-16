@@ -7,9 +7,9 @@ import {
   ClientSideBaseVisitor,
   DocumentMode,
   getConfigValue,
-  transformComment,
   LoadedFragment,
   OMIT_TYPE,
+  transformComment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { ReactApolloPluginConfigDefaultBaseOptions, ReactApolloRawPluginConfig } from './config.js';
 
