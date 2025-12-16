@@ -6,8 +6,8 @@ import {
   DocumentMode,
   getConfigValue,
   indentMultiline,
-  transformComment,
   LoadedFragment,
+  transformComment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RawGraphQLRequestPluginConfig } from './config.js';
 
