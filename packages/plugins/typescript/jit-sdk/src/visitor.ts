@@ -5,8 +5,8 @@ import {
   ClientSideBaseVisitor,
   DocumentMode,
   indentMultiline,
-  transformComment,
   LoadedFragment,
+  transformComment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RawJitSdkPluginConfig } from './config.js';
 
