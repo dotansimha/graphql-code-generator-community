@@ -527,6 +527,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
         suffix: this._getHookSuffix(nodeName, operationType),
         useTypesPrefix: false,
       }) + this.config.hooksSuffix;
+    /** @ts-expect-error @type{import('graphql').OperationDefinitionNode}.description exists as of v16.12.0 */
     const operationDocComment = transformComment(node.description);
 
     const optional = hasRequiredVariables(node) ? '' : '?';
