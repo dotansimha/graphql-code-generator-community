@@ -117,6 +117,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
       .map(o => {
         const operationType = o.node.operation;
         const operationName = o.node.name.value;
+        /** @ts-expect-error @type{import('graphql').OperationDefinitionNode}.description exists as of v16.12.0 */
         const operationDocComment = transformComment(o.node.description);
         const optionalVariables =
           !o.node.variableDefinitions ||
