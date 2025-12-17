@@ -84,6 +84,7 @@ export class JitSdkVisitor extends ClientSideBaseVisitor<
     let hasSubscription = false;
     for (const o of this._operationsToInclude) {
       const operationName = o.node.name.value;
+      /** @ts-expect-error @type{import('graphql').OperationDefinitionNode}.description exists as of v16.12.0 */
       const operationDocComment = transformComment(o.node.description);
       const compiledQueryVariableName = `${operationName}Compiled`;
       compiledQueries.push(
