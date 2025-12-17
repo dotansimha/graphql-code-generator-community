@@ -111,6 +111,7 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
     const allPossibleActions = this._operationsToInclude
       .map(o => {
         const operationName = o.node.name.value;
+        /** @ts-expect-error @type{import('graphql').OperationDefinitionNode}.description exists as of v16.12.0 */
         const operationDocComment = transformComment(o.node.description);
         const optionalVariables =
           !o.node.variableDefinitions ||
