@@ -1,6 +1,6 @@
 import autoBind from 'auto-bind';
 import { camelCase, pascalCase } from 'change-case-all';
-import { GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
+import { GraphQLSchema, Kind, OperationDefinitionNode, StringValueNode } from 'graphql';
 import { Types } from '@graphql-codegen/plugin-helpers';
 import {
   ClientSideBasePluginConfig,
@@ -530,8 +530,8 @@ export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactH
         suffix: this._getHookSuffix(nodeName, operationType),
         useTypesPrefix: false,
       }) + this.config.hooksSuffix;
-    /** @ts-expect-error @type{import('graphql').OperationDefinitionNode}.description exists as of v16.12.0 */
-    const operationDocComment = transformComment(node.description);
+    const operationDocComment =
+      'description' in node ? transformComment(node.description as StringValueNode) : '';
 
     const optional = hasRequiredVariables(node) ? '' : '?';
 
