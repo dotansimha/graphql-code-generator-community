@@ -1,5 +1,5 @@
 import autoBind from 'auto-bind';
-import { GraphQLSchema, Kind, OperationDefinitionNode, print } from 'graphql';
+import { GraphQLSchema, Kind, OperationDefinitionNode, print, StringValueNode } from 'graphql';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
@@ -111,8 +111,8 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
     const allPossibleActions = this._operationsToInclude
       .map(o => {
         const operationName = o.node.name.value;
-        /** @ts-expect-error @type{import('graphql').OperationDefinitionNode}.description exists as of v16.12.0 */
-        const operationDocComment = transformComment(o.node.description);
+        const operationDocComment =
+          'description' in o.node ? transformComment(o.node.description as StringValueNode) : '';
         const optionalVariables =
           !o.node.variableDefinitions ||
           o.node.variableDefinitions.length === 0 ||
