@@ -1,4 +1,10 @@
-import { buildClientSchema, GraphQLSchema, parse, printSchema } from 'graphql';
+import {
+  buildClientSchema,
+  GraphQLSchema,
+  versionInfo as graphqlVersion,
+  parse,
+  printSchema,
+} from 'graphql';
 import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
@@ -10,9 +16,17 @@ import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import { RawJitSdkPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
 
+// graphql did not add support for operation descriptions until version 16.12.0
+// https://github.com/graphql/graphql-js/commit/364f17fd3519fe2daf7caa0238f4f977bd079012
+const graphqlQueryDescriptions =
+  graphqlVersion.major > 16 || (graphqlVersion.major === 16 && graphqlVersion.minor >= 12);
+
 const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
 const basicDoc = parse(/* GraphQL */ `
-  """description (becomes JSDoc)"""
+  ${graphqlQueryDescriptions
+    ? `
+  """description (becomes JSDoc)"""`
+    : ''}
   query feed {
     feed {
       id
@@ -87,9 +101,21 @@ const validate = async (
   return m;
 };
 
+// `compatibleIt` can be restored to just `it` after older graphql support is dropped.
+const compatibleIt = (testName: string, fn: Parameters<typeof it>[1]) => {
+  const compatName = `${testName} with graphql < 16.12.0`;
+  if (graphqlQueryDescriptions) {
+    it.skip(compatName, () => {});
+    it(testName, fn);
+  } else {
+    it.skip(testName, () => {});
+    it(compatName, fn);
+  }
+};
+
 describe('jit-sdk', () => {
   describe('sdk', () => {
-    it('Should generate a correct wrap method', async () => {
+    compatibleIt('Should generate a correct wrap method', async () => {
       const config = {};
       const docs = [{ filePath: '', document: basicDoc }];
       const result = (await plugin(schema, docs, config, {
@@ -118,7 +144,7 @@ async function test() {
       expect(output).toMatchSnapshot();
     });
 
-    it('Should generate a correct wrap method with documentMode=string', async () => {
+    compatibleIt('Should generate a correct wrap method with documentMode=string', async () => {
       const config = { documentMode: DocumentMode.string };
       const docs = [{ filePath: '', document: basicDoc }];
       const result = (await plugin(schema, docs, config, {
