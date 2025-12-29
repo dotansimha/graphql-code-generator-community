@@ -35,7 +35,11 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 }`;
   }
 
-  generateInfiniteQueryHook(config: GenerateConfig, isSuspense = false): string {
+  generateInfiniteQueryHook(
+    config: GenerateConfig,
+    isSuspense = false,
+    uniqueSuspenseQueryKeys: boolean,
+  ): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
@@ -43,6 +47,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     const { generateBaseInfiniteQueryHook, variables, options } = this.generateInfiniteQueryHelper(
       config,
       isSuspense,
+      uniqueSuspenseQueryKeys,
     );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
@@ -68,7 +73,11 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
         });
   }
 
-  generateQueryHook(config: GenerateConfig, isSuspense = false): string {
+  generateQueryHook(
+    config: GenerateConfig,
+    isSuspense = false,
+    uniqueSuspenseQueryKeys: boolean,
+  ): string {
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
@@ -79,6 +88,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(
       config,
       isSuspense,
+      uniqueSuspenseQueryKeys,
     );
 
     const { documentVariableName, operationResultType, operationVariablesTypes } = config;
