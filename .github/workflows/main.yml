@@ -110,6 +110,6 @@ jobs:
       - name: Build
         run: yarn build
       - name: Test
-        run: yarn test
+        run: GRAPHQL_VERSION=${{matrix.graphql_version}} yarn test
         env:
           CI: true
