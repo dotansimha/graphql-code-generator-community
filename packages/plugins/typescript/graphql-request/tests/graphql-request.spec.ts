@@ -13,7 +13,6 @@ import { plugin } from '../src/index.js';
 describe('graphql-request', () => {
   const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
   const basicDoc = parse(/* GraphQL */ `
-    """description (becomes JSDoc)"""
     query feed {
       feed {
         id
