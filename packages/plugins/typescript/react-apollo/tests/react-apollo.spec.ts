@@ -1,11 +1,4 @@
-import {
-  buildASTSchema,
-  buildClientSchema,
-  buildSchema,
-  GraphQLSchema,
-  versionInfo as graphqlVersion,
-  parse,
-} from 'graphql';
+import { buildASTSchema, buildClientSchema, buildSchema, GraphQLSchema, parse } from 'graphql';
 import gql from 'graphql-tag';
 import { extract } from 'jest-docblock';
 import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
@@ -15,11 +8,6 @@ import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operati
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import { ReactApolloRawPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
-
-// graphql did not add support for operation descriptions until version 16.12.0
-// https://github.com/graphql/graphql-js/commit/364f17fd3519fe2daf7caa0238f4f977bd079012
-const graphqlQueryDescriptions =
-  graphqlVersion.major > 16 || (graphqlVersion.major === 16 && graphqlVersion.minor >= 12);
 
 describe('React Apollo', () => {
   let spyConsoleError: jest.SpyInstance;
@@ -35,10 +23,7 @@ describe('React Apollo', () => {
   const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
 
   const basicDoc = parse(/* GraphQL */ `
-    ${graphqlQueryDescriptions
-      ? `
-    """description for feed"""`
-      : ''}
+    """description for feed"""
     query test {
       feed {
         id
@@ -933,12 +918,8 @@ query MyFeed {
 
       expect(content.content).toBeSimilarStringTo(`
           export const TestDocument = gql\`
-          ${
-            graphqlQueryDescriptions
-              ? `"""description for feed"""
-      `
-              : ''
-          }query test {
+          """description for feed"""
+      query test {
             feed {
               id
               commentCount
