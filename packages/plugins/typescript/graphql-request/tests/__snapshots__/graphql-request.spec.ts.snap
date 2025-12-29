@@ -204,8 +204,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = \`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -246,7 +245,6 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FeedQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FeedQuery>({ document: FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);
     },
@@ -492,8 +490,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -534,7 +531,6 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FeedQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FeedQuery>({ document: FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);
     },
@@ -772,8 +768,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = \`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -814,7 +809,6 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FeedQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FeedQuery>({ document: FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);
     },
@@ -1054,8 +1048,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -1099,7 +1092,6 @@ const Feed3DocumentString = print(Feed3Document);
 const Feed4DocumentString = print(Feed4Document);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: FeedQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<FeedQuery>(FeedDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query', variables);
     },
@@ -1339,8 +1331,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = \`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -1381,7 +1372,6 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: FeedQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<FeedQuery>(FeedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query', variables);
     },
@@ -1621,8 +1611,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -1663,7 +1652,6 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FeedQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FeedQuery>({ document: FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);
     },
@@ -1904,8 +1892,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -1949,7 +1936,6 @@ const Feed3DocumentString = print(Feed3Document);
 const Feed4DocumentString = print(Feed4Document);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: FeedQuery; errors?: GraphQLError[]; extensions?: unknown; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<FeedQuery>(FeedDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query', variables);
     },
@@ -2190,8 +2176,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -2235,7 +2220,6 @@ const Feed3DocumentString = print(Feed3Document);
 const Feed4DocumentString = print(Feed4Document);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: FeedQuery; errors?: GraphQLError[]; extensions?: any; headers: Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<FeedQuery>(FeedDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'feed', 'query', variables);
     },
@@ -2475,8 +2459,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -2517,7 +2500,6 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FeedQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FeedQuery>({ document: FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);
     },
@@ -2757,8 +2739,7 @@ export type Feed4QueryVariables = Exact<{
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
 export const FeedDocument = gql\`
-    """description (becomes JSDoc)"""
-query feed {
+    query feed {
   feed {
     id
     commentCount
@@ -2799,7 +2780,6 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    /** description (becomes JSDoc) */
     feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FeedQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<FeedQuery>({ document: FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);
     },

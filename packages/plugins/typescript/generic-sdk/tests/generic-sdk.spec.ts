@@ -17,7 +17,6 @@ const schema = extendSchema(
   `),
 );
 const basicDoc = parse(/* GraphQL */ `
-  """description (becomes JSDoc)"""
   query feed {
     feed {
       id
