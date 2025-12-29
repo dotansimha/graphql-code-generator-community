@@ -5,6 +5,7 @@ const ROOT_DIR = __dirname;
 const TSCONFIG = resolve(ROOT_DIR, 'tsconfig.json');
 const tsconfig = require(TSCONFIG);
 const CI = !!process.env.CI;
+const GRAPHQL_VERSION = process.env.GRAPHQL_VERSION || '16';
 
 const { versionInfo } = require('graphql');
 
@@ -37,6 +38,7 @@ module.exports = ({ dirname, projectMode = true }) => {
     collectCoverage: false,
     testTimeout: 20000,
     testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)', '!**/nhost/**'],
+    testPathIgnorePatterns: GRAPHQL_VERSION === '16' ? [] : ['.*v16\+.*'],
     resolver: './node_modules/bob-the-bundler/jest-resolver.cjs',
     snapshotFormat: {
       escapeString: false,
