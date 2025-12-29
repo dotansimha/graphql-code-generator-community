@@ -507,11 +507,11 @@ export const CurrentUserForProfileDocument = `
 
 export const useCurrentUserForProfileQuery = <TData = CurrentUserForProfileQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
-  variables?: CurrentUserForProfileQueryVariables,
+  variables: CurrentUserForProfileQueryVariables = {},
   options?: UseQueryOptions<CurrentUserForProfileQuery, TError, TData>,
 ) => {
   return useQuery<CurrentUserForProfileQuery, TError, TData>(
-    variables === undefined ? ['CurrentUserForProfile'] : ['CurrentUserForProfile', variables],
+    ['CurrentUserForProfile', variables],
     fetcher<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
       dataSource.endpoint,
       dataSource.fetchParams || {},
@@ -527,13 +527,11 @@ export const useInfiniteCurrentUserForProfileQuery = <
   TError = unknown,
 >(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
-  variables?: CurrentUserForProfileQueryVariables,
+  variables: CurrentUserForProfileQueryVariables = {},
   options?: UseInfiniteQueryOptions<CurrentUserForProfileQuery, TError, TData>,
 ) => {
   return useInfiniteQuery<CurrentUserForProfileQuery, TError, TData>(
-    variables === undefined
-      ? ['CurrentUserForProfile.infinite']
-      : ['CurrentUserForProfile.infinite', variables],
+    ['CurrentUserForProfile.infinite', variables],
     metaData =>
       fetcher<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>(
         dataSource.endpoint,
