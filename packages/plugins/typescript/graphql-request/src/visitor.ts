@@ -1,5 +1,5 @@
 import autoBind from 'auto-bind';
-import { GraphQLSchema, Kind, OperationDefinitionNode, print } from 'graphql';
+import { GraphQLSchema, Kind, OperationDefinitionNode, print, StringValueNode } from 'graphql';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
@@ -7,6 +7,7 @@ import {
   getConfigValue,
   indentMultiline,
   LoadedFragment,
+  transformComment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RawGraphQLRequestPluginConfig } from './config.js';
 
@@ -116,6 +117,8 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
       .map(o => {
         const operationType = o.node.operation;
         const operationName = o.node.name.value;
+        const operationDocComment =
+          'description' in o.node ? transformComment(o.node.description as StringValueNode) : '';
         const optionalVariables =
           !o.node.variableDefinitions ||
           o.node.variableDefinitions.length === 0 ||
@@ -130,7 +133,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
             docArg = `${docVarName}String`;
             extraVariables.push(`const ${docArg} = print(${docVarName});`);
           }
-          return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
+          return `${operationDocComment}${operationName}(variables${optionalVariables ? '?' : ''}: ${
             o.operationVariablesTypes
           }, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: ${
             o.operationResultType
@@ -142,7 +145,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     }>(${docArg}, variables, {...requestHeaders, ...wrappedRequestHeaders}), '${operationName}', '${operationType}', variables);
 }`;
         }
-        return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
+        return `${operationDocComment}${operationName}(variables${optionalVariables ? '?' : ''}: ${
           o.operationVariablesTypes
         }, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<${o.operationResultType}> {
   return withWrapper((wrappedRequestHeaders) => client.request<${

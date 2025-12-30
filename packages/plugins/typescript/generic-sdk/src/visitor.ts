@@ -1,5 +1,5 @@
 import autoBind from 'auto-bind';
-import { GraphQLSchema, Kind, OperationDefinitionNode, print } from 'graphql';
+import { GraphQLSchema, Kind, OperationDefinitionNode, print, StringValueNode } from 'graphql';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
@@ -7,6 +7,7 @@ import {
   getConfigValue,
   indentMultiline,
   LoadedFragment,
+  transformComment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RawGenericSdkPluginConfig } from './config.js';
 
@@ -110,6 +111,8 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
     const allPossibleActions = this._operationsToInclude
       .map(o => {
         const operationName = o.node.name.value;
+        const operationDocComment =
+          'description' in o.node ? transformComment(o.node.description as StringValueNode) : '';
         const optionalVariables =
           !o.node.variableDefinitions ||
           o.node.variableDefinitions.length === 0 ||
@@ -125,7 +128,7 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
         const resultData = this.config.rawRequest
           ? `ExecutionResult<${o.operationResultType}, E>`
           : o.operationResultType;
-        return `${operationName}(variables${optionalVariables ? '?' : ''}: ${
+        return `${operationDocComment}${operationName}(variables${optionalVariables ? '?' : ''}: ${
           o.operationVariablesTypes
         }, options?: C): ${returnType}<${resultData}> {
   return requester<${o.operationResultType}, ${

@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`jit-sdk - GraphQL 16+ generates operation description correctly 1`] = `
+{
+  "content": "
+export const FeedDocument = gql\`
+    """description (becomes JSDoc)"""
+query feed {
+  feed {
+    id
+    commentCount
+    repository {
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+function handleExecutionResult<T>(result: ExecutionResult, operationName: string) {
+  if (result.errors) {
+    const originalErrors = result.errors.map(error => error.originalError|| error);
+    throw new AggregateError(originalErrors, \`Failed to execute \${operationName}: \\n\\t\${originalErrors.join('\\n\\t')}\`);
+  }
+  return result.data as unknown as T;
+}
+export interface SdkOptions<TGlobalContext = any, TGlobalRoot = any> {
+  globalContext?: TGlobalContext;
+  globalRoot?: TGlobalRoot;
+  jitOptions?: Partial<CompilerOptions>;
+}
+export function getSdk<TGlobalContext = any, TGlobalRoot = any, TOperationContext = any, TOperationRoot = any>(schema: GraphQLSchema, { globalContext, globalRoot, jitOptions = {} }: SdkOptions<TGlobalContext, TGlobalRoot> = {}) {
+    const feedCompiled = compileQuery(schema, FeedDocument, 'feed', jitOptions);
+    if(!(isCompiledQuery(feedCompiled))) {
+      const originalErrors = feedCompiled?.errors?.map(error => error.originalError || error) || [];
+      throw new AggregateError(originalErrors, \`Failed to compile feed: \\n\\t\${originalErrors.join('\\n\\t')}\`);
+    }
+
+  return {
+    /** description (becomes JSDoc) */
+    async feed(variables?: FeedQueryVariables, context?: TOperationContext, root?: TOperationRoot): Promise<FeedQuery> {
+      const result = await feedCompiled.query({
+        ...globalRoot,
+        ...root
+      }, {
+        ...globalContext,
+        ...context
+      }, variables);
+      return handleExecutionResult(result, 'feed');
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;",
+  "prepend": [
+    "import { GraphQLSchema, ExecutionResult } from 'graphql';",
+    "import { compileQuery, isCompiledQuery, CompilerOptions } from 'graphql-jit';",
+    "import { AggregateError, isAsyncIterable, mapAsyncIterator } from '@graphql-tools/utils';",
+    "import gql from 'graphql-tag';",
+  ],
+}
+`;
