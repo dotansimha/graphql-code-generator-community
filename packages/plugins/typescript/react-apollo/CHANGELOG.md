@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 4.4.0
+
+### Minor Changes
+
+- [#1282](https://github.com/dotansimha/graphql-code-generator-community/pull/1282)
+  [`0007cc0`](https://github.com/dotansimha/graphql-code-generator-community/commit/0007cc0833acbae8b9be16e13f1e38b5f33d2c87)
+  Thanks [@gibson042](https://github.com/gibson042)! - Represent operation descriptions as JSDoc
+  comments
+
 ## 4.3.4
 
 ### Patch Changes

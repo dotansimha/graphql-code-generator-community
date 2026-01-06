@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-generic-sdk
 
+## 4.1.0
+
+### Minor Changes
+
+- [#1282](https://github.com/dotansimha/graphql-code-generator-community/pull/1282)
+  [`0007cc0`](https://github.com/dotansimha/graphql-code-generator-community/commit/0007cc0833acbae8b9be16e13f1e38b5f33d2c87)
+  Thanks [@gibson042](https://github.com/gibson042)! - Represent operation descriptions as JSDoc
+  comments
+
 ## 4.0.2
 
 ### Patch Changes
@@ -7,7 +16,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/visitor-plugin-common@2.13.8` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/2.13.8)
     (from `2.13.1`, in `dependencies`)
@@ -15,7 +23,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
