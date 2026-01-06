@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 6.4.0
+
+### Minor Changes
+
+- [#1282](https://github.com/dotansimha/graphql-code-generator-community/pull/1282)
+  [`0007cc0`](https://github.com/dotansimha/graphql-code-generator-community/commit/0007cc0833acbae8b9be16e13f1e38b5f33d2c87)
+  Thanks [@gibson042](https://github.com/gibson042)! - Represent operation descriptions as JSDoc
+  comments
+
 ## 6.3.0
 
 ### Minor Changes
@@ -16,7 +25,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/visitor-plugin-common@2.13.8` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/2.13.8)
     (from `2.13.1`, in `dependencies`)
@@ -24,14 +32,12 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
 - [#828](https://github.com/dotansimha/graphql-code-generator-community/pull/828)
   [`0c551ba`](https://github.com/dotansimha/graphql-code-generator-community/commit/0c551baf81b9d146a644a88e78bfc714894a9ab2)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@~2.8.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.0) (from
     `~2.6.0`, in `dependencies`)
 
@@ -92,7 +98,6 @@
 - [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
   [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
     `~2.4.0`, in `dependencies`)
 
@@ -167,7 +172,6 @@
 - [#8295](https://github.com/dotansimha/graphql-code-generator/pull/8295)
   [`a18818118`](https://github.com/dotansimha/graphql-code-generator/commit/a18818118c11d834ae41edbd172dbc259817fcb6)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`graphql-request@^3.4.0 || ^4.0.0 || ^5.0.0` ↗︎](https://www.npmjs.com/package/graphql-request/v/null)
     (from `^3.4.0 || ^4.0.0`, in `peerDependencies`)
@@ -627,7 +631,6 @@
 ### Major Changes
 
 - af3803b8: Upgrade generated code to match graphql-request v3.
-
   - `@graphql-codegen/typescript-graphql-request` @ `v1` => matches `graphql-request` (v1 and v2)
   - `@graphql-codegen/typescript-graphql-request` @ `v2` => matches `graphql-request` (v3)
 
