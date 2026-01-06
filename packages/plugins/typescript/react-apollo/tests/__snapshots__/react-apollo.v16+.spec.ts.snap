@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`React Apollo - GraphQL v16+ generates operation description correctly 1`] = `
+{
+  "content": "
+export const TestDocument = gql\`
+    """description for feed"""
+query Test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+
+/**
+ * __useTestQuery__
+ *
+ * To run a query within a React component, call \`useTestQuery\` and pass it any options that fit your needs.
+ * When your component renders, \`useTestQuery\` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTestQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTestQuery(baseOptions?: Apollo.QueryHookOptions<TestQuery, TestQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TestQuery, TestQueryVariables>(TestDocument, options);
+      }
+export function useTestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestQuery, TestQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TestQuery, TestQueryVariables>(TestDocument, options);
+        }
+// @ts-ignore
+export function useTestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>): Apollo.UseSuspenseQueryResult<TestQuery, TestQueryVariables>;
+export function useTestSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>): Apollo.UseSuspenseQueryResult<TestQuery | undefined, TestQueryVariables>;
+export function useTestSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TestQuery, TestQueryVariables>(TestDocument, options);
+        }
+export type TestQueryHookResult = ReturnType<typeof useTestQuery>;
+export type TestLazyQueryHookResult = ReturnType<typeof useTestLazyQuery>;
+export type TestSuspenseQueryHookResult = ReturnType<typeof useTestSuspenseQuery>;
+export type TestQueryResult = Apollo.QueryResult<TestQuery, TestQueryVariables>;",
+  "prepend": [
+    "import { gql } from '@apollo/client';",
+    "import * as Apollo from '@apollo/client';",
+    "const defaultOptions = {} as const;",
+  ],
+}
+`;

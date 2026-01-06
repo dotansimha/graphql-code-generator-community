@@ -917,7 +917,7 @@ query MyFeed {
 
       expect(content.content).toBeSimilarStringTo(`
           export const TestDocument = gql\`
-          query test {
+      query test {
             feed {
               id
               commentCount

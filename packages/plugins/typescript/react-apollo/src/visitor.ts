@@ -1,6 +1,6 @@
 import autoBind from 'auto-bind';
 import { camelCase, pascalCase } from 'change-case-all';
-import { GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
+import { GraphQLSchema, Kind, OperationDefinitionNode, StringValueNode } from 'graphql';
 import { Types } from '@graphql-codegen/plugin-helpers';
 import {
   ClientSideBasePluginConfig,
@@ -9,6 +9,7 @@ import {
   getConfigValue,
   LoadedFragment,
   OMIT_TYPE,
+  transformComment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { ReactApolloPluginConfigDefaultBaseOptions, ReactApolloRawPluginConfig } from './config.js';
 
@@ -529,10 +530,12 @@ export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactH
         suffix: this._getHookSuffix(nodeName, operationType),
         useTypesPrefix: false,
       }) + this.config.hooksSuffix;
+    const operationDocComment =
+      'description' in node ? transformComment(node.description as StringValueNode) : '';
 
     const optional = hasRequiredVariables(node) ? '' : '?';
 
-    return `export function refetch${operationName}(variables${optional}: ${operationVariablesTypes}) {
+    return `${operationDocComment}export function refetch${operationName}(variables${optional}: ${operationVariablesTypes}) {
       return { query: ${this.getDocumentNodeVariable(
         node,
         documentVariableName,

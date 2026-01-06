@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`generic-sdk - GraphQL v16+ generates operation description correctly 1`] = `
+{
+  "content": "
+export const FeedDocument = gql\`
+    """description (becomes JSDoc)"""
+query feed {
+  feed {
+    id
+    commentCount
+    repository {
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
+export function getSdk<C>(requester: Requester<C>) {
+  return {
+    /** description (becomes JSDoc) */
+    feed(variables?: FeedQueryVariables, options?: C): Promise<FeedQuery> {
+      return requester<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options) as Promise<FeedQuery>;
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;",
+  "prepend": [
+    "import { DocumentNode } from 'graphql';",
+    "import gql from 'graphql-tag';",
+  ],
+}
+`;

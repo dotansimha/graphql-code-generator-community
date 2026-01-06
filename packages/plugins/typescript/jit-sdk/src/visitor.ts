@@ -1,11 +1,12 @@
 import autoBind from 'auto-bind';
-import { GraphQLSchema, Kind, OperationDefinitionNode, print } from 'graphql';
+import { GraphQLSchema, Kind, OperationDefinitionNode, print, StringValueNode } from 'graphql';
 import {
   ClientSideBasePluginConfig,
   ClientSideBaseVisitor,
   DocumentMode,
   indentMultiline,
   LoadedFragment,
+  transformComment,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RawJitSdkPluginConfig } from './config.js';
 
@@ -83,6 +84,8 @@ export class JitSdkVisitor extends ClientSideBaseVisitor<
     let hasSubscription = false;
     for (const o of this._operationsToInclude) {
       const operationName = o.node.name.value;
+      const operationDocComment =
+        'description' in o.node ? transformComment(o.node.description as StringValueNode) : '';
       const compiledQueryVariableName = `${operationName}Compiled`;
       compiledQueries.push(
         indentMultiline(
@@ -115,7 +118,7 @@ if(!(isCompiledQuery(${compiledQueryVariableName}))) {
       }
       sdkMethods.push(
         indentMultiline(
-          `async ${operationName}(variables${optionalVariables ? '?' : ''}: ${
+          `${operationDocComment}async ${operationName}(variables${optionalVariables ? '?' : ''}: ${
             o.operationVariablesTypes
           }, context?: TOperationContext, root?: TOperationRoot): Promise<${returnType}> {
   const result = await ${compiledQueryVariableName}.${methodName}({
