@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/yourusername/graphql-codegen-solid-urql.git"
   },
-  "author": "",
+  "author": "David Di Biase <dave@solidjs.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,10 +20,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "eslint **/*.ts",
-    "prepublishOnly": "npm run build",
-    "test": "vitest --no-watch",
-    "watch": "tsc --watch"
+    "lint": "cross-env \"ESLINT_USE_FLAT_CONFIG=false\" eslint **/*.ts",
+    "test": "jest --no-watchman --config ../../../../jest.config.js"
   },
   "peerDependencies": {
     "@graphql-codegen/plugin-helpers": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",

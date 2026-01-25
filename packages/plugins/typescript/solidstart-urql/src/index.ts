@@ -1,13 +1,12 @@
-import { PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
 import { concatAST, GraphQLSchema, Kind } from 'graphql';
+import { oldVisit, PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
 import { LoadedFragment } from '@graphql-codegen/visitor-plugin-common';
-import { SolidStartUrqlVisitor, SolidStartUrqlPluginRawConfig } from './visitor';
-import { visit } from 'graphql';
+import { SolidStartUrqlPluginRawConfig, SolidStartUrqlVisitor } from './visitor';
 
 export const plugin: PluginFunction<SolidStartUrqlPluginRawConfig, Types.ComplexPluginOutput> = (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
-  config: SolidStartUrqlPluginRawConfig
+  config: SolidStartUrqlPluginRawConfig,
 ) => {
   const allAst = concatAST(documents.map(v => v.document!));
   const allFragments: LoadedFragment[] = [
@@ -15,11 +14,7 @@ export const plugin: PluginFunction<SolidStartUrqlPluginRawConfig, Types.Complex
   ];
 
   const visitor = new SolidStartUrqlVisitor(schema, allFragments, config, documents);
-  
-  // Use the visitor to walk through the AST
-  const visitorResult = visit(allAst, {
-    OperationDefinition: (node) => visitor.OperationDefinition(node)
-  });
+  const visitorResult = oldVisit(allAst, { leave: visitor as any });
 
   return {
     prepend: visitor.getImports(),
@@ -34,10 +29,13 @@ export const validate: PluginValidateFn<any> = async (
   schema: GraphQLSchema,
   documents: Types.DocumentFile[],
   config: SolidStartUrqlPluginRawConfig,
-  outputFile: string
+  outputFile: string,
+  allPlugins: Types.ConfiguredPlugin[],
 ) => {
   if (!outputFile.endsWith('.ts') && !outputFile.endsWith('.tsx')) {
-    throw new Error(`Plugin "typescript-solidstart-urql" requires extension to be ".ts" or ".tsx"!`);
+    throw new Error(
+      `Plugin "typescript-solidstart-urql" requires extension to be ".ts" or ".tsx"!`,
+    );
   }
 };
 
