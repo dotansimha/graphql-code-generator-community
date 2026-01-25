@@ -1,0 +1,12 @@
+overwrite: true
+schema: "example/schema.graphql"
+documents: "example/**/*.graphql"
+generates:
+  example/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "./dist/index.js"
+    config:
+      withPrimitives: true
+      urqlImportFrom: "@urql/solid-start"

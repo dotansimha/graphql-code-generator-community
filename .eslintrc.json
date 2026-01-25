@@ -51,5 +51,13 @@
       }
     }
   ],
-  "ignorePatterns": ["dist", "node_modules", "dev-test", "test-files", "flow.js", "jest.project.js"]
+  "ignorePatterns": [
+    "dist",
+    "node_modules",
+    "dev-test",
+    "test-files",
+    "flow.js",
+    "jest.project.js",
+    "example"
+  ]
 }

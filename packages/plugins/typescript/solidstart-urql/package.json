@@ -1,0 +1,43 @@
+{
+  "name": "@graphql-codegen/typescript-solidstart-urql",
+  "version": "6.1.1",
+  "description": "GraphQL Code Generator plugin for generating typed SolidStart URQL query primitives",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/graphql-codegen-solidstart-urql.git"
+  },
+  "author": "David Di Biase <dave@solidjs.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "graphql",
+    "codegen",
+    "solidstart",
+    "solidjs",
+    "urql",
+    "typescript",
+    "graphql-codegen-plugin"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "cross-env \"ESLINT_USE_FLAT_CONFIG=false\" eslint **/*.ts",
+    "test": "jest --no-watchman --config ../../../../jest.config.js"
+  },
+  "peerDependencies": {
+    "@graphql-codegen/plugin-helpers": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
+    "graphql": "^15.0.0 || ^16.0.0"
+  },
+  "dependencies": {
+    "@graphql-codegen/typescript-operations": "^4.3.2",
+    "@graphql-codegen/visitor-plugin-common": "^5.5.0",
+    "tslib": "^2.6.0"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^6.1.1",
+    "@graphql-codegen/plugin-helpers": "^5.0.0",
+    "@types/node": "^20.11.0",
+    "graphql": "^16.8.1",
+    "typescript": "^5.3.3"
+  }
+}
