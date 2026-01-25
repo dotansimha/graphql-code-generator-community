@@ -1,0 +1,18 @@
+{
+  "name": "solid-urql-codegen-example",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.0",
+    "@graphql-codegen/typescript-operations": "^4.0.0",
+    "@graphql-codegen/typescript-solid-urql": "file:..",
+    "graphql": "^16.8.1"
+  },
+  "resolutions": {
+    "graphql": "^16.8.1"
+  }
+}
