@@ -6,7 +6,7 @@
 
 A GraphQL Code Generator plugin that generates fully typed Solid primitives for URQL, including `createQuery`, `createMutation`, and `createSubscription`.
 
-> **Note:** This plugin is for client-side SolidJS applications. If you're building a SolidStart application with SSR, use [`@graphql-codegen/typescript-solidstart-urql`](https://github.com/yourusername/graphql-codegen-solidstart-urql) instead. See the [comparison documentation](https://github.com/yourusername/graphql-codegen-solidstart-urql/blob/main/COMPARISON.md) for differences between the two plugins.
+> **Note:** This plugin is for client-side Solid applications. If you're building a SolidStart application with SSR, use [`@graphql-codegen/typescript-solidstart-urql`](https://github.com/yourusername/graphql-codegen-solidstart-urql) instead. See the [comparison documentation](https://github.com/yourusername/graphql-codegen-solidstart-urql/blob/main/COMPARISON.md) for differences between the two plugins.
 
 ## Installation
 
@@ -75,7 +75,7 @@ export default config;
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `withPrimitives` | `boolean` | `true` | Enable/disable generation of SolidJS primitives (wrappers around `createQuery`, `createMutation`, etc.) |
+| `withPrimitives` | `boolean` | `true` | Enable/disable generation of Solid primitives (wrappers around `createQuery`, `createMutation`, etc.) |
 | `urqlImportFrom` | `string` | `'solid-urql'` | The module to import `createQuery`, `createMutation`, etc. from |
 
 ### `withPrimitives` Option
@@ -108,7 +108,7 @@ export const useCreateGetUser = (args: Omit<CreateQueryArgs<GetUserQueryVariable
 };
 ```
 
-### Using in Your SolidJS Component
+### Using in Your Solid Component
 
 ```tsx
 import { Component } from 'solid-js';

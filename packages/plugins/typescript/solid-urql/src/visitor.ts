@@ -1,19 +1,56 @@
+import { GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
 import {
-  ClientSideBaseVisitor,
   ClientSideBasePluginConfig,
-  LoadedFragment,
+  ClientSideBaseVisitor,
   DocumentMode,
+  LoadedFragment,
   RawClientSideBasePluginConfig,
-} from "@graphql-codegen/visitor-plugin-common";
-import { GraphQLSchema, OperationDefinitionNode, Kind } from "graphql";
-import { SolidUrqlPluginConfig } from "./config";
+} from '@graphql-codegen/visitor-plugin-common';
+import { SolidUrqlPluginConfig } from './config';
 
-export interface SolidUrqlPluginRawConfig
-  extends RawClientSideBasePluginConfig {
+/**
+ * @description Raw configuration for the SolidJS URQL plugin
+ */
+export interface SolidUrqlPluginRawConfig extends RawClientSideBasePluginConfig {
+  /**
+   * @description Whether to generate SolidJS primitives (createQuery, createMutation, createSubscription)
+   * @default true
+   *
+   * @exampleMarkdown
+   * ```yml
+   * generates:
+   *   path/to/file.ts:
+   *     plugins:
+   *       - typescript
+   *       - typescript-operations
+   *       - typescript-solid-urql
+   *     config:
+   *       withPrimitives: true
+   * ```
+   */
   withPrimitives?: boolean;
+  /**
+   * @description The package to import URQL functions from
+   * @default "solid-urql"
+   *
+   * @exampleMarkdown
+   * ```yml
+   * generates:
+   *   path/to/file.ts:
+   *     plugins:
+   *       - typescript
+   *       - typescript-operations
+   *       - typescript-solid-urql
+   *     config:
+   *       urqlImportFrom: "@urql/solid"
+   * ```
+   */
   urqlImportFrom?: string;
 }
 
+/**
+ * @description Visitor class for generating SolidJS URQL hooks from GraphQL operations
+ */
 export class SolidUrqlVisitor extends ClientSideBaseVisitor<
   SolidUrqlPluginRawConfig,
   SolidUrqlPluginConfig
@@ -28,15 +65,19 @@ export class SolidUrqlVisitor extends ClientSideBaseVisitor<
   ) {
     super(schema, fragments, rawConfig, {
       withPrimitives: rawConfig.withPrimitives !== false,
-      urqlImportFrom: rawConfig.urqlImportFrom || "solid-urql",
+      urqlImportFrom: rawConfig.urqlImportFrom || 'solid-urql',
       documentMode: DocumentMode.string,
     } as any);
 
     this._externalImportPrefix = this.config.importOperationTypesFrom
       ? `${this.config.importOperationTypesFrom}.`
-      : "";
+      : '';
   }
 
+  /**
+   * @description Generates import statements for SolidJS URQL hooks
+   * @returns Array of import statements
+   */
   public getImports(): string[] {
     const baseImports = super.getImports();
     const imports: string[] = [...baseImports];
@@ -48,13 +89,21 @@ export class SolidUrqlVisitor extends ClientSideBaseVisitor<
     }
 
     imports.push(`import type { Accessor } from 'solid-js';`);
-    imports.push(
-      `import type { OperationContext, OperationResult } from '@urql/core';`,
-    );
+    imports.push(`import type { OperationContext, OperationResult } from '@urql/core';`);
 
     return imports.filter(Boolean);
   }
 
+  /**
+   * @description Builds the appropriate hook based on operation type (Query, Mutation, or Subscription)
+   * @param node - The operation definition node
+   * @param documentVariableName - The name of the document variable
+   * @param operationType - The type of GraphQL operation
+   * @param operationResultType - The TypeScript type for the operation result
+   * @param operationVariablesTypes - The TypeScript type for the operation variables
+   * @param hasRequiredVariables - Whether the operation has required variables
+   * @returns The generated hook code
+   */
   protected buildOperation(
     node: OperationDefinitionNode,
     documentVariableName: string,
@@ -63,16 +112,16 @@ export class SolidUrqlVisitor extends ClientSideBaseVisitor<
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
-    const operationName = this.convertName(node.name?.value || "", {
+    const operationName = this.convertName(node.name?.value || '', {
       useTypesPrefix: false,
       useTypesSuffix: false,
     });
 
     if (!this.config.withPrimitives) {
-      return "";
+      return '';
     }
 
-    if (operationType === "Query") {
+    if (operationType === 'Query') {
       return this.buildQueryHook(
         node,
         operationName,
@@ -81,7 +130,7 @@ export class SolidUrqlVisitor extends ClientSideBaseVisitor<
         operationVariablesTypes,
         hasRequiredVariables,
       );
-    } else if (operationType === "Mutation") {
+    } else if (operationType === 'Mutation') {
       return this.buildMutationHook(
         node,
         operationName,
@@ -90,7 +139,7 @@ export class SolidUrqlVisitor extends ClientSideBaseVisitor<
         operationVariablesTypes,
         hasRequiredVariables,
       );
-    } else if (operationType === "Subscription") {
+    } else if (operationType === 'Subscription') {
       return this.buildSubscriptionHook(
         node,
         operationName,
@@ -101,9 +150,12 @@ export class SolidUrqlVisitor extends ClientSideBaseVisitor<
       );
     }
 
-    return "";
+    return '';
   }
 
+  /**
+   * @description Generates a SolidJS query hook using createQuery
+   */
   private buildQueryHook(
     node: OperationDefinitionNode,
     operationName: string,
@@ -128,6 +180,9 @@ export const ${hookName} = (args: ${argsType}) => {
 `;
   }
 
+  /**
+   * @description Generates a SolidJS mutation hook using createMutation
+   */
   private buildMutationHook(
     node: OperationDefinitionNode,
     operationName: string,
@@ -145,6 +200,9 @@ export const ${hookName} = () => {
 `;
   }
 
+  /**
+   * @description Generates a SolidJS subscription hook using createSubscription
+   */
   private buildSubscriptionHook(
     node: OperationDefinitionNode,
     operationName: string,
