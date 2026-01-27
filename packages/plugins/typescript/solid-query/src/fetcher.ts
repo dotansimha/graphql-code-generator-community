@@ -89,7 +89,7 @@ export abstract class FetcherRenderer {
     ${implHookOuter}
     return ${infiniteQuery.getHook()}<${operationResultType}, TError, TData>(
       ${this.generateInfiniteQueryFormattedParameters(
-        this.generateInfiniteQueryKey(config, isSuspense),
+        this.generateInfiniteQueryKey(config),
         implFetcher,
       )}
     )};`;
@@ -126,7 +126,7 @@ export abstract class FetcherRenderer {
     ${implHookOuter}
     return ${query.getHook()}<${operationResultType}, TError, TData>(
       ${this.generateQueryFormattedParameters(
-        this.generateQueryKey(config, isSuspense),
+        this.generateQueryKey(config),
         implFetcher,
       )}
     )};`;
@@ -201,8 +201,8 @@ export abstract class FetcherRenderer {
     return `options: Omit<${infiniteQuery.getOptions()}<${operationResultType}, TError, TData>, 'queryKey'> & { queryKey?: ${infiniteQuery.getOptions()}<${operationResultType}, TError, TData>['queryKey'] }`;
   }
 
-  public generateInfiniteQueryKey(config: GenerateConfig, isSuspense: boolean): string {
-    const identifier = isSuspense ? 'infiniteSuspense' : 'infinite';
+  public generateInfiniteQueryKey(config: GenerateConfig): string {
+    const identifier = 'infinite';
     if (config.hasRequiredVariables)
       return `['${config.node.name.value}.${identifier}', variables]`;
     return `variables === undefined ? ['${config.node.name.value}.${identifier}'] : ['${config.node.name.value}.${identifier}', variables]`;
@@ -216,13 +216,13 @@ export abstract class FetcherRenderer {
       hook: this.generateInfiniteQueryHook(config, isSuspense),
       getKey: `${infiniteQuery.getHook(
         operationName,
-      )}.getKey = (${signature}) => ${this.generateInfiniteQueryKey(config, isSuspense)};`,
+      )}.getKey = (${signature}) => ${this.generateInfiniteQueryKey(config)};`,
       rootKey: `${infiniteQuery.getHook(operationName)}.rootKey = '${node.name.value}.infinite';`,
     };
   }
 
-  public generateQueryKey(config: GenerateConfig, isSuspense: boolean): string {
-    const identifier = isSuspense ? `${config.node.name.value}Suspense` : config.node.name.value;
+  public generateQueryKey(config: GenerateConfig): string {
+    const identifier = config.node.name.value;
     if (config.hasRequiredVariables) return `['${identifier}', variables]`;
     return `variables === undefined ? ['${identifier}'] : ['${identifier}', variables]`;
   }
@@ -234,10 +234,7 @@ export abstract class FetcherRenderer {
     return {
       hook: this.generateQueryHook(config, isSuspense),
       document: `${query.getHook(operationName)}.document = ${documentVariableName};`,
-      getKey: `${query.getHook(operationName)}.getKey = (${signature}) => ${this.generateQueryKey(
-        config,
-        isSuspense,
-      )};`,
+      getKey: `${query.getHook(operationName)}.getKey = (${signature}) => ${this.generateQueryKey(config)};`,
       rootKey: `${query.getHook(operationName)}.rootKey = '${node.name.value}';`,
     };
   }
