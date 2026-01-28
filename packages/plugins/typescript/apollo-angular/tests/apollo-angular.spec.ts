@@ -736,6 +736,115 @@ describe('Apollo Angular', () => {
         export class ApolloAngularSDK {
       `);
     });
+
+    it('should add OperationVariables constraint for apolloAngularVersion 12+', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const myFeed = gql(`
+        query MyFeed {
+          feed {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: myFeed }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 12,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`
+        type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+        interface WatchQueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}
+
+        interface QueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}`);
+    });
+
+    it('should add OperationVariables constraint for mutations with apolloAngularVersion 12+', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const myMutation = gql(`
+        mutation Update($arg: Int) {
+          update(arg: $arg) {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: myMutation }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 12,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`
+        interface MutationOptionsAlone<T, V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}`);
+    });
+
+    it('should add OperationVariables constraint for subscriptions with apolloAngularVersion 12+', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const mySubscription = gql(`
+        subscription MyFeed {
+          feed {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: mySubscription }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 12,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`
+        interface SubscriptionOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}`);
+    });
+
+    it('should NOT add OperationVariables constraint for apolloAngularVersion below 12', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const myFeed = gql(`
+        query MyFeed {
+          feed {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: myFeed }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 11,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      expect(content.content).toBeSimilarStringTo(`
+        interface WatchQueryOptionsAlone<V> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}`);
+      expect(content.content).not.toContain('OperationVariables');
+    });
   });
 
   describe('near-operation-file', () => {

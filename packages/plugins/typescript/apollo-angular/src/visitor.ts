@@ -407,17 +407,26 @@ ${camelCase(o.node.name.value)}Watch(variables${
       hasQueries || hasMutations || hasSubscriptions
         ? `type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;`
         : '';
+
+    // For apollo-angular v12+, add OperationVariables constraint to fix type compatibility
+    const vConstraint =
+      this.config.apolloAngularVersion >= 12 ? '<V extends ApolloCore.OperationVariables>' : '<V>';
+    const tvConstraint =
+      this.config.apolloAngularVersion >= 12
+        ? '<T, V extends ApolloCore.OperationVariables>'
+        : '<T, V>';
+
     const watchType = hasQueries
-      ? `interface WatchQueryOptionsAlone<V> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}`
+      ? `interface WatchQueryOptionsAlone${vConstraint} extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}`
       : '';
     const queryType = hasQueries
-      ? `interface QueryOptionsAlone<V> extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}`
+      ? `interface QueryOptionsAlone${vConstraint} extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}`
       : '';
     const mutationType = hasMutations
-      ? `interface MutationOptionsAlone<T, V> extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}`
+      ? `interface MutationOptionsAlone${tvConstraint} extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}`
       : '';
     const subscriptionType = hasSubscriptions
-      ? `interface SubscriptionOptionsAlone<V> extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}`
+      ? `interface SubscriptionOptionsAlone${vConstraint} extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}`
       : '';
 
     const types = [omitType, watchType, queryType, mutationType, subscriptionType]
