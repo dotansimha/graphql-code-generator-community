@@ -737,7 +737,7 @@ describe('Apollo Angular', () => {
       `);
     });
 
-    it('should add OperationVariables constraint for apolloAngularVersion 12+', async () => {
+    it('should use combined parameter syntax for apolloAngularVersion 12+', async () => {
       const modifiedSchema = extendSchema(schema, addToSchema);
       const myFeed = gql(`
         query MyFeed {
@@ -759,15 +759,27 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
+      // For v12+, interfaces should only omit 'query' (not 'variables')
       expect(content.content).toBeSimilarStringTo(`
         type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-        interface WatchQueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}
+        interface WatchQueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query'> {}
 
-        interface QueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}`);
+        interface QueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.QueryOptions<V>, 'query'> {}`);
+
+      // For v12+, SDK methods should use combined parameter syntax
+      expect(content.content).toBeSimilarStringTo(`
+        myFeed(options?: QueryOptionsAlone<MyFeedQueryVariables>) {
+          return this.myFeedGql.fetch(options)
+        }
+
+        myFeedWatch(options?: WatchQueryOptionsAlone<MyFeedQueryVariables>) {
+          return this.myFeedGql.watch(options)
+        }
+      `);
     });
 
-    it('should add OperationVariables constraint for mutations with apolloAngularVersion 12+', async () => {
+    it('should use combined parameter syntax for mutations with apolloAngularVersion 12+', async () => {
       const modifiedSchema = extendSchema(schema, addToSchema);
       const myMutation = gql(`
         mutation Update($arg: Int) {
@@ -789,11 +801,19 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
+      // For v12+, interface should only omit 'mutation' (not 'variables')
       expect(content.content).toBeSimilarStringTo(`
-        interface MutationOptionsAlone<T, V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}`);
+        interface MutationOptionsAlone<T, V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation'> {}`);
+
+      // For v12+, SDK methods should use combined parameter syntax
+      expect(content.content).toBeSimilarStringTo(`
+        update(options?: MutationOptionsAlone<UpdateMutation, UpdateMutationVariables>) {
+          return this.updateGql.mutate(options)
+        }
+      `);
     });
 
-    it('should add OperationVariables constraint for subscriptions with apolloAngularVersion 12+', async () => {
+    it('should use combined parameter syntax for subscriptions with apolloAngularVersion 12+', async () => {
       const modifiedSchema = extendSchema(schema, addToSchema);
       const mySubscription = gql(`
         subscription MyFeed {
@@ -815,11 +835,19 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
+      // For v12+, interface should only omit 'query' (not 'variables')
       expect(content.content).toBeSimilarStringTo(`
-        interface SubscriptionOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}`);
+        interface SubscriptionOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.SubscriptionOptions<V>, 'query'> {}`);
+
+      // For v12+, SDK methods should use combined parameter syntax
+      expect(content.content).toBeSimilarStringTo(`
+        myFeed(options?: SubscriptionOptionsAlone<MyFeedSubscriptionVariables>) {
+          return this.myFeedGql.subscribe(options)
+        }
+      `);
     });
 
-    it('should NOT add OperationVariables constraint for apolloAngularVersion below 12', async () => {
+    it('should use legacy two-parameter syntax for apolloAngularVersion below 12', async () => {
       const modifiedSchema = extendSchema(schema, addToSchema);
       const myFeed = gql(`
         query MyFeed {
@@ -841,9 +869,47 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
+      // For v11 and below, interfaces should omit both 'query' and 'variables'
       expect(content.content).toBeSimilarStringTo(`
         interface WatchQueryOptionsAlone<V> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}`);
       expect(content.content).not.toContain('OperationVariables');
+
+      // For v11 and below, SDK methods should use legacy two-parameter syntax
+      expect(content.content).toBeSimilarStringTo(`
+        myFeed(variables?: MyFeedQueryVariables, options?: QueryOptionsAlone<MyFeedQueryVariables>) {
+          return this.myFeedGql.fetch(variables, options)
+        }
+      `);
+    });
+
+    it('should require options parameter for required variables with apolloAngularVersion 12+', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const myFeed = gql(`
+        query MyFeed($type: FeedType!) {
+          feed(type: $type) {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: myFeed }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 12,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      // For v12+ with required variables, options parameter should be required (no ?)
+      expect(content.content).toBeSimilarStringTo(`
+        myFeed(options: QueryOptionsAlone<MyFeedQueryVariables>) {
+          return this.myFeedGql.fetch(options)
+        }
+      `);
     });
   });
 

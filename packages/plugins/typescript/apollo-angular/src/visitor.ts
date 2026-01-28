@@ -348,6 +348,8 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
     );
     const hasQueries = this._operationsToInclude.find(o => o.operationType === 'Query');
 
+    const isV12Plus = this.config.apolloAngularVersion >= 12;
+
     const allPossibleActions = this._operationsToInclude
       .map(o => {
         const operationResultType = this._externalImportPrefix + o.operationResultType;
@@ -365,23 +367,40 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
             ? `${o.operationType}OptionsAlone<${operationResultType}, ${operationVariablesTypes}>`
             : `${o.operationType}OptionsAlone<${operationVariablesTypes}>`;
 
-        const method = `
+        // For v12+, use combined parameter syntax where variables are nested in options
+        let method: string;
+        if (isV12Plus) {
+          method = `
+${camelCase(o.node.name.value)}(options${optionalVariables ? '?' : ''}: ${options}) {
+  return this.${camelCase(o.serviceName)}.${actionType(o.operationType)}(options)
+}`;
+        } else {
+          method = `
 ${camelCase(o.node.name.value)}(variables${
-          optionalVariables ? '?' : ''
-        }: ${operationVariablesTypes}, options?: ${options}) {
+            optionalVariables ? '?' : ''
+          }: ${operationVariablesTypes}, options?: ${options}) {
   return this.${camelCase(o.serviceName)}.${actionType(o.operationType)}(variables, options)
 }`;
+        }
 
         let watchMethod: string;
 
         if (o.operationType === 'Query') {
-          watchMethod = `
+          if (isV12Plus) {
+            watchMethod = `
+
+${camelCase(o.node.name.value)}Watch(options${optionalVariables ? '?' : ''}: WatchQueryOptionsAlone<${operationVariablesTypes}>) {
+  return this.${camelCase(o.serviceName)}.watch(options)
+}`;
+          } else {
+            watchMethod = `
 
 ${camelCase(o.node.name.value)}Watch(variables${
-            optionalVariables ? '?' : ''
-          }: ${operationVariablesTypes}, options?: WatchQueryOptionsAlone<${operationVariablesTypes}>) {
+              optionalVariables ? '?' : ''
+            }: ${operationVariablesTypes}, options?: WatchQueryOptionsAlone<${operationVariablesTypes}>) {
   return this.${camelCase(o.serviceName)}.watch(variables, options)
 }`;
+          }
         }
         return [method, watchMethod].join('');
       })
@@ -408,25 +427,24 @@ ${camelCase(o.node.name.value)}Watch(variables${
         ? `type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;`
         : '';
 
-    // For apollo-angular v12+, add OperationVariables constraint to fix type compatibility
-    const vConstraint =
-      this.config.apolloAngularVersion >= 12 ? '<V extends ApolloCore.OperationVariables>' : '<V>';
-    const tvConstraint =
-      this.config.apolloAngularVersion >= 12
-        ? '<T, V extends ApolloCore.OperationVariables>'
-        : '<T, V>';
+    // For apollo-angular v12+, add OperationVariables constraint and only omit 'query'/'mutation'
+    // (not 'variables') since v12+ uses combined parameter syntax where variables are in options
+    const vConstraint = isV12Plus ? '<V extends ApolloCore.OperationVariables>' : '<V>';
+    const tvConstraint = isV12Plus ? '<T, V extends ApolloCore.OperationVariables>' : '<T, V>';
+    const omitFields = isV12Plus ? `'query'` : `'query' | 'variables'`;
+    const omitMutationFields = isV12Plus ? `'mutation'` : `'mutation' | 'variables'`;
 
     const watchType = hasQueries
-      ? `interface WatchQueryOptionsAlone${vConstraint} extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}`
+      ? `interface WatchQueryOptionsAlone${vConstraint} extends Omit<ApolloCore.WatchQueryOptions<V>, ${omitFields}> {}`
       : '';
     const queryType = hasQueries
-      ? `interface QueryOptionsAlone${vConstraint} extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}`
+      ? `interface QueryOptionsAlone${vConstraint} extends Omit<ApolloCore.QueryOptions<V>, ${omitFields}> {}`
       : '';
     const mutationType = hasMutations
-      ? `interface MutationOptionsAlone${tvConstraint} extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}`
+      ? `interface MutationOptionsAlone${tvConstraint} extends Omit<ApolloCore.MutationOptions<T, V>, ${omitMutationFields}> {}`
       : '';
     const subscriptionType = hasSubscriptions
-      ? `interface SubscriptionOptionsAlone${vConstraint} extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}`
+      ? `interface SubscriptionOptionsAlone${vConstraint} extends Omit<ApolloCore.SubscriptionOptions<V>, ${omitFields}> {}`
       : '';
 
     const types = [omitType, watchType, queryType, mutationType, subscriptionType]
