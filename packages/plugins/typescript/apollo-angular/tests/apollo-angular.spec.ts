@@ -759,21 +759,22 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
-      // For v12+, interfaces should have OperationVariables constraint
+      // For v12+, use type aliases with Apollo.Apollo namespace types
       expect(content.content).toBeSimilarStringTo(`
         type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-        interface WatchQueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}
+        type WatchQueryOptionsAlone<T, V extends ApolloCore.OperationVariables> = Omit<Apollo.Apollo.WatchQueryOptions<T, V>, 'query' | 'variables'>
 
-        interface QueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}`);
+        type QueryOptionsAlone<T, V extends ApolloCore.OperationVariables> = Omit<Apollo.Apollo.QueryOptions<T, V>, 'query' | 'variables'>`);
 
       // For v12+, SDK methods should keep same signature but combine variables into options internally
+      // Watch method should have explicit return type for proper type inference
       expect(content.content).toBeSimilarStringTo(`
-        myFeed(variables?: MyFeedQueryVariables, options?: QueryOptionsAlone<MyFeedQueryVariables>) {
+        myFeed(variables?: MyFeedQueryVariables, options?: QueryOptionsAlone<MyFeedQuery, MyFeedQueryVariables>) {
           return this.myFeedGql.fetch({ ...options, variables })
         }
 
-        myFeedWatch(variables?: MyFeedQueryVariables, options?: WatchQueryOptionsAlone<MyFeedQueryVariables>) {
+        myFeedWatch(variables?: MyFeedQueryVariables, options?: WatchQueryOptionsAlone<MyFeedQuery, MyFeedQueryVariables>): Apollo.QueryRef<MyFeedQuery, MyFeedQueryVariables> {
           return this.myFeedGql.watch({ ...options, variables })
         }
       `);
@@ -801,9 +802,9 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
-      // For v12+, interface should have OperationVariables constraint
+      // For v12+, use type alias with Apollo.Apollo namespace
       expect(content.content).toBeSimilarStringTo(`
-        interface MutationOptionsAlone<T, V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}`);
+        type MutationOptionsAlone<T, V extends ApolloCore.OperationVariables> = Omit<Apollo.Apollo.MutateOptions<T, V>, 'mutation' | 'variables'>`);
 
       // For v12+, SDK methods should combine variables into options internally
       expect(content.content).toBeSimilarStringTo(`
@@ -835,13 +836,13 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
-      // For v12+, interface should have OperationVariables constraint
+      // For v12+, use type alias with Apollo.Apollo namespace
       expect(content.content).toBeSimilarStringTo(`
-        interface SubscriptionOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}`);
+        type SubscriptionOptionsAlone<T, V extends ApolloCore.OperationVariables> = Omit<Apollo.Apollo.SubscribeOptions<T, V>, 'query' | 'variables'>`);
 
       // For v12+, SDK methods should combine variables into options internally
       expect(content.content).toBeSimilarStringTo(`
-        myFeed(variables?: MyFeedSubscriptionVariables, options?: SubscriptionOptionsAlone<MyFeedSubscriptionVariables>) {
+        myFeed(variables?: MyFeedSubscriptionVariables, options?: SubscriptionOptionsAlone<MyFeedSubscription, MyFeedSubscriptionVariables>) {
           return this.myFeedGql.subscribe({ ...options, variables })
         }
       `);
