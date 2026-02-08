@@ -22,7 +22,21 @@ export const plugin: PluginFunction<KotlinResolversPluginRawConfig> = async (
   const astNode = getCachedDocumentNodeFromSchema(schema);
   const visitorResult = oldVisit(astNode, { leave: visitor as any });
   const packageName = visitor.getPackageName();
-  const blockContent = visitorResult.definitions.filter(d => typeof d === 'string').join('\n\n');
+  let blockContent = visitorResult.definitions.filter(d => typeof d === 'string').join('\n\n');
+
+  // Add Jakarta Validation imports if validation annotations are enabled
+  if (config.validationAnnotations && blockContent.includes('@field:')) {
+    const packageRegex = /(package\s+[^\n]+)/;
+    const match = blockContent.match(packageRegex);
+    if (match) {
+      blockContent = blockContent.replace(
+        packageRegex,
+        `${match[1]}\n\nimport jakarta.validation.constraints.*`
+      );
+    } else {
+      blockContent = `import jakarta.validation.constraints.*\n\n${blockContent}`;
+    }
+  }
 
   return [packageName, blockContent].join('\n');
 };
