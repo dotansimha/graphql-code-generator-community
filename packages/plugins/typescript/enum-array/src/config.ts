@@ -14,4 +14,9 @@ export interface EnumArrayPluginConfig extends RawTypesConfig {
    * @description use enum members instead of string literals. Defaults to false
    */
   useMembers?: boolean;
+  /**
+   * @description generate non-empty tuple types [EnumType, ...EnumType[]] instead of EnumType[].
+   * Preserves original enum type in Zod parsed schemas. Defaults to false
+   */
+  asNonEmptyTuple?: boolean;
 }
