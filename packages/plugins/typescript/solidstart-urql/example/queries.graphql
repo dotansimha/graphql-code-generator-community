@@ -1,0 +1,97 @@
+query GetUsers {
+  users {
+    id
+    name
+    email
+  }
+}
+
+query GetUser($id: ID!) {
+  user(id: $id) {
+    id
+    name
+    email
+    posts {
+      id
+      title
+      createdAt
+    }
+  }
+}
+
+query GetPosts {
+  posts {
+    id
+    title
+    content
+    createdAt
+    author {
+      id
+      name
+    }
+  }
+}
+
+query GetPost($id: ID!) {
+  post(id: $id) {
+    id
+    title
+    content
+    createdAt
+    author {
+      id
+      name
+      email
+    }
+  }
+}
+
+# Mutations are included for completeness but won't generate primitives
+mutation CreateUser($name: String!, $email: String!) {
+  createUser(name: $name, email: $email) {
+    id
+    name
+    email
+  }
+}
+
+mutation UpdateUser($id: ID!, $name: String, $email: String) {
+  updateUser(id: $id, name: $name, email: $email) {
+    id
+    name
+    email
+  }
+}
+
+# Subscriptions
+subscription OnUserAdded {
+  userAdded {
+    id
+    name
+    email
+  }
+}
+
+subscription OnPostAdded {
+  postAdded {
+    id
+    title
+    content
+    author {
+      id
+      name
+    }
+  }
+}
+
+subscription OnUserUpdated($userId: ID!) {
+  userUpdated(userId: $userId) {
+    id
+    name
+    email
+    posts {
+      id
+      title
+    }
+  }
+}
