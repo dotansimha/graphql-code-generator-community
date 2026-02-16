@@ -1,5 +1,150 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`React-Query config: uniqueSuspenseQueryKeys reuses the same query keys between suspense and standard queries when set to false: content 1`] = `
+"
+
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+
+export const useTestQuery = <
+      TData = TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: TestQueryVariables,
+      options?: Omit<UseQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<TestQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<TestQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['test'] : ['test', variables],
+    queryFn: fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+    ...options
+  }
+    )};
+
+export const useSuspenseTestQuery = <
+      TData = TestQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: TestQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<TestQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<TestQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['test'] : ['test', variables],
+    queryFn: fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
+    ...options
+  }
+    )};
+
+export const useInfiniteTestQuery = <
+      TData = InfiniteData<TestQuery>,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables: TestQueryVariables,
+      options: Omit<UseInfiniteQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseInfiniteQueryOptions<TestQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useInfiniteQuery<TestQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      queryFn: (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const useSuspenseInfiniteTestQuery = <
+      TData = InfiniteData<TestQuery>,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables: TestQueryVariables,
+      options: Omit<UseSuspenseInfiniteQueryOptions<TestQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseInfiniteQueryOptions<TestQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseInfiniteQuery<TestQuery, TError, TData>(
+      (() => {
+    const { queryKey: optionsQueryKey, ...restOptions } = options;
+    return {
+      queryKey: optionsQueryKey ?? variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
+      queryFn: (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
+      ...restOptions
+    }
+  })()
+    )};
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<TestMutation, TError, TestMutationVariables, TContext>
+    ) => {
+    
+    return useMutation<TestMutation, TError, TestMutationVariables, TContext>(
+      {
+    mutationKey: ['test'],
+    mutationFn: (variables?: TestMutationVariables) => fetcher<TestMutation, TestMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables)(),
+    ...options
+  }
+    )};
+"
+`;
+
+exports[`React-Query config: uniqueSuspenseQueryKeys reuses the same query keys between suspense and standard queries when set to false: prepend 1`] = `
+[
+  "import { useQuery, useSuspenseQuery, useInfiniteQuery, useSuspenseInfiniteQuery, useMutation, UseQueryOptions, UseSuspenseQueryOptions, UseInfiniteQueryOptions, InfiniteData, UseSuspenseInfiniteQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
+  "
+function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
+  return async (): Promise<TData> => {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      ...requestInit,
+      body: JSON.stringify({ query, variables }),
+    });
+
+    const json = await res.json();
+
+    if (json.errors) {
+      const { message } = json.errors[0];
+
+      throw new Error(message);
+    }
+
+    return json.data;
+  }
+}",
+]
+`;
+
 exports[`React-Query exposeQueryKeys: true Should generate getKey for each query 1`] = `
 "
 

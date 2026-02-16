@@ -74,6 +74,23 @@ describe('React-Query', () => {
     await validateTypeScript(mergeOutputs(out), schema, docs, config);
   });
 
+  describe('config: uniqueSuspenseQueryKeys', () => {
+    it('reuses the same query keys between suspense and standard queries when set to false', async () => {
+      const config: ReactQueryRawPluginConfig = {
+        reactQueryVersion: 5,
+        addInfiniteQuery: true,
+        addSuspenseQuery: true,
+        uniqueSuspenseQueryKeys: false,
+      };
+
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+
+      expect(out.prepend).toMatchSnapshot('prepend');
+      expect(out.content).toMatchSnapshot('content');
+      await validateTypeScript(mergeOutputs(out), schema, docs, config);
+    });
+  });
+
   it('Duplicated nested fragments are removed', async () => {
     const schema = buildSchema(/* GraphQL */ `
       schema {
