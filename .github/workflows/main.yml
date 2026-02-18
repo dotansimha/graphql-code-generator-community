@@ -28,7 +28,7 @@ jobs:
       - name: Setup env
         uses: the-guild-org/shared-config/setup@main
         with:
-          nodeVersion: 18
+          nodeVersion: 24
       - name: Prettier Check
         run: yarn prettier:check
   dev-tests:
@@ -45,7 +45,7 @@ jobs:
       - name: Setup env
         uses: the-guild-org/shared-config/setup@main
         with:
-          nodeVersion: 18
+          nodeVersion: 24
       - name: Build
         run: yarn build
         env:
@@ -63,7 +63,7 @@ jobs:
       - name: Setup env
         uses: the-guild-org/shared-config/setup@main
         with:
-          nodeVersion: 18
+          nodeVersion: 24
       - name: Build
         run: yarn build
         env:
@@ -83,10 +83,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest] # remove windows to speed up the tests
-        node_version: [18, 20, 22]
+        node_version: [20, 22, 24]
         graphql_version: [15, 16]
         include:
-          - node-version: 18
+          - node-version: 20
             os: windows-latest
             graphql_version: 16
     steps:
