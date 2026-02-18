@@ -125,10 +125,7 @@ export abstract class FetcherRenderer {
     >(${argumentsResult}) => {
     ${implHookOuter}
     return ${query.getHook()}<${operationResultType}, TError, TData>(
-      ${this.generateQueryFormattedParameters(
-        this.generateQueryKey(config),
-        implFetcher,
-      )}
+      ${this.generateQueryFormattedParameters(this.generateQueryKey(config), implFetcher)}
     )};`;
     };
 
