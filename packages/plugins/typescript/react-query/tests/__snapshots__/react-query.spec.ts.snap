@@ -1439,7 +1439,7 @@ export const useSuspenseTestQuery = <
     
     return useSuspenseQuery<TestQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['testSuspense'] : ['testSuspense', variables],
+    queryKey: variables === undefined ? ['test'] : ['test', variables],
     queryFn: fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, variables),
     ...options
   }
@@ -1478,7 +1478,7 @@ export const useSuspenseInfiniteTestQuery = <
       (() => {
     const { queryKey: optionsQueryKey, ...restOptions } = options;
     return {
-      queryKey: optionsQueryKey ?? variables === undefined ? ['test.infiniteSuspense'] : ['test.infiniteSuspense', variables],
+      queryKey: optionsQueryKey ?? variables === undefined ? ['test.infinite'] : ['test.infinite', variables],
       queryFn: (metaData) => fetcher<TestQuery, TestQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, TestDocument, {...variables, ...(metaData.pageParam ?? {})})(),
       ...restOptions
     }
