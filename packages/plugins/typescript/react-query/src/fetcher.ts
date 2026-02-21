@@ -284,7 +284,7 @@ export abstract class FetcherRenderer {
     return `(() => {
     const { queryKey: optionsQueryKey, ...restOptions } = options;
     return {
-      queryKey: optionsQueryKey ?? ${queryKey},
+      queryKey: optionsQueryKey ?? (${queryKey}),
       queryFn: ${queryFn},
       ...restOptions
     }
