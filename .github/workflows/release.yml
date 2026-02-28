@@ -8,19 +8,59 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write # allows ODIC publishing
+  contents: read
+
 jobs:
   release-snapshot:
+    runs-on: ubuntu-24.04
     if: github.event_name == 'pull_request'
-    uses: the-guild-org/shared-config/.github/workflows/release-snapshot.yml@main
     # permissions:
     #   id-token: write # allows ODIC publishing
-    with:
-      npmTag: alpha
-      buildScript: build
-      nodeVersion: 24
-    secrets:
-      githubToken: ${{ secrets.GITHUB_TOKEN }}
-      npmToken: ${{ secrets.NPM_TOKEN }}
+    #   contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
+
+      - run: yarn install --prefer-offline
+
+      - name: Deploy snapshot
+        run: |
+          yarn changeset version --snapshot $RELEASE_TAG
+          yarn build
+          yarn changeset publish --tag alpha --no-git-tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: test-run${{ github.run_number }}-${{ github.run_attempt }}
+
+      # - name: Release Snapshot
+      #   uses: 'the-guild-org/changesets-snapshot-action@v0.0.3'
+      #   with:
+      #     tag: alpha
+      #     prepareScript: 'yarn build'
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub Token
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # NPM Token
+
+    # uses: the-guild-org/shared-config/.github/workflows/release-snapshot.yml@main
+    # permissions:
+    #   id-token: write # allows ODIC publishing
+    # with:
+    #   npmTag: alpha
+    #   buildScript: build
+    #   nodeVersion: 24
+    # secrets:
+    #   githubToken: ${{ secrets.GITHUB_TOKEN }}
+    #   npmToken: ${{ secrets.NPM_TOKEN }} # FIXME: eddeee888 Required because the workflows requires it
 
   release-stable:
     if: github.event_name == 'push'
