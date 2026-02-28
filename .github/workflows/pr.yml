@@ -15,13 +15,3 @@ jobs:
     if: ${{ github.event.pull_request.title != 'Upcoming Release Changes' }}
     secrets:
       githubToken: ${{ secrets.GITHUB_TOKEN }}
-
-  release:
-    uses: the-guild-org/shared-config/.github/workflows/release-snapshot.yml@main
-    with:
-      npmTag: alpha
-      buildScript: build
-      nodeVersion: 24
-    secrets:
-      githubToken: ${{ secrets.GITHUB_TOKEN }}
-      npmToken: ${{ secrets.NPM_TOKEN }}
