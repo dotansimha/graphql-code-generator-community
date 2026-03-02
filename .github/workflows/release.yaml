@@ -8,17 +8,13 @@ on:
     branches:
       - main
 
-permissions:
-  id-token: write # allows ODIC publishing
-  contents: read
-
 jobs:
   release-snapshot:
     runs-on: ubuntu-24.04
     if: github.event_name == 'pull_request'
-    # permissions:
-    #   id-token: write # allows ODIC publishing
-    #   contents: read
+    permissions:
+      id-token: write # allows ODIC publishing
+      # contents: read
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
