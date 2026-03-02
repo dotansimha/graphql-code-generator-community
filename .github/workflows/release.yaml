@@ -14,7 +14,7 @@ jobs:
     uses: the-guild-org/shared-config/.github/workflows/release-snapshot.yml@main
     permissions:
       id-token: write # allows ODIC publishing
-      pull-requests: write
+      pull-requests: write # allows creating comment with alpha versions
     with:
       npmTag: alpha
       buildScript: build
