@@ -45,7 +45,7 @@ jobs:
       - name: Setup env
         uses: the-guild-org/shared-config/setup@main
         with:
-          nodeVersion: 18
+          nodeVersion: 24
       - name: Build
         run: yarn build
         env:
@@ -63,7 +63,7 @@ jobs:
       - name: Setup env
         uses: the-guild-org/shared-config/setup@main
         with:
-          nodeVersion: 18
+          nodeVersion: 24
       - name: Build
         run: yarn build
         env:
