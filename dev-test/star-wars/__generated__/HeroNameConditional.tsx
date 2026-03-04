@@ -73,27 +73,6 @@ export function useHeroNameConditionalInclusionLazyQuery(
     HeroNameConditionalInclusionQueryVariables
   >(HeroNameConditionalInclusionDocument, options);
 }
-// @ts-ignore
-export function useHeroNameConditionalInclusionSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroNameConditionalInclusionQuery,
-    HeroNameConditionalInclusionQueryVariables
-  >,
-): Apollo.UseSuspenseQueryResult<
-  HeroNameConditionalInclusionQuery,
-  HeroNameConditionalInclusionQueryVariables
->;
-export function useHeroNameConditionalInclusionSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        HeroNameConditionalInclusionQuery,
-        HeroNameConditionalInclusionQueryVariables
-      >,
-): Apollo.UseSuspenseQueryResult<
-  HeroNameConditionalInclusionQuery | undefined,
-  HeroNameConditionalInclusionQueryVariables
->;
 export function useHeroNameConditionalInclusionSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
@@ -172,27 +151,6 @@ export function useHeroNameConditionalExclusionLazyQuery(
     HeroNameConditionalExclusionQueryVariables
   >(HeroNameConditionalExclusionDocument, options);
 }
-// @ts-ignore
-export function useHeroNameConditionalExclusionSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    HeroNameConditionalExclusionQuery,
-    HeroNameConditionalExclusionQueryVariables
-  >,
-): Apollo.UseSuspenseQueryResult<
-  HeroNameConditionalExclusionQuery,
-  HeroNameConditionalExclusionQueryVariables
->;
-export function useHeroNameConditionalExclusionSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        HeroNameConditionalExclusionQuery,
-        HeroNameConditionalExclusionQueryVariables
-      >,
-): Apollo.UseSuspenseQueryResult<
-  HeroNameConditionalExclusionQuery | undefined,
-  HeroNameConditionalExclusionQueryVariables
->;
 export function useHeroNameConditionalExclusionSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken

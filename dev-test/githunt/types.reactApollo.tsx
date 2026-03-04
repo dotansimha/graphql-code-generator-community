@@ -497,15 +497,6 @@ export function useCommentLazyQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
 }
-// @ts-ignore
-export function useCommentSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<CommentQuery, CommentQueryVariables>,
-): Apollo.UseSuspenseQueryResult<CommentQuery, CommentQueryVariables>;
-export function useCommentSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<CommentQuery, CommentQueryVariables>,
-): Apollo.UseSuspenseQueryResult<CommentQuery | undefined, CommentQueryVariables>;
 export function useCommentSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
@@ -567,24 +558,6 @@ export function useCurrentUserForProfileLazyQuery(
     options,
   );
 }
-// @ts-ignore
-export function useCurrentUserForProfileSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<
-    CurrentUserForProfileQuery,
-    CurrentUserForProfileQueryVariables
-  >,
-): Apollo.UseSuspenseQueryResult<CurrentUserForProfileQuery, CurrentUserForProfileQueryVariables>;
-export function useCurrentUserForProfileSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        CurrentUserForProfileQuery,
-        CurrentUserForProfileQueryVariables
-      >,
-): Apollo.UseSuspenseQueryResult<
-  CurrentUserForProfileQuery | undefined,
-  CurrentUserForProfileQueryVariables
->;
 export function useCurrentUserForProfileSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
@@ -654,13 +627,6 @@ export function useFeedLazyQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
 }
-// @ts-ignore
-export function useFeedSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>,
-): Apollo.UseSuspenseQueryResult<FeedQuery, FeedQueryVariables>;
-export function useFeedSuspenseQuery(
-  baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>,
-): Apollo.UseSuspenseQueryResult<FeedQuery | undefined, FeedQueryVariables>;
 export function useFeedSuspenseQuery(
   baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FeedQuery, FeedQueryVariables>,
 ) {

@@ -55,15 +55,6 @@ export function useHeroAppearsInLazyQuery(
     options,
   );
 }
-// @ts-ignore
-export function useHeroAppearsInSuspenseQuery(
-  baseOptions?: Apollo.SuspenseQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
-): Apollo.UseSuspenseQueryResult<HeroAppearsInQuery, HeroAppearsInQueryVariables>;
-export function useHeroAppearsInSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<HeroAppearsInQuery, HeroAppearsInQueryVariables>,
-): Apollo.UseSuspenseQueryResult<HeroAppearsInQuery | undefined, HeroAppearsInQueryVariables>;
 export function useHeroAppearsInSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
