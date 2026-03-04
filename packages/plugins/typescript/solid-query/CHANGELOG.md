@@ -1,5 +1,15 @@
 # @graphql-codegen/typescript-solid-query
 
+## 1.0.2
+
+### Patch Changes
+
+- [#1371](https://github.com/dotansimha/graphql-code-generator-community/pull/1371)
+  [`25ad6d3`](https://github.com/dotansimha/graphql-code-generator-community/commit/25ad6d32686fd88e32da57f9b24c0a5713aaab1e)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Query keys should be shared between suspense
+  and non-suspense hooks to ensure consistent state management and synchronization, preventing
+  discrepancies and maintaining a single source of truth for query invalidation.
+
 ## 1.0.1
 
 ### Patch Changes
@@ -7,7 +17,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/visitor-plugin-common@2.13.8` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/2.13.8)
     (from `2.13.1`, in `dependencies`)
@@ -15,7 +24,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
