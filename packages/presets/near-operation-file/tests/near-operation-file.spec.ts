@@ -1540,6 +1540,41 @@ describe('near-operation-file preset', () => {
       "import { AnimalFragment_Cat } from './issue-1112-interface.generated'",
     );
   });
+
+  it('generates correctly without baseTypesPath for standalone typescript-operations', async () => {
+    const result = await executeCodegen({
+      schema: /* GraphQL */ `
+        type Query {
+          user: User
+        }
+
+        type User {
+          id: ID!
+          name: String!
+        }
+      `,
+      documents: path.join(__dirname, 'fixtures/no-base-types-path.graphql'),
+      generates: {
+        [__dirname]: {
+          preset,
+          plugins: ['typescript-operations'],
+        },
+      },
+    });
+
+    const generatedFile = result.find(({ filename }) =>
+      filename.endsWith('fixtures/no-base-types-path.generated.ts'),
+    );
+
+    // FIXME: when typescript-operations v6 releases, this test will be updated
+    expect(generatedFile.content).toMatchInlineSnapshot(`
+     "export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+     export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string } | null };
+     "
+    `);
+  });
 });
 
 const getFragmentImportsFromResult = (result: Types.GenerateOptions[], index = 0) =>

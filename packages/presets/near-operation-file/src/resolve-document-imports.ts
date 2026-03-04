@@ -55,7 +55,7 @@ interface ResolveDocumentImportResult {
 export function resolveDocumentImports<T>(
   presetOptions: Types.PresetFnArgs<T>,
   schemaObject: GraphQLSchema,
-  importResolverOptions: DocumentImportResolverOptions,
+  importResolverOptions: DocumentImportResolverOptions & { schemaTypesSource: ImportSource }, // Original type is `schemaTypesSource: string | ImportSource`. We manually override `schemaTypesSource` type because we only use the `ImportSource` use case
   dedupeFragments = false,
 ): Array<ResolveDocumentImportResult> {
   const resolveFragments = buildFragmentResolver(
@@ -84,7 +84,10 @@ export function resolveDocumentImports<T>(
         ],
       };
 
-      if (isUsingTypes(externalFragmentsInjectedDocument, [], schemaObject)) {
+      if (
+        isUsingTypes(externalFragmentsInjectedDocument, [], schemaObject) &&
+        schemaTypesSource.namespace
+      ) {
         const schemaTypesImportStatement = generateImportStatement({
           baseDir,
           emitLegacyCommonJSImports: presetOptions.config.emitLegacyCommonJSImports,
