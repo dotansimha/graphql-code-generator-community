@@ -1540,6 +1540,43 @@ describe('near-operation-file preset', () => {
       "import { AnimalFragment_Cat } from './issue-1112-interface.generated'",
     );
   });
+
+  it('generates correctly without baseTypesPath', async () => {
+    const documents = [
+      {
+        location: 'user.graphql',
+        document: parse(/* GraphQL */ `
+          query User {
+            user {
+              id
+            }
+          }
+        `),
+      },
+    ];
+
+    const result = await executeCodegen({
+      schema: /* GraphQL */ `
+        type Query {
+          user: User
+        }
+
+        type User {
+          id: ID!
+          name: String!
+        }
+      `,
+      documents: path.join(__dirname, 'fixtures/no-base-types-path.graphql'),
+      generates: {
+        'out/': {
+          preset,
+          plugins: ['typescript-operations'],
+        },
+      },
+    });
+
+    expect(result).toMatchInlineSnapshot();
+  });
 });
 
 const getFragmentImportsFromResult = (result: Types.GenerateOptions[], index = 0) =>
