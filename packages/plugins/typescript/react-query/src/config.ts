@@ -117,7 +117,8 @@ export interface BaseReactQueryPluginConfig {
  *
  */
 export interface ReactQueryRawPluginConfig
-  extends Omit<
+  extends
+    Omit<
       RawClientSideBasePluginConfig,
       | 'documentMode'
       | 'noGraphQLTag'

@@ -570,16 +570,22 @@ export class VoteGQL extends Apollo.Mutation<VoteMutation, VoteMutationVariables
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-interface WatchQueryOptionsAlone<V>
-  extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}
+interface WatchQueryOptionsAlone<V> extends Omit<
+  ApolloCore.WatchQueryOptions<V>,
+  'query' | 'variables'
+> {}
 
 interface QueryOptionsAlone<V> extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}
 
-interface MutationOptionsAlone<T, V>
-  extends Omit<ApolloCore.MutationOptions<T, V>, 'mutation' | 'variables'> {}
+interface MutationOptionsAlone<T, V> extends Omit<
+  ApolloCore.MutationOptions<T, V>,
+  'mutation' | 'variables'
+> {}
 
-interface SubscriptionOptionsAlone<V>
-  extends Omit<ApolloCore.SubscriptionOptions<V>, 'query' | 'variables'> {}
+interface SubscriptionOptionsAlone<V> extends Omit<
+  ApolloCore.SubscriptionOptions<V>,
+  'query' | 'variables'
+> {}
 
 @Injectable({ providedIn: 'root' })
 export class ApolloAngularSDK {
