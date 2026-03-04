@@ -11,7 +11,9 @@ describe('React Apollo - GraphQL v16+', () => {
         {
           location: '',
           document: parse(/* GraphQL */ `
-            """description for feed"""
+            """
+            description for feed
+            """
             query Test {
               feed {
                 id
