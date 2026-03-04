@@ -28,7 +28,8 @@ jobs:
     uses: the-guild-org/shared-config/.github/workflows/release-stable.yml@main
     permissions:
       id-token: write # allows ODIC publishing
-      contents: write
+      pull-requests: write # allows creating Version Packages PR
+      contents: write # allows modifying changeset files
     with:
       releaseScript: release
       nodeVersion: 24
