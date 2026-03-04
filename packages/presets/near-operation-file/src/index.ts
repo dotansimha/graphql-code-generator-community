@@ -220,11 +220,12 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
     const fileName = options.presetConfig.fileName || '';
     const extension = options.presetConfig.extension || '.generated.ts';
     const folder = options.presetConfig.folder || '';
-    const importTypesNamespace = options.presetConfig.importTypesNamespace || 'Types';
+    const baseTypesPath = options.presetConfig.baseTypesPath || '';
+    const importTypesNamespace =
+      options.presetConfig.importTypesNamespace ||
+      (options.presetConfig.baseTypesPath ? 'Types' : undefined); // When there is `baseTypesPath`, we assume there'd be a type import, so we default `importTypesNamespace` value to `Types` for convenience.
     const importAllFragmentsFrom: FragmentImportFromFn | string | null =
       options.presetConfig.importAllFragmentsFrom || null;
-
-    const { baseTypesPath = '' } = options.presetConfig;
 
     const shouldAbsolute = !baseTypesPath.startsWith('~');
 

@@ -1541,20 +1541,7 @@ describe('near-operation-file preset', () => {
     );
   });
 
-  it('generates correctly without baseTypesPath', async () => {
-    const documents = [
-      {
-        location: 'user.graphql',
-        document: parse(/* GraphQL */ `
-          query User {
-            user {
-              id
-            }
-          }
-        `),
-      },
-    ];
-
+  it('generates correctly without baseTypesPath for standalone typescript-operations', async () => {
     const result = await executeCodegen({
       schema: /* GraphQL */ `
         type Query {
@@ -1568,14 +1555,25 @@ describe('near-operation-file preset', () => {
       `,
       documents: path.join(__dirname, 'fixtures/no-base-types-path.graphql'),
       generates: {
-        'out/': {
+        [__dirname]: {
           preset,
           plugins: ['typescript-operations'],
         },
       },
     });
 
-    expect(result).toMatchInlineSnapshot();
+    const generatedFile = result.find(({ filename }) =>
+      filename.endsWith('fixtures/no-base-types-path.generated.ts'),
+    );
+
+    // FIXME: when typescript-operations v6 releases, this test will be updated
+    expect(generatedFile.content).toMatchInlineSnapshot(`
+     "export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+     export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string } | null };
+     "
+    `);
   });
 });
 
