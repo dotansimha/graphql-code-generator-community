@@ -1100,14 +1100,18 @@ export type GraphCacheResolvers = {
     content?: GraphCacheResolver<
       WithTypename<Comment>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
     createdAt?: GraphCacheResolver<
       WithTypename<Comment>,
       Record<string, never>,
-      Scalars['Float'] | string
+      Scalars['Float']['output'] | string
     >;
-    id?: GraphCacheResolver<WithTypename<Comment>, Record<string, never>, Scalars['Int'] | string>;
+    id?: GraphCacheResolver<
+      WithTypename<Comment>,
+      Record<string, never>,
+      Scalars['Int']['output'] | string
+    >;
     postedBy?: GraphCacheResolver<
       WithTypename<Comment>,
       Record<string, never>,
@@ -1116,14 +1120,14 @@ export type GraphCacheResolvers = {
     repoName?: GraphCacheResolver<
       WithTypename<Comment>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
   };
   Entry?: {
     commentCount?: GraphCacheResolver<
       WithTypename<Entry>,
       Record<string, never>,
-      Scalars['Int'] | string
+      Scalars['Int']['output'] | string
     >;
     comments?: GraphCacheResolver<
       WithTypename<Entry>,
@@ -1133,14 +1137,18 @@ export type GraphCacheResolvers = {
     createdAt?: GraphCacheResolver<
       WithTypename<Entry>,
       Record<string, never>,
-      Scalars['Float'] | string
+      Scalars['Float']['output'] | string
     >;
     hotScore?: GraphCacheResolver<
       WithTypename<Entry>,
       Record<string, never>,
-      Scalars['Float'] | string
+      Scalars['Float']['output'] | string
     >;
-    id?: GraphCacheResolver<WithTypename<Entry>, Record<string, never>, Scalars['Int'] | string>;
+    id?: GraphCacheResolver<
+      WithTypename<Entry>,
+      Record<string, never>,
+      Scalars['Int']['output'] | string
+    >;
     postedBy?: GraphCacheResolver<
       WithTypename<Entry>,
       Record<string, never>,
@@ -1151,7 +1159,11 @@ export type GraphCacheResolvers = {
       Record<string, never>,
       WithTypename<Repository> | string
     >;
-    score?: GraphCacheResolver<WithTypename<Entry>, Record<string, never>, Scalars['Int'] | string>;
+    score?: GraphCacheResolver<
+      WithTypename<Entry>,
+      Record<string, never>,
+      Scalars['Int']['output'] | string
+    >;
     vote?: GraphCacheResolver<
       WithTypename<Entry>,
       Record<string, never>,
@@ -1162,27 +1174,27 @@ export type GraphCacheResolvers = {
     description?: GraphCacheResolver<
       WithTypename<Repository>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
     full_name?: GraphCacheResolver<
       WithTypename<Repository>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
     html_url?: GraphCacheResolver<
       WithTypename<Repository>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
     name?: GraphCacheResolver<
       WithTypename<Repository>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
     open_issues_count?: GraphCacheResolver<
       WithTypename<Repository>,
       Record<string, never>,
-      Scalars['Int'] | string
+      Scalars['Int']['output'] | string
     >;
     owner?: GraphCacheResolver<
       WithTypename<Repository>,
@@ -1192,31 +1204,31 @@ export type GraphCacheResolvers = {
     stargazers_count?: GraphCacheResolver<
       WithTypename<Repository>,
       Record<string, never>,
-      Scalars['Int'] | string
+      Scalars['Int']['output'] | string
     >;
   };
   User?: {
     avatar_url?: GraphCacheResolver<
       WithTypename<User>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
     html_url?: GraphCacheResolver<
       WithTypename<User>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
     login?: GraphCacheResolver<
       WithTypename<User>,
       Record<string, never>,
-      Scalars['String'] | string
+      Scalars['String']['output'] | string
     >;
   };
   Vote?: {
     vote_value?: GraphCacheResolver<
       WithTypename<Vote>,
       Record<string, never>,
-      Scalars['Int'] | string
+      Scalars['Int']['output'] | string
     >;
   };
 };
