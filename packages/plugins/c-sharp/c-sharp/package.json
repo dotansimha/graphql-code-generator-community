@@ -51,9 +51,6 @@
     "access": "public"
   },
   "sideEffects": false,
-  "jest-junit": {
-    "outputDirectory": "../../../../test-results/c-sharp"
-  },
   "typescript": {
     "definition": "dist/typings/index.d.ts"
   }
