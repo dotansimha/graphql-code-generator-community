@@ -3,6 +3,11 @@ import { defineConfig } from 'vitest/config';
 
 export const sharedConfig = defineConfig({
   plugins: [tsconfigPaths() as any],
+  resolve: {
+    alias: {
+      graphql: 'graphql/index.js',
+    },
+  },
   test: {
     globals: true,
   },

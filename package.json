@@ -26,7 +26,7 @@
     "prettier": "prettier --write --list-different .",
     "prettier:check": "prettier --check .",
     "release": "changeset publish",
-    "test": "jest --forceExit --no-watchman",
+    "test": "vitest",
     "test-and-build": "yarn build && yarn test",
     "types:check": "tsc --noEmit",
     "watch-build": "npx tsc-watch --project tsconfig.json --onSuccess \"bob build\""
