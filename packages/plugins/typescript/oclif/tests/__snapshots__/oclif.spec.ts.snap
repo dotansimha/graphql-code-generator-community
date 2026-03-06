@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`oclif cli builds from a mutation with string and enum type 1`] = `
+exports[`oclif > cli > builds from a mutation with string and enum type 1`] = `
 "
 const VoteDocument = \`
 mutation Vote($name: String!, $type: VoteType!) {
@@ -32,7 +32,7 @@ export default class Vote extends Command {
 "
 `;
 
-exports[`oclif cli builds from a read query with integer parameters 1`] = `
+exports[`oclif > cli > builds from a read query with integer parameters 1`] = `
 "
 const GetFeedDocument = \`
 query GetFeed($type: FeedType!, $offset: Int!, $limit: Int!) {
@@ -69,7 +69,7 @@ export default class GetFeed extends Command {
 "
 `;
 
-exports[`oclif cli builds from a read query with single enum parameter 1`] = `
+exports[`oclif > cli > builds from a read query with single enum parameter 1`] = `
 "
 const GetFeedDocument = \`
 query GetFeed($type: FeedType!) {
@@ -98,7 +98,7 @@ export default class GetFeed extends Command {
 "
 `;
 
-exports[`oclif cli builds from a read query with single string parameter 1`] = `
+exports[`oclif > cli > builds from a read query with single string parameter 1`] = `
 "
 const GetEntryDocument = \`
 query GetEntry($name: String!) {
@@ -128,7 +128,7 @@ export default class GetEntry extends Command {
 "
 `;
 
-exports[`oclif cli reads metadata from the @oclif directive 1`] = `
+exports[`oclif > cli > reads metadata from the @oclif directive 1`] = `
 "
 const GetCurrentUserDocument = \`
 query GetCurrentUser {
