@@ -3,7 +3,7 @@
 exports[`React-Query > exposeQueryKeys: true > Should generate getKey for each query 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -17,7 +17,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TestQuery,
@@ -36,13 +36,13 @@ export const useTestQuery = <
 
 useTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -63,7 +63,7 @@ export const useTestMutation = <
 exports[`React-Query > exposeQueryKeys: true, addInfiniteQuery: true > Should generate getKey for each query - also infinite queries 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -77,7 +77,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TestQuery,
@@ -113,13 +113,13 @@ export const useInfiniteTestQuery = <
 
 useInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -140,7 +140,7 @@ export const useTestMutation = <
 exports[`React-Query > exposeQueryRootKeys: true > Should generate rootKey for each query 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -154,7 +154,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TestQuery,
@@ -173,13 +173,13 @@ export const useTestQuery = <
 
 useTestQuery.rootKey = 'test';
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -200,7 +200,7 @@ export const useTestMutation = <
 exports[`React-Query > exposeQueryRootKeys: true, addInfiniteQuery: true > Should generate rootKey for each query - also infinite queries 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -214,7 +214,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TestQuery,
@@ -250,13 +250,13 @@ export const useInfiniteTestQuery = <
 
 useInfiniteTestQuery.rootKey = 'test.infinite';
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -277,7 +277,7 @@ export const useTestMutation = <
 exports[`React-Query > fetcher: custom-mapper > Should generate mutation correctly with lazy variables > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -291,7 +291,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -321,13 +321,13 @@ export const useInfiniteTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -352,7 +352,7 @@ exports[`React-Query > fetcher: custom-mapper > Should generate mutation correct
 exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with external mapper > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -366,7 +366,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -396,13 +396,13 @@ export const useInfiniteTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -427,7 +427,7 @@ exports[`React-Query > fetcher: custom-mapper > Should generate query correctly 
 exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with internal mapper > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -441,7 +441,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -457,13 +457,13 @@ export const useTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -488,7 +488,7 @@ exports[`React-Query > fetcher: custom-mapper > Should generate query correctly 
 exports[`React-Query > fetcher: fetch > Should generate query and mutation correctly > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -502,7 +502,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -519,13 +519,13 @@ export const useTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -572,7 +572,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 exports[`React-Query > fetcher: graphql-request > Should generate query correctly with client > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -586,7 +586,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -620,13 +620,13 @@ export const useInfiniteTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -664,7 +664,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 exports[`React-Query > fetcher: graphql-request with clientImportPath > Should generate query correctly with client > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -678,7 +678,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -695,13 +695,13 @@ export const useTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -739,7 +739,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(query: string
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -753,7 +753,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -769,13 +769,13 @@ export const useTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -819,7 +819,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config and fetchParams object > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -833,7 +833,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -849,13 +849,13 @@ export const useTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -899,7 +899,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -913,7 +913,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -943,13 +943,13 @@ export const useInfiniteTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -992,7 +992,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from env var > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -1006,7 +1006,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -1022,13 +1022,13 @@ export const useTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -1071,7 +1071,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from just identifier > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -1085,7 +1085,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TTestQuery,
@@ -1101,13 +1101,13 @@ export const useTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -1176,7 +1176,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 exports[`React-Query > support import-type preset in v4 > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -1190,7 +1190,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = Types.TestQuery,
@@ -1207,13 +1207,13 @@ export const useTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -1234,7 +1234,7 @@ export const useTestMutation = <
 exports[`React-Query > support import-type preset in v5 > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -1248,7 +1248,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = Types.TestQuery,
@@ -1267,13 +1267,13 @@ export const useTestQuery = <
   }
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -1296,7 +1296,7 @@ export const useTestMutation = <
 exports[`React-Query > support v4 syntax > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -1310,7 +1310,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TestQuery,
@@ -1342,13 +1342,13 @@ export const useInfiniteTestQuery = <
       options
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
@@ -1395,7 +1395,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 exports[`React-Query > support v5 syntax > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -1409,7 +1409,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const useTestQuery = <
       TData = TestQuery,
@@ -1485,13 +1485,13 @@ export const useSuspenseInfiniteTestQuery = <
   })()
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const useTestMutation = <
       TError = unknown,
