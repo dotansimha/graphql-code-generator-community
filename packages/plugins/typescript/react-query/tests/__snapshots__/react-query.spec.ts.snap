@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`React-Query exposeQueryKeys: true Should generate getKey for each query 1`] = `
+exports[`React-Query > exposeQueryKeys: true > Should generate getKey for each query 1`] = `
 "
 
 export const TestDocument = \`
@@ -60,7 +60,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query exposeQueryKeys: true, addInfiniteQuery: true Should generate getKey for each query - also infinite queries 1`] = `
+exports[`React-Query > exposeQueryKeys: true, addInfiniteQuery: true > Should generate getKey for each query - also infinite queries 1`] = `
 "
 
 export const TestDocument = \`
@@ -137,7 +137,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query exposeQueryRootKeys: true Should generate rootKey for each query 1`] = `
+exports[`React-Query > exposeQueryRootKeys: true > Should generate rootKey for each query 1`] = `
 "
 
 export const TestDocument = \`
@@ -197,7 +197,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query exposeQueryRootKeys: true, addInfiniteQuery: true Should generate rootKey for each query - also infinite queries 1`] = `
+exports[`React-Query > exposeQueryRootKeys: true, addInfiniteQuery: true > Should generate rootKey for each query - also infinite queries 1`] = `
 "
 
 export const TestDocument = \`
@@ -274,7 +274,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: custom-mapper Should generate mutation correctly with lazy variables: content 1`] = `
+exports[`React-Query > fetcher: custom-mapper > Should generate mutation correctly with lazy variables > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -342,14 +342,14 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: custom-mapper Should generate mutation correctly with lazy variables: prepend 1`] = `
+exports[`React-Query > fetcher: custom-mapper > Should generate mutation correctly with lazy variables > prepend 1`] = `
 [
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "import { useCustomFetcher } from './my-file';",
 ]
 `;
 
-exports[`React-Query fetcher: custom-mapper Should generate query correctly with external mapper: content 1`] = `
+exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with external mapper > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -417,14 +417,14 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: custom-mapper Should generate query correctly with external mapper: prepend 1`] = `
+exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with external mapper > prepend 1`] = `
 [
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "import { myCustomFetcher } from './my-file';",
 ]
 `;
 
-exports[`React-Query fetcher: custom-mapper Should generate query correctly with internal mapper: content 1`] = `
+exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with internal mapper > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -478,14 +478,14 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: custom-mapper Should generate query correctly with internal mapper: prepend 1`] = `
+exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with internal mapper > prepend 1`] = `
 [
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
   null,
 ]
 `;
 
-exports[`React-Query fetcher: fetch Should generate query and mutation correctly: content 1`] = `
+exports[`React-Query > fetcher: fetch > Should generate query and mutation correctly > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -543,7 +543,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: fetch Should generate query and mutation correctly: prepend 1`] = `
+exports[`React-Query > fetcher: fetch > Should generate query and mutation correctly > prepend 1`] = `
 [
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
   "
@@ -569,7 +569,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 ]
 `;
 
-exports[`React-Query fetcher: graphql-request Should generate query correctly with client: content 1`] = `
+exports[`React-Query > fetcher: graphql-request > Should generate query correctly with client > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -645,7 +645,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: graphql-request Should generate query correctly with client: prepend 1`] = `
+exports[`React-Query > fetcher: graphql-request > Should generate query correctly with client > prepend 1`] = `
 [
   "import { GraphQLClient } from 'graphql-request';",
   "import { RequestInit } from 'graphql-request/dist/types.dom';",
@@ -661,7 +661,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 ]
 `;
 
-exports[`React-Query fetcher: graphql-request with clientImportPath Should generate query correctly with client: content 1`] = `
+exports[`React-Query > fetcher: graphql-request with clientImportPath > Should generate query correctly with client > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -719,7 +719,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: graphql-request with clientImportPath Should generate query correctly with client: prepend 1`] = `
+exports[`React-Query > fetcher: graphql-request with clientImportPath > Should generate query correctly with client > prepend 1`] = `
 [
   "import { client as graphqlClient } from 'client.ts';",
   "import { GraphQLClient } from 'graphql-request';",
@@ -736,7 +736,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(query: string
 ]
 `;
 
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with fetch config and fetchParams object: content 1`] = `
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -790,7 +790,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with fetch config and fetchParams object: prepend 1`] = `
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config > prepend 1`] = `
 [
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
@@ -816,7 +816,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 ]
 `;
 
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with fetch config: content 1`] = `
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config and fetchParams object > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -870,7 +870,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with fetch config: prepend 1`] = `
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config and fetchParams object > prepend 1`] = `
 [
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
@@ -896,165 +896,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 ]
 `;
 
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint from env var: content 1`] = `
-"
-
-export const TestDocument = \`
-    query test {
-  feed {
-    id
-    commentCount
-    repository {
-      full_name
-      html_url
-      owner {
-        avatar_url
-      }
-    }
-  }
-}
-    \`;
-
-export const useTestQuery = <
-      TData = TTestQuery,
-      TError = unknown
-    >(
-      variables?: TTestQueryVariables,
-      options?: UseQueryOptions<TTestQuery, TError, TData>
-    ) => {
-    
-    return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
-      fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
-      options
-    )};
-
-export const TestDocument = \`
-    mutation test($name: String) {
-  submitRepository(repoFullName: $name) {
-    id
-  }
-}
-    \`;
-
-export const useTestMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
-    
-    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
-      ['test'],
-      (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
-      options
-    )};
-"
-`;
-
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint from env var: prepend 1`] = `
-[
-  "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
-  "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(process.env.ENDPOINT_URL as string, {
-    method: "POST",
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}",
-]
-`;
-
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint from just identifier: content 1`] = `
-"
-
-export const TestDocument = \`
-    query test {
-  feed {
-    id
-    commentCount
-    repository {
-      full_name
-      html_url
-      owner {
-        avatar_url
-      }
-    }
-  }
-}
-    \`;
-
-export const useTestQuery = <
-      TData = TTestQuery,
-      TError = unknown
-    >(
-      variables?: TTestQueryVariables,
-      options?: UseQueryOptions<TTestQuery, TError, TData>
-    ) => {
-    
-    return useQuery<TTestQuery, TError, TData>(
-      variables === undefined ? ['test'] : ['test', variables],
-      fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
-      options
-    )};
-
-export const TestDocument = \`
-    mutation test($name: String) {
-  submitRepository(repoFullName: $name) {
-    id
-  }
-}
-    \`;
-
-export const useTestMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
-    
-    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
-      ['test'],
-      (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
-      options
-    )};
-"
-`;
-
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint from just identifier: prepend 1`] = `
-[
-  "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
-  "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(myEndpoint as string, {
-    method: "POST",
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}",
-]
-`;
-
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint: content 1`] = `
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -1122,7 +964,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint: prepend 1`] = `
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint > prepend 1`] = `
 [
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "
@@ -1147,7 +989,165 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 ]
 `;
 
-exports[`React-Query reactQueryImportFrom: custom-path Should import react-query from custom path: prepend 1`] = `
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from env var > content 1`] = `
+"
+
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+
+export const useTestQuery = <
+      TData = TTestQuery,
+      TError = unknown
+    >(
+      variables?: TTestQueryVariables,
+      options?: UseQueryOptions<TTestQuery, TError, TData>
+    ) => {
+    
+    return useQuery<TTestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
+      options
+    )};
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
+    
+    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+      ['test'],
+      (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
+      options
+    )};
+"
+`;
+
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from env var > prepend 1`] = `
+[
+  "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
+  "
+function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+  return async (): Promise<TData> => {
+    const res = await fetch(process.env.ENDPOINT_URL as string, {
+    method: "POST",
+      body: JSON.stringify({ query, variables }),
+    });
+
+    const json = await res.json();
+
+    if (json.errors) {
+      const { message } = json.errors[0];
+
+      throw new Error(message);
+    }
+
+    return json.data;
+  }
+}",
+]
+`;
+
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from just identifier > content 1`] = `
+"
+
+export const TestDocument = \`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+
+export const useTestQuery = <
+      TData = TTestQuery,
+      TError = unknown
+    >(
+      variables?: TTestQueryVariables,
+      options?: UseQueryOptions<TTestQuery, TError, TData>
+    ) => {
+    
+    return useQuery<TTestQuery, TError, TData>(
+      variables === undefined ? ['test'] : ['test', variables],
+      fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
+      options
+    )};
+
+export const TestDocument = \`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`;
+
+export const useTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
+    
+    return useMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+      ['test'],
+      (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
+      options
+    )};
+"
+`;
+
+exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from just identifier > prepend 1`] = `
+[
+  "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
+  "
+function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+  return async (): Promise<TData> => {
+    const res = await fetch(myEndpoint as string, {
+    method: "POST",
+      body: JSON.stringify({ query, variables }),
+    });
+
+    const json = await res.json();
+
+    if (json.errors) {
+      const { message } = json.errors[0];
+
+      throw new Error(message);
+    }
+
+    return json.data;
+  }
+}",
+]
+`;
+
+exports[`React-Query > reactQueryImportFrom: custom-path > Should import react-query from custom path > prepend 1`] = `
 [
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'custom-react-query';",
   "
@@ -1173,7 +1173,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 ]
 `;
 
-exports[`React-Query support import-type preset in v4: content 1`] = `
+exports[`React-Query > support import-type preset in v4 > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -1231,7 +1231,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query support import-type preset in v5: content 1`] = `
+exports[`React-Query > support import-type preset in v5 > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -1293,7 +1293,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query support v4 syntax: content 1`] = `
+exports[`React-Query > support v4 syntax > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -1366,7 +1366,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query support v4 syntax: prepend 1`] = `
+exports[`React-Query > support v4 syntax > prepend 1`] = `
 [
   "import { useQuery, useInfiniteQuery, useMutation, type UseQueryOptions, type UseInfiniteQueryOptions, type UseMutationOptions } from '@tanstack/react-query';",
   "
@@ -1392,7 +1392,7 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 ]
 `;
 
-exports[`React-Query support v5 syntax: content 1`] = `
+exports[`React-Query > support v5 syntax > content 1`] = `
 "
 
 export const TestDocument = \`
@@ -1511,7 +1511,7 @@ export const useTestMutation = <
 "
 `;
 
-exports[`React-Query support v5 syntax: prepend 1`] = `
+exports[`React-Query > support v5 syntax > prepend 1`] = `
 [
   "import { useQuery, useSuspenseQuery, useInfiniteQuery, useSuspenseInfiniteQuery, useMutation, UseQueryOptions, UseSuspenseQueryOptions, UseInfiniteQueryOptions, InfiniteData, UseSuspenseInfiniteQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
