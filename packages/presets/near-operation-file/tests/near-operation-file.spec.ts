@@ -383,7 +383,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6439 - generating code only for the last query inside a file', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -427,7 +427,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6520 - self-importing fragment', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -457,7 +457,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6546 - duplicate fragment imports', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -556,7 +556,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#7798 - importing type definitions of dependent fragments when `inlineFragmentType` is `mask`', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type User {
@@ -593,7 +593,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#406 - duplicate fragment imports', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -1192,7 +1192,7 @@ describe('near-operation-file preset', () => {
   });
 
   it('Should allow external fragments to be imported from packages with function', async () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
     await executePreset({
       baseOutputDir: './src/',
       config: {},
@@ -1478,7 +1478,7 @@ describe('near-operation-file preset', () => {
   });
 
   it('#1112 - should import only interface types that are in use', async () => {
-    const result = await executeCodegen({
+    const { result } = await executeCodegen({
       schema: [
         /* GraphQL */ `
           type Query {
@@ -1526,23 +1526,37 @@ describe('near-operation-file preset', () => {
       generatedDoc.filename.match(/issue-1112-operation/),
     ).content;
 
-    expect(interfaceContent).toContain(
-      "export type AnimalFragment_Cat = { __typename?: 'Cat', name: string };",
-    );
-    expect(interfaceContent).toContain(
-      "export type AnimalFragment_Dog = { __typename?: 'Dog', name: string };",
-    );
-    expect(interfaceContent).toContain(
-      'export type AnimalFragment = AnimalFragment_Cat | AnimalFragment_Dog;',
-    );
+    expect(interfaceContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
 
-    expect(operationContent).toContain(
-      "import { AnimalFragment_Cat } from './issue-1112-interface.generated'",
-    );
+      export type AnimalFragment_Cat = { __typename?: 'Cat', name: string };
+
+      export type AnimalFragment_Dog = { __typename?: 'Dog', name: string };
+
+      export type AnimalFragment =
+        | AnimalFragment_Cat
+        | AnimalFragment_Dog
+      ;
+      "
+    `);
+
+    expect(operationContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
+
+      import { AnimalFragment_Cat } from './issue-1112-interface.generated';
+      export type CatsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+      export type CatsQuery = { __typename?: 'Query', cats: Array<(
+          { __typename?: 'Cat' }
+          & AnimalFragment_Cat
+        )> };
+      "
+    `);
   });
 
   it('generates correctly without baseTypesPath for standalone typescript-operations', async () => {
-    const result = await executeCodegen({
+    const { result } = await executeCodegen({
       schema: /* GraphQL */ `
         type Query {
           user: User
