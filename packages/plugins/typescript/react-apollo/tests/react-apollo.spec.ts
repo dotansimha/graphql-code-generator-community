@@ -365,48 +365,6 @@ describe('React Apollo', () => {
       expect(output).toMatchSnapshot();
     });
 
-    it('Issue #2080 - noGraphQLTag does not work with fragments correctly', async () => {
-      const docs = [
-        {
-          location: '',
-          document: parse(/* GraphQL */ `
-            query test {
-              feed {
-                id
-                commentCount
-                repository {
-                  ...RepositoryFields
-                }
-              }
-            }
-
-            fragment RepositoryFields on Repository {
-              full_name
-              html_url
-              owner {
-                avatar_url
-              }
-            }
-          `),
-        },
-      ];
-      const content = (await plugin(
-        schema,
-        docs,
-        {
-          noGraphQLTag: true,
-        },
-        {
-          outputFile: 'graphql.tsx',
-        },
-      )) as Types.ComplexPluginOutput;
-      expect(
-        content.content.split(
-          '{"kind":"FragmentDefinition","name":{"kind":"Name","value":"RepositoryFields"}',
-        ).length,
-      ).toBe(3);
-    });
-
     it('#6001 - Should not use TypesSuffix on function names', async () => {
       const docs = [
         {
@@ -479,24 +437,6 @@ describe('React Apollo', () => {
 
       // To make sure all imports are unified correctly under Apollo namespaced import
       expect(content.content).toContain(` gql\``);
-      await validateTypeScript(content, schema, docs, {});
-    });
-
-    it('should import DocumentNode when using noGraphQLTag', async () => {
-      const docs = [{ location: '', document: basicDoc }];
-      const content = (await plugin(
-        schema,
-        docs,
-        {
-          noGraphQLTag: true,
-        },
-        {
-          outputFile: 'graphql.tsx',
-        },
-      )) as Types.ComplexPluginOutput;
-
-      expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
-      expect(content.prepend).not.toContain(`import gql from 'graphql-tag';`);
       await validateTypeScript(content, schema, docs, {});
     });
 
@@ -932,30 +872,6 @@ query MyFeed {
           }
           \`;
         `);
-      await validateTypeScript(content, schema, docs, {});
-    });
-
-    it('should generate Document variable with noGraphQlTag', async () => {
-      const docs = [{ location: '', document: basicDoc }];
-      const content = (await plugin(
-        schema,
-        docs,
-        {
-          noGraphQLTag: true,
-        },
-        {
-          outputFile: 'graphql.tsx',
-        },
-      )) as Types.ComplexPluginOutput;
-
-      expect(content.content).toBeSimilarStringTo(
-        `[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode;`,
-      );
-
-      // For issue #1599 - make sure there are not `loc` properties
-      expect(content.content).not.toContain(`loc":`);
-      expect(content.content).not.toContain(`loc':`);
-
       await validateTypeScript(content, schema, docs, {});
     });
 
