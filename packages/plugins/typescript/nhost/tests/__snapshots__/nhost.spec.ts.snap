@@ -1,46 +1,46 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TypeScript Nhost Plugin should generate the nhost-compatible schema 1`] = `
+exports[`TypeScript Nhost Plugin > should generate the nhost-compatible schema 1`] = `
 {
   "content": "/** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  DateTime: any;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type InputType = {
-  t?: InputMaybe<Scalars['String']>;
+  t?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['ID'];
-  username: Scalars['String'];
-  email: Scalars['String'];
+  id: Scalars['ID']['output'];
+  username: Scalars['String']['output'];
+  email: Scalars['String']['output'];
   profile?: Maybe<Profile>;
   role?: Maybe<Role>;
 };
 
 export type Profile = {
   __typename?: 'Profile';
-  age?: Maybe<Scalars['Int']>;
-  firstName: Scalars['String'];
+  age?: Maybe<Scalars['Int']['output']>;
+  firstName: Scalars['String']['output'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  test?: Maybe<Scalars['String']>;
+  test?: Maybe<Scalars['String']['output']>;
   login?: Maybe<User>;
 };
 
 
 export type Mutation_LoginArgs = {
-  username: Scalars['String'];
-  password: Scalars['String'];
+  username: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 };
 
 export type Subscription = {
@@ -49,28 +49,28 @@ export type Subscription = {
 };
 
 export type Notifiction = {
-  id: Scalars['ID'];
-  createdAt: Scalars['String'];
+  id: Scalars['ID']['output'];
+  createdAt: Scalars['String']['output'];
 };
 
 export type TextNotification = Notifiction & {
   __typename?: 'TextNotification';
-  id: Scalars['ID'];
-  text: Scalars['String'];
-  createdAt: Scalars['String'];
+  id: Scalars['ID']['output'];
+  text: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
 };
 
 export type ImageNotification = Notifiction & {
   __typename?: 'ImageNotification';
-  id: Scalars['ID'];
-  imageUrl: Scalars['String'];
+  id: Scalars['ID']['output'];
+  imageUrl: Scalars['String']['output'];
   metadata: ImageMetadata;
-  createdAt: Scalars['String'];
+  createdAt: Scalars['String']['output'];
 };
 
 export type ImageMetadata = {
   __typename?: 'ImageMetadata';
-  createdBy: Scalars['String'];
+  createdBy: Scalars['String']['output'];
 };
 
 export type Role =
@@ -90,17 +90,17 @@ export type Query = {
   notifications: Array<Notifiction>;
   mixedNotifications: Array<AnyNotification>;
   search: Array<SearchResult>;
-  dummy?: Maybe<Scalars['String']>;
-  dummyNonNull: Scalars['String'];
-  dummyArray?: Maybe<Array<Maybe<Scalars['String']>>>;
-  dummyNonNullArray: Array<Maybe<Scalars['String']>>;
-  dummyNonNullArrayWithValues: Array<Scalars['String']>;
+  dummy?: Maybe<Scalars['String']['output']>;
+  dummyNonNull: Scalars['String']['output'];
+  dummyArray?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  dummyNonNullArray: Array<Maybe<Scalars['String']['output']>>;
+  dummyNonNullArrayWithValues: Array<Scalars['String']['output']>;
   dummyWithType?: Maybe<Profile>;
 };
 
 
 export type Query_SearchArgs = {
-  term: Scalars['String'];
+  term: Scalars['String']['input'];
 };
 
 
@@ -728,6 +728,8 @@ export default {
     "export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };",
     "export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };",
     "export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };",
+    "export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };",
+    "export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };",
   ],
 }
 `;
