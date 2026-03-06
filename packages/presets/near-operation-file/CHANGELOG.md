@@ -1,5 +1,14 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 5.0.0
+
+### Major Changes
+
+- [#1385](https://github.com/dotansimha/graphql-code-generator-community/pull/1385)
+  [`76d5e05`](https://github.com/dotansimha/graphql-code-generator-community/commit/76d5e05861a65dc9879deca365d82da9bb61f0b3)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - BREAKING CHANGE: Remove the required
+  baseTypesPath condition to support typescript-operations v6
+
 ## 4.0.0
 
 ### Major Changes
