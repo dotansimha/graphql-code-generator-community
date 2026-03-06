@@ -50,7 +50,7 @@
   "devDependencies": {
     "@apollo/client": "3.14.0",
     "@graphql-codegen/core": "5.0.0",
-    "@graphql-codegen/testing": "4.0.1",
+    "@graphql-codegen/testing": "4.0.2",
     "@graphql-codegen/typescript-operations": "5.0.8",
     "@graphql-tools/schema": "10.0.31",
     "cross-fetch": "3.2.0",

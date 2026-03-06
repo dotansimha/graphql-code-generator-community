@@ -1521,6 +1521,15 @@
     lodash "~4.17.0"
     tslib "~2.6.0"
 
+"@graphql-codegen/schema-ast@^2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/schema-ast/-/schema-ast-2.6.1.tgz#8ba1b38827c034b51ecd3ce88622c2ae6cd3fe1a"
+  integrity sha512-5TNW3b1IHJjCh07D2yQNGDQzUpUl2AD+GVe1Dzjqyx/d2Fn0TPMxLsHsKPS4Plg4saO8FK/QO70wLsP7fdbQ1w==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^3.1.2"
+    "@graphql-tools/utils" "^9.0.0"
+    tslib "~2.4.0"
+
 "@graphql-codegen/schema-ast@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/schema-ast/-/schema-ast-5.0.0.tgz#9708d7484a01bb3a502685126708d7b139fd0721"
@@ -1530,10 +1539,10 @@
     "@graphql-tools/utils" "^10.0.0"
     tslib "~2.6.0"
 
-"@graphql-codegen/testing@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/testing/-/testing-4.0.1.tgz#c236dac7efb62a5275dcba3654b197b46480d5d7"
-  integrity sha512-PAZ8V6Ohn20Lcs6k9ePT81l8HMD4LPcGSUHFbaPxq9879jrs9klDqHcOkH67TMTJ1CiJIeEffAlvv+ZDafp0Vg==
+"@graphql-codegen/testing@4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/testing/-/testing-4.0.2.tgz#d62a5e00391d081bbd4b4726f32cda80d084a99c"
+  integrity sha512-JOi9WlV4b4mek4HYLPOnPVUYJ7Vy1Z34n2AHYMkzQyvVzYITIrRCMOfOAq860IepjX9lhwxhGncoVd5oe+/e8A==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^6.0.0"
     common-tags "^1.8.0"
@@ -1564,6 +1573,17 @@
     auto-bind "~4.0.0"
     tslib "~2.6.0"
 
+"@graphql-codegen/typescript@^2.8.1":
+  version "2.8.8"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-2.8.8.tgz#8c3b9153e334db43c65f8f31ced69b4c60d14861"
+  integrity sha512-A0oUi3Oy6+DormOlrTC4orxT9OBZkIglhbJBcDmk34jAKKUgesukXRd4yOhmTrnbchpXz2T8IAOFB3FWIaK4Rw==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^3.1.2"
+    "@graphql-codegen/schema-ast" "^2.6.1"
+    "@graphql-codegen/visitor-plugin-common" "2.13.8"
+    auto-bind "~4.0.0"
+    tslib "~2.4.0"
+
 "@graphql-codegen/typescript@^5.0.0", "@graphql-codegen/typescript@^5.0.8":
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-5.0.8.tgz#23ace3fa12ad88eea6ad1436a2b7354ef3255357"
@@ -1574,6 +1594,22 @@
     "@graphql-codegen/visitor-plugin-common" "6.2.3"
     auto-bind "~4.0.0"
     tslib "~2.6.0"
+
+"@graphql-codegen/visitor-plugin-common@2.13.8", "@graphql-codegen/visitor-plugin-common@^2.12.1", "@graphql-codegen/visitor-plugin-common@^2.13.8":
+  version "2.13.8"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-2.13.8.tgz#09bc6317b227e5a278f394f4cef0d6c2d1910597"
+  integrity sha512-IQWu99YV4wt8hGxIbBQPtqRuaWZhkQRG2IZKbMoSvh0vGeWb3dB0n0hSgKaOOxDY+tljtOf9MTcUYvJslQucMQ==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^3.1.2"
+    "@graphql-tools/optimize" "^1.3.0"
+    "@graphql-tools/relay-operation-optimizer" "^6.5.0"
+    "@graphql-tools/utils" "^9.0.0"
+    auto-bind "~4.0.0"
+    change-case-all "1.0.15"
+    dependency-graph "^0.11.0"
+    graphql-tag "^2.11.0"
+    parse-filepath "^1.0.2"
+    tslib "~2.4.0"
 
 "@graphql-codegen/visitor-plugin-common@6.2.3", "@graphql-codegen/visitor-plugin-common@^6.0.0", "@graphql-codegen/visitor-plugin-common@^6.2.1", "@graphql-codegen/visitor-plugin-common@^6.2.3":
   version "6.2.3"
@@ -1590,22 +1626,6 @@
     graphql-tag "^2.11.0"
     parse-filepath "^1.0.2"
     tslib "~2.6.0"
-
-"@graphql-codegen/visitor-plugin-common@^2.12.1", "@graphql-codegen/visitor-plugin-common@^2.13.8":
-  version "2.13.8"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-2.13.8.tgz#09bc6317b227e5a278f394f4cef0d6c2d1910597"
-  integrity sha512-IQWu99YV4wt8hGxIbBQPtqRuaWZhkQRG2IZKbMoSvh0vGeWb3dB0n0hSgKaOOxDY+tljtOf9MTcUYvJslQucMQ==
-  dependencies:
-    "@graphql-codegen/plugin-helpers" "^3.1.2"
-    "@graphql-tools/optimize" "^1.3.0"
-    "@graphql-tools/relay-operation-optimizer" "^6.5.0"
-    "@graphql-tools/utils" "^9.0.0"
-    auto-bind "~4.0.0"
-    change-case-all "1.0.15"
-    dependency-graph "^0.11.0"
-    graphql-tag "^2.11.0"
-    parse-filepath "^1.0.2"
-    tslib "~2.4.0"
 
 "@graphql-hive/signal@^1.0.0":
   version "1.0.0"
