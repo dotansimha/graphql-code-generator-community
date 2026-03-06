@@ -33,8 +33,7 @@
   },
   "typings": "dist/typings/index.d.ts",
   "scripts": {
-    "lint": "eslint **/*.ts",
-    "test": "jest --no-watchman --config ../../../../jest.config.js"
+    "lint": "eslint **/*.ts"
   },
   "peerDependencies": {
     "graphql": "^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0"

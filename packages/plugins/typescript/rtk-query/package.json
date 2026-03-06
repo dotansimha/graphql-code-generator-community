@@ -33,8 +33,7 @@
   },
   "typings": "dist/typings/index.d.ts",
   "scripts": {
-    "lint": "eslint **/*.ts",
-    "test": "jest --no-watchman --config ../../../../jest.config.js --forceExit"
+    "lint": "eslint **/*.ts"
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^1.6.0 || ^2.0.0",
