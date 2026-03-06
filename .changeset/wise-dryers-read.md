@@ -13,7 +13,6 @@
 '@graphql-codegen/typescript-stencil-apollo': major
 '@graphql-codegen/urql-introspection': major
 '@graphql-codegen/hasura-allow-list': major
-'@graphql-codegen/typescript-react-apollo': major
 '@graphql-codegen/c-sharp-common': major
 '@graphql-codegen/typescript-generic-sdk': major
 '@graphql-codegen/typescript-react-query': major
