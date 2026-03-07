@@ -120,8 +120,6 @@ export interface ReactQueryRawPluginConfig
   extends
     Omit<
       RawClientSideBasePluginConfig,
-      | 'documentMode'
-      | 'noGraphQLTag'
       | 'gqlImport'
       | 'documentNodeImport'
       | 'noExport'

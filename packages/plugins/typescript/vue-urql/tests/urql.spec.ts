@@ -8,9 +8,9 @@ import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import { plugin } from '../src/index.js';
 
 describe('urql', () => {
-  let spyConsoleError: jest.SpyInstance;
+  let spyConsoleError;
   beforeEach(() => {
-    spyConsoleError = jest.spyOn(console, 'warn');
+    spyConsoleError = vi.spyOn(console, 'warn');
     spyConsoleError.mockImplementation();
   });
 
@@ -51,7 +51,7 @@ describe('urql', () => {
 
   describe('Config', () => {
     it('should output warning if documentMode = external and importDocumentNodeExternallyFrom is not set', async () => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn');
       const docs = [{ location: '', document: basicDoc }];
       await plugin(
         schema,
@@ -71,7 +71,7 @@ describe('urql', () => {
     });
 
     it('output warning if importOperationTypesFrom is set to something other than "Operations"', async () => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn');
       const docs = [{ location: '', document: basicDoc }];
       await plugin(
         schema,
@@ -92,7 +92,7 @@ describe('urql', () => {
     });
 
     it('output warning if importOperationTypesFrom is set and documentMode is not "external"', async () => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn');
       const docs = [{ location: '', document: basicDoc }];
       await plugin(
         schema,
@@ -112,7 +112,7 @@ describe('urql', () => {
     });
 
     it('output warning if importOperationTypesFrom is set and importDocumentNodeExternallyFrom is not', async () => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn');
       const docs = [{ location: '', document: basicDoc }];
       await plugin(
         schema,
@@ -149,24 +149,6 @@ describe('urql', () => {
 
       expect(content.prepend).toContain(`import * as Urql from '@urql/vue';`);
       expect(content.prepend).toContain(`import gql from 'graphql-tag';`);
-      await validateTypeScript(content, schema, docs, {});
-    });
-
-    it('should import DocumentNode when using noGraphQLTag', async () => {
-      const docs = [{ location: '', document: basicDoc }];
-      const content = (await plugin(
-        schema,
-        docs,
-        {
-          noGraphQLTag: true,
-        },
-        {
-          outputFile: 'graphql.ts',
-        },
-      )) as Types.ComplexPluginOutput;
-
-      expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
-      expect(content.prepend).not.toContain(`import gql from 'graphql-tag';`);
       await validateTypeScript(content, schema, docs, {});
     });
 
@@ -416,30 +398,6 @@ query MyFeed {
           }
           \`;
         `);
-      await validateTypeScript(content, schema, docs, {});
-    });
-
-    it('should generate Document variable with noGraphQlTag', async () => {
-      const docs = [{ location: '', document: basicDoc }];
-      const content = (await plugin(
-        schema,
-        docs,
-        {
-          noGraphQLTag: true,
-        },
-        {
-          outputFile: 'graphql.ts',
-        },
-      )) as Types.ComplexPluginOutput;
-
-      expect(content.content).toBeSimilarStringTo(
-        `[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode;`,
-      );
-
-      // For issue #1599 - make sure there are not `loc` properties
-      expect(content.content).not.toContain(`loc":`);
-      expect(content.content).not.toContain(`loc':`);
-
       await validateTypeScript(content, schema, docs, {});
     });
 

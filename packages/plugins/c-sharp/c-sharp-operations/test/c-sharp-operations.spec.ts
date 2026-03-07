@@ -2,7 +2,6 @@ import { getJsonAttributeSourceConfiguration } from '@graphql-codegen/c-sharp-co
 import { Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
 import { buildSchema, parse } from 'graphql';
-import each from 'jest-each';
 import { CSharpOperationsRawPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
 
@@ -48,25 +47,25 @@ describe('C# Operations', () => {
       expect(result.content).toContain('namespace MyCompany.MyGeneratedGql {');
     });
 
-    each(['Newtonsoft.Json', 'System.Text.Json']).it(
-      `Should include configured '%s' using directives`,
-      async source => {
-        const schema = buildSchema(/* GraphQL */ `
-          enum ns {
-            dummy
-          }
-        `);
-        const config: CSharpOperationsRawPluginConfig = {
-          jsonAttributesSource: source,
-        };
-        const result = (await plugin(schema, [], config, {
-          outputFile: '',
-        })) as Types.ComplexPluginOutput;
-        const jsonConfig = getJsonAttributeSourceConfiguration(source);
+    it.each<CSharpOperationsRawPluginConfig['jsonAttributesSource']>([
+      'Newtonsoft.Json',
+      'System.Text.Json',
+    ])(`Should include configured '%s' using directives`, async source => {
+      const schema = buildSchema(/* GraphQL */ `
+        enum ns {
+          dummy
+        }
+      `);
+      const config: CSharpOperationsRawPluginConfig = {
+        jsonAttributesSource: source,
+      };
+      const result = (await plugin(schema, [], config, {
+        outputFile: '',
+      })) as Types.ComplexPluginOutput;
+      const jsonConfig = getJsonAttributeSourceConfiguration(source);
 
-        expect(result.content).toContain(`using ${jsonConfig.namespace};`);
-      },
-    );
+      expect(result.content).toContain(`using ${jsonConfig.namespace};`);
+    });
   });
 
   describe('Query', () => {
@@ -829,35 +828,35 @@ describe('C# Operations', () => {
       `);
     });
 
-    each(['Newtonsoft.Json', 'System.Text.Json']).it(
-      `Should generate scalar response class using '%s' source`,
-      async source => {
-        const schema = buildSchema(/* GraphQL */ `
-          type Subscription {
-            you: Int!
-          }
-        `);
-        const operation = parse(/* GraphQL */ `
-          subscription onNotifyYou {
-            you
-          }
-        `);
-        const jsonConfig = getJsonAttributeSourceConfiguration(source);
+    it.each<CSharpOperationsRawPluginConfig['jsonAttributesSource']>([
+      'Newtonsoft.Json',
+      'System.Text.Json',
+    ])(`Should generate scalar response class using '%s' source`, async source => {
+      const schema = buildSchema(/* GraphQL */ `
+        type Subscription {
+          you: Int!
+        }
+      `);
+      const operation = parse(/* GraphQL */ `
+        subscription onNotifyYou {
+          you
+        }
+      `);
+      const jsonConfig = getJsonAttributeSourceConfiguration(source);
 
-        const result = (await plugin(
-          schema,
-          [{ location: '', document: operation }],
-          { typesafeOperation: true, jsonAttributesSource: source },
-          { outputFile: '' },
-        )) as Types.ComplexPluginOutput;
-        expect(result.content).toBeSimilarStringTo(`
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: operation }],
+        { typesafeOperation: true, jsonAttributesSource: source },
+        { outputFile: '' },
+      )) as Types.ComplexPluginOutput;
+      expect(result.content).toBeSimilarStringTo(`
         public class Response {
           [${jsonConfig.propertyAttribute}("you")]
           public int you { get; set; }
         }
       `);
-      },
-    );
+    });
     it('Should generate nested response class', async () => {
       const schema = buildSchema(/* GraphQL */ `
         type Subscription {
@@ -1431,39 +1430,40 @@ describe('C# Operations', () => {
   });
 
   describe('MemberNamingConfig', () => {
-    each(['System.Text.Json', 'Newtonsoft.Json']).it(
-      'Should generate enums with pascal case values for %s',
-      async source => {
-        const schema = buildSchema(/* GraphQL */ `
-          type Query {
-            myQuery: MyEnum!
-          }
-          enum MyEnum {
-            Value1
-            value2
-            anotherValue
-            LastValue
-            SHOUTY_SNAKE_VALUE
-          }
-        `);
-        const operation = parse(/* GraphQL */ `
-          query GetMyQuery {
-            myQuery
-          }
-        `);
-        const jsonConfig = getJsonAttributeSourceConfiguration(source);
+    it.each<CSharpOperationsRawPluginConfig['jsonAttributesSource']>([
+      'System.Text.Json',
+      'Newtonsoft.Json',
+    ])('Should generate enums with pascal case values for %s', async source => {
+      const schema = buildSchema(/* GraphQL */ `
+        type Query {
+          myQuery: MyEnum!
+        }
+        enum MyEnum {
+          Value1
+          value2
+          anotherValue
+          LastValue
+          SHOUTY_SNAKE_VALUE
+        }
+      `);
+      const operation = parse(/* GraphQL */ `
+        query GetMyQuery {
+          myQuery
+        }
+      `);
+      const jsonConfig = getJsonAttributeSourceConfiguration(source);
 
-        const result = (await plugin(
-          schema,
-          [{ location: '', document: operation }],
-          {
-            typesafeOperation: true,
-            memberNameConvention: 'pascalCase',
-            jsonAttributesSource: source,
-          },
-          { outputFile: '' },
-        )) as Types.ComplexPluginOutput;
-        expect(result.content).toBeSimilarStringTo(`
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: operation }],
+        {
+          typesafeOperation: true,
+          memberNameConvention: 'pascalCase',
+          jsonAttributesSource: source,
+        },
+        { outputFile: '' },
+      )) as Types.ComplexPluginOutput;
+      expect(result.content).toBeSimilarStringTo(`
         ${jsonConfig.enumConfiguration.decorator}
         public enum MyEnum {
           ${jsonConfig.enumConfiguration.enumMemberAttribute('Value1')}
@@ -1478,8 +1478,7 @@ describe('C# Operations', () => {
           ShoutySnakeValue
         }
         `);
-      },
-    );
+    });
 
     it('Should generate input classes with pascal case property names', async () => {
       const schema = buildSchema(/* GraphQL */ `

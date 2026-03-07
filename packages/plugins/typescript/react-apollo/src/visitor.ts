@@ -631,7 +631,7 @@ export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactH
         suffix: operationTypeSuffix + this._parsedConfig.operationResultSuffix,
       });
 
-      const IDType = this.scalars.ID ?? 'string';
+      const IDType = this.scalars.ID.output ?? 'string';
 
       const hook = `export function use${fragmentName}<F = { id: ${IDType} }>(identifiers: F) {
   return ${this.getApolloReactHooksIdentifier()}.use${operationType}<${operationResultType}>({

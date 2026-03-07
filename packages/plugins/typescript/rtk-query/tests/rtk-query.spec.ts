@@ -7,9 +7,9 @@ import { plugin } from '../src/index.js';
 const githunt = resolve(__dirname, '../../../../../dev-test/githunt/');
 
 describe('RTK Query', () => {
-  let spyConsoleError: jest.SpyInstance;
+  let spyConsoleError;
   beforeEach(() => {
-    spyConsoleError = jest.spyOn(console, 'warn');
+    spyConsoleError = vi.spyOn(console, 'warn');
     spyConsoleError.mockImplementation();
   });
 

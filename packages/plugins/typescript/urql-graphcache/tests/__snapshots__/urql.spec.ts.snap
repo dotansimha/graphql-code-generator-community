@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`urql graphcache Should correctly name GraphCacheResolvers & GraphCacheOptimisticUpdaters with nonstandard mutationType names 1`] = `
+exports[`urql graphcache > Should correctly name GraphCacheResolvers & GraphCacheOptimisticUpdaters with nonstandard mutationType names 1`] = `
 "import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
@@ -48,7 +48,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should correctly output GraphCacheOptimisticUpdaters when there are no mutations 1`] = `
+exports[`urql graphcache > Should correctly output GraphCacheOptimisticUpdaters when there are no mutations 1`] = `
 "import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
@@ -92,7 +92,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should output the cache-generic correctly (with interfaces) 1`] = `
+exports[`urql graphcache > Should output the cache-generic correctly (with interfaces) 1`] = `
 "import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
@@ -164,7 +164,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should output the cache-generic correctly (with typesPrefix and typesSuffix) 1`] = `
+exports[`urql graphcache > Should output the cache-generic correctly (with typesPrefix and typesSuffix) 1`] = `
 "import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
@@ -235,7 +235,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should output the cache-generic correctly (with unions) 1`] = `
+exports[`urql graphcache > Should output the cache-generic correctly (with unions) 1`] = `
 "import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
@@ -294,7 +294,7 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should output the cache-generic correctly 1`] = `
+exports[`urql graphcache > Should output the cache-generic correctly 1`] = `
 "import { cacheExchange } from '@urql/exchange-graphcache';
 import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 

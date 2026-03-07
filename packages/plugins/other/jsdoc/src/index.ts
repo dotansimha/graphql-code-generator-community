@@ -11,11 +11,11 @@ import { getCachedDocumentNodeFromSchema, PluginFunction } from '@graphql-codege
 import { DEFAULT_SCALARS, RawDocumentsConfig } from '@graphql-codegen/visitor-plugin-common';
 
 const transformScalar = (scalar: string) => {
-  if (DEFAULT_SCALARS[scalar] === undefined) {
+  if (DEFAULT_SCALARS[scalar]?.output === undefined) {
     return scalar;
   }
 
-  return DEFAULT_SCALARS[scalar];
+  return DEFAULT_SCALARS[scalar].output;
 };
 
 const createDocBlock = (lines: Array<string>) => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`urql Hooks Should generate subscription hooks with optional arguments 1`] = `
+exports[`urql > Hooks > Should generate subscription hooks with optional arguments 1`] = `
 "import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -18,7 +18,7 @@ export function useListenToCommentsSubscription<TData = ListenToCommentsSubscrip
 };"
 `;
 
-exports[`urql Hooks Should generate subscription hooks with required arguments 1`] = `
+exports[`urql > Hooks > Should generate subscription hooks with required arguments 1`] = `
 "import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -36,7 +36,7 @@ export function useListenToCommentsSubscription<TData = ListenToCommentsSubscrip
 };"
 `;
 
-exports[`urql Hooks should allow importing operations and documents from another file 1`] = `
+exports[`urql > Hooks > should allow importing operations and documents from another file 1`] = `
 "import * as Operations from '@myproject/generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

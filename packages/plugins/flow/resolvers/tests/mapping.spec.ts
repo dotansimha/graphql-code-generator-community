@@ -125,7 +125,7 @@ describe('ResolversTypes', () => {
   });
 
   it('should warn about unused mappers by default', async () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const testSchema = buildSchema(/* GraphQL */ `
       type Query {
         comments: [Comment!]!
@@ -162,7 +162,7 @@ describe('ResolversTypes', () => {
   });
 
   it('should be able not to warn about unused mappers', async () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const testSchema = buildSchema(/* GraphQL */ `
       type Query {
         comments: [Comment!]!
@@ -364,7 +364,7 @@ describe('ResolversTypes', () => {
   });
 
   it('Should generate the correct resolvers when used with mappers with interfaces', async () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const result = (await plugin(
       resolversTestingSchema,
       [],

@@ -40,24 +40,6 @@ describe('Apollo Angular', () => {
   };
 
   describe('Imports', () => {
-    it('should import DocumentNode when using noGraphQLTag', async () => {
-      const docs = [{ location: '', document: basicDoc }];
-      const content = (await plugin(
-        schema,
-        docs,
-        {
-          noGraphQLTag: true,
-        },
-        {
-          outputFile: 'graphql.tsx',
-        },
-      )) as Types.ComplexPluginOutput;
-
-      expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
-      expect(content.prepend).not.toContain(`import gql from 'graphql-tag';`);
-      await validateTypeScript(content, schema, docs, {});
-    });
-
     it(`should use gql import from gqlImport config option`, async () => {
       const docs = [{ location: '', document: basicDoc }];
       const content = (await plugin(
@@ -236,7 +218,7 @@ describe('Apollo Angular', () => {
     });
 
     it('should output warning if documentMode = external and importDocumentNodeExternallyFrom is not set', async () => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn');
       const docs = [{ location: '', document: basicDoc }];
       await plugin(
         schema,
@@ -256,7 +238,7 @@ describe('Apollo Angular', () => {
     });
 
     it('output warning if importOperationTypesFrom is set to something other than "Operations"', async () => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn');
       const docs = [{ location: '', document: basicDoc }];
       await plugin(
         schema,
@@ -277,7 +259,7 @@ describe('Apollo Angular', () => {
     });
 
     it('output warning if importOperationTypesFrom is set and documentMode is not "external"', async () => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn');
       const docs = [{ location: '', document: basicDoc }];
       await plugin(
         schema,
@@ -297,7 +279,7 @@ describe('Apollo Angular', () => {
     });
 
     it('output warning if importOperationTypesFrom is set and importDocumentNodeExternallyFrom is not', async () => {
-      jest.spyOn(console, 'warn');
+      vi.spyOn(console, 'warn');
       const docs = [{ location: '', document: basicDoc }];
       await plugin(
         schema,

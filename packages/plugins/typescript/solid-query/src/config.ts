@@ -107,8 +107,6 @@ export interface SolidQueryRawPluginConfig
   extends
     Omit<
       RawClientSideBasePluginConfig,
-      | 'documentMode'
-      | 'noGraphQLTag'
       | 'gqlImport'
       | 'documentNodeImport'
       | 'noExport'

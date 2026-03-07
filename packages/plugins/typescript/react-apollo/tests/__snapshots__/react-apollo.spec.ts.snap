@@ -1,21 +1,23 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`React Apollo Issues Issue #2742 - Incorrect import prefix 1`] = `
+exports[`React Apollo > Issues > Issue #2742 - Incorrect import prefix 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type Query = {
@@ -30,13 +32,13 @@ export type Query = {
 
 export type QueryFeedArgs = {
   type: FeedType;
-  offset?: InputMaybe<Scalars['Int']>;
-  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryEntryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 /** A list of options for the sort order of the feed */
@@ -56,17 +58,17 @@ export type Entry = {
   /** The GitHub user who submitted this entry */
   postedBy: User;
   /** A timestamp of when the entry was submitted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The score of this repository, upvotes - downvotes */
-  score: Scalars['Int'];
+  score: Scalars['Int']['output'];
   /** The hot score of this repository */
-  hotScore: Scalars['Float'];
+  hotScore: Scalars['Float']['output'];
   /** Comments posted about this repository */
   comments: Array<Maybe<Comment>>;
   /** The number of comments posted about this repository */
-  commentCount: Scalars['Int'];
+  commentCount: Scalars['Int']['output'];
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** XXX to be changed */
   vote: Vote;
 };
@@ -74,8 +76,8 @@ export type Entry = {
 
 /** Information about a GitHub repository submitted to GitHunt */
 export type EntryCommentsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /**
@@ -84,17 +86,17 @@ export type EntryCommentsArgs = {
  */
 export type Repository = {
   /** Just the name of the repository, e.g. GitHunt-API */
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
   /** The full name of the repository with the username, e.g. apollostack/GitHunt-API */
-  full_name: Scalars['String'];
+  full_name: Scalars['String']['output'];
   /** The description of the repository */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The link to the repository on GitHub */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
   /** The number of people who have starred this repository on GitHub */
-  stargazers_count: Scalars['Int'];
+  stargazers_count: Scalars['Int']['output'];
   /** The number of open issues on this repository on GitHub */
-  open_issues_count?: Maybe<Scalars['Int']>;
+  open_issues_count?: Maybe<Scalars['Int']['output']>;
   /** The owner of this repository on GitHub, e.g. apollostack */
   owner?: Maybe<User>;
 };
@@ -102,30 +104,30 @@ export type Repository = {
 /** A user object from the GitHub API. This uses the exact field names returned from the GitHub API. */
 export type User = {
   /** The name of the user, e.g. apollostack */
-  login: Scalars['String'];
+  login: Scalars['String']['output'];
   /** The URL to a directly embeddable image for this user's avatar */
-  avatar_url: Scalars['String'];
+  avatar_url: Scalars['String']['output'];
   /** The URL of this user's GitHub page */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
 };
 
 /** A comment about an entry, submitted by a user */
 export type Comment = {
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** The GitHub user who posted the comment */
   postedBy: User;
   /** A timestamp of when the comment was posted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The text of the comment */
-  content: Scalars['String'];
+  content: Scalars['String']['output'];
   /** The repository which this comment is about */
-  repoName: Scalars['String'];
+  repoName: Scalars['String']['output'];
 };
 
 /** XXX to be removed */
 export type Vote = {
-  vote_value: Scalars['Int'];
+  vote_value: Scalars['Int']['output'];
 };
 
 export type Mutation = {
@@ -139,19 +141,19 @@ export type Mutation = {
 
 
 export type MutationSubmitRepositoryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 
 export type MutationVoteArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
   type: VoteType;
 };
 
 
 export type MutationSubmitCommentArgs = {
-  repoFullName: Scalars['String'];
-  commentContent: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
+  commentContent: Scalars['String']['input'];
 };
 
 /** The type of vote to record, when submitting a vote */
@@ -168,7 +170,7 @@ export type Subscription = {
 
 
 export type SubscriptionCommentAddedArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 export type Get_SomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -203,22 +205,24 @@ export type Get_SomethingSuspenseQueryHookResult = ReturnType<typeof useGet_Some
 export type Get_SomethingQueryResult = Apollo.QueryResult<Types.Get_SomethingQuery, Types.Get_SomethingQueryVariables>;"
 `;
 
-exports[`React Apollo Issues Issue #2826 - Incorrect prefix 1`] = `
+exports[`React Apollo > Issues > Issue #2826 - Incorrect prefix 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type GQLQuery = {
@@ -233,13 +237,13 @@ export type GQLQuery = {
 
 export type GQLQueryFeedArgs = {
   type: GQLFeedType;
-  offset?: InputMaybe<Scalars['Int']>;
-  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type GQLQueryEntryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 /** A list of options for the sort order of the feed */
@@ -259,17 +263,17 @@ export type GQLEntry = {
   /** The GitHub user who submitted this entry */
   postedBy: GQLUser;
   /** A timestamp of when the entry was submitted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The score of this repository, upvotes - downvotes */
-  score: Scalars['Int'];
+  score: Scalars['Int']['output'];
   /** The hot score of this repository */
-  hotScore: Scalars['Float'];
+  hotScore: Scalars['Float']['output'];
   /** Comments posted about this repository */
   comments: Array<Maybe<GQLComment>>;
   /** The number of comments posted about this repository */
-  commentCount: Scalars['Int'];
+  commentCount: Scalars['Int']['output'];
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** XXX to be changed */
   vote: GQLVote;
 };
@@ -277,8 +281,8 @@ export type GQLEntry = {
 
 /** Information about a GitHub repository submitted to GitHunt */
 export type GQLEntryCommentsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /**
@@ -287,17 +291,17 @@ export type GQLEntryCommentsArgs = {
  */
 export type GQLRepository = {
   /** Just the name of the repository, e.g. GitHunt-API */
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
   /** The full name of the repository with the username, e.g. apollostack/GitHunt-API */
-  full_name: Scalars['String'];
+  full_name: Scalars['String']['output'];
   /** The description of the repository */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The link to the repository on GitHub */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
   /** The number of people who have starred this repository on GitHub */
-  stargazers_count: Scalars['Int'];
+  stargazers_count: Scalars['Int']['output'];
   /** The number of open issues on this repository on GitHub */
-  open_issues_count?: Maybe<Scalars['Int']>;
+  open_issues_count?: Maybe<Scalars['Int']['output']>;
   /** The owner of this repository on GitHub, e.g. apollostack */
   owner?: Maybe<GQLUser>;
 };
@@ -305,30 +309,30 @@ export type GQLRepository = {
 /** A user object from the GitHub API. This uses the exact field names returned from the GitHub API. */
 export type GQLUser = {
   /** The name of the user, e.g. apollostack */
-  login: Scalars['String'];
+  login: Scalars['String']['output'];
   /** The URL to a directly embeddable image for this user's avatar */
-  avatar_url: Scalars['String'];
+  avatar_url: Scalars['String']['output'];
   /** The URL of this user's GitHub page */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
 };
 
 /** A comment about an entry, submitted by a user */
 export type GQLComment = {
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** The GitHub user who posted the comment */
   postedBy: GQLUser;
   /** A timestamp of when the comment was posted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The text of the comment */
-  content: Scalars['String'];
+  content: Scalars['String']['output'];
   /** The repository which this comment is about */
-  repoName: Scalars['String'];
+  repoName: Scalars['String']['output'];
 };
 
 /** XXX to be removed */
 export type GQLVote = {
-  vote_value: Scalars['Int'];
+  vote_value: Scalars['Int']['output'];
 };
 
 export type GQLMutation = {
@@ -342,19 +346,19 @@ export type GQLMutation = {
 
 
 export type GQLMutationSubmitRepositoryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 
 export type GQLMutationVoteArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
   type: GQLVoteType;
 };
 
 
 export type GQLMutationSubmitCommentArgs = {
-  repoFullName: Scalars['String'];
-  commentContent: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
+  commentContent: Scalars['String']['input'];
 };
 
 /** The type of vote to record, when submitting a vote */
@@ -371,7 +375,7 @@ export type GQLSubscription = {
 
 
 export type GQLSubscriptionCommentAddedArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 export type GQLGet_SomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -406,22 +410,24 @@ export type Get_SomethingSuspenseQueryHookResult = ReturnType<typeof useGet_Some
 export type Get_SomethingQueryResult = Apollo.QueryResult<GQLGet_SomethingQuery, GQLGet_SomethingQueryVariables>;"
 `;
 
-exports[`React Apollo Issues PR #2725 - transformUnderscore: true causes invalid output 1`] = `
+exports[`React Apollo > Issues > PR #2725 - transformUnderscore: true causes invalid output 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type Query = {
@@ -436,13 +442,13 @@ export type Query = {
 
 export type QueryFeedArgs = {
   type: FeedType;
-  offset?: InputMaybe<Scalars['Int']>;
-  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryEntryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 /** A list of options for the sort order of the feed */
@@ -462,17 +468,17 @@ export type Entry = {
   /** The GitHub user who submitted this entry */
   postedBy: User;
   /** A timestamp of when the entry was submitted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The score of this repository, upvotes - downvotes */
-  score: Scalars['Int'];
+  score: Scalars['Int']['output'];
   /** The hot score of this repository */
-  hotScore: Scalars['Float'];
+  hotScore: Scalars['Float']['output'];
   /** Comments posted about this repository */
   comments: Array<Maybe<Comment>>;
   /** The number of comments posted about this repository */
-  commentCount: Scalars['Int'];
+  commentCount: Scalars['Int']['output'];
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** XXX to be changed */
   vote: Vote;
 };
@@ -480,8 +486,8 @@ export type Entry = {
 
 /** Information about a GitHub repository submitted to GitHunt */
 export type EntryCommentsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /**
@@ -490,17 +496,17 @@ export type EntryCommentsArgs = {
  */
 export type Repository = {
   /** Just the name of the repository, e.g. GitHunt-API */
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
   /** The full name of the repository with the username, e.g. apollostack/GitHunt-API */
-  full_name: Scalars['String'];
+  full_name: Scalars['String']['output'];
   /** The description of the repository */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The link to the repository on GitHub */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
   /** The number of people who have starred this repository on GitHub */
-  stargazers_count: Scalars['Int'];
+  stargazers_count: Scalars['Int']['output'];
   /** The number of open issues on this repository on GitHub */
-  open_issues_count?: Maybe<Scalars['Int']>;
+  open_issues_count?: Maybe<Scalars['Int']['output']>;
   /** The owner of this repository on GitHub, e.g. apollostack */
   owner?: Maybe<User>;
 };
@@ -508,30 +514,30 @@ export type Repository = {
 /** A user object from the GitHub API. This uses the exact field names returned from the GitHub API. */
 export type User = {
   /** The name of the user, e.g. apollostack */
-  login: Scalars['String'];
+  login: Scalars['String']['output'];
   /** The URL to a directly embeddable image for this user's avatar */
-  avatar_url: Scalars['String'];
+  avatar_url: Scalars['String']['output'];
   /** The URL of this user's GitHub page */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
 };
 
 /** A comment about an entry, submitted by a user */
 export type Comment = {
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** The GitHub user who posted the comment */
   postedBy: User;
   /** A timestamp of when the comment was posted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The text of the comment */
-  content: Scalars['String'];
+  content: Scalars['String']['output'];
   /** The repository which this comment is about */
-  repoName: Scalars['String'];
+  repoName: Scalars['String']['output'];
 };
 
 /** XXX to be removed */
 export type Vote = {
-  vote_value: Scalars['Int'];
+  vote_value: Scalars['Int']['output'];
 };
 
 export type Mutation = {
@@ -545,19 +551,19 @@ export type Mutation = {
 
 
 export type MutationSubmitRepositoryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 
 export type MutationVoteArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
   type: VoteType;
 };
 
 
 export type MutationSubmitCommentArgs = {
-  repoFullName: Scalars['String'];
-  commentContent: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
+  commentContent: Scalars['String']['input'];
 };
 
 /** The type of vote to record, when submitting a vote */
@@ -574,7 +580,7 @@ export type Subscription = {
 
 
 export type SubscriptionCommentAddedArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 export type GetSomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -609,22 +615,24 @@ export type GetSomethingSuspenseQueryHookResult = ReturnType<typeof useGetSometh
 export type GetSomethingQueryResult = Apollo.QueryResult<GetSomethingQuery, GetSomethingQueryVariables>;"
 `;
 
-exports[`React Apollo Issues PR #2725 - transformUnderscore: true causes invalid output 2`] = `
+exports[`React Apollo > Issues > PR #2725 - transformUnderscore: true causes invalid output 2`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type Query = {
@@ -639,13 +647,13 @@ export type Query = {
 
 export type QueryFeedArgs = {
   type: FeedType;
-  offset?: InputMaybe<Scalars['Int']>;
-  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryEntryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 /** A list of options for the sort order of the feed */
@@ -665,17 +673,17 @@ export type Entry = {
   /** The GitHub user who submitted this entry */
   postedBy: User;
   /** A timestamp of when the entry was submitted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The score of this repository, upvotes - downvotes */
-  score: Scalars['Int'];
+  score: Scalars['Int']['output'];
   /** The hot score of this repository */
-  hotScore: Scalars['Float'];
+  hotScore: Scalars['Float']['output'];
   /** Comments posted about this repository */
   comments: Array<Maybe<Comment>>;
   /** The number of comments posted about this repository */
-  commentCount: Scalars['Int'];
+  commentCount: Scalars['Int']['output'];
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** XXX to be changed */
   vote: Vote;
 };
@@ -683,8 +691,8 @@ export type Entry = {
 
 /** Information about a GitHub repository submitted to GitHunt */
 export type EntryCommentsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /**
@@ -693,17 +701,17 @@ export type EntryCommentsArgs = {
  */
 export type Repository = {
   /** Just the name of the repository, e.g. GitHunt-API */
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
   /** The full name of the repository with the username, e.g. apollostack/GitHunt-API */
-  full_name: Scalars['String'];
+  full_name: Scalars['String']['output'];
   /** The description of the repository */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The link to the repository on GitHub */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
   /** The number of people who have starred this repository on GitHub */
-  stargazers_count: Scalars['Int'];
+  stargazers_count: Scalars['Int']['output'];
   /** The number of open issues on this repository on GitHub */
-  open_issues_count?: Maybe<Scalars['Int']>;
+  open_issues_count?: Maybe<Scalars['Int']['output']>;
   /** The owner of this repository on GitHub, e.g. apollostack */
   owner?: Maybe<User>;
 };
@@ -711,30 +719,30 @@ export type Repository = {
 /** A user object from the GitHub API. This uses the exact field names returned from the GitHub API. */
 export type User = {
   /** The name of the user, e.g. apollostack */
-  login: Scalars['String'];
+  login: Scalars['String']['output'];
   /** The URL to a directly embeddable image for this user's avatar */
-  avatar_url: Scalars['String'];
+  avatar_url: Scalars['String']['output'];
   /** The URL of this user's GitHub page */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
 };
 
 /** A comment about an entry, submitted by a user */
 export type Comment = {
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** The GitHub user who posted the comment */
   postedBy: User;
   /** A timestamp of when the comment was posted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The text of the comment */
-  content: Scalars['String'];
+  content: Scalars['String']['output'];
   /** The repository which this comment is about */
-  repoName: Scalars['String'];
+  repoName: Scalars['String']['output'];
 };
 
 /** XXX to be removed */
 export type Vote = {
-  vote_value: Scalars['Int'];
+  vote_value: Scalars['Int']['output'];
 };
 
 export type Mutation = {
@@ -748,19 +756,19 @@ export type Mutation = {
 
 
 export type MutationSubmitRepositoryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 
 export type MutationVoteArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
   type: VoteType;
 };
 
 
 export type MutationSubmitCommentArgs = {
-  repoFullName: Scalars['String'];
-  commentContent: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
+  commentContent: Scalars['String']['input'];
 };
 
 /** The type of vote to record, when submitting a vote */
@@ -777,7 +785,7 @@ export type Subscription = {
 
 
 export type SubscriptionCommentAddedArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 export type GetSomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -812,7 +820,7 @@ export type GetSomethingSuspenseQueryHookResult = ReturnType<typeof useGetSometh
 export type GetSomethingQueryResult = Apollo.QueryResult<GetSomethingQuery, GetSomethingQueryVariables>;"
 `;
 
-exports[`React Apollo documentMode and importDocumentNodeExternallyFrom should generate definitions Document variable when documentMode is "documentNode" and nested fragments 1`] = `
+exports[`React Apollo > documentMode and importDocumentNodeExternallyFrom > should generate definitions Document variable when documentMode is "documentNode" and nested fragments 1`] = `
 "export const CFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"C"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"greeting"}}]}}]} as unknown as DocumentNode;
 export const BFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"B"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"C"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"greeting"}}]}}]} as unknown as DocumentNode;
 export const AFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"A"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"B"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"C"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"greeting"}}]}}]} as unknown as DocumentNode;

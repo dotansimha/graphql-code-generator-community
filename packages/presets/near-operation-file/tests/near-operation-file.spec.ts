@@ -383,7 +383,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6439 - generating code only for the last query inside a file', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -427,7 +427,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6520 - self-importing fragment', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -457,7 +457,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6546 - duplicate fragment imports', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -556,7 +556,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#7798 - importing type definitions of dependent fragments when `inlineFragmentType` is `mask`', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type User {
@@ -593,7 +593,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#406 - duplicate fragment imports', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -1192,7 +1192,7 @@ describe('near-operation-file preset', () => {
   });
 
   it('Should allow external fragments to be imported from packages with function', async () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
     await executePreset({
       baseOutputDir: './src/',
       config: {},
@@ -1301,184 +1301,8 @@ describe('near-operation-file preset', () => {
     );
   });
 
-  it('Should import relevant fragments on dedupeFragments', async () => {
-    const testSchema = parse(/* GraphQL */ `
-      schema {
-        query: Query
-      }
-
-      type Query {
-        animals: [Animal!]!
-      }
-
-      type Group {
-        id: ID!
-        name: String!
-      }
-      type Animal {
-        id: ID!
-        name: String!
-        group: Group
-      }
-    `);
-
-    const operations = [
-      {
-        location: '/operations/document.graphql',
-        document: parse(/* GraphQL */ `
-          #import "./fragments/MyAnimalFragment.graphql"
-
-          query Test {
-            animals {
-              ...MyAnimalFragment
-            }
-          }
-        `),
-      },
-      {
-        location: '/operations/fragments/AnotherGroupFragment.graphql',
-        document: parse(/* GraphQL */ `
-          fragment AnotherGroupFragment on Group {
-            id
-          }
-        `),
-      },
-      {
-        location: '/operations/fragments/MyAnimalFragment.graphql',
-        document: parse(/* GraphQL */ `
-          #import "./MyGroupFragment.graphql"
-
-          fragment MyAnimalFragment on Animal {
-            name
-            group {
-              ...MyGroupFragment
-            }
-          }
-        `),
-      },
-      {
-        location: '/operations/fragments/MyGroupFragment.graphql',
-        document: parse(/* GraphQL */ `
-          #import "./AnotherGroupFragment.graphql"
-
-          fragment MyGroupFragment on Group {
-            ...AnotherGroupFragment
-            name
-          }
-        `),
-      },
-    ];
-
-    const result = await executePreset({
-      baseOutputDir: './src/',
-      config: {
-        skipTypename: true,
-        dedupeFragments: true,
-        exportFragmentSpreadSubTypes: true,
-      },
-      presetConfig: {
-        extension: '.ts',
-        baseTypesPath: '../types',
-      },
-      schema: testSchema,
-      schemaAst: buildASTSchema(testSchema),
-      documents: operations,
-      plugins: [{ typescript: {} }, { 'typescript-operations': {} }, { 'typed-document-node': {} }],
-      pluginMap: {
-        typescript: {} as any,
-        'typescript-operations': {} as any,
-        'typed-document-node': {} as any,
-      },
-    });
-
-    expect(getFragmentImportsFromResult(result)).toContain(
-      `import { MyGroupFragmentFragmentDoc, MyGroupFragmentFragment } from './fragments/MyGroupFragment';`,
-    );
-
-    expect(getFragmentImportsFromResult(result)).toContain(
-      `import { AnotherGroupFragmentFragmentDoc, AnotherGroupFragmentFragment } from './fragments/AnotherGroupFragment';`,
-    );
-  });
-
-  it('Should import relevant nested fragments on dedupeFragments', async () => {
-    const schema = parse(/* GraphQL */ `
-      type Address {
-        city: String
-      }
-
-      type Author {
-        address: Address
-      }
-
-      type Book {
-        author: Author
-      }
-
-      type Query {
-        book: Book
-      }
-    `);
-
-    const operations = [
-      {
-        location: '/author.graphql',
-        document: parse(/* GraphQL */ `
-          fragment Address on Address {
-            city
-          }
-
-          fragment Author on Author {
-            address {
-              ...Address
-            }
-          }
-        `),
-      },
-      {
-        location: '/book.graphql',
-        document: parse(/* GraphQL */ `
-          fragment Book on Book {
-            author {
-              ...Author
-            }
-          }
-
-          query Book {
-            book {
-              ...Book
-            }
-          }
-        `),
-      },
-    ];
-
-    const result = await executePreset({
-      baseOutputDir: './src/',
-      config: {
-        dedupeFragments: true,
-      },
-      presetConfig: {
-        extension: '.ts',
-        baseTypesPath: './types',
-      },
-      schema,
-      schemaAst: buildASTSchema(schema),
-      documents: operations,
-      plugins: [{ typescript: {} }, { 'typescript-operations': {} }, { 'typed-document-node': {} }],
-      pluginMap: {
-        typescript: {} as any,
-        'typescript-operations': {} as any,
-        'typed-document-node': {} as any,
-      },
-    });
-
-    expect(getFragmentImportsFromResult(result, 1)).toContain(
-      `import { AuthorFragmentDoc, AuthorFragment, AddressFragmentDoc, AddressFragment } from './author';`,
-    );
-  });
-
   it('#1112 - should import only interface types that are in use', async () => {
-    const result = await executeCodegen({
+    const { result } = await executeCodegen({
       schema: [
         /* GraphQL */ `
           type Query {
@@ -1526,23 +1350,37 @@ describe('near-operation-file preset', () => {
       generatedDoc.filename.match(/issue-1112-operation/),
     ).content;
 
-    expect(interfaceContent).toContain(
-      "export type AnimalFragment_Cat = { __typename?: 'Cat', name: string };",
-    );
-    expect(interfaceContent).toContain(
-      "export type AnimalFragment_Dog = { __typename?: 'Dog', name: string };",
-    );
-    expect(interfaceContent).toContain(
-      'export type AnimalFragment = AnimalFragment_Cat | AnimalFragment_Dog;',
-    );
+    expect(interfaceContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
 
-    expect(operationContent).toContain(
-      "import { AnimalFragment_Cat } from './issue-1112-interface.generated'",
-    );
+      export type AnimalFragment_Cat = { __typename?: 'Cat', name: string };
+
+      export type AnimalFragment_Dog = { __typename?: 'Dog', name: string };
+
+      export type AnimalFragment =
+        | AnimalFragment_Cat
+        | AnimalFragment_Dog
+      ;
+      "
+    `);
+
+    expect(operationContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
+
+      import { AnimalFragment_Cat } from './issue-1112-interface.generated';
+      export type CatsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+      export type CatsQuery = { __typename?: 'Query', cats: Array<(
+          { __typename?: 'Cat' }
+          & AnimalFragment_Cat
+        )> };
+      "
+    `);
   });
 
   it('generates correctly without baseTypesPath for standalone typescript-operations', async () => {
-    const result = await executeCodegen({
+    const { result } = await executeCodegen({
       schema: /* GraphQL */ `
         type Query {
           user: User

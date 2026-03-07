@@ -10,9 +10,9 @@ import { VueApolloRawPluginConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
 
 describe('Vue Apollo', () => {
-  let spyConsoleError: jest.SpyInstance;
+  let spyConsoleError;
   beforeEach(() => {
-    spyConsoleError = jest.spyOn(console, 'warn');
+    spyConsoleError = vi.spyOn(console, 'warn');
     spyConsoleError.mockImplementation();
   });
 
@@ -132,24 +132,6 @@ describe('Vue Apollo', () => {
       expect(content.prepend).toContain(
         `import * as VueCompositionApi from 'custom-composition-api-package';`,
       );
-      await validateTypeScript(content, schema, docs, {});
-    });
-
-    it('should import DocumentNode when using noGraphQLTag', async () => {
-      const docs = [{ location: '', document: basicDoc }];
-      const content = (await plugin(
-        schema,
-        docs,
-        {
-          noGraphQLTag: true,
-        },
-        {
-          outputFile: 'graphql.ts',
-        },
-      )) as Types.ComplexPluginOutput;
-
-      expect(content.prepend).toContain(`import { DocumentNode } from 'graphql';`);
-      expect(content.prepend).not.toContain(`import gql from 'graphql-tag';`);
       await validateTypeScript(content, schema, docs, {});
     });
 

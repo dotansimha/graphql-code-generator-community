@@ -384,7 +384,7 @@ async function test() {
         }
       `);
 
-      const warnSpy = jest.spyOn(console, 'warn');
+      const warnSpy = vi.spyOn(console, 'warn');
       const docs = [{ location: 'file.graphlq', document: doc }];
       const result = (await plugin(schema, docs, {}, {})) as Types.ComplexPluginOutput;
       expect(result.content).not.toContain('feed');

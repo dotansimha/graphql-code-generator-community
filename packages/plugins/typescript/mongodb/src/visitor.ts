@@ -201,12 +201,12 @@ export class TsMongoVisitor extends BaseVisitor<
     let type: string = null;
 
     if (this.scalars[coreType.name.value]) {
-      type = this.scalars[coreType.name.value];
+      type = this.scalars[coreType.name.value].output;
     } else {
       const schemaType = this._schema.getType(coreType.name.value);
 
       if (isEnumType(schemaType) && this.config.enumsAsString) {
-        type = this.scalars.String;
+        type = this.scalars.String.output;
       } else {
         type = coreType.name.value;
       }
@@ -290,7 +290,7 @@ export class TsMongoVisitor extends BaseVisitor<
       'additionalFields',
     );
     const fields = this._buildFieldsTree(node.fields);
-    fields.addField(discriminatorField, this.scalars.String);
+    fields.addField(discriminatorField, this.scalars.String.output);
     this._addAdditionalFields(fields, additionalFields);
 
     return new DeclarationBlock(this._declarationBlockConfig)
@@ -343,7 +343,7 @@ export class TsMongoVisitor extends BaseVisitor<
       'additionalFields',
     );
     const fields = new FieldsTree();
-    fields.addField(discriminatorField, this.scalars.String);
+    fields.addField(discriminatorField, this.scalars.String.output);
     this._addAdditionalFields(fields, additionalFields);
 
     return new DeclarationBlock(this._declarationBlockConfig)

@@ -75,8 +75,8 @@ export class JavaResolversVisitor extends BaseVisitor<
   }
 
   protected getTypeToUse(type: NamedTypeNode): string {
-    if (this.scalars[type.name.value]) {
-      return this.scalars[type.name.value];
+    if (this.scalars[type.name.value]?.output) {
+      return this.scalars[type.name.value].output;
     }
     if (this.config.mappers[type.name.value]) {
       return this.config.mappers[type.name.value].type;
