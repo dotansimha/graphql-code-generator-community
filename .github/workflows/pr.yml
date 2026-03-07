@@ -4,14 +4,11 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-  id-token: write
-  pull-requests: write
-
 jobs:
   dependencies:
     uses: the-guild-org/shared-config/.github/workflows/changesets-dependencies.yml@v1
     if: ${{ github.event.pull_request.title != 'Upcoming Release Changes' }}
+    permissions:
+      contents: write # allows modifying changeset files
     secrets:
       githubToken: ${{ secrets.GITHUB_TOKEN }}
