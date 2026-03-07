@@ -97,7 +97,7 @@ jobs:
         with:
           nodeVersion: ${{matrix.node_version}}
       - name: Use GraphQL v${{matrix.graphql_version}}
-        run: node ./scripts/match-graphql.js ${{matrix.graphql_version}}
+        run: node ./scripts/match-graphql.cjs ${{matrix.graphql_version}}
       - name: Install Dependencies
         run: yarn
       - name: Cache Vitest
