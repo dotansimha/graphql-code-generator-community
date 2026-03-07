@@ -85,8 +85,8 @@ function constructType(
   const type = schema.getType(typeNode.name);
   if (isScalarType(type)) {
     return nullable
-      ? `Maybe<Scalars['${type.name}']${allowString ? ' | string' : ''}>`
-      : `Scalars['${type.name}']${allowString ? ' | string' : ''}`;
+      ? `Maybe<Scalars['${type.name}']['output']${allowString ? ' | string' : ''}>`
+      : `Scalars['${type.name}']['output']${allowString ? ' | string' : ''}`;
   }
 
   const tsTypeName = convertName(typeNode.name, {
