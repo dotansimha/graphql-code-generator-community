@@ -736,6 +736,152 @@ describe('Apollo Angular', () => {
         export class ApolloAngularSDK {
       `);
     });
+
+    it('should combine variables into options for apolloAngularVersion 12+', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const myFeed = gql(`
+        query MyFeed {
+          feed {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: myFeed }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 12,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      // For v12+, use type aliases with Apollo.Apollo namespace types
+      expect(content.content).toBeSimilarStringTo(`
+        type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+        type WatchQueryOptionsAlone<T, V extends ApolloCore.OperationVariables> = Omit<Apollo.Apollo.WatchQueryOptions<T, V>, 'query' | 'variables'>
+
+        type QueryOptionsAlone<T, V extends ApolloCore.OperationVariables> = Omit<Apollo.Apollo.QueryOptions<T, V>, 'query' | 'variables'>`);
+
+      // For v12+, SDK methods should keep same signature but combine variables into options internally
+      // Watch method should have explicit return type for proper type inference
+      expect(content.content).toBeSimilarStringTo(`
+        myFeed(variables?: MyFeedQueryVariables, options?: QueryOptionsAlone<MyFeedQuery, MyFeedQueryVariables>) {
+          return this.myFeedGql.fetch({ ...options, variables })
+        }
+
+        myFeedWatch(variables?: MyFeedQueryVariables, options?: WatchQueryOptionsAlone<MyFeedQuery, MyFeedQueryVariables>): Apollo.QueryRef<MyFeedQuery, MyFeedQueryVariables> {
+          return this.myFeedGql.watch({ ...options, variables })
+        }
+      `);
+    });
+
+    it('should combine variables into options for mutations with apolloAngularVersion 12+', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const myMutation = gql(`
+        mutation Update($arg: Int) {
+          update(arg: $arg) {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: myMutation }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 12,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      // For v12+, use type alias with Apollo.Apollo namespace
+      expect(content.content).toBeSimilarStringTo(`
+        type MutationOptionsAlone<T, V extends ApolloCore.OperationVariables> = Omit<Apollo.Apollo.MutateOptions<T, V>, 'mutation' | 'variables'>`);
+
+      // For v12+, SDK methods should combine variables into options internally
+      expect(content.content).toBeSimilarStringTo(`
+        update(variables?: UpdateMutationVariables, options?: MutationOptionsAlone<UpdateMutation, UpdateMutationVariables>) {
+          return this.updateGql.mutate({ ...options, variables })
+        }
+      `);
+    });
+
+    it('should combine variables into options for subscriptions with apolloAngularVersion 12+', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const mySubscription = gql(`
+        subscription MyFeed {
+          feed {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: mySubscription }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 12,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      // For v12+, use type alias with Apollo.Apollo namespace
+      expect(content.content).toBeSimilarStringTo(`
+        type SubscriptionOptionsAlone<T, V extends ApolloCore.OperationVariables> = Omit<Apollo.Apollo.SubscribeOptions<T, V>, 'query' | 'variables'>`);
+
+      // For v12+, SDK methods should combine variables into options internally
+      expect(content.content).toBeSimilarStringTo(`
+        myFeed(variables?: MyFeedSubscriptionVariables, options?: SubscriptionOptionsAlone<MyFeedSubscription, MyFeedSubscriptionVariables>) {
+          return this.myFeedGql.subscribe({ ...options, variables })
+        }
+      `);
+    });
+
+    it('should use legacy call syntax for apolloAngularVersion below 12', async () => {
+      const modifiedSchema = extendSchema(schema, addToSchema);
+      const myFeed = gql(`
+        query MyFeed {
+          feed {
+            id
+          }
+        }
+      `);
+      const docs = [{ location: '', document: myFeed }];
+      const content = (await plugin(
+        modifiedSchema,
+        docs,
+        {
+          sdkClass: true,
+          apolloAngularVersion: 11,
+        },
+        {
+          outputFile: 'graphql.ts',
+        },
+      )) as Types.ComplexPluginOutput;
+
+      // For v11 and below, interfaces should not have OperationVariables constraint
+      expect(content.content).toBeSimilarStringTo(`
+        interface WatchQueryOptionsAlone<V> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}`);
+      expect(content.content).not.toContain('OperationVariables');
+
+      // For v11 and below, SDK methods should pass variables and options separately
+      expect(content.content).toBeSimilarStringTo(`
+        myFeed(variables?: MyFeedQueryVariables, options?: QueryOptionsAlone<MyFeedQueryVariables>) {
+          return this.myFeedGql.fetch(variables, options)
+        }
+      `);
+    });
   });
 
   describe('near-operation-file', () => {
