@@ -43,7 +43,7 @@
     "unixify": "^1.0.0"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "4.0.2"
+    "@graphql-codegen/testing": "4.0.4"
   },
   "publishConfig": {
     "directory": "dist",
