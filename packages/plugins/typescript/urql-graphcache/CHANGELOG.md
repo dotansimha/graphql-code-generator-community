@@ -1,5 +1,32 @@
 # @graphql-codegen/typescript-urql-graphcache
 
+## 4.0.0
+
+### Major Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update GraphQL Codegen common packages to
+  latest
+
+### Patch Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.1.1)
+    (from `^3.0.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^6.2.4` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/6.2.4)
+    (from `2.13.8`, in `dependencies`)
+
+- [#1367](https://github.com/dotansimha/graphql-code-generator-community/pull/1367)
+  [`29a5a68`](https://github.com/dotansimha/graphql-code-generator-community/commit/29a5a68bf2f103824e532e5d95f8fe65f8566977)
+  Thanks [@pasiba](https://github.com/pasiba)! - Fix scalar types in generated `GraphCacheUpdaters`,
+  `GraphCacheOptimisticUpdaters`, and `GraphCacheResolvers` to use `Scalars['X']['output']` instead
+  of `Scalars['X']`.
+
 ## 3.1.1
 
 ### Patch Changes
@@ -7,7 +34,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/visitor-plugin-common@2.13.8` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/2.13.8)
     (from `2.13.1`, in `dependencies`)
@@ -15,14 +41,12 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
 - [#677](https://github.com/dotansimha/graphql-code-generator-community/pull/677)
   [`d769783`](https://github.com/dotansimha/graphql-code-generator-community/commit/d769783524f51383513e6acce12535f3558470b6)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@urql/exchange-graphcache@^5.2.0 || ^6.0.0 || ^7.0.0` ↗︎](https://www.npmjs.com/package/@urql/exchange-graphcache/v/5.2.0)
     (from `^5.2.0 || ^6.0.0`, in `peerDependencies`)

@@ -1,5 +1,23 @@
 # @graphql-codegen/typescript-graphql-files-modules
 
+## 4.0.0
+
+### Major Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update GraphQL Codegen common packages to
+  latest
+
+### Patch Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.1.1)
+    (from `^3.0.0`, in `dependencies`)
+
 ## 3.0.1
 
 ### Patch Changes
@@ -7,7 +25,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 

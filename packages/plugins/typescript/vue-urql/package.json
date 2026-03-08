@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-vue-urql",
-  "version": "3.2.1",
+  "version": "4.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating ready-to-use Vue-Urql composition functions based on GraphQL operations",
   "repository": {

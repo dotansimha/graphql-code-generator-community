@@ -1,5 +1,27 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 4.4.1
+
+### Patch Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.1.1)
+    (from `^3.0.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^6.2.4` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/6.2.4)
+    (from `2.13.8`, in `dependencies`)
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update GraphQL Codegen common packages to
+  latest.
+
+  Note1: This is only a patch because this intends to solve security issues. Note2: This package
+  will be deprecated soon.
+
 ## 4.4.0
 
 ### Minor Changes
