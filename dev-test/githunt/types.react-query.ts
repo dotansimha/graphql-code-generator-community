@@ -12,6 +12,12 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
+  [_ in K]?: never;
+};
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 
 function fetcher<TData, TVariables>(
   endpoint: string,
@@ -39,55 +45,55 @@ function fetcher<TData, TVariables>(
 }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
 };
 
 /** A comment about an entry, submitted by a user */
 export type Comment = {
   __typename?: 'Comment';
   /** The text of the comment */
-  content: Scalars['String'];
+  content: Scalars['String']['output'];
   /** A timestamp of when the comment was posted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** The GitHub user who posted the comment */
   postedBy: User;
   /** The repository which this comment is about */
-  repoName: Scalars['String'];
+  repoName: Scalars['String']['output'];
 };
 
 /** Information about a GitHub repository submitted to GitHunt */
 export type Entry = {
   __typename?: 'Entry';
   /** The number of comments posted about this repository */
-  commentCount: Scalars['Int'];
+  commentCount: Scalars['Int']['output'];
   /** Comments posted about this repository */
   comments: Array<Maybe<Comment>>;
   /** A timestamp of when the entry was submitted */
-  createdAt: Scalars['Float'];
+  createdAt: Scalars['Float']['output'];
   /** The hot score of this repository */
-  hotScore: Scalars['Float'];
+  hotScore: Scalars['Float']['output'];
   /** The SQL ID of this entry */
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   /** The GitHub user who submitted this entry */
   postedBy: User;
   /** Information about the repository from GitHub */
   repository: Repository;
   /** The score of this repository, upvotes - downvotes */
-  score: Scalars['Int'];
+  score: Scalars['Int']['output'];
   /** XXX to be changed */
   vote: Vote;
 };
 
 /** Information about a GitHub repository submitted to GitHunt */
 export type EntryCommentsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** A list of options for the sort order of the feed */
@@ -111,16 +117,16 @@ export type Mutation = {
 };
 
 export type MutationSubmitCommentArgs = {
-  commentContent: Scalars['String'];
-  repoFullName: Scalars['String'];
+  commentContent: Scalars['String']['input'];
+  repoFullName: Scalars['String']['input'];
 };
 
 export type MutationSubmitRepositoryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 export type MutationVoteArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
   type: VoteType;
 };
 
@@ -135,12 +141,12 @@ export type Query = {
 };
 
 export type QueryEntryArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 export type QueryFeedArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   type: FeedType;
 };
 
@@ -151,19 +157,19 @@ export type QueryFeedArgs = {
 export type Repository = {
   __typename?: 'Repository';
   /** The description of the repository */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The full name of the repository with the username, e.g. apollostack/GitHunt-API */
-  full_name: Scalars['String'];
+  full_name: Scalars['String']['output'];
   /** The link to the repository on GitHub */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
   /** Just the name of the repository, e.g. GitHunt-API */
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
   /** The number of open issues on this repository on GitHub */
-  open_issues_count?: Maybe<Scalars['Int']>;
+  open_issues_count?: Maybe<Scalars['Int']['output']>;
   /** The owner of this repository on GitHub, e.g. apollostack */
   owner?: Maybe<User>;
   /** The number of people who have starred this repository on GitHub */
-  stargazers_count: Scalars['Int'];
+  stargazers_count: Scalars['Int']['output'];
 };
 
 export type Subscription = {
@@ -173,24 +179,24 @@ export type Subscription = {
 };
 
 export type SubscriptionCommentAddedArgs = {
-  repoFullName: Scalars['String'];
+  repoFullName: Scalars['String']['input'];
 };
 
 /** A user object from the GitHub API. This uses the exact field names returned from the GitHub API. */
 export type User = {
   __typename?: 'User';
   /** The URL to a directly embeddable image for this user's avatar */
-  avatar_url: Scalars['String'];
+  avatar_url: Scalars['String']['output'];
   /** The URL of this user's GitHub page */
-  html_url: Scalars['String'];
+  html_url: Scalars['String']['output'];
   /** The name of the user, e.g. apollostack */
-  login: Scalars['String'];
+  login: Scalars['String']['output'];
 };
 
 /** XXX to be removed */
 export type Vote = {
   __typename?: 'Vote';
-  vote_value: Scalars['Int'];
+  vote_value: Scalars['Int']['output'];
 };
 
 /** The type of vote to record, when submitting a vote */
@@ -369,7 +375,8 @@ export type VoteMutation = {
   } | null;
 };
 
-export const CommentsPageCommentFragmentDoc = `
+export const CommentsPageCommentFragmentDoc = new TypedDocumentString(
+  `
     fragment CommentsPageComment on Comment {
   id
   postedBy {
@@ -379,16 +386,22 @@ export const CommentsPageCommentFragmentDoc = `
   createdAt
   content
 }
-    `;
-export const VoteButtonsFragmentDoc = `
+    `,
+  { fragmentName: 'CommentsPageComment' },
+);
+export const VoteButtonsFragmentDoc = new TypedDocumentString(
+  `
     fragment VoteButtons on Entry {
   score
   vote {
     vote_value
   }
 }
-    `;
-export const RepoInfoFragmentDoc = `
+    `,
+  { fragmentName: 'VoteButtons' },
+);
+export const RepoInfoFragmentDoc = new TypedDocumentString(
+  `
     fragment RepoInfo on Entry {
   createdAt
   repository {
@@ -401,8 +414,11 @@ export const RepoInfoFragmentDoc = `
     login
   }
 }
-    `;
-export const FeedEntryFragmentDoc = `
+    `,
+  { fragmentName: 'RepoInfo' },
+);
+export const FeedEntryFragmentDoc = new TypedDocumentString(
+  `
     fragment FeedEntry on Entry {
   id
   commentCount
@@ -416,9 +432,27 @@ export const FeedEntryFragmentDoc = `
   ...VoteButtons
   ...RepoInfo
 }
-    ${VoteButtonsFragmentDoc}
-${RepoInfoFragmentDoc}`;
-export const OnCommentAddedDocument = `
+    fragment RepoInfo on Entry {
+  createdAt
+  repository {
+    description
+    stargazers_count
+    open_issues_count
+  }
+  postedBy {
+    html_url
+    login
+  }
+}
+fragment VoteButtons on Entry {
+  score
+  vote {
+    vote_value
+  }
+}`,
+  { fragmentName: 'FeedEntry' },
+);
+export const OnCommentAddedDocument = new TypedDocumentString(`
     subscription onCommentAdded($repoFullName: String!) {
   commentAdded(repoFullName: $repoFullName) {
     id
@@ -430,8 +464,8 @@ export const OnCommentAddedDocument = `
     content
   }
 }
-    `;
-export const CommentDocument = `
+    `);
+export const CommentDocument = new TypedDocumentString(`
     query Comment($repoFullName: String!, $limit: Int, $offset: Int) {
   currentUser {
     login
@@ -459,7 +493,15 @@ export const CommentDocument = `
     }
   }
 }
-    ${CommentsPageCommentFragmentDoc}`;
+    fragment CommentsPageComment on Comment {
+  id
+  postedBy {
+    login
+    html_url
+  }
+  createdAt
+  content
+}`);
 
 export const useCommentQuery = <TData = CommentQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
@@ -496,14 +538,14 @@ export const useInfiniteCommentQuery = <TData = CommentQuery, TError = unknown>(
   );
 };
 
-export const CurrentUserForProfileDocument = `
+export const CurrentUserForProfileDocument = new TypedDocumentString(`
     query CurrentUserForProfile {
   currentUser {
     login
     avatar_url
   }
 }
-    `;
+    `);
 
 export const useCurrentUserForProfileQuery = <TData = CurrentUserForProfileQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
@@ -545,7 +587,7 @@ export const useInfiniteCurrentUserForProfileQuery = <
   );
 };
 
-export const FeedDocument = `
+export const FeedDocument = new TypedDocumentString(`
     query Feed($type: FeedType!, $offset: Int, $limit: Int) {
   currentUser {
     login
@@ -554,7 +596,37 @@ export const FeedDocument = `
     ...FeedEntry
   }
 }
-    ${FeedEntryFragmentDoc}`;
+    fragment FeedEntry on Entry {
+  id
+  commentCount
+  repository {
+    full_name
+    html_url
+    owner {
+      avatar_url
+    }
+  }
+  ...VoteButtons
+  ...RepoInfo
+}
+fragment RepoInfo on Entry {
+  createdAt
+  repository {
+    description
+    stargazers_count
+    open_issues_count
+  }
+  postedBy {
+    html_url
+    login
+  }
+}
+fragment VoteButtons on Entry {
+  score
+  vote {
+    vote_value
+  }
+}`);
 
 export const useFeedQuery = <TData = FeedQuery, TError = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
@@ -591,13 +663,13 @@ export const useInfiniteFeedQuery = <TData = FeedQuery, TError = unknown>(
   );
 };
 
-export const SubmitRepositoryDocument = `
+export const SubmitRepositoryDocument = new TypedDocumentString(`
     mutation submitRepository($repoFullName: String!) {
   submitRepository(repoFullName: $repoFullName) {
     createdAt
   }
 }
-    `;
+    `);
 
 export const useSubmitRepositoryMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
@@ -621,13 +693,21 @@ export const useSubmitRepositoryMutation = <TError = unknown, TContext = unknown
   );
 };
 
-export const SubmitCommentDocument = `
+export const SubmitCommentDocument = new TypedDocumentString(`
     mutation submitComment($repoFullName: String!, $commentContent: String!) {
   submitComment(repoFullName: $repoFullName, commentContent: $commentContent) {
     ...CommentsPageComment
   }
 }
-    ${CommentsPageCommentFragmentDoc}`;
+    fragment CommentsPageComment on Comment {
+  id
+  postedBy {
+    login
+    html_url
+  }
+  createdAt
+  content
+}`);
 
 export const useSubmitCommentMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },
@@ -651,7 +731,7 @@ export const useSubmitCommentMutation = <TError = unknown, TContext = unknown>(
   );
 };
 
-export const VoteDocument = `
+export const VoteDocument = new TypedDocumentString(`
     mutation vote($repoFullName: String!, $type: VoteType!) {
   vote(repoFullName: $repoFullName, type: $type) {
     score
@@ -661,7 +741,7 @@ export const VoteDocument = `
     }
   }
 }
-    `;
+    `);
 
 export const useVoteMutation = <TError = unknown, TContext = unknown>(
   dataSource: { endpoint: string; fetchParams?: RequestInit },

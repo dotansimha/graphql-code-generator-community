@@ -2,7 +2,7 @@ import { buildSchema, GraphQLSchema, print } from 'graphql';
 import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
-import { addToSchema, plugin } from './../src/index.js';
+import { addToSchema, plugin } from '../src/index.js';
 
 describe('TypeScript Mongo', () => {
   const validate = async (content: Types.PluginOutput, schema: GraphQLSchema, config: any) => {

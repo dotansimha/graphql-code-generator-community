@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`React Apollo - GraphQL v16+ generates operation description correctly 1`] = `
+exports[`React Apollo - GraphQL v16+ > generates operation description correctly 1`] = `
 {
   "content": "
 export const TestDocument = gql\`

@@ -83,10 +83,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest] # remove windows to speed up the tests
-        node_version: [18, 20, 22]
+        node_version: [20, 22, 24]
         graphql_version: [15, 16]
         include:
-          - node-version: 18
+          - node-version: 20
             os: windows-latest
             graphql_version: 16
     steps:
@@ -97,16 +97,16 @@ jobs:
         with:
           nodeVersion: ${{matrix.node_version}}
       - name: Use GraphQL v${{matrix.graphql_version}}
-        run: node ./scripts/match-graphql.js ${{matrix.graphql_version}}
+        run: node ./scripts/match-graphql.cjs ${{matrix.graphql_version}}
       - name: Install Dependencies
         run: yarn
-      - name: Cache Jest
+      - name: Cache Vitest
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
         with:
-          path: .cache/jest
-          key: ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-jest-${{hashFiles('yarn.lock')}}
+          path: node_modules/.vite
+          key: ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-vitest-${{hashFiles('yarn.lock')}}
           restore-keys: |
-            ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-jest-
+            ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-vitest-
       - name: Build
         run: yarn build
       - name: Test

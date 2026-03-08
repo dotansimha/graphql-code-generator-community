@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Operations Visitor Should handle Query correctly 1`] = `
+exports[`Operations Visitor > Should handle Query correctly 1`] = `
 "package app.test.generated.graphql;
 
 import com.apollographql.apollo.api.Query;
@@ -477,7 +477,7 @@ public final class ListProductsQuery implements Query<ListProductsQuery.Data, Li
 "
 `;
 
-exports[`Operations Visitor Should handle Query correctly with fragments 1`] = `
+exports[`Operations Visitor > Should handle Query correctly with fragments 1`] = `
 "package fragment;
 
 import com.apollographql.apollo.api.Query;

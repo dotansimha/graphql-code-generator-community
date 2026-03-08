@@ -173,12 +173,10 @@ export class CSharpOperationsVisitor extends ClientSideBaseVisitor<
     const includeNestedFragments =
       this.config.documentMode === DocumentMode.documentNode ||
       this.config.documentMode === DocumentMode.string ||
-      (this.config.dedupeFragments && node.kind === 'OperationDefinition');
+      node.kind === 'OperationDefinition';
     const fragmentNames = this._extractFragments(node, includeNestedFragments);
     const fragments = this._transformFragments(fragmentNames);
-    const doc = this._prepareDocument(
-      [print(node), this._includeFragments(fragments, node.kind)].join('\n'),
-    );
+    const doc = this._prepareDocument([print(node), this._includeFragments(fragments)].join('\n'));
 
     return doc.replace(/"/g, '""');
   }

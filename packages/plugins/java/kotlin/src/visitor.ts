@@ -28,11 +28,26 @@ import {
 import { KotlinResolversPluginRawConfig } from './config.js';
 
 export const KOTLIN_SCALARS = {
-  ID: 'Any',
-  String: 'String',
-  Boolean: 'Boolean',
-  Int: 'Int',
-  Float: 'Float',
+  ID: {
+    input: 'Any',
+    output: 'Any',
+  },
+  String: {
+    input: 'String',
+    output: 'String',
+  },
+  Boolean: {
+    input: 'Boolean',
+    output: 'Boolean',
+  },
+  Int: {
+    input: 'Int',
+    output: 'Int',
+  },
+  Float: {
+    input: 'Float',
+    output: 'Float',
+  },
 };
 
 export interface KotlinResolverParsedConfig extends ParsedConfig {
@@ -105,7 +120,7 @@ export class KotlinResolversVisitor extends BaseVisitor<
 
     return `${comment}enum class ${enumName}(val label: String) {
 ${enumValues}
-        
+
   companion object {
     ${this.config.omitJvmStatic ? '' : '@JvmStatic'}
     fun valueOfLabel(label: String): ${enumName}? {
@@ -139,8 +154,8 @@ ${enumValues}
     if (isScalarType(schemaType)) {
       if (this.config.scalars[schemaType.name]) {
         result = {
-          baseType: this.scalars[schemaType.name],
-          typeName: this.scalars[schemaType.name],
+          baseType: this.scalars[schemaType.name].input,
+          typeName: this.scalars[schemaType.name].input,
           isScalar: true,
           isArray,
           nullable,

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`msw Should generate JSDoc documentation with variables and selection from the operations themselves: content with variables and selection JSDoc documentation 1`] = `
+exports[`msw > Should generate JSDoc documentation with variables and selection from the operations themselves > content with variables and selection JSDoc documentation 1`] = `
 "
 /**
  * @param resolver A function that accepts [resolver arguments](https://mswjs.io/docs/api/graphql#resolver-argument) and must always return the instruction on what to do with the intercepted request. ([see more](https://mswjs.io/docs/concepts/response-resolver#resolver-instructions))
@@ -48,7 +48,7 @@ export const mockUpdateUserMutation = (resolver: GraphQLResponseResolver<UpdateU
 "
 `;
 
-exports[`msw Should generate a link with an endpoint when passed a link variable: content with a link/endpoint 1`] = `
+exports[`msw > Should generate a link with an endpoint when passed a link variable > content with a link/endpoint 1`] = `
 "const api = graphql.link('http://localhost:3000/graphql')
 
 /**
@@ -95,7 +95,7 @@ export const mockUpdateUserMutationApi = (resolver: GraphQLResponseResolver<Upda
 "
 `;
 
-exports[`msw Should generate handlerNames without suffix when withSuffix is false: content without link name suffix 1`] = `
+exports[`msw > Should generate handlerNames without suffix when withSuffix is false > content without link name suffix 1`] = `
 "const api = graphql.link('http://localhost:3000/graphql')
 
 /**
@@ -142,7 +142,7 @@ export const mockUpdateUserMutation = (resolver: GraphQLResponseResolver<UpdateU
 "
 `;
 
-exports[`msw Should generate mocks based on queries and mutations: content 1`] = `
+exports[`msw > Should generate mocks based on queries and mutations > content 1`] = `
 "
 /**
  * @param resolver A function that accepts [resolver arguments](https://mswjs.io/docs/api/graphql#resolver-argument) and must always return the instruction on what to do with the intercepted request. ([see more](https://mswjs.io/docs/concepts/response-resolver#resolver-instructions))
@@ -188,13 +188,13 @@ export const mockUpdateUserMutation = (resolver: GraphQLResponseResolver<UpdateU
 "
 `;
 
-exports[`msw Should generate mocks based on queries and mutations: imports 1`] = `
+exports[`msw > Should generate mocks based on queries and mutations > imports 1`] = `
 [
   "import { graphql, type GraphQLResponseResolver, type RequestHandlerOptions } from 'msw'",
 ]
 `;
 
-exports[`msw Should use the "importOperationTypesFrom" setting: content with types configured via importOperationTypesFrom 1`] = `
+exports[`msw > Should use the "importOperationTypesFrom" setting > content with types configured via importOperationTypesFrom 1`] = `
 "
 /**
  * @param resolver A function that accepts [resolver arguments](https://mswjs.io/docs/api/graphql#resolver-argument) and must always return the instruction on what to do with the intercepted request. ([see more](https://mswjs.io/docs/concepts/response-resolver#resolver-instructions))

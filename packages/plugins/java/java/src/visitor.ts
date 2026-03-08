@@ -159,8 +159,8 @@ export class JavaResolversVisitor extends BaseVisitor<
     if (isScalarType(schemaType)) {
       if (this.scalars[schemaType.name]) {
         result = {
-          baseType: this.scalars[schemaType.name],
-          typeName: this.scalars[schemaType.name],
+          baseType: this.scalars[schemaType.name].input,
+          typeName: this.scalars[schemaType.name].input,
           isScalar: true,
           isEnum: false,
           isArray,
