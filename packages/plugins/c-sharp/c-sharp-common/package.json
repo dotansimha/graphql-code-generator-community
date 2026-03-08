@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/c-sharp-common",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "type": "module",
   "repository": "git@github.com:dotansimha/graphql-code-generator-community.git",
   "license": "MIT",

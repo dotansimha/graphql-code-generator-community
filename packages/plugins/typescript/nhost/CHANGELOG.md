@@ -1,5 +1,29 @@
 # @graphql-codegen/typescript-nhost
 
+## 1.0.0
+
+### Major Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update GraphQL Codegen common packages to
+  latest
+
+### Patch Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.1.1)
+    (from `^4.0.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/typescript@^5.0.9` ↗︎](https://www.npmjs.com/package/@graphql-codegen/typescript/v/5.0.9)
+    (from `^3.0.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^6.2.4` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/6.2.4)
+    (from `3.1.1`, in `dependencies`)
+
 ## 0.0.3
 
 ### Patch Changes
@@ -7,7 +31,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/visitor-plugin-common@3.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/3.1.1)
     (from `3.0.0`, in `dependencies`)
@@ -15,7 +38,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
@@ -47,7 +69,6 @@
   [`Typescript Nhost SDK`](https://docs.nhost.io/reference/javascript).
 
   What the plugin does:
-
   - Generate types with `graphql-codegem/typescript`, following a strict configuration. (the plugin
     does not require `@graphql-codegen/typescript` to be installed by the user but is use as a
     dependency).

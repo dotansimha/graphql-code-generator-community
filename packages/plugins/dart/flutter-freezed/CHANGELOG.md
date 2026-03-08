@@ -1,5 +1,29 @@
 # @graphql-codegen/flutter-freezed
 
+## 5.0.0
+
+### Major Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update GraphQL Codegen common packages to
+  latest
+
+### Patch Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.1.1)
+    (from `^3.0.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/schema-ast@^5.0.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/schema-ast/v/5.0.1)
+    (from `^2.5.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^6.2.4` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/6.2.4)
+    (from `2.13.8`, in `dependencies`)
+
 ## 4.0.1
 
 ### Patch Changes
@@ -7,7 +31,6 @@
 - [#355](https://github.com/dotansimha/graphql-code-generator-community/pull/355)
   [`ca72b89`](https://github.com/dotansimha/graphql-code-generator-community/commit/ca72b89a601979799d0c10087535ff2acc4378f0)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency
     [`@graphql-codegen/visitor-plugin-common@2.13.8` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/2.13.8)
     (from `2.13.1`, in `dependencies`)
@@ -15,7 +38,6 @@
 - [#612](https://github.com/dotansimha/graphql-code-generator-community/pull/612)
   [`5af565e`](https://github.com/dotansimha/graphql-code-generator-community/commit/5af565e6dada98e2341968ea37f343c5c348414a)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@^2.8.1` ↗︎](https://www.npmjs.com/package/tslib/v/2.8.1) (from
     `~2.8.0`, in `dependencies`)
 
@@ -39,7 +61,6 @@
 - [#422](https://github.com/dotansimha/graphql-code-generator-community/pull/422)
   [`ef0adf8c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/ef0adf8c2124e4b40d23c52966486a887f122b9b)
   Thanks [@renovate](https://github.com/apps/renovate)! - dependencies updates:
-
   - Updated dependency [`tslib@~2.6.0` ↗︎](https://www.npmjs.com/package/tslib/v/2.6.0) (from
     `~2.4.0`, in `dependencies`)
 
@@ -125,24 +146,20 @@
   ## What has changed
 
   The following type definitions have been removed:
-
   - CustomDecorator = Record<string, DecoratorToFreezed>;
 
   - DecoratorToFreezed
-
     - arguments?: string[];
     - applyOn: ApplyDecoratorOn[];
     - mapsToFreezedAs: '@Default' | '@deprecated' | 'final' | 'directive' | 'custom';
 
   - FieldConfig
-
     - final?: boolean;
     - deprecated?: boolean;
     - defaultValue?: any;
     - customDecorators?: CustomDecorator;
 
   - FreezedConfig
-
     - alwaysUseJsonKeyName?: boolean;
     - copyWith?: boolean;
     - customDecorators?: CustomDecorator;
@@ -158,7 +175,6 @@
     - unionValueCase?: 'FreezedUnionCase.camel' | 'FreezedUnionCase.pascal';
 
   - TypeSpecificFreezedConfig
-
     - deprecated?: boolean;
     - config?: FreezedConfig;
     - fields?: Record<string, FieldConfig>;
