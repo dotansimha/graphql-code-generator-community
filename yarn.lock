@@ -1532,10 +1532,10 @@
     "@graphql-tools/utils" "^11.0.0"
     tslib "~2.6.0"
 
-"@graphql-codegen/testing@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/testing/-/testing-4.0.2.tgz#d62a5e00391d081bbd4b4726f32cda80d084a99c"
-  integrity sha512-JOi9WlV4b4mek4HYLPOnPVUYJ7Vy1Z34n2AHYMkzQyvVzYITIrRCMOfOAq860IepjX9lhwxhGncoVd5oe+/e8A==
+"@graphql-codegen/testing@4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/testing/-/testing-4.0.4.tgz#3edc5f7a1332b55c3713688897424c95b7dd27f9"
+  integrity sha512-WJKhxs/xpkyEk5GhzVr+bIbdR4Uk0gfj1cTSNdPNicFnKkChZLiPHEklxAkd4158Ufnca1Mg4G4q697moQwc1g==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^6.0.0"
     common-tags "^1.8.0"
