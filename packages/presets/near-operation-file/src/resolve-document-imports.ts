@@ -25,7 +25,7 @@ export type DocumentImportResolverOptions = {
   /**
    * Generates a target file path from the source `document.location`
    */
-  generateFilePath: (location: string) => string;
+  generateFilePath: (location: string, operationName: string) => string;
   /**
    * Schema base types source
    */
@@ -69,7 +69,12 @@ export function resolveDocumentImports<T>(
 
   return documents.map(documentFile => {
     try {
-      const generatedFilePath = generateFilePath(documentFile.location);
+      // FIXME
+      const operationName =
+        documentFile.document.definitions.find(d => d.kind === 'OperationDefinition')?.name
+          ?.value ?? documentFile.document.definitions[0].name.value;
+
+      const generatedFilePath = generateFilePath(documentFile.location, operationName);
       const importStatements: string[] = [];
       const { externalFragments, fragmentImports } = resolveFragments(
         generatedFilePath,
