@@ -264,10 +264,14 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       schemaObject,
       {
         baseDir,
-        generateFilePath(location: string) {
+        generateFilePath(location, operationName) {
           const newFilePath = defineFilepathSubfolder(location, folder);
 
-          return appendFileNameToFilePath(newFilePath, fileName, extension);
+          return appendFileNameToFilePath(
+            newFilePath,
+            filePerOperation ? operationName : fileName,
+            extension,
+          );
         },
         schemaTypesSource: {
           path: shouldAbsolute ? join(options.baseOutputDir, baseTypesPath) : baseTypesPath,
