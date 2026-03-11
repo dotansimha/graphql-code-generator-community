@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-urql-graphcache
 
+## 4.0.1
+
+### Patch Changes
+
+- [#1110](https://github.com/dotansimha/graphql-code-generator-community/pull/1110)
+  [`e60bf64`](https://github.com/dotansimha/graphql-code-generator-community/commit/e60bf641b7f2c43539e921263cecdf666e104e21)
+  Thanks [@dargmuesli](https://github.com/dargmuesli)! - Resolve a duplicate import, improve typing
+  for "empty object" and respect `defaultScalarType`
+
 ## 4.0.0
 
 ### Major Changes
