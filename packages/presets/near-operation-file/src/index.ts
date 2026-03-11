@@ -200,6 +200,30 @@ export type NearOperationFileConfig = {
    * ```
    */
   importTypesNamespace?: string;
+
+  /**
+   * @description Optional, generates a file per operation
+   * @default false
+   *
+   * @exampleMarkdown
+   * ```ts filename="codegen.ts" {11}
+   *  import type { CodegenConfig } from '@graphql-codegen/cli';
+   *  const config: CodegenConfig = {
+   *    // ...
+   *    generates: {
+   *      'path/to/file.ts': {
+   *        preset: 'near-operation-file',
+   *        presetConfig: {
+   *          filePerOperation: true
+   *        },
+   *        plugins: ['typescript-operations'],
+   *      },
+   *    },
+   *  };
+   *  export default config;
+   * ```
+   */
+  filePerOperation?: boolean;
 };
 
 export type FragmentNameToFile = {
@@ -226,6 +250,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       (options.presetConfig.baseTypesPath ? 'Types' : undefined); // When there is `baseTypesPath`, we assume there'd be a type import, so we default `importTypesNamespace` value to `Types` for convenience.
     const importAllFragmentsFrom: FragmentImportFromFn | string | null =
       options.presetConfig.importAllFragmentsFrom || null;
+    const filePerOperation = options.presetConfig.filePerOperation || false;
 
     const shouldAbsolute = !baseTypesPath.startsWith('~');
 
