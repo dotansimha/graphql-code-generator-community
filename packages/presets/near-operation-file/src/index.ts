@@ -177,7 +177,7 @@ export type NearOperationFileConfig = {
   folder?: string;
   /**
    * @description Optional, override the name of the import namespace used to import from the `baseTypesPath` file.
-   * @default Types
+   * @default Types (if `baseTypesPath` is set)
    *
    * @exampleMarkdown
    * ```ts filename="codegen.ts" {11}
