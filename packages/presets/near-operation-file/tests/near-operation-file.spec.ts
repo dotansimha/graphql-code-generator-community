@@ -1413,6 +1413,62 @@ describe('near-operation-file preset', () => {
      "
     `);
   });
+
+  it('generates a file per operation (instead of file) when using filePerOperation:true', async () => {
+    const { result } = await executeCodegen({
+      schema: /* GraphQL */ `
+        type Query {
+          user: User
+        }
+
+        type User {
+          id: ID!
+          name: String!
+        }
+      `,
+      documents: path.join(__dirname, 'fixtures/file-per-operation.*.graphql'),
+      generates: {
+        [__dirname]: {
+          preset,
+          presetConfig: {
+            filePerOperation: true,
+          },
+          plugins: ['typescript-operations'],
+        },
+      },
+    });
+
+    expect(result.length).toBe(3);
+
+    const file1 = result.find(file => file.filename.endsWith('User1a.generated.ts'));
+    expect(file1.content).toMatchInlineSnapshot(`
+      "export type User1aQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User1aQuery = { __typename?: 'Query', user1a?: { __typename?: 'User', id: string } | null };
+
+      export type User1bQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User1bQuery = { __typename?: 'Query', user1b?: { __typename?: 'User', id: string, name: string } | null };
+      "
+    `);
+
+    const file2 = result.find(file => file.filename.endsWith('User2.generated.ts'));
+    expect(file2.content).toMatchInlineSnapshot(`
+      "export type User2QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User2Query = { __typename?: 'Query', user2?: { __typename?: 'User', id: string } | null };
+      "
+    `);
+
+    const file3 = result.find(file => file.filename.endsWith('UserFragment3.generated.ts'));
+    expect(file3.content).toMatchInlineSnapshot(`
+      "export type UserFragment3Fragment = { __typename?: 'User', id: string };
+      "
+    `);
+  });
 });
 
 const getFragmentImportsFromResult = (result: Types.GenerateOptions[], index = 0) =>
