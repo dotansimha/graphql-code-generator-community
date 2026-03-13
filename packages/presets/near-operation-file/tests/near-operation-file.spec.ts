@@ -1426,7 +1426,7 @@ describe('near-operation-file preset', () => {
           name: String!
         }
       `,
-      documents: path.join(__dirname, 'fixtures/file-per-operation.*.graphql'),
+      documents: path.join(__dirname, 'fixtures/file-per-operation.*.graphql*'),
       generates: {
         [__dirname]: {
           preset,
@@ -1438,16 +1438,20 @@ describe('near-operation-file preset', () => {
       },
     });
 
-    expect(result.length).toBe(3);
+    expect(result.length).toBe(5);
 
-    const file1 = result.find(file => file.filename.endsWith('User1a.generated.ts'));
-    expect(file1.content).toMatchInlineSnapshot(`
+    const file1a = result.find(file => file.filename.endsWith('User1a.generated.ts'));
+    expect(file1a.content).toMatchInlineSnapshot(`
       "export type User1aQueryVariables = Exact<{ [key: string]: never; }>;
 
 
       export type User1aQuery = { __typename?: 'Query', user1a?: { __typename?: 'User', id: string } | null };
+      "
+    `);
 
-      export type User1bQueryVariables = Exact<{ [key: string]: never; }>;
+    const file1b = result.find(file => file.filename.endsWith('User1b.generated.ts'));
+    expect(file1b.content).toMatchInlineSnapshot(`
+      "export type User1bQueryVariables = Exact<{ [key: string]: never; }>;
 
 
       export type User1bQuery = { __typename?: 'Query', user1b?: { __typename?: 'User', id: string, name: string } | null };
@@ -1466,6 +1470,17 @@ describe('near-operation-file preset', () => {
     const file3 = result.find(file => file.filename.endsWith('UserFragment3.generated.ts'));
     expect(file3.content).toMatchInlineSnapshot(`
       "export type UserFragment3Fragment = { __typename?: 'User', id: string };
+      "
+    `);
+
+    const file4 = result.find(file => file.filename.endsWith('User4.generated.ts'));
+    expect(file4.content).toMatchInlineSnapshot(`
+      "export type User4QueryVariables = Exact<{
+        id: Scalars['ID']['input'];
+      }>;
+
+
+      export type User4Query = { __typename?: 'Query', user4?: { __typename?: 'User', name: string } | null };
       "
     `);
   });
