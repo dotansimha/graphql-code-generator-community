@@ -1,4 +1,4 @@
-import { FragmentDefinitionNode, GraphQLSchema } from 'graphql';
+import { FragmentDefinitionNode, GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
 import { isUsingTypes, Types } from '@graphql-codegen/plugin-helpers';
 import {
   FragmentImport,
@@ -25,7 +25,7 @@ export type DocumentImportResolverOptions = {
   /**
    * Generates a target file path from the source `document.location`
    */
-  generateFilePath: (location: string, operationName: string) => string;
+  generateFilePath: (location: string, customFilename?: string) => string;
   /**
    * Schema base types source
    */
@@ -69,12 +69,11 @@ export function resolveDocumentImports<T>(
 
   return documents.map(documentFile => {
     try {
-      // FIXME
-      const operationName =
-        documentFile.document.definitions.find(d => d.kind === 'OperationDefinition')?.name
-          ?.value ?? documentFile.document.definitions[0].name.value;
+      const operationOrFragmentName = documentFile.document.definitions.find(
+        d => d.kind === Kind.OPERATION_DEFINITION || d.kind === Kind.FRAGMENT_DEFINITION,
+      )?.name?.value;
 
-      const generatedFilePath = generateFilePath(documentFile.location, operationName);
+      const generatedFilePath = generateFilePath(documentFile.location, operationOrFragmentName);
       const importStatements: string[] = [];
       const { externalFragments, fragmentImports } = resolveFragments(
         generatedFilePath,

@@ -202,7 +202,7 @@ export type NearOperationFileConfig = {
   importTypesNamespace?: string;
 
   /**
-   * @description Optional, generates a file per operation
+   * @description Optional, generates one file per operation, using the operation name as the filename. Note: if your documents are in `.graphql` files and there are multiple operations or fragments in a single file, the generated filename will be based on the first operation or fragment found.
    * @default false
    *
    * @exampleMarkdown
@@ -264,12 +264,14 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       schemaObject,
       {
         baseDir,
-        generateFilePath(location, operationName) {
+        generateFilePath(location, customFilename) {
           const newFilePath = defineFilepathSubfolder(location, folder);
 
           return appendFileNameToFilePath(
             newFilePath,
-            filePerOperation ? operationName : fileName,
+            filePerOperation
+              ? customFilename // Note: Unnamed operations will cause `operationName` to be undefined. In such case, the generated filename will be based on the source document file.
+              : fileName,
             extension,
           );
         },
