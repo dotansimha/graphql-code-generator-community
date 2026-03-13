@@ -1438,7 +1438,7 @@ describe('near-operation-file preset', () => {
       },
     });
 
-    expect(result.length).toBe(5);
+    expect(result.length).toBe(6);
 
     const file1a = result.find(file => file.filename.endsWith('User1a.generated.ts'));
     expect(file1a.content).toMatchInlineSnapshot(`
@@ -1455,6 +1455,18 @@ describe('near-operation-file preset', () => {
 
 
       export type User1bQuery = { __typename?: 'Query', user1b?: { __typename?: 'User', id: string, name: string } | null };
+      "
+    `);
+
+    // Unnamed operations falls back to source doc filename
+    const file1c = result.find(file =>
+      file.filename.endsWith('file-per-operation.1.graphql.generated.ts'),
+    );
+    expect(file1c.content).toMatchInlineSnapshot(`
+      "export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type Unnamed_1_Query = { __typename?: 'Query', anon?: { __typename: 'User' } | null };
       "
     `);
 

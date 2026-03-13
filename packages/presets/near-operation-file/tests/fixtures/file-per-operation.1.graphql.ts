@@ -13,3 +13,11 @@
     }
   }
 `;
+
+/* GraphQL */ `
+  query {
+    anon: user {
+      __typename
+    }
+  }
+`;
