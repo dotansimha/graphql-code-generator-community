@@ -1,4 +1,4 @@
-import { FragmentDefinitionNode, GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
+import { FragmentDefinitionNode, GraphQLSchema, Kind } from 'graphql';
 import { isUsingTypes, Types } from '@graphql-codegen/plugin-helpers';
 import {
   FragmentImport,
