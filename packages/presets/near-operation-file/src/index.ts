@@ -269,7 +269,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
 
           return appendFileNameToFilePath(
             newFilePath,
-            filePerOperation
+            filePerOperation && customFilename
               ? customFilename // Note: Unnamed operations will cause `operationName` to be undefined. In such case, the generated filename will be based on the source document file.
               : fileName,
             extension,
