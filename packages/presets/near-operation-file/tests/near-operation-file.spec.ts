@@ -1438,7 +1438,7 @@ describe('near-operation-file preset', () => {
       },
     });
 
-    expect(result.length).toBe(6);
+    expect(result.length).toBe(8);
 
     const file1a = result.find(file => file.filename.endsWith('User1a.generated.ts'));
     expect(file1a.content).toMatchInlineSnapshot(`
@@ -1493,6 +1493,20 @@ describe('near-operation-file preset', () => {
 
 
       export type User4Query = { __typename?: 'Query', user4?: { __typename?: 'User', name: string } | null };
+      "
+    `);
+
+    const file5a = result.find(file => file.filename.endsWith('UserFragment5a.generated.ts'));
+    expect(file5a.content).toMatchInlineSnapshot(`
+      "export type UserFragment5aFragment = { __typename?: 'User', id: string };
+      "
+    `);
+    const file5b = result.find(file => file.filename.endsWith('User5b.generated.ts'));
+    expect(file5b.content).toMatchInlineSnapshot(`
+      "export type User5bQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User5bQuery = { __typename?: 'Query', user1a?: { __typename?: 'User', id: string } | null };
       "
     `);
   });
