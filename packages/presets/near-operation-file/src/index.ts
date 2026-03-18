@@ -177,7 +177,7 @@ export type NearOperationFileConfig = {
   folder?: string;
   /**
    * @description Optional, override the name of the import namespace used to import from the `baseTypesPath` file.
-   * @default Types
+   * @default Types (if `baseTypesPath` is set)
    *
    * @exampleMarkdown
    * ```ts filename="codegen.ts" {11}
@@ -200,6 +200,30 @@ export type NearOperationFileConfig = {
    * ```
    */
   importTypesNamespace?: string;
+
+  /**
+   * @description Optional, generates one file per operation, using the operation name as the filename. Note: if your documents are in `.graphql` files and there are multiple operations or fragments in a single file, the generated filename will be based on the first operation or fragment found.
+   * @default false
+   *
+   * @exampleMarkdown
+   * ```ts filename="codegen.ts" {11}
+   *  import type { CodegenConfig } from '@graphql-codegen/cli';
+   *  const config: CodegenConfig = {
+   *    // ...
+   *    generates: {
+   *      'path/to/file.ts': {
+   *        preset: 'near-operation-file',
+   *        presetConfig: {
+   *          filePerOperation: true
+   *        },
+   *        plugins: ['typescript-operations'],
+   *      },
+   *    },
+   *  };
+   *  export default config;
+   * ```
+   */
+  filePerOperation?: boolean;
 };
 
 export type FragmentNameToFile = {
@@ -226,6 +250,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       (options.presetConfig.baseTypesPath ? 'Types' : undefined); // When there is `baseTypesPath`, we assume there'd be a type import, so we default `importTypesNamespace` value to `Types` for convenience.
     const importAllFragmentsFrom: FragmentImportFromFn | string | null =
       options.presetConfig.importAllFragmentsFrom || null;
+    const filePerOperation = options.presetConfig.filePerOperation || false;
 
     const shouldAbsolute = !baseTypesPath.startsWith('~');
 
@@ -239,10 +264,16 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       schemaObject,
       {
         baseDir,
-        generateFilePath(location: string) {
+        generateFilePath(location, customFilename) {
           const newFilePath = defineFilepathSubfolder(location, folder);
 
-          return appendFileNameToFilePath(newFilePath, fileName, extension);
+          return appendFileNameToFilePath(
+            newFilePath,
+            filePerOperation && customFilename
+              ? customFilename // Note: Unnamed operations will cause `operationName` to be undefined. In such case, the generated filename will be based on the source document file.
+              : fileName,
+            extension,
+          );
         },
         schemaTypesSource: {
           path: shouldAbsolute ? join(options.baseOutputDir, baseTypesPath) : baseTypesPath,
