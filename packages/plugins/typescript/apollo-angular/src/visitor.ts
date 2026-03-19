@@ -108,7 +108,7 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
       }
     }
 
-    const dependencyInjections = ['apollo: Apollo.Apollo'].concat(this.config.additionalDI);
+    const dependencyInjections = ['apollo: Apollo'].concat(this.config.additionalDI);
     const dependencyInjectionArgs = dependencyInjections.map(content => {
       return content.split(':')[0];
     });
@@ -129,7 +129,7 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
 
     const imports = [
       `import { Injectable } from '@angular/core';`,
-      `import * as Apollo from '${this.config.apolloAngularPackage}';`,
+      `import { Apollo, Query as ApolloQuery, Mutation as ApolloMutation } from '${this.config.apolloAngularPackage}';`,
     ];
 
     if (this.config.sdkClass) {
@@ -316,7 +316,7 @@ export class ApolloAngularVisitor extends ClientSideBaseVisitor<
   @Injectable({
     providedIn: ${this._providedIn(node)}
   })
-  export class ${serviceName} extends Apollo.${operationType}<${operationResultType}, ${operationVariablesTypes}> {
+  export class ${serviceName} extends Apollo${operationType}<${operationResultType}, ${operationVariablesTypes}> {
     ${this.config.addExplicitOverride ? 'override ' : ''}document = ${this._getDocumentNodeVariable(
       node,
       documentVariableName,
