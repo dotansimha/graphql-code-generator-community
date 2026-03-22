@@ -39,6 +39,8 @@ function buildArrayDefinition(e: GraphQLEnumType, config: EnumArrayPluginConfig)
 
   if (config.constArrays) {
     return `export const ${upperName} = [${values}] as const;`;
+  } else if (config.asNonEmptyTuple) {
+    return `export const ${upperName}: [${enumName}, ...${enumName}[]] = [${values}];`;
   } else {
     return `export const ${upperName}: ${enumName}[] = [${values}];`;
   }
