@@ -67,7 +67,7 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
           }`;
 
           /** @ts-expect-error name DOES exist on @type{import('graphql').SelectionNode} */
-          const selections = node.selectionSet.selections.map(sel => sel.name.value).join(', ');
+          const selections = node.selectionSet.selections.map(sel => (sel.alias || sel.name).value).join(', ');
           const variables = node.variableDefinitions.map(def => def.variable.name.value).join(', ');
 
           return `/**
