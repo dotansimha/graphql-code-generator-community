@@ -1,5 +1,13 @@
 # @graphql-codegen/typescript-mongodb
 
+## 4.0.1
+
+### Patch Changes
+
+- [#1423](https://github.com/dotansimha/graphql-code-generator-community/pull/1423)
+  [`4f8402e`](https://github.com/dotansimha/graphql-code-generator-community/commit/4f8402e5345f4164282c09f0ba822803a0dc11ff)
+  Thanks [@dargmuesli](https://github.com/dargmuesli)! - Use caret version range for lodash.
+
 ## 4.0.0
 
 ### Major Changes
