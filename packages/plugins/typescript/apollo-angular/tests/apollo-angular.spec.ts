@@ -66,7 +66,9 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Apollo from 'apollo-angular';`);
+      expect(content.prepend).toContain(
+        `import { Apollo, Query as ApolloQuery, Mutation as ApolloMutation } from 'apollo-angular';`,
+      );
       expect(content.prepend).toContain(`import { Injectable } from '@angular/core';`);
       await validateTypeScript(content, schema, docs, {});
     });
@@ -83,7 +85,7 @@ describe('Apollo Angular', () => {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-          constructor(apollo: Apollo.Apollo) {
+          constructor(apollo: Apollo) {
             super(apollo);
           }
         }
@@ -105,7 +107,7 @@ describe('Apollo Angular', () => {
       )) as Types.ComplexPluginOutput;
 
       expect(content.content).toBeSimilarStringTo(`
-          constructor(apollo: Apollo.Apollo, testService: TestService, testService1: TestService1) {
+          constructor(apollo: Apollo, testService: TestService, testService1: TestService1) {
             super(apollo, testService, testService1);
           }
         }
@@ -145,7 +147,9 @@ describe('Apollo Angular', () => {
         },
       )) as Types.ComplexPluginOutput;
 
-      expect(content.prepend).toContain(`import * as Apollo from 'my-custom-apollo-angular';`);
+      expect(content.prepend).toContain(
+        `import { Apollo, Query as ApolloQuery, Mutation as ApolloMutation } from 'my-custom-apollo-angular';`,
+      );
       expect(content.prepend).toContain(`import { Injectable } from '@angular/core';`);
       await validateTypeScript(content, schema, docs, {});
     });
@@ -326,11 +330,15 @@ describe('Apollo Angular', () => {
     it('Should be able to use root schema object', async () => {
       const rootSchema = buildSchema(`
         type RootQuery { f: String }
-        schema { query: RootQuery }
+        type RootMutation { g(input: String!): String! }
+        schema { query: RootQuery, mutation: RootMutation }
       `);
       const query = gql`
         query test {
           f
+        }
+        mutation testMutation {
+          g(input: "foo")
         }
       `;
       const docs = [{ location: '', document: query }];
@@ -347,7 +355,13 @@ describe('Apollo Angular', () => {
         @Injectable({
           providedIn: 'root'
         })
-        export class TestGQL extends Apollo.Query
+        export class TestGQL extends ApolloQuery
+      `);
+      expect(content.content).toBeSimilarStringTo(`
+        @Injectable({
+          providedIn: 'root'
+        })
+        export class TestMutationGQL extends ApolloMutation
       `);
       await validateTypeScript(content, rootSchema, docs, {});
     });
@@ -738,10 +752,10 @@ describe('Apollo Angular', () => {
       expect(content.content).toBeSimilarStringTo(`@Injectable({
         providedIn: 'root'
       })
-      export class TestGQL extends Apollo.Query<TestQuery, TestQueryVariables> {
+      export class TestGQL extends ApolloQuery<TestQuery, TestQueryVariables> {
         document = Operations.TestDocument;
 
-        constructor(apollo: Apollo.Apollo) {
+        constructor(apollo: Apollo) {
           super(apollo);
         }
       }`);
