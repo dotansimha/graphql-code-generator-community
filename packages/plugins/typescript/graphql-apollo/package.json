@@ -53,7 +53,7 @@
     "@graphql-codegen/typescript-operations": "5.0.9",
     "@graphql-tools/schema": "10.0.31",
     "cross-fetch": "3.2.0",
-    "react": "19.2.4"
+    "react": "19.2.5"
   },
   "publishConfig": {
     "directory": "dist",
