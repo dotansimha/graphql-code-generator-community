@@ -1,11 +1,11 @@
-/* GraphQL */ `
+export const user1a = /* GraphQL */ `
   query User1a {
     user1a: user {
       id
     }
   }
 `;
-/* GraphQL */ `
+export const user1b = /* GraphQL */ `
   query User1b {
     user1b: user {
       id
@@ -14,7 +14,7 @@
   }
 `;
 
-/* GraphQL */ `
+export const anon = /* GraphQL */ `
   query {
     anon: user {
       __typename
