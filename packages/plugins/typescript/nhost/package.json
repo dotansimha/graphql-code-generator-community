@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-nhost",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "GraphQL Code Generator plugin for the Typescript Nhost SDK",
   "repository": {
