@@ -264,16 +264,20 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
       schemaObject,
       {
         baseDir,
-        generateFilePath(location, customFilename) {
+        generateFilePath({ location, meta }) {
           const newFilePath = defineFilepathSubfolder(location, folder);
 
-          return appendFileNameToFilePath(
-            newFilePath,
-            filePerOperation && customFilename
-              ? customFilename // Note: Unnamed operations will cause `operationName` to be undefined. In such case, the generated filename will be based on the source document file.
-              : fileName,
-            extension,
-          );
+          let customFilename = fileName;
+          if (filePerOperation) {
+            // Note: If a file only has unnamed operations (i.e. undefined operation name) or fragment (i.e. undefined fragment name).
+            // In such case, the generated filename will be based on the source document file.
+            customFilename =
+              meta['operations'][0]?.name?.value ||
+              meta['fragments'][0]?.name?.value ||
+              customFilename;
+          }
+
+          return appendFileNameToFilePath(newFilePath, customFilename, extension);
         },
         schemaTypesSource: {
           path: shouldAbsolute ? join(options.baseOutputDir, baseTypesPath) : baseTypesPath,
