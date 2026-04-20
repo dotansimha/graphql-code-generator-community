@@ -1,5 +1,14 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 5.1.0
+
+### Minor Changes
+
+- [#1399](https://github.com/dotansimha/graphql-code-generator-community/pull/1399)
+  [`2b22acb`](https://github.com/dotansimha/graphql-code-generator-community/commit/2b22acbb31e62fd4594db170c50f7aedcbac6cc4)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Add `filePerOperation` config to generate
+  filename based on named operation or fragment, instead of source filename
+
 ## 5.0.1
 
 ### Patch Changes
