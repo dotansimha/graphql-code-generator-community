@@ -33,7 +33,7 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
 }
 export type Sdk = ReturnType<typeof getSdk>;",
   "prepend": [
-    "import { GraphQLClient, RequestOptions } from 'graphql-request';",
+    "import { GraphQLClient, type RequestOptions } from 'graphql-request';",
     "type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];",
     "import gql from 'graphql-tag';",
   ],

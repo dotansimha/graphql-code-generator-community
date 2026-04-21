@@ -48,7 +48,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     const typeImport = this.config.useTypeImports ? 'import type' : 'import';
 
     this._additionalImports.push(
-      `${typeImport} { GraphQLClient, RequestOptions } from 'graphql-request';`,
+      `${typeImport} { GraphQLClient, type RequestOptions } from 'graphql-request';`,
     );
 
     if (this.config.rawRequest) {

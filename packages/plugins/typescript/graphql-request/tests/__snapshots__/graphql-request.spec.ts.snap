@@ -8,7 +8,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -295,7 +295,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 import gql from 'graphql-tag';
 /** All built-in and custom scalars, mapped to their actual values */
@@ -576,7 +576,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -856,7 +856,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import type { GraphQLClient, RequestOptions } from 'graphql-request';
+import type { GraphQLClient, type RequestOptions } from 'graphql-request';
 import { GraphQLError, print } from 'graphql'
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 import gql from 'graphql-tag';
@@ -1142,7 +1142,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import { GraphQLClient, type RequestOptions } from 'graphql-request';
 import { GraphQLError } from 'graphql'
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 /** All built-in and custom scalars, mapped to their actual values */
@@ -1424,7 +1424,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 import gql from 'graphql-tag';
 /** All built-in and custom scalars, mapped to their actual values */
@@ -1706,7 +1706,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import { GraphQLClient, type RequestOptions } from 'graphql-request';
 import { GraphQLError, print } from 'graphql'
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 import gql from 'graphql-tag';
@@ -1992,7 +1992,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import { GraphQLClient, type RequestOptions } from 'graphql-request';
 import { GraphQLError, print } from 'graphql'
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 import gql from 'graphql-tag';
@@ -2278,7 +2278,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import type { GraphQLClient, RequestOptions } from 'graphql-request';
+import type { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 import gql from 'graphql-tag';
 /** All built-in and custom scalars, mapped to their actual values */
@@ -2560,7 +2560,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import { GraphQLClient, RequestOptions } from 'graphql-request';
+import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 import gql from 'graphql-tag';
 /** All built-in and custom scalars, mapped to their actual values */
