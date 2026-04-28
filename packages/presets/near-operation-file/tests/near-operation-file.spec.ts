@@ -85,6 +85,53 @@ describe('near-operation-file preset', () => {
   ];
 
   describe('Issues', () => {
+    it('dedupes repeated external fragments when multiple documents are merged into the same output file', async () => {
+      const result = await executePreset({
+        baseOutputDir: './src/',
+        config: {},
+        presetConfig: {
+          cwd: '/some/deep/path',
+          baseTypesPath: 'types.ts',
+          fileName: 'types',
+        },
+        schemaAst: schemaNode,
+        schema: getCachedDocumentNodeFromSchema(schemaNode),
+        documents: [
+          {
+            location: '/some/deep/path/src/graphql/query-a.graphql',
+            document: parse(/* GraphQL */ `
+              query QueryA {
+                user {
+                  ...UserFields
+                }
+              }
+            `),
+          },
+          {
+            location: '/some/deep/path/src/graphql/query-b.graphql',
+            document: parse(/* GraphQL */ `
+              query QueryB {
+                user {
+                  ...UserFields
+                }
+              }
+            `),
+          },
+          {
+            location: '/some/deep/path/src/graphql/user-fragment.graphql',
+            document: fragmentAst,
+          },
+        ],
+        plugins: [],
+        pluginMap: {},
+      });
+
+      expect(result).toHaveLength(1);
+      expect(result[0].filename).toBe('/some/deep/path/src/graphql/types.generated.ts');
+      expect(result[0].config.externalFragments).toHaveLength(1);
+      expect(result[0].config.externalFragments[0].name).toBe('UserFields');
+    });
+
     it('#5002 - error when inline fragment does not specify the name of the type', async () => {
       const testSchema = parse(/* GraphQL */ `
         scalar Date

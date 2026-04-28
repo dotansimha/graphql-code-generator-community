@@ -325,7 +325,16 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
     const artifacts: Array<Types.GenerateOptions> = [];
 
     for (const [filename, record] of filePathsMap.entries()) {
+      const fragmentNames = new Set<string>();
       let fragmentImportsArr = record.fragmentImports;
+      const externalFragments = record.externalFragments.filter(fragment => {
+        if (fragmentNames.has(fragment.name)) {
+          return false;
+        }
+
+        fragmentNames.add(fragment.name);
+        return true;
+      });
 
       if (importAllFragmentsFrom) {
         fragmentImportsArr = record.fragmentImports.map<ImportDeclaration<FragmentImport>>(t => {
@@ -377,7 +386,7 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         // are exported from operations file
         exportFragmentSpreadSubTypes: true,
         namespacedImportName: importTypesNamespace,
-        externalFragments: record.externalFragments,
+        externalFragments,
         fragmentImports: fragmentImportsArr,
       };
 
