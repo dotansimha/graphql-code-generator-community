@@ -1521,6 +1521,39 @@ describe('near-operation-file preset', () => {
       "
     `);
   });
+  it('should not generate output for documents marked as external', async () => {
+    const result = await executePreset({
+      baseOutputDir: '/some/path',
+      config: {},
+      presetConfig: {
+        baseTypesPath: 'types.ts',
+      },
+      schema: schemaDocumentNode,
+      schemaAst: schemaNode,
+      documents: [
+        {
+          location: '/some/deep/path/src/graphql/me-query.graphql',
+          document: operationAst,
+          type: 'standard',
+        },
+        {
+          location: '/some/deep/path/src/graphql/external-query.graphql',
+          document: operationAst,
+          type: 'external',
+        },
+        {
+          location: '/some/deep/path/src/graphql/user-fragment.graphql',
+          document: fragmentAst,
+          type: 'external',
+        },
+      ],
+      plugins: [{ 'typescript-operations': {} }],
+      pluginMap: { 'typescript-operations': {} as any },
+    });
+
+    expect(result).toHaveLength(1);
+    expect(result[0].filename).toContain('me-query.generated.ts');
+  });
 });
 
 const getFragmentImportsFromResult = (result: Types.GenerateOptions[], index = 0) =>

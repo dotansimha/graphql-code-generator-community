@@ -78,7 +78,7 @@ export function resolveDocumentImports<T>(
   const { baseOutputDir, documents } = presetOptions;
   const { generateFilePath, schemaTypesSource, baseDir, typesImport } = importResolverOptions;
 
-  return documents.map(documentFile => {
+  return documents.filter(documentFile => documentFile.type !== 'external').map(documentFile => {
     try {
       const meta: {
         operations: OperationDefinitionNode[];
