@@ -78,67 +78,69 @@ export function resolveDocumentImports<T>(
   const { baseOutputDir, documents } = presetOptions;
   const { generateFilePath, schemaTypesSource, baseDir, typesImport } = importResolverOptions;
 
-  return documents.filter(documentFile => documentFile.type !== 'external').map(documentFile => {
-    try {
-      const meta: {
-        operations: OperationDefinitionNode[];
-        fragments: FragmentDefinitionNode[];
-      } = {
-        operations: [],
-        fragments: [],
-      };
-      for (const definition of documentFile.document.definitions) {
-        if (definition.kind === Kind.OPERATION_DEFINITION) {
-          meta.operations.push(definition);
-        } else if (definition.kind === Kind.FRAGMENT_DEFINITION) {
-          meta.fragments.push(definition);
+  return documents
+    .filter(documentFile => documentFile.type !== 'external')
+    .map(documentFile => {
+      try {
+        const meta: {
+          operations: OperationDefinitionNode[];
+          fragments: FragmentDefinitionNode[];
+        } = {
+          operations: [],
+          fragments: [],
+        };
+        for (const definition of documentFile.document.definitions) {
+          if (definition.kind === Kind.OPERATION_DEFINITION) {
+            meta.operations.push(definition);
+          } else if (definition.kind === Kind.FRAGMENT_DEFINITION) {
+            meta.fragments.push(definition);
+          }
         }
-      }
-      const generatedFilePath = generateFilePath({ location: documentFile.location, meta });
+        const generatedFilePath = generateFilePath({ location: documentFile.location, meta });
 
-      const importStatements: string[] = [];
-      const { externalFragments, fragmentImports } = resolveFragments(
-        generatedFilePath,
-        documentFile.document,
-      );
+        const importStatements: string[] = [];
+        const { externalFragments, fragmentImports } = resolveFragments(
+          generatedFilePath,
+          documentFile.document,
+        );
 
-      const externalFragmentsInjectedDocument = {
-        ...documentFile.document,
-        definitions: [
-          ...documentFile.document.definitions,
-          ...externalFragments.map(fragment => fragment.node),
-        ],
-      };
+        const externalFragmentsInjectedDocument = {
+          ...documentFile.document,
+          definitions: [
+            ...documentFile.document.definitions,
+            ...externalFragments.map(fragment => fragment.node),
+          ],
+        };
 
-      if (
-        isUsingTypes(externalFragmentsInjectedDocument, [], schemaObject) &&
-        schemaTypesSource.namespace
-      ) {
-        const schemaTypesImportStatement = generateImportStatement({
-          baseDir,
-          emitLegacyCommonJSImports: presetOptions.config.emitLegacyCommonJSImports,
-          importExtension: presetOptions.config.importExtension,
-          importSource: resolveImportSource(schemaTypesSource),
-          baseOutputDir,
-          outputPath: generatedFilePath,
-          typesImport,
-        });
-        importStatements.unshift(schemaTypesImportStatement);
-      }
+        if (
+          isUsingTypes(externalFragmentsInjectedDocument, [], schemaObject) &&
+          schemaTypesSource.namespace
+        ) {
+          const schemaTypesImportStatement = generateImportStatement({
+            baseDir,
+            emitLegacyCommonJSImports: presetOptions.config.emitLegacyCommonJSImports,
+            importExtension: presetOptions.config.importExtension,
+            importSource: resolveImportSource(schemaTypesSource),
+            baseOutputDir,
+            outputPath: generatedFilePath,
+            typesImport,
+          });
+          importStatements.unshift(schemaTypesImportStatement);
+        }
 
-      return {
-        filename: generatedFilePath,
-        documents: [documentFile],
-        importStatements,
-        fragmentImports,
-        externalFragments,
-      };
-    } catch (e) {
-      throw new Error(
-        `Unable to validate GraphQL document! \n
+        return {
+          filename: generatedFilePath,
+          documents: [documentFile],
+          importStatements,
+          fragmentImports,
+          externalFragments,
+        };
+      } catch (e) {
+        throw new Error(
+          `Unable to validate GraphQL document! \n
          File ${documentFile.location} caused error:
          ${e.message || e.toString()}`,
-      );
-    }
-  });
+        );
+      }
+    });
 }
