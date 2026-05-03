@@ -1,5 +1,13 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 5.2.0
+
+### Minor Changes
+
+- [#1456](https://github.com/dotansimha/graphql-code-generator-community/pull/1456)
+  [`aaa517a`](https://github.com/dotansimha/graphql-code-generator-community/commit/aaa517a038da8046ef4138794f735af761bbc587)
+  Thanks [@ikusakov2](https://github.com/ikusakov2)! - Handle externalDocuments from Codegen CLI
+
 ## 5.1.0
 
 ### Minor Changes
