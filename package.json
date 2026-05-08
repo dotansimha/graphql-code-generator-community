@@ -47,7 +47,7 @@
     "eslint-plugin-import": "2.32.0",
     "graphql": "16.13.2",
     "husky": "9.1.7",
-    "jest-diff": "30.4.0",
+    "jest-diff": "30.4.1",
     "jest-docblock": "30.4.0",
     "lint-staged": "16.4.0",
     "patch-package": "8.0.1",
