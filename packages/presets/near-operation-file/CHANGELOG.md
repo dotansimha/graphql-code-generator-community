@@ -1,5 +1,20 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 5.2.1
+
+### Patch Changes
+
+- [#1454](https://github.com/dotansimha/graphql-code-generator-community/pull/1454)
+  [`60cbc2d`](https://github.com/dotansimha/graphql-code-generator-community/commit/60cbc2d3c8dcfd7622bf2613e195905639a03390)
+  Thanks [@Nurou](https://github.com/Nurou)! - Deduplicate `externalFragments` by name when multiple
+  source documents are merged into the same generated output
+
+  Why: multiple documents can resolve to the same generated file and each contribute the same
+  external fragment downstream plugins then receive repeated externalFragments, which can cause
+  severe perf blow-ups
+
+  Relates to: https://github.com/dotansimha/graphql-code-generator-community/issues/752
+
 ## 5.2.0
 
 ### Minor Changes
