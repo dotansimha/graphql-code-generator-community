@@ -72,9 +72,6 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
     const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
     this.visitor.imports.add(`${typeImport} { GraphQLClient } from 'graphql-request';`);
-    this.visitor.imports.add(
-      `${typeImport} { RequestInit } from 'graphql-request/dist/types.dom';`,
-    );
 
     const { generateBaseQueryHook, variables, options } = this.generateQueryHelper(
       config,
@@ -135,11 +132,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
       config;
 
     const variables = this.generateQueryVariablesSignature(config);
-    const typeImport = this.visitor.config.useTypeImports ? 'import type' : 'import';
     if (this.clientPath) this.visitor.imports.add(this.clientPath);
-    this.visitor.imports.add(
-      `${typeImport} { RequestInit } from 'graphql-request/dist/types.dom';`,
-    );
 
     return this.clientPath
       ? `\nuse${operationName}.fetcher = (${variables}, headers?: RequestInit['headers']) => fetcher<${operationResultType}, ${operationVariablesTypes}>(${documentVariableName}, variables, headers);`
