@@ -2,6 +2,24 @@
 
 exports[`React-Query > exposeQueryKeys: true > Should generate getKey for each query 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -62,6 +80,24 @@ export const useTestMutation = <
 
 exports[`React-Query > exposeQueryKeys: true, addInfiniteQuery: true > Should generate getKey for each query - also infinite queries 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -139,6 +175,24 @@ export const useTestMutation = <
 
 exports[`React-Query > exposeQueryRootKeys: true > Should generate rootKey for each query 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -199,6 +253,24 @@ export const useTestMutation = <
 
 exports[`React-Query > exposeQueryRootKeys: true, addInfiniteQuery: true > Should generate rootKey for each query - also infinite queries 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -276,6 +348,24 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: custom-mapper > Should generate mutation correctly with lazy variables > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -344,6 +434,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: custom-mapper > Should generate mutation correctly with lazy variables > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "import { useCustomFetcher } from './my-file';",
 ]
@@ -351,6 +442,24 @@ exports[`React-Query > fetcher: custom-mapper > Should generate mutation correct
 
 exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with external mapper > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -419,6 +528,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with external mapper > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "import { myCustomFetcher } from './my-file';",
 ]
@@ -426,6 +536,24 @@ exports[`React-Query > fetcher: custom-mapper > Should generate query correctly 
 
 exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with internal mapper > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -480,6 +608,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: custom-mapper > Should generate query correctly with internal mapper > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
   null,
 ]
@@ -487,6 +616,24 @@ exports[`React-Query > fetcher: custom-mapper > Should generate query correctly 
 
 exports[`React-Query > fetcher: fetch > Should generate query and mutation correctly > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -545,6 +692,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: fetch > Should generate query and mutation correctly > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
   "
 function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
@@ -571,6 +719,24 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 
 exports[`React-Query > fetcher: graphql-request > Should generate query correctly with client > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -649,6 +815,7 @@ exports[`React-Query > fetcher: graphql-request > Should generate query correctl
 [
   "import { GraphQLClient } from 'graphql-request';",
   "import { RequestInit } from 'graphql-request/dist/types.dom';",
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "
 function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
@@ -663,6 +830,24 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 
 exports[`React-Query > fetcher: graphql-request with clientImportPath > Should generate query correctly with client > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -724,6 +909,7 @@ exports[`React-Query > fetcher: graphql-request with clientImportPath > Should g
   "import { client as graphqlClient } from 'client.ts';",
   "import { GraphQLClient } from 'graphql-request';",
   "import { RequestInit } from 'graphql-request/dist/types.dom';",
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
   "
 function fetcher<TData, TVariables extends { [key: string]: any }>(query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
@@ -738,6 +924,24 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(query: string
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -792,6 +996,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
@@ -818,6 +1023,24 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config and fetchParams object > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -872,6 +1095,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config and fetchParams object > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
@@ -898,6 +1122,24 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -966,6 +1208,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
@@ -991,6 +1234,24 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from env var > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -1045,6 +1306,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from env var > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
@@ -1070,6 +1332,24 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from just identifier > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -1124,6 +1404,7 @@ export const useTestMutation = <
 
 exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from just identifier > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
@@ -1149,6 +1430,7 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 
 exports[`React-Query > reactQueryImportFrom: custom-path > Should import react-query from custom path > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'custom-react-query';",
   "
 function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
@@ -1175,6 +1457,24 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 
 exports[`React-Query > support import-type preset in v4 > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -1233,6 +1533,24 @@ export const useTestMutation = <
 
 exports[`React-Query > support import-type preset in v5 > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -1295,6 +1613,24 @@ export const useTestMutation = <
 
 exports[`React-Query > support v4 syntax > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -1368,6 +1704,7 @@ export const useTestMutation = <
 
 exports[`React-Query > support v4 syntax > prepend 1`] = `
 [
+  "import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useInfiniteQuery, useMutation, type UseQueryOptions, type UseInfiniteQueryOptions, type UseMutationOptions } from '@tanstack/react-query';",
   "
 function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
@@ -1394,6 +1731,24 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 
 exports[`React-Query > support v5 syntax > content 1`] = `
 "
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
 export const TestDocument = new TypedDocumentString(\`
     query test {
@@ -1513,6 +1868,7 @@ export const useTestMutation = <
 
 exports[`React-Query > support v5 syntax > prepend 1`] = `
 [
+  "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useSuspenseQuery, useInfiniteQuery, useSuspenseInfiniteQuery, useMutation, UseQueryOptions, UseSuspenseQueryOptions, UseInfiniteQueryOptions, InfiniteData, UseSuspenseInfiniteQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
 function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
