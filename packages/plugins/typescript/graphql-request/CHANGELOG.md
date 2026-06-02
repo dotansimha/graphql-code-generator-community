@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 7.1.0
+
+### Minor Changes
+
+- [#1440](https://github.com/dotansimha/graphql-code-generator-community/pull/1440)
+  [`a69289d`](https://github.com/dotansimha/graphql-code-generator-community/commit/a69289d22da8054104390ead6b84c7389265a8e4)
+  Thanks [@roelvanhintum](https://github.com/roelvanhintum)! - Import graphql-request RequestOptions
+  as a type
+
 ## 7.0.1
 
 ### Patch Changes
