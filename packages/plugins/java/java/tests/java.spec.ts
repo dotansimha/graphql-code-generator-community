@@ -158,7 +158,9 @@ describe('Java', () => {
           if (args != null) {
             this.f = (Iterable<String>) args.get("f");
             if (args.get("g") != null) {
-              this.g = (Iterable<SearchUserInput>) args.get("g");
+              this.g = ((Iterable<Map<String, Object>>) args.get("g")).stream()
+               .map(o -> o == null ? null : new SearchUserInput(o))
+               .collect(Collectors.toList());
             }
           }
         }
