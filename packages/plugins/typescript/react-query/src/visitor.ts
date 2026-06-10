@@ -9,6 +9,7 @@ import {
   getConfigValue,
   LoadedFragment,
 } from '@graphql-codegen/visitor-plugin-common';
+import { AmplifyGraphqlFetcher } from './amplify-graphql.js';
 import { BaseReactQueryPluginConfig, ReactQueryRawPluginConfig } from './config.js';
 import { CustomMapperFetcher } from './fetcher-custom-mapper.js';
 import { HardcodedFetchFetcher } from './fetcher-fetch-hardcoded.js';
@@ -63,6 +64,9 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
   }
 
   private createFetcher(raw: ReactQueryRawPluginConfig['fetcher']): FetcherRenderer {
+    if (raw === 'amplify-graphql') {
+      return new AmplifyGraphqlFetcher(this);
+    }
     if (raw === 'fetch') {
       return new FetchFetcher(this);
     }
