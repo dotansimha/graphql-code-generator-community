@@ -8,6 +8,7 @@ import {
   DocumentMode,
   getConfigValue,
   LoadedFragment,
+  typedDocumentString,
 } from '@graphql-codegen/visitor-plugin-common';
 import { BaseReactQueryPluginConfig, ReactQueryRawPluginConfig } from './config.js';
 import { CustomMapperFetcher } from './fetcher-custom-mapper.js';
@@ -100,7 +101,17 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
         ? 'react-query'
         : '@tanstack/react-query';
 
-    return [...baseImports, `import { ${hookAndTypeImports.join(', ')} } from '${moduleName}';`];
+    const typedDocumentStringPropImport = this._generateImport(
+      typedDocumentString.import,
+      typedDocumentString.import.propName,
+      true,
+    );
+
+    return [
+      ...baseImports,
+      typedDocumentStringPropImport,
+      `import { ${hookAndTypeImports.join(', ')} } from '${moduleName}';`,
+    ];
   }
 
   public getFetcherImplementation(): string {
