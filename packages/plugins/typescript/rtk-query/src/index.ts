@@ -1,7 +1,7 @@
 import { extname } from 'path';
 import { concatAST, FragmentDefinitionNode, GraphQLSchema, Kind } from 'graphql';
 import { oldVisit, PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
-import { LoadedFragment } from '@graphql-codegen/visitor-plugin-common';
+import { LoadedFragment, typedDocumentString } from '@graphql-codegen/visitor-plugin-common';
 import { RTKQueryRawPluginConfig } from './config.js';
 import { RTKQueryVisitor } from './visitor.js';
 
@@ -32,6 +32,7 @@ export const plugin: PluginFunction<RTKQueryRawPluginConfig, Types.ComplexPlugin
   return {
     prepend: visitor.getImports(),
     content: [
+      typedDocumentString.template,
       visitor.fragments,
       ...visitorResult.definitions.filter(t => typeof t === 'string'),
       visitor.getInjectCall(),
