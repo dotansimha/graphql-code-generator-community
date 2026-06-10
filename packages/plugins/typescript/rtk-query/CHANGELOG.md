@@ -1,5 +1,23 @@
 # @graphql-codegen/typescript-rtk-query
 
+## 4.0.2
+
+### Patch Changes
+
+- [#1496](https://github.com/dotansimha/graphql-code-generator-community/pull/1496)
+  [`ec1491e`](https://github.com/dotansimha/graphql-code-generator-community/commit/ec1491e1eb172cf2de23a5d5d19a811d4568c7cf)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^7.0.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/7.0.1)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^7.1.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/7.1.0)
+    (from `^6.3.0`, in `dependencies`)
+
+- [#1496](https://github.com/dotansimha/graphql-code-generator-community/pull/1496)
+  [`ec1491e`](https://github.com/dotansimha/graphql-code-generator-community/commit/ec1491e1eb172cf2de23a5d5d19a811d4568c7cf)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Fix missing TypedDocumentString support
+
 ## 4.0.1
 
 ### Patch Changes
