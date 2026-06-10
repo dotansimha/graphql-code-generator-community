@@ -131,7 +131,7 @@ export { injectedRtkApi as api };
     const operationTypeString = operationType.toLowerCase();
 
     const functionsString =
-      `query: (variables) => ({ document: ${documentVariableName} unknown as string, variables })
+      `query: (variables) => ({ document: ${documentVariableName} as unknown as string, variables })
       ${this.injectTransformResponse(Generics)}`.trim();
 
     const endpointString = `

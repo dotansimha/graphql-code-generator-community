@@ -100,15 +100,15 @@ export const SubmitRepositoryDocument = new TypedDocumentString(\`
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument unknown as string, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
       transformResponse: (response: CommentQuery) => response
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument unknown as string, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
       transformResponse: (response: FeedQuery) => response
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument unknown as string, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
       transformResponse: (response: SubmitRepositoryMutation) => response
     }),
   }),
@@ -190,13 +190,13 @@ export const SubmitRepositoryDocument = new TypedDocumentString(\`
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument unknown as string, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument unknown as string, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument unknown as string, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
     }),
   }),
 });
@@ -277,13 +277,13 @@ export const SubmitRepositoryDocument = new TypedDocumentString(\`
 const injectedRtkApi = alternateApiName.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument unknown as string, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument unknown as string, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument unknown as string, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
     }),
   }),
 });
@@ -365,13 +365,13 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: module.hot?.status() === "apply",
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument unknown as string, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument unknown as string, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument unknown as string, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
     }),
   }),
 });
@@ -452,13 +452,13 @@ export const SubmitRepositoryDocument = new TypedDocumentString(\`
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument unknown as string, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument unknown as string, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument unknown as string, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
     }),
   }),
 });
