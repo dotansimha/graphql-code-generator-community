@@ -49,7 +49,7 @@
     "husky": "9.1.7",
     "jest-diff": "30.4.1",
     "jest-docblock": "30.4.0",
-    "lint-staged": "16.4.0",
+    "lint-staged": "17.0.7",
     "patch-package": "8.0.1",
     "prettier": "3.8.4",
     "rimraf": "6.1.3",
