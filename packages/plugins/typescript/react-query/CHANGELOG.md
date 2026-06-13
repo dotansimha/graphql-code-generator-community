@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-react-query
 
+## 7.0.3
+
+### Patch Changes
+
+- [#1506](https://github.com/dotansimha/graphql-code-generator-community/pull/1506)
+  [`bebe34b`](https://github.com/dotansimha/graphql-code-generator-community/commit/bebe34b2d141161d77348e85dbd223f04cba96e8)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Fix document type overriding to ensure
+  TypeScript works without manual typing
+
 ## 7.0.2
 
 ### Patch Changes
