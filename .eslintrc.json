@@ -53,5 +53,13 @@
       }
     }
   ],
-  "ignorePatterns": ["dist", "node_modules", "dev-test", "test-files", "flow.js"]
+  "ignorePatterns": [
+    "dist",
+    "node_modules",
+    "dev-test",
+    "test-files",
+    "flow.js",
+    "jest.project.js",
+    "packages/plugins/typescript/**/example/**"
+  ]
 }
