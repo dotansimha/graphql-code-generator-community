@@ -1,3 +1,4 @@
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 import { api } from '../../packages/plugins/typescript/rtk-query/tests/baseApi';
 
 module.hot?.accept();
@@ -344,6 +345,24 @@ export type VoteMutation = {
   } | null;
 };
 
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 export const CommentsPageCommentFragmentDoc = new TypedDocumentString(
   `
     fragment CommentsPageComment on Comment {
@@ -557,25 +576,28 @@ const injectedRtkApi = api.injectEndpoints({
   overrideExisting: module.hot?.status() === 'apply',
   endpoints: build => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: variables => ({ document: CommentDocument, variables }),
+      query: variables => ({ document: CommentDocument as unknown as string, variables }),
     }),
     CurrentUserForProfile: build.query<
       CurrentUserForProfileQuery,
       CurrentUserForProfileQueryVariables | void
     >({
-      query: variables => ({ document: CurrentUserForProfileDocument, variables }),
+      query: variables => ({
+        document: CurrentUserForProfileDocument as unknown as string,
+        variables,
+      }),
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: variables => ({ document: FeedDocument, variables }),
+      query: variables => ({ document: FeedDocument as unknown as string, variables }),
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: variables => ({ document: SubmitRepositoryDocument, variables }),
+      query: variables => ({ document: SubmitRepositoryDocument as unknown as string, variables }),
     }),
     submitComment: build.mutation<SubmitCommentMutation, SubmitCommentMutationVariables>({
-      query: variables => ({ document: SubmitCommentDocument, variables }),
+      query: variables => ({ document: SubmitCommentDocument as unknown as string, variables }),
     }),
     vote: build.mutation<VoteMutation, VoteMutationVariables>({
-      query: variables => ({ document: VoteDocument, variables }),
+      query: variables => ({ document: VoteDocument as unknown as string, variables }),
     }),
   }),
 });

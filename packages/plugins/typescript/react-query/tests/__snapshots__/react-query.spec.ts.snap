@@ -695,7 +695,7 @@ exports[`React-Query > fetcher: fetch > Should generate query and mutation corre
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
   "
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(endpoint, {
       method: 'POST',
@@ -818,7 +818,7 @@ exports[`React-Query > fetcher: graphql-request > Should generate query correctl
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "
-function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
+function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: TypedDocumentString<unknown, unknown>, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
   return async (): Promise<TData> => client.request({
     document: query,
     variables,
@@ -912,7 +912,7 @@ exports[`React-Query > fetcher: graphql-request with clientImportPath > Should g
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';",
   "
-function fetcher<TData, TVariables extends { [key: string]: any }>(query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
+function fetcher<TData, TVariables extends { [key: string]: any }>(query: TypedDocumentString<unknown, unknown>, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
   return async (): Promise<TData> => graphqlClient.request({
     document: query,
     variables,
@@ -999,7 +999,7 @@ exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctl
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch("http://localhost:3000/graphql", {
     method: "POST",
@@ -1098,7 +1098,7 @@ exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctl
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch("http://localhost:3000/graphql", {
     method: "POST",
@@ -1211,7 +1211,7 @@ exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctl
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useInfiniteQuery, useMutation, UseQueryOptions, UseInfiniteQueryOptions, UseMutationOptions } from 'react-query';",
   "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch("http://localhost:3000/graphql", {
     method: "POST",
@@ -1309,7 +1309,7 @@ exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctl
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(process.env.ENDPOINT_URL as string, {
     method: "POST",
@@ -1407,7 +1407,7 @@ exports[`React-Query > fetcher: hardcoded-fetch > Should generate query correctl
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(myEndpoint as string, {
     method: "POST",
@@ -1433,7 +1433,7 @@ exports[`React-Query > reactQueryImportFrom: custom-path > Should import react-q
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'custom-react-query';",
   "
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(endpoint, {
       method: 'POST',
@@ -1707,7 +1707,7 @@ exports[`React-Query > support v4 syntax > prepend 1`] = `
   "import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useInfiniteQuery, useMutation, type UseQueryOptions, type UseInfiniteQueryOptions, type UseMutationOptions } from '@tanstack/react-query';",
   "
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(endpoint, {
       method: 'POST',
@@ -1871,7 +1871,7 @@ exports[`React-Query > support v5 syntax > prepend 1`] = `
   "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
   "import { useQuery, useSuspenseQuery, useInfiniteQuery, useSuspenseInfiniteQuery, useMutation, UseQueryOptions, UseSuspenseQueryOptions, UseInfiniteQueryOptions, InfiniteData, UseSuspenseInfiniteQueryOptions, UseMutationOptions } from '@tanstack/react-query';",
   "
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
+function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(endpoint, {
       method: 'POST',
