@@ -885,7 +885,7 @@ describe('Configuring specific fields for all Graphql Types:', () => {
   const pattern = FieldNamePattern.forFieldNamesOfAllTypeNames([id, name, friends]);
 
   describe('Pattern.forFieldNamesOfAllTypeNames:', () => {
-    describe('builds the expected pattern for the list of FieldNames:', () => {
+    it('builds the expected pattern for the list of FieldNames:', () => {
       expect(pattern.value).toBe(expectedPattern);
     });
   });
@@ -988,7 +988,7 @@ describe('Configuring all fields for all Graphql Types:', () => {
   const pattern = FieldNamePattern.forAllFieldNamesOfAllTypeNames();
 
   describe('Pattern.forAllFieldNamesOfAllTypeNames:', () => {
-    describe('builds the expected pattern:', () => {
+    it('builds the expected pattern:', () => {
       expect(pattern.value).toBe(expectedPattern);
     });
   });
@@ -1072,7 +1072,7 @@ describe('Configuring all fields except those specified in the exclusion list of
   ]);
 
   describe('Pattern.forAllFieldNamesExcludeFieldNamesOfAllTypeNames:', () => {
-    describe('builds the expected pattern:', () => {
+    it('builds the expected pattern:', () => {
       expect(pattern.value).toBe(expectedPattern);
     });
   });
@@ -1181,7 +1181,7 @@ describe('Configuring specific fields of all GraphQL Types except those specifie
   );
 
   describe('Pattern.forFieldNamesOfAllTypeNamesExcludeTypeNames:', () => {
-    describe('builds the expected pattern for the list of FieldNames:', () => {
+    it('builds the expected pattern for the list of FieldNames:', () => {
       expect(pattern.value).toBe(expectedPattern);
     });
   });
@@ -1306,7 +1306,7 @@ describe('Configuring all fields of all GraphQL Types except those specified in 
   const pattern = FieldNamePattern.forAllFieldNamesOfAllTypeNamesExcludeTypeNames([Droid, Human]);
 
   describe('Pattern.forAllFieldNamesExcludeFieldNamesOfAllTypeNamesExcludeTypeNames:', () => {
-    describe('builds the expected pattern for the list of FieldNames:', () => {
+    it('builds the expected pattern for the list of FieldNames:', () => {
       expect(pattern.value).toBe(expectedPattern);
     });
   });
@@ -1411,7 +1411,7 @@ describe('Configuring all fields except those specified in the exclusion list of
   );
 
   describe('Pattern.forAllFieldNamesExcludeFieldNamesOfAllTypeNamesExcludeTypeNames:', () => {
-    describe('builds the expected pattern for the list of FieldNames:', () => {
+    it('builds the expected pattern for the list of FieldNames:', () => {
       expect(pattern.value).toBe(expectedPattern);
     });
   });

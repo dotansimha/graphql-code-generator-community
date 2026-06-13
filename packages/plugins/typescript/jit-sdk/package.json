@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-jit-sdk",
-  "version": "3.1.0",
+  "version": "4.0.1",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating a ready-to-use SDK that uses GraphQL JIT",
   "repository": {
@@ -33,24 +33,23 @@
   },
   "typings": "dist/typings/index.d.ts",
   "scripts": {
-    "lint": "eslint **/*.ts",
-    "test": "jest --no-watchman --config ../../../../jest.config.js"
+    "lint": "eslint **/*.ts"
   },
   "peerDependencies": {
-    "@graphql-tools/utils": "^8.8.0 || ^10.0.0",
+    "@graphql-tools/utils": "^8.8.0 || ^10.0.0 || ^11.0.0",
     "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0",
     "graphql-jit": "^0.6.0 || ^0.7.0 || ^0.8.0",
     "graphql-tag": "^2.0.0"
   },
   "dependencies": {
-    "@graphql-codegen/plugin-helpers": "^3.0.0",
-    "@graphql-codegen/visitor-plugin-common": "2.13.8",
+    "@graphql-codegen/plugin-helpers": "^6.3.0",
+    "@graphql-codegen/visitor-plugin-common": "^6.3.0",
     "auto-bind": "~4.0.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@graphql-tools/utils": "10.11.0",
-    "graphql-jit": "0.8.7"
+    "@graphql-tools/utils": "11.1.0",
+    "graphql-jit": "0.8.8"
   },
   "publishConfig": {
     "directory": "dist",

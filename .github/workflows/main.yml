@@ -14,7 +14,7 @@ env:
 jobs:
   lint:
     name: Linting Check
-    uses: the-guild-org/shared-config/.github/workflows/lint.yml@main
+    uses: the-guild-org/shared-config/.github/workflows/lint.yml@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
     with:
       script: yarn ci:lint
     secrets:
@@ -24,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Main
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - name: Setup env
-        uses: the-guild-org/shared-config/setup@main
+        uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
-          nodeVersion: 18
+          nodeVersion: 24
       - name: Prettier Check
         run: yarn prettier:check
   dev-tests:
@@ -41,11 +41,11 @@ jobs:
           - 'esm'
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - name: Setup env
-        uses: the-guild-org/shared-config/setup@main
+        uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
-          nodeVersion: 18
+          nodeVersion: 24
       - name: Build
         run: yarn build
         env:
@@ -59,11 +59,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - name: Setup env
-        uses: the-guild-org/shared-config/setup@main
+        uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
-          nodeVersion: 18
+          nodeVersion: 24
       - name: Build
         run: yarn build
         env:
@@ -83,30 +83,30 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest] # remove windows to speed up the tests
-        node_version: [18, 20, 22]
+        node_version: [20, 22, 24]
         graphql_version: [15, 16]
         include:
-          - node-version: 18
+          - node-version: 20
             os: windows-latest
             graphql_version: 16
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - name: Setup env
-        uses: the-guild-org/shared-config/setup@main
+        uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
           nodeVersion: ${{matrix.node_version}}
       - name: Use GraphQL v${{matrix.graphql_version}}
-        run: node ./scripts/match-graphql.js ${{matrix.graphql_version}}
+        run: node ./scripts/match-graphql.cjs ${{matrix.graphql_version}}
       - name: Install Dependencies
         run: yarn
-      - name: Cache Jest
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
+      - name: Cache Vitest
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5
         with:
-          path: .cache/jest
-          key: ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-jest-${{hashFiles('yarn.lock')}}
+          path: node_modules/.vite
+          key: ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-vitest-${{hashFiles('yarn.lock')}}
           restore-keys: |
-            ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-jest-
+            ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-vitest-
       - name: Build
         run: yarn build
       - name: Test

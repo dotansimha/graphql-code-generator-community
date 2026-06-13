@@ -1,7 +1,22 @@
 export const JAVA_SCALARS = {
-  ID: 'Object',
-  String: 'String',
-  Boolean: 'Boolean',
-  Int: 'Integer',
-  Float: 'Double',
+  ID: {
+    input: 'Object',
+    output: 'Object',
+  },
+  String: {
+    input: 'String',
+    output: 'String',
+  },
+  Boolean: {
+    input: 'Boolean',
+    output: 'Boolean',
+  },
+  Int: {
+    input: 'Integer',
+    output: 'Integer',
+  },
+  Float: {
+    input: 'Double',
+    output: 'Double',
+  },
 };

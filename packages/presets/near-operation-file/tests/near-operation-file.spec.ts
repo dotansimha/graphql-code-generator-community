@@ -85,6 +85,53 @@ describe('near-operation-file preset', () => {
   ];
 
   describe('Issues', () => {
+    it('dedupes repeated external fragments when multiple documents are merged into the same output file', async () => {
+      const result = await executePreset({
+        baseOutputDir: './src/',
+        config: {},
+        presetConfig: {
+          cwd: '/some/deep/path',
+          baseTypesPath: 'types.ts',
+          fileName: 'types',
+        },
+        schemaAst: schemaNode,
+        schema: getCachedDocumentNodeFromSchema(schemaNode),
+        documents: [
+          {
+            location: '/some/deep/path/src/graphql/query-a.graphql',
+            document: parse(/* GraphQL */ `
+              query QueryA {
+                user {
+                  ...UserFields
+                }
+              }
+            `),
+          },
+          {
+            location: '/some/deep/path/src/graphql/query-b.graphql',
+            document: parse(/* GraphQL */ `
+              query QueryB {
+                user {
+                  ...UserFields
+                }
+              }
+            `),
+          },
+          {
+            location: '/some/deep/path/src/graphql/user-fragment.graphql',
+            document: fragmentAst,
+          },
+        ],
+        plugins: [],
+        pluginMap: {},
+      });
+
+      expect(result).toHaveLength(1);
+      expect(result[0].filename).toBe('/some/deep/path/src/graphql/types.generated.ts');
+      expect(result[0].config.externalFragments).toHaveLength(1);
+      expect(result[0].config.externalFragments[0].name).toBe('UserFields');
+    });
+
     it('#5002 - error when inline fragment does not specify the name of the type', async () => {
       const testSchema = parse(/* GraphQL */ `
         scalar Date
@@ -383,7 +430,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6439 - generating code only for the last query inside a file', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -427,7 +474,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6520 - self-importing fragment', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -457,7 +504,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6546 - duplicate fragment imports', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -556,7 +603,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#7798 - importing type definitions of dependent fragments when `inlineFragmentType` is `mask`', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type User {
@@ -593,7 +640,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#406 - duplicate fragment imports', async () => {
-      const result = await executeCodegen({
+      const { result } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -1192,7 +1239,7 @@ describe('near-operation-file preset', () => {
   });
 
   it('Should allow external fragments to be imported from packages with function', async () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
     await executePreset({
       baseOutputDir: './src/',
       config: {},
@@ -1301,184 +1348,8 @@ describe('near-operation-file preset', () => {
     );
   });
 
-  it('Should import relevant fragments on dedupeFragments', async () => {
-    const testSchema = parse(/* GraphQL */ `
-      schema {
-        query: Query
-      }
-
-      type Query {
-        animals: [Animal!]!
-      }
-
-      type Group {
-        id: ID!
-        name: String!
-      }
-      type Animal {
-        id: ID!
-        name: String!
-        group: Group
-      }
-    `);
-
-    const operations = [
-      {
-        location: '/operations/document.graphql',
-        document: parse(/* GraphQL */ `
-          #import "./fragments/MyAnimalFragment.graphql"
-
-          query Test {
-            animals {
-              ...MyAnimalFragment
-            }
-          }
-        `),
-      },
-      {
-        location: '/operations/fragments/AnotherGroupFragment.graphql',
-        document: parse(/* GraphQL */ `
-          fragment AnotherGroupFragment on Group {
-            id
-          }
-        `),
-      },
-      {
-        location: '/operations/fragments/MyAnimalFragment.graphql',
-        document: parse(/* GraphQL */ `
-          #import "./MyGroupFragment.graphql"
-
-          fragment MyAnimalFragment on Animal {
-            name
-            group {
-              ...MyGroupFragment
-            }
-          }
-        `),
-      },
-      {
-        location: '/operations/fragments/MyGroupFragment.graphql',
-        document: parse(/* GraphQL */ `
-          #import "./AnotherGroupFragment.graphql"
-
-          fragment MyGroupFragment on Group {
-            ...AnotherGroupFragment
-            name
-          }
-        `),
-      },
-    ];
-
-    const result = await executePreset({
-      baseOutputDir: './src/',
-      config: {
-        skipTypename: true,
-        dedupeFragments: true,
-        exportFragmentSpreadSubTypes: true,
-      },
-      presetConfig: {
-        extension: '.ts',
-        baseTypesPath: '../types',
-      },
-      schema: testSchema,
-      schemaAst: buildASTSchema(testSchema),
-      documents: operations,
-      plugins: [{ typescript: {} }, { 'typescript-operations': {} }, { 'typed-document-node': {} }],
-      pluginMap: {
-        typescript: {} as any,
-        'typescript-operations': {} as any,
-        'typed-document-node': {} as any,
-      },
-    });
-
-    expect(getFragmentImportsFromResult(result)).toContain(
-      `import { MyGroupFragmentFragmentDoc, MyGroupFragmentFragment } from './fragments/MyGroupFragment';`,
-    );
-
-    expect(getFragmentImportsFromResult(result)).toContain(
-      `import { AnotherGroupFragmentFragmentDoc, AnotherGroupFragmentFragment } from './fragments/AnotherGroupFragment';`,
-    );
-  });
-
-  it('Should import relevant nested fragments on dedupeFragments', async () => {
-    const schema = parse(/* GraphQL */ `
-      type Address {
-        city: String
-      }
-
-      type Author {
-        address: Address
-      }
-
-      type Book {
-        author: Author
-      }
-
-      type Query {
-        book: Book
-      }
-    `);
-
-    const operations = [
-      {
-        location: '/author.graphql',
-        document: parse(/* GraphQL */ `
-          fragment Address on Address {
-            city
-          }
-
-          fragment Author on Author {
-            address {
-              ...Address
-            }
-          }
-        `),
-      },
-      {
-        location: '/book.graphql',
-        document: parse(/* GraphQL */ `
-          fragment Book on Book {
-            author {
-              ...Author
-            }
-          }
-
-          query Book {
-            book {
-              ...Book
-            }
-          }
-        `),
-      },
-    ];
-
-    const result = await executePreset({
-      baseOutputDir: './src/',
-      config: {
-        dedupeFragments: true,
-      },
-      presetConfig: {
-        extension: '.ts',
-        baseTypesPath: './types',
-      },
-      schema,
-      schemaAst: buildASTSchema(schema),
-      documents: operations,
-      plugins: [{ typescript: {} }, { 'typescript-operations': {} }, { 'typed-document-node': {} }],
-      pluginMap: {
-        typescript: {} as any,
-        'typescript-operations': {} as any,
-        'typed-document-node': {} as any,
-      },
-    });
-
-    expect(getFragmentImportsFromResult(result, 1)).toContain(
-      `import { AuthorFragmentDoc, AuthorFragment, AddressFragmentDoc, AddressFragment } from './author';`,
-    );
-  });
-
   it('#1112 - should import only interface types that are in use', async () => {
-    const result = await executeCodegen({
+    const { result } = await executeCodegen({
       schema: [
         /* GraphQL */ `
           type Query {
@@ -1526,19 +1397,209 @@ describe('near-operation-file preset', () => {
       generatedDoc.filename.match(/issue-1112-operation/),
     ).content;
 
-    expect(interfaceContent).toContain(
-      "export type AnimalFragment_Cat = { __typename?: 'Cat', name: string };",
-    );
-    expect(interfaceContent).toContain(
-      "export type AnimalFragment_Dog = { __typename?: 'Dog', name: string };",
-    );
-    expect(interfaceContent).toContain(
-      'export type AnimalFragment = AnimalFragment_Cat | AnimalFragment_Dog;',
+    expect(interfaceContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
+
+      export type AnimalFragment_Cat = { __typename?: 'Cat', name: string };
+
+      export type AnimalFragment_Dog = { __typename?: 'Dog', name: string };
+
+      export type AnimalFragment =
+        | AnimalFragment_Cat
+        | AnimalFragment_Dog
+      ;
+      "
+    `);
+
+    expect(operationContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
+
+      import { AnimalFragment_Cat } from './issue-1112-interface.generated';
+      export type CatsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+      export type CatsQuery = { __typename?: 'Query', cats: Array<(
+          { __typename?: 'Cat' }
+          & AnimalFragment_Cat
+        )> };
+      "
+    `);
+  });
+
+  it('generates correctly without baseTypesPath for standalone typescript-operations', async () => {
+    const { result } = await executeCodegen({
+      schema: /* GraphQL */ `
+        type Query {
+          user: User
+        }
+
+        type User {
+          id: ID!
+          name: String!
+        }
+      `,
+      documents: path.join(__dirname, 'fixtures/no-base-types-path.graphql'),
+      generates: {
+        [__dirname]: {
+          preset,
+          plugins: ['typescript-operations'],
+        },
+      },
+    });
+
+    const generatedFile = result.find(({ filename }) =>
+      filename.endsWith('fixtures/no-base-types-path.generated.ts'),
     );
 
-    expect(operationContent).toContain(
-      "import { AnimalFragment_Cat } from './issue-1112-interface.generated'",
+    // FIXME: when typescript-operations v6 releases, this test will be updated
+    expect(generatedFile.content).toMatchInlineSnapshot(`
+     "export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+     export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string } | null };
+     "
+    `);
+  });
+
+  it('generates a file per operation (instead of file) when using filePerOperation:true', async () => {
+    const { result } = await executeCodegen({
+      schema: /* GraphQL */ `
+        type Query {
+          user: User
+        }
+
+        type User {
+          id: ID!
+          name: String!
+        }
+      `,
+      documents: path.join(__dirname, 'fixtures/file-per-operation.*.graphql*'),
+      generates: {
+        [__dirname]: {
+          preset,
+          presetConfig: {
+            filePerOperation: true,
+          },
+          plugins: ['typescript-operations'],
+        },
+      },
+    });
+
+    expect(result.length).toBe(9);
+
+    const file1a = result.find(file => file.filename.endsWith('User1a.generated.ts'));
+    expect(file1a.content).toMatchInlineSnapshot(`
+      "export type User1aQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User1aQuery = { __typename?: 'Query', user1a?: { __typename?: 'User', id: string } | null };
+      "
+    `);
+
+    const file1b = result.find(file => file.filename.endsWith('User1b.generated.ts'));
+    expect(file1b.content).toMatchInlineSnapshot(`
+      "export type User1bQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User1bQuery = { __typename?: 'Query', user1b?: { __typename?: 'User', id: string, name: string } | null };
+      "
+    `);
+
+    // Unnamed operations falls back to source doc filename
+    const file1c = result.find(file =>
+      file.filename.endsWith('file-per-operation.1.graphql.generated.ts'),
     );
+    expect(file1c.content).toMatchInlineSnapshot(`
+      "export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type Unnamed_1_Query = { __typename?: 'Query', anon?: { __typename: 'User' } | null };
+      "
+    `);
+
+    const file2 = result.find(file => file.filename.endsWith('User2.generated.ts'));
+    expect(file2.content).toMatchInlineSnapshot(`
+      "export type User2QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User2Query = { __typename?: 'Query', user2?: { __typename?: 'User', id: string } | null };
+      "
+    `);
+
+    const file3 = result.find(file => file.filename.endsWith('UserFragment3.generated.ts'));
+    expect(file3.content).toMatchInlineSnapshot(`
+      "export type UserFragment3Fragment = { __typename?: 'User', id: string };
+      "
+    `);
+
+    const file4 = result.find(file => file.filename.endsWith('User4.generated.ts'));
+    expect(file4.content).toMatchInlineSnapshot(`
+      "export type User4QueryVariables = Exact<{
+        id: Scalars['ID']['input'];
+      }>;
+
+
+      export type User4Query = { __typename?: 'Query', user4?: { __typename?: 'User', name: string } | null };
+      "
+    `);
+
+    const file5a = result.find(file => file.filename.endsWith('UserFragment5a.generated.ts'));
+    expect(file5a.content).toMatchInlineSnapshot(`
+      "export type UserFragment5aFragment = { __typename?: 'User', id: string };
+      "
+    `);
+    const file5b = result.find(file => file.filename.endsWith('User5b.generated.ts'));
+    expect(file5b.content).toMatchInlineSnapshot(`
+      "export type User5bQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User5bQuery = { __typename?: 'Query', user1a?: { __typename?: 'User', id: string } | null };
+      "
+    `);
+
+    const file6 = result.find(file => file.filename.endsWith('User6.generated.ts'));
+    expect(file6.content).toMatchInlineSnapshot(`
+      "export type UserFragment6Fragment = { __typename?: 'User', id: string };
+
+      export type User6QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+      export type User6Query = { __typename?: 'Query', user6?: { __typename?: 'User', id: string } | null };
+      "
+    `);
+  });
+  it('should not generate output for documents marked as external', async () => {
+    const result = await executePreset({
+      baseOutputDir: '/some/path',
+      config: {},
+      presetConfig: {
+        baseTypesPath: 'types.ts',
+      },
+      schema: schemaDocumentNode,
+      schemaAst: schemaNode,
+      documents: [
+        {
+          location: '/some/deep/path/src/graphql/me-query.graphql',
+          document: operationAst,
+          type: 'standard',
+        },
+        {
+          location: '/some/deep/path/src/graphql/external-query.graphql',
+          document: operationAst,
+          type: 'external',
+        },
+        {
+          location: '/some/deep/path/src/graphql/user-fragment.graphql',
+          document: fragmentAst,
+          type: 'external',
+        },
+      ],
+      plugins: [{ 'typescript-operations': {} }],
+      pluginMap: { 'typescript-operations': {} as any },
+    });
+
+    expect(result).toHaveLength(1);
+    expect(result[0].filename).toContain('me-query.generated.ts');
   });
 });
 

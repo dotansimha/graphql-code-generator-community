@@ -104,10 +104,9 @@ export interface BaseSolidQueryPluginConfig {
  *
  */
 export interface SolidQueryRawPluginConfig
-  extends Omit<
+  extends
+    Omit<
       RawClientSideBasePluginConfig,
-      | 'documentMode'
-      | 'noGraphQLTag'
       | 'gqlImport'
       | 'documentNodeImport'
       | 'noExport'

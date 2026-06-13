@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`jit-sdk - GraphQL 16+ generates operation description correctly 1`] = `
+exports[`jit-sdk - GraphQL 16+ > generates operation description correctly 1`] = `
 {
   "content": "
 export const FeedDocument = gql\`

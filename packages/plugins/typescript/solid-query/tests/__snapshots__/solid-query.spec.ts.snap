@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Solid-Query exposeQueryKeys: true Should generate getKey for each query 1`] = `
+exports[`Solid-Query > exposeQueryKeys: true > Should generate getKey for each query 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -17,7 +17,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TestQuery,
@@ -38,13 +38,13 @@ export const createTestQuery = <
 
 createTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test'] : ['test', variables];
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -64,10 +64,10 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query exposeQueryKeys: true, addInfiniteQuery: true Should generate getKey for each query - also infinite queries 1`] = `
+exports[`Solid-Query > exposeQueryKeys: true, addInfiniteQuery: true > Should generate getKey for each query - also infinite queries 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -81,7 +81,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TestQuery,
@@ -124,13 +124,13 @@ export const createInfiniteTestQuery = <
 
 createInfiniteTestQuery.getKey = (variables?: TestQueryVariables) => variables === undefined ? ['test.infinite'] : ['test.infinite', variables];
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -150,10 +150,10 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query exposeQueryRootKeys: true Should generate rootKey for each query 1`] = `
+exports[`Solid-Query > exposeQueryRootKeys: true > Should generate rootKey for each query 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -167,7 +167,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TestQuery,
@@ -188,13 +188,13 @@ export const createTestQuery = <
 
 createTestQuery.rootKey = 'test';
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -214,10 +214,10 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query exposeQueryRootKeys: true, addInfiniteQuery: true Should generate rootKey for each query - also infinite queries 1`] = `
+exports[`Solid-Query > exposeQueryRootKeys: true, addInfiniteQuery: true > Should generate rootKey for each query - also infinite queries 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -231,7 +231,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TestQuery,
@@ -274,13 +274,13 @@ export const createInfiniteTestQuery = <
 
 createInfiniteTestQuery.rootKey = 'test.infinite';
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -300,10 +300,10 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: custom-mapper Should generate mutation correctly with lazy variables: content 1`] = `
+exports[`Solid-Query > fetcher: custom-mapper > Should generate mutation correctly with lazy variables > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -317,7 +317,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -354,13 +354,13 @@ export const createInfiniteTestQuery = <
   }))()
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -377,17 +377,17 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: custom-mapper Should generate mutation correctly with lazy variables: prepend 1`] = `
+exports[`Solid-Query > fetcher: custom-mapper > Should generate mutation correctly with lazy variables > prepend 1`] = `
 [
   "import { createQuery, createInfiniteQuery, createMutation, CreateQueryOptions, CreateInfiniteQueryOptions, InfiniteData, CreateMutationOptions } from '@tanstack/solid-query';",
   "import { useCustomFetcher } from './my-file';",
 ]
 `;
 
-exports[`Solid-Query fetcher: custom-mapper Should generate query correctly with external mapper: content 1`] = `
+exports[`Solid-Query > fetcher: custom-mapper > Should generate query correctly with external mapper > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -401,7 +401,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -438,13 +438,13 @@ export const createInfiniteTestQuery = <
   }))()
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -461,17 +461,17 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: custom-mapper Should generate query correctly with external mapper: prepend 1`] = `
+exports[`Solid-Query > fetcher: custom-mapper > Should generate query correctly with external mapper > prepend 1`] = `
 [
   "import { createQuery, createInfiniteQuery, createMutation, CreateQueryOptions, CreateInfiniteQueryOptions, InfiniteData, CreateMutationOptions } from '@tanstack/solid-query';",
   "import { myCustomFetcher } from './my-file';",
 ]
 `;
 
-exports[`Solid-Query fetcher: custom-mapper Should generate query correctly with internal mapper: content 1`] = `
+exports[`Solid-Query > fetcher: custom-mapper > Should generate query correctly with internal mapper > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -485,7 +485,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -503,13 +503,13 @@ export const createTestQuery = <
   })
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -526,17 +526,17 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: custom-mapper Should generate query correctly with internal mapper: prepend 1`] = `
+exports[`Solid-Query > fetcher: custom-mapper > Should generate query correctly with internal mapper > prepend 1`] = `
 [
   "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from '@tanstack/solid-query';",
   null,
 ]
 `;
 
-exports[`Solid-Query fetcher: fetch Should generate query and mutation correctly: content 1`] = `
+exports[`Solid-Query > fetcher: fetch > Should generate query and mutation correctly > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -550,7 +550,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -569,13 +569,13 @@ export const createTestQuery = <
   })
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -595,7 +595,7 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: fetch Should generate query and mutation correctly: prepend 1`] = `
+exports[`Solid-Query > fetcher: fetch > Should generate query and mutation correctly > prepend 1`] = `
 [
   "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from '@tanstack/solid-query';",
   "
@@ -621,10 +621,10 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 ]
 `;
 
-exports[`Solid-Query fetcher: graphql-request Should generate query correctly with client: content 1`] = `
+exports[`Solid-Query > fetcher: graphql-request > Should generate query correctly with client > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -638,7 +638,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -679,13 +679,13 @@ export const createInfiniteTestQuery = <
   }))()
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -706,7 +706,7 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: graphql-request Should generate query correctly with client: prepend 1`] = `
+exports[`Solid-Query > fetcher: graphql-request > Should generate query correctly with client > prepend 1`] = `
 [
   "import { GraphQLClient } from 'graphql-request';",
   "import { RequestInit } from 'graphql-request/dist/types.dom';",
@@ -722,10 +722,10 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(client: Graph
 ]
 `;
 
-exports[`Solid-Query fetcher: graphql-request with clientImportPath Should generate query correctly with client: content 1`] = `
+exports[`Solid-Query > fetcher: graphql-request with clientImportPath > Should generate query correctly with client > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -739,7 +739,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -758,13 +758,13 @@ export const createTestQuery = <
   })
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -784,7 +784,7 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: graphql-request with clientImportPath Should generate query correctly with client: prepend 1`] = `
+exports[`Solid-Query > fetcher: graphql-request with clientImportPath > Should generate query correctly with client > prepend 1`] = `
 [
   "import { client as graphqlClient } from 'client.ts';",
   "import { GraphQLClient } from 'graphql-request';",
@@ -801,10 +801,10 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(query: string
 ]
 `;
 
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with fetch config and fetchParams object: content 1`] = `
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -818,7 +818,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -836,13 +836,13 @@ export const createTestQuery = <
   })
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -859,7 +859,7 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with fetch config and fetchParams object: prepend 1`] = `
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config > prepend 1`] = `
 [
   "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from '@tanstack/solid-query';",
   "
@@ -885,10 +885,10 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 ]
 `;
 
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with fetch config: content 1`] = `
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config and fetchParams object > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -902,7 +902,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -920,13 +920,13 @@ export const createTestQuery = <
   })
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -943,7 +943,7 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with fetch config: prepend 1`] = `
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with fetch config and fetchParams object > prepend 1`] = `
 [
   "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from '@tanstack/solid-query';",
   "
@@ -969,10 +969,10 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 ]
 `;
 
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint from env var: content 1`] = `
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint > content 1`] = `
 "
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     query test {
   feed {
     id
@@ -986,173 +986,7 @@ export const TestDocument = \`
     }
   }
 }
-    \`;
-
-export const createTestQuery = <
-      TData = TTestQuery,
-      TError = unknown
-    >(
-      variables?: TTestQueryVariables,
-      options?: Omit<CreateQueryOptions<TTestQuery, TError, TData>, 'queryKey'> & { queryKey?: CreateQueryOptions<TTestQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return createQuery<TTestQuery, TError, TData>(
-      () => ({
-    queryKey: variables === undefined ? ['test'] : ['test', variables],
-    queryFn: fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
-    ...options
-  })
-    )};
-
-export const TestDocument = \`
-    mutation test($name: String) {
-  submitRepository(repoFullName: $name) {
-    id
-  }
-}
-    \`;
-
-export const createTestMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: CreateMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
-    
-    return createMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
-      () => ({
-    mutationKey: ['test'],
-    mutationFn: (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
-    ...options
-  })
-    )};
-"
-`;
-
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint from env var: prepend 1`] = `
-[
-  "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from '@tanstack/solid-query';",
-  "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(process.env.ENDPOINT_URL as string, {
-    method: "POST",
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}",
-]
-`;
-
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint from just identifier: content 1`] = `
-"
-
-export const TestDocument = \`
-    query test {
-  feed {
-    id
-    commentCount
-    repository {
-      full_name
-      html_url
-      owner {
-        avatar_url
-      }
-    }
-  }
-}
-    \`;
-
-export const createTestQuery = <
-      TData = TTestQuery,
-      TError = unknown
-    >(
-      variables?: TTestQueryVariables,
-      options?: Omit<CreateQueryOptions<TTestQuery, TError, TData>, 'queryKey'> & { queryKey?: CreateQueryOptions<TTestQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return createQuery<TTestQuery, TError, TData>(
-      () => ({
-    queryKey: variables === undefined ? ['test'] : ['test', variables],
-    queryFn: fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
-    ...options
-  })
-    )};
-
-export const TestDocument = \`
-    mutation test($name: String) {
-  submitRepository(repoFullName: $name) {
-    id
-  }
-}
-    \`;
-
-export const createTestMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: CreateMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
-    
-    return createMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
-      () => ({
-    mutationKey: ['test'],
-    mutationFn: (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
-    ...options
-  })
-    )};
-"
-`;
-
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint from just identifier: prepend 1`] = `
-[
-  "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from '@tanstack/solid-query';",
-  "
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(myEndpoint as string, {
-    method: "POST",
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}",
-]
-`;
-
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint: content 1`] = `
-"
-
-export const TestDocument = \`
-    query test {
-  feed {
-    id
-    commentCount
-    repository {
-      full_name
-      html_url
-      owner {
-        avatar_url
-      }
-    }
-  }
-}
-    \`;
+    \`);
 
 export const createTestQuery = <
       TData = TTestQuery,
@@ -1189,13 +1023,13 @@ export const createInfiniteTestQuery = <
   }))()
     )};
 
-export const TestDocument = \`
+export const TestDocument = new TypedDocumentString(\`
     mutation test($name: String) {
   submitRepository(repoFullName: $name) {
     id
   }
 }
-    \`;
+    \`);
 
 export const createTestMutation = <
       TError = unknown,
@@ -1212,7 +1046,7 @@ export const createTestMutation = <
 "
 `;
 
-exports[`Solid-Query fetcher: hardcoded-fetch Should generate query correctly with hardcoded endpoint: prepend 1`] = `
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint > prepend 1`] = `
 [
   "import { createQuery, createInfiniteQuery, createMutation, CreateQueryOptions, CreateInfiniteQueryOptions, InfiniteData, CreateMutationOptions } from '@tanstack/solid-query';",
   "
@@ -1237,7 +1071,173 @@ function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
 ]
 `;
 
-exports[`Solid-Query solidQueryImportFrom: custom-path Should import solid-query from custom path: prepend 1`] = `
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from env var > content 1`] = `
+"
+
+export const TestDocument = new TypedDocumentString(\`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`);
+
+export const createTestQuery = <
+      TData = TTestQuery,
+      TError = unknown
+    >(
+      variables?: TTestQueryVariables,
+      options?: Omit<CreateQueryOptions<TTestQuery, TError, TData>, 'queryKey'> & { queryKey?: CreateQueryOptions<TTestQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return createQuery<TTestQuery, TError, TData>(
+      () => ({
+    queryKey: variables === undefined ? ['test'] : ['test', variables],
+    queryFn: fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
+    ...options
+  })
+    )};
+
+export const TestDocument = new TypedDocumentString(\`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`);
+
+export const createTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: CreateMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
+    
+    return createMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+      () => ({
+    mutationKey: ['test'],
+    mutationFn: (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
+    ...options
+  })
+    )};
+"
+`;
+
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from env var > prepend 1`] = `
+[
+  "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from '@tanstack/solid-query';",
+  "
+function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+  return async (): Promise<TData> => {
+    const res = await fetch(process.env.ENDPOINT_URL as string, {
+    method: "POST",
+      body: JSON.stringify({ query, variables }),
+    });
+
+    const json = await res.json();
+
+    if (json.errors) {
+      const { message } = json.errors[0];
+
+      throw new Error(message);
+    }
+
+    return json.data;
+  }
+}",
+]
+`;
+
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from just identifier > content 1`] = `
+"
+
+export const TestDocument = new TypedDocumentString(\`
+    query test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`);
+
+export const createTestQuery = <
+      TData = TTestQuery,
+      TError = unknown
+    >(
+      variables?: TTestQueryVariables,
+      options?: Omit<CreateQueryOptions<TTestQuery, TError, TData>, 'queryKey'> & { queryKey?: CreateQueryOptions<TTestQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return createQuery<TTestQuery, TError, TData>(
+      () => ({
+    queryKey: variables === undefined ? ['test'] : ['test', variables],
+    queryFn: fetcher<TTestQuery, TTestQueryVariables>(TestDocument, variables),
+    ...options
+  })
+    )};
+
+export const TestDocument = new TypedDocumentString(\`
+    mutation test($name: String) {
+  submitRepository(repoFullName: $name) {
+    id
+  }
+}
+    \`);
+
+export const createTestMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: CreateMutationOptions<TTestMutation, TError, TTestMutationVariables, TContext>) => {
+    
+    return createMutation<TTestMutation, TError, TTestMutationVariables, TContext>(
+      () => ({
+    mutationKey: ['test'],
+    mutationFn: (variables?: TTestMutationVariables) => fetcher<TTestMutation, TTestMutationVariables>(TestDocument, variables)(),
+    ...options
+  })
+    )};
+"
+`;
+
+exports[`Solid-Query > fetcher: hardcoded-fetch > Should generate query correctly with hardcoded endpoint from just identifier > prepend 1`] = `
+[
+  "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from '@tanstack/solid-query';",
+  "
+function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+  return async (): Promise<TData> => {
+    const res = await fetch(myEndpoint as string, {
+    method: "POST",
+      body: JSON.stringify({ query, variables }),
+    });
+
+    const json = await res.json();
+
+    if (json.errors) {
+      const { message } = json.errors[0];
+
+      throw new Error(message);
+    }
+
+    return json.data;
+  }
+}",
+]
+`;
+
+exports[`Solid-Query > solidQueryImportFrom: custom-path > Should import solid-query from custom path > prepend 1`] = `
 [
   "import { createQuery, createMutation, CreateQueryOptions, CreateMutationOptions } from 'custom-solid-query';",
   "

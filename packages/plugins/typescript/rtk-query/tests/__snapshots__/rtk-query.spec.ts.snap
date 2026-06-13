@@ -1,20 +1,56 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`RTK Query For fragment 1`] = `
-"export const VoteButtonsFragmentDoc = \`
+exports[`RTK Query > For fragment 1`] = `
+"export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+export const VoteButtonsFragmentDoc = new TypedDocumentString(\`
     fragment VoteButtons on Entry {
   score
   vote {
     vote_value
   }
 }
-    \`;
+    \`, {"fragmentName":"VoteButtons"});
 "
 `;
 
-exports[`RTK Query With addTransformResponse 1`] = `
-"
-export const CommentDocument = \`
+exports[`RTK Query > With addTransformResponse 1`] = `
+"export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+
+export const CommentDocument = new TypedDocumentString(\`
     query Comment($repoFullName: String!, $limit: Int, $offset: Int) {
   currentUser {
     login
@@ -42,8 +78,8 @@ export const CommentDocument = \`
     }
   }
 }
-    \${CommentsPageCommentFragmentDoc}\`;
-export const FeedDocument = \`
+    \`);
+export const FeedDocument = new TypedDocumentString(\`
     query Feed($type: FeedType!, $offset: Int, $limit: Int) {
   currentUser {
     login
@@ -52,27 +88,27 @@ export const FeedDocument = \`
     ...FeedEntry
   }
 }
-    \${FeedEntryFragmentDoc}\`;
-export const SubmitRepositoryDocument = \`
+    \`);
+export const SubmitRepositoryDocument = new TypedDocumentString(\`
     mutation submitRepository($repoFullName: String!) {
   submitRepository(repoFullName: $repoFullName) {
     createdAt
   }
 }
-    \`;
+    \`);
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
       transformResponse: (response: CommentQuery) => response
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
       transformResponse: (response: FeedQuery) => response
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
       transformResponse: (response: SubmitRepositoryMutation) => response
     }),
   }),
@@ -84,9 +120,27 @@ export { injectedRtkApi as api };
 "
 `;
 
-exports[`RTK Query With hooks 1`] = `
-"
-export const CommentDocument = \`
+exports[`RTK Query > With hooks 1`] = `
+"export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+
+export const CommentDocument = new TypedDocumentString(\`
     query Comment($repoFullName: String!, $limit: Int, $offset: Int) {
   currentUser {
     login
@@ -114,8 +168,8 @@ export const CommentDocument = \`
     }
   }
 }
-    \${CommentsPageCommentFragmentDoc}\`;
-export const FeedDocument = \`
+    \`);
+export const FeedDocument = new TypedDocumentString(\`
     query Feed($type: FeedType!, $offset: Int, $limit: Int) {
   currentUser {
     login
@@ -124,25 +178,25 @@ export const FeedDocument = \`
     ...FeedEntry
   }
 }
-    \${FeedEntryFragmentDoc}\`;
-export const SubmitRepositoryDocument = \`
+    \`);
+export const SubmitRepositoryDocument = new TypedDocumentString(\`
     mutation submitRepository($repoFullName: String!) {
   submitRepository(repoFullName: $repoFullName) {
     createdAt
   }
 }
-    \`;
+    \`);
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
     }),
   }),
 });
@@ -153,9 +207,27 @@ export const { useCommentQuery, useLazyCommentQuery, useFeedQuery, useLazyFeedQu
 "
 `;
 
-exports[`RTK Query With importBaseApiAlternateName 1`] = `
-"
-export const CommentDocument = \`
+exports[`RTK Query > With importBaseApiAlternateName 1`] = `
+"export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+
+export const CommentDocument = new TypedDocumentString(\`
     query Comment($repoFullName: String!, $limit: Int, $offset: Int) {
   currentUser {
     login
@@ -183,8 +255,8 @@ export const CommentDocument = \`
     }
   }
 }
-    \${CommentsPageCommentFragmentDoc}\`;
-export const FeedDocument = \`
+    \`);
+export const FeedDocument = new TypedDocumentString(\`
     query Feed($type: FeedType!, $offset: Int, $limit: Int) {
   currentUser {
     login
@@ -193,25 +265,25 @@ export const FeedDocument = \`
     ...FeedEntry
   }
 }
-    \${FeedEntryFragmentDoc}\`;
-export const SubmitRepositoryDocument = \`
+    \`);
+export const SubmitRepositoryDocument = new TypedDocumentString(\`
     mutation submitRepository($repoFullName: String!) {
   submitRepository(repoFullName: $repoFullName) {
     createdAt
   }
 }
-    \`;
+    \`);
 
 const injectedRtkApi = alternateApiName.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
     }),
   }),
 });
@@ -222,9 +294,27 @@ export { injectedRtkApi as api };
 "
 `;
 
-exports[`RTK Query With overrideExisting 1`] = `
-"
-export const CommentDocument = \`
+exports[`RTK Query > With overrideExisting 1`] = `
+"export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+
+export const CommentDocument = new TypedDocumentString(\`
     query Comment($repoFullName: String!, $limit: Int, $offset: Int) {
   currentUser {
     login
@@ -252,8 +342,8 @@ export const CommentDocument = \`
     }
   }
 }
-    \${CommentsPageCommentFragmentDoc}\`;
-export const FeedDocument = \`
+    \`);
+export const FeedDocument = new TypedDocumentString(\`
     query Feed($type: FeedType!, $offset: Int, $limit: Int) {
   currentUser {
     login
@@ -262,26 +352,26 @@ export const FeedDocument = \`
     ...FeedEntry
   }
 }
-    \${FeedEntryFragmentDoc}\`;
-export const SubmitRepositoryDocument = \`
+    \`);
+export const SubmitRepositoryDocument = new TypedDocumentString(\`
     mutation submitRepository($repoFullName: String!) {
   submitRepository(repoFullName: $repoFullName) {
     createdAt
   }
 }
-    \`;
+    \`);
 
 const injectedRtkApi = api.injectEndpoints({
   overrideExisting: module.hot?.status() === "apply",
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
     }),
   }),
 });
@@ -292,9 +382,27 @@ export { injectedRtkApi as api };
 "
 `;
 
-exports[`RTK Query Without hooks 1`] = `
-"
-export const CommentDocument = \`
+exports[`RTK Query > Without hooks 1`] = `
+"export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
+
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+
+export const CommentDocument = new TypedDocumentString(\`
     query Comment($repoFullName: String!, $limit: Int, $offset: Int) {
   currentUser {
     login
@@ -322,8 +430,8 @@ export const CommentDocument = \`
     }
   }
 }
-    \${CommentsPageCommentFragmentDoc}\`;
-export const FeedDocument = \`
+    \`);
+export const FeedDocument = new TypedDocumentString(\`
     query Feed($type: FeedType!, $offset: Int, $limit: Int) {
   currentUser {
     login
@@ -332,25 +440,25 @@ export const FeedDocument = \`
     ...FeedEntry
   }
 }
-    \${FeedEntryFragmentDoc}\`;
-export const SubmitRepositoryDocument = \`
+    \`);
+export const SubmitRepositoryDocument = new TypedDocumentString(\`
     mutation submitRepository($repoFullName: String!) {
   submitRepository(repoFullName: $repoFullName) {
     createdAt
   }
 }
-    \`;
+    \`);
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     Comment: build.query<CommentQuery, CommentQueryVariables>({
-      query: (variables) => ({ document: CommentDocument, variables })
+      query: (variables) => ({ document: CommentDocument as unknown as string, variables })
     }),
     Feed: build.query<FeedQuery, FeedQueryVariables>({
-      query: (variables) => ({ document: FeedDocument, variables })
+      query: (variables) => ({ document: FeedDocument as unknown as string, variables })
     }),
     submitRepository: build.mutation<SubmitRepositoryMutation, SubmitRepositoryMutationVariables>({
-      query: (variables) => ({ document: SubmitRepositoryDocument, variables })
+      query: (variables) => ({ document: SubmitRepositoryDocument as unknown as string, variables })
     }),
   }),
 });

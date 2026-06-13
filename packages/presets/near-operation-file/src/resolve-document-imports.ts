@@ -1,4 +1,9 @@
-import { FragmentDefinitionNode, GraphQLSchema } from 'graphql';
+import {
+  GraphQLSchema,
+  Kind,
+  type FragmentDefinitionNode,
+  type OperationDefinitionNode,
+} from 'graphql';
 import { isUsingTypes, Types } from '@graphql-codegen/plugin-helpers';
 import {
   FragmentImport,
@@ -25,7 +30,13 @@ export type DocumentImportResolverOptions = {
   /**
    * Generates a target file path from the source `document.location`
    */
-  generateFilePath: (location: string) => string;
+  generateFilePath: (params: {
+    location: string;
+    meta: {
+      operations: OperationDefinitionNode[];
+      fragments: FragmentDefinitionNode[];
+    };
+  }) => string;
   /**
    * Schema base types source
    */
@@ -55,7 +66,7 @@ interface ResolveDocumentImportResult {
 export function resolveDocumentImports<T>(
   presetOptions: Types.PresetFnArgs<T>,
   schemaObject: GraphQLSchema,
-  importResolverOptions: DocumentImportResolverOptions,
+  importResolverOptions: DocumentImportResolverOptions & { schemaTypesSource: ImportSource }, // Original type is `schemaTypesSource: string | ImportSource`. We manually override `schemaTypesSource` type because we only use the `ImportSource` use case
   dedupeFragments = false,
 ): Array<ResolveDocumentImportResult> {
   const resolveFragments = buildFragmentResolver(
@@ -67,49 +78,69 @@ export function resolveDocumentImports<T>(
   const { baseOutputDir, documents } = presetOptions;
   const { generateFilePath, schemaTypesSource, baseDir, typesImport } = importResolverOptions;
 
-  return documents.map(documentFile => {
-    try {
-      const generatedFilePath = generateFilePath(documentFile.location);
-      const importStatements: string[] = [];
-      const { externalFragments, fragmentImports } = resolveFragments(
-        generatedFilePath,
-        documentFile.document,
-      );
+  return documents
+    .filter(documentFile => documentFile.type !== 'external')
+    .map(documentFile => {
+      try {
+        const meta: {
+          operations: OperationDefinitionNode[];
+          fragments: FragmentDefinitionNode[];
+        } = {
+          operations: [],
+          fragments: [],
+        };
+        for (const definition of documentFile.document.definitions) {
+          if (definition.kind === Kind.OPERATION_DEFINITION) {
+            meta.operations.push(definition);
+          } else if (definition.kind === Kind.FRAGMENT_DEFINITION) {
+            meta.fragments.push(definition);
+          }
+        }
+        const generatedFilePath = generateFilePath({ location: documentFile.location, meta });
 
-      const externalFragmentsInjectedDocument = {
-        ...documentFile.document,
-        definitions: [
-          ...documentFile.document.definitions,
-          ...externalFragments.map(fragment => fragment.node),
-        ],
-      };
+        const importStatements: string[] = [];
+        const { externalFragments, fragmentImports } = resolveFragments(
+          generatedFilePath,
+          documentFile.document,
+        );
 
-      if (isUsingTypes(externalFragmentsInjectedDocument, [], schemaObject)) {
-        const schemaTypesImportStatement = generateImportStatement({
-          baseDir,
-          emitLegacyCommonJSImports: presetOptions.config.emitLegacyCommonJSImports,
-          importExtension: presetOptions.config.importExtension,
-          importSource: resolveImportSource(schemaTypesSource),
-          baseOutputDir,
-          outputPath: generatedFilePath,
-          typesImport,
-        });
-        importStatements.unshift(schemaTypesImportStatement);
-      }
+        const externalFragmentsInjectedDocument = {
+          ...documentFile.document,
+          definitions: [
+            ...documentFile.document.definitions,
+            ...externalFragments.map(fragment => fragment.node),
+          ],
+        };
 
-      return {
-        filename: generatedFilePath,
-        documents: [documentFile],
-        importStatements,
-        fragmentImports,
-        externalFragments,
-      };
-    } catch (e) {
-      throw new Error(
-        `Unable to validate GraphQL document! \n
+        if (
+          isUsingTypes(externalFragmentsInjectedDocument, [], schemaObject) &&
+          schemaTypesSource.namespace
+        ) {
+          const schemaTypesImportStatement = generateImportStatement({
+            baseDir,
+            emitLegacyCommonJSImports: presetOptions.config.emitLegacyCommonJSImports,
+            importExtension: presetOptions.config.importExtension,
+            importSource: resolveImportSource(schemaTypesSource),
+            baseOutputDir,
+            outputPath: generatedFilePath,
+            typesImport,
+          });
+          importStatements.unshift(schemaTypesImportStatement);
+        }
+
+        return {
+          filename: generatedFilePath,
+          documents: [documentFile],
+          importStatements,
+          fragmentImports,
+          externalFragments,
+        };
+      } catch (e) {
+        throw new Error(
+          `Unable to validate GraphQL document! \n
          File ${documentFile.location} caused error:
          ${e.message || e.toString()}`,
-      );
-    }
-  });
+        );
+      }
+    });
 }

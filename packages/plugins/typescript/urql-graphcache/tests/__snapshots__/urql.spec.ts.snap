@@ -1,8 +1,7 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`urql graphcache Should correctly name GraphCacheResolvers & GraphCacheOptimisticUpdaters with nonstandard mutationType names 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+exports[`urql graphcache > Should correctly name GraphCacheResolvers & GraphCacheOptimisticUpdaters with nonstandard mutationType names 1`] = `
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -15,9 +14,9 @@ export type GraphCacheResolvers = {
     todos?: GraphCacheResolver<WithTypename<Query_Root>, Record<string, never>, Array<WithTypename<Todo> | string>>
   },
   Todo?: {
-    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID'] | string>,
-    text?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String'] | string>,
-    complete?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean'] | string>
+    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID']['output'] | string>,
+    text?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String']['output'] | string>,
+    complete?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean']['output'] | string>
   }
 };
 
@@ -32,7 +31,7 @@ export type GraphCacheUpdaters = {
   Mutation_Root?: {
     toggleTodo?: GraphCacheUpdateResolver<{ toggleTodo: WithTypename<Todo> }, Mutation_RootToggleTodoArgs>
   },
-  Subscription?: {},
+  Subscription?: object,
   Todo?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
     text?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
@@ -48,9 +47,8 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should correctly output GraphCacheOptimisticUpdaters when there are no mutations 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+exports[`urql graphcache > Should correctly output GraphCacheOptimisticUpdaters when there are no mutations 1`] = `
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -63,20 +61,20 @@ export type GraphCacheResolvers = {
     todos?: GraphCacheResolver<WithTypename<Query_Root>, Record<string, never>, Array<WithTypename<Todo> | string>>
   },
   Todo?: {
-    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID'] | string>,
-    text?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String'] | string>,
-    complete?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean'] | string>
+    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID']['output'] | string>,
+    text?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String']['output'] | string>,
+    complete?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean']['output'] | string>
   }
 };
 
-export type GraphCacheOptimisticUpdaters = {};
+export type GraphCacheOptimisticUpdaters = object;
 
 export type GraphCacheUpdaters = {
   Query_Root?: {
     todos?: GraphCacheUpdateResolver<{ todos: Maybe<Array<WithTypename<Todo>>> }, Record<string, never>>
   },
-  Mutation?: {},
-  Subscription?: {},
+  Mutation?: object,
+  Subscription?: object,
   Todo?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
     text?: GraphCacheUpdateResolver<Maybe<WithTypename<Todo>>, Record<string, never>>,
@@ -92,9 +90,8 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should output the cache-generic correctly (with interfaces) 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+exports[`urql graphcache > Should output the cache-generic correctly (with interfaces) 1`] = `
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -109,33 +106,33 @@ export type GraphCacheResolvers = {
     schoolBooks?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, Array<WithTypename<Textbook> | string>>
   },
   Author?: {
-    id?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Scalars['ID'] | string>,
-    name?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Scalars['String'] | string>,
+    id?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Scalars['ID']['output'] | string>,
+    name?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Scalars['String']['output'] | string>,
     friends?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Array<WithTypename<Author> | string>>,
     friendsPaginated?: GraphCacheResolver<WithTypename<Author>, AuthorFriendsPaginatedArgs, Array<WithTypename<Author> | string>>
   },
   Todo?: {
-    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID'] | string>,
-    text?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String'] | string>,
-    complete?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean'] | string>,
+    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID']['output'] | string>,
+    text?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String']['output'] | string>,
+    complete?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean']['output'] | string>,
     author?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, WithTypename<Author> | string>
   },
   Textbook?: {
-    id?: GraphCacheResolver<WithTypename<Textbook>, Record<string, never>, Scalars['ID'] | string>,
-    title?: GraphCacheResolver<WithTypename<Textbook>, Record<string, never>, Scalars['String'] | string>,
+    id?: GraphCacheResolver<WithTypename<Textbook>, Record<string, never>, Scalars['ID']['output'] | string>,
+    title?: GraphCacheResolver<WithTypename<Textbook>, Record<string, never>, Scalars['String']['output'] | string>,
     author?: GraphCacheResolver<WithTypename<Textbook>, Record<string, never>, WithTypename<Author> | string>,
     todo?: GraphCacheResolver<WithTypename<Textbook>, Record<string, never>, WithTypename<Todo> | string>
   }
 };
 
-export type GraphCacheOptimisticUpdaters = {};
+export type GraphCacheOptimisticUpdaters = object;
 
 export type GraphCacheUpdaters = {
   Query?: {
     schoolBooks?: GraphCacheUpdateResolver<{ schoolBooks: Maybe<Array<WithTypename<Textbook>>> }, Record<string, never>>
   },
-  Mutation?: {},
-  Subscription?: {},
+  Mutation?: object,
+  Subscription?: object,
   Author?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
     name?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
@@ -164,9 +161,8 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should output the cache-generic correctly (with typesPrefix and typesSuffix) 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+exports[`urql graphcache > Should output the cache-generic correctly (with typesPrefix and typesSuffix) 1`] = `
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -180,15 +176,15 @@ export type GraphCacheResolvers = {
     todos?: GraphCacheResolver<WithTypename<PrefixQuerySuffix>, Record<string, never>, Array<WithTypename<PrefixTodoSuffix> | string>>
   },
   Author?: {
-    id?: GraphCacheResolver<WithTypename<PrefixAuthorSuffix>, Record<string, never>, Scalars['ID'] | string>,
-    name?: GraphCacheResolver<WithTypename<PrefixAuthorSuffix>, Record<string, never>, Scalars['String'] | string>,
+    id?: GraphCacheResolver<WithTypename<PrefixAuthorSuffix>, Record<string, never>, Scalars['ID']['output'] | string>,
+    name?: GraphCacheResolver<WithTypename<PrefixAuthorSuffix>, Record<string, never>, Scalars['String']['output'] | string>,
     friends?: GraphCacheResolver<WithTypename<PrefixAuthorSuffix>, Record<string, never>, Array<WithTypename<PrefixAuthorSuffix> | string>>,
     friendsPaginated?: GraphCacheResolver<WithTypename<PrefixAuthorSuffix>, PrefixAuthorFriendsPaginatedArgsSuffix, Array<WithTypename<PrefixAuthorSuffix> | string>>
   },
   Todo?: {
-    id?: GraphCacheResolver<WithTypename<PrefixTodoSuffix>, Record<string, never>, Scalars['ID'] | string>,
-    text?: GraphCacheResolver<WithTypename<PrefixTodoSuffix>, Record<string, never>, Scalars['String'] | string>,
-    complete?: GraphCacheResolver<WithTypename<PrefixTodoSuffix>, Record<string, never>, Scalars['Boolean'] | string>,
+    id?: GraphCacheResolver<WithTypename<PrefixTodoSuffix>, Record<string, never>, Scalars['ID']['output'] | string>,
+    text?: GraphCacheResolver<WithTypename<PrefixTodoSuffix>, Record<string, never>, Scalars['String']['output'] | string>,
+    complete?: GraphCacheResolver<WithTypename<PrefixTodoSuffix>, Record<string, never>, Scalars['Boolean']['output'] | string>,
     author?: GraphCacheResolver<WithTypename<PrefixTodoSuffix>, Record<string, never>, WithTypename<PrefixAuthorSuffix> | string>
   }
 };
@@ -212,7 +208,7 @@ export type GraphCacheUpdaters = {
     toggleTodosOptionalEntity?: GraphCacheUpdateResolver<{ toggleTodosOptionalEntity: Array<WithTypename<PrefixTodoSuffix>> }, PrefixMutationToggleTodosOptionalEntityArgsSuffix>,
     toggleTodosOptional?: GraphCacheUpdateResolver<{ toggleTodosOptional: Maybe<Array<WithTypename<PrefixTodoSuffix>>> }, PrefixMutationToggleTodosOptionalArgsSuffix>
   },
-  Subscription?: {},
+  Subscription?: object,
   Author?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixAuthorSuffix>>, Record<string, never>>,
     name?: GraphCacheUpdateResolver<Maybe<WithTypename<PrefixAuthorSuffix>>, Record<string, never>>,
@@ -235,9 +231,8 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should output the cache-generic correctly (with unions) 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+exports[`urql graphcache > Should output the cache-generic correctly (with unions) 1`] = `
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -251,14 +246,14 @@ export type GraphCacheResolvers = {
     media?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, Array<WithTypename<Media> | string>>
   },
   Book?: {
-    id?: GraphCacheResolver<WithTypename<Book>, Record<string, never>, Scalars['ID'] | string>,
-    title?: GraphCacheResolver<WithTypename<Book>, Record<string, never>, Scalars['String'] | string>,
-    pages?: GraphCacheResolver<WithTypename<Book>, Record<string, never>, Scalars['Int'] | string>
+    id?: GraphCacheResolver<WithTypename<Book>, Record<string, never>, Scalars['ID']['output'] | string>,
+    title?: GraphCacheResolver<WithTypename<Book>, Record<string, never>, Scalars['String']['output'] | string>,
+    pages?: GraphCacheResolver<WithTypename<Book>, Record<string, never>, Scalars['Int']['output'] | string>
   },
   Movie?: {
-    id?: GraphCacheResolver<WithTypename<Movie>, Record<string, never>, Scalars['ID'] | string>,
-    title?: GraphCacheResolver<WithTypename<Movie>, Record<string, never>, Scalars['String'] | string>,
-    duration?: GraphCacheResolver<WithTypename<Movie>, Record<string, never>, Scalars['Int'] | string>
+    id?: GraphCacheResolver<WithTypename<Movie>, Record<string, never>, Scalars['ID']['output'] | string>,
+    title?: GraphCacheResolver<WithTypename<Movie>, Record<string, never>, Scalars['String']['output'] | string>,
+    duration?: GraphCacheResolver<WithTypename<Movie>, Record<string, never>, Scalars['Int']['output'] | string>
   }
 };
 
@@ -273,7 +268,7 @@ export type GraphCacheUpdaters = {
   Mutation?: {
     updateMedia?: GraphCacheUpdateResolver<{ updateMedia: Maybe<WithTypename<Media>> }, MutationUpdateMediaArgs>
   },
-  Subscription?: {},
+  Subscription?: object,
   Book?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Book>>, Record<string, never>>,
     title?: GraphCacheUpdateResolver<Maybe<WithTypename<Book>>, Record<string, never>>,
@@ -294,9 +289,8 @@ export type GraphCacheConfig = Parameters<typeof cacheExchange>[0] & {
 };"
 `;
 
-exports[`urql graphcache Should output the cache-generic correctly 1`] = `
-"import { cacheExchange } from '@urql/exchange-graphcache';
-import { Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
+exports[`urql graphcache > Should output the cache-generic correctly 1`] = `
+"import { cacheExchange, Resolver as GraphCacheResolver, UpdateResolver as GraphCacheUpdateResolver, OptimisticMutationResolver as GraphCacheOptimisticMutationResolver } from '@urql/exchange-graphcache';
 
 export type WithTypename<T extends { __typename?: any }> = Partial<T> & { __typename: NonNullable<T['__typename']> };
 
@@ -310,15 +304,15 @@ export type GraphCacheResolvers = {
     todos?: GraphCacheResolver<WithTypename<Query>, Record<string, never>, Array<WithTypename<Todo> | string>>
   },
   Author?: {
-    id?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Scalars['ID'] | string>,
-    name?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Scalars['String'] | string>,
+    id?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Scalars['ID']['output'] | string>,
+    name?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Scalars['String']['output'] | string>,
     friends?: GraphCacheResolver<WithTypename<Author>, Record<string, never>, Array<WithTypename<Author> | string>>,
     friendsPaginated?: GraphCacheResolver<WithTypename<Author>, AuthorFriendsPaginatedArgs, Array<WithTypename<Author> | string>>
   },
   Todo?: {
-    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID'] | string>,
-    text?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String'] | string>,
-    complete?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean'] | string>,
+    id?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['ID']['output'] | string>,
+    text?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['String']['output'] | string>,
+    complete?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, Scalars['Boolean']['output'] | string>,
     author?: GraphCacheResolver<WithTypename<Todo>, Record<string, never>, WithTypename<Author> | string>
   }
 };
@@ -342,7 +336,7 @@ export type GraphCacheUpdaters = {
     toggleTodosOptionalEntity?: GraphCacheUpdateResolver<{ toggleTodosOptionalEntity: Array<WithTypename<Todo>> }, MutationToggleTodosOptionalEntityArgs>,
     toggleTodosOptional?: GraphCacheUpdateResolver<{ toggleTodosOptional: Maybe<Array<WithTypename<Todo>>> }, MutationToggleTodosOptionalArgs>
   },
-  Subscription?: {},
+  Subscription?: object,
   Author?: {
     id?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,
     name?: GraphCacheUpdateResolver<Maybe<WithTypename<Author>>, Record<string, never>>,

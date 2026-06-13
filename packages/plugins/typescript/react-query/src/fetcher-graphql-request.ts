@@ -18,7 +18,7 @@ export class GraphQLRequestClientFetcher extends FetcherRenderer {
   generateFetcherImplementation(): string {
     return this.clientPath
       ? `
-function fetcher<TData, TVariables extends { [key: string]: any }>(query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
+function fetcher<TData, TVariables extends { [key: string]: any }>(query: TypedDocumentString<unknown, unknown>, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
   return async (): Promise<TData> => graphqlClient.request({
     document: query,
     variables,
@@ -26,7 +26,7 @@ function fetcher<TData, TVariables extends { [key: string]: any }>(query: string
   });
 }`
       : `
-function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: string, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
+function fetcher<TData, TVariables extends { [key: string]: any }>(client: GraphQLClient, query: TypedDocumentString<unknown, unknown>, variables?: TVariables, requestHeaders?: RequestInit['headers']) {
   return async (): Promise<TData> => client.request({
     document: query,
     variables,

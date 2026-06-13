@@ -1,5 +1,44 @@
 # @graphql-codegen/typescript-generic-sdk
 
+## 5.0.1
+
+### Patch Changes
+
+- [#1444](https://github.com/dotansimha/graphql-code-generator-community/pull/1444)
+  [`6af41aa`](https://github.com/dotansimha/graphql-code-generator-community/commit/6af41aa62f5664d32603157733f5a5af280a0c8d)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.3.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.3.0)
+    (from `^6.1.1`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^6.3.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/6.3.0)
+    (from `^6.2.4`, in `dependencies`)
+
+- [#1444](https://github.com/dotansimha/graphql-code-generator-community/pull/1444)
+  [`6af41aa`](https://github.com/dotansimha/graphql-code-generator-community/commit/6af41aa62f5664d32603157733f5a5af280a0c8d)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Bump official codegen package deps
+
+## 5.0.0
+
+### Major Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update GraphQL Codegen common packages to
+  latest
+
+### Patch Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.1.1)
+    (from `^3.0.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^6.2.4` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/6.2.4)
+    (from `2.13.8`, in `dependencies`)
+
 ## 4.1.0
 
 ### Minor Changes

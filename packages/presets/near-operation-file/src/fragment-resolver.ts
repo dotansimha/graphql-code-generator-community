@@ -89,7 +89,7 @@ function buildFragmentRegistry(
   const registry = documents.reduce<FragmentRegistry>((prev: FragmentRegistry, documentRecord) => {
     const fragments: FragmentDefinitionNode[] = documentRecord.document.definitions.filter(
       d => d.kind === Kind.FRAGMENT_DEFINITION,
-    ) as FragmentDefinitionNode[];
+    );
 
     for (const fragment of fragments) {
       const schemaType = schemaObject.getType(fragment.typeCondition.name.value);
@@ -100,8 +100,12 @@ function buildFragmentRegistry(
         );
       }
 
+      const filePath = generateFilePath({
+        location: documentRecord.location,
+        meta: { operations: [], fragments: [fragment] },
+      });
+
       const fragmentName = fragment.name.value;
-      const filePath = generateFilePath(documentRecord.location);
       const possibleTypes = getPossibleTypes(schemaObject, schemaType);
       const possibleTypeNames = possibleTypes.map(t => t.name);
       const imports = createFragmentImports(baseVisitor, fragment.name.value, possibleTypeNames);

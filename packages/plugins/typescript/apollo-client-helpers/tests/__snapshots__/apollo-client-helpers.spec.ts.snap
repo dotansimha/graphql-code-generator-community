@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`apollo-client-helpers Should output typePolicies object correctly 1`] = `
+exports[`apollo-client-helpers > Should output typePolicies object correctly 1`] = `
 "import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
 export type QueryKeySpecifier = ('user' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
@@ -24,7 +24,7 @@ export type StrictTypedTypePolicies = {
 export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies;"
 `;
 
-exports[`apollo-client-helpers Should output typePolicies object with requireKeyFields: true 1`] = `
+exports[`apollo-client-helpers > Should output typePolicies object with requireKeyFields: true 1`] = `
 "import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
 export type QueryKeySpecifier = ('user' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
@@ -48,7 +48,7 @@ export type StrictTypedTypePolicies = {
 export type TypedTypePolicies = StrictTypedTypePolicies & TypePolicies;"
 `;
 
-exports[`apollo-client-helpers Should output typePolicies object with requirePoliciesForAllTypes: true 1`] = `
+exports[`apollo-client-helpers > Should output typePolicies object with requirePoliciesForAllTypes: true 1`] = `
 "import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
 export type QueryKeySpecifier = ('user' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {

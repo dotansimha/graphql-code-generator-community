@@ -1,5 +1,84 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 5.2.1
+
+### Patch Changes
+
+- [#1454](https://github.com/dotansimha/graphql-code-generator-community/pull/1454)
+  [`60cbc2d`](https://github.com/dotansimha/graphql-code-generator-community/commit/60cbc2d3c8dcfd7622bf2613e195905639a03390)
+  Thanks [@Nurou](https://github.com/Nurou)! - Deduplicate `externalFragments` by name when multiple
+  source documents are merged into the same generated output
+
+  Why: multiple documents can resolve to the same generated file and each contribute the same
+  external fragment downstream plugins then receive repeated externalFragments, which can cause
+  severe perf blow-ups
+
+  Relates to: https://github.com/dotansimha/graphql-code-generator-community/issues/752
+
+## 5.2.0
+
+### Minor Changes
+
+- [#1456](https://github.com/dotansimha/graphql-code-generator-community/pull/1456)
+  [`aaa517a`](https://github.com/dotansimha/graphql-code-generator-community/commit/aaa517a038da8046ef4138794f735af761bbc587)
+  Thanks [@ikusakov2](https://github.com/ikusakov2)! - Handle externalDocuments from Codegen CLI
+
+## 5.1.0
+
+### Minor Changes
+
+- [#1399](https://github.com/dotansimha/graphql-code-generator-community/pull/1399)
+  [`2b22acb`](https://github.com/dotansimha/graphql-code-generator-community/commit/2b22acbb31e62fd4594db170c50f7aedcbac6cc4)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Add `filePerOperation` config to generate
+  filename based on named operation or fragment, instead of source filename
+
+## 5.0.1
+
+### Patch Changes
+
+- [#1444](https://github.com/dotansimha/graphql-code-generator-community/pull/1444)
+  [`6af41aa`](https://github.com/dotansimha/graphql-code-generator-community/commit/6af41aa62f5664d32603157733f5a5af280a0c8d)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.3.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.3.0)
+    (from `^6.1.1`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^6.3.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/6.3.0)
+    (from `^6.2.4`, in `dependencies`)
+
+- [#1444](https://github.com/dotansimha/graphql-code-generator-community/pull/1444)
+  [`6af41aa`](https://github.com/dotansimha/graphql-code-generator-community/commit/6af41aa62f5664d32603157733f5a5af280a0c8d)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Bump official codegen package deps
+
+## 5.0.0
+
+### Major Changes
+
+- [#1385](https://github.com/dotansimha/graphql-code-generator-community/pull/1385)
+  [`76d5e05`](https://github.com/dotansimha/graphql-code-generator-community/commit/76d5e05861a65dc9879deca365d82da9bb61f0b3)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - BREAKING CHANGE: Remove the required
+  baseTypesPath condition to support typescript-operations v6
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update GraphQL Codegen common packages to
+  latest
+
+### Patch Changes
+
+- [#1387](https://github.com/dotansimha/graphql-code-generator-community/pull/1387)
+  [`0717cb7`](https://github.com/dotansimha/graphql-code-generator-community/commit/0717cb7f25f8ea33f54756119d01f072a3fb716c)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^6.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/6.1.1)
+    (from `^6.1.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^6.2.4` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/6.2.4)
+    (from `^6.2.1`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-tools/utils@^11.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/11.0.0)
+    (from `^10.0.0`, in `dependencies`)
+
 ## 4.0.0
 
 ### Major Changes

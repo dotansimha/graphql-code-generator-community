@@ -11,19 +11,21 @@ describe('jit-sdk - GraphQL 16+', () => {
         {
           location: '',
           document: parse(/* GraphQL */ `
-          """description (becomes JSDoc)"""
-          query feed {
-            feed {
-              id
-              commentCount
-              repository {
-                owner {
-                  avatar_url
+            """
+            description (becomes JSDoc)
+            """
+            query feed {
+              feed {
+                id
+                commentCount
+                repository {
+                  owner {
+                    avatar_url
+                  }
                 }
               }
             }
-          }
-        `),
+          `),
         },
       ],
       {},

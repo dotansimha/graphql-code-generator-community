@@ -16,7 +16,9 @@ describe('generic-sdk - GraphQL v16+', () => {
         {
           location: '',
           document: parse(/* GraphQL */ `
-            """description (becomes JSDoc)"""
+            """
+            description (becomes JSDoc)
+            """
             query feed {
               feed {
                 id

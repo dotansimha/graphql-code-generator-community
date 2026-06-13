@@ -7,6 +7,7 @@ import {
   DocumentMode,
   getConfigValue,
   LoadedFragment,
+  typedDocumentString,
 } from '@graphql-codegen/visitor-plugin-common';
 import { RTKQueryPluginConfig, RTKQueryRawPluginConfig } from './config.js';
 
@@ -55,8 +56,15 @@ export class RTKQueryVisitor extends ClientSideBaseVisitor<
       return baseImports;
     }
 
+    const typedDocumentStringPropImport = this._generateImport(
+      typedDocumentString.import,
+      typedDocumentString.import.propName,
+      true,
+    );
+
     return [
       ...baseImports,
+      typedDocumentStringPropImport,
       `import { ${this.config.importBaseApiAlternateName} } from '${this.config.importBaseApiFrom}';`,
     ];
   }
@@ -123,7 +131,7 @@ export { injectedRtkApi as api };
     const operationTypeString = operationType.toLowerCase();
 
     const functionsString =
-      `query: (variables) => ({ document: ${documentVariableName}, variables })
+      `query: (variables) => ({ document: ${documentVariableName} as unknown as string, variables })
       ${this.injectTransformResponse(Generics)}`.trim();
 
     const endpointString = `

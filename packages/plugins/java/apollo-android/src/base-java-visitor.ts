@@ -109,7 +109,7 @@ export class BaseJavaVisitor<Config extends VisitorConfig = any> extends BaseVis
     let typeToUse = schemaType.name;
 
     if (isScalarType(schemaType)) {
-      const scalar = this.scalars[schemaType.name] || 'Object';
+      const scalar = this.scalars[schemaType.name].output || 'Object';
 
       if (Imports[scalar]) {
         this._imports.add(Imports[scalar]);

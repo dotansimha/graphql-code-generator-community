@@ -7,9 +7,9 @@ import { plugin } from '../src/index.js';
 const githunt = resolve(__dirname, '../../../../../dev-test/githunt/');
 
 describe('RTK Query', () => {
-  let spyConsoleError: jest.SpyInstance;
+  let spyConsoleError;
   beforeEach(() => {
-    spyConsoleError = jest.spyOn(console, 'warn');
+    spyConsoleError = vi.spyOn(console, 'warn');
     spyConsoleError.mockImplementation();
   });
 
@@ -45,6 +45,9 @@ describe('RTK Query', () => {
       },
     )) as Types.ComplexPluginOutput;
 
+    expect(content.prepend).toContain(
+      "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
+    );
     expect(content.prepend).toContain("import { api } from './baseApi';");
 
     expect(content.content).toMatchSnapshot();
@@ -66,6 +69,9 @@ describe('RTK Query', () => {
       },
     )) as Types.ComplexPluginOutput;
 
+    expect(content.prepend).toContain(
+      "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
+    );
     expect(content.prepend).toContain("import { api } from './baseApi';");
 
     expect(content.content).toMatchSnapshot();
@@ -88,6 +94,9 @@ describe('RTK Query', () => {
       },
     )) as Types.ComplexPluginOutput;
 
+    expect(content.prepend).toContain(
+      "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
+    );
     expect(content.prepend).toContain("import { api } from './baseApi';");
     expect(content.content).toContain('overrideExisting: module.hot?.status() === "apply",');
 
@@ -110,6 +119,9 @@ describe('RTK Query', () => {
       },
     )) as Types.ComplexPluginOutput;
 
+    expect(content.prepend).toContain(
+      "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
+    );
     expect(content.prepend).toContain("import { alternateApiName } from './baseApi';");
     expect(content.content).toContain('alternateApiName.injectEndpoints');
 
@@ -131,6 +143,10 @@ describe('RTK Query', () => {
         outputFile: 'graphql.ts',
       },
     )) as Types.ComplexPluginOutput;
+
+    expect(content.prepend).toContain(
+      "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
+    );
 
     expect(content.content).toContain('transformResponse: (response: CommentQuery) => response');
     expect(content.content).toContain('transformResponse: (response: FeedQuery) => response');

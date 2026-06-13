@@ -1,7 +1,6 @@
-import { getJsonAttributeSourceConfiguration } from '@graphql-codegen/c-sharp-common';
 import '@graphql-codegen/testing';
 import { buildSchema } from 'graphql';
-import each from 'jest-each';
+import { getJsonAttributeSourceConfiguration } from '@graphql-codegen/c-sharp-common';
 import { CSharpResolversPluginRawConfig } from '../src/config.js';
 import { plugin } from '../src/index.js';
 
@@ -30,23 +29,23 @@ describe('C#', () => {
       expect(result).toContain('using Newtonsoft.Json;');
     });
 
-    each(['Newtonsoft.Json', 'System.Text.Json']).it(
-      `Should include configured '%s' using directives`,
-      async source => {
-        const schema = buildSchema(/* GraphQL */ `
-          enum ns {
-            dummy
-          }
-        `);
-        const config: CSharpResolversPluginRawConfig = {
-          jsonAttributesSource: source,
-        };
-        const result = await plugin(schema, [], config, { outputFile: '' });
-        const jsonConfig = getJsonAttributeSourceConfiguration(source);
+    it.each<CSharpResolversPluginRawConfig['jsonAttributesSource']>([
+      'Newtonsoft.Json',
+      'System.Text.Json',
+    ])(`Should include configured '%s' using directives`, async source => {
+      const schema = buildSchema(/* GraphQL */ `
+        enum ns {
+          dummy
+        }
+      `);
+      const config: CSharpResolversPluginRawConfig = {
+        jsonAttributesSource: source,
+      };
+      const result = await plugin(schema, [], config, { outputFile: '' });
+      const jsonConfig = getJsonAttributeSourceConfiguration(source);
 
-        expect(result).toContain(`using ${jsonConfig.namespace};`);
-      },
-    );
+      expect(result).toContain(`using ${jsonConfig.namespace};`);
+    });
   });
 
   describe('Namespaces', () => {
@@ -430,30 +429,30 @@ describe('C#', () => {
       expect(result).toContain('public class @public {');
     });
 
-    each(['Newtonsoft.Json', 'System.Text.Json']).it(
-      `Should generate properties for types using '%s' source`,
-      async source => {
-        const schema = buildSchema(/* GraphQL */ `
-          type User {
-            id: Int
-            email: String
-          }
-        `);
-        const config: CSharpResolversPluginRawConfig = {
-          jsonAttributesSource: source,
-          namingConvention: 'change-case-all#pascalCase',
-        };
-        const result = await plugin(schema, [], config, { outputFile: '' });
-        const jsonConfig = getJsonAttributeSourceConfiguration(source);
+    it.each<CSharpResolversPluginRawConfig['jsonAttributesSource']>([
+      'Newtonsoft.Json',
+      'System.Text.Json',
+    ])(`Should generate properties for types using '%s' source`, async source => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: Int
+          email: String
+        }
+      `);
+      const config: CSharpResolversPluginRawConfig = {
+        jsonAttributesSource: source,
+        namingConvention: 'change-case-all#pascalCase',
+      };
+      const result = await plugin(schema, [], config, { outputFile: '' });
+      const jsonConfig = getJsonAttributeSourceConfiguration(source);
 
-        expect(result).toBeSimilarStringTo(`
+      expect(result).toBeSimilarStringTo(`
           [${jsonConfig.propertyAttribute}("id")]
           public int? id { get; set; }
           [${jsonConfig.propertyAttribute}("email")]
           public string email { get; set; }
         `);
-      },
-    );
+    });
 
     it(`Should generate properties for types without JSON attributes`, async () => {
       const schema = buildSchema(/* GraphQL */ `
@@ -607,7 +606,10 @@ describe('C#', () => {
 
   describe('GraphQL Value Types', () => {
     describe('Scalar', () => {
-      each(['Newtonsoft.Json', 'System.Text.Json']).it(
+      it.each<CSharpResolversPluginRawConfig['jsonAttributesSource']>([
+        'Newtonsoft.Json',
+        'System.Text.Json',
+      ])(
         `Should generate properties for mandatory scalar types using '%s' source`,
         async source => {
           const schema = buildSchema(/* GraphQL */ `
