@@ -8,7 +8,7 @@ const documents = [{
 }];
 
 const config = {
-  withHooks: true,
+  withPrimitives: true,
   urqlImportFrom: 'solid-urql'
 };
 

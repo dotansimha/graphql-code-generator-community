@@ -112,6 +112,9 @@ export class SolidUrqlVisitor extends ClientSideBaseVisitor<
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
+    operationResultType = this._externalImportPrefix + operationResultType;
+    operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
+
     const operationName = this.convertName(node.name?.value || '', {
       useTypesPrefix: false,
       useTypesSuffix: false,

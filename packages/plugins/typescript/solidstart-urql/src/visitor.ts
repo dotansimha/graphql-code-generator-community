@@ -109,6 +109,9 @@ export class SolidStartUrqlVisitor extends ClientSideBaseVisitor<
     operationVariablesTypes: string,
     hasRequiredVariables: boolean,
   ): string {
+    operationResultType = this._externalImportPrefix + operationResultType;
+    operationVariablesTypes = this._externalImportPrefix + operationVariablesTypes;
+
     const operationName = this.convertName(node.name?.value || '', {
       useTypesPrefix: false,
       useTypesSuffix: false,
@@ -163,9 +166,9 @@ export class SolidStartUrqlVisitor extends ClientSideBaseVisitor<
   ): string {
     const functionName = `query${operationName}`;
     const kebabCaseKey = operationName
-      .replace(/([A-Z])/g, '-$1')
-      .toLowerCase()
-      .substring(1);
+      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+      .replace(/_/g, '-')
+      .toLowerCase();
 
     return `
 export const ${functionName} = createQuery<${operationResultType}, ${operationVariablesTypes}>(
@@ -188,9 +191,9 @@ export const ${functionName} = createQuery<${operationResultType}, ${operationVa
   ): string {
     const functionName = `action${operationName}`;
     const kebabCaseKey = operationName
-      .replace(/([A-Z])/g, '-$1')
-      .toLowerCase()
-      .substring(1);
+      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+      .replace(/_/g, '-')
+      .toLowerCase();
 
     return `
 export const ${functionName} = () => createMutation<${operationResultType}, ${operationVariablesTypes}>(

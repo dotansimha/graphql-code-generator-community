@@ -4,7 +4,8 @@
   "description": "GraphQL Code Generator plugin for generating typed SolidJS URQL hooks",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/graphql-codegen-solid-urql.git"
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
+    "directory": "packages/plugins/typescript/solid-urql"
   },
   "author": "David Di Biase <dave@solidjs.com>",
   "license": "MIT",

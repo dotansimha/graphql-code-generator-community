@@ -60,6 +60,6 @@
     "test-files",
     "flow.js",
     "jest.project.js",
-    "example"
+    "packages/plugins/typescript/**/example/**"
   ]
 }

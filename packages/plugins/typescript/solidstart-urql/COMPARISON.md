@@ -34,20 +34,19 @@ This document explains the differences between the two URQL plugins for SolidJS 
 
 ```typescript
 // Generates for Queries
-export const useGetUserQuery = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
-  return createQuery<GetUserQuery, GetUserQueryVariables>({
-    ...args,
-    query: GetUserDocument,
-  });
-};
+export const queryGetUser = createQuery<GetUserQuery, GetUserQueryVariables>(
+  GetUserDocument,
+  'get-user'
+);
 
 // Generates for Mutations
-export const useCreateUserMutation = () => {
-  return createMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
-};
+export const actionCreateUser = () => createMutation<CreateUserMutation, CreateUserMutationVariables>(
+  CreateUserDocument,
+  'create-user'
+);
 
 // Generates for Subscriptions
-export const useOnUserUpdatedSubscription = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
+export const useSubscriptionOnUserUpdated = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
   return createSubscription<OnUserUpdatedSubscription, OnUserUpdatedSubscriptionVariables>({
     ...args,
     query: OnUserUpdatedDocument,
@@ -70,8 +69,13 @@ export const actionCreateUser = () => createMutation<CreateUserMutation, CreateU
   'create-user'
 );
 
-// Does NOT generate for Subscriptions
-// Use createSubscription directly from @urql/solid-start
+// Generates for Subscriptions
+export const useSubscriptionOnUserUpdated = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
+  return createSubscription<OnUserUpdatedSubscription, OnUserUpdatedSubscriptionVariables>({
+    ...args,
+    query: OnUserUpdatedDocument,
+  });
+};
 ```
 
 ## Usage Pattern Differences

@@ -34,7 +34,7 @@ This document explains the differences between the two URQL plugins for SolidJS 
 
 ```typescript
 // Generates for Queries
-export const useGetUserQuery = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
+export const useCreateGetUser = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
   return createQuery<GetUserQuery, GetUserQueryVariables>({
     ...args,
     query: GetUserDocument,
@@ -42,12 +42,12 @@ export const useGetUserQuery = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
 };
 
 // Generates for Mutations
-export const useCreateUserMutation = () => {
+export const useCreateCreateUser = () => {
   return createMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument);
 };
 
 // Generates for Subscriptions
-export const useOnUserUpdatedSubscription = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
+export const useCreateOnUserUpdated = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
   return createSubscription<OnUserUpdatedSubscription, OnUserUpdatedSubscriptionVariables>({
     ...args,
     query: OnUserUpdatedDocument,
@@ -70,8 +70,13 @@ export const actionCreateUser = () => createMutation<CreateUserMutation, CreateU
   'create-user'
 );
 
-// Does NOT generate for Subscriptions
-// Use createSubscription directly from @urql/solid-start
+// Generates for Subscriptions
+export const useCreateOnUserUpdated = (args: Omit<CreateQueryArgs<...>, 'query'>) => {
+  return createSubscription<OnUserUpdatedSubscription, OnUserUpdatedSubscriptionVariables>({
+    ...args,
+    query: OnUserUpdatedDocument,
+  });
+};
 ```
 
 ## Usage Pattern Differences
@@ -183,8 +188,8 @@ const submission = useSubmission(createUserAction);
 ### Subscriptions
 ```tsx
 // Before (with typescript-solid-urql)
-import { useOnUserUpdatedSubscription } from './generated/graphql';
-const [messages] = useOnUserUpdatedSubscription();
+import { useCreateOnUserUpdated } from './generated/graphql';
+const [messages] = useCreateOnUserUpdated();
 
 // After (with typescript-solidstart-urql)
 import { createSubscription } from '@urql/solid-start';

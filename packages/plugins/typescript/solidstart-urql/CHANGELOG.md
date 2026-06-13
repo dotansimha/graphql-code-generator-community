@@ -14,19 +14,19 @@
 ### Features
 - Generates query functions that wrap `@urql/solid-start`'s `createQuery` primitive
 - Generates mutation functions that wrap `@urql/solid-start`'s `createMutation` primitive
-- Query and mutation generation (subscriptions handled manually with `createSubscription`)
+- Query, mutation, and subscription generation
 - Optimized for SolidStart's server-side rendering with `createAsync`
 - Proper handling of required vs optional variables
 - Compatible with @urql/core and @urql/solid-start
-- Follows SolidJS conventions with `query*` and `mutation*` naming
+- Follows SolidStart conventions with `query*`, `action*`, and `useSubscription*` naming
 - Automatic kebab-case cache key generation for queries
 
 ### API Design
-- Query functions named `queryOperationName` (e.g., `queryGetUser`, `queryGetPosts`)
-- Mutation functions named `mutationOperationName` (e.g., `mutationCreateUser`, `mutationUpdateUser`)
+- Query primitives named `queryOperationName` (e.g., `queryGetUser`, `queryGetPosts`)
+- Mutation action factories named `actionOperationName` (e.g., `actionCreateUser`, `actionUpdateUser`)
+- Subscription helpers named `useSubscriptionOperationName` (e.g., `useSubscriptionOnUserUpdated`)
 - Compatible with SolidStart's `createAsync` primitive for queries
-- Returns `[state, execute]` tuple for mutations
-- Can be called without explicit `useClient()` - handled internally
+- Mutation primitives return factory functions for component-level usage
 
 ### Design Decisions
 - Generates both Query and Mutation primitives

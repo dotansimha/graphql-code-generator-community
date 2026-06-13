@@ -4,7 +4,8 @@
   "description": "GraphQL Code Generator plugin for generating typed SolidStart URQL query primitives",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/graphql-codegen-solidstart-urql.git"
+    "url": "https://github.com/dotansimha/graphql-code-generator-community.git",
+    "directory": "packages/plugins/typescript/solidstart-urql"
   },
   "author": "David Di Biase <dave@solidjs.com>",
   "license": "MIT",

@@ -6,7 +6,7 @@
 
 A GraphQL Code Generator plugin that generates fully typed Solid primitives for URQL, including `createQuery`, `createMutation`, and `createSubscription`.
 
-> **Note:** This plugin is for client-side Solid applications. If you're building a SolidStart application with SSR, use [`@graphql-codegen/typescript-solidstart-urql`](https://github.com/yourusername/graphql-codegen-solidstart-urql) instead. See the [comparison documentation](https://github.com/yourusername/graphql-codegen-solidstart-urql/blob/main/COMPARISON.md) for differences between the two plugins.
+> **Note:** This plugin is for client-side Solid applications. If you're building a SolidStart application with SSR, use [`@graphql-codegen/typescript-solidstart-urql`](../solidstart-urql) instead. See the [comparison documentation](../solidstart-urql/COMPARISON.md) for differences between the two plugins.
 
 ## Installation
 
