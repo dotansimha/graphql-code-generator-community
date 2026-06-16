@@ -38,7 +38,7 @@
     "@changesets/changelog-github": "0.7.0",
     "@changesets/cli": "2.31.0",
     "@theguild/prettier-config": "3.0.1",
-    "@types/node": "24.13.1",
+    "@types/node": "24.13.2",
     "@typescript-eslint/eslint-plugin": "8.61.1",
     "@typescript-eslint/parser": "8.61.1",
     "bob-the-bundler": "7.0.1",
