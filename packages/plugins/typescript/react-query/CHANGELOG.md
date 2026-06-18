@@ -1,5 +1,21 @@
 # @graphql-codegen/typescript-react-query
 
+## 7.0.4
+
+### Patch Changes
+
+- [#1516](https://github.com/dotansimha/graphql-code-generator-community/pull/1516)
+  [`088b27f`](https://github.com/dotansimha/graphql-code-generator-community/commit/088b27fc1b24fe2bf2ec43dbce0e90cf639377ec)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^7.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/7.1.1)
+    (from `^7.1.0`, in `dependencies`)
+
+- [#1516](https://github.com/dotansimha/graphql-code-generator-community/pull/1516)
+  [`088b27f`](https://github.com/dotansimha/graphql-code-generator-community/commit/088b27fc1b24fe2bf2ec43dbce0e90cf639377ec)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Fix TypedDocumentString not being generated
+  when only fragments are available
+
 ## 7.0.3
 
 ### Patch Changes
