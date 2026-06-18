@@ -81,37 +81,41 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     return this._collectedOperations.length > 0;
   }
 
+  public get hasFragments(): boolean {
+    return this._fragments.size > 0;
+  }
+
   public getImports(): string[] {
     const baseImports = super.getImports();
 
-    if (!this.hasOperations) {
-      return baseImports;
+    if (this.hasFragments || this.hasOperations) {
+      const typedDocumentStringPropImport = this._generateImport(
+        typedDocumentString.import,
+        typedDocumentString.import.propName,
+        true,
+      );
+
+      baseImports.push(typedDocumentStringPropImport);
     }
 
-    const hookAndTypeImports = [
-      ...Array.from(this.reactQueryHookIdentifiersInUse),
-      ...Array.from(this.reactQueryOptionsIdentifiersInUse).map(
-        identifier => `${this.config.useTypeImports ? 'type ' : ''}${identifier}`,
-      ),
-    ];
+    if (this.hasOperations) {
+      const hookAndTypeImports = [
+        ...Array.from(this.reactQueryHookIdentifiersInUse),
+        ...Array.from(this.reactQueryOptionsIdentifiersInUse).map(
+          identifier => `${this.config.useTypeImports ? 'type ' : ''}${identifier}`,
+        ),
+      ];
 
-    const moduleName = this.config.reactQueryImportFrom
-      ? this.config.reactQueryImportFrom
-      : this.config.reactQueryVersion <= 3
-        ? 'react-query'
-        : '@tanstack/react-query';
+      const moduleName = this.config.reactQueryImportFrom
+        ? this.config.reactQueryImportFrom
+        : this.config.reactQueryVersion <= 3
+          ? 'react-query'
+          : '@tanstack/react-query';
 
-    const typedDocumentStringPropImport = this._generateImport(
-      typedDocumentString.import,
-      typedDocumentString.import.propName,
-      true,
-    );
+      baseImports.push(`import { ${hookAndTypeImports.join(', ')} } from '${moduleName}';`);
+    }
 
-    return [
-      ...baseImports,
-      typedDocumentStringPropImport,
-      `import { ${hookAndTypeImports.join(', ')} } from '${moduleName}';`,
-    ];
+    return baseImports;
   }
 
   public getFetcherImplementation(): string {
