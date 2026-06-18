@@ -29,6 +29,17 @@ export const plugin: PluginFunction<ReactQueryRawPluginConfig, Types.ComplexPlug
   const visitor = new ReactQueryVisitor(schema, allFragments, config, documents);
   const visitorResult = oldVisit(allAst, { leave: visitor });
 
+  const prepend: string[] = [...visitor.getImports()];
+  const content: string[] = [''];
+
+  if (visitor.hasOperations) {
+    prepend.push(visitor.getFetcherImplementation());
+  }
+
+  if (visitor.hasFragments) {
+    content.push(typedDocumentString.template);
+  }
+
   if (visitor.hasOperations) {
     return {
       prepend: [...visitor.getImports(), visitor.getFetcherImplementation()],
@@ -41,13 +52,12 @@ export const plugin: PluginFunction<ReactQueryRawPluginConfig, Types.ComplexPlug
     };
   }
 
+  content.push(visitor.fragments);
+  content.push(...visitorResult.definitions.filter(t => typeof t === 'string'));
+
   return {
-    prepend: [...visitor.getImports()],
-    content: [
-      '',
-      visitor.fragments,
-      ...visitorResult.definitions.filter(t => typeof t === 'string'),
-    ].join('\n'),
+    prepend,
+    content: content.join('\n'),
   };
 };
 
