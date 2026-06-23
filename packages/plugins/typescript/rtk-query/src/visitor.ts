@@ -49,24 +49,30 @@ export class RTKQueryVisitor extends ClientSideBaseVisitor<
     return this._collectedOperations.length > 0;
   }
 
+  public get hasFragments(): boolean {
+    return this._fragments.size > 0;
+  }
+
   public getImports(): string[] {
     const baseImports = super.getImports();
 
-    if (!this.hasOperations) {
-      return baseImports;
+    if (this.hasFragments || this.hasOperations) {
+      const typedDocumentStringPropImport = this._generateImport(
+        typedDocumentString.import,
+        typedDocumentString.import.propName,
+        true,
+      );
+
+      baseImports.push(typedDocumentStringPropImport);
     }
 
-    const typedDocumentStringPropImport = this._generateImport(
-      typedDocumentString.import,
-      typedDocumentString.import.propName,
-      true,
-    );
+    if (this.hasOperations) {
+      baseImports.push(
+        `import { ${this.config.importBaseApiAlternateName} } from '${this.config.importBaseApiFrom}';`,
+      );
+    }
 
-    return [
-      ...baseImports,
-      typedDocumentStringPropImport,
-      `import { ${this.config.importBaseApiAlternateName} } from '${this.config.importBaseApiFrom}';`,
-    ];
+    return baseImports;
   }
 
   public getInjectCall() {

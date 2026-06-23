@@ -47,7 +47,9 @@ describe('RTK Query - fragments', () => {
       }
           \`, {"fragmentName":"SomethingFrag"});
       ",
-        "prepend": [],
+        "prepend": [
+          "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
+        ],
       }
     `);
   });
