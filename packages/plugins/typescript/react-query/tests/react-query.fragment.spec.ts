@@ -19,10 +19,11 @@ describe('React Query - fragments', () => {
       }
     `);
 
-    const { content } = await plugin(schema, [{ document }], {});
+    const result = await plugin(schema, [{ document }], {});
 
-    expect(content).toMatchInlineSnapshot(`
-      "
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "content": "
       export class TypedDocumentString<TResult, TVariables>
         extends String
         implements DocumentTypeDecoration<TResult, TVariables>
@@ -45,7 +46,11 @@ describe('React Query - fragments', () => {
           fragment SomethingFrag on Something {
         id
       }
-          \`, {"fragmentName":"SomethingFrag"});"
+          \`, {"fragmentName":"SomethingFrag"});",
+        "prepend": [
+          "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
+        ],
+      }
     `);
   });
 });
