@@ -36,20 +36,8 @@ export const plugin: PluginFunction<ReactQueryRawPluginConfig, Types.ComplexPlug
     prepend.push(visitor.getFetcherImplementation());
   }
 
-  if (visitor.hasFragments) {
+  if (visitor.hasFragments || visitor.hasOperations) {
     content.push(typedDocumentString.template);
-  }
-
-  if (visitor.hasOperations) {
-    return {
-      prepend: [...visitor.getImports(), visitor.getFetcherImplementation()],
-      content: [
-        '',
-        typedDocumentString.template,
-        visitor.fragments,
-        ...visitorResult.definitions.filter(t => typeof t === 'string'),
-      ].join('\n'),
-    };
   }
 
   content.push(visitor.fragments);

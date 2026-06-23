@@ -1,7 +1,7 @@
 import { buildSchema, parse } from 'graphql';
 import { plugin } from '../src/index.js';
 
-describe('React Query - fragments', () => {
+describe('RTK Query - fragments', () => {
   it('generates TypedDocumentString for fragments correctly', async () => {
     const schema = buildSchema(/* GraphQL */ `
       type Query {
@@ -19,12 +19,11 @@ describe('React Query - fragments', () => {
       }
     `);
 
-    const result = await plugin(schema, [{ document }], {});
+    const result = await plugin(schema, [{ document }], { importBaseApiFrom: './api' });
 
     expect(result).toMatchInlineSnapshot(`
       {
-        "content": "
-      export class TypedDocumentString<TResult, TVariables>
+        "content": "export class TypedDocumentString<TResult, TVariables>
         extends String
         implements DocumentTypeDecoration<TResult, TVariables>
       {
@@ -46,7 +45,8 @@ describe('React Query - fragments', () => {
           fragment SomethingFrag on Something {
         id
       }
-          \`, {"fragmentName":"SomethingFrag"});",
+          \`, {"fragmentName":"SomethingFrag"});
+      ",
         "prepend": [
           "import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';",
         ],
