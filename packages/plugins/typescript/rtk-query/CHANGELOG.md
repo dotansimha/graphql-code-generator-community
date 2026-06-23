@@ -1,5 +1,21 @@
 # @graphql-codegen/typescript-rtk-query
 
+## 4.0.4
+
+### Patch Changes
+
+- [#1522](https://github.com/dotansimha/graphql-code-generator-community/pull/1522)
+  [`3c2d70c`](https://github.com/dotansimha/graphql-code-generator-community/commit/3c2d70c893aedc171819083616f461d7dd599ce5)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^7.1.1` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/7.1.1)
+    (from `^7.1.0`, in `dependencies`)
+
+- [#1522](https://github.com/dotansimha/graphql-code-generator-community/pull/1522)
+  [`3c2d70c`](https://github.com/dotansimha/graphql-code-generator-community/commit/3c2d70c893aedc171819083616f461d7dd599ce5)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Fix missing type import if document file only
+  contains a fragment
+
 ## 4.0.3
 
 ### Patch Changes
