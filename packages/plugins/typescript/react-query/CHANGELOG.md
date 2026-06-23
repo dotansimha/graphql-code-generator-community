@@ -1,5 +1,14 @@
 # @graphql-codegen/typescript-react-query
 
+## 7.0.5
+
+### Patch Changes
+
+- [#1522](https://github.com/dotansimha/graphql-code-generator-community/pull/1522)
+  [`3c2d70c`](https://github.com/dotansimha/graphql-code-generator-community/commit/3c2d70c893aedc171819083616f461d7dd599ce5)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Remove unncessary early return. No functional
+  change.
+
 ## 7.0.4
 
 ### Patch Changes
