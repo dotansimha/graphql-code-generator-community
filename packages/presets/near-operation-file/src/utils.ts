@@ -8,6 +8,8 @@ import {
   isInterfaceType,
   isObjectType,
   isUnionType,
+  Kind,
+  OperationDefinitionNode,
   SelectionSetNode,
   TypeInfo,
   visit,
@@ -43,6 +45,7 @@ export function analyzeFragmentUsage(
 ): {
   fragmentsInUse: { [fragmentName: string]: number };
   usedFragmentTypes: { [fragmentName: string]: string[] };
+  operationFragments: Set<string>;
 } {
   const localFragments = getLocalFragments(documentNode);
 
@@ -60,26 +63,64 @@ export function analyzeFragmentUsage(
     fragmentsInUse,
   );
 
-  return { fragmentsInUse, usedFragmentTypes };
+  const operationFragments = collectOperationFragments(
+    documentNode,
+    fragmentRegistry,
+    localFragments,
+  );
+
+  return { fragmentsInUse, usedFragmentTypes, operationFragments };
 }
 
 /**
- * Get all fragment definitions that are local to this document
+ * External fragments transitively reachable from the document's operations (graphQLTag operations
+ * interpolate all of these). Steps through local fragments too, since an operation may reach an
+ * external fragment via a local one.
  */
-function getLocalFragments(documentNode: DocumentNode): Set<string> {
-  const localFragments = new Set<string>();
+function collectOperationFragments(
+  documentNode: DocumentNode,
+  fragmentRegistry: FragmentRegistry,
+  localFragments: Map<string, FragmentDefinitionNode>,
+): Set<string> {
+  const reachable = new Set<string>();
+  const visited = new Set<string>();
+
+  const collect = (node: OperationDefinitionNode | FragmentDefinitionNode): void => {
+    visit(node, {
+      FragmentSpread: ({ name: { value } }) => {
+        if (fragmentRegistry[value]) reachable.add(value);
+        if (visited.has(value)) return;
+        visited.add(value);
+        const fragmentNode = fragmentRegistry[value]?.node ?? localFragments.get(value);
+        if (fragmentNode) collect(fragmentNode);
+      },
+    });
+  };
+
+  for (const definition of documentNode.definitions) {
+    if (definition.kind === Kind.OPERATION_DEFINITION) collect(definition);
+  }
+
+  return reachable;
+}
+
+/**
+ * Get all fragment definitions that are local to this document, keyed by name
+ */
+function getLocalFragments(documentNode: DocumentNode): Map<string, FragmentDefinitionNode> {
+  const localFragments = new Map<string, FragmentDefinitionNode>();
   visit(documentNode, {
     FragmentDefinition: node => {
-      localFragments.add(node.name.value);
+      localFragments.set(node.name.value, node);
     },
   });
   return localFragments;
 }
 
-export function extractExternalFragmentsInUse(
+function extractExternalFragmentsInUse(
   documentNode: DocumentNode | FragmentDefinitionNode,
   fragmentNameToFile: FragmentRegistry,
-  localFragment: Set<string>,
+  localFragment: Map<string, FragmentDefinitionNode>,
   result: { [fragmentName: string]: number } = {},
   level = 0,
 ): { [fragmentName: string]: number } {
@@ -115,7 +156,7 @@ function analyzeFragmentTypeUsage(
   documentNode: DocumentNode,
   fragmentRegistry: FragmentRegistry,
   schema: GraphQLSchema,
-  localFragments: Set<string>,
+  localFragments: Map<string, FragmentDefinitionNode>,
   fragmentsInUse: { [fragmentName: string]: number },
 ): { [fragmentName: string]: string[] } {
   const usedFragmentTypes: { [fragmentName: string]: Set<string> } = {};
@@ -168,7 +209,7 @@ function analyzeSelectionSetTypeContext(
   usedFragmentTypes: { [fragmentName: string]: Set<string> },
   fragmentRegistry: FragmentRegistry,
   schema: GraphQLSchema,
-  localFragments: Set<string>,
+  localFragments: Map<string, FragmentDefinitionNode>,
 ): void {
   const { spreads, inlines } = separateSelectionSet(selectionSet.selections);
 
