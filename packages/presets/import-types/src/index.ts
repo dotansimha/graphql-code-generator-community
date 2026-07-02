@@ -16,7 +16,7 @@ export type ImportTypesConfig = {
    *    generates: {
    *      'path/to/file.ts': {
    *        preset: 'import-types',
-   *        plugins: ['typescript-operations'],
+   *        plugins: ['typescript-resolvers'],
    *        presetConfig: {
    *          typesPath: 'types.ts'
    *        },
@@ -40,7 +40,7 @@ export type ImportTypesConfig = {
    *    generates: {
    *      'path/to/file.ts': {
    *        preset: 'import-types',
-   *        plugins: ['typescript-operations'],
+   *        plugins: ['typescript-resolvers'],
    *        presetConfig: {
    *          typesPath: 'types.ts',
    *          importTypesNamespace: 'SchemaTypes',
