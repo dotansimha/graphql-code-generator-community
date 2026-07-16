@@ -247,6 +247,60 @@ describe('C# Operations', () => {
         }
       `);
     });
+
+    it('Should properly treat value-type scalar mappings nullability', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type Query {
+          dateTimeOptional: Date
+          dateOnlyOptional: DateOnlyScalar
+          durationOptional: Duration
+          dateOffsetOptional: DateOffset
+        }
+
+        scalar Date
+        scalar DateOnlyScalar
+        scalar Duration
+        scalar DateOffset
+      `);
+
+      const operation = parse(/* GraphQL */ `
+        query findTypedScalars {
+          dateTimeOptional
+          dateOnlyOptional
+          durationOptional
+          dateOffsetOptional
+        }
+      `);
+
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: operation }],
+        {
+          typesafeOperation: true,
+          scalars: {
+            Date: 'DateTime',
+            DateOnlyScalar: 'DateOnly',
+            Duration: 'TimeSpan',
+            DateOffset: 'DateTimeOffset',
+          },
+        },
+        { outputFile: '' },
+      )) as Types.ComplexPluginOutput;
+
+      expect(result.content).toBeSimilarStringTo(`
+        public class Response {
+          [JsonProperty("dateTimeOptional")]
+          public DateTime? dateTimeOptional { get; set; }
+          [JsonProperty("dateOnlyOptional")]
+          public DateOnly? dateOnlyOptional { get; set; }
+          [JsonProperty("durationOptional")]
+          public TimeSpan? durationOptional { get; set; }
+          [JsonProperty("dateOffsetOptional")]
+          public DateTimeOffset? dateOffsetOptional { get; set; }
+        }
+      `);
+    });
+
     it('Should generate nested response class', async () => {
       const schema = buildSchema(/* GraphQL */ `
         type Query {
