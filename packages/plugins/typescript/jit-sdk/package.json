@@ -48,7 +48,7 @@
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@graphql-tools/utils": "11.2.0",
+    "@graphql-tools/utils": "11.2.1",
     "graphql-jit": "0.8.8"
   },
   "publishConfig": {
