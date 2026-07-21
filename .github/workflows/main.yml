@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Main
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Setup env
         uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
@@ -41,7 +41,7 @@ jobs:
           - 'esm'
     steps:
       - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Setup env
         uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Setup env
         uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
@@ -91,7 +91,7 @@ jobs:
             graphql_version: 16
     steps:
       - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Setup env
         uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
