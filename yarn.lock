@@ -1877,9 +1877,9 @@
     tslib "^2.8.0"
 
 "@graphql-codegen/visitor-plugin-common@^7.0.0", "@graphql-codegen/visitor-plugin-common@^7.1.1", "@graphql-codegen/visitor-plugin-common@^7.2.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-7.2.0.tgz#f22355a37c8761385a5029352bdf86fe87ad9a6c"
-  integrity sha512-qqtTY8taONuxlR0HvD8z+zgWC3CfJ47M2rATx+geWNIN8v8Itc5TflHYxjkWAtNL6E3q7WZRY5P7se+2S3EjBg==
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-7.2.1.tgz#2bcb99fa6d6bdb0b7f226da988c6ecf67c3618df"
+  integrity sha512-OfTs7yvdbG3LaDJ158vtlglF0QzRN6b/t2Xi02DqBDfJqUorUM72uzuG9BpeALTPNTxFU7aaauS57uTc5oJjsw==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^7.1.0"
     "@graphql-tools/optimize" "^2.0.0"
