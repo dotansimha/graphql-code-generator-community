@@ -45,7 +45,7 @@
     "cross-env": "10.1.0",
     "eslint": "9.39.5",
     "eslint-plugin-import": "2.32.0",
-    "graphql": "16.13.2",
+    "graphql": "17.0.0",
     "husky": "9.1.7",
     "jest-diff": "30.4.1",
     "jest-docblock": "30.4.0",
@@ -59,7 +59,7 @@
     "vitest": "4.1.10"
   },
   "resolutions": {
-    "graphql": "16.13.2"
+    "graphql": "17.0.0"
   },
   "lint-staged": {
     "packages/**/src/**/*.{ts,tsx}": [
