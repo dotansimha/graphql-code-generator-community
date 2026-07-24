@@ -3,6 +3,7 @@ import { Types } from '@graphql-codegen/plugin-helpers';
 import {
   BaseVisitor,
   buildScalarsFromConfig,
+  DocumentMode,
   FragmentImport,
   getConfigValue,
   getPossibleTypes,
@@ -27,60 +28,52 @@ export type FragmentRegistry = {
     filePath: string;
     onType: string;
     node: FragmentDefinitionNode;
-    imports: Array<FragmentImport>;
     possibleTypes: string[];
   };
 };
 
 /**
- * Creates fragment imports based on possible types and usage
+ * Creates a fragment's type imports based on possible types and usage
  */
-function createFragmentImports(
+function createFragmentTypeImports(
   baseVisitor: BaseVisitor<RawConfig, NearOperationFileParsedConfig>,
   fragmentName: string,
   possibleTypes: string[],
   usedTypes?: string[],
 ): Array<FragmentImport> {
-  const fragmentImports: Array<FragmentImport> = [];
-
-  // Always include the document import
-  fragmentImports.push({
-    name: baseVisitor.getFragmentVariableName(fragmentName),
-    kind: 'document',
-  });
-
   const fragmentSuffix = baseVisitor.getFragmentSuffix(fragmentName);
 
   if (possibleTypes.length === 1) {
-    fragmentImports.push({
-      name: baseVisitor.convertName(fragmentName, {
-        useTypesPrefix: true,
-        suffix: fragmentSuffix,
-      }),
-      kind: 'type',
-    });
-  } else if (possibleTypes.length > 0) {
-    const typesToImport = usedTypes && usedTypes.length > 0 ? usedTypes : possibleTypes;
-
-    typesToImport.forEach(typeName => {
-      fragmentImports.push({
+    return [
+      {
         name: baseVisitor.convertName(fragmentName, {
           useTypesPrefix: true,
-          suffix: `_${typeName}` + (fragmentSuffix.length > 0 ? `_${fragmentSuffix}` : ''),
+          suffix: fragmentSuffix,
         }),
         kind: 'type',
-      });
-    });
+      },
+    ];
   }
 
-  return fragmentImports;
+  if (possibleTypes.length > 0) {
+    const typesToImport = usedTypes && usedTypes.length > 0 ? usedTypes : possibleTypes;
+
+    return typesToImport.map(typeName => ({
+      name: baseVisitor.convertName(fragmentName, {
+        useTypesPrefix: true,
+        suffix: `_${typeName}` + (fragmentSuffix.length > 0 ? `_${fragmentSuffix}` : ''),
+      }),
+      kind: 'type',
+    }));
+  }
+
+  return [];
 }
 
 /**
- * Used by `buildFragmentResolver` to build a mapping of fragmentNames to paths, importNames, and other useful info
+ * Used by `buildFragmentResolver` to build a mapping of fragmentNames to paths, nodes, and other useful info
  */
 function buildFragmentRegistry(
-  baseVisitor: BaseVisitor<RawConfig, NearOperationFileParsedConfig>,
   { generateFilePath }: DocumentImportResolverOptions,
   { documents }: Types.PresetFnArgs<{}>,
   schemaObject: GraphQLSchema,
@@ -108,7 +101,6 @@ function buildFragmentRegistry(
       const fragmentName = fragment.name.value;
       const possibleTypes = getPossibleTypes(schemaObject, schemaType);
       const possibleTypeNames = possibleTypes.map(t => t.name);
-      const imports = createFragmentImports(baseVisitor, fragment.name.value, possibleTypeNames);
 
       if (prev[fragmentName] && print(fragment) !== print(prev[fragmentName].node)) {
         duplicateFragmentNames.push(fragmentName);
@@ -116,7 +108,6 @@ function buildFragmentRegistry(
 
       prev[fragmentName] = {
         filePath,
-        imports,
         onType: fragment.typeCondition.name.value,
         node: fragment,
         possibleTypes: possibleTypeNames,
@@ -162,21 +153,20 @@ export default function buildFragmentResolver<T>(
 ) {
   const { config } = presetOptions;
   const baseVisitor = createBaseVisitor(config, schemaObject);
-  const fragmentRegistry = buildFragmentRegistry(
-    baseVisitor,
-    collectorOptions,
-    presetOptions,
-    schemaObject,
-  );
+  const fragmentRegistry = buildFragmentRegistry(collectorOptions, presetOptions, schemaObject);
   const { baseOutputDir } = presetOptions;
   const { baseDir, typesImport } = collectorOptions;
 
   function resolveFragments(generatedFilePath: string, documentFileContent: DocumentNode) {
-    const { fragmentsInUse, usedFragmentTypes } = analyzeFragmentUsage(
+    const { fragmentsInUse, usedFragmentTypes, operationFragments } = analyzeFragmentUsage(
       documentFileContent,
       fragmentRegistry,
       schemaObject,
     );
+
+    // graphQLTag operations inline every fragment they transitively spread
+    const { documentMode = DocumentMode.graphQLTag } = config;
+    const isGraphQLTagMode = documentMode === DocumentMode.graphQLTag;
 
     const externalFragments: LoadedFragment<{ level: number }>[] = [];
     const fragmentFileImports: { [fragmentFile: string]: Array<FragmentImport> } = {};
@@ -186,29 +176,35 @@ export default function buildFragmentResolver<T>(
 
       if (!fragmentDetails) continue;
 
-      // add top level references to the import object
-      // we don't check or global namespace because the calling config can do so
-      if (
-        level === 0 ||
-        (dedupeFragments &&
-          ['OperationDefinition', 'FragmentDefinition'].includes(
-            documentFileContent.definitions[0].kind,
-          ))
-      ) {
-        if (fragmentDetails.filePath !== generatedFilePath) {
-          // don't emit imports to same location
-          const usedTypesForFragment = usedFragmentTypes[fragmentName] || [];
-          const filteredImports = createFragmentImports(
-            baseVisitor,
-            fragmentName,
-            fragmentDetails.possibleTypes,
-            usedTypesForFragment,
-          );
+      // don't emit imports to the same location
+      if (fragmentDetails.filePath !== generatedFilePath) {
+        const imports: FragmentImport[] = [];
+        const isSpreadDirectly = level === 0 || dedupeFragments;
 
-          if (!fragmentFileImports[fragmentDetails.filePath]) {
-            fragmentFileImports[fragmentDetails.filePath] = [];
-          }
-          fragmentFileImports[fragmentDetails.filePath].push(...filteredImports);
+        const needsDocument = isGraphQLTagMode
+          ? operationFragments.has(fragmentName)
+          : isSpreadDirectly;
+
+        if (needsDocument) {
+          imports.push({
+            name: baseVisitor.getFragmentVariableName(fragmentName),
+            kind: 'document',
+          });
+        }
+
+        if (isSpreadDirectly) {
+          imports.push(
+            ...createFragmentTypeImports(
+              baseVisitor,
+              fragmentName,
+              fragmentDetails.possibleTypes,
+              usedFragmentTypes[fragmentName] || [],
+            ),
+          );
+        }
+
+        if (imports.length > 0) {
+          (fragmentFileImports[fragmentDetails.filePath] ??= []).push(...imports);
         }
       }
 
