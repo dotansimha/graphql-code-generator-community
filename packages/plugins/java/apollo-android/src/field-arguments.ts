@@ -46,7 +46,7 @@ export function visitFieldArguments(selection: FieldNode, imports: ImportsSet): 
       Variable: (node: VariableNode) => {
         return `new UnmodifiableMapBuilder<String, Object>(2).put("kind", "Variable").put("variableName", "${node.name.value}").build()`;
       },
-      StringValue: (node: StringValueNode) => `"${node.value}"`,
+      StringValue: (node: StringValueNode) => `"${node.value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`,
       IntValue: (node: IntValueNode) => `"${node.value}"`,
       FloatValue: (node: FloatValueNode) => `"${node.value}"`,
     },
