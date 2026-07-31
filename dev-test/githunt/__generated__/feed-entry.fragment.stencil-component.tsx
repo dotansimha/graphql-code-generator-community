@@ -1,6 +1,4 @@
 import gql from 'graphql-tag';
-import { RepoInfoFragmentDoc } from './repo-info.fragment.stencil-component.js';
-import { VoteButtonsFragmentDoc } from './vote-buttons.fragment.stencil-component.js';
 
 declare global {
   export type FeedEntryFragment = {
@@ -37,6 +35,4 @@ export const FeedEntryFragmentDoc = gql`
     ...VoteButtons
     ...RepoInfo
   }
-  ${VoteButtonsFragmentDoc}
-  ${RepoInfoFragmentDoc}
 `;

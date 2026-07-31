@@ -392,8 +392,6 @@ export const FeedEntryFragmentDoc = gql`
     ...VoteButtons
     ...RepoInfo
   }
-  ${VoteButtonsFragmentDoc}
-  ${RepoInfoFragmentDoc}
 `;
 export function useCommentsPageCommentFragment<F = { id: string }>(identifiers: F) {
   return Apollo.useFragment<CommentsPageCommentFragment>({
@@ -673,6 +671,8 @@ export const FeedDocument = gql`
     }
   }
   ${FeedEntryFragmentDoc}
+  ${VoteButtonsFragmentDoc}
+  ${RepoInfoFragmentDoc}
 `;
 
 /**

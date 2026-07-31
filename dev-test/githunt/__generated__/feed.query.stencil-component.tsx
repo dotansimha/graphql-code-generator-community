@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 import { FeedEntryFragmentDoc } from './feed-entry.fragment.stencil-component.js';
+import { RepoInfoFragmentDoc } from './repo-info.fragment.stencil-component.js';
+import { VoteButtonsFragmentDoc } from './vote-buttons.fragment.stencil-component.js';
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
 
@@ -44,6 +46,8 @@ const FeedDocument = gql`
     }
   }
   ${FeedEntryFragmentDoc}
+  ${VoteButtonsFragmentDoc}
+  ${RepoInfoFragmentDoc}
 `;
 
 @Component({
