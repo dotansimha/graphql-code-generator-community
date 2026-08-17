@@ -1,5 +1,19 @@
 # @graphql-codegen/typescript-react-apollo
 
+## 5.0.0
+
+### Major Changes
+
+- [#1530](https://github.com/dotansimha/graphql-code-generator-community/pull/1530)
+  [`73ecb79`](https://github.com/dotansimha/graphql-code-generator-community/commit/73ecb79a33655624caef4351d6b06e2339872832)
+  Thanks [@wassim-k](https://github.com/wassim-k)! - Update GraphQL Codegen common packages to
+  latest (`@graphql-codegen/visitor-plugin-common` v7).
+
+  This changes the shape of generated documents: a fragment's `*Doc` no longer interpolates the
+  fragments it spreads, and each operation document instead interpolates every fragment it
+  transitively spreads. Generated output is equivalent, but any code or snapshot asserting on the
+  previous interpolation layout needs updating.
+
 ## 4.4.2
 
 ### Patch Changes
