@@ -603,7 +603,7 @@ export function use${suspenseOperationName}(baseOptions?: ${this.getApolloReactH
   public get fragments(): string {
     const fragments = super.fragments;
 
-    if (this['_fragments'].length === 0 || !this.config.withFragmentHooks) {
+    if (this['_fragments'].size === 0 || !this.config.withFragmentHooks) {
       return fragments;
     }
 

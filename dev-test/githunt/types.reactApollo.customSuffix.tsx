@@ -392,8 +392,6 @@ export const FeedEntryFragmentDoc = gql`
     ...VoteButtons
     ...RepoInfo
   }
-  ${VoteButtonsFragmentDoc}
-  ${RepoInfoFragmentDoc}
 `;
 export const OnCommentAddedDocument = gql`
   subscription onCommentAdded($repoFullName: String!) {
@@ -636,6 +634,8 @@ export const FeedDocument = gql`
     }
   }
   ${FeedEntryFragmentDoc}
+  ${VoteButtonsFragmentDoc}
+  ${RepoInfoFragmentDoc}
 `;
 
 /**

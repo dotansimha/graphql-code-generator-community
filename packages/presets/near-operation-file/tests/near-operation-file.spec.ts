@@ -319,6 +319,162 @@ describe('near-operation-file preset', () => {
       );
     });
 
+    it("Should add import to external fragment when it's in use (transitively nested fragment)", async () => {
+      const testSchema = buildSchema(/* GraphQL */ `
+        schema {
+          query: Query
+        }
+
+        type Query {
+          list: [Book]
+        }
+
+        type Book {
+          id: ID!
+          title: String!
+          pages: [Page!]!
+        }
+
+        type Page {
+          id: ID!
+          number: Int!
+        }
+      `);
+
+      const result = await executePreset({
+        baseOutputDir: './src/',
+        config: {},
+        presetConfig: {
+          cwd: '/some/deep/path',
+          baseTypesPath: 'types.ts',
+        },
+        schemaAst: testSchema,
+        schema: getCachedDocumentNodeFromSchema(testSchema),
+        documents: [
+          {
+            location: '/some/deep/path/src/graphql/queries.graphql',
+            document: parse(/* GraphQL */ `
+              query List {
+                list {
+                  ...Book
+                }
+              }
+            `),
+          },
+          {
+            location: '/some/deep/path/src/graphql/book-fragment.graphql',
+            document: parse(/* GraphQL */ `
+              fragment Book on Book {
+                id
+                title
+                pages {
+                  ...Page
+                }
+              }
+            `),
+          },
+          {
+            location: '/some/deep/path/src/graphql/page-fragment.graphql',
+            document: parse(/* GraphQL */ `
+              fragment Page on Page {
+                id
+                number
+              }
+            `),
+          },
+        ],
+        plugins: [{ 'typescript-react-apollo': {} }],
+        pluginMap: { 'typescript-react-apollo': {} as any },
+      });
+
+      expect(result[0].filename).toContain('queries.generated.ts');
+      expect(getFragmentImportsFromResult(result)).toContain(
+        `import { BookFragmentDoc, BookFragment } from './book-fragment.generated';`,
+      );
+      expect(getFragmentImportsFromResult(result)).toContain(
+        `import { PageFragmentDoc } from './page-fragment.generated';`,
+      );
+    });
+
+    it('dedupeFragments: flattens nested fragments into the operation file (imports their type too)', async () => {
+      const testSchema = buildSchema(/* GraphQL */ `
+        schema {
+          query: Query
+        }
+
+        type Query {
+          list: [Book]
+        }
+
+        type Book {
+          id: ID!
+          title: String!
+          pages: [Page!]!
+        }
+
+        type Page {
+          id: ID!
+          number: Int!
+        }
+      `);
+
+      const documents = [
+        {
+          location: '/some/deep/path/src/graphql/queries.graphql',
+          document: parse(/* GraphQL */ `
+            query List {
+              list {
+                ...Book
+              }
+            }
+          `),
+        },
+        {
+          location: '/some/deep/path/src/graphql/book-fragment.graphql',
+          document: parse(/* GraphQL */ `
+            fragment Book on Book {
+              id
+              title
+              pages {
+                ...Page
+              }
+            }
+          `),
+        },
+        {
+          location: '/some/deep/path/src/graphql/page-fragment.graphql',
+          document: parse(/* GraphQL */ `
+            fragment Page on Page {
+              id
+              number
+            }
+          `),
+        },
+      ];
+
+      const run = (dedupeFragments: boolean) =>
+        executePreset({
+          baseOutputDir: './src/',
+          config: { dedupeFragments },
+          presetConfig: { cwd: '/some/deep/path', baseTypesPath: 'types.ts' },
+          schemaAst: testSchema,
+          schema: getCachedDocumentNodeFromSchema(testSchema),
+          documents,
+          plugins: [{ 'typescript-react-apollo': {} }],
+          pluginMap: { 'typescript-react-apollo': {} as any },
+        });
+
+      const withoutDedupe = getFragmentImportsFromResult(await run(false));
+      expect(withoutDedupe).toContain(
+        `import { PageFragmentDoc } from './page-fragment.generated';`,
+      );
+
+      const withDedupe = getFragmentImportsFromResult(await run(true));
+      expect(withDedupe).toContain(
+        `import { PageFragmentDoc, PageFragment } from './page-fragment.generated';`,
+      );
+    });
+
     it('#2365 - Should not add Fragment suffix to import identifier when dedupeOperationSuffix: true', async () => {
       const result = await executePreset({
         baseOutputDir: './src/',
