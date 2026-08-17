@@ -1,5 +1,22 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 5.2.2
+
+### Patch Changes
+
+- [#1530](https://github.com/dotansimha/graphql-code-generator-community/pull/1530)
+  [`73ecb79`](https://github.com/dotansimha/graphql-code-generator-community/commit/73ecb79a33655624caef4351d6b06e2339872832)
+  Thanks [@wassim-k](https://github.com/wassim-k)! - Fix fragment `*Doc` imports for
+  transitively-nested fragments in `documentMode: graphQLTag`.
+
+  Since `visitor-plugin-common` v7, a `graphQLTag` operation inlines every fragment it transitively
+  spreads, so the operation file now imports the `*Doc` of fragments reached only through another
+  fragment. Previously these were missing, producing `Cannot find name 'XFragmentDoc'`. Fragment
+  files correspondingly no longer emit fragment `*Doc` imports they don't use.
+
+  Requires `@graphql-codegen/visitor-plugin-common` `^7.2.2` — earlier v7 releases emit an invalid
+  `import * from '...'` statement for fragment files whose imports are all elided.
+
 ## 5.2.1
 
 ### Patch Changes
