@@ -46,7 +46,7 @@ export const validate: PluginValidateFn<any> = async (
   config: RawClientSideBasePluginConfig,
   outputFile: string,
 ) => {
-  if (extname(outputFile) !== '.ts' && extname(outputFile) !== 'tsx') {
+  if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "typescript-graphql-apollo" requires extension to be ".ts" or ".tsx"!`);
   }
 };
