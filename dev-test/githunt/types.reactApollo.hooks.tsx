@@ -393,8 +393,15 @@ export const FeedEntryFragmentDoc = gql`
     ...RepoInfo
   }
 `;
-export function useCommentsPageCommentFragment<F = { id: string }>(identifiers: F) {
+export function useCommentsPageCommentFragment<F = { id: string }>(
+  identifiers: F,
+  options?: Omit<
+    Apollo.UseFragmentOptions<CommentsPageCommentFragment, Apollo.OperationVariables>,
+    'fragment' | 'fragmentName' | 'from'
+  >,
+) {
   return Apollo.useFragment<CommentsPageCommentFragment>({
+    ...options,
     fragment: CommentsPageCommentFragmentDoc,
     fragmentName: 'CommentsPageComment',
     from: {
@@ -406,8 +413,15 @@ export function useCommentsPageCommentFragment<F = { id: string }>(identifiers: 
 export type CommentsPageCommentFragmentHookResult = ReturnType<
   typeof useCommentsPageCommentFragment
 >;
-export function useFeedEntryFragment<F = { id: string }>(identifiers: F) {
+export function useFeedEntryFragment<F = { id: string }>(
+  identifiers: F,
+  options?: Omit<
+    Apollo.UseFragmentOptions<FeedEntryFragment, Apollo.OperationVariables>,
+    'fragment' | 'fragmentName' | 'from'
+  >,
+) {
   return Apollo.useFragment<FeedEntryFragment>({
+    ...options,
     fragment: FeedEntryFragmentDoc,
     fragmentName: 'FeedEntry',
     from: {
@@ -417,8 +431,15 @@ export function useFeedEntryFragment<F = { id: string }>(identifiers: F) {
   });
 }
 export type FeedEntryFragmentHookResult = ReturnType<typeof useFeedEntryFragment>;
-export function useRepoInfoFragment<F = { id: string }>(identifiers: F) {
+export function useRepoInfoFragment<F = { id: string }>(
+  identifiers: F,
+  options?: Omit<
+    Apollo.UseFragmentOptions<RepoInfoFragment, Apollo.OperationVariables>,
+    'fragment' | 'fragmentName' | 'from'
+  >,
+) {
   return Apollo.useFragment<RepoInfoFragment>({
+    ...options,
     fragment: RepoInfoFragmentDoc,
     fragmentName: 'RepoInfo',
     from: {
@@ -428,8 +449,15 @@ export function useRepoInfoFragment<F = { id: string }>(identifiers: F) {
   });
 }
 export type RepoInfoFragmentHookResult = ReturnType<typeof useRepoInfoFragment>;
-export function useVoteButtonsFragment<F = { id: string }>(identifiers: F) {
+export function useVoteButtonsFragment<F = { id: string }>(
+  identifiers: F,
+  options?: Omit<
+    Apollo.UseFragmentOptions<VoteButtonsFragment, Apollo.OperationVariables>,
+    'fragment' | 'fragmentName' | 'from'
+  >,
+) {
   return Apollo.useFragment<VoteButtonsFragment>({
+    ...options,
     fragment: VoteButtonsFragmentDoc,
     fragmentName: 'VoteButtons',
     from: {
