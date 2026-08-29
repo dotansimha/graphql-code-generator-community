@@ -3,12 +3,23 @@ import { Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
 
-describe('type-graphql', () => {
+const testCases = [
+  ['type-graphql', 'TypeGraphQL', {}],
+  [
+    '@nestjs/graphql',
+    'NestJSGraphQL',
+    {
+      useNestJSGraphQL: true,
+    },
+  ],
+];
+
+describe.each(testCases)('%s', (libName, importFrom, config) => {
   it('should expose Maybe', async () => {
     const schema = buildSchema(/* GraphQL */ `
       scalar A
     `);
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
     expect(result.prepend).toBeSimilarStringTo('export type Maybe<T> =');
   });
 
@@ -16,7 +27,7 @@ describe('type-graphql', () => {
     const schema = buildSchema(/* GraphQL */ `
       scalar A
     `);
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
     expect(result.prepend).toBeSimilarStringTo('export type Exact<');
   });
 
@@ -24,21 +35,21 @@ describe('type-graphql', () => {
     const schema = buildSchema(/* GraphQL */ `
       scalar A
     `);
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
     expect(result.prepend).toBeSimilarStringTo('export type FixDecorator<T> = T;');
   });
 
-  it('should generate type-graphql import/export', async () => {
+  it('should generate import/export', async () => {
     const schema = buildSchema(/* GraphQL */ `
       scalar A
     `);
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
 
-    expect(result.prepend).toBeSimilarStringTo(`import * as TypeGraphQL from 'type-graphql';
-    export { TypeGraphQL };`);
+    expect(result.prepend).toBeSimilarStringTo(`import * as ${importFrom} from '${libName}';
+    export { ${importFrom} };`);
   });
 
-  it('should generate type-graphql enums', async () => {
+  it('should generate classes for object types', async () => {
     const schema = buildSchema(/* GraphQL */ `
       "custom enum"
       enum MyEnum {
@@ -48,7 +59,7 @@ describe('type-graphql', () => {
         B
       }
     `);
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
 
     expect(result.content).toBeSimilarStringTo(`
       /** custom enum */
@@ -58,10 +69,10 @@ describe('type-graphql', () => {
         /** this is b */
         B = 'B'
       }
-      TypeGraphQL.registerEnumType(MyEnum, { name: 'MyEnum' });`);
+      ${importFrom}.registerEnumType(MyEnum, { name: 'MyEnum' });`);
   });
 
-  it('should generate type-graphql classes for object types', async () => {
+  it('should generate classes for object types', async () => {
     const schema = buildSchema(/* GraphQL */ `
       type A {
         id: ID
@@ -84,45 +95,45 @@ describe('type-graphql', () => {
       }
     `);
 
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.ObjectType()
+      @${importFrom}.ObjectType()
       export class A {
         __typename?: 'A';
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
-        @TypeGraphQL.Field(type => TypeGraphQL.ID)
+        @${importFrom}.Field(type => ${importFrom}.ID)
         mandatoryId!: Scalars['ID'];
-        @TypeGraphQL.Field(type => String, { nullable: true })
+        @${importFrom}.Field(type => String, { nullable: true })
         str?: Maybe<Scalars['String']>;
-        @TypeGraphQL.Field(type => String)
+        @${importFrom}.Field(type => String)
         mandatoryStr!: Scalars['String'];
-        @TypeGraphQL.Field(type => Boolean, { nullable: true })
+        @${importFrom}.Field(type => Boolean, { nullable: true })
         bool?: Maybe<Scalars['Boolean']>;
-        @TypeGraphQL.Field(type => Boolean)
+        @${importFrom}.Field(type => Boolean)
         mandatoryBool!: Scalars['Boolean'];
-        @TypeGraphQL.Field(type => TypeGraphQL.Int, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.Int, { nullable: true })
         int?: Maybe<Scalars['Int']>;
-        @TypeGraphQL.Field(type => TypeGraphQL.Int)
+        @${importFrom}.Field(type => ${importFrom}.Int)
         mandatoryInt!: Scalars['Int'];
-        @TypeGraphQL.Field(type => TypeGraphQL.Float, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.Float, { nullable: true })
         float?: Maybe<Scalars['Float']>;
-        @TypeGraphQL.Field(type => TypeGraphQL.Float)
+        @${importFrom}.Field(type => ${importFrom}.Float)
         mandatoryFloat!: Scalars['Float'];
-        @TypeGraphQL.Field(type => B, { nullable: true })
+        @${importFrom}.Field(type => B, { nullable: true })
         b?: Maybe<B>;
-        @TypeGraphQL.Field(type => B)
+        @${importFrom}.Field(type => B)
         mandatoryB!: FixDecorator<B>;
-        @TypeGraphQL.Field(type => [String], { nullable: true })
+        @${importFrom}.Field(type => [String], { nullable: true })
         arr?: Maybe<Array<Scalars['String']>>;
-        @TypeGraphQL.Field(type => [String])
+        @${importFrom}.Field(type => [String])
         mandatoryArr!: Array<Scalars['String']>;
       }
     `);
   });
 
-  it('should generate type-graphql classes implementing type-graphql interfaces for object types', async () => {
+  it('should generate classes implementing interfaces for object types', async () => {
     const schema = buildSchema(/* GraphQL */ `
       type Test implements ITest {
         id: ID
@@ -133,30 +144,30 @@ describe('type-graphql', () => {
       }
     `);
 
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.ObjectType({ implements: ITest })
+      @${importFrom}.ObjectType({ implements: ITest })
       export class Test extends ITest {
         __typename?: 'Test';
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
-        @TypeGraphQL.Field(type => String)
+        @${importFrom}.Field(type => String)
         mandatoryStr!: Scalars['String'];
       }
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.InterfaceType()
+      @${importFrom}.InterfaceType()
       export abstract class ITest {
 
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
       }
     `);
   });
 
-  it('should generate type-graphql classes for input types', async () => {
+  it('should generate classes for input types', async () => {
     const schema = buildSchema(/* GraphQL */ `
       input A {
         id: ID
@@ -179,52 +190,52 @@ describe('type-graphql', () => {
       }
     `);
 
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.InputType()
+      @${importFrom}.InputType()
       export class A {
 
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
 
-        @TypeGraphQL.Field(type => TypeGraphQL.ID)
+        @${importFrom}.Field(type => ${importFrom}.ID)
         mandatoryId!: Scalars['ID'];
 
-        @TypeGraphQL.Field(type => String, { nullable: true })
+        @${importFrom}.Field(type => String, { nullable: true })
         str?: Maybe<Scalars['String']>;
 
-        @TypeGraphQL.Field(type => String)
+        @${importFrom}.Field(type => String)
         mandatoryStr!: Scalars['String'];
 
-        @TypeGraphQL.Field(type => Boolean, { nullable: true })
+        @${importFrom}.Field(type => Boolean, { nullable: true })
         bool?: Maybe<Scalars['Boolean']>;
 
-        @TypeGraphQL.Field(type => Boolean)
+        @${importFrom}.Field(type => Boolean)
         mandatoryBool!: Scalars['Boolean'];
 
-        @TypeGraphQL.Field(type => TypeGraphQL.Int, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.Int, { nullable: true })
         int?: Maybe<Scalars['Int']>;
 
-        @TypeGraphQL.Field(type => TypeGraphQL.Int)
+        @${importFrom}.Field(type => ${importFrom}.Int)
         mandatoryInt!: Scalars['Int'];
 
-        @TypeGraphQL.Field(type => TypeGraphQL.Float, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.Float, { nullable: true })
         float?: Maybe<Scalars['Float']>;
 
-        @TypeGraphQL.Field(type => TypeGraphQL.Float)
+        @${importFrom}.Field(type => ${importFrom}.Float)
         mandatoryFloat!: Scalars['Float'];
 
-        @TypeGraphQL.Field(type => B, { nullable: true })
+        @${importFrom}.Field(type => B, { nullable: true })
         b?: Maybe<B>;
 
-        @TypeGraphQL.Field(type => B)
+        @${importFrom}.Field(type => B)
         mandatoryB!: FixDecorator<B>;
 
-        @TypeGraphQL.Field(type => [String], { nullable: true })
+        @${importFrom}.Field(type => [String], { nullable: true })
         arr?: Maybe<Array<Scalars['String']>>;
 
-        @TypeGraphQL.Field(type => [String])
+        @${importFrom}.Field(type => [String])
         mandatoryArr!: Array<Scalars['String']>;
       }
     `);
@@ -256,58 +267,58 @@ describe('type-graphql', () => {
       }
     `);
 
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.ArgsType()
+      @${importFrom}.ArgsType()
       export class MutationTestArgs {
 
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
 
-        @TypeGraphQL.Field(type => TypeGraphQL.ID)
+        @${importFrom}.Field(type => ${importFrom}.ID)
         mandatoryId!: Scalars['ID'];
 
-        @TypeGraphQL.Field(type => String, { nullable: true })
+        @${importFrom}.Field(type => String, { nullable: true })
         str?: Maybe<Scalars['String']>;
 
-        @TypeGraphQL.Field(type => String)
+        @${importFrom}.Field(type => String)
         mandatoryStr!: Scalars['String'];
 
-        @TypeGraphQL.Field(type => Boolean, { nullable: true })
+        @${importFrom}.Field(type => Boolean, { nullable: true })
         bool?: Maybe<Scalars['Boolean']>;
 
-        @TypeGraphQL.Field(type => Boolean)
+        @${importFrom}.Field(type => Boolean)
         mandatoryBool!: Scalars['Boolean'];
 
-        @TypeGraphQL.Field(type => TypeGraphQL.Int, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.Int, { nullable: true })
         int?: Maybe<Scalars['Int']>;
 
-        @TypeGraphQL.Field(type => TypeGraphQL.Int)
+        @${importFrom}.Field(type => ${importFrom}.Int)
         mandatoryInt!: Scalars['Int'];
 
-        @TypeGraphQL.Field(type => TypeGraphQL.Float, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.Float, { nullable: true })
         float?: Maybe<Scalars['Float']>;
 
-        @TypeGraphQL.Field(type => TypeGraphQL.Float)
+        @${importFrom}.Field(type => ${importFrom}.Float)
         mandatoryFloat!: Scalars['Float'];
 
-        @TypeGraphQL.Field(type => B, { nullable: true })
+        @${importFrom}.Field(type => B, { nullable: true })
         b?: Maybe<B>;
 
-        @TypeGraphQL.Field(type => B)
+        @${importFrom}.Field(type => B)
         mandatoryB!: FixDecorator<B>;
 
-        @TypeGraphQL.Field(type => [String], { nullable: true })
+        @${importFrom}.Field(type => [String], { nullable: true })
         arr?: Maybe<Array<Scalars['String']>>;
 
-        @TypeGraphQL.Field(type => [String])
+        @${importFrom}.Field(type => [String])
         mandatoryArr!: Array<Scalars['String']>;
       }
     `);
   });
 
-  it('should generate type-graphql types as custom types', async () => {
+  it('should generate types as custom types', async () => {
     const schema = buildSchema(/* GraphQL */ `
       type Test {
         id: ID
@@ -321,25 +332,25 @@ describe('type-graphql', () => {
     const result = (await plugin(
       schema,
       [],
-      { decoratorName: { type: 'Foo', field: 'Bar', interface: 'FooBar' } },
+      { decoratorName: { type: 'Foo', field: 'Bar', interface: 'FooBar' }, ...(config || {}) },
       { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
-        @TypeGraphQL.Foo()
+        @${importFrom}.Foo()
         export class Test {
           __typename?: 'Test';
-          @TypeGraphQL.Bar(type => TypeGraphQL.ID, { nullable: true })
+          @${importFrom}.Bar(type => ${importFrom}.ID, { nullable: true })
           id?: Maybe<Scalars['ID']>;
-          @TypeGraphQL.Bar(type => String)
+          @${importFrom}.Bar(type => String)
           mandatoryStr!: Scalars['String'];
         }
       `);
     expect(result.content).toBeSimilarStringTo(`
-        @TypeGraphQL.FooBar()
+        @${importFrom}.FooBar()
         export abstract class ITest {
 
-          @TypeGraphQL.Bar(type => TypeGraphQL.ID, { nullable: true })
+          @${importFrom}.Bar(type => ${importFrom}.ID, { nullable: true })
           id?: Maybe<Scalars['ID']>;
         }
       `);
@@ -358,17 +369,17 @@ describe('type-graphql', () => {
     const result = (await plugin(
       schema,
       [],
-      { scalars: { DateTime: 'Date' } },
+      { scalars: { DateTime: 'Date' }, ...(config || {}) },
       { outputFile: '' },
     )) as Types.ComplexPluginOutput;
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.ObjectType()
+      @${importFrom}.ObjectType()
       export class A {
         __typename?: 'A';
-        @TypeGraphQL.Field(type => Date, { nullable: true })
+        @${importFrom}.Field(type => Date, { nullable: true })
         date?: Maybe<Scalars['DateTime']>;
-        @TypeGraphQL.Field(type => Date)
+        @${importFrom}.Field(type => Date)
         mandatoryDate!: Scalars['DateTime'];
       }
     `);
@@ -427,190 +438,190 @@ describe('type-graphql', () => {
       }
     `);
 
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => String, { nullable: true })
+      @${importFrom}.Field(type => String, { nullable: true })
       str1?: Maybe<Scalars['String']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => String)
+      @${importFrom}.Field(type => String)
       str2!: Scalars['String'];
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [String], { nullable: 'itemsAndList' })
+      @${importFrom}.Field(type => [String], { nullable: 'itemsAndList' })
       strArr1?: Maybe<Array<Maybe<Scalars['String']>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [String], { nullable: 'items' })
+      @${importFrom}.Field(type => [String], { nullable: 'items' })
       strArr2!: Array<Maybe<Scalars['String']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [String], { nullable: true })
+      @${importFrom}.Field(type => [String], { nullable: true })
       strArr3?: Maybe<Array<Scalars['String']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [String])
+      @${importFrom}.Field(type => [String])
       strArr4!: Array<Scalars['String']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => TypeGraphQL.Int, { nullable: true })
+      @${importFrom}.Field(type => ${importFrom}.Int, { nullable: true })
       int1?: Maybe<Scalars['Int']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => TypeGraphQL.Int)
+      @${importFrom}.Field(type => ${importFrom}.Int)
       int2!: Scalars['Int'];
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [TypeGraphQL.Int], { nullable: 'itemsAndList' })
+      @${importFrom}.Field(type => [${importFrom}.Int], { nullable: 'itemsAndList' })
       intArr1?: Maybe<Array<Maybe<Scalars['Int']>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [TypeGraphQL.Int], { nullable: 'items' })
+      @${importFrom}.Field(type => [${importFrom}.Int], { nullable: 'items' })
       intArr2!: Array<Maybe<Scalars['Int']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [TypeGraphQL.Int], { nullable: true })
+      @${importFrom}.Field(type => [${importFrom}.Int], { nullable: true })
       intArr3?: Maybe<Array<Scalars['Int']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [TypeGraphQL.Int])
+      @${importFrom}.Field(type => [${importFrom}.Int])
       intArr4!: Array<Scalars['Int']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => MyType2, { nullable: true })
+      @${importFrom}.Field(type => MyType2, { nullable: true })
       custom1?: Maybe<MyType2>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => MyType2)
+      @${importFrom}.Field(type => MyType2)
       custom2!: FixDecorator<MyType2>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [MyType2], { nullable: 'itemsAndList' })
+      @${importFrom}.Field(type => [MyType2], { nullable: 'itemsAndList' })
       customArr1?: Maybe<Array<Maybe<MyType2>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [MyType2], { nullable: 'items' })
+      @${importFrom}.Field(type => [MyType2], { nullable: 'items' })
       customArr2!: Array<Maybe<MyType2>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [MyType2], { nullable: true })
+      @${importFrom}.Field(type => [MyType2], { nullable: true })
       customArr3?: Maybe<Array<MyType2>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [MyType2])
+      @${importFrom}.Field(type => [MyType2])
       customArr4!: Array<MyType2>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => String, { nullable: true })
+      @${importFrom}.Field(type => String, { nullable: true })
       inputStr1?: Maybe<Scalars['String']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => String)
+      @${importFrom}.Field(type => String)
       inputStr2!: Scalars['String'];
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [String], { nullable: 'itemsAndList' })
+      @${importFrom}.Field(type => [String], { nullable: 'itemsAndList' })
       inputStrArr1?: Maybe<Array<Maybe<Scalars['String']>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [String], { nullable: 'items' })
+      @${importFrom}.Field(type => [String], { nullable: 'items' })
       inputStrArr2!: Array<Maybe<Scalars['String']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [String], { nullable: true })
+      @${importFrom}.Field(type => [String], { nullable: true })
       inputStrArr3?: Maybe<Array<Scalars['String']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [String])
+      @${importFrom}.Field(type => [String])
       inputStrArr4!: Array<Scalars['String']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => TypeGraphQL.Int, { nullable: true })
+      @${importFrom}.Field(type => ${importFrom}.Int, { nullable: true })
       inputInt1?: Maybe<Scalars['Int']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => TypeGraphQL.Int)
+      @${importFrom}.Field(type => ${importFrom}.Int)
       inputInt2!: Scalars['Int'];
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [TypeGraphQL.Int], { nullable: 'itemsAndList' })
+      @${importFrom}.Field(type => [${importFrom}.Int], { nullable: 'itemsAndList' })
       inputIntArr1?: Maybe<Array<Maybe<Scalars['Int']>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [TypeGraphQL.Int], { nullable: 'items' })
+      @${importFrom}.Field(type => [${importFrom}.Int], { nullable: 'items' })
       inputIntArr2!: Array<Maybe<Scalars['Int']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [TypeGraphQL.Int], { nullable: true })
+      @${importFrom}.Field(type => [${importFrom}.Int], { nullable: true })
       inputIntArr3?: Maybe<Array<Scalars['Int']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [TypeGraphQL.Int])
+      @${importFrom}.Field(type => [${importFrom}.Int])
       inputIntArr4!: Array<Scalars['Int']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => MyType2, { nullable: true })
+      @${importFrom}.Field(type => MyType2, { nullable: true })
       inputCustom1?: Maybe<MyType2>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => MyType2)
+      @${importFrom}.Field(type => MyType2)
       inputCustom2!: FixDecorator<MyType2>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [MyType2], { nullable: 'itemsAndList' })
+      @${importFrom}.Field(type => [MyType2], { nullable: 'itemsAndList' })
       inputCustomArr1?: Maybe<Array<Maybe<MyType2>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [MyType2], { nullable: 'items' })
+      @${importFrom}.Field(type => [MyType2], { nullable: 'items' })
       inputCustomArr2!: Array<Maybe<MyType2>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [MyType2], { nullable: true })
+      @${importFrom}.Field(type => [MyType2], { nullable: true })
       inputCustomArr3?: Maybe<Array<MyType2>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.Field(type => [MyType2])
+      @${importFrom}.Field(type => [MyType2])
       inputCustomArr4!: Array<MyType2>;
     `);
   });
 
-  it('should put the GraphQL description in the TypeGraphQL options', async () => {
+  it('should put the GraphQL description in the options', async () => {
     const schema = buildSchema(/* GraphQL */ `
       """
       Test type description
@@ -647,39 +658,39 @@ describe('type-graphql', () => {
       }
     `);
 
-    const result = await plugin(schema, [], {}, { outputFile: '' });
+    const result = await plugin(schema, [], config || {}, { outputFile: '' });
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.ObjectType({ description: 'Test type description', implements: ITest })
+      @${importFrom}.ObjectType({ description: 'Test type description', implements: ITest })
       export class Test extends ITest {
         __typename?: 'Test';
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { description: 'id field description\\ninside Test class', nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { description: 'id field description\\ninside Test class', nullable: true })
         id?: Maybe<Scalars['ID']>;
-        @TypeGraphQL.Field(type => String, { description: 'mandatoryStr field description' })
+        @${importFrom}.Field(type => String, { description: 'mandatoryStr field description' })
         mandatoryStr!: Scalars['String'];
       }
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.InterfaceType({ description: 'ITest interface description' })
+      @${importFrom}.InterfaceType({ description: 'ITest interface description' })
       export abstract class ITest {
 
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { description: 'id field description\\ninside ITest interface', nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { description: 'id field description\\ninside ITest interface', nullable: true })
         id?: Maybe<Scalars['ID']>;
       }
     `);
 
     expect(result.content).toBeSimilarStringTo(`
-      @TypeGraphQL.InputType({ description: 'TestInput input description' })
+      @${importFrom}.InputType({ description: 'TestInput input description' })
       export class TestInput {
 
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
       }
     `);
   });
 
-  it('should only generate TypeGraphQL decorators for included types', async () => {
+  it('should only generate decorators for included types', async () => {
     const schema = buildSchema(/* GraphQL */ `
       enum RegularEnum {
         A
@@ -732,16 +743,17 @@ describe('type-graphql', () => {
           'TypeGraphQLInputType',
           'QueryTypeGraphQlFunctionArgs',
         ],
+        ...(config || {}),
       },
       { outputFile: '' },
     );
 
     expect(result.content).not.toBeSimilarStringTo(
-      `TypeGraphQL.registerEnumType(RegularEnum, { name: 'RegularEnum' });`,
+      `${importFrom}.registerEnumType(RegularEnum, { name: 'RegularEnum' });`,
     );
 
     expect(result.content).toBeSimilarStringTo(
-      `TypeGraphQL.registerEnumType(TypeGraphQlEnum, { name: 'TypeGraphQlEnum' });`,
+      `${importFrom}.registerEnumType(TypeGraphQlEnum, { name: 'TypeGraphQlEnum' });`,
     );
 
     expect(result.content).toBeSimilarStringTo(
@@ -752,9 +764,9 @@ describe('type-graphql', () => {
 
     expect(result.content).toBeSimilarStringTo(
       `
-      @TypeGraphQL.InterfaceType()
+      @${importFrom}.InterfaceType()
       export abstract class ITypeGraphQlInterfaceType {
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
       }`,
     );
@@ -767,10 +779,10 @@ describe('type-graphql', () => {
     );
 
     expect(result.content).toBeSimilarStringTo(
-      `@TypeGraphQL.ObjectType()
+      `@${importFrom}.ObjectType()
       export class TypeGraphQlType {
         __typename?: 'TypeGraphQLType';
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
       }`,
     );
@@ -782,9 +794,9 @@ describe('type-graphql', () => {
     );
 
     expect(result.content).toBeSimilarStringTo(
-      `@TypeGraphQL.InputType()
+      `@${importFrom}.InputType()
       export class TypeGraphQlInputType {
-        @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+        @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
         id?: Maybe<Scalars['ID']>;
       }`,
     );
@@ -801,13 +813,13 @@ describe('type-graphql', () => {
         optionalId?: InputMaybe<Scalars['ID']>;
       };`);
 
-    expect(result.content).toBeSimilarStringTo(` @TypeGraphQL.ArgsType()
+    expect(result.content).toBeSimilarStringTo(` @${importFrom}.ArgsType()
        export class QueryTypeGraphQlFunctionArgs {
 
-         @TypeGraphQL.Field(type => TypeGraphQL.ID)
+         @${importFrom}.Field(type => ${importFrom}.ID)
          mandatoryId!: Scalars['ID'];
 
-         @TypeGraphQL.Field(type => TypeGraphQL.ID, { nullable: true })
+         @${importFrom}.Field(type => ${importFrom}.ID, { nullable: true })
          optionalId?: Maybe<Scalars['ID']>;
        };`);
   });
