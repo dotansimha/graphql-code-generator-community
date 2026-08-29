@@ -41,7 +41,7 @@ export const plugin: PluginFunction<Record<string, any>, Types.ComplexPluginOutp
           suffix: operationTypeSuffix + operationResultSuffix,
         });
 
-        return `export type ${storeTypeName} = OperationStore<${operationResultType}, ${operationVariablesTypes}>;`;
+        return `export type ${storeTypeName} = OperationResultStore<${operationResultType}, ${operationVariablesTypes}>;`;
       }
 
       return null;
@@ -49,7 +49,7 @@ export const plugin: PluginFunction<Record<string, any>, Types.ComplexPluginOutp
     .filter(Boolean);
 
   return {
-    prepend: [`import type { OperationStore } from '@urql/svelte';`],
+    prepend: [`import type { OperationResultStore } from '@urql/svelte';`],
     content: out.filter(Boolean).join('\n'),
   };
 };
