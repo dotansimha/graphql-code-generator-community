@@ -5168,15 +5168,15 @@ java-ast@0.4.1:
   dependencies:
     antlr4ts "^0.5.0-alpha.4"
 
-jest-diff@30.5.0:
-  version "30.5.0"
-  resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-30.5.0.tgz#993b5a15c06bf84b40421ced031309686e675f0b"
-  integrity sha512-QjCfDMwdPFvLxTQmS4/Dswx3PUCiqmSXVLGljMC3SU7YG1qHVoR6b86IH/O2G9k9OMyKXz2vS2Q60VnAozNDwA==
+jest-diff@30.5.1:
+  version "30.5.1"
+  resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-30.5.1.tgz#e03474eca7e5dc42924b15c72069b3203253768d"
+  integrity sha512-e3cNNMpv8Kh20MjjphTXs+3Vz7DQyLM1nft7KJhnh46atFhjVJRa+0Hq0beywuwsACtMQUBihQkFl8zxb7gt1Q==
   dependencies:
     "@jest/diff-sequences" "30.5.0"
     "@jest/get-type" "30.5.0"
     chalk "^4.1.2"
-    pretty-format "30.5.0"
+    pretty-format "30.5.1"
 
 jest-docblock@30.5.0:
   version "30.5.0"
@@ -6150,10 +6150,10 @@ prettier@^2.7.1:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
-pretty-format@30.5.0:
-  version "30.5.0"
-  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-30.5.0.tgz#6862cfce518e99bd1c928bb019ff3a3b2786fa61"
-  integrity sha512-mzNzBErpHwM0zpmWS7ExOv62yhQhvd546nUuFqVR0dmnJB59tfrw9sjDF0DJknwsr59OXP0buwJ7PaKguczHSg==
+pretty-format@30.5.1:
+  version "30.5.1"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-30.5.1.tgz#0dda910a75d12346b771977b1f328517b9e846d4"
+  integrity sha512-byhRAPguVKMQIj4kjJwJ5lAskVhfuiSdiYl/aLTWpgkGEmic2jYhJh1yE9ih8Ox44Xg9ccCT11/S6QrzSJuNrg==
   dependencies:
     "@jest/react-is-18" "npm:react-is@^18.3.1"
     "@jest/react-is-19" "npm:react-is@^19.2.5"
