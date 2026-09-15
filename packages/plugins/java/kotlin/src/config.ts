@@ -72,4 +72,20 @@ export interface KotlinResolversPluginRawConfig extends RawConfig {
    * ```
    */
   omitJvmStatic?: boolean;
+
+  /**
+   * @default false
+   * @description Enable Jakarta Validation annotations from GraphQL directives
+   *
+   * @exampleMarkdown
+   * ```yaml
+   * generates:
+   *   src/main/kotlin/my-org/my-app/Types.kt:
+   *     plugins:
+   *       - kotlin
+   *     config:
+   *       validationAnnotations: true
+   * ```
+   */
+  validationAnnotations?: boolean;
 }

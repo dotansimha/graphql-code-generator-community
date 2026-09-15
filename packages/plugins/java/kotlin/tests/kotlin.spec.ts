@@ -358,4 +358,97 @@ describe('Kotlin', () => {
       )`);
     });
   });
+
+  describe('Jakarta Validation', () => {
+    // language=GraphQL
+    const validationSchema = buildSchema(`
+      directive @notBlank on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+      directive @size(min: Int, max: Int) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+      directive @email on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+      directive @min(value: Int!) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+      directive @max(value: Int!) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+      directive @pattern(regexp: String!) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+      input UserInput {
+        username: String! @notBlank @size(min: 3, max: 20)
+        email: String! @email
+        age: Int @min(value: 18)
+        phone: String @pattern(regexp: "^[0-9]{10}$")
+      }
+
+      type User {
+        id: ID!
+        username: String! @notBlank @size(min: 3, max: 20)
+        email: String! @email
+        age: Int @min(value: 18)
+        phone: String @pattern(regexp: "^[0-9]{10}$")
+      }
+
+      type Query {
+        user(id: ID!): User
+      }
+    `);
+
+    it('should generate validation annotations for input types when validationAnnotations is enabled', async () => {
+      const result = await plugin(
+        validationSchema,
+        [],
+        {
+          validationAnnotations: true,
+          package: 'com.example'
+        },
+        {
+          outputFile: OUTPUT_FILE
+        }
+      );
+
+      expect(result).toContain('import jakarta.validation.constraints.*');
+      expect(result).toContain('@field:NotBlank');
+      expect(result).toContain('@field:Size(min = 3, max = 20)');
+      expect(result).toContain('@field:Email');
+      expect(result).toContain('@field:Min(value = 18)');
+      expect(result).toContain('@field:Pattern(regexp = "^[0-9]{10}$")');
+    });
+
+    it('should not generate validation annotations when validationAnnotations is disabled', async () => {
+      const result = await plugin(
+        validationSchema,
+        [],
+        {
+          validationAnnotations: false,
+          package: 'com.example'
+        },
+        {
+          outputFile: OUTPUT_FILE
+        }
+      );
+
+      expect(result).not.toContain('import jakarta.validation.constraints.*');
+      expect(result).not.toContain('@field:NotBlank');
+      expect(result).not.toContain('@field:Size');
+      expect(result).not.toContain('@field:Email');
+    });
+
+    it('should generate validation annotations for object types when withTypes is true', async () => {
+      const result = await plugin(
+        validationSchema,
+        [],
+        {
+          validationAnnotations: true,
+          withTypes: true,
+          package: 'com.example'
+        },
+        {
+          outputFile: OUTPUT_FILE
+        }
+      );
+
+      expect(result).toContain('import jakarta.validation.constraints.*');
+      expect(result).toContain('@field:NotBlank');
+      expect(result).toContain('@field:Size(min = 3, max = 20)');
+      expect(result).toContain('@field:Email');
+      expect(result).toContain('@field:Min(value = 18)');
+      expect(result).toContain('@field:Pattern(regexp = "^[0-9]{10}$")');
+    });
+  });
 });
