@@ -6164,10 +6164,10 @@ prettier-plugin-sh@^0.15.0:
     mvdan-sh "^0.10.1"
     sh-syntax "^0.4.2"
 
-prettier@3.8.5:
-  version "3.8.5"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.8.5.tgz#81cf9de0cf46db973fa85103ff06dfcdb0d9bc39"
-  integrity sha512-zxcTTCedNGJM4R8sj/Cq/F0W/c4iE0afWBcBwMTRtw4WHYP9TWkYjdiH3npPRUYsXQCPR0hTU9yjovOu+E6EQA==
+prettier@3.9.8:
+  version "3.9.8"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.9.8.tgz#54e81128584538c81d85fce9d5fd77a410c385c5"
+  integrity sha512-WRFq3Wn3WId7LLROfMLdH7xaFr2jR62wU8nLO6rQUOLOxNZUviyJQs1M0iIhLexSFy+L+w0ch66wtoO2jRjG0A==
 
 prettier@^2.7.1:
   version "2.8.8"
