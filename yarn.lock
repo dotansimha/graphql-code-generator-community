@@ -5197,10 +5197,10 @@ java-ast@0.4.1:
   dependencies:
     antlr4ts "^0.5.0-alpha.4"
 
-jest-diff@30.5.1:
-  version "30.5.1"
-  resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-30.5.1.tgz#e03474eca7e5dc42924b15c72069b3203253768d"
-  integrity sha512-e3cNNMpv8Kh20MjjphTXs+3Vz7DQyLM1nft7KJhnh46atFhjVJRa+0Hq0beywuwsACtMQUBihQkFl8zxb7gt1Q==
+jest-diff@30.5.2:
+  version "30.5.2"
+  resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-30.5.2.tgz#0d96ecb53aac3949132a6ce2106790d9212edced"
+  integrity sha512-rBtHnI6BWTiWj3lM7fOLVfChx7R9B0u9VV3PRHawKs79x6ZjW1QoSrKenaigNGWlvhtoi2BqvDbABDie+Os3xQ==
   dependencies:
     "@jest/diff-sequences" "30.5.0"
     "@jest/get-type" "30.5.0"
