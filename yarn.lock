@@ -3041,7 +3041,23 @@
     "@whatwg-node/promise-helpers" "^1.0.0"
     tslib "^2.6.3"
 
-"@whatwg-node/fetch@0.10.13", "@whatwg-node/fetch@^0.10.0", "@whatwg-node/fetch@^0.10.13":
+"@whatwg-node/disposablestack@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/disposablestack/-/disposablestack-0.1.0.tgz#bec98b7a7002b995e5414081c8c3d396fe55c09d"
+  integrity sha512-ok0A9+D+mdeb3w1GNCpVr+2gVVLRWKo9Ywm/whNsoWSNfNg3jNxS0/wUF6NSUYbfOtFGu2wZgJnLjasbaQEfvA==
+  dependencies:
+    "@whatwg-node/promise-helpers" "^2.0.0"
+    tslib "^2.6.3"
+
+"@whatwg-node/fetch@0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/fetch/-/fetch-0.12.0.tgz#c10f4600f4cefe327034c725b3942b704c33ac50"
+  integrity sha512-O/Dj+Dvo1zCtV6ryeQr0e6g26MSPJ1dSydti1zkWGykxN7jD6nxj6AHpZ+LkQJ61F14Ti997bqYEP03ZW3haiQ==
+  dependencies:
+    "@whatwg-node/node-fetch" "^0.9.0"
+    urlpattern-polyfill "^10.0.0"
+
+"@whatwg-node/fetch@^0.10.0", "@whatwg-node/fetch@^0.10.13":
   version "0.10.13"
   resolved "https://registry.yarnpkg.com/@whatwg-node/fetch/-/fetch-0.10.13.tgz#2d47190c620f134dda31c7f827976a909b2cca7a"
   integrity sha512-b4PhJ+zYj4357zwk4TTuF2nEe0vVtOrwdsrNo5hL+u1ojXNhh1FgJ6pg1jzDlwlT4oBdzfSwaBwMCtFCsIWg8Q==
@@ -3059,10 +3075,27 @@
     "@whatwg-node/promise-helpers" "^1.3.2"
     tslib "^2.6.3"
 
+"@whatwg-node/node-fetch@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/node-fetch/-/node-fetch-0.9.0.tgz#3d52ecde12fb250024dc94388486300342f7e984"
+  integrity sha512-vcqOxc8/tWZ+l8TxmJHKSws0SqYuJt1xMo50HdxD4g67TOKPOKdFFx0yth1WZJPltr2daftkVTazZMSvpvxfyw==
+  dependencies:
+    "@fastify/busboy" "^3.1.1"
+    "@whatwg-node/disposablestack" "^0.1.0"
+    "@whatwg-node/promise-helpers" "^2.0.0"
+    tslib "^2.6.3"
+
 "@whatwg-node/promise-helpers@^1.0.0", "@whatwg-node/promise-helpers@^1.2.1", "@whatwg-node/promise-helpers@^1.2.4", "@whatwg-node/promise-helpers@^1.3.2":
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/@whatwg-node/promise-helpers/-/promise-helpers-1.3.2.tgz#3b54987ad6517ef6db5920c66a6f0dada606587d"
   integrity sha512-Nst5JdK47VIl9UcGwtv2Rcgyn5lWtZ0/mhRQ4G8NN2isxpq2TO30iqHzmwoJycjWuyUfg3GFXqP/gFHXeV57IA==
+  dependencies:
+    tslib "^2.6.3"
+
+"@whatwg-node/promise-helpers@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@whatwg-node/promise-helpers/-/promise-helpers-2.0.0.tgz#93a89655355bbd5d7e2b0d64fc93a88224d7030e"
+  integrity sha512-/i9CS0Z96o+cPwaYoAyVxAThDiUX1wV3tDmNWPJbn+vtdR+JftuCDg1NGCXBrzIYVDGkJ8uT6ctwmrBOUzOpKQ==
   dependencies:
     tslib "^2.6.3"
 
