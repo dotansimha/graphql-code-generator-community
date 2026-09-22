@@ -12,6 +12,19 @@ import {
 import { atJsonKeyDecorator, stringIsNotEmpty } from '../utils.js';
 import { Block } from './index.js';
 
+function toPascalCase(str: string): string {
+  if(!str.includes('-')) return str;
+
+  return str
+    .split('-')                     // Split the string by hyphens
+    .map((word, index) =>           // Capitalize each word, except the first one
+      index === 0
+        ? word                      // Keep the first word in lowercase
+        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()  // Capitalize subsequent words
+    )
+    .join('');                      // Join the words together without spaces
+}
+
 export class ParameterBlock {
   public static build(
     config: FlutterFreezedPluginConfig,
@@ -94,11 +107,11 @@ export class ParameterBlock {
 
     if (this.isListType(type)) {
       const T = this.parameterType(config, type.type, type);
-      return `List<${T}>${this.isNonNullType(parentType) ? '' : '?'}`;
+      return `List<${toPascalCase(T)}>${this.isNonNullType(parentType) ? '' : '?'}`;
     }
 
     if (this.isNamedType(type)) {
-      return `${Config.customScalars(config, type.name.value)}${
+      return `${toPascalCase(Config.customScalars(config, type.name.value))}${
         this.isNonNullType(parentType) ? '' : '?'
       }`;
     }
