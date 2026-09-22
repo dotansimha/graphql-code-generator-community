@@ -111,6 +111,17 @@ export const atJsonKeyDecorator = ({
   return stringIsNotEmpty(body) ? `@JsonKey(${body})\n` : '';
 };
 
+type JsonValueOptions = {
+  value?: string;
+};
+export const atJsonValueDecorator = ({ value }: JsonValueOptions): string => {
+  const body = [stringIsNotEmpty(value) ? `'${value}'` : undefined]
+    .filter(value => value !== undefined)
+    .join(',');
+
+  return stringIsNotEmpty(body) ? `@JsonValue(${body})\n` : '';
+};
+
 export const stringIsNotEmpty = (str: string) => str?.length > 0;
 
 //#endregion
