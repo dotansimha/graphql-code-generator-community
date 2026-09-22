@@ -236,7 +236,7 @@ export interface ApolloAngularRawPluginConfig extends RawClientSideBasePluginCon
    *      'path/to/file': {
    *        plugins: ['apollo-angular'],
    *        config: {
-   *          additionalDI: ['testService: TestService', 'testService1': TestService1']
+   *          additionalDI: ['testService: TestService', 'testService1: TestService1']
    *        },
    *      },
    *    },
