@@ -1619,10 +1619,10 @@
     "@graphql-codegen/plugin-helpers" "^7.1.0"
     tslib "^2.8.0"
 
-"@graphql-codegen/cli@7.4.2":
-  version "7.4.2"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-7.4.2.tgz#96f8ff9abb4b6b6eb4e66a8394bed279e0230c6b"
-  integrity sha512-DLzX9sBKEmzh6wWGXYNjmDRB2+h7tkl78HGKKF00wwO5bWGAbhLsedBqyjZpZxmo0+PuOBb3T3bBW9G1Hovt9g==
+"@graphql-codegen/cli@7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-7.4.3.tgz#b0d7388af73f4ca5606504b0961a7b3ea919c907"
+  integrity sha512-NxjXhuy/xE7HAGRYcKrrVCgoPBHLSZJCEuFqy7BTYln+qWNhfJdtD2du0pVwIRoftGfeX87MQzOwU/TG09hlVQ==
   dependencies:
     "@babel/generator" "^7.18.13"
     "@babel/template" "^7.18.10"
