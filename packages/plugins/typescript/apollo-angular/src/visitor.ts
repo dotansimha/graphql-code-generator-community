@@ -408,7 +408,7 @@ ${camelCase(o.node.name.value)}Watch(variables${
         ? `type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;`
         : '';
     const watchType = hasQueries
-      ? `interface WatchQueryOptionsAlone<V> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}`
+      ? `interface WatchQueryOptionsAlone<V extends ApolloCore.OperationVariables> extends Omit<ApolloCore.WatchQueryOptions<V>, 'query' | 'variables'> {}`
       : '';
     const queryType = hasQueries
       ? `interface QueryOptionsAlone<V> extends Omit<ApolloCore.QueryOptions<V>, 'query' | 'variables'> {}`
