@@ -165,6 +165,16 @@ function analyzeFragmentTypeUsage(
   visit(
     documentNode,
     visitWithTypeInfo(typeInfo, {
+      FragmentDefinition: (node: FragmentDefinitionNode) => {
+        analyzeSelectionSetTypeContext(
+          node.selectionSet,
+          node.typeCondition.name.value,
+          usedFragmentTypes,
+          fragmentRegistry,
+          schema,
+          localFragments,
+        );
+      },
       Field: (node: FieldNode) => {
         if (!node.selectionSet) return;
 
