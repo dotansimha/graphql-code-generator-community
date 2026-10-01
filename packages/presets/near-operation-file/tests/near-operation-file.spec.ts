@@ -1582,6 +1582,63 @@ describe('near-operation-file preset', () => {
     `);
   });
 
+  it('#1112 - should import only interface types that are in use when spread directly in a fragment', async () => {
+    const { result } = await executeCodegen({
+      schema: [
+        /* GraphQL */ `
+          type Query {
+            dogs: [Dog!]!
+            cats: [Cat!]!
+          }
+
+          interface IAnimal {
+            name: String!
+          }
+
+          type Cat implements IAnimal {
+            name: String!
+          }
+
+          type Dog implements IAnimal {
+            name: String!
+          }
+        `,
+      ],
+      documents: [
+        path.join(__dirname, 'fixtures/issue-1112-interface.ts'),
+        path.join(__dirname, 'fixtures/issue-1112-fragment.ts'),
+      ],
+      generates: {
+        'out1.ts': {
+          preset,
+          presetConfig: {
+            baseTypesPath: 'types.ts',
+          },
+          plugins: ['typescript-operations'],
+        },
+      },
+      config: {
+        inlineFragmentTypes: 'combine',
+        dedupeOperationSuffix: true,
+      },
+    });
+
+    const fragmentContent = result.find(generatedDoc =>
+      generatedDoc.filename.match(/issue-1112-fragment/),
+    ).content;
+
+    expect(fragmentContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
+
+      import { AnimalFragment_Cat } from './issue-1112-interface.generated';
+      export type CatFragment = (
+        { __typename?: 'Cat' }
+        & AnimalFragment_Cat
+      );
+      "
+    `);
+  });
+
   it('generates correctly without baseTypesPath for standalone typescript-operations', async () => {
     const { result } = await executeCodegen({
       schema: /* GraphQL */ `
