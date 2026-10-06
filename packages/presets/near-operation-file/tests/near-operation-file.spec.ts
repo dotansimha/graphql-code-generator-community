@@ -834,6 +834,77 @@ describe('near-operation-file preset', () => {
       const imports = queriesContent.match(/import.*\bUserNameFragment\b/g);
       expect(imports).toHaveLength(1);
     });
+    it('imports all polymorphic fragment variants when the fragment is spread at the root of a fragment', async () => {
+      const { result } = await executeCodegen({
+        schema: [
+          /* GraphQL */ `
+            interface Node {
+              id: ID!
+            }
+
+            type Article implements Node {
+              id: ID!
+              title: String!
+            }
+
+            type Video implements Node {
+              id: ID!
+              title: String!
+              thumbnail: Image
+            }
+
+            type Image implements Node {
+              id: ID!
+              title: String!
+            }
+
+            type Query {
+              node(id: ID!): Node
+            }
+          `,
+        ],
+        documents: [
+          path.join(__dirname, 'fixtures/root-fragment-spread-child.ts'),
+          path.join(__dirname, 'fixtures/root-fragment-spread-parent.ts'),
+        ],
+        generates: {
+          'out1.ts': {
+            preset,
+            presetConfig: {
+              baseTypesPath: 'types.ts',
+            },
+            plugins: ['typescript-operations'],
+          },
+        },
+        config: {
+          inlineFragmentTypes: 'combine',
+        },
+      });
+
+      const parentContent = result.find(generatedDoc =>
+        generatedDoc.filename.match(/root-fragment-spread-parent/),
+      ).content;
+
+      // The root-level `...NodeTitle` spread applies to every possible type of `Node`, so every
+      // variant referenced by the generated types must also be imported. Before the fix only the
+      // variant seen in the nested `thumbnail` field (`Image`) was imported.
+      const importBlock = parentContent.match(
+        /import \{[^}]*\} from '\.\/root-fragment-spread-child\.generated'/,
+      )[0];
+      const importedVariants = importBlock.match(/NodeTitle_[A-Za-z]+_Fragment/g).sort();
+      const referencedVariants = [
+        ...new Set(parentContent.match(/& (NodeTitle_[A-Za-z]+_Fragment)/g)),
+      ]
+        .map(match => match.replace('& ', ''))
+        .sort();
+
+      expect(referencedVariants).toEqual([
+        'NodeTitle_Article_Fragment',
+        'NodeTitle_Image_Fragment',
+        'NodeTitle_Video_Fragment',
+      ]);
+      expect(importedVariants).toEqual(referencedVariants);
+    });
   });
 
   it('should not add imports for fragments in the same location', async () => {

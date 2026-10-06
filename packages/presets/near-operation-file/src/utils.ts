@@ -165,6 +165,31 @@ function analyzeFragmentTypeUsage(
   visit(
     documentNode,
     visitWithTypeInfo(typeInfo, {
+      // Fragment spreads placed directly at the root of a fragment or operation are not nested in
+      // any field, so they must be analyzed against the definition's own type condition / root type.
+      FragmentDefinition: (node: FragmentDefinitionNode) => {
+        analyzeSelectionSetTypeContext(
+          node.selectionSet,
+          node.typeCondition.name.value,
+          usedFragmentTypes,
+          fragmentRegistry,
+          schema,
+          localFragments,
+        );
+      },
+      OperationDefinition: (node: OperationDefinitionNode) => {
+        const rootType = schema.getRootType(node.operation);
+        if (!rootType) return;
+
+        analyzeSelectionSetTypeContext(
+          node.selectionSet,
+          rootType.name,
+          usedFragmentTypes,
+          fragmentRegistry,
+          schema,
+          localFragments,
+        );
+      },
       Field: (node: FieldNode) => {
         if (!node.selectionSet) return;
 
