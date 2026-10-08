@@ -4,6 +4,16 @@ const config: CodegenConfig = {
   hooks: { afterAllFileWrite: ['prettier --write'] },
   emitLegacyCommonJSImports: false,
   generates: {
+    // --- Python plugins (workspace packages under packages/plugins/python) ---
+    './dev-test/python/schema_types.py': {
+      schema: './dev-test/python/schema.graphql',
+      plugins: ['python'],
+    },
+    './dev-test/python/operations.py': {
+      schema: './dev-test/python/schema.graphql',
+      documents: './dev-test/python/operations.graphql',
+      plugins: ['python', 'python-operations'],
+    },
     './dev-test/test-schema/flow-types.flow.js': {
       schema: './dev-test/test-schema/schema.json',
       plugins: ['flow', 'flow-resolvers'],

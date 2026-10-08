@@ -9,6 +9,7 @@
     "packages/plugins/dart/*",
     "packages/plugins/typescript/*",
     "packages/plugins/other/*",
+    "packages/plugins/python/*",
     "packages/presets/*"
   ],
   "packageManager": "yarn@1.22.22",

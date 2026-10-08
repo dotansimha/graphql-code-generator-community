@@ -1,0 +1,33 @@
+scalar DateTime
+
+enum Role {
+  ADMIN
+  USER
+}
+
+interface Node {
+  id: ID!
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+  email: String
+  role: Role!
+  friends: [User!]!
+  createdAt: DateTime
+}
+
+input CreateUserInput {
+  name: String!
+  role: Role
+}
+
+type Query {
+  users(role: Role): [User!]!
+  me: User
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+}

@@ -1,0 +1,50 @@
+{
+  "name": "@graphql-codegen/python-common",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Shared Python-specific helpers (reserved keywords, scalar mapping, identifier naming) for @graphql-codegen/python and @graphql-codegen/python-operations.",
+  "repository": "git@github.com:dotansimha/graphql-code-generator-community.git",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/typings/index.d.cts",
+        "default": "./dist/cjs/index.js"
+      },
+      "import": {
+        "types": "./dist/typings/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "default": {
+        "types": "./dist/typings/index.d.ts",
+        "default": "./dist/esm/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "typings": "dist/typings/index.d.ts",
+  "scripts": {
+    "lint": "eslint **/*.ts"
+  },
+  "dependencies": {
+    "@graphql-codegen/visitor-plugin-common": "^6.3.0",
+    "change-case-all": "1.0.15",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/testing": "4.0.5"
+  },
+  "publishConfig": {
+    "directory": "dist",
+    "access": "public"
+  },
+  "sideEffects": false,
+  "typescript": {
+    "definition": "dist/typings/index.d.ts"
+  }
+}

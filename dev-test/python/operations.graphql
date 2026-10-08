@@ -1,0 +1,19 @@
+query GetUsers($role: Role) {
+  users(role: $role) {
+    id
+    name
+    role
+    friends {
+      id
+      name
+    }
+  }
+}
+
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    name
+    role
+  }
+}
