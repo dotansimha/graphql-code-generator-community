@@ -175,6 +175,19 @@ function analyzeFragmentTypeUsage(
           localFragments,
         );
       },
+      OperationDefinition: (node: OperationDefinitionNode) => {
+        const rootType = typeInfo.getType();
+        if (!isObjectType(rootType)) return;
+
+        analyzeSelectionSetTypeContext(
+          node.selectionSet,
+          rootType.name,
+          usedFragmentTypes,
+          fragmentRegistry,
+          schema,
+          localFragments,
+        );
+      },
       Field: (node: FieldNode) => {
         if (!node.selectionSet) return;
 

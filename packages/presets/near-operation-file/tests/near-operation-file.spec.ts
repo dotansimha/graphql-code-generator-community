@@ -1639,6 +1639,121 @@ describe('near-operation-file preset', () => {
     `);
   });
 
+  it('#1112 - should import only interface types that are in use when spread at the root of an operation', async () => {
+    const { result } = await executeCodegen({
+      schema: [
+        /* GraphQL */ `
+          interface Node {
+            id: ID!
+          }
+
+          type Query implements Node {
+            id: ID!
+            me: User
+          }
+
+          type User implements Node {
+            id: ID!
+          }
+        `,
+      ],
+      documents: [
+        path.join(__dirname, 'fixtures/issue-1112-node.ts'),
+        path.join(__dirname, 'fixtures/issue-1112-root-operation.ts'),
+      ],
+      generates: {
+        'out1.ts': {
+          preset,
+          presetConfig: {
+            baseTypesPath: 'types.ts',
+          },
+          plugins: ['typescript-operations'],
+        },
+      },
+      config: {
+        inlineFragmentTypes: 'combine',
+        dedupeOperationSuffix: true,
+      },
+    });
+
+    const operationContent = result.find(generatedDoc =>
+      generatedDoc.filename.match(/issue-1112-root-operation/),
+    ).content;
+
+    expect(operationContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
+
+      import { NodeFragment_Query } from './issue-1112-node.generated';
+      export type RootNodeQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+      export type RootNodeQuery = (
+        { __typename?: 'Query' }
+        & NodeFragment_Query
+      );
+      "
+    `);
+  });
+
+  it('#1112 - should import every interface type in use when spread at the root of an operation and in a nested field', async () => {
+    const { result } = await executeCodegen({
+      schema: [
+        /* GraphQL */ `
+          interface Node {
+            id: ID!
+          }
+
+          type Query implements Node {
+            id: ID!
+            me: User
+          }
+
+          type User implements Node {
+            id: ID!
+          }
+        `,
+      ],
+      documents: [
+        path.join(__dirname, 'fixtures/issue-1112-node.ts'),
+        path.join(__dirname, 'fixtures/issue-1112-root-and-nested-operation.ts'),
+      ],
+      generates: {
+        'out1.ts': {
+          preset,
+          presetConfig: {
+            baseTypesPath: 'types.ts',
+          },
+          plugins: ['typescript-operations'],
+        },
+      },
+      config: {
+        inlineFragmentTypes: 'combine',
+        dedupeOperationSuffix: true,
+      },
+    });
+
+    const operationContent = result.find(generatedDoc =>
+      generatedDoc.filename.match(/issue-1112-root-and-nested-operation/),
+    ).content;
+
+    expect(operationContent).toMatchInlineSnapshot(`
+      "import * as Types from '../../../../../out1.ts/types';
+
+      import { NodeFragment_Query, NodeFragment_User } from './issue-1112-node.generated';
+      export type RootAndNestedNodeQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+      export type RootAndNestedNodeQuery = (
+        { __typename?: 'Query', me?: (
+          { __typename?: 'User' }
+          & NodeFragment_User
+        ) | null }
+        & NodeFragment_Query
+      );
+      "
+    `);
+  });
+
   it('generates correctly without baseTypesPath for standalone typescript-operations', async () => {
     const { result } = await executeCodegen({
       schema: /* GraphQL */ `
