@@ -834,6 +834,47 @@ describe('near-operation-file preset', () => {
       const imports = queriesContent.match(/import.*\bUserNameFragment\b/g);
       expect(imports).toHaveLength(1);
     });
+
+    it('#11026 - importing nested fragment used in a field selection when `inlineFragmentTypes` is `combine`', async () => {
+      const { result } = await executeCodegen({
+        schema: [
+          /* GraphQL */ `
+            type Markdown {
+              markdown: String!
+            }
+
+            type Widget {
+              title: Markdown!
+            }
+
+            type Query {
+              ping: Widget
+            }
+          `,
+        ],
+        documents: [
+          path.join(__dirname, 'fixtures/issue-11026-op.ts'),
+          path.join(__dirname, 'fixtures/issue-11026-markdown.ts'),
+        ],
+        generates: {
+          'src/': {
+            preset,
+            presetConfig: {
+              extension: '.generated.ts',
+              baseTypesPath: 'globalTypes.ts',
+            },
+            plugins: ['typescript-operations'],
+            config: { omitOperationSuffix: true, inlineFragmentTypes: 'combine' },
+          },
+        },
+      });
+
+      const opContent = result.find(generatedDoc =>
+        generatedDoc.filename.match(/issue-11026-op/),
+      ).content;
+      expect(opContent).toContain('MarkdownFragment');
+      expect(opContent).toMatch(/import.*\bMarkdownFragment\b.*from '\.\/issue-11026-markdown\.generated'/);
+    });
   });
 
   it('should not add imports for fragments in the same location', async () => {
