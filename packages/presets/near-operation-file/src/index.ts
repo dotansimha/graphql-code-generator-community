@@ -356,17 +356,26 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
         if (!fragmentImportsByImportSource[fi.importSource.path]) {
           fragmentImportsByImportSource[fi.importSource.path] = fi;
         } else {
-          const mergedIdentifiersByName = {};
-          fragmentImportsByImportSource[fi.importSource.path].importSource.identifiers.forEach(
-            identifier => {
-              mergedIdentifiersByName[identifier.name] = identifier;
-            },
-          );
-          fi.importSource.identifiers.forEach(identifier => {
-            mergedIdentifiersByName[identifier.name] = identifier;
+          // Identifiers are keyed by kind and name, so a type and a document with the same name are both kept:
+          // e.g. `[{ MarkdownFragment, type }]` + `[{ MarkdownFragment, document }]`
+          //   → `{ 'type:MarkdownFragment': ..., 'document:MarkdownFragment': ... }`
+          const mergedIdentifiersByKindAndName: Record<string, FragmentImport> = {};
+          [
+            ...fragmentImportsByImportSource[fi.importSource.path].importSource.identifiers,
+            ...fi.importSource.identifiers,
+          ].forEach(identifier => {
+            mergedIdentifiersByKindAndName[`${identifier.kind}:${identifier.name}`] = identifier;
           });
-          fragmentImportsByImportSource[fi.importSource.path].importSource.identifiers =
-            Object.values(mergedIdentifiersByName);
+          const mergedIdentifiers = Object.values(mergedIdentifiersByKindAndName);
+          // Document identifiers come before type identifiers, because client-side-base-visitor's getImports
+          // keeps the first identifier per name before filtering by kind 'document', so a type listed first
+          // would drop the `*Doc` import:
+          // e.g. `[{ MarkdownFragment, type }]` + `[{ MarkdownFragment, document }]`
+          //   → `[{ MarkdownFragment, document }, { MarkdownFragment, type }]`
+          fragmentImportsByImportSource[fi.importSource.path].importSource.identifiers = [
+            ...mergedIdentifiers.filter(identifier => identifier.kind === 'document'),
+            ...mergedIdentifiers.filter(identifier => identifier.kind === 'type'),
+          ];
         }
       });
       fragmentImportsArr = Object.values(fragmentImportsByImportSource);

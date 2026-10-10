@@ -834,6 +834,167 @@ describe('near-operation-file preset', () => {
       const imports = queriesContent.match(/import.*\bUserNameFragment\b/g);
       expect(imports).toHaveLength(1);
     });
+
+    it('#11026 - importing nested fragment used in a field selection when `inlineFragmentTypes` is `combine`', async () => {
+      const { result } = await executeCodegen({
+        schema: [
+          /* GraphQL */ `
+            type Markdown {
+              markdown: String!
+            }
+
+            type Widget {
+              title: Markdown!
+            }
+
+            type Query {
+              ping: Widget
+            }
+          `,
+        ],
+        documents: [
+          path.join(__dirname, 'fixtures/issue-11026-op.ts'),
+          path.join(__dirname, 'fixtures/issue-11026-markdown.ts'),
+        ],
+        generates: {
+          'src/': {
+            preset,
+            presetConfig: {
+              extension: '.generated.ts',
+              baseTypesPath: 'globalTypes.ts',
+            },
+            plugins: ['typescript-operations'],
+            config: { omitOperationSuffix: true, inlineFragmentTypes: 'combine' },
+          },
+        },
+      });
+
+      const opContent = result.find(generatedDoc =>
+        generatedDoc.filename.match(/issue-11026-op/),
+      ).content;
+      expect(opContent).toMatchInlineSnapshot(`
+        "import * as Types from '../../../../../src/globalTypes';
+
+        import { MarkdownFragment } from './issue-11026-markdown.generated';
+        export type WidgetFragment = { __typename?: 'Widget', title: (
+            { __typename?: 'Markdown' }
+            & MarkdownFragment
+          ) };
+
+        export type PingVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+        export type Ping = { __typename?: 'Query', ping?: (
+            { __typename?: 'Widget' }
+            & WidgetFragment
+          ) | null };
+        "
+      `);
+    });
+
+    it('#11026 - importing nested fragment document used in a field selection when `inlineFragmentTypes` is `combine` with a document plugin', async () => {
+      const { result } = await executeCodegen({
+        schema: [
+          /* GraphQL */ `
+            type Markdown {
+              markdown: String!
+            }
+
+            type Widget {
+              title: Markdown!
+            }
+
+            type Query {
+              ping: Widget
+            }
+          `,
+        ],
+        documents: [
+          path.join(__dirname, 'fixtures/issue-11026-op.ts'),
+          path.join(__dirname, 'fixtures/issue-11026-markdown.ts'),
+        ],
+        generates: {
+          'src/': {
+            preset,
+            presetConfig: {
+              extension: '.generated.ts',
+              baseTypesPath: 'globalTypes.ts',
+            },
+            plugins: ['typescript-operations', 'typescript-react-apollo'],
+            config: { omitOperationSuffix: true, inlineFragmentTypes: 'combine' },
+          },
+        },
+      });
+
+      const opContent = result.find(generatedDoc =>
+        generatedDoc.filename.match(/issue-11026-op/),
+      ).content;
+      expect(opContent).toMatchInlineSnapshot(`
+        "import * as Types from '../../../../../src/globalTypes';
+
+        import { MarkdownFragment } from './issue-11026-markdown.generated';
+        import { gql } from '@apollo/client';
+        import * as Apollo from '@apollo/client';
+        const defaultOptions = {} as const;
+        export type WidgetFragment = { __typename?: 'Widget', title: (
+            { __typename?: 'Markdown' }
+            & MarkdownFragment
+          ) };
+
+        export type PingVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+        export type Ping = { __typename?: 'Query', ping?: (
+            { __typename?: 'Widget' }
+            & WidgetFragment
+          ) | null };
+
+
+        export const PingDocument = gql\`
+            query Ping {
+          ping {
+            ...WidgetFragment
+          }
+        }
+            \${WidgetFragment}
+        \${MarkdownFragment}\`;
+
+        /**
+         * __usePing__
+         *
+         * To run a query within a React component, call \`usePing\` and pass it any options that fit your needs.
+         * When your component renders, \`usePing\` returns an object from Apollo Client that contains loading, error, and data properties
+         * you can use to render your UI.
+         *
+         * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+         *
+         * @example
+         * const { data, loading, error } = usePing({
+         *   variables: {
+         *   },
+         * });
+         */
+        export function usePing(baseOptions?: Apollo.QueryHookOptions<Ping, PingVariables>) {
+                const options = {...defaultOptions, ...baseOptions}
+                return Apollo.useQuery<Ping, PingVariables>(PingDocument, options);
+              }
+        export function usePingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ping, PingVariables>) {
+                  const options = {...defaultOptions, ...baseOptions}
+                  return Apollo.useLazyQuery<Ping, PingVariables>(PingDocument, options);
+                }
+        // @ts-ignore
+        export function usePingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<Ping, PingVariables>): Apollo.UseSuspenseQueryResult<Ping, PingVariables>;
+        export function usePingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<Ping, PingVariables>): Apollo.UseSuspenseQueryResult<Ping | undefined, PingVariables>;
+        export function usePingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<Ping, PingVariables>) {
+                  const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+                  return Apollo.useSuspenseQuery<Ping, PingVariables>(PingDocument, options);
+                }
+        export type PingHookResult = ReturnType<typeof usePing>;
+        export type PingLazyQueryHookResult = ReturnType<typeof usePingLazyQuery>;
+        export type PingSuspenseQueryHookResult = ReturnType<typeof usePingSuspenseQuery>;
+        export type PingQueryResult = Apollo.QueryResult<Ping, PingVariables>;"
+      `);
+    });
   });
 
   it('should not add imports for fragments in the same location', async () => {
