@@ -1,6 +1,4 @@
-import gql from 'graphql-tag';
-
-export const MARKDOWN_FRAGMENT = gql`
+export const MARKDOWN_FRAGMENT = /* GraphQL */ `
   fragment MarkdownFragment on Markdown {
     markdown
   }

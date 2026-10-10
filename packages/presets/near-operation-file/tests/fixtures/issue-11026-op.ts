@@ -1,20 +1,15 @@
-import gql from 'graphql-tag';
-import { MARKDOWN_FRAGMENT } from './issue-11026-markdown';
-
-export const WIDGET_FRAGMENT = gql`
+export const WIDGET_FRAGMENT = /* GraphQL */ `
   fragment WidgetFragment on Widget {
     title {
       ...MarkdownFragment
     }
   }
-  ${MARKDOWN_FRAGMENT}
 `;
 
-export const PING_QUERY = gql`
+export const PING_QUERY = /* GraphQL */ `
   query Ping {
     ping {
       ...WidgetFragment
     }
   }
-  ${WIDGET_FRAGMENT}
 `;
