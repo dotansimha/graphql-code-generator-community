@@ -872,8 +872,24 @@ describe('near-operation-file preset', () => {
       const opContent = result.find(generatedDoc =>
         generatedDoc.filename.match(/issue-11026-op/),
       ).content;
-      expect(opContent).toContain('MarkdownFragment');
-      expect(opContent).toMatch(/import.*\bMarkdownFragment\b.*from '\.\/issue-11026-markdown\.generated'/);
+      expect(opContent).toMatchInlineSnapshot(`
+        "import * as Types from '../../../../../src/globalTypes';
+
+        import type { MarkdownFragment } from './issue-11026-markdown.generated';
+        export type WidgetFragment = { __typename?: 'Widget', title: (
+            { __typename?: 'Markdown' }
+            & MarkdownFragment
+          ) };
+
+        export type PingVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+        export type Ping = { __typename?: 'Query', ping?: (
+            { __typename?: 'Widget' }
+            & WidgetFragment
+          ) | null };
+        "
+      `);
     });
   });
 
