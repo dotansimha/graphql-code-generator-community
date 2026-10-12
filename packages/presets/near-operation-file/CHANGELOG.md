@@ -1,5 +1,15 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 5.2.3
+
+### Patch Changes
+
+- [#1652](https://github.com/dotansimha/graphql-code-generator-community/pull/1652)
+  [`24a78b1`](https://github.com/dotansimha/graphql-code-generator-community/commit/24a78b17c77dd5f7a6eed8c3e2337a93d9abedca)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Fix nested fragment imports being dropped
+  when a fragment's type and document share the same name (e.g. with `omitOperationSuffix`), such as
+  when `inlineFragmentTypes` is `combine`.
+
 ## 5.2.2
 
 ### Patch Changes
