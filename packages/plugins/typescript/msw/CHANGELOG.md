@@ -1,5 +1,15 @@
 # @graphql-codegen/typescript-msw
 
+## 4.0.2
+
+### Patch Changes
+
+- [#1653](https://github.com/dotansimha/graphql-code-generator-community/pull/1653)
+  [`10e2370`](https://github.com/dotansimha/graphql-code-generator-community/commit/10e2370af8b15c7ad4922350f919a9ce7b78d34c)
+  Thanks [@SteveGT96](https://github.com/SteveGT96)! - Support graphql 17: an operation without
+  variables no longer throws (graphql 17 omits an empty `variableDefinitions`), and the graphql peer
+  range accepts `^17`.
+
 ## 4.0.1
 
 ### Patch Changes
