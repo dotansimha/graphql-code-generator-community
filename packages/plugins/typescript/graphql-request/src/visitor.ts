@@ -40,10 +40,10 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     fragments: LoadedFragment[],
     rawConfig: RawGraphQLRequestPluginConfig,
   ) {
-    const effectiveDocumentMode =
-      rawConfig.documentMode === DocumentMode.string
-        ? DocumentMode.plainString
-        : getConfigValue(rawConfig.documentMode, DocumentMode.graphQLTag);
+    const isDocumentModeString = rawConfig.documentMode === DocumentMode.string;
+    const effectiveDocumentMode = isDocumentModeString
+      ? DocumentMode.plainString
+      : getConfigValue(rawConfig.documentMode, DocumentMode.graphQLTag);
 
     super(schema, fragments, rawConfig, {
       documentMode: effectiveDocumentMode,
@@ -53,7 +53,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
     autoBind(this);
 
-    if (rawConfig.documentMode === DocumentMode.string && !hasWarnedDocumentModeString) {
+    if (isDocumentModeString && !hasWarnedDocumentModeString) {
       hasWarnedDocumentModeString = true;
       // eslint-disable-next-line no-console
       console.warn(
