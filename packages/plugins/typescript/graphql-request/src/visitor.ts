@@ -49,6 +49,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     autoBind(this);
 
     if (rawConfig.documentMode === DocumentMode.string) {
+      // eslint-disable-next-line no-console
       console.warn(
         "[typescript-graphql-request] documentMode: 'string' does not work with this plugin (it references an undeclared TypedDocumentString), and has been remapped to 'plainString' for correctness. Set documentMode: 'plainString' to silence this warning.",
       );
