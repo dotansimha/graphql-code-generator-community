@@ -205,7 +205,7 @@ export type Feed4QueryVariables = Exact<{
 
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
-export const FeedDocument = new TypedDocumentString(\`
+export const FeedDocument = \`
     query feed {
   feed {
     id
@@ -217,28 +217,28 @@ export const FeedDocument = new TypedDocumentString(\`
     }
   }
 }
-    \`);
-export const Feed2Document = new TypedDocumentString(\`
+    \`;
+export const Feed2Document = \`
     query feed2($v: String!) {
   feed {
     id
   }
 }
-    \`);
-export const Feed3Document = new TypedDocumentString(\`
+    \`;
+export const Feed3Document = \`
     query feed3($v: String) {
   feed {
     id
   }
 }
-    \`);
-export const Feed4Document = new TypedDocumentString(\`
+    \`;
+export const Feed4Document = \`
     query feed4($v: String! = "TEST") {
   feed {
     id
   }
 }
-    \`);
+    \`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -773,7 +773,7 @@ export type Feed4QueryVariables = Exact<{
 
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
-export const FeedDocument = new TypedDocumentString(\`
+export const FeedDocument = \`
     query feed {
   feed {
     id
@@ -785,28 +785,28 @@ export const FeedDocument = new TypedDocumentString(\`
     }
   }
 }
-    \`);
-export const Feed2Document = new TypedDocumentString(\`
+    \`;
+export const Feed2Document = \`
     query feed2($v: String!) {
   feed {
     id
   }
 }
-    \`);
-export const Feed3Document = new TypedDocumentString(\`
+    \`;
+export const Feed3Document = \`
     query feed3($v: String) {
   feed {
     id
   }
 }
-    \`);
-export const Feed4Document = new TypedDocumentString(\`
+    \`;
+export const Feed4Document = \`
     query feed4($v: String! = "TEST") {
   feed {
     id
   }
 }
-    \`);
+    \`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -1340,7 +1340,7 @@ export type Feed4QueryVariables = Exact<{
 
 export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
 
-export const FeedDocument = new TypedDocumentString(\`
+export const FeedDocument = \`
     query feed {
   feed {
     id
@@ -1352,28 +1352,28 @@ export const FeedDocument = new TypedDocumentString(\`
     }
   }
 }
-    \`);
-export const Feed2Document = new TypedDocumentString(\`
+    \`;
+export const Feed2Document = \`
     query feed2($v: String!) {
   feed {
     id
   }
 }
-    \`);
-export const Feed3Document = new TypedDocumentString(\`
+    \`;
+export const Feed3Document = \`
     query feed3($v: String) {
   feed {
     id
   }
 }
-    \`);
-export const Feed4Document = new TypedDocumentString(\`
+    \`;
+export const Feed4Document = \`
     query feed4($v: String! = "TEST") {
   feed {
     id
   }
 }
-    \`);
+    \`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
