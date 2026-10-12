@@ -152,6 +152,7 @@ async function test() {
       it('Should generate nested fragments with the default graphQLTag documentMode', async () => {
         const config = {};
         const docs = [{ location: '', document: fragmentDoc }];
+        // PluginFunction returns string | ComplexPluginOutput; narrowing needs a plugin return type change in src
         const result = (await plugin(schema, docs, config, {
           outputFile: 'graphql.ts',
         })) as Types.ComplexPluginOutput;
@@ -166,6 +167,7 @@ async function test() {
         try {
           const config = { documentMode: DocumentMode.string };
           const docs = [{ location: '', document: fragmentDoc }];
+          // PluginFunction returns string | ComplexPluginOutput; narrowing needs a plugin return type change in src
           const result = (await plugin(schema, docs, config, {
             outputFile: 'graphql.ts',
           })) as Types.ComplexPluginOutput;
@@ -365,28 +367,30 @@ async function test() {
       expect(output).toMatchSnapshot();
     });
 
-    it('Should remap documentMode = "string" to "plainString" and warn at most once per run', async () => {
+    it('Should remap documentMode = "string" to "plainString" and warn once per run', async () => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
       try {
+        vi.resetModules();
+        const { plugin: freshPlugin } = await import('../src/index.js');
         // Multiple visitors in the same run (e.g. near-operation-file) must not repeat the warning
-        await plugin(
+        await freshPlugin(
           schema,
           [{ location: '', document: basicDoc }],
           { documentMode: DocumentMode.string },
           { outputFile: 'graphql.ts' },
         );
-        const result = (await plugin(
+        // PluginFunction returns string | ComplexPluginOutput; narrowing needs a plugin return type change in src
+        const result = (await freshPlugin(
           schema,
           [{ location: '', document: basicDoc }],
           { documentMode: DocumentMode.string },
           { outputFile: 'graphql.ts' },
         )) as Types.ComplexPluginOutput;
 
-        // Module-level flag may already be set by earlier tests, so assert "at most once"
-        expect(warn.mock.calls.length).toBeLessThanOrEqual(1);
-        for (const call of warn.mock.calls) {
-          expect(call[0]).toContain("documentMode: 'string' does not work with this plugin");
-        }
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn).toHaveBeenCalledWith(
+          "[typescript-graphql-request] documentMode: 'string' does not work with this plugin (it references an undeclared TypedDocumentString), and has been remapped to 'plainString' for correctness. Set documentMode: 'plainString' to silence this warning.",
+        );
         expect(result.content).toContain('export const FeedDocument = `');
         expect(result.content).not.toContain('TypedDocumentString');
       } finally {
