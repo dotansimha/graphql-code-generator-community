@@ -20,6 +20,8 @@ const additionalExportedTypes = `
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 `;
 
+let hasWarnedDocumentModeString = false;
+
 export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
   RawGraphQLRequestPluginConfig,
   GraphQLRequestPluginConfig
@@ -48,7 +50,8 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
     autoBind(this);
 
-    if (rawConfig.documentMode === DocumentMode.string) {
+    if (rawConfig.documentMode === DocumentMode.string && !hasWarnedDocumentModeString) {
+      hasWarnedDocumentModeString = true;
       // eslint-disable-next-line no-console
       console.warn(
         "[typescript-graphql-request] documentMode: 'string' does not work with this plugin (it references an undeclared TypedDocumentString), and has been remapped to 'plainString' for correctness. Set documentMode: 'plainString' to silence this warning.",

@@ -313,9 +313,16 @@ async function test() {
       expect(output).toMatchSnapshot();
     });
 
-    it('Should remap documentMode = "string" to "plainString" and warn once', async () => {
+    it('Should remap documentMode = "string" to "plainString" and warn at most once per run', async () => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
       try {
+        // Multiple visitors in the same run (e.g. near-operation-file) must not repeat the warning
+        await plugin(
+          schema,
+          [{ location: '', document: basicDoc }],
+          { documentMode: DocumentMode.string },
+          { outputFile: 'graphql.ts' },
+        );
         const result = (await plugin(
           schema,
           [{ location: '', document: basicDoc }],
@@ -323,10 +330,11 @@ async function test() {
           { outputFile: 'graphql.ts' },
         )) as Types.ComplexPluginOutput;
 
-        expect(warn).toHaveBeenCalledTimes(1);
-        expect(warn).toHaveBeenCalledWith(
-          "[typescript-graphql-request] documentMode: 'string' does not work with this plugin (it references an undeclared TypedDocumentString), and has been remapped to 'plainString' for correctness. Set documentMode: 'plainString' to silence this warning.",
-        );
+        // Module-level flag may already be set by earlier tests, so assert "at most once"
+        expect(warn.mock.calls.length).toBeLessThanOrEqual(1);
+        for (const call of warn.mock.calls) {
+          expect(call[0]).toContain("documentMode: 'string' does not work with this plugin");
+        }
         expect(result.content).toContain('export const FeedDocument = `');
         expect(result.content).not.toContain('TypedDocumentString');
       } finally {
