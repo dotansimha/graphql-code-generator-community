@@ -68,7 +68,10 @@ export class MSWVisitor extends ClientSideBaseVisitor<MSWRawPluginConfig, MSWPlu
 
           /** @ts-expect-error name DOES exist on @type{import('graphql').SelectionNode} */
           const selections = node.selectionSet.selections.map(sel => sel.name.value).join(', ');
-          const variables = node.variableDefinitions.map(def => def.variable.name.value).join(', ');
+          // graphql 17 leaves variableDefinitions undefined when an operation has none.
+          const variables = (node.variableDefinitions ?? [])
+            .map(def => def.variable.name.value)
+            .join(', ');
 
           return `/**
  * @param resolver A function that accepts [resolver arguments](https://mswjs.io/docs/api/graphql#resolver-argument) and must always return the instruction on what to do with the intercepted request. ([see more](https://mswjs.io/docs/concepts/response-resolver#resolver-instructions))

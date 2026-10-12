@@ -25,6 +25,17 @@ describe('msw', () => {
     expect(result.content).toMatchSnapshot('content');
   });
 
+  it('Should accept operations without variableDefinitions (graphql 17)', async () => {
+    // graphql 17 omits variableDefinitions when an operation declares none.
+    const document = parse(`query ${queryName} { name }`);
+    const [operation] = document.definitions as any[];
+    delete operation.variableDefinitions;
+
+    const result = await plugin(null, [{ document }], {});
+
+    expect(result.content).toContain(`mock${queryName}Query`);
+  });
+
   it('Should generate a link with an endpoint when passed a link variable', async () => {
     const link = { name: 'api', endpoint: 'http://localhost:3000/graphql' };
     const capitalizedName = pascalCase(link.name);
