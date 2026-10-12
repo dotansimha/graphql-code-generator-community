@@ -39,11 +39,20 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     rawConfig: RawGraphQLRequestPluginConfig,
   ) {
     super(schema, fragments, rawConfig, {
+      ...(rawConfig.documentMode === DocumentMode.string
+        ? { documentMode: DocumentMode.plainString }
+        : {}),
       rawRequest: getConfigValue(rawConfig.rawRequest, false),
       extensionsType: getConfigValue(rawConfig.extensionsType, 'any'),
     });
 
     autoBind(this);
+
+    if (rawConfig.documentMode === DocumentMode.string) {
+      console.warn(
+        "[typescript-graphql-request] documentMode: 'string' does not work with this plugin (it references an undeclared TypedDocumentString), and has been remapped to 'plainString' for correctness. Set documentMode: 'plainString' to silence this warning.",
+      );
+    }
 
     const typeImport = this.config.useTypeImports ? 'type ' : '';
 
@@ -52,7 +61,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     );
 
     if (this.config.rawRequest) {
-      if (this.config.documentMode !== DocumentMode.string) {
+      if (this.config.documentMode !== DocumentMode.plainString) {
         this._additionalImports.push(`import { GraphQLError, print } from 'graphql'`);
       } else {
         this._additionalImports.push(`import { GraphQLError } from 'graphql'`);
@@ -129,7 +138,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
         if (this.config.rawRequest) {
           let docArg = docVarName;
-          if (this.config.documentMode !== DocumentMode.string) {
+          if (this.config.documentMode !== DocumentMode.plainString) {
             docArg = `${docVarName}String`;
             extraVariables.push(`const ${docArg} = print(${docVarName});`);
           }
