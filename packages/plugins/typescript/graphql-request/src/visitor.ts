@@ -40,10 +40,13 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     fragments: LoadedFragment[],
     rawConfig: RawGraphQLRequestPluginConfig,
   ) {
+    const effectiveDocumentMode =
+      rawConfig.documentMode === DocumentMode.string
+        ? DocumentMode.plainString
+        : getConfigValue(rawConfig.documentMode, DocumentMode.graphQLTag);
+
     super(schema, fragments, rawConfig, {
-      ...(rawConfig.documentMode === DocumentMode.string
-        ? { documentMode: DocumentMode.plainString }
-        : {}),
+      documentMode: effectiveDocumentMode,
       rawRequest: getConfigValue(rawConfig.rawRequest, false),
       extensionsType: getConfigValue(rawConfig.extensionsType, 'any'),
     });
