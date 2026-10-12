@@ -127,6 +127,58 @@ async function test() {
       expect(output).toMatchSnapshot();
     });
 
+    describe('nested fragments', () => {
+      const fragmentDoc = parse(/* GraphQL */ `
+        fragment OwnerFields on User {
+          avatar_url
+        }
+
+        fragment FeedEntryFields on Entry {
+          id
+          repository {
+            owner {
+              ...OwnerFields
+            }
+          }
+        }
+
+        query feedWithFragments {
+          feed {
+            ...FeedEntryFields
+          }
+        }
+      `);
+
+      it('Should generate nested fragments with the default graphQLTag documentMode', async () => {
+        const config = {};
+        const docs = [{ location: '', document: fragmentDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
+
+        const output = await validate(result, config, docs, schema, '');
+
+        expect(output).toMatchSnapshot();
+      });
+
+      it('Should generate nested fragments with documentMode = "string"', async () => {
+        const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+        try {
+          const config = { documentMode: DocumentMode.string };
+          const docs = [{ location: '', document: fragmentDoc }];
+          const result = (await plugin(schema, docs, config, {
+            outputFile: 'graphql.ts',
+          })) as Types.ComplexPluginOutput;
+
+          const output = await validate(result, config, docs, schema, '');
+
+          expect(output).toMatchSnapshot();
+        } finally {
+          warn.mockRestore();
+        }
+      });
+    });
+
     it('Should allow passing wrapper arg to generated getSdk', async () => {
       const config = { documentMode: DocumentMode.string };
       const docs = [{ location: '', document: basicDoc }];
