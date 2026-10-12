@@ -2061,12 +2061,12 @@
     p-limit "3.1.0"
     tslib "^2.4.0"
 
-"@graphql-tools/merge@^9.2.6":
-  version "9.2.6"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-9.2.6.tgz#2cf3cd419a7ace9be3381873160882d84512c48b"
-  integrity sha512-M7iI/qoCnks6iITkimtdZgI2SrWOInr+QRWuhEsInaumzQGPd0pnWbRAVTRVcFN2Gu9hM2aS5kYzASC93d9epw==
+"@graphql-tools/merge@^9.2.6", "@graphql-tools/merge@^9.2.7":
+  version "9.2.7"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-9.2.7.tgz#4b29e353ff4be5e91170cb4d11e1d1ce52503841"
+  integrity sha512-Zo69OGURoOupi9v+3PCNOuQSgwz0/KNOsfTNMudSLzHTKMu40Bz3KqHaIxWuUiFr/ZDRXClI8ou48vdJWtwh4w==
   dependencies:
-    "@graphql-tools/utils" "^12.0.3"
+    "@graphql-tools/utils" "^12.0.4"
     tslib "^2.4.0"
 
 "@graphql-tools/optimize@^1.3.0":
@@ -2101,13 +2101,13 @@
     "@graphql-tools/utils" "^12.0.3"
     tslib "^2.4.0"
 
-"@graphql-tools/schema@10.1.3", "@graphql-tools/schema@^10.0.0", "@graphql-tools/schema@^10.1.1", "@graphql-tools/schema@^10.1.3":
-  version "10.1.3"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-10.1.3.tgz#1dbbb63e7c82054f62371f9d818bc0d1bb226f3b"
-  integrity sha512-N1ZpzguxzqTy5fpurqWQ5BXyjirlrtvVLeSafsu+SCDNjDeRnVxf9n5PVbdgzwFPAmP/7NK9sq9UB/kyR8oFiw==
+"@graphql-tools/schema@10.1.4", "@graphql-tools/schema@^10.0.0", "@graphql-tools/schema@^10.1.1", "@graphql-tools/schema@^10.1.3":
+  version "10.1.4"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-10.1.4.tgz#33340e04e94c6a15ce4a4c5e6c02d49891bb641d"
+  integrity sha512-talZuSrjeklX7RVYLgF7fxHgywZXSYWzFZf3NG5CNFgkeK3xTocYMvlC3FLAApMWUW59qkyuHN1/HIgaIGfjRA==
   dependencies:
-    "@graphql-tools/merge" "^9.2.6"
-    "@graphql-tools/utils" "^12.0.3"
+    "@graphql-tools/merge" "^9.2.7"
+    "@graphql-tools/utils" "^12.0.4"
     tslib "^2.4.0"
 
 "@graphql-tools/url-loader@^9.1.12":
@@ -2138,10 +2138,10 @@
     cross-inspect "1.0.1"
     tslib "^2.4.0"
 
-"@graphql-tools/utils@^12.0.1", "@graphql-tools/utils@^12.0.3":
-  version "12.0.3"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-12.0.3.tgz#8cae349fe99ff6dd142e497485e4a031b6d32248"
-  integrity sha512-M+04bHvI1SKoug7W2EkwfKjig2mdtgIIlFY8p2jLHmxPNVs5bC/3R+58JrD+7ZXWgPILWTwuqJ9AqTjPlahroA==
+"@graphql-tools/utils@^12.0.1", "@graphql-tools/utils@^12.0.3", "@graphql-tools/utils@^12.0.4":
+  version "12.0.4"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-12.0.4.tgz#c36581c7cb79f482fdfd2e9ba5dfdcf8e1cbb17d"
+  integrity sha512-hJmeBRrK1OUABqRxLXB1YwrBB+3zTXeRJYb5PaF7CweV80zNGnN640Jz+0BrCaUE8HBk6KtoVXM/tUScUsKdeg==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
     "@whatwg-node/promise-helpers" "^2.0.0"
