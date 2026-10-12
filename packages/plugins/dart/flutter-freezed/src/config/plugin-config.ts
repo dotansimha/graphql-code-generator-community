@@ -16,8 +16,6 @@ import { FieldNamePattern, Pattern, TypeName, TypeNamePattern } from './pattern.
 export type FlutterFreezedPluginConfig = {
   /**
    * @name camelCasedEnums
-   * @type {(boolean | DartIdentifierCasing)}
-   * @default true
    * @summary Specify how Enum values should be cased.
    * @description Setting this option to `true` will camelCase enum values as required by Dart's recommended linter.
    *
@@ -55,8 +53,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name copyWith
-   * @type {(boolean | TypeNamePattern)}
-   * @default undefined
    * @see {@link https://pub.dev/packages/freezed#how-copywith-works How copyWith works}
    * @see {@link https://pub.dev/documentation/freezed_annotation/latest/freezed_annotation/Freezed/copyWith.html Freezed annotation copyWith property}
    * @summary enables Freezed copyWith helper method
@@ -99,8 +95,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name customScalars
-   * @type {(Record<string, string>)}
-   * @default {}
    * @summary Maps GraphQL Scalar Types to Dart built-in types
    * @description The `key` is the GraphQL Scalar Type and the `value` is the equivalent Dart Type
    *
@@ -134,8 +128,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name defaultValues
-   * @type {([pattern: FieldNamePattern, value: string, appliesOn: AppliesOnParameters[]][])}
-   * @default undefined
    * @see {@link https://pub.dev/packages/freezed#default-values Default values}
    * @see {@link https://pub.dev/documentation/freezed_annotation/latest/freezed_annotation/Default-class.html Default class}
    * @summary set the default value for a field.
@@ -181,8 +173,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name deprecated
-   * @type {([pattern: Pattern, appliesOn: (AppliesOnFactory | AppliesOnParameters)[]][])}
-   * @default undefined
    * @see {@link https://pub.dev/packages/freezed#decorators-and-comments Decorators and comments}
    * @summary a list of Graphql Types(factory constructors) or fields(parameters) to be marked as deprecated.
    * @description Using a TypeNamePattern, you can mark an entire factory constructor for one or more GraphQL types as deprecated.
@@ -233,8 +223,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name equal
-   * @type {(boolean | TypeNamePattern)}
-   * @default undefined
    * @see {@link https://pub.dev/packages/freezed#changing-the-behavior-for-a-specific-model Freezed equal helper method usage}
    * @see {@link https://pub.dev/documentation/freezed_annotation/latest/freezed_annotation/Freezed/equal.html Freezed annotation equal property}
    * @summary enables Freezed equal helper method
@@ -277,8 +265,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name escapeDartKeywords
-   * @type {(boolean | [pattern: Pattern, prefix?: string, suffix?: string, appliesOn?: AppliesOn[]][])}
-   * @default true
    * @see_also [dartKeywordEscapePrefix,dartKeywordEscapeSuffix]
    * @summary ensures that the generated Freezed models do not use any of Dart's reserved keywords as identifiers
    * @description Wraps the fields names that are valid Dart keywords with the prefix and suffix given
@@ -325,13 +311,11 @@ export type FlutterFreezedPluginConfig = {
    * ```
    */
   escapeDartKeywords?:
-    | boolean
-    | [pattern: Pattern, prefix?: string, suffix?: string, appliesOn?: AppliesOn[]][];
+  | boolean
+  | [pattern: Pattern, prefix?: string, suffix?: string, appliesOn?: AppliesOn[]][];
 
   /**
    * @name final
-   * @type {([pattern: FieldNamePattern, appliesOn: AppliesOnParameters[]][])}
-   * @default undefined
    * @see {@link https://pub.dev/packages/freezed#defining-a-mutable-class-instead-of-an-immutable-one Freezed annotation equal property}
    * @summary  marks fields as final
    * @description This will mark the specified parameters as final
@@ -362,8 +346,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name ignoreTypes
-   * @type {(TypeNamePattern)}
-   * @default undefined
    * @description names of GraphQL types to ignore when generating Freezed classes
    *
    * @exampleMarkdown
@@ -393,8 +375,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name immutable
-   * @type {(boolean | TypeNamePattern)}
-   * @default undefined
    * @see {@link https://pub.dev/packages/freezed#creating-a-model-using-freezed Creating a Model using Freezed}
    * @summary enables Freezed immutable helper method
    * @description  set to true to use the `@freezed` decorator or false to use the `@unfreezed` decorator
@@ -433,8 +413,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name makeCollectionsUnmodifiable
-   * @type {(boolean | TypeNamePattern)}
-   * @default undefined
    * @see {@link https://pub.dev/packages/freezed#allowing-the-mutation-of-listsmapssets Allowing the mutation of Lists/Maps/Sets}
    * @description allows collections(lists/maps) to be modified even if class is immutable
    *
@@ -468,8 +446,6 @@ export type FlutterFreezedPluginConfig = {
 
   /**
    * @name mergeTypes
-   * @type {(Record<string, TypeName[]>)}
-   * @default undefined
    * @description maps over the value(array of typeNames) and transform each as a named factory constructor inside a class generated for the key(target GraphQL Object Type).
    * @exampleMarkdown
    * ## Usage:
@@ -506,7 +482,6 @@ export type FlutterFreezedPluginConfig = {
    * @description  since inputs will be used to collect data, it makes sense to make them mutable with Freezed's `@unfreezed` decorator.
    *
    * This overrides(in order words: has a higher precedence than) the `immutable` config value `ONLY` for GraphQL `input types`.
-   * @default true
    *
    * @exampleMarkdown
    * ## Usage:
@@ -539,7 +514,6 @@ export type FlutterFreezedPluginConfig = {
   /**
    * @name privateEmptyConstructor
    * @description if true, defines a private empty constructor to allow getter and methods to work on the class
-   * @default true
    *
    * @exampleMarkdown
    * ## Usage:
@@ -573,7 +547,6 @@ export type FlutterFreezedPluginConfig = {
    * @name unionClass
    * @description customize the key to be used for fromJson with multiple constructors
    * @see {@link https://pub.dev/packages/freezed#fromjson---classes-with-multiple-constructors fromJSON - classes with multiple constructors}
-   * @default undefined
    * @exampleMarkdown
    * ## Usage:
    * ```ts filename='codegen.ts'
