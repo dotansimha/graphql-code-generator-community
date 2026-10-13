@@ -1,5 +1,18 @@
 # @graphql-codegen/typescript-jit-sdk
 
+## 4.0.2
+
+### Patch Changes
+
+- [#1661](https://github.com/dotansimha/graphql-code-generator-community/pull/1661)
+  [`02c33b2`](https://github.com/dotansimha/graphql-code-generator-community/commit/02c33b2191cba0b1b8e0acbce48f510d976ccbda)
+  Thanks [@ardatan](https://github.com/ardatan)! - dependencies updates:
+  - Updated dependency [`graphql-jit@^0.8.10` ↗︎](https://www.npmjs.com/package/graphql-jit/v/0.8.10)
+    (from `0.8.9`, in `devDependencies`)
+  - Updated peer dependency
+    [`graphql-jit@^0.7.5 || ^0.8.10 || ^0.9.1` ↗︎](https://www.npmjs.com/package/graphql-jit) (from
+    `^0.6.0 || ^0.7.0 || ^0.8.0`)
+
 ## 4.0.1
 
 ### Patch Changes
