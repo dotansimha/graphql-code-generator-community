@@ -22,6 +22,11 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "paths": {
+      "@graphql-codegen/python": ["packages/plugins/python/python/src/index.ts"],
+      "@graphql-codegen/python-common": ["packages/plugins/python/python-common/src/index.ts"],
+      "@graphql-codegen/python-operations": [
+        "packages/plugins/python/python-operations/src/index.ts"
+      ],
       "@graphql-codegen/flow": ["packages/plugins/flow/flow/src/index.ts"],
       "@graphql-codegen/flow-operations": ["packages/plugins/flow/operations/src/index.ts"],
       "@graphql-codegen/flow-resolvers": ["packages/plugins/flow/resolvers/src/index.ts"],

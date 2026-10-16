@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`python-operations plugin > matches the full snapshot for the target example 1`] = `
+"from typing import Optional, TypedDict
+from pydantic import BaseModel
+
+
+class GetUsersQueryUsersFriends(BaseModel):
+    id: 'str'
+    name: 'str'
+
+
+class GetUsersQueryUsers(BaseModel):
+    id: 'str'
+    name: 'str'
+    role: 'Role'
+    friends: 'list[GetUsersQueryUsersFriends]'
+
+
+class GetUsersQuery(BaseModel):
+    users: 'list[GetUsersQueryUsers]'
+
+
+class GetUsersQueryVariables(TypedDict):
+    role: 'Optional[Role]'"
+`;

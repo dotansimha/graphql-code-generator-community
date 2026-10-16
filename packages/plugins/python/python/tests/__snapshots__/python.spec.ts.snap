@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`@graphql-codegen/python > matches the full schema snapshot 1`] = `
+"from enum import Enum
+from typing import Optional, TypedDict, Any
+from pydantic import BaseModel, ConfigDict, Field
+
+
+class Role(str, Enum):
+    ADMIN = 'ADMIN'
+    USER = 'USER'
+
+
+class Node(BaseModel):
+    id: 'str'
+
+
+class User(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+    id: 'str'
+    name: 'str'
+    email: 'Optional[str]' = None
+    role: 'Role'
+    friends: 'list[User]'
+    created_at: 'Optional[Any]' = Field(default=None, alias='createdAt')
+
+
+UserFilter = TypedDict('UserFilter', {
+    'role': 'Optional[Role]',
+    'from': 'Optional[str]',
+})
+
+
+class Query(BaseModel):
+    users: 'list[User]'
+"
+`;
