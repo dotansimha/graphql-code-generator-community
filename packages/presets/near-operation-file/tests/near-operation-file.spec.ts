@@ -891,6 +891,40 @@ describe('near-operation-file preset', () => {
         "
       `);
     });
+
+    it('#1584 - should not retain fragment imports when all identifiers are elided', async () => {
+      const location = '/some/deep/path/src/graphql/operation.graphql';
+      const result = await executePreset({
+        baseOutputDir: './src/',
+        config: {},
+        presetConfig: {
+          cwd: '/some/deep/path',
+          baseTypesPath: 'types.ts',
+        },
+        schemaAst: schemaNode,
+        schema: schemaDocumentNode,
+        documents: [
+          {
+            location,
+            document: parse(/* GraphQL */ `
+              query Test {
+                user {
+                  id
+                }
+              }
+            `),
+          },
+        ],
+        plugins: [{ 'typescript-operations': {} }],
+      });
+
+      for (const file of result) {
+        const fragmentImports = (file.config as any).fragmentImports || [];
+        for (const fi of fragmentImports) {
+          expect(fi.importSource.identifiers.length).toBeGreaterThan(0);
+        }
+      }
+    });
   });
 
   it('should not add imports for fragments in the same location', async () => {

@@ -378,7 +378,11 @@ export const preset: Types.OutputPreset<NearOperationFileConfig> = {
           ];
         }
       });
-      fragmentImportsArr = Object.values(fragmentImportsByImportSource);
+      fragmentImportsArr = Object.values(fragmentImportsByImportSource).filter(
+        fi =>
+          (fi.importSource.identifiers && fi.importSource.identifiers.length > 0) ||
+          Boolean(fi.importSource.namespace),
+      );
 
       const plugins = [
         // TODO/NOTE I made globalNamespace include schema types - is that correct?
