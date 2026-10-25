@@ -4,6 +4,22 @@ const config: CodegenConfig = {
   hooks: { afterAllFileWrite: ['prettier --write'] },
   emitLegacyCommonJSImports: false,
   generates: {
+    './dev-test/githunt/types.py': {
+      schema: './dev-test/githunt/schema.json',
+      plugins: ['python'],
+    },
+    './dev-test/githunt/operations.py': {
+      schema: './dev-test/githunt/schema.json',
+      // python-operations doesn't support fragment spreads yet, so only the
+      // githunt operations that don't use them.
+      documents: [
+        './dev-test/githunt/comment-added.subscription.graphql',
+        './dev-test/githunt/current-user.query.graphql',
+        './dev-test/githunt/new-entry.mutation.graphql',
+        './dev-test/githunt/vote.mutation.graphql',
+      ],
+      plugins: ['python', 'python-operations'],
+    },
     './dev-test/test-schema/flow-types.flow.js': {
       schema: './dev-test/test-schema/schema.json',
       plugins: ['flow', 'flow-resolvers'],
