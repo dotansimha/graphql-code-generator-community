@@ -42,4 +42,7 @@ export const csharpValueTypes = [
   'short',
   'ushort',
   'DateTime',
+  'DateOnly',
+  'TimeSpan',
+  'DateTimeOffset',
 ];
