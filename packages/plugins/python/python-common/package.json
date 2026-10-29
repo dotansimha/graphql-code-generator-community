@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/python-common",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "Shared Python-specific helpers (reserved keywords, scalar mapping, identifier naming) for @graphql-codegen/python and @graphql-codegen/python-operations.",
   "repository": "git@github.com:dotansimha/graphql-code-generator-community.git",

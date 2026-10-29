@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/python-operations",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "Document-driven GraphQL Code Generator plugin that emits Python operation types (per-operation result + variables).",
   "repository": "git@github.com:dotansimha/graphql-code-generator-community.git",
@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@graphql-codegen/plugin-helpers": "^6.3.0",
-    "@graphql-codegen/python-common": "0.0.1",
+    "@graphql-codegen/python-common": "0.0.2",
     "@graphql-codegen/visitor-plugin-common": "^6.3.0",
     "tslib": "^2.8.1"
   },
