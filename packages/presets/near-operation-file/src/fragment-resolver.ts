@@ -167,6 +167,10 @@ export default function buildFragmentResolver<T>(
     // graphQLTag operations inline every fragment they transitively spread
     const { documentMode = DocumentMode.graphQLTag } = config;
     const isGraphQLTagMode = documentMode === DocumentMode.graphQLTag;
+    const inlineReferencedFragmentsInFragmentDocuments = getConfigValue(
+      config.inlineReferencedFragmentsInFragmentDocuments,
+      false,
+    );
 
     const externalFragments: LoadedFragment<{ level: number }>[] = [];
     const fragmentFileImports: { [fragmentFile: string]: Array<FragmentImport> } = {};
@@ -181,8 +185,11 @@ export default function buildFragmentResolver<T>(
         const imports: FragmentImport[] = [];
         const isSpreadDirectly = level === 0 || dedupeFragments;
 
+        // with inlineReferencedFragmentsInFragmentDocuments, graphQLTag fragment documents also
+        // interpolate the fragments they spread directly
         const needsDocument = isGraphQLTagMode
-          ? operationFragments.has(fragmentName)
+          ? operationFragments.has(fragmentName) ||
+            (inlineReferencedFragmentsInFragmentDocuments && level === 0)
           : isSpreadDirectly;
 
         if (needsDocument) {
