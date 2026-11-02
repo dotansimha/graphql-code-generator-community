@@ -3264,7 +3264,7 @@ async-function@^1.0.0:
   resolved "https://registry.yarnpkg.com/async-function/-/async-function-1.0.0.tgz#509c9fca60eaf85034c6829838188e4e4c8ffb2b"
   integrity sha512-hsU18Ae8CDTR6Kgu9DYf0EbCr/a5iGL0rytQDobUcdpYOKokk8LEjVphnXkDkgpi0wYVsqrXuP0bZxJaTqdgoA==
 
-auto-bind@^5.0.0:
+auto-bind@^5.0.0, auto-bind@~5.0.0:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/auto-bind/-/auto-bind-5.0.1.tgz#50d8e63ea5a1dddcb5e5e36451c1a8266ffbb2ae"
   integrity sha512-ooviqdwwgfIfNmDwo94wlshcdzfO64XV0Cg6oDsDYBJfITDz1EngD2z7DkbvCWn+XIMsIqW27sEVF6qcpJrRcg==
