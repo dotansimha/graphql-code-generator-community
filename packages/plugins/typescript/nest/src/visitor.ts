@@ -99,6 +99,7 @@ export class NestVisitor<
         null,
         enumNames,
         this.config.enumPrefix,
+        this.config.enumSuffix,
         this.config.enumValues,
         undefined,
         undefined,
@@ -302,7 +303,7 @@ export class NestVisitor<
           return type;
         }
         if (this.scalars[type]) {
-          return this.scalars[type];
+          return this.scalars[type].output;
         }
         throw new Error(`Unknown scalar type ${type}`);
       });
@@ -379,7 +380,7 @@ export class NestVisitor<
     return (
       decorator +
       indent(
-        `${this.config.immutableTypes ? 'readonly ' : ''}${node.name}${
+        `${this.config.immutableTypes ? 'readonly ' : ''}${node.name.value}${
           type.isNullable ? '?' : '!'
         }: ${typeString};`,
       )

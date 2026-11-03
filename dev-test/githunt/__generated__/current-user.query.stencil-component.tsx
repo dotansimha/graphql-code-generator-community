@@ -2,12 +2,18 @@ import gql from 'graphql-tag';
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 declare global {
-  export type CurrentUserForProfileQueryVariables = Types.Exact<{ [key: string]: never }>;
+  export type CurrentUserForProfileQueryVariables = Exact<{ [key: string]: never }>;
 
   export type CurrentUserForProfileQuery = {
-    __typename?: 'Query';
-    currentUser?: { __typename?: 'User'; login: string; avatar_url: string } | null;
+    currentUser: { login: string; avatar_url: string } | null;
   };
 }
 

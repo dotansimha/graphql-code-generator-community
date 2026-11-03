@@ -292,7 +292,8 @@ query MyFeed {
     ...FeedWithRepository
   }
 }
-\${FeedWithRepositoryFragmentDoc}\`;`);
+\${FeedWithRepositoryFragmentDoc}
+\${RepositoryWithOwnerFragmentDoc}\`;`);
       await validateTypeScript(content, schema, docs, {});
     });
 

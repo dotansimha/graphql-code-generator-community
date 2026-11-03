@@ -21,6 +21,7 @@ export interface VueApolloSmartOpsPluginConfig extends ClientSideBasePluginConfi
   vueAppType?: string;
   vueAppTypeImportFrom?: string;
   addDocBlocks: boolean;
+  inlineReferencedFragmentsInFragmentDocuments: boolean;
 }
 
 type OperationTypeName = 'Query' | 'Mutation' | 'Subscription';
@@ -74,6 +75,7 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
       vueAppType: getConfigValue(rawConfig.vueAppType, undefined),
       vueAppTypeImportFrom: getConfigValue(rawConfig.vueAppTypeImportFrom, undefined),
       addDocBlocks: getConfigValue(rawConfig.addDocBlocks, true),
+      inlineReferencedFragmentsInFragmentDocuments: true,
     });
 
     this.externalImportPrefix = this.config.importOperationTypesFrom

@@ -1,4 +1,3 @@
-import autoBind from 'auto-bind';
 import { GraphQLSchema, Kind, OperationDefinitionNode } from 'graphql';
 import {
   ClientSideBasePluginConfig,
@@ -14,6 +13,7 @@ export interface UrqlPluginConfig extends ClientSideBasePluginConfig {
   withComponent: boolean;
   withHooks: boolean;
   urqlImportFrom: string;
+  inlineReferencedFragmentsInFragmentDocuments: boolean;
 }
 
 export class UrqlVisitor extends ClientSideBaseVisitor<UrqlRawPluginConfig, UrqlPluginConfig> {
@@ -23,7 +23,8 @@ export class UrqlVisitor extends ClientSideBaseVisitor<UrqlRawPluginConfig, Urql
     super(schema, fragments, rawConfig, {
       withComponent: getConfigValue(rawConfig.withComponent, false),
       withHooks: getConfigValue(rawConfig.withHooks, true),
-      urqlImportFrom: getConfigValue(rawConfig.urqlImportFrom, null),
+      urqlImportFrom: getConfigValue(rawConfig.urqlImportFrom, 'urql'),
+      inlineReferencedFragmentsInFragmentDocuments: true,
     });
 
     if (this.config.importOperationTypesFrom) {
@@ -46,8 +47,6 @@ export class UrqlVisitor extends ClientSideBaseVisitor<UrqlRawPluginConfig, Urql
         );
       }
     }
-
-    autoBind(this);
   }
 
   public getImports(): string[] {

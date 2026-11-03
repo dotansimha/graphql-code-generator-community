@@ -12,12 +12,12 @@ describe('nest', () => {
     expect(result.prepend).toBeSimilarStringTo('export type Maybe<T> =');
   });
 
-  it('should expose Exact', async () => {
+  it('should expose InputMaybe', async () => {
     const schema = buildSchema(/* GraphQL */ `
       scalar A
     `);
     const result = await plugin(schema, [], {}, { outputFile: '' });
-    expect(result.prepend).toBeSimilarStringTo('export type Exact<');
+    expect(result.prepend).toBeSimilarStringTo('export type InputMaybe<T> =');
   });
 
   it('should expose FixDecorator', async () => {
@@ -91,33 +91,33 @@ describe('nest', () => {
       export class A {
         __typename?: 'A';
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
         @Nest.Field(type => Nest.ID)
-        mandatoryId!: Scalars['ID'];
+        mandatoryId!: Scalars['ID']['output'];
         @Nest.Field(type => String, { nullable: true })
-        str?: Maybe<Scalars['String']>;
+        str?: Maybe<Scalars['String']['output']>;
         @Nest.Field(type => String)
-        mandatoryStr!: Scalars['String'];
+        mandatoryStr!: Scalars['String']['output'];
         @Nest.Field(type => Boolean, { nullable: true })
-        bool?: Maybe<Scalars['Boolean']>;
+        bool?: Maybe<Scalars['Boolean']['output']>;
         @Nest.Field(type => Boolean)
-        mandatoryBool!: Scalars['Boolean'];
+        mandatoryBool!: Scalars['Boolean']['output'];
         @Nest.Field(type => Nest.Int, { nullable: true })
-        int?: Maybe<Scalars['Int']>;
+        int?: Maybe<Scalars['Int']['output']>;
         @Nest.Field(type => Nest.Int)
-        mandatoryInt!: Scalars['Int'];
+        mandatoryInt!: Scalars['Int']['output'];
         @Nest.Field(type => Nest.Float, { nullable: true })
-        float?: Maybe<Scalars['Float']>;
+        float?: Maybe<Scalars['Float']['output']>;
         @Nest.Field(type => Nest.Float)
-        mandatoryFloat!: Scalars['Float'];
+        mandatoryFloat!: Scalars['Float']['output'];
         @Nest.Field(type => B, { nullable: true })
         b?: Maybe<B>;
         @Nest.Field(type => B)
         mandatoryB!: FixDecorator<B>;
         @Nest.Field(type => [String], { nullable: true })
-        arr?: Maybe<Array<Scalars['String']>>;
+        arr?: Maybe<Array<Scalars['String']['output']>>;
         @Nest.Field(type => [String])
-        mandatoryArr!: Array<Scalars['String']>;
+        mandatoryArr!: Array<Scalars['String']['output']>;
       }
     `);
   });
@@ -140,9 +140,9 @@ describe('nest', () => {
       export class Test extends ITest {
         __typename?: 'Test';
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
         @Nest.Field(type => String)
-        mandatoryStr!: Scalars['String'];
+        mandatoryStr!: Scalars['String']['output'];
       }
     `);
 
@@ -151,7 +151,7 @@ describe('nest', () => {
       export abstract class ITest {
 
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
       }
     `);
   });
@@ -186,34 +186,34 @@ describe('nest', () => {
       export class A {
 
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['input']>;
 
         @Nest.Field(type => Nest.ID)
-        mandatoryId!: Scalars['ID'];
+        mandatoryId!: Scalars['ID']['input'];
 
         @Nest.Field(type => String, { nullable: true })
-        str?: Maybe<Scalars['String']>;
+        str?: Maybe<Scalars['String']['input']>;
 
         @Nest.Field(type => String)
-        mandatoryStr!: Scalars['String'];
+        mandatoryStr!: Scalars['String']['input'];
 
         @Nest.Field(type => Boolean, { nullable: true })
-        bool?: Maybe<Scalars['Boolean']>;
+        bool?: Maybe<Scalars['Boolean']['input']>;
 
         @Nest.Field(type => Boolean)
-        mandatoryBool!: Scalars['Boolean'];
+        mandatoryBool!: Scalars['Boolean']['input'];
 
         @Nest.Field(type => Nest.Int, { nullable: true })
-        int?: Maybe<Scalars['Int']>;
+        int?: Maybe<Scalars['Int']['input']>;
 
         @Nest.Field(type => Nest.Int)
-        mandatoryInt!: Scalars['Int'];
+        mandatoryInt!: Scalars['Int']['input'];
 
         @Nest.Field(type => Nest.Float, { nullable: true })
-        float?: Maybe<Scalars['Float']>;
+        float?: Maybe<Scalars['Float']['input']>;
 
         @Nest.Field(type => Nest.Float)
-        mandatoryFloat!: Scalars['Float'];
+        mandatoryFloat!: Scalars['Float']['input'];
 
         @Nest.Field(type => B, { nullable: true })
         b?: Maybe<B>;
@@ -222,10 +222,10 @@ describe('nest', () => {
         mandatoryB!: FixDecorator<B>;
 
         @Nest.Field(type => [String], { nullable: true })
-        arr?: Maybe<Array<Scalars['String']>>;
+        arr?: Maybe<Array<Scalars['String']['input']>>;
 
         @Nest.Field(type => [String])
-        mandatoryArr!: Array<Scalars['String']>;
+        mandatoryArr!: Array<Scalars['String']['input']>;
       }
     `);
   });
@@ -263,34 +263,34 @@ describe('nest', () => {
       export class MutationTestArgs {
 
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['input']>;
 
         @Nest.Field(type => Nest.ID)
-        mandatoryId!: Scalars['ID'];
+        mandatoryId!: Scalars['ID']['input'];
 
         @Nest.Field(type => String, { nullable: true })
-        str?: Maybe<Scalars['String']>;
+        str?: Maybe<Scalars['String']['input']>;
 
         @Nest.Field(type => String)
-        mandatoryStr!: Scalars['String'];
+        mandatoryStr!: Scalars['String']['input'];
 
         @Nest.Field(type => Boolean, { nullable: true })
-        bool?: Maybe<Scalars['Boolean']>;
+        bool?: Maybe<Scalars['Boolean']['input']>;
 
         @Nest.Field(type => Boolean)
-        mandatoryBool!: Scalars['Boolean'];
+        mandatoryBool!: Scalars['Boolean']['input'];
 
         @Nest.Field(type => Nest.Int, { nullable: true })
-        int?: Maybe<Scalars['Int']>;
+        int?: Maybe<Scalars['Int']['input']>;
 
         @Nest.Field(type => Nest.Int)
-        mandatoryInt!: Scalars['Int'];
+        mandatoryInt!: Scalars['Int']['input'];
 
         @Nest.Field(type => Nest.Float, { nullable: true })
-        float?: Maybe<Scalars['Float']>;
+        float?: Maybe<Scalars['Float']['input']>;
 
         @Nest.Field(type => Nest.Float)
-        mandatoryFloat!: Scalars['Float'];
+        mandatoryFloat!: Scalars['Float']['input'];
 
         @Nest.Field(type => B, { nullable: true })
         b?: Maybe<B>;
@@ -299,10 +299,10 @@ describe('nest', () => {
         mandatoryB!: FixDecorator<B>;
 
         @Nest.Field(type => [String], { nullable: true })
-        arr?: Maybe<Array<Scalars['String']>>;
+        arr?: Maybe<Array<Scalars['String']['input']>>;
 
         @Nest.Field(type => [String])
-        mandatoryArr!: Array<Scalars['String']>;
+        mandatoryArr!: Array<Scalars['String']['input']>;
       }
     `);
   });
@@ -330,9 +330,9 @@ describe('nest', () => {
         export class Test {
           __typename?: 'Test';
           @Nest.Bar(type => Nest.ID, { nullable: true })
-          id?: Maybe<Scalars['ID']>;
+          id?: Maybe<Scalars['ID']['output']>;
           @Nest.Bar(type => String)
-          mandatoryStr!: Scalars['String'];
+          mandatoryStr!: Scalars['String']['output'];
         }
       `);
     expect(result.content).toBeSimilarStringTo(`
@@ -340,7 +340,7 @@ describe('nest', () => {
         export abstract class ITest {
 
           @Nest.Bar(type => Nest.ID, { nullable: true })
-          id?: Maybe<Scalars['ID']>;
+          id?: Maybe<Scalars['ID']['output']>;
         }
       `);
   });
@@ -367,9 +367,9 @@ describe('nest', () => {
       export class A {
         __typename?: 'A';
         @Nest.Field(type => Date, { nullable: true })
-        date?: Maybe<Scalars['DateTime']>;
+        date?: Maybe<Scalars['DateTime']['output']>;
         @Nest.Field(type => Date)
-        mandatoryDate!: Scalars['DateTime'];
+        mandatoryDate!: Scalars['DateTime']['output'];
       }
     `);
   });
@@ -431,62 +431,62 @@ describe('nest', () => {
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => String, { nullable: true })
-      str1?: Maybe<Scalars['String']>;
+      str1?: Maybe<Scalars['String']['output']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => String)
-      str2!: Scalars['String'];
+      str2!: Scalars['String']['output'];
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [String], { nullable: 'itemsAndList' })
-      strArr1?: Maybe<Array<Maybe<Scalars['String']>>>;
+      strArr1?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [String], { nullable: 'items' })
-      strArr2!: Array<Maybe<Scalars['String']>>;
+      strArr2!: Array<Maybe<Scalars['String']['output']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [String], { nullable: true })
-      strArr3?: Maybe<Array<Scalars['String']>>;
+      strArr3?: Maybe<Array<Scalars['String']['output']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [String])
-      strArr4!: Array<Scalars['String']>;
+      strArr4!: Array<Scalars['String']['output']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => Nest.Int, { nullable: true })
-      int1?: Maybe<Scalars['Int']>;
+      int1?: Maybe<Scalars['Int']['output']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => Nest.Int)
-      int2!: Scalars['Int'];
+      int2!: Scalars['Int']['output'];
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [Nest.Int], { nullable: 'itemsAndList' })
-      intArr1?: Maybe<Array<Maybe<Scalars['Int']>>>;
+      intArr1?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [Nest.Int], { nullable: 'items' })
-      intArr2!: Array<Maybe<Scalars['Int']>>;
+      intArr2!: Array<Maybe<Scalars['Int']['output']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [Nest.Int], { nullable: true })
-      intArr3?: Maybe<Array<Scalars['Int']>>;
+      intArr3?: Maybe<Array<Scalars['Int']['output']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [Nest.Int])
-      intArr4!: Array<Scalars['Int']>;
+      intArr4!: Array<Scalars['Int']['output']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
@@ -521,62 +521,62 @@ describe('nest', () => {
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => String, { nullable: true })
-      inputStr1?: Maybe<Scalars['String']>;
+      inputStr1?: Maybe<Scalars['String']['input']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => String)
-      inputStr2!: Scalars['String'];
+      inputStr2!: Scalars['String']['input'];
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [String], { nullable: 'itemsAndList' })
-      inputStrArr1?: Maybe<Array<Maybe<Scalars['String']>>>;
+      inputStrArr1?: Maybe<Array<Maybe<Scalars['String']['input']>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [String], { nullable: 'items' })
-      inputStrArr2!: Array<Maybe<Scalars['String']>>;
+      inputStrArr2!: Array<Maybe<Scalars['String']['input']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [String], { nullable: true })
-      inputStrArr3?: Maybe<Array<Scalars['String']>>;
+      inputStrArr3?: Maybe<Array<Scalars['String']['input']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [String])
-      inputStrArr4!: Array<Scalars['String']>;
+      inputStrArr4!: Array<Scalars['String']['input']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => Nest.Int, { nullable: true })
-      inputInt1?: Maybe<Scalars['Int']>;
+      inputInt1?: Maybe<Scalars['Int']['input']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => Nest.Int)
-      inputInt2!: Scalars['Int'];
+      inputInt2!: Scalars['Int']['input'];
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [Nest.Int], { nullable: 'itemsAndList' })
-      inputIntArr1?: Maybe<Array<Maybe<Scalars['Int']>>>;
+      inputIntArr1?: Maybe<Array<Maybe<Scalars['Int']['input']>>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [Nest.Int], { nullable: 'items' })
-      inputIntArr2!: Array<Maybe<Scalars['Int']>>;
+      inputIntArr2!: Array<Maybe<Scalars['Int']['input']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [Nest.Int], { nullable: true })
-      inputIntArr3?: Maybe<Array<Scalars['Int']>>;
+      inputIntArr3?: Maybe<Array<Scalars['Int']['input']>>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
       @Nest.Field(type => [Nest.Int])
-      inputIntArr4!: Array<Scalars['Int']>;
+      inputIntArr4!: Array<Scalars['Int']['input']>;
     `);
 
     expect(result.content).toBeSimilarStringTo(`
@@ -654,9 +654,9 @@ describe('nest', () => {
       export class Test extends ITest {
         __typename?: 'Test';
         @Nest.Field(type => Nest.ID, { description: 'id field description\\ninside Test class', nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
         @Nest.Field(type => String, { description: 'mandatoryStr field description' })
-        mandatoryStr!: Scalars['String'];
+        mandatoryStr!: Scalars['String']['output'];
       }
     `);
 
@@ -665,7 +665,7 @@ describe('nest', () => {
       export abstract class ITest {
 
         @Nest.Field(type => Nest.ID, { description: 'id field description\\ninside ITest interface', nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
       }
     `);
 
@@ -674,7 +674,7 @@ describe('nest', () => {
       export class TestInput {
 
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['input']>;
       }
     `);
   });
@@ -746,7 +746,7 @@ describe('nest', () => {
 
     expect(result.content).toBeSimilarStringTo(
       `export type IRegularInterfaceType = {
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
       };`,
     );
 
@@ -755,14 +755,14 @@ describe('nest', () => {
       @Nest.InterfaceType()
       export abstract class INestInterfaceType {
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
       }`,
     );
 
     expect(result.content).toBeSimilarStringTo(
       `export type RegularType = {
         __typename?: 'RegularType';
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
       };`,
     );
 
@@ -771,13 +771,13 @@ describe('nest', () => {
       export class NestType {
         __typename?: 'NestType';
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['output']>;
       }`,
     );
 
     expect(result.content).toBeSimilarStringTo(
       `export type RegularInputType = {
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['input']>;
       };`,
     );
 
@@ -785,30 +785,30 @@ describe('nest', () => {
       `@Nest.InputType()
       export class NestInputType {
         @Nest.Field(type => Nest.ID, { nullable: true })
-        id?: Maybe<Scalars['ID']>;
+        id?: Maybe<Scalars['ID']['input']>;
       }`,
     );
 
     expect(result.content).toBeSimilarStringTo(`
     export type Query = {
       __typename?: 'Query';
-      regularFunction: Scalars['Boolean'];
-      NestFunction: Scalars['Boolean'];
+      regularFunction: Scalars['Boolean']['output'];
+      NestFunction: Scalars['Boolean']['output'];
     };`);
 
     expect(result.content).toBeSimilarStringTo(`export type QueryRegularFunctionArgs = {
-        mandatoryId: Scalars['ID'];
-        optionalId?: InputMaybe<Scalars['ID']>;
+      mandatoryId: Scalars['ID']['input'];
+      optionalId?: InputMaybe<Scalars['ID']['input']>;
       };`);
 
     expect(result.content).toBeSimilarStringTo(` @Nest.ArgsType()
        export class QueryNestFunctionArgs {
 
          @Nest.Field(type => Nest.ID)
-         mandatoryId!: Scalars['ID'];
+         mandatoryId!: Scalars['ID']['input'];
 
          @Nest.Field(type => Nest.ID, { nullable: true })
-         optionalId?: Maybe<Scalars['ID']>;
+         optionalId?: Maybe<Scalars['ID']['input']>;
        };`);
   });
 
@@ -831,10 +831,10 @@ describe('nest', () => {
        export class QueryQueryArgs {
 
          @Nest.Field(type => Nest.ID, { description: 'Mandatory id description' })
-         mandatoryId!: Scalars['ID'];
+         mandatoryId!: Scalars['ID']['input'];
 
          @Nest.Field(type => Nest.ID, { nullable: true })
-         optionalId?: Maybe<Scalars['ID']>;
+         optionalId?: Maybe<Scalars['ID']['input']>;
        };`);
   });
 });

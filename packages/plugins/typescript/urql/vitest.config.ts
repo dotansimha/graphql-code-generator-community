@@ -8,6 +8,11 @@ export default mergeConfig(
       name: 'typescript-urql',
       include: ['**/*.spec.ts'],
       setupFiles: './vitest.setup.ts',
+      server: {
+        deps: {
+          inline: [/^@graphql-codegen\//],
+        },
+      },
     },
   }),
 );

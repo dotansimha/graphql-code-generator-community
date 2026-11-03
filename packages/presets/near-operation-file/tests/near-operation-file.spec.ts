@@ -586,7 +586,7 @@ describe('near-operation-file preset', () => {
     });
 
     it('#6439 - generating code only for the last query inside a file', async () => {
-      const { result } = await executeCodegen({
+      const { result, error } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -609,28 +609,32 @@ describe('near-operation-file preset', () => {
       });
 
       expect(result[0].content).toMatchInlineSnapshot(`
-       "import * as Types from '../../../../../out1.ts/types';
+        "/** Internal type. DO NOT USE DIRECTLY. */
+        type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+        /** Internal type. DO NOT USE DIRECTLY. */
+        export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+        import * as Types from '../../../../../out1.ts/types';
 
-       export type AQueryVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-       export type AQuery = { __typename?: 'Query', a?: string | null };
-
-       export type BQueryVariables = Types.Exact<{ [key: string]: never; }>;
-
-
-       export type BQuery = { __typename?: 'Query', a?: string | null };
-
-       export type CQueryVariables = Types.Exact<{ [key: string]: never; }>;
+        export type AQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-       export type CQuery = { __typename?: 'Query', a?: string | null };
-       "
+        export type AQuery = { a: string | null };
+
+        export type BQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+        export type BQuery = { a: string | null };
+
+        export type CQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+        export type CQuery = { a: string | null };
+        "
       `);
     });
 
     it('#6520 - self-importing fragment', async () => {
-      const { result } = await executeCodegen({
+      const { result, error } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -655,12 +659,13 @@ describe('near-operation-file preset', () => {
           },
         },
       });
+      if (error) throw error;
 
       expect(result[0].content).not.toMatch(`import { UserFieldsFragmentDoc }`);
     });
 
     it('#6546 - duplicate fragment imports', async () => {
-      const { result } = await executeCodegen({
+      const { result, error } = await executeCodegen({
         schema: [
           /* GraphQL */ `
             type Query {
@@ -688,6 +693,7 @@ describe('near-operation-file preset', () => {
           },
         },
       });
+      if (error) throw error;
 
       const queriesContent = result.find(generatedDoc =>
         generatedDoc.filename.match(/issue-6546-queries/),
@@ -873,21 +879,19 @@ describe('near-operation-file preset', () => {
         generatedDoc.filename.match(/issue-11026-op/),
       ).content;
       expect(opContent).toMatchInlineSnapshot(`
-        "import * as Types from '../../../../../src/globalTypes';
+        "/** Internal type. DO NOT USE DIRECTLY. */
+        type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+        /** Internal type. DO NOT USE DIRECTLY. */
+        export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+        import * as Types from '../../../../../src/globalTypes';
 
         import { MarkdownFragment } from './issue-11026-markdown.generated';
-        export type WidgetFragment = { __typename?: 'Widget', title: (
-            { __typename?: 'Markdown' }
-            & MarkdownFragment
-          ) };
+        export type WidgetFragment = { title: MarkdownFragment };
 
-        export type PingVariables = Types.Exact<{ [key: string]: never; }>;
+        export type PingVariables = Exact<{ [key: string]: never; }>;
 
 
-        export type Ping = { __typename?: 'Query', ping?: (
-            { __typename?: 'Widget' }
-            & WidgetFragment
-          ) | null };
+        export type Ping = { ping: WidgetFragment | null };
         "
       `);
     });
@@ -1611,11 +1615,13 @@ describe('near-operation-file preset', () => {
     ).content;
 
     expect(interfaceContent).toMatchInlineSnapshot(`
-      "import * as Types from '../../../../../out1.ts/types';
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      import * as Types from '../../../../../out1.ts/types';
 
-      export type AnimalFragment_Cat = { __typename?: 'Cat', name: string };
+      export type AnimalFragment_Cat = { name: string };
 
-      export type AnimalFragment_Dog = { __typename?: 'Dog', name: string };
+      export type AnimalFragment_Dog = { name: string };
 
       export type AnimalFragment =
         | AnimalFragment_Cat
@@ -1625,16 +1631,17 @@ describe('near-operation-file preset', () => {
     `);
 
     expect(operationContent).toMatchInlineSnapshot(`
-      "import * as Types from '../../../../../out1.ts/types';
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      import * as Types from '../../../../../out1.ts/types';
 
       import { AnimalFragment_Cat } from './issue-1112-interface.generated';
-      export type CatsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+      export type CatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-      export type CatsQuery = { __typename?: 'Query', cats: Array<(
-          { __typename?: 'Cat' }
-          & AnimalFragment_Cat
-        )> };
+      export type CatsQuery = { cats: Array<AnimalFragment_Cat> };
       "
     `);
   });
@@ -1666,11 +1673,15 @@ describe('near-operation-file preset', () => {
 
     // FIXME: when typescript-operations v6 releases, this test will be updated
     expect(generatedFile.content).toMatchInlineSnapshot(`
-     "export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-     export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string } | null };
-     "
+      export type UserQuery = { user: { id: string } | null };
+      "
     `);
   });
 
@@ -1702,19 +1713,27 @@ describe('near-operation-file preset', () => {
 
     const file1a = result.find(file => file.filename.endsWith('User1a.generated.ts'));
     expect(file1a.content).toMatchInlineSnapshot(`
-      "export type User1aQueryVariables = Exact<{ [key: string]: never; }>;
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type User1aQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-      export type User1aQuery = { __typename?: 'Query', user1a?: { __typename?: 'User', id: string } | null };
+      export type User1aQuery = { user1a: { id: string } | null };
       "
     `);
 
     const file1b = result.find(file => file.filename.endsWith('User1b.generated.ts'));
     expect(file1b.content).toMatchInlineSnapshot(`
-      "export type User1bQueryVariables = Exact<{ [key: string]: never; }>;
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type User1bQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-      export type User1bQuery = { __typename?: 'Query', user1b?: { __typename?: 'User', id: string, name: string } | null };
+      export type User1bQuery = { user1b: { id: string, name: string } | null };
       "
     `);
 
@@ -1723,61 +1742,85 @@ describe('near-operation-file preset', () => {
       file.filename.endsWith('file-per-operation.1.graphql.generated.ts'),
     );
     expect(file1c.content).toMatchInlineSnapshot(`
-      "export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
 
 
-      export type Unnamed_1_Query = { __typename?: 'Query', anon?: { __typename: 'User' } | null };
+      export type Unnamed_1_Query = { anon: { __typename: 'User' } | null };
       "
     `);
 
     const file2 = result.find(file => file.filename.endsWith('User2.generated.ts'));
     expect(file2.content).toMatchInlineSnapshot(`
-      "export type User2QueryVariables = Exact<{ [key: string]: never; }>;
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type User2QueryVariables = Exact<{ [key: string]: never; }>;
 
 
-      export type User2Query = { __typename?: 'Query', user2?: { __typename?: 'User', id: string } | null };
+      export type User2Query = { user2: { id: string } | null };
       "
     `);
 
     const file3 = result.find(file => file.filename.endsWith('UserFragment3.generated.ts'));
     expect(file3.content).toMatchInlineSnapshot(`
-      "export type UserFragment3Fragment = { __typename?: 'User', id: string };
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type UserFragment3Fragment = { id: string };
       "
     `);
 
     const file4 = result.find(file => file.filename.endsWith('User4.generated.ts'));
     expect(file4.content).toMatchInlineSnapshot(`
-      "export type User4QueryVariables = Exact<{
-        id: Scalars['ID']['input'];
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type User4QueryVariables = Exact<{
+        id: string | number;
       }>;
 
 
-      export type User4Query = { __typename?: 'Query', user4?: { __typename?: 'User', name: string } | null };
+      export type User4Query = { user4: { name: string } | null };
       "
     `);
 
     const file5a = result.find(file => file.filename.endsWith('UserFragment5a.generated.ts'));
     expect(file5a.content).toMatchInlineSnapshot(`
-      "export type UserFragment5aFragment = { __typename?: 'User', id: string };
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type UserFragment5aFragment = { id: string };
       "
     `);
     const file5b = result.find(file => file.filename.endsWith('User5b.generated.ts'));
     expect(file5b.content).toMatchInlineSnapshot(`
-      "export type User5bQueryVariables = Exact<{ [key: string]: never; }>;
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type User5bQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-      export type User5bQuery = { __typename?: 'Query', user1a?: { __typename?: 'User', id: string } | null };
+      export type User5bQuery = { user1a: { id: string } | null };
       "
     `);
 
     const file6 = result.find(file => file.filename.endsWith('User6.generated.ts'));
     expect(file6.content).toMatchInlineSnapshot(`
-      "export type UserFragment6Fragment = { __typename?: 'User', id: string };
+      "/** Internal type. DO NOT USE DIRECTLY. */
+      type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+      /** Internal type. DO NOT USE DIRECTLY. */
+      export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+      export type UserFragment6Fragment = { id: string };
 
       export type User6QueryVariables = Exact<{ [key: string]: never; }>;
 
 
-      export type User6Query = { __typename?: 'Query', user6?: { __typename?: 'User', id: string } | null };
+      export type User6Query = { user6: { id: string } | null };
       "
     `);
   });

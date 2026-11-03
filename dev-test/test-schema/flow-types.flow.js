@@ -4,11 +4,11 @@ import { type GraphQLResolveInfo } from 'graphql';
 export type $RequireFields<Origin, Keys> = $Diff<Origin, Keys> & $ObjMapi<Keys, <Key>(k: Key) => $NonMaybeType<$ElementType<Origin, Key>>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {|
-  ID: string,
-  String: string,
-  Boolean: boolean,
-  Int: number,
-  Float: number,
+  ID: { input: string, output: string, }
+  String: { input: string, output: string, }
+  Boolean: { input: boolean, output: boolean, }
+  Int: { input: number, output: number, }
+  Float: { input: number, output: number, }
 |};
 
 export type Query = {|
@@ -19,14 +19,14 @@ export type Query = {|
 
 
 export type QueryUserByIdArgs = {|
-  id: $ElementType<Scalars, 'Int'>,
+  id: $ElementType<$ElementType<Scalars, 'Int'>, 'input'>,
 |};
 
 export type User = {|
   __typename?: 'User',
-  email: $ElementType<Scalars, 'String'>,
-  id: $ElementType<Scalars, 'Int'>,
-  name: $ElementType<Scalars, 'String'>,
+  email: $ElementType<$ElementType<Scalars, 'String'>, 'output'>,
+  id: $ElementType<$ElementType<Scalars, 'Int'>, 'output'>,
+  name: $ElementType<$ElementType<Scalars, 'String'>, 'output'>,
 |};
 
 export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
@@ -90,19 +90,19 @@ export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Boolean: ResolverTypeWrapper<$ElementType<Scalars, 'Boolean'>>,
-  Int: ResolverTypeWrapper<$ElementType<Scalars, 'Int'>>,
-  Query: ResolverTypeWrapper<{}>,
-  String: ResolverTypeWrapper<$ElementType<Scalars, 'String'>>,
+  Boolean: ResolverTypeWrapper<$ElementType<$ElementType<Scalars, 'Boolean'>, 'output'>>,
+  Int: ResolverTypeWrapper<$ElementType<$ElementType<Scalars, 'Int'>, 'output'>>,
+  Query: ResolverTypeWrapper<Record<PropertyKey, never>>,
+  String: ResolverTypeWrapper<$ElementType<$ElementType<Scalars, 'String'>, 'output'>>,
   User: ResolverTypeWrapper<User>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Boolean: $ElementType<Scalars, 'Boolean'>,
-  Int: $ElementType<Scalars, 'Int'>,
-  Query: {},
-  String: $ElementType<Scalars, 'String'>,
+  Boolean: $ElementType<$ElementType<Scalars, 'Boolean'>, 'output'>,
+  Int: $ElementType<$ElementType<Scalars, 'Int'>, 'output'>,
+  Query: Record<PropertyKey, never>,
+  String: $ElementType<$ElementType<Scalars, 'String'>, 'output'>,
   User: User,
 };
 
@@ -115,7 +115,6 @@ export type UserResolvers<ContextType = any, ParentType = $ElementType<Resolvers
   email?: Resolver<$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
   id?: Resolver<$ElementType<ResolversTypes, 'Int'>, ParentType, ContextType>,
   name?: Resolver<$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {

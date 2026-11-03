@@ -13,7 +13,7 @@ export class FlowOperationVariablesToObject extends OperationVariablesToObject {
   protected getScalar(name: string): string {
     const prefix = this._namespacedImportName ? `${this._namespacedImportName}.` : '';
 
-    return `$ElementType<${prefix}Scalars, '${name}'>`;
+    return `$ElementType<$ElementType<${prefix}Scalars, '${name}'>, 'input'>`;
   }
 
   public wrapAstTypeWithModifiers(

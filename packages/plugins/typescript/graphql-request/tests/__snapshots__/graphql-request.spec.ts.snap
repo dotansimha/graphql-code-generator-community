@@ -3,10 +3,9 @@
 exports[`graphql-request > sdk > Should allow passing wrapper arg to generated getSdk 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
@@ -182,28 +181,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = new TypedDocumentString(\`
     query feed {
@@ -290,10 +289,9 @@ async function test() {
 exports[`graphql-request > sdk > Should generate a correct wrap method 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
@@ -470,28 +468,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = gql\`
     query feed {
@@ -571,10 +569,9 @@ async function test() {
 exports[`graphql-request > sdk > Should generate a correct wrap method with documentMode=string 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
@@ -750,28 +747,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = new TypedDocumentString(\`
     query feed {
@@ -851,10 +848,9 @@ async function test() {
 exports[`graphql-request > sdk > Should not import print as type when supporting useTypeImports and rawRequest and documentMode = "documentNode" 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { type GraphQLClient, type RequestOptions } from 'graphql-request';
 import { GraphQLError, print } from 'graphql'
@@ -1032,28 +1028,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = gql\`
     query feed {
@@ -1137,10 +1133,9 @@ async function test() {
 exports[`graphql-request > sdk > Should only import GraphQLError when rawRequest is true and documentMode = "string" 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { GraphQLClient, type RequestOptions } from 'graphql-request';
 import { GraphQLError } from 'graphql'
@@ -1317,28 +1312,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = new TypedDocumentString(\`
     query feed {
@@ -1419,10 +1414,9 @@ async function test() {
 exports[`graphql-request > sdk > Should support emitLegacyCommonJSImports: false by emitting imports with extensions 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
@@ -1599,28 +1593,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = gql\`
     query feed {
@@ -1701,10 +1695,9 @@ async function test() {
 exports[`graphql-request > sdk > Should support extensionType when rawRequest is true and documentMode = "DocumentNode" 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { GraphQLClient, type RequestOptions } from 'graphql-request';
 import { GraphQLError, print } from 'graphql'
@@ -1882,28 +1875,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = gql\`
     query feed {
@@ -1987,10 +1980,9 @@ async function test() {
 exports[`graphql-request > sdk > Should support rawRequest when documentMode = "documentNode" 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { GraphQLClient, type RequestOptions } from 'graphql-request';
 import { GraphQLError, print } from 'graphql'
@@ -2168,28 +2160,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = gql\`
     query feed {
@@ -2273,10 +2265,9 @@ async function test() {
 exports[`graphql-request > sdk > Should support useTypeImports 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { type GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
@@ -2453,28 +2444,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = gql\`
     query feed {
@@ -2555,10 +2546,9 @@ async function test() {
 exports[`graphql-request > sdk > extensionType should be irrelevant when rawRequest is false 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { GraphQLClient, type RequestOptions } from 'graphql-request';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
@@ -2735,28 +2725,28 @@ export type SubscriptionCommentAddedArgs = {
 export type FeedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number, commentCount: number, repository: { __typename?: 'Repository', owner?: { __typename?: 'User', avatar_url: string } | null } } | null> | null };
+export type FeedQuery = { feed: Array<{ id: number, commentCount: number, repository: { owner: { avatar_url: string } | null } } | null> | null };
 
 export type Feed2QueryVariables = Exact<{
-  v: Scalars['String']['input'];
+  v: string;
 }>;
 
 
-export type Feed2Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed2Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed3QueryVariables = Exact<{
-  v?: InputMaybe<Scalars['String']['input']>;
+  v?: string | null | undefined;
 }>;
 
 
-export type Feed3Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed3Query = { feed: Array<{ id: number } | null> | null };
 
 export type Feed4QueryVariables = Exact<{
-  v?: Scalars['String']['input'];
+  v?: string;
 }>;
 
 
-export type Feed4Query = { __typename?: 'Query', feed?: Array<{ __typename?: 'Entry', id: number } | null> | null };
+export type Feed4Query = { feed: Array<{ id: number } | null> | null };
 
 export const FeedDocument = gql\`
     query feed {

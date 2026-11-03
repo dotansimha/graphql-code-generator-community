@@ -41,7 +41,7 @@ export class FlowResolversVisitor extends BaseResolversVisitor<
   }
 
   protected _getScalar(name: string): string {
-    return `$ElementType<Scalars, '${name}'>`;
+    return `$ElementType<$ElementType<Scalars, '${name}'>, 'output'>`;
   }
 
   protected applyRequireFields(argsType: string, fields: InputValueDefinitionNode[]): string {
@@ -133,11 +133,11 @@ export class FlowResolversVisitor extends BaseResolversVisitor<
   }
 
   ScalarTypeDefinition(node: ScalarTypeDefinitionNode): string {
-    const nameAsString = node.name as any as string;
+    const nameAsString = node.name.value;
     const baseName = this.getTypeToUse(nameAsString);
 
     this._hasScalars = true;
-    this._collectedResolvers[node.name as any] = 'GraphQLScalarType';
+    this._collectedResolvers[node.name.value] = { typename: 'GraphQLScalarType' };
 
     return new DeclarationBlock({
       ...this._declarationBlockConfig,
@@ -155,7 +155,7 @@ export class FlowResolversVisitor extends BaseResolversVisitor<
       .withBlock(
         [
           indent(`...GraphQLScalarTypeConfig<${baseName}, any>`),
-          indent(`name: '${node.name}'`),
+          indent(`name: '${node.name.value}'`),
         ].join(', \n'),
       ).string;
   }
@@ -169,7 +169,7 @@ export class FlowResolversVisitor extends BaseResolversVisitor<
     mappedEnumType: string,
   ): string {
     const valuesMap = `{| ${(node.values || [])
-      .map(v => `${v.name as any as string}${this.config.avoidOptionals ? '' : '?'}: *`)
+      .map(v => `${v.name.value}${this.config.avoidOptionals ? '' : '?'}: *`)
       .join(', ')} |}`;
 
     this._globalDeclarations.add(ENUM_RESOLVERS_SIGNATURE);
@@ -183,7 +183,7 @@ export class FlowResolversVisitor extends BaseResolversVisitor<
   ): string {
     return `{| ${(node.values || [])
       .map(v => {
-        const valueName = v.name as any as string;
+        const valueName = v.name.value;
         const mappedValue = valuesMapping[valueName];
 
         return `${valueName}: ${

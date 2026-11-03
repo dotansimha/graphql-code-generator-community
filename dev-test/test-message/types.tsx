@@ -1,17 +1,13 @@
-import * as Apollo from '@apollo/client';
-import * as Operations from './documents';
-
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
-  [_ in K]?: never;
-};
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> =
   | T
   | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+import * as Operations from './documents';
+import * as Apollo from '@apollo/client';
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -65,51 +61,40 @@ export type QueryMessagesArgs = {
   tab: Scalars['String']['input'];
 };
 
+export type CreateMessageInput = {
+  description: string;
+};
+
 export type GetMessagesQueryVariables = Exact<{
-  tab: Scalars['String']['input'];
+  tab: string;
 }>;
 
-export type GetMessagesQuery = {
-  __typename?: 'Query';
-  messages?: Array<{ __typename?: 'Message'; id: string } | null> | null;
-};
+export type GetMessagesQuery = { messages: Array<{ id: string } | null> | null };
 
 export type CreateMessageMutationVariables = Exact<{
   args: CreateMessageInput;
 }>;
 
-export type CreateMessageMutation = {
-  __typename?: 'Mutation';
-  createMessage?: { __typename?: 'Message'; id: string } | null;
-};
+export type CreateMessageMutation = { createMessage: { id: string } | null };
 
 export type DeclineMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-  reason: Scalars['String']['input'];
+  id: string | number;
+  reason: string;
 }>;
 
-export type DeclineMutation = {
-  __typename?: 'Mutation';
-  decline?: { __typename?: 'Message'; id: string } | null;
-};
+export type DeclineMutation = { decline: { id: string } | null };
 
 export type ApproveMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
+  id: string | number;
 }>;
 
-export type ApproveMutation = {
-  __typename?: 'Mutation';
-  approve?: { __typename?: 'Message'; id: string } | null;
-};
+export type ApproveMutation = { approve: { id: string } | null };
 
 export type EscalateMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
+  id: string | number;
 }>;
 
-export type EscalateMutation = {
-  __typename?: 'Mutation';
-  escalate?: { __typename?: 'Message'; id: string } | null;
-};
+export type EscalateMutation = { escalate: { id: string } | null };
 
 /**
  * __useGetMessagesQuery__
