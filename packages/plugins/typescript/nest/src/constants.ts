@@ -1,6 +1,6 @@
 export const MAYBE_REGEX = /^Maybe<(.*?)>$/;
 export const ARRAY_REGEX = /^Array<(.*?)>$/;
-export const SCALAR_REGEX = /^Scalars\['(.*?)'\]$/;
+export const SCALAR_REGEX = /^Scalars\['(.*?)'\](?:\['(?:input|output)'\])?$/;
 export const GRAPHQL_TYPES = ['Query', 'Mutation', 'Subscription'];
 export const NEST_SCALARS = ['ID', 'Int', 'Float', 'GraphQLISODateTime', 'GraphQLTimestamp'];
 export const FIX_DECORATOR_SIGNATURE = `type FixDecorator<T> = T;`;

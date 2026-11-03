@@ -16,11 +16,7 @@ import {
   TypeScriptOperationVariablesToObject,
   TypeScriptPluginParsedConfig,
 } from '@graphql-codegen/typescript';
-import {
-  AvoidOptionalsConfig,
-  DeclarationBlock,
-  indent,
-} from '@graphql-codegen/visitor-plugin-common';
+import { DeclarationBlock, indent } from '@graphql-codegen/visitor-plugin-common';
 import { TypeGraphQLPluginConfig } from './config.js';
 
 export type DecoratorConfig = {
@@ -32,7 +28,6 @@ export type DecoratorConfig = {
 };
 
 export interface TypeGraphQLPluginParsedConfig extends TypeScriptPluginParsedConfig {
-  avoidOptionals: AvoidOptionalsConfig;
   constEnums: boolean;
   enumsAsTypes: boolean;
   immutableTypes: boolean;
@@ -43,7 +38,7 @@ export interface TypeGraphQLPluginParsedConfig extends TypeScriptPluginParsedCon
 
 const MAYBE_REGEX = /^Maybe<(.*?)>$/;
 const ARRAY_REGEX = /^Array<(.*?)>$/;
-const SCALAR_REGEX = /^Scalars\['(.*?)'\]$/;
+const SCALAR_REGEX = /^Scalars\['(.*?)'\](?:\['(?:input|output)'\])?$/;
 const GRAPHQL_TYPES = ['Query', 'Mutation', 'Subscription'];
 const SCALARS = ['ID', 'String', 'Boolean', 'Int', 'Float'];
 const TYPE_GRAPHQL_SCALARS = ['ID', 'Int', 'Float'];
@@ -149,6 +144,7 @@ export class TypeGraphQLVisitor<
         null,
         enumNames,
         this.config.enumPrefix,
+        this.config.enumSuffix,
         this.config.enumValues,
         undefined,
         undefined,
@@ -172,7 +168,9 @@ export class TypeGraphQLVisitor<
 
     if (node.description) {
       // Add description as TypeGraphQL description instead of comment
-      decoratorOptions.description = escapeString(node.description as unknown as string);
+      decoratorOptions.description = escapeString(
+        typeof node.description === 'string' ? node.description : node.description.value,
+      );
       (node as any).description = undefined;
     }
 
@@ -216,8 +214,8 @@ export class TypeGraphQLVisitor<
   }
 
   ObjectTypeDefinition(node: ObjectTypeDefinitionNode, key: number | string, parent: any): string {
-    const isGraphQLType = GRAPHQL_TYPES.includes(node.name as unknown as string);
-    if (!isGraphQLType && !this.hasTypeDecorators(node.name as unknown as string)) {
+    const isGraphQLType = GRAPHQL_TYPES.includes(node.name.value);
+    if (!isGraphQLType && !this.hasTypeDecorators(node.name.value)) {
       return this.typescriptVisitor.ObjectTypeDefinition(node, key, parent);
     }
 
@@ -250,7 +248,7 @@ export class TypeGraphQLVisitor<
   }
 
   InputObjectTypeDefinition(node: InputObjectTypeDefinitionNode): string {
-    if (!this.hasTypeDecorators(node.name as unknown as string)) {
+    if (!this.hasTypeDecorators(node.name.value)) {
       return this.typescriptVisitor.InputObjectTypeDefinition(node);
     }
 
@@ -301,7 +299,7 @@ export class TypeGraphQLVisitor<
     key: number | string,
     parent: any,
   ): string {
-    if (!this.hasTypeDecorators(node.name as unknown as string)) {
+    if (!this.hasTypeDecorators(node.name.value)) {
       return this.typescriptVisitor.InterfaceTypeDefinition(node, key, parent);
     }
 
@@ -327,7 +325,7 @@ export class TypeGraphQLVisitor<
       type.type = `FixDecorator<${type.type}>`;
     }
     if (type.isScalar) {
-      type.type = `Scalars['${type.type}']`;
+      type.type = `Scalars['${type.type}']['input']`;
     }
     if (type.isArray) {
       type.type = `Array<${type.type}>`;
@@ -382,7 +380,7 @@ export class TypeGraphQLVisitor<
       }
       if (this.scalars[type]) {
         // This is a type specified in the configuration
-        return this.scalars[type];
+        return this.scalars[type].output;
       }
       throw new Error(`Unknown scalar type ${type}`);
     });
@@ -440,7 +438,7 @@ export class TypeGraphQLVisitor<
     return (
       decorator +
       indent(
-        `${this.config.immutableTypes ? 'readonly ' : ''}${node.name}${
+        `${this.config.immutableTypes ? 'readonly ' : ''}${node.name.value}${
           type.isNullable ? '?' : '!'
         }: ${typeString};`,
       )
@@ -500,7 +498,7 @@ export class TypeGraphQLVisitor<
   }
 
   EnumTypeDefinition(node: EnumTypeDefinitionNode): string {
-    if (!this.hasTypeDecorators(node.name as unknown as string)) {
+    if (!this.hasTypeDecorators(node.name.value)) {
       return this.typescriptVisitor.EnumTypeDefinition(node);
     }
 

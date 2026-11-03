@@ -16,6 +16,7 @@ export interface VueApolloPluginConfig extends ClientSideBasePluginConfig {
   vueApolloComposableImportFrom: 'vue' | '@vue/apollo-composable' | string;
   vueCompositionApiImportFrom: 'vue' | '@vue/apollo-composable' | string;
   addDocBlocks: boolean;
+  inlineReferencedFragmentsInFragmentDocuments: boolean;
   clientId?: string;
 }
 
@@ -58,6 +59,7 @@ export class VueApolloVisitor extends ClientSideBaseVisitor<
       ),
       addDocBlocks: getConfigValue(rawConfig.addDocBlocks, true),
       clientId: getConfigValue(rawConfig.clientId, null),
+      inlineReferencedFragmentsInFragmentDocuments: true,
     });
 
     this.externalImportPrefix = this.config.importOperationTypesFrom

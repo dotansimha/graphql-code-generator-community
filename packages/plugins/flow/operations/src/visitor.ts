@@ -1,12 +1,5 @@
 import autoBind from 'auto-bind';
-import {
-  GraphQLNamedType,
-  GraphQLOutputType,
-  GraphQLSchema,
-  isEnumType,
-  isNonNullType,
-  SelectionSetNode,
-} from 'graphql';
+import { GraphQLNamedType, GraphQLSchema, isEnumType, SelectionSetNode } from 'graphql';
 import { FlowOperationVariablesToObject } from '@graphql-codegen/flow';
 import {
   BaseDocumentsVisitor,
@@ -76,21 +69,15 @@ export class FlowDocumentsVisitor extends BaseDocumentsVisitor<
     const wrapOptional = (type: string) => `?${type}`;
 
     const { useFlowReadOnlyTypes } = this.config;
-    const formatNamedField = (
-      name: string,
-      type: GraphQLOutputType | GraphQLNamedType | null,
-      isConditional = false,
-    ): string => {
-      const optional = (!!type && !isNonNullType(type)) || isConditional;
-      return `${useFlowReadOnlyTypes ? '+' : ''}${name}${optional ? '?' : ''}`;
-    };
-
     const processorConfig: SelectionSetProcessorConfig = {
       namespacedImportName: this.config.namespacedImportName,
       convertName: this.convertName.bind(this),
       enumPrefix: this.config.enumPrefix,
+      enumSuffix: this.config.enumSuffix,
       scalars: this.scalars,
-      formatNamedField,
+      formatNamedField({ name, isOptional }) {
+        return `${useFlowReadOnlyTypes ? '+' : ''}${name}${isOptional ? '?' : ''}`;
+      },
       wrapTypeWithModifiers(baseType, type) {
         return wrapTypeWithModifiers(baseType, type, { wrapOptional, wrapArray });
       },
@@ -123,6 +110,7 @@ export class FlowDocumentsVisitor extends BaseDocumentsVisitor<
         this.config.namespacedImportName,
         enumsNames,
         this.config.enumPrefix,
+        this.config.enumSuffix,
         {},
         true,
       ),

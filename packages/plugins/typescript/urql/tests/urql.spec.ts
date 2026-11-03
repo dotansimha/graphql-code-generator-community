@@ -35,6 +35,34 @@ describe('urql', () => {
     }
   `);
 
+  it('supports GraphQL 17', async () => {
+    const schema = buildASTSchema(gql`
+      type Query {
+        hello: String
+      }
+    `);
+    const docs = [
+      {
+        location: '',
+        document: gql`
+          query Hello {
+            hello
+          }
+        `,
+      },
+    ];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {},
+      { outputFile: 'graphql.ts' },
+    )) as Types.ComplexPluginOutput;
+
+    expect(content.content).toContain('export function useHelloQuery');
+    expect(content.content).toContain('query Hello');
+  });
+
   const validateTypeScript = async (
     output: Types.PluginOutput,
     testSchema: GraphQLSchema,
@@ -198,7 +226,8 @@ query MyFeed {
     ...FeedWithRepository
   }
 }
-\${FeedWithRepositoryFragmentDoc}\`;`);
+\${FeedWithRepositoryFragmentDoc}
+\${RepositoryWithOwnerFragmentDoc}\`;`);
       await validateTypeScript(content, schema, docs, {});
     });
 

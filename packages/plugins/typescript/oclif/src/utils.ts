@@ -59,6 +59,6 @@ const getInnerType = (type: TypeNode): TypeConfig => {
 
 // remove all @oclif directives from the document for transmission to the server
 export const omitOclifDirectives = (node: OperationDefinitionNode) => {
-  const directives = node.directives.filter(directive => directive.name.value !== 'oclif');
+  const directives = (node.directives ?? []).filter(directive => directive.name.value !== 'oclif');
   return Object.assign({}, node, { directives });
 };

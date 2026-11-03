@@ -324,11 +324,12 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     operationName: string,
     operationType: string,
   ): string {
-    const variableString = node.variableDefinitions.reduce((acc, item) => {
-      const name = item.variable.name.value;
+    const variableString =
+      node.variableDefinitions?.reduce((acc, item) => {
+        const name = item.variable.name.value;
 
-      return `${acc}\n *      ${name}: // value for '${name}'`;
-    }, '');
+        return `${acc}\n *      ${name}: // value for '${name}'`;
+      }, '') ?? '';
 
     const queryDescription = `
  * To run a query within a React component, call \`use${operationName}\` and pass it any options that fit your needs.

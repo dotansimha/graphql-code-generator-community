@@ -4,6 +4,17 @@ import '@graphql-codegen/testing';
 import { plugin } from '../src/index.js';
 
 describe('urql graphcache', () => {
+  it('supports GraphQL 17', async () => {
+    const schema = buildSchema(/* GraphQL */ `
+      type Query {
+        hello: String
+      }
+    `);
+    const result = await plugin(schema, [], {});
+
+    expect(result.content).toContain('hello?: GraphCacheResolver');
+  });
+
   it('Should output the cache-generic correctly', async () => {
     const schema = buildSchema(/* GraphQL */ `
       type Query {

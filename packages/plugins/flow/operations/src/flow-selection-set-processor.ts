@@ -1,4 +1,4 @@
-import { GraphQLInterfaceType, GraphQLObjectType } from 'graphql';
+import { GraphQLInterfaceType, GraphQLObjectType, isNonNullType } from 'graphql';
 import {
   BaseSelectionSetProcessor,
   indent,
@@ -33,13 +33,13 @@ export class FlowWithPickSelectionSetProcessor extends BaseSelectionSetProcessor
 
     return [
       `{${useFlowExactObject ? '|' : ''} ${fields
-        .map(
-          aliasedField =>
-            `${formatNamedField(
-              aliasedField.alias,
-              fieldObj[aliasedField.fieldName].type,
-            )}: $ElementType<${parentName}, '${aliasedField.fieldName}'>`,
-        )
+        .map(aliasedField => {
+          const fieldType = fieldObj[aliasedField.fieldName].type;
+          return `${formatNamedField({
+            name: aliasedField.alias,
+            isOptional: !isNonNullType(fieldType) || aliasedField.isConditional,
+          })}: $ElementType<${parentName}, '${aliasedField.fieldName}'>`;
+        })
         .join(', ')} ${useFlowExactObject ? '|' : ''}}`,
     ];
   }
@@ -100,7 +100,10 @@ export class FlowWithPickSelectionSetProcessor extends BaseSelectionSetProcessor
           hasConditionals = true;
           conditilnalsList.push(field.fieldName);
         }
-        return `${formatNamedField(field.fieldName, fieldObj[field.fieldName].type)}: *`;
+        return `${formatNamedField({
+          name: field.fieldName,
+          isOptional: !isNonNullType(fieldObj[field.fieldName].type) || field.isConditional,
+        })}: *`;
       })
       .join(', ')} ${useFlowExactObject ? '|' : ''}}>`;
     if (hasConditionals) {

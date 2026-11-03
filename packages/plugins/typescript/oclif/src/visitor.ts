@@ -81,14 +81,16 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     const operation = this._operationsToInclude[0];
 
     // Find the @oclif directive in the client document, if it's there
-    const directive = operation.node.directives.find(directive => directive.name.value === 'oclif');
+    const directive = operation.node.directives?.find(
+      directive => directive.name.value === 'oclif',
+    );
 
     // Remap the directive's fields ie @oclif(description: "a name") to a more usable format
     const directiveValues: OclifDirectiveValues = {};
 
     if (directive) {
       directiveValues.examples = [];
-      directive.arguments.forEach(arg => {
+      (directive.arguments ?? []).forEach(arg => {
         const value = 'value' in arg.value ? arg.value.value.toString() : null;
         const { value: name } = arg.name;
         if (name === 'description') {
@@ -103,7 +105,9 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
     const { description, examples } = directiveValues;
 
-    const flags = operation.node.variableDefinitions.map(getFlagConfigForVariableDefinition);
+    const flags = (operation.node.variableDefinitions ?? []).map(
+      getFlagConfigForVariableDefinition,
+    );
 
     return `
 ${this.definition}
