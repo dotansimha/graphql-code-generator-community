@@ -1,5 +1,18 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 5.2.4
+
+### Patch Changes
+
+- [#1638](https://github.com/dotansimha/graphql-code-generator-community/pull/1638)
+  [`253c487`](https://github.com/dotansimha/graphql-code-generator-community/commit/253c487fe0c9cfc8dde4d2bef255ada7c7895d44)
+  Thanks [@wassim-k](https://github.com/wassim-k)! - Fix unused interface fragment type imports when
+  a fragment is spread directly in another fragment or operation.
+
+  Top-level spreads of a polymorphic fragment (e.g. `...AnimalFragment` inside
+  `fragment CatFragment on Cat`) were not narrowed to the parent's type, producing unused imports
+  or, when also spread in a nested field, missing ones.
+
 ## 5.2.3
 
 ### Patch Changes
