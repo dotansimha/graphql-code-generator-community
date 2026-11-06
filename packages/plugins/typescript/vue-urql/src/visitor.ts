@@ -14,6 +14,7 @@ import { VueUrqlRawPluginConfig } from './config.js';
 export interface UrqlPluginConfig extends ClientSideBasePluginConfig {
   withComposition: boolean;
   urqlImportFrom: string;
+  inlineReferencedFragmentsInFragmentDocuments: boolean;
 }
 
 export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, UrqlPluginConfig> {
@@ -27,6 +28,7 @@ export class UrqlVisitor extends ClientSideBaseVisitor<VueUrqlRawPluginConfig, U
     super(schema, fragments, rawConfig, {
       withComposition: getConfigValue(rawConfig.withComposition, true),
       urqlImportFrom: getConfigValue(rawConfig.urqlImportFrom, '@urql/vue'),
+      inlineReferencedFragmentsInFragmentDocuments: true,
     });
 
     if (this.config.importOperationTypesFrom) {

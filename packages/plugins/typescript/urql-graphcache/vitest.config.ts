@@ -7,6 +7,11 @@ export default mergeConfig(
     test: {
       name: 'typescript-urql-graphcache',
       include: ['**/*.spec.ts'],
+      server: {
+        deps: {
+          inline: [/^@graphql-codegen\//],
+        },
+      },
     },
   }),
 );

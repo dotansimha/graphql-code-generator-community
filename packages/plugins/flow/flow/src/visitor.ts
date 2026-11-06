@@ -9,7 +9,6 @@ import {
   ListTypeNode,
   NamedTypeNode,
   NonNullTypeNode,
-  ObjectTypeDefinitionNode,
 } from 'graphql';
 import {
   BaseTypesVisitor,
@@ -54,8 +53,8 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
     });
   }
 
-  protected _getScalar(name: string): string {
-    return `$ElementType<Scalars, '${name}'>`;
+  protected _getScalar(name: string, type: 'input' | 'output'): string {
+    return `$ElementType<$ElementType<Scalars, '${name}'>, '${type}'>`;
   }
 
   InputValueDefinition(
@@ -67,7 +66,7 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
     const addOptionalSign = originalFieldNode.type.kind !== Kind.NON_NULL_TYPE;
     const comment = transformComment(node.description as any as string, 1);
 
-    return comment + indent(`${node.name}${addOptionalSign ? '?' : ''}: ${node.type},`);
+    return comment + indent(`${node.name.value}${addOptionalSign ? '?' : ''}: ${node.type},`);
   }
 
   NamedType(node: NamedTypeNode, key, parent, path, ancestors): string {
@@ -96,22 +95,8 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
     return (
       comment +
       indent(
-        `${this.config.useFlowReadOnlyTypes ? '+' : ''}${node.name}${namePostfix}: ${typeString},`,
+        `${this.config.useFlowReadOnlyTypes ? '+' : ''}${node.name.value}${namePostfix}: ${typeString},`,
       )
-    );
-  }
-
-  ObjectTypeDefinition(node: ObjectTypeDefinitionNode, key: number | string, parent: any): string {
-    return super.ObjectTypeDefinition(
-      {
-        ...node,
-        interfaces:
-          node.interfaces && node.interfaces.length > 0
-            ? node.interfaces.map(name => (name as any as string).replace('?', ''))
-            : ([] as any),
-      },
-      key,
-      parent,
     );
   }
 
@@ -168,7 +153,7 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
   }
 
   EnumTypeDefinition(node: EnumTypeDefinitionNode): string {
-    const typeName = node.name as any as string;
+    const typeName = node.name.value;
 
     if (this.config.enumValues[typeName] && this.config.enumValues[typeName].sourceFile) {
       return null;
@@ -192,7 +177,7 @@ export class FlowVisitor extends BaseTypesVisitor<FlowPluginConfig, FlowPluginPa
               transformUnderscore: true,
               useTypesPrefix: false,
             });
-            let enumValue: string | number = enumOption.name as any;
+            let enumValue: string | number = enumOption.name.value;
 
             if (
               this.config.enumValues[typeName] &&

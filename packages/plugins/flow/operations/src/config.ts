@@ -40,6 +40,7 @@ export interface FlowDocumentsPluginConfig extends RawDocumentsConfig {
    * ```
    */
   useFlowReadOnlyTypes?: boolean;
+  preResolveTypes?: boolean;
   /**
    * @description Flatten fragment spread and inline fragments into a simple selection set before generating.
    * @default false

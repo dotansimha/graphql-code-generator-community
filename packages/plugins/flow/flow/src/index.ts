@@ -26,6 +26,9 @@ export const plugin: PluginFunction<FlowPluginConfig, Types.ComplexPluginOutput>
 
   return {
     prepend: [header, ...visitor.getEnumsImports()],
-    content: [visitor.scalarsDefinition, ...visitorResult.definitions].join('\n'),
+    content: [
+      visitor.scalarsDefinition,
+      ...visitorResult.definitions.filter(definition => typeof definition === 'string'),
+    ].join('\n'),
   };
 };

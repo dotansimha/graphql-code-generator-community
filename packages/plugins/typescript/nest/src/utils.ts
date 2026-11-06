@@ -29,7 +29,7 @@ export const buildTypeString = (type: Type): string => {
     type.type = `FixDecorator<${type.type}>`;
   }
   if (type.isScalar) {
-    type.type = `Scalars['${type.type}']`;
+    type.type = `Scalars['${type.type}']['input']`;
   }
   if (type.isArray) {
     type.type = `Array<${type.type}>`;

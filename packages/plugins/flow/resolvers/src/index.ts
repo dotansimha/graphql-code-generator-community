@@ -6,6 +6,7 @@ import {
   PluginFunction,
   Types,
 } from '@graphql-codegen/plugin-helpers';
+import { convertFactory } from '@graphql-codegen/visitor-plugin-common';
 import { FlowResolversPluginConfig } from './config';
 import { FlowResolversVisitor } from './visitor.js';
 
@@ -18,7 +19,10 @@ export const plugin: PluginFunction<FlowResolversPluginConfig, Types.ComplexPlug
   const showUnusedMappers =
     typeof config.showUnusedMappers === 'boolean' ? config.showUnusedMappers : true;
 
-  const transformedSchema = config.federation ? addFederationReferencesToSchema(schema) : schema;
+  const transformedSchema = config.federation
+    ? addFederationReferencesToSchema(schema, { convertName: convertFactory(config) })
+        .transformedSchema
+    : schema;
 
   const astNode = getCachedDocumentNodeFromSchema(transformedSchema);
   const visitor = new FlowResolversVisitor(config, transformedSchema);
@@ -121,7 +125,7 @@ ${defsToInclude.join('\n')}
       resolversTypeMapping,
       resolversParentTypeMapping,
       ...visitorResult.definitions.filter(d => typeof d === 'string'),
-      getRootResolver(),
+      getRootResolver().content,
       getAllDirectiveResolvers(),
     ].join('\n'),
   };
