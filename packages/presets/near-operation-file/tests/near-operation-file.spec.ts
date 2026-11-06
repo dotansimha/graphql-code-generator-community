@@ -475,6 +475,115 @@ describe('near-operation-file preset', () => {
       );
     });
 
+    it('inlineReferencedFragmentsInFragmentDocuments: imports the *Doc of fragments spread by a fragment document', async () => {
+      const testSchema = buildSchema(/* GraphQL */ `
+        schema {
+          query: Query
+        }
+
+        type Query {
+          list: [Book]
+        }
+
+        type Book {
+          id: ID!
+          title: String!
+          pages: [Page!]!
+        }
+
+        type Page {
+          id: ID!
+          number: Int!
+          lines: [Line!]!
+        }
+
+        type Line {
+          id: ID!
+          text: String!
+        }
+      `);
+
+      const documents = [
+        {
+          location: '/some/deep/path/src/graphql/book-fragment.graphql',
+          document: parse(/* GraphQL */ `
+            fragment Book on Book {
+              id
+              title
+              pages {
+                ...Page
+              }
+            }
+          `),
+        },
+        {
+          location: '/some/deep/path/src/graphql/page-fragment.graphql',
+          document: parse(/* GraphQL */ `
+            fragment Page on Page {
+              id
+              number
+              lines {
+                ...Line
+              }
+            }
+          `),
+        },
+        {
+          location: '/some/deep/path/src/graphql/line-fragment.graphql',
+          document: parse(/* GraphQL */ `
+            fragment Line on Line {
+              id
+              text
+            }
+          `),
+        },
+      ];
+
+      const run = (config: Record<string, unknown>) =>
+        executePreset({
+          baseOutputDir: './src/',
+          config,
+          presetConfig: { cwd: '/some/deep/path', baseTypesPath: 'types.ts' },
+          schemaAst: testSchema,
+          schema: getCachedDocumentNodeFromSchema(testSchema),
+          documents,
+          plugins: [{ 'typescript-react-apollo': {} }],
+          pluginMap: { 'typescript-react-apollo': {} as any },
+        });
+
+      const withoutOption = getFragmentImportsFromResult(await run({}));
+      expect(withoutOption).toContain(`import { PageFragment } from './page-fragment.generated';`);
+
+      const withOption = getFragmentImportsFromResult(
+        await run({ inlineReferencedFragmentsInFragmentDocuments: true }),
+      );
+      expect(withOption).toContain(
+        `import { PageFragmentDoc, PageFragment } from './page-fragment.generated';`,
+      );
+      // Line is only spread by Page, whose document interpolates it itself
+      expect(withOption).not.toContain('LineFragmentDoc');
+
+      // with dedupeFragments, only directly spread fragments are interpolated
+      const withDedupe = getFragmentImportsFromResult(
+        await run({ inlineReferencedFragmentsInFragmentDocuments: true, dedupeFragments: true }),
+      );
+      expect(withDedupe).toContain(
+        `import { PageFragmentDoc, PageFragment } from './page-fragment.generated';`,
+      );
+      expect(withDedupe).not.toContain('LineFragmentDoc');
+
+      // other document modes are unaffected
+      const documentNodeMode = getFragmentImportsFromResult(
+        await run({
+          inlineReferencedFragmentsInFragmentDocuments: true,
+          documentMode: 'documentNode',
+        }),
+      );
+      expect(documentNodeMode).toContain(
+        `import { PageFragmentDoc, PageFragment } from './page-fragment.generated';`,
+      );
+    });
+
     it('#2365 - Should not add Fragment suffix to import identifier when dedupeOperationSuffix: true', async () => {
       const result = await executePreset({
         baseOutputDir: './src/',
