@@ -891,6 +891,79 @@ describe('near-operation-file preset', () => {
         "
       `);
     });
+
+    it.each([
+      ['include', '@include(if: $flag)'],
+      ['skip', '@skip(if: $flag)'],
+    ])(
+      '#11054 - importing nested fragment used in a field selection when outer spread has %s',
+      async (_, directive) => {
+        const testSchema = buildSchema(/* GraphQL */ `
+          type Markdown {
+            markdown: String!
+          }
+
+          type Query {
+            thing(flag: Boolean): Markdown
+          }
+        `);
+
+        const result = await executePreset({
+          baseOutputDir: './src/',
+          config: {
+            omitOperationSuffix: true,
+          },
+          presetConfig: {
+            cwd: '/some/deep/path',
+            baseTypesPath: 'types.ts',
+          },
+          schemaAst: testSchema,
+          schema: getCachedDocumentNodeFromSchema(testSchema),
+          documents: [
+            {
+              location: '/some/deep/path/src/graphql/ping.graphql',
+              document: parse(/* GraphQL */ `
+                query Ping($flag: Boolean!) {
+                  ...ContainerFragment ${directive}
+                }
+              `),
+            },
+            {
+              location: '/some/deep/path/src/graphql/container-fragment.graphql',
+              document: parse(/* GraphQL */ `
+                fragment ContainerFragment on Query {
+                  thing(flag: true) {
+                    ...MarkdownFragment
+                  }
+                }
+              `),
+            },
+            {
+              location: '/some/deep/path/src/graphql/markdown-fragment.graphql',
+              document: parse(/* GraphQL */ `
+                fragment MarkdownFragment on Markdown {
+                  markdown
+                }
+              `),
+            },
+          ],
+          plugins: [{ 'typescript-operations': {} }],
+          pluginMap: { 'typescript-operations': {} as any },
+        });
+
+        const markdownImport = result[0].config.fragmentImports.find(fi =>
+          fi.importSource.path.includes('markdown-fragment'),
+        );
+        const typeIdentifiers =
+          markdownImport?.importSource.identifiers.filter(i => i.kind === 'type') || [];
+        expect(typeIdentifiers).toEqual([
+          {
+            name: 'MarkdownFragment',
+            kind: 'type',
+          },
+        ]);
+      },
+    );
   });
 
   it('should not add imports for fragments in the same location', async () => {

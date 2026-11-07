@@ -16,7 +16,12 @@ import {
   visitWithTypeInfo,
 } from 'graphql';
 import parsePath from 'parse-filepath';
-import { getPossibleTypes, separateSelectionSet } from '@graphql-codegen/visitor-plugin-common';
+import {
+  getPossibleTypes,
+  hasConditionalDirectives,
+  hasIncrementalDeliveryDirectives,
+  separateSelectionSet,
+} from '@graphql-codegen/visitor-plugin-common';
 import { FragmentRegistry } from './fragment-resolver.js';
 
 export function defineFilepathSubfolder(baseFilePath: string, folder: string) {
@@ -134,12 +139,15 @@ function extractExternalFragmentsInUse(
         result[node.name.value] = level;
 
         if (fragmentNameToFile[node.name.value]) {
+          const isConditional =
+            hasConditionalDirectives(node.directives) ||
+            hasIncrementalDeliveryDirectives(node.directives);
           extractExternalFragmentsInUse(
             fragmentNameToFile[node.name.value].node,
             fragmentNameToFile,
             localFragment,
             result,
-            level + 1,
+            isConditional ? level : level + 1,
           );
         }
       }
