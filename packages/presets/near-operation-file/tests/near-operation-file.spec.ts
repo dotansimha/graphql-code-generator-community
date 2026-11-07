@@ -6,14 +6,7 @@ import { generateFragmentImportStatement } from '@graphql-codegen/visitor-plugin
 import { preset } from '../src/index.js';
 
 describe('near-operation-file preset', () => {
-  const executePreset: typeof preset.buildGeneratesSection = options =>
-    preset.buildGeneratesSection({
-      ...options,
-      config: {
-        ...options.config,
-        emitLegacyCommonJSImports: true,
-      },
-    });
+  const executePreset: typeof preset.buildGeneratesSection = options => preset.buildGeneratesSection(options);
   const schemaDocumentNode = parse(/* GraphQL */ `
     type Query {
       user(id: String): User!
@@ -1143,6 +1136,29 @@ describe('near-operation-file preset', () => {
           },
         },
       ]),
+    );
+  });
+
+  it('Should end schema-types and fragment imports with importExtension', async () => {
+    const result = await executePreset({
+      baseOutputDir: './src/',
+      config: { importExtension: '.js' },
+      presetConfig: {
+        cwd: '/some/deep/path',
+        baseTypesPath: 'types.ts',
+      },
+      schema: schemaDocumentNode,
+      schemaAst: schemaNode,
+      documents: [testDocuments[0], testDocuments[1]],
+      plugins: [{ typescript: {} }],
+      pluginMap: { typescript: {} as any },
+    });
+
+    expect(result.map(o => o.plugins)[0]).toEqual(
+      expect.arrayContaining([{ add: { content: `import * as Types from '../types.js';\n` } }]),
+    );
+    expect(getFragmentImportsFromResult(result)).toContain(
+      `import { UserFieldsFragmentDoc, UserFieldsFragment } from './user-fragment.generated.js';`,
     );
   });
 
