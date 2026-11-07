@@ -4807,14 +4807,14 @@ graphql-request@^6.0.0:
     "@graphql-typed-document-node/core" "^3.2.0"
     cross-fetch "^3.1.5"
 
-graphql-tag@2.12.6, graphql-tag@^2.11.0, graphql-tag@^2.12.6:
+graphql-tag@2.12.6:
   version "2.12.6"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
   integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
   dependencies:
     tslib "^2.1.0"
 
-graphql-tag@^2.12.7:
+graphql-tag@^2.11.0, graphql-tag@^2.12.6, graphql-tag@^2.12.7:
   version "2.12.7"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.7.tgz#4c82de0af91679b1940f149819fc8351801ed130"
   integrity sha512-xnE/NFzy+0eIesvAsREJZ284zTl/wYuBAvpsFSDhRGRdRHdnE90M21Q3xAWyYInb0J756c6x0pIQ62+vtvOs1Q==
@@ -4844,10 +4844,10 @@ graphql-yoga@^5.21.0:
     lru-cache "^10.0.0"
     tslib "^2.8.1"
 
-graphql@16.13.2:
-  version "16.13.2"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.13.2.tgz#4d2b73df5796b201f1bc2765f5d7067f689cb55f"
-  integrity sha512-5bJ+nf/UCpAjHM8i06fl7eLyVC9iuNAjm9qzkiu2ZGhM0VscSvS6WDPfAwkdkBuoXGM9FJSbKl6wylMwP9Ktig==
+graphql@16.15.0:
+  version "16.15.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.15.0.tgz#9e87af2e3adb6808cf3bde1c4f0bbfa675b4bac1"
+  integrity sha512-32kz9FecohDiC/tgcViwnRXM7HFBVTPiW7pHO+DikKOI5KjhU/jNULOReXsrFqt2WAYbE9xFXsTffJw6iTO8qw==
 
 has-bigints@^1.0.2:
   version "1.1.0"
