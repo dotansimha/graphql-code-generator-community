@@ -31,8 +31,8 @@ export const plugin: PluginFunction<FlutterFreezedPluginConfig> = (
 
   const importStatements = Block.buildImportStatements(info?.outputFile ?? 'app_models');
 
-  const generatedBlocks: string[] = visitorResult.definitions.filter(
-    (def: any) => typeof def === 'string' && def.length > 0,
+  const generatedBlocks = visitorResult.definitions.filter(
+    (def): def is string => typeof def === 'string' && def.length > 0,
   );
   // return [importStatements, ...generatedBlocks].join('').trim();
 
