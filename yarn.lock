@@ -1774,7 +1774,7 @@
     nock "^14.0.0"
     tslib "^2.8.0"
 
-"@graphql-codegen/testing@^6.0.0":
+"@graphql-codegen/testing@6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/testing/-/testing-6.0.0.tgz#0ec900b5db931688c52f38193c4ae37147c454d0"
   integrity sha512-Fay6wkQzzfSADIdTNKxifsvRZr4pCzzSxnR7p/tEPU6IuOcLS07ze8rsLhnNmTrjpKZQ+rJ3qeUIdZtqqDn6tg==
