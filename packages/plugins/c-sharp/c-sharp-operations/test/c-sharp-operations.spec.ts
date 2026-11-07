@@ -1091,9 +1091,45 @@ describe('C# Operations', () => {
         { documentMode: 'plainString' },
         { outputFile: '' },
       )) as Types.ComplexPluginOutput;
-      expect(result.content).toContain('@"');
-      expect(result.content).toContain('fragment UserFields on User');
-      expect(result.content).not.toContain('${UserFields}');
+      expect(result.content).toMatchInlineSnapshot(`
+        "using System;
+        using Newtonsoft.Json;
+        using GraphQL;
+        using GraphQL.Client.Abstractions;
+
+        namespace GraphQLCodeGen {
+
+            public class UserGQL {
+              /// <summary>
+              /// UserGQL.Request 
+              /// </summary>
+              public static GraphQLRequest Request() {
+                return new GraphQLRequest {
+                  Query = UserDocument,
+                  OperationName = "user"
+                };
+              }
+
+              /// <remarks>This method is obsolete. Use Request instead.</remarks>
+              public static GraphQLRequest getUserGQL() {
+                return Request();
+              }
+              
+              public static string UserDocument = @"
+                query user {
+                  user {
+                    ...UserFields
+                  }
+                }
+                fragment UserFields on User {
+                  id
+                  username
+                }";
+              
+            }
+            
+        }"
+      `);
     });
 
     it('Should generate response class', async () => {
