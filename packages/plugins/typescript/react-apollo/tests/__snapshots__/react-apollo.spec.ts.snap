@@ -3,10 +3,9 @@
 exports[`React Apollo > Issues > Issue #2742 - Incorrect import prefix 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -175,7 +174,7 @@ export type SubscriptionCommentAddedArgs = {
 export type Get_SomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Get_SomethingQuery = { feed?: Array<{ id: number } | null> | null };
+export type Get_SomethingQuery = { feed: Array<{ id: number } | null> | null };
 
 export const Get_SomethingDocument = gql\`
     query GET_SOMETHING {
@@ -208,10 +207,9 @@ export type Get_SomethingQueryResult = Apollo.QueryResult<Types.Get_SomethingQue
 exports[`React Apollo > Issues > Issue #2826 - Incorrect prefix 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -380,7 +378,7 @@ export type GQLSubscriptionCommentAddedArgs = {
 export type GQLGet_SomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GQLGet_SomethingQuery = { feed?: Array<{ id: number } | null> | null };
+export type GQLGet_SomethingQuery = { feed: Array<{ id: number } | null> | null };
 
 export const Get_SomethingDocument = gql\`
     query GET_SOMETHING {
@@ -413,10 +411,9 @@ export type Get_SomethingQueryResult = Apollo.QueryResult<GQLGet_SomethingQuery,
 exports[`React Apollo > Issues > PR #2725 - transformUnderscore: true causes invalid output 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -585,7 +582,7 @@ export type SubscriptionCommentAddedArgs = {
 export type GetSomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSomethingQuery = { feed?: Array<{ id: number } | null> | null };
+export type GetSomethingQuery = { feed: Array<{ id: number } | null> | null };
 
 export const GetSomethingDocument = gql\`
     query GET_SOMETHING {
@@ -618,10 +615,9 @@ export type GetSomethingQueryResult = Apollo.QueryResult<GetSomethingQuery, GetS
 exports[`React Apollo > Issues > PR #2725 - transformUnderscore: true causes invalid output 2`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -790,7 +786,7 @@ export type SubscriptionCommentAddedArgs = {
 export type GetSomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSomethingQuery = { feed?: Array<{ id: number } | null> | null };
+export type GetSomethingQuery = { feed: Array<{ id: number } | null> | null };
 
 export const GetSomethingDocument = gql\`
     query GET_SOMETHING {

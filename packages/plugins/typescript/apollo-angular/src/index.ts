@@ -55,11 +55,11 @@ export const addToSchema = parse(`
   directive @namedClient(name: String!) on OBJECT | FIELD
 `);
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
+export const validate: PluginValidateFn<ApolloAngularRawPluginConfig> = async (
+  schema,
+  documents,
   config,
-  outputFile: string,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts') {
     throw new Error(`Plugin "apollo-angular" requires extension to be ".ts"!`);

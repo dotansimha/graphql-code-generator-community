@@ -38,11 +38,11 @@ export const plugin: PluginFunction<ReactApolloRawPluginConfig, Types.ComplexPlu
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: ReactApolloRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<ReactApolloRawPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (config.withComponent === true) {
     if (extname(outputFile) !== '.tsx') {
