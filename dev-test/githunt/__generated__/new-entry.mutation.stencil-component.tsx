@@ -2,15 +2,19 @@ import gql from 'graphql-tag';
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 declare global {
-  export type SubmitRepositoryMutationVariables = Types.Exact<{
-    repoFullName: Types.Scalars['String']['input'];
+  export type SubmitRepositoryMutationVariables = Exact<{
+    repoFullName: string;
   }>;
 
-  export type SubmitRepositoryMutation = {
-    __typename?: 'Mutation';
-    submitRepository?: { __typename?: 'Entry'; createdAt: number } | null;
-  };
+  export type SubmitRepositoryMutation = { submitRepository: { createdAt: number } | null };
 }
 
 const SubmitRepositoryDocument = gql`

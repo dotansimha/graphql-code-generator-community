@@ -37,7 +37,16 @@ describe('Urql Introspection Plugin', () => {
       const allCases = extensions.concat(extensions.map(val => val.toUpperCase()));
 
       try {
-        await Promise.all(allCases.map(ext => validate(schema, [], {}, `foo${ext}`, [])));
+        await Promise.all(
+          allCases.map(ext =>
+            validate(
+              schema,
+              [],
+              {},
+              { outputFile: `foo${ext}`, allPlugins: [], pluginContext: {} },
+            ),
+          ),
+        );
 
         throw new Error('DONE');
       } catch (e) {
@@ -47,7 +56,12 @@ describe('Urql Introspection Plugin', () => {
 
     it('should throw on commonjs + ts', async () => {
       try {
-        await validate(schema, [], { module: 'commonjs' }, 'foo.ts', []);
+        await validate(
+          schema,
+          [],
+          { module: 'commonjs' },
+          { outputFile: 'foo.ts', allPlugins: [], pluginContext: {} },
+        );
 
         throw new Error('SHOULD_NOT_BE_HERE');
       } catch (e) {
@@ -61,7 +75,14 @@ describe('Urql Introspection Plugin', () => {
 
       try {
         await Promise.all(
-          allCases.map(ext => validate(schema, [], { useTypeImports: true }, `foo${ext}`, [])),
+          allCases.map(ext =>
+            validate(
+              schema,
+              [],
+              { useTypeImports: true },
+              { outputFile: `foo${ext}`, allPlugins: [], pluginContext: {} },
+            ),
+          ),
         );
 
         throw new Error('DONE');
@@ -72,7 +93,12 @@ describe('Urql Introspection Plugin', () => {
 
     it('should throw on unsupported extension', async () => {
       try {
-        await validate(schema, [], {}, 'foo.yml', []);
+        await validate(
+          schema,
+          [],
+          {},
+          { outputFile: 'foo.yml', allPlugins: [], pluginContext: {} },
+        );
 
         throw new Error('SHOULD_NOT_BE_HERE');
       } catch (e) {
