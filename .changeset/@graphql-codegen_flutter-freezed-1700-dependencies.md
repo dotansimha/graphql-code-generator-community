@@ -1,5 +1,5 @@
 ---
-"@graphql-codegen/flutter-freezed": patch
+"@graphql-codegen/flutter-freezed": major
 ---
 dependencies updates:
   - Updated dependency [`@graphql-codegen/plugin-helpers@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/8.0.0) (from `^6.3.0`, in `dependencies`)
