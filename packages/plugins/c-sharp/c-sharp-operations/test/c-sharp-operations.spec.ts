@@ -1062,6 +1062,40 @@ describe('C# Operations', () => {
       `);
     });
 
+    it('Should inline fragment definitions when documentMode is plainString', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: ID!
+          username: String!
+        }
+        type Query {
+          user: User!
+        }
+      `);
+      const operation = parse(/* GraphQL */ `
+        query user {
+          user {
+            ...UserFields
+          }
+        }
+
+        fragment UserFields on User {
+          id
+          username
+        }
+      `);
+
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: operation }],
+        { documentMode: 'plainString' },
+        { outputFile: '' },
+      )) as Types.ComplexPluginOutput;
+      expect(result.content).toContain('@"');
+      expect(result.content).toContain('fragment UserFields on User');
+      expect(result.content).not.toContain('${UserFields}');
+    });
+
     it('Should generate response class', async () => {
       const schema = buildSchema(/* GraphQL */ `
         type Query {
