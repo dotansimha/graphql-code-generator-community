@@ -6,7 +6,7 @@ import { generateFragmentImportStatement } from '@graphql-codegen/visitor-plugin
 import { preset } from '../src/index.js';
 
 describe('near-operation-file preset', () => {
-  const executePreset: typeof preset.buildGeneratesSection = options => preset.buildGeneratesSection(options);
+  const executePreset = preset.buildGeneratesSection;
   const schemaDocumentNode = parse(/* GraphQL */ `
     type Query {
       user(id: String): User!
