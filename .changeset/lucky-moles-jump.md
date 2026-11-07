@@ -1,5 +1,5 @@
 ---
-'@graphql-codegen/python': major
+'@graphql-codegen/python': minor
 ---
 
 Update `@graphql-codegen/plugin-helpers` and `@graphql-codegen/visitor-plugin-common` to v8.
