@@ -3,7 +3,7 @@ import { Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
 import { buildSchema, parse } from 'graphql';
 import { CSharpOperationsRawPluginConfig } from '../src/config.js';
-import { plugin } from '../src/index.js';
+import { plugin, validate } from '../src/index.js';
 
 describe('C# Operations', () => {
   describe('Namespaces', () => {
@@ -1667,6 +1667,26 @@ describe('C# Operations', () => {
       expect(result.content).toContain('OperationName = "FindMe2"');
       expect(result.content).toContain('OperationName = "findme3"');
       expect(result.content).toContain('OperationName = "FINDME4"');
+    });
+  });
+
+  describe('validate', () => {
+    const schema = buildSchema(/* GraphQL */ `
+      type Query {
+        me: Int!
+      }
+    `);
+
+    it('Should reject an output file without the .cs extension', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'Types.ts', allPlugins: [], pluginContext: {} }),
+      ).rejects.toThrow('requires extension to be ".cs"');
+    });
+
+    it('Should accept an output file with the .cs extension', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'Types.cs', allPlugins: [], pluginContext: {} }),
+      ).resolves.toBeUndefined();
     });
   });
 });
