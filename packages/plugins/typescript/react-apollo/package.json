@@ -47,8 +47,8 @@
   },
   "devDependencies": {
     "@graphql-codegen/testing": "6.0.0",
-    "@graphql-codegen/typescript": "^7.0.0",
-    "@graphql-codegen/typescript-operations": "^7.0.0",
+    "@graphql-codegen/typescript": "7.0.0",
+    "@graphql-codegen/typescript-operations": "7.0.0",
     "graphql-tag": "^2.12.6"
   },
   "publishConfig": {
