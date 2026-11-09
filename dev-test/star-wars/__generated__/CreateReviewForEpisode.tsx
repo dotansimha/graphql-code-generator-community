@@ -2,15 +2,47 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 const defaultOptions = {} as const;
-export type CreateReviewForEpisodeMutationVariables = Types.Exact<{
+/** The input object sent when passing a color */
+export type ColorInput = {
+  blue: number;
+  green: number;
+  red: number;
+};
+
+/** The episodes in the Star Wars trilogy */
+export type Episode =
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  | 'EMPIRE'
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  | 'JEDI'
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  | 'NEWHOPE';
+
+/** The input object sent when someone is creating a new review */
+export type ReviewInput = {
+  /** Comment about the movie, optional */
+  commentary?: string | null | undefined;
+  /** Favorite color, optional */
+  favoriteColor?: ColorInput | null | undefined;
+  /** 0-5 stars */
+  stars: number;
+};
+
+export type CreateReviewForEpisodeMutationVariables = Exact<{
   episode: Types.Episode;
   review: Types.ReviewInput;
 }>;
 
 export type CreateReviewForEpisodeMutation = {
-  __typename?: 'Mutation';
-  createReview?: { __typename?: 'Review'; stars: number; commentary?: string | null } | null;
+  createReview: { stars: number; commentary: string | null } | null;
 };
 
 export const CreateReviewForEpisodeDocument = gql`

@@ -2,7 +2,7 @@ import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   hooks: { afterAllFileWrite: ['prettier --write'] },
-  emitLegacyCommonJSImports: false,
+  importExtension: '.js',
   generates: {
     './dev-test/githunt/types.py': {
       schema: './dev-test/githunt/schema.json',
@@ -37,31 +37,30 @@ const config: CodegenConfig = {
     './dev-test/githunt/types.reactApollo.tsx': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
+      plugins: ['typescript-operations', 'typescript-react-apollo'],
     },
     './dev-test/githunt/types.reactApollo.v2.tsx': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
       config: { reactApolloVersion: 2 },
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
+      plugins: ['typescript-operations', 'typescript-react-apollo'],
     },
     './dev-test/githunt/types.reactApollo.customSuffix.tsx': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
       config: { operationResultSuffix: 'MyOperation' },
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
+      plugins: ['typescript-operations', 'typescript-react-apollo'],
     },
     './dev-test/githunt/types.reactApollo.preResolveTypes.tsx': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
       config: { preResolveTypes: true },
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
+      plugins: ['typescript-operations', 'typescript-react-apollo'],
     },
     './dev-test/githunt/types.reactApollo.hooks.tsx': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
       plugins: [
-        'typescript',
         'typescript-operations',
         {
           'typescript-react-apollo': {
@@ -73,7 +72,7 @@ const config: CodegenConfig = {
     './dev-test/githunt/types.react-query.ts': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-query'],
+      plugins: ['typescript-operations', 'typescript-react-query'],
       config: { addInfiniteQuery: true },
     },
     './dev-test/githunt/types.rtk-query.ts': {
@@ -81,7 +80,6 @@ const config: CodegenConfig = {
       documents: './dev-test/githunt/**/*.graphql',
       plugins: [
         { add: { content: 'module.hot?.accept();' } },
-        'typescript',
         'typescript-operations',
         {
           'typescript-rtk-query': {
@@ -95,18 +93,18 @@ const config: CodegenConfig = {
     './dev-test/githunt/types.apolloAngular.ts': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: ['typescript', 'typescript-operations', 'typescript-apollo-angular'],
+      plugins: ['typescript-operations', 'typescript-apollo-angular'],
     },
     './dev-test/githunt/types.apolloAngular.sdk.ts': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
       config: { sdkClass: true },
-      plugins: ['typescript', 'typescript-operations', 'typescript-apollo-angular'],
+      plugins: ['typescript-operations', 'typescript-apollo-angular'],
     },
     './dev-test/githunt/types.stencilApollo.tsx': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: ['typescript', 'typescript-operations', 'typescript-stencil-apollo'],
+      plugins: ['typescript-operations', 'typescript-stencil-apollo'],
     },
     './dev-test/githunt/types.urql.tsx': {
       schema: './dev-test/githunt/schema.json',
@@ -138,17 +136,17 @@ const config: CodegenConfig = {
     './dev-test/githunt/types.vueApollo.ts': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: ['typescript', 'typescript-operations', 'typescript-vue-apollo'],
+      plugins: ['typescript-operations', 'typescript-vue-apollo'],
     },
     './dev-test/githunt/types.vueApolloSmartOps.ts': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: ['typescript', 'typescript-operations', 'typescript-vue-apollo-smart-ops'],
+      plugins: ['typescript-operations', 'typescript-vue-apollo-smart-ops'],
     },
     './dev-test/githunt/jit-sdk.ts': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: ['typescript', 'typescript-operations', 'typescript-jit-sdk'],
+      plugins: ['typescript-operations', 'typescript-jit-sdk'],
     },
     './dev-test/star-wars': {
       schema: './dev-test/star-wars/schema.json',
@@ -166,7 +164,7 @@ const config: CodegenConfig = {
     './dev-test/test-message/types.tsx': {
       schema: './dev-test/test-message/schema.graphql',
       documents: './dev-test/test-message/documents.ts',
-      plugins: ['typescript', 'typescript-operations', 'typescript-react-apollo'],
+      plugins: ['typescript-operations', 'typescript-react-apollo'],
       config: {
         documentMode: 'external',
         importDocumentNodeExternallyFrom: './documents.ts',

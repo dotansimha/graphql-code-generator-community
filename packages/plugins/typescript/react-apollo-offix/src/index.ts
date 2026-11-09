@@ -37,11 +37,11 @@ export const plugin: PluginFunction<RawClientSideBasePluginConfig> = (
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  _schema: GraphQLSchema,
-  _documents: Types.DocumentFile[],
-  _config: RawClientSideBasePluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<RawClientSideBasePluginConfig> = async (
+  _schema,
+  _documents,
+  _config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.tsx' && extname(outputFile) !== '.ts') {
     throw new Error(`Plugin "react-apollo" requires extension to be ".tsx" or ".ts!`);

@@ -2,13 +2,19 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 const defaultOptions = {} as const;
-export type TwoHeroesQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type TwoHeroesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TwoHeroesQuery = {
-  __typename?: 'Query';
-  r2?: { __typename?: 'Droid'; name: string } | { __typename?: 'Human'; name: string } | null;
-  luke?: { __typename?: 'Droid'; name: string } | { __typename?: 'Human'; name: string } | null;
+  r2: { name: string } | { name: string } | null;
+  luke: { name: string } | { name: string } | null;
 };
 
 export const TwoHeroesDocument = gql`

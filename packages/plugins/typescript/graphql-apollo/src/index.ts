@@ -1,10 +1,7 @@
 import { extname } from 'path';
 import { concatAST, FragmentDefinitionNode, GraphQLSchema, Kind } from 'graphql';
 import { oldVisit, PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
-import {
-  LoadedFragment,
-  RawClientSideBasePluginConfig,
-} from '@graphql-codegen/visitor-plugin-common';
+import { LoadedFragment } from '@graphql-codegen/visitor-plugin-common';
 import { RawGraphQLApolloPluginConfig } from './config.js';
 import { GraphQLApolloVisitor } from './visitor.js';
 
@@ -40,11 +37,11 @@ export const plugin: PluginFunction<RawGraphQLApolloPluginConfig> = (
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: RawClientSideBasePluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<RawGraphQLApolloPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== 'tsx') {
     throw new Error(`Plugin "typescript-graphql-apollo" requires extension to be ".ts" or ".tsx"!`);

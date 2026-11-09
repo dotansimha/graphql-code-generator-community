@@ -2,25 +2,39 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 const defaultOptions = {} as const;
-export type HeroNameConditionalInclusionQueryVariables = Types.Exact<{
-  episode?: Types.InputMaybe<Types.Episode>;
-  includeName: Types.Scalars['Boolean']['input'];
+/** The episodes in the Star Wars trilogy */
+export type Episode =
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  | 'EMPIRE'
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  | 'JEDI'
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  | 'NEWHOPE';
+
+export type HeroNameConditionalInclusionQueryVariables = Exact<{
+  episode?: Types.Episode | null | undefined;
+  includeName: boolean;
 }>;
 
 export type HeroNameConditionalInclusionQuery = {
-  __typename?: 'Query';
-  hero?: { __typename?: 'Droid'; name?: string } | { __typename?: 'Human'; name?: string } | null;
+  hero: { name?: string } | { name?: string } | null;
 };
 
-export type HeroNameConditionalExclusionQueryVariables = Types.Exact<{
-  episode?: Types.InputMaybe<Types.Episode>;
-  skipName: Types.Scalars['Boolean']['input'];
+export type HeroNameConditionalExclusionQueryVariables = Exact<{
+  episode?: Types.Episode | null | undefined;
+  skipName: boolean;
 }>;
 
 export type HeroNameConditionalExclusionQuery = {
-  __typename?: 'Query';
-  hero?: { __typename?: 'Droid'; name?: string } | { __typename?: 'Human'; name?: string } | null;
+  hero: { name?: string } | { name?: string } | null;
 };
 
 export const HeroNameConditionalInclusionDocument = gql`

@@ -3,33 +3,36 @@ import { CommentsPageCommentFragmentDoc } from './comments-page-comment.fragment
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 declare global {
-  export type CommentQueryVariables = Types.Exact<{
-    repoFullName: Types.Scalars['String']['input'];
-    limit?: Types.InputMaybe<Types.Scalars['Int']['input']>;
-    offset?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  export type CommentQueryVariables = Exact<{
+    repoFullName: string;
+    limit?: number | null | undefined;
+    offset?: number | null | undefined;
   }>;
 
   export type CommentQuery = {
-    __typename?: 'Query';
-    currentUser?: { __typename?: 'User'; login: string; html_url: string } | null;
-    entry?: {
-      __typename?: 'Entry';
+    currentUser: { login: string; html_url: string } | null;
+    entry: {
       id: number;
       createdAt: number;
       commentCount: number;
-      postedBy: { __typename?: 'User'; login: string; html_url: string };
+      postedBy: { login: string; html_url: string };
       comments: Array<{
-        __typename?: 'Comment';
         id: number;
         createdAt: number;
         content: string;
-        postedBy: { __typename?: 'User'; login: string; html_url: string };
+        postedBy: { login: string; html_url: string };
       } | null>;
       repository: {
-        __typename?: 'Repository';
-        description?: string | null;
-        open_issues_count?: number | null;
+        description: string | null;
+        open_issues_count: number | null;
         stargazers_count: number;
         full_name: string;
         html_url: string;
