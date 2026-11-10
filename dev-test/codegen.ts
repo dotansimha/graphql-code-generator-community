@@ -109,13 +109,12 @@ const config: CodegenConfig = {
     './dev-test/githunt/types.urql.tsx': {
       schema: './dev-test/githunt/schema.json',
       documents: './dev-test/githunt/**/*.graphql',
-      plugins: [
-        'typescript',
-        'typescript-operations',
-        'typescript-urql',
-        'urql-introspection',
-        'typescript-urql-graphcache',
-      ],
+      plugins: ['typescript-operations', 'typescript-urql', 'urql-introspection'],
+    },
+    './dev-test/githunt/types.urql-graphcache.ts': {
+      schema: './dev-test/githunt/schema.json',
+      documents: './dev-test/githunt/**/*.graphql',
+      plugins: ['typescript', 'typescript-urql-graphcache'],
     },
     './dev-test/githunt': {
       schema: './dev-test/githunt/schema.json',
