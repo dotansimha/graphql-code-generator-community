@@ -3,7 +3,7 @@ import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
-import { plugin } from '../src/index.js';
+import { plugin, validate } from '../src/index.js';
 
 const validateTypeScript = async (
   output: Types.PluginOutput,
@@ -967,5 +967,22 @@ describe('Solid-Query', () => {
       expect(out.prepend).toMatchSnapshot('prepend');
       await validateTypeScript(mergeOutputs(out), schema, docs, config);
     });
+  });
+
+  describe('validate', () => {
+    it('Should reject output files that are not .ts or .tsx', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'graphql.js', allPlugins: [], pluginContext: {} }),
+      ).rejects.toThrow('requires extension to be ".ts" or ".tsx"');
+    });
+
+    it.each(['graphql.ts', 'graphql.tsx'])(
+      'Should accept %s as the output file',
+      async outputFile => {
+        await expect(
+          validate(schema, [], {}, { outputFile, allPlugins: [], pluginContext: {} }),
+        ).resolves.toBeUndefined();
+      },
+    );
   });
 });
