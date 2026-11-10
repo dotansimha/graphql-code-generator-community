@@ -1,5 +1,5 @@
 import { extname } from 'path';
-import { concatAST, FragmentDefinitionNode, GraphQLSchema, Kind } from 'graphql';
+import { concatAST, FragmentDefinitionNode, Kind } from 'graphql';
 import { oldVisit, PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
 import { LoadedFragment } from '@graphql-codegen/visitor-plugin-common';
 import { MSWRawPluginConfig } from './config.js';
@@ -33,11 +33,11 @@ export const plugin: PluginFunction<MSWRawPluginConfig, Types.ComplexPluginOutpu
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: MSWRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<MSWRawPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts') {
     throw new Error(`Plugin "typescript-msw" requires extension to be ".ts"!`);
