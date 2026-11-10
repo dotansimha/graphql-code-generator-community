@@ -50,11 +50,11 @@ export const plugin: PluginFunction<SolidQueryRawPluginConfig, Types.ComplexPlug
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: SolidQueryRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<SolidQueryRawPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "typescript-solid-query" requires extension to be ".ts" or ".tsx"!`);
