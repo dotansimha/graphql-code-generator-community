@@ -8,7 +8,7 @@ import {
 } from '@graphql-codegen/typescript-operations';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import { RawGenericSdkPluginConfig } from '../src/config.js';
-import { plugin } from '../src/index.js';
+import { plugin, validate as validatePlugin } from '../src/index.js';
 
 const schema = extendSchema(
   buildClientSchema(require('../../../../../dev-test/githunt/schema.json')),
@@ -268,6 +268,30 @@ async function test() {
       expect(output).toContain(`Types.Feed2Query`);
       expect(output).toContain(`Types.Feed3Query`);
       expect(output).toContain(`Types.Feed4Query`);
+    });
+  });
+
+  describe('validate', () => {
+    it('Should reject output files that are not .ts', async () => {
+      await expect(
+        validatePlugin(
+          schema,
+          [],
+          {},
+          { outputFile: 'graphql.js', allPlugins: [], pluginContext: {} },
+        ),
+      ).rejects.toThrow('requires extension to be ".ts"');
+    });
+
+    it('Should accept .ts as the output file', async () => {
+      await expect(
+        validatePlugin(
+          schema,
+          [],
+          {},
+          { outputFile: 'graphql.ts', allPlugins: [], pluginContext: {} },
+        ),
+      ).resolves.toBeUndefined();
     });
   });
 });

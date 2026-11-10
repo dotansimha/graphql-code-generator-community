@@ -1,10 +1,7 @@
 import { extname } from 'path';
 import { concatAST, FragmentDefinitionNode, GraphQLSchema, Kind } from 'graphql';
 import { oldVisit, PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
-import {
-  LoadedFragment,
-  RawClientSideBasePluginConfig,
-} from '@graphql-codegen/visitor-plugin-common';
+import { LoadedFragment } from '@graphql-codegen/visitor-plugin-common';
 import { RawGraphQLRequestPluginConfig } from './config.js';
 import { GraphQLRequestVisitor } from './visitor.js';
 
@@ -40,11 +37,11 @@ export const plugin: PluginFunction<RawGraphQLRequestPluginConfig> = (
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: RawClientSideBasePluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<RawGraphQLRequestPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (!['.ts', '.mts', '.cts'].includes(extname(outputFile))) {
     throw new Error(
