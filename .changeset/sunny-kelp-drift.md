@@ -1,0 +1,12 @@
+---
+"@graphql-codegen/typescript-vue-urql": major
+---
+
+Move to graphql-codegen v8.
+
+- Bump `@graphql-codegen/plugin-helpers` and `@graphql-codegen/visitor-plugin-common` to `^8.0.0`
+- Narrow the `graphql` peer dependency to `^16.0.0 || ^17.0.0`
+- Require Node.js `>=22.18.0`
+- `validate` now reads `outputFile` from the `info` object passed as its fourth argument, so it requires `@graphql-codegen/cli` v8
+
+With the default `documentMode: graphQLTag`, a fragment document no longer interpolates the documents of the fragments it spreads. Each operation document now interpolates every fragment it uses, directly or through other fragments, once. To keep using a fragment document on its own (for example with Apollo `cache.readFragment`), set `inlineReferencedFragmentsInFragmentDocuments: true`.
