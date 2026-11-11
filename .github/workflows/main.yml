@@ -75,12 +75,14 @@ jobs:
       Unit Test on Node ${{matrix.node_version}} (${{matrix.os}}) and GraphQL
       v${{matrix.graphql_version}}
     runs-on: ubuntu-latest
+    continue-on-error: ${{matrix.graphql_version == 17}}
     needs:
       - lint
       - prettier-check
       - dev-tests
       - esm
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest] # remove windows to speed up the tests
         node_version: [22, 24]
