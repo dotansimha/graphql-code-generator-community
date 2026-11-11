@@ -324,7 +324,7 @@ export class ReactApolloVisitor extends ClientSideBaseVisitor<
     operationName: string,
     operationType: string,
   ): string {
-    const variableString = node.variableDefinitions.reduce((acc, item) => {
+    const variableString = (node.variableDefinitions || []).reduce((acc, item) => {
       const name = item.variable.name.value;
 
       return `${acc}\n *      ${name}: // value for '${name}'`;

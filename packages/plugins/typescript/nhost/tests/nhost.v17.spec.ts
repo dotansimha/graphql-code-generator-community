@@ -1,7 +1,7 @@
-import { buildSchema } from 'graphql';
+import { buildSchema, versionInfo } from 'graphql';
 import { plugin } from '../src/index.js';
 
-describe('TypeScript Nhost Plugin', () => {
+describe.skipIf(versionInfo.major !== 17)('TypeScript Nhost Plugin - GraphQL v17', () => {
   const schema = buildSchema(/* GraphQL */ `
     scalar DateTime
 
@@ -237,8 +237,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "ID",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -249,8 +249,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -261,8 +261,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -311,8 +311,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -351,8 +351,8 @@ describe('TypeScript Nhost Plugin', () => {
                         "type": {
                           "kind": "NON_NULL",
                           "ofType": {
-                            "kind": "SCALAR",
                             "name": "String",
+                            "kind": "SCALAR",
                             "ofType": null
                           }
                         }
@@ -362,8 +362,8 @@ describe('TypeScript Nhost Plugin', () => {
                         "type": {
                           "kind": "NON_NULL",
                           "ofType": {
-                            "kind": "SCALAR",
                             "name": "String",
+                            "kind": "SCALAR",
                             "ofType": null
                           }
                         }
@@ -398,8 +398,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "ID",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -410,8 +410,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -439,8 +439,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "ID",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -451,8 +451,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -463,8 +463,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -487,8 +487,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "ID",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -499,8 +499,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -511,8 +511,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "OBJECT",
                         "name": "ImageMetadata",
+                        "kind": "OBJECT",
                         "ofType": null
                       }
                     },
@@ -523,8 +523,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -547,8 +547,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -646,8 +646,8 @@ describe('TypeScript Nhost Plugin', () => {
                         "ofType": {
                           "kind": "NON_NULL",
                           "ofType": {
-                            "kind": "INTERFACE",
                             "name": "Notifiction",
+                            "kind": "INTERFACE",
                             "ofType": null
                           }
                         }
@@ -664,8 +664,8 @@ describe('TypeScript Nhost Plugin', () => {
                         "ofType": {
                           "kind": "NON_NULL",
                           "ofType": {
-                            "kind": "UNION",
                             "name": "AnyNotification",
+                            "kind": "UNION",
                             "ofType": null
                           }
                         }
@@ -682,8 +682,8 @@ describe('TypeScript Nhost Plugin', () => {
                         "ofType": {
                           "kind": "NON_NULL",
                           "ofType": {
-                            "kind": "UNION",
                             "name": "SearchResult",
+                            "kind": "UNION",
                             "ofType": null
                           }
                         }
@@ -695,8 +695,8 @@ describe('TypeScript Nhost Plugin', () => {
                         "type": {
                           "kind": "NON_NULL",
                           "ofType": {
-                            "kind": "SCALAR",
                             "name": "String",
+                            "kind": "SCALAR",
                             "ofType": null
                           }
                         }
@@ -717,8 +717,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "NON_NULL",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -729,8 +729,8 @@ describe('TypeScript Nhost Plugin', () => {
                     "type": {
                       "kind": "LIST",
                       "ofType": {
-                        "kind": "SCALAR",
                         "name": "String",
+                        "kind": "SCALAR",
                         "ofType": null
                       }
                     },
@@ -743,8 +743,8 @@ describe('TypeScript Nhost Plugin', () => {
                       "ofType": {
                         "kind": "LIST",
                         "ofType": {
-                          "kind": "SCALAR",
                           "name": "String",
+                          "kind": "SCALAR",
                           "ofType": null
                         }
                       }
@@ -760,8 +760,8 @@ describe('TypeScript Nhost Plugin', () => {
                         "ofType": {
                           "kind": "NON_NULL",
                           "ofType": {
-                            "kind": "SCALAR",
                             "name": "String",
+                            "kind": "SCALAR",
                             "ofType": null
                           }
                         }

@@ -3,7 +3,7 @@ import { defineConfig } from 'vitest/config';
 export const sharedConfig = defineConfig({
   resolve: {
     alias: {
-      graphql: 'graphql/index.js',
+      graphql: require.resolve('graphql'),
     },
     tsconfigPaths: true,
   },

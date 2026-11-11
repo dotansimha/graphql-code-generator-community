@@ -1,5 +1,39 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`generic-sdk > generates operation description correctly 1`] = `
+{
+  "content": "
+export const FeedDocument = gql\`
+    """description (becomes JSDoc)"""
+query feed {
+  feed {
+    id
+    commentCount
+    repository {
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
+export function getSdk<C>(requester: Requester<C>) {
+  return {
+    /** description (becomes JSDoc) */
+    feed(variables?: FeedQueryVariables, options?: C): Promise<FeedQuery> {
+      return requester<FeedQuery, FeedQueryVariables>(FeedDocument, variables, options) as Promise<FeedQuery>;
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;",
+  "prepend": [
+    "import { DocumentNode } from 'graphql';",
+    "import gql from 'graphql-tag';",
+  ],
+}
+`;
+
 exports[`generic-sdk > sdk > Should generate a correct wrap method 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;

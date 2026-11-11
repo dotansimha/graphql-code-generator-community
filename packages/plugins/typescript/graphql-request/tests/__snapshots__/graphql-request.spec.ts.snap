@@ -1,5 +1,45 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`graphql-request > generates operation description correctly 1`] = `
+{
+  "content": "
+export const FeedDocument = gql\`
+    """description (becomes JSDoc)"""
+query feed {
+  feed {
+    id
+    commentCount
+    repository {
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
+
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType, _variables) => action();
+
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    /** description (becomes JSDoc) */
+    feed(variables?: FeedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<FeedQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<FeedQuery>({ document: FeedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'feed', 'query', variables);
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;",
+  "prepend": [
+    "import { GraphQLClient, type RequestOptions } from 'graphql-request';",
+    "type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];",
+    "import gql from 'graphql-tag';",
+  ],
+}
+`;
+
 exports[`graphql-request > sdk > Should allow passing wrapper arg to generated getSdk 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
