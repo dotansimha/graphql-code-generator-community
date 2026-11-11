@@ -1,5 +1,25 @@
 # @graphql-codegen/typescript-jit-sdk
 
+## 5.0.1
+
+### Patch Changes
+
+- [#1720](https://github.com/dotansimha/graphql-code-generator-community/pull/1720)
+  [`86dd614`](https://github.com/dotansimha/graphql-code-generator-community/commit/86dd61487ab3f25053b5d81f3f079f42e8635e46)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-tools/utils@^13.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/13.0.0)
+    (from `^8.8.0 || ^10.0.0 || ^11.0.0`, in `peerDependencies`)
+
+- [#1720](https://github.com/dotansimha/graphql-code-generator-community/pull/1720)
+  [`86dd614`](https://github.com/dotansimha/graphql-code-generator-community/commit/86dd61487ab3f25053b5d81f3f079f42e8635e46)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Bump `@graphql-tools/utils` and
+  `@graphql-tools/schema` to the latest majors.
+
+  - `@graphql-codegen/flow-resolvers`: `engines.node` is now `>=22.18.0`, as required by the new
+    `@graphql-tools/utils` major.
+  - `@graphql-codegen/typescript-jit-sdk`: the `@graphql-tools/utils` peer range is now `^13.0.0`.
+
 ## 5.0.0
 
 ### Major Changes

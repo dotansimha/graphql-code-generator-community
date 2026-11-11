@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/flow-resolvers",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating Flow types for GraphQL resolvers signature",
   "repository": {
