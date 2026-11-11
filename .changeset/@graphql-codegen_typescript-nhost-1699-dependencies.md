@@ -1,6 +1,8 @@
 ---
 "@graphql-codegen/typescript-nhost": patch
 ---
+Generated output changes from `@graphql-codegen/typescript` v7: the nhost.v16+ output now emits `DateTime: { input: unknown; output: unknown; }` instead of `any`, and `prepend` no longer includes the `Exact`, `MakeOptional`, `MakeMaybe`, `MakeEmpty` and `Incremental` helper types.
+
 dependencies updates:
   - Updated dependency [`@graphql-codegen/plugin-helpers@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/8.0.0) (from `^6.3.0`, in `dependencies`)
   - Updated dependency [`@graphql-codegen/visitor-plugin-common@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/8.0.0) (from `^6.3.0`, in `dependencies`)
