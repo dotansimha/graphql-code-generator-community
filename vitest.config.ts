@@ -1,5 +1,3 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import { defineConfig } from 'vitest/config';
 
 export const sharedConfig = defineConfig({
