@@ -36,7 +36,7 @@
     "lint": "eslint **/*.ts"
   },
   "peerDependencies": {
-    "@graphql-tools/utils": "^8.8.0 || ^10.0.0 || ^11.0.0",
+    "@graphql-tools/utils": "^13.0.0",
     "graphql": "^16.0.0 || ^17.0.0",
     "graphql-jit": "^0.7.5 || ^0.8.10 || ^0.9.1",
     "graphql-tag": "^2.0.0"
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@graphql-codegen/typescript": "7.0.1",
     "@graphql-codegen/typescript-operations": "7.0.1",
-    "@graphql-tools/utils": "11.2.2",
+    "@graphql-tools/utils": "13.2.2",
     "graphql-jit": "^0.8.10"
   },
   "publishConfig": {
