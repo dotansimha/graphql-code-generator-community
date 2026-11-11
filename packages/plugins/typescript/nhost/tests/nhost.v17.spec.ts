@@ -1,7 +1,7 @@
-import { buildSchema } from 'graphql';
+import { buildSchema, versionInfo } from 'graphql';
 import { plugin } from '../src/index.js';
 
-describe('TypeScript Nhost Plugin', () => {
+describe.skipIf(versionInfo.major !== 17)('TypeScript Nhost Plugin - GraphQL v17', () => {
   const schema = buildSchema(/* GraphQL */ `
     scalar DateTime
 
