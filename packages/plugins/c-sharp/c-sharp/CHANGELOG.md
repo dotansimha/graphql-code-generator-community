@@ -1,5 +1,14 @@
 # @graphql-codegen/c-sharp
 
+## 7.0.1
+
+### Patch Changes
+
+- [#1717](https://github.com/dotansimha/graphql-code-generator-community/pull/1717)
+  [`828f1de`](https://github.com/dotansimha/graphql-code-generator-community/commit/828f1dea3fabc1a5e660f87c8781854ceb5b8563)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Support GraphQL v17, where AST nodes leave
+  `variableDefinitions`, `directives` and `arguments` undefined instead of an empty array.
+
 ## 7.0.0
 
 ### Major Changes
