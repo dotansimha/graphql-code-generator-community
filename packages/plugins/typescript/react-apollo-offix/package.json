@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/typescript-react-offix",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating useOffline mutations for offix use",
   "repository": {

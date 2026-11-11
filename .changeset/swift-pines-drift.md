@@ -1,7 +1,0 @@
----
-'@graphql-codegen/typescript-mongodb': major
----
-
-Update `@graphql-codegen/plugin-helpers`, `@graphql-codegen/visitor-plugin-common` and `@graphql-codegen/typescript` to v8/v7. `validate` now reads `outputFile` from the `info` object passed as its fourth argument, so it requires `@graphql-codegen/cli` v8.
-
-The `graphql` peer dependency range is now `^16.0.0 || ^17.0.0`, and `engines.node` is now `>=22.18.0`.
