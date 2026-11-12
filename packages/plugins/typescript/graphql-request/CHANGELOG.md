@@ -1,5 +1,21 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 8.0.2
+
+### Patch Changes
+
+- [#1657](https://github.com/dotansimha/graphql-code-generator-community/pull/1657)
+  [`ed49d00`](https://github.com/dotansimha/graphql-code-generator-community/commit/ed49d006ce67eee73bd722fa46fd099009890094)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - This changes the shape of generated
+  documents: a fragment's `*Doc` no longer interpolates the fragments it spreads, and each operation
+  document instead interpolates every fragment it transitively spreads. Generated output is
+  equivalent, but any code or snapshot asserting on the previous interpolation layout needs
+  updating. Also, `documentMode: 'string'` is now remapped to `'plainString'` with a console
+  warning, because the `'string'` output referenced an undeclared `TypedDocumentString`. Documents
+  are now typed as plain `string`; if you supplied `TypedDocumentString` yourself (e.g. via the
+  `add` plugin) or relied on the `TypedDocumentString<Result, Variables>` type of exported
+  documents, please check your setup. Set `documentMode: 'plainString'` to silence the warning.
+
 ## 8.0.1
 
 ### Patch Changes
