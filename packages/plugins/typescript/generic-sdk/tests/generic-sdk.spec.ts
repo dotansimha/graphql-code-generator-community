@@ -157,6 +157,73 @@ async function test() {
       expect(output).toMatchSnapshot();
     });
 
+    it('Should remap documentMode = "string" to "plainString" and warn once per run', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      try {
+        vi.resetModules();
+        const { plugin: freshPlugin } = await import('../src/index.js');
+        // Multiple visitors in the same run (e.g. near-operation-file) must not repeat the warning
+        await freshPlugin(
+          schema,
+          [{ location: '', document: basicDoc }],
+          { documentMode: DocumentMode.string },
+          { outputFile: 'graphql.ts' },
+        );
+        const result = (await freshPlugin(
+          schema,
+          [{ location: '', document: basicDoc }],
+          { documentMode: DocumentMode.string },
+          { outputFile: 'graphql.ts' },
+        )) as Types.ComplexPluginOutput;
+
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn).toHaveBeenCalledWith(
+          "[typescript-generic-sdk] documentMode: 'string' does not work with this plugin (it references an undeclared TypedDocumentString), and has been remapped to 'plainString' for correctness. Set documentMode: 'plainString' to silence this warning.",
+        );
+        expect(result.content).toContain('export const FeedDocument = `');
+        expect(result.content).not.toContain('TypedDocumentString');
+      } finally {
+        warn.mockRestore();
+      }
+    });
+
+    it('Should type doc as string and not import DocumentNode when documentMode = "plainString"', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+      try {
+        const result = (await plugin(
+          schema,
+          [{ location: '', document: basicDoc }],
+          { documentMode: DocumentMode.plainString },
+          { outputFile: 'graphql.ts' },
+        )) as Types.ComplexPluginOutput;
+
+        expect(warn).not.toHaveBeenCalled();
+        expect(result.prepend.join('\n')).not.toContain('DocumentNode');
+        expect(result.content).toContain('export const FeedDocument = `');
+        expect(result.content).not.toContain('TypedDocumentString');
+        expect(result.content).toContain(
+          'export type Requester<C = {}> = <R, V>(doc: string, vars?: V, options?: C)',
+        );
+      } finally {
+        warn.mockRestore();
+      }
+    });
+
+    it('Should type doc as string when rawRequest is true and documentMode = "plainString"', async () => {
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: basicDoc }],
+        { rawRequest: true, documentMode: DocumentMode.plainString },
+        { outputFile: 'graphql.ts' },
+      )) as Types.ComplexPluginOutput;
+
+      expect(result.prepend).toContain(`import { ExecutionResult } from 'graphql';`);
+      expect(result.prepend.join('\n')).not.toContain('DocumentNode');
+      expect(result.content).toContain(
+        'export type Requester<C = {}, E = unknown> = <R, V>(doc: string, vars?: V, options?: C)',
+      );
+    });
+
     it('Should support rawRequest', async () => {
       const config = { rawRequest: true };
       const docs = [{ filePath: '', document: basicDoc }];

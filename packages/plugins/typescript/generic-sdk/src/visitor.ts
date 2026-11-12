@@ -29,6 +29,8 @@ function isStreamOperation(operationAST: OperationDefinitionNode) {
   return false;
 }
 
+let hasWarnedDocumentModeString = false;
+
 export class GenericSdkVisitor extends ClientSideBaseVisitor<
   RawGenericSdkPluginConfig,
   GenericSdkPluginConfig
@@ -47,18 +49,32 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
     fragments: LoadedFragment[],
     rawConfig: RawGenericSdkPluginConfig,
   ) {
+    const isDocumentModeString = rawConfig.documentMode === DocumentMode.string;
+    const effectiveDocumentMode = isDocumentModeString
+      ? DocumentMode.plainString
+      : getConfigValue(rawConfig.documentMode, DocumentMode.graphQLTag);
+
     super(schema, fragments, rawConfig, {
+      documentMode: effectiveDocumentMode,
       usingObservableFrom: rawConfig.usingObservableFrom,
       rawRequest: getConfigValue(rawConfig.rawRequest, false),
     });
 
     autoBind(this);
 
+    if (isDocumentModeString && !hasWarnedDocumentModeString) {
+      hasWarnedDocumentModeString = true;
+      // eslint-disable-next-line no-console
+      console.warn(
+        "[typescript-generic-sdk] documentMode: 'string' does not work with this plugin (it references an undeclared TypedDocumentString), and has been remapped to 'plainString' for correctness. Set documentMode: 'plainString' to silence this warning.",
+      );
+    }
+
     if (this.config.usingObservableFrom) {
       this._additionalImports.push(this.config.usingObservableFrom);
     }
     const importType = this.config.useTypeImports ? 'import type' : 'import';
-    if (this.config.documentMode !== DocumentMode.string) {
+    if (this.config.documentMode !== DocumentMode.plainString) {
       this._additionalImports.push(
         `${importType} { DocumentNode${
           this.config.rawRequest ? ', ExecutionResult' : ''
@@ -139,7 +155,7 @@ export class GenericSdkVisitor extends ClientSideBaseVisitor<
       .map(s => indentMultiline(s, 2));
 
     const documentNodeType =
-      this.config.documentMode === DocumentMode.string ? 'string' : 'DocumentNode';
+      this.config.documentMode === DocumentMode.plainString ? 'string' : 'DocumentNode';
 
     if (this.config.rawRequest) {
       return `export type Requester<C = {}, E = unknown> = <R, V>(doc: ${documentNodeType}, vars?: V, options?: C) => Promise<ExecutionResult<R, E>> | ${
