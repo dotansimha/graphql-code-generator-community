@@ -65,6 +65,12 @@ plugins:
   `@graphql-codegen/java-apollo-android`
 - [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-nest.svg)](https://badge.fury.io/js/%40graphql-codegen%2Ftypescript-nest) -
   `@graphql-codegen/typescript-nest`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fpython.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fpython) -
+  `@graphql-codegen/python`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fpython-operations.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fpython-operations) -
+  `@graphql-codegen/python-operations`
+- [![npm version](https://badge.fury.io/js/%40graphql-codegen%2Fpython-common.svg)](https://badge.fury.io/js/%40graphql-codegen%2Fpython-common) -
+  `@graphql-codegen/python-common`
 
 ### Getting started with codegen
 

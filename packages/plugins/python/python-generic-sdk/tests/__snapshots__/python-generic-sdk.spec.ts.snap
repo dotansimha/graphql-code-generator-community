@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`python-generic-sdk plugin > matches the snapshot for the target example 1`] = `
+"from typing import Any, Optional, Protocol
+GET_USERS_DOCUMENT = """query GetUsers($role: Role) {
+  users(role: $role) {
+    id
+    name
+    role
+    friends {
+      id
+      name
+    }
+  }
+}"""
+
+
+class Requester(Protocol):
+    async def __call__(self, doc: str, variables: 'Any' = None, options: 'Any' = None) -> 'Any':
+        ...
+
+
+def get_sdk(requester: Requester):
+    class Sdk:
+        async def get_users(self, variables: 'Optional[GetUsersQueryVariables]' = None, options: 'Any' = None) -> 'GetUsersQuery':
+            return GetUsersQuery.model_validate(await requester(GET_USERS_DOCUMENT, variables, options))
+
+    return Sdk()"
+`;
