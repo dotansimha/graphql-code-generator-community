@@ -1,5 +1,18 @@
 # @graphql-codegen/typescript-generic-sdk
 
+## 6.0.1
+
+### Patch Changes
+
+- [#1725](https://github.com/dotansimha/graphql-code-generator-community/pull/1725)
+  [`7921dbc`](https://github.com/dotansimha/graphql-code-generator-community/commit/7921dbcbe4885ac805fd686295a1c3706ad51479)
+  Thanks [@mlahargou](https://github.com/mlahargou)! - `documentMode: 'string'` is now remapped to
+  `'plainString'` with a console warning, because the `'string'` output referenced an undeclared
+  `TypedDocumentString`. Documents are now plain strings and `Requester` types `doc` as `string`. If
+  you supplied `TypedDocumentString` yourself (e.g. via the `add` plugin) or relied on the
+  `TypedDocumentString<Result, Variables>` type of exported documents, please check your setup. Set
+  `documentMode: 'plainString'` to silence the warning.
+
 ## 6.0.0
 
 ### Major Changes
