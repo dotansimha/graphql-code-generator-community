@@ -895,6 +895,7 @@ describe('near-operation-file preset', () => {
     it.each([
       ['include', '@include(if: $flag)'],
       ['skip', '@skip(if: $flag)'],
+      ['defer', '@defer'],
     ])(
       '#11054 - importing nested fragment used in a field selection when outer spread has %s',
       async (_, directive) => {
@@ -956,12 +957,14 @@ describe('near-operation-file preset', () => {
         );
         const typeIdentifiers =
           markdownImport?.importSource.identifiers.filter(i => i.kind === 'type') || [];
-        expect(typeIdentifiers).toEqual([
-          {
-            name: 'MarkdownFragment',
-            kind: 'type',
-          },
-        ]);
+        expect(typeIdentifiers).toMatchInlineSnapshot(`
+          [
+            {
+              "kind": "type",
+              "name": "MarkdownFragment",
+            },
+          ]
+        `);
       },
     );
   });
