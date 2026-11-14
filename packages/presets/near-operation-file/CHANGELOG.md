@@ -1,5 +1,73 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 6.0.1
+
+### Patch Changes
+
+- [#1720](https://github.com/dotansimha/graphql-code-generator-community/pull/1720)
+  [`86dd614`](https://github.com/dotansimha/graphql-code-generator-community/commit/86dd61487ab3f25053b5d81f3f079f42e8635e46)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-tools/utils@^13.2.2` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/13.2.2)
+    (from `^11.0.0`, in `dependencies`)
+
+- [#1720](https://github.com/dotansimha/graphql-code-generator-community/pull/1720)
+  [`86dd614`](https://github.com/dotansimha/graphql-code-generator-community/commit/86dd61487ab3f25053b5d81f3f079f42e8635e46)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Bump `@graphql-tools/utils` and
+  `@graphql-tools/schema` to the latest majors.
+
+  - `@graphql-codegen/flow-resolvers`: `engines.node` is now `>=22.18.0`, as required by the new
+    `@graphql-tools/utils` major.
+  - `@graphql-codegen/typescript-jit-sdk`: the `@graphql-tools/utils` peer range is now `^13.0.0`.
+
+## 6.0.0
+
+### Major Changes
+
+- [#1706](https://github.com/dotansimha/graphql-code-generator-community/pull/1706)
+  [`54de5c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/54de5c2360ccfd7572442e2065fa206df6e73fd2)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update `@graphql-codegen/add`,
+  `@graphql-codegen/plugin-helpers` and `@graphql-codegen/visitor-plugin-common` to v8.
+
+  The preset no longer reads `emitLegacyCommonJSImports`, which v8 removed. Generated relative
+  imports use `importExtension` only, and get no extension when it is not set. If you relied on
+  `emitLegacyCommonJSImports: false` to append `.js`, set `importExtension: '.js'` instead.
+
+  The `graphql` peer dependency range is now `^16.0.0 || ^17.0.0`, and `engines.node` is now
+  `>=22.18.0`.
+
+### Patch Changes
+
+- [#1706](https://github.com/dotansimha/graphql-code-generator-community/pull/1706)
+  [`54de5c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/54de5c2360ccfd7572442e2065fa206df6e73fd2)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/add@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/add/v/8.0.0)
+    (from `^7.0.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/8.0.0)
+    (from `^7.0.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/8.0.0)
+    (from `^7.2.2`, in `dependencies`)
+  - Updated dependency
+    [`graphql@^16.0.0 || ^17.0.0` ↗︎](https://www.npmjs.com/package/graphql/v/16.0.0) (from
+    `^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0`,
+    in `peerDependencies`)
+
+## 5.2.4
+
+### Patch Changes
+
+- [#1638](https://github.com/dotansimha/graphql-code-generator-community/pull/1638)
+  [`253c487`](https://github.com/dotansimha/graphql-code-generator-community/commit/253c487fe0c9cfc8dde4d2bef255ada7c7895d44)
+  Thanks [@wassim-k](https://github.com/wassim-k)! - Fix unused interface fragment type imports when
+  a fragment is spread directly in another fragment or operation.
+
+  Top-level spreads of a polymorphic fragment (e.g. `...AnimalFragment` inside
+  `fragment CatFragment on Cat`) were not narrowed to the parent's type, producing unused imports
+  or, when also spread in a nested field, missing ones.
+
 ## 5.2.3
 
 ### Patch Changes

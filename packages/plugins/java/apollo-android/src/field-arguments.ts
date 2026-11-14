@@ -24,10 +24,9 @@ export function visitFieldArguments(selection: FieldNode, imports: ImportsSet): 
   return oldVisit(selection, {
     leave: {
       Field: (node: FieldNode) => {
+        const args = node.arguments || [];
         return (
-          `new UnmodifiableMapBuilder<String, Object>(${node.arguments.length})` +
-          node.arguments.join('') +
-          '.build()'
+          `new UnmodifiableMapBuilder<String, Object>(${args.length})` + args.join('') + '.build()'
         );
       },
       Argument: (node: ArgumentNode) => {

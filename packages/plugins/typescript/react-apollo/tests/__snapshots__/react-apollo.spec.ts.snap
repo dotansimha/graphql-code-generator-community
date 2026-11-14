@@ -3,10 +3,9 @@
 exports[`React Apollo > Issues > Issue #2742 - Incorrect import prefix 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -175,7 +174,7 @@ export type SubscriptionCommentAddedArgs = {
 export type Get_SomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Get_SomethingQuery = { feed?: Array<{ id: number } | null> | null };
+export type Get_SomethingQuery = { feed: Array<{ id: number } | null> | null };
 
 export const Get_SomethingDocument = gql\`
     query GET_SOMETHING {
@@ -208,10 +207,9 @@ export type Get_SomethingQueryResult = Apollo.QueryResult<Types.Get_SomethingQue
 exports[`React Apollo > Issues > Issue #2826 - Incorrect prefix 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -380,7 +378,7 @@ export type GQLSubscriptionCommentAddedArgs = {
 export type GQLGet_SomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GQLGet_SomethingQuery = { feed?: Array<{ id: number } | null> | null };
+export type GQLGet_SomethingQuery = { feed: Array<{ id: number } | null> | null };
 
 export const Get_SomethingDocument = gql\`
     query GET_SOMETHING {
@@ -413,10 +411,9 @@ export type Get_SomethingQueryResult = Apollo.QueryResult<GQLGet_SomethingQuery,
 exports[`React Apollo > Issues > PR #2725 - transformUnderscore: true causes invalid output 1`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -585,7 +582,7 @@ export type SubscriptionCommentAddedArgs = {
 export type GetSomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSomethingQuery = { feed?: Array<{ id: number } | null> | null };
+export type GetSomethingQuery = { feed: Array<{ id: number } | null> | null };
 
 export const GetSomethingDocument = gql\`
     query GET_SOMETHING {
@@ -618,10 +615,9 @@ export type GetSomethingQueryResult = Apollo.QueryResult<GetSomethingQuery, GetS
 exports[`React Apollo > Issues > PR #2725 - transformUnderscore: true causes invalid output 2`] = `
 "export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
@@ -790,7 +786,7 @@ export type SubscriptionCommentAddedArgs = {
 export type GetSomethingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSomethingQuery = { feed?: Array<{ id: number } | null> | null };
+export type GetSomethingQuery = { feed: Array<{ id: number } | null> | null };
 
 export const GetSomethingDocument = gql\`
     query GET_SOMETHING {
@@ -826,4 +822,66 @@ export const BFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"Fra
 export const AFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"A"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"B"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"C"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"greeting"}}]}}]} as unknown as DocumentNode;
 export const TestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Test"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"a"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"A"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"B"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CFields"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"C"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"greeting"}}]}}]} as unknown as DocumentNode;
 export type TestQueryResult = Apollo.QueryResult<TestQuery, TestQueryVariables>;"
+`;
+
+exports[`React Apollo > generates operation description correctly 1`] = `
+{
+  "content": "
+export const TestDocument = gql\`
+    """description for feed"""
+query Test {
+  feed {
+    id
+    commentCount
+    repository {
+      full_name
+      html_url
+      owner {
+        avatar_url
+      }
+    }
+  }
+}
+    \`;
+
+/**
+ * __useTestQuery__
+ *
+ * To run a query within a React component, call \`useTestQuery\` and pass it any options that fit your needs.
+ * When your component renders, \`useTestQuery\` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTestQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTestQuery(baseOptions?: Apollo.QueryHookOptions<TestQuery, TestQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TestQuery, TestQueryVariables>(TestDocument, options);
+      }
+export function useTestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TestQuery, TestQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TestQuery, TestQueryVariables>(TestDocument, options);
+        }
+// @ts-ignore
+export function useTestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>): Apollo.UseSuspenseQueryResult<TestQuery, TestQueryVariables>;
+export function useTestSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>): Apollo.UseSuspenseQueryResult<TestQuery | undefined, TestQueryVariables>;
+export function useTestSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<TestQuery, TestQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TestQuery, TestQueryVariables>(TestDocument, options);
+        }
+export type TestQueryHookResult = ReturnType<typeof useTestQuery>;
+export type TestLazyQueryHookResult = ReturnType<typeof useTestLazyQuery>;
+export type TestSuspenseQueryHookResult = ReturnType<typeof useTestSuspenseQuery>;
+export type TestQueryResult = Apollo.QueryResult<TestQuery, TestQueryVariables>;",
+  "prepend": [
+    "import { gql } from '@apollo/client';",
+    "import * as Apollo from '@apollo/client';",
+    "const defaultOptions = {} as const;",
+  ],
+}
 `;

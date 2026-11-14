@@ -1,4 +1,4 @@
-import { buildClientSchema, GraphQLSchema, parse, printSchema } from 'graphql';
+import { buildClientSchema, GraphQLSchema, parse, printSchema, versionInfo } from 'graphql';
 import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin, TypeScriptPluginConfig } from '@graphql-codegen/typescript';
@@ -88,14 +88,16 @@ const validate = async (
 
 describe('jit-sdk', () => {
   describe('sdk', () => {
-    it('Should generate a correct wrap method', async () => {
-      const config = {};
-      const docs = [{ filePath: '', document: basicDoc }];
-      const result = (await plugin(schema, docs, config, {
-        outputFile: 'graphql.ts',
-      })) as Types.ComplexPluginOutput;
+    it.skipIf(versionInfo.major !== 16)(
+      'Should generate a correct wrap method - GraphQL v16',
+      async () => {
+        const config = {};
+        const docs = [{ filePath: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
 
-      const usage = `
+        const usage = `
 async function test() {
   const schema = buildSchema(\`${printSchema(schema).trim()}\`);
   const sdk = getJitSdk(schema);
@@ -112,19 +114,22 @@ async function test() {
     }
   }
 }`;
-      const output = await validate(result, config, docs, schema, usage);
+        const output = await validate(result, config, docs, schema, usage);
 
-      expect(output).toMatchSnapshot();
-    });
+        expect(output).toMatchSnapshot();
+      },
+    );
 
-    it('Should generate a correct wrap method with documentMode=string', async () => {
-      const config = { documentMode: DocumentMode.string };
-      const docs = [{ filePath: '', document: basicDoc }];
-      const result = (await plugin(schema, docs, config, {
-        outputFile: 'graphql.ts',
-      })) as Types.ComplexPluginOutput;
+    it.skipIf(versionInfo.major !== 17)(
+      'Should generate a correct wrap method - GraphQL v17',
+      async () => {
+        const config = {};
+        const docs = [{ filePath: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
 
-      const usage = `
+        const usage = `
 async function test() {
   const schema = buildSchema(\`${printSchema(schema).trim()}\`);
   const sdk = getJitSdk(schema);
@@ -141,10 +146,75 @@ async function test() {
     }
   }
 }`;
-      const output = await validate(result, config, docs, schema, usage);
+        const output = await validate(result, config, docs, schema, usage);
 
-      expect(output).toMatchSnapshot();
-    });
+        expect(output).toMatchSnapshot();
+      },
+    );
+
+    it.skipIf(versionInfo.major !== 16)(
+      'Should generate a correct wrap method with documentMode=string - GraphQL v16',
+      async () => {
+        const config = { documentMode: DocumentMode.string };
+        const docs = [{ filePath: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
+
+        const usage = `
+async function test() {
+  const schema = buildSchema(\`${printSchema(schema).trim()}\`);
+  const sdk = getJitSdk(schema);
+
+  await sdk.feed();
+  await sdk.feed3();
+  await sdk.feed4();
+
+  const result = await sdk.feed2({ v: "1" });
+
+  if (result.feed) {
+    if (result.feed[0]) {
+      const id = result.feed[0].id
+    }
+  }
+}`;
+        const output = await validate(result, config, docs, schema, usage);
+
+        expect(output).toMatchSnapshot();
+      },
+    );
+
+    it.skipIf(versionInfo.major !== 17)(
+      'Should generate a correct wrap method with documentMode=string - GraphQL v17',
+      async () => {
+        const config = { documentMode: DocumentMode.string };
+        const docs = [{ filePath: '', document: basicDoc }];
+        const result = (await plugin(schema, docs, config, {
+          outputFile: 'graphql.ts',
+        })) as Types.ComplexPluginOutput;
+
+        const usage = `
+async function test() {
+  const schema = buildSchema(\`${printSchema(schema).trim()}\`);
+  const sdk = getJitSdk(schema);
+
+  await sdk.feed();
+  await sdk.feed3();
+  await sdk.feed4();
+
+  const result = await sdk.feed2({ v: "1" });
+
+  if (result.feed) {
+    if (result.feed[0]) {
+      const id = result.feed[0].id
+    }
+  }
+}`;
+        const output = await validate(result, config, docs, schema, usage);
+
+        expect(output).toMatchSnapshot();
+      },
+    );
 
     it('Should generate a correct wrap method in case of Subscription', async () => {
       const docs = [{ filePath: '', document: docWithSubscription }];
@@ -176,5 +246,38 @@ async function test() {
 `);
       }
     });
+  });
+
+  it('generates operation description correctly', async () => {
+    const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
+
+    const content = await plugin(
+      schema,
+      [
+        {
+          location: '',
+          document: parse(/* GraphQL */ `
+            """
+            description (becomes JSDoc)
+            """
+            query feed {
+              feed {
+                id
+                commentCount
+                repository {
+                  owner {
+                    avatar_url
+                  }
+                }
+              }
+            }
+          `),
+        },
+      ],
+      {},
+      { outputFile: 'graphql.tsx' },
+    );
+
+    expect(content).toMatchSnapshot();
   });
 });

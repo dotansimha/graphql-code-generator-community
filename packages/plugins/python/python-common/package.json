@@ -1,12 +1,12 @@
 {
   "name": "@graphql-codegen/python-common",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "Shared Python-specific helpers (reserved keywords, scalar mapping, identifier naming) for @graphql-codegen/python and @graphql-codegen/python-operations.",
   "repository": "git@github.com:dotansimha/graphql-code-generator-community.git",
   "license": "MIT",
   "engines": {
-    "node": ">= 16.0.0"
+    "node": ">=22.18.0"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -32,12 +32,12 @@
     "lint": "eslint **/*.ts"
   },
   "dependencies": {
-    "@graphql-codegen/visitor-plugin-common": "^6.3.0",
+    "@graphql-codegen/visitor-plugin-common": "^8.0.0",
     "change-case-all": "1.0.15",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@graphql-codegen/testing": "4.0.5"
+    "@graphql-codegen/testing": "6.0.0"
   },
   "publishConfig": {
     "directory": "dist",

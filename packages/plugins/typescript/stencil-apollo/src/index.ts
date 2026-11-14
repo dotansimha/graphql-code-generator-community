@@ -39,11 +39,11 @@ export const plugin: PluginFunction<StencilApolloRawPluginConfig> = (
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: StencilApolloRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<StencilApolloRawPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "stencil-apollo" requires extension to be ".tsx"!`);

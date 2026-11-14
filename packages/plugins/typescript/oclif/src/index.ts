@@ -49,11 +49,11 @@ export const plugin: PluginFunction = (
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: Config,
-  outputFile: string,
+export const validate: PluginValidateFn<Config> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts') {
     throw new Error(`Plugin "typescript-oclif" requires output file extensions to be ".ts"!`);

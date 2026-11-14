@@ -36,11 +36,11 @@ export const plugin: PluginFunction<VueUrqlRawPluginConfig, Types.ComplexPluginO
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: VueUrqlRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<VueUrqlRawPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts') {
     throw new Error(`Plugin "typescript-vue-urql" requires extension to be ".ts"!`);

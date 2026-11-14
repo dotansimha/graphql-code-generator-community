@@ -87,10 +87,10 @@ ${fieldsNames
 }
 
 export const validate: PluginValidateFn<ApolloClientHelpersConfig> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
+  schema,
+  documents,
   config,
-  outputFile: string,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "apollo-client-helpers" requires extension to be ".ts" or ".tsx"!`);

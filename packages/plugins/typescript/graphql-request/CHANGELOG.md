@@ -1,5 +1,63 @@
 # @graphql-codegen/typescript-graphql-request
 
+## 8.0.2
+
+### Patch Changes
+
+- [#1657](https://github.com/dotansimha/graphql-code-generator-community/pull/1657)
+  [`ed49d00`](https://github.com/dotansimha/graphql-code-generator-community/commit/ed49d006ce67eee73bd722fa46fd099009890094)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - This changes the shape of generated
+  documents: a fragment's `*Doc` no longer interpolates the fragments it spreads, and each operation
+  document instead interpolates every fragment it transitively spreads. Generated output is
+  equivalent, but any code or snapshot asserting on the previous interpolation layout needs
+  updating. Also, `documentMode: 'string'` is now remapped to `'plainString'` with a console
+  warning, because the `'string'` output referenced an undeclared `TypedDocumentString`. Documents
+  are now typed as plain `string`; if you supplied `TypedDocumentString` yourself (e.g. via the
+  `add` plugin) or relied on the `TypedDocumentString<Result, Variables>` type of exported
+  documents, please check your setup. Set `documentMode: 'plainString'` to silence the warning.
+
+## 8.0.1
+
+### Patch Changes
+
+- [#1720](https://github.com/dotansimha/graphql-code-generator-community/pull/1720)
+  [`86dd614`](https://github.com/dotansimha/graphql-code-generator-community/commit/86dd61487ab3f25053b5d81f3f079f42e8635e46)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Bump `@graphql-tools/utils` and
+  `@graphql-tools/schema` to the latest majors.
+
+  - `@graphql-codegen/flow-resolvers`: `engines.node` is now `>=22.18.0`, as required by the new
+    `@graphql-tools/utils` major.
+  - `@graphql-codegen/typescript-jit-sdk`: the `@graphql-tools/utils` peer range is now `^13.0.0`.
+
+## 8.0.0
+
+### Major Changes
+
+- [#1711](https://github.com/dotansimha/graphql-code-generator-community/pull/1711)
+  [`fb443c1`](https://github.com/dotansimha/graphql-code-generator-community/commit/fb443c19d7ac69bcf27d5b85bab423beceab73b7)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Move to graphql-codegen v8.
+
+  - Bump `@graphql-codegen/plugin-helpers` and `@graphql-codegen/visitor-plugin-common` to `^8.0.0`
+  - Narrow the `graphql` peer dependency to `^16.0.0 || ^17.0.0`
+  - Require Node.js `>=22.18.0`
+  - `validate` reads `outputFile` from the v8 `info` argument
+
+### Patch Changes
+
+- [#1711](https://github.com/dotansimha/graphql-code-generator-community/pull/1711)
+  [`fb443c1`](https://github.com/dotansimha/graphql-code-generator-community/commit/fb443c19d7ac69bcf27d5b85bab423beceab73b7)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/8.0.0)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/8.0.0)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`graphql@^16.0.0 || ^17.0.0` ↗︎](https://www.npmjs.com/package/graphql/v/16.0.0) (from
+    `^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0`,
+    in `peerDependencies`)
+
 ## 7.1.0
 
 ### Minor Changes

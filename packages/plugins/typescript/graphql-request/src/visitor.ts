@@ -20,6 +20,8 @@ const additionalExportedTypes = `
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 `;
 
+let hasWarnedDocumentModeString = false;
+
 export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
   RawGraphQLRequestPluginConfig,
   GraphQLRequestPluginConfig
@@ -38,12 +40,26 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     fragments: LoadedFragment[],
     rawConfig: RawGraphQLRequestPluginConfig,
   ) {
+    const isDocumentModeString = rawConfig.documentMode === DocumentMode.string;
+    const effectiveDocumentMode = isDocumentModeString
+      ? DocumentMode.plainString
+      : getConfigValue(rawConfig.documentMode, DocumentMode.graphQLTag);
+
     super(schema, fragments, rawConfig, {
+      documentMode: effectiveDocumentMode,
       rawRequest: getConfigValue(rawConfig.rawRequest, false),
       extensionsType: getConfigValue(rawConfig.extensionsType, 'any'),
     });
 
     autoBind(this);
+
+    if (isDocumentModeString && !hasWarnedDocumentModeString) {
+      hasWarnedDocumentModeString = true;
+      // eslint-disable-next-line no-console
+      console.warn(
+        "[typescript-graphql-request] documentMode: 'string' does not work with this plugin (it references an undeclared TypedDocumentString), and has been remapped to 'plainString' for correctness. Set documentMode: 'plainString' to silence this warning.",
+      );
+    }
 
     const typeImport = this.config.useTypeImports ? 'type ' : '';
 
@@ -52,7 +68,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
     );
 
     if (this.config.rawRequest) {
-      if (this.config.documentMode !== DocumentMode.string) {
+      if (this.config.documentMode !== DocumentMode.plainString) {
         this._additionalImports.push(`import { GraphQLError, print } from 'graphql'`);
       } else {
         this._additionalImports.push(`import { GraphQLError } from 'graphql'`);
@@ -129,7 +145,7 @@ export class GraphQLRequestVisitor extends ClientSideBaseVisitor<
 
         if (this.config.rawRequest) {
           let docArg = docVarName;
-          if (this.config.documentMode !== DocumentMode.string) {
+          if (this.config.documentMode !== DocumentMode.plainString) {
             docArg = `${docVarName}String`;
             extraVariables.push(`const ${docArg} = print(${docVarName});`);
           }

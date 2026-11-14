@@ -3,20 +3,25 @@ import { CommentsPageCommentFragmentDoc } from './comments-page-comment.fragment
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 declare global {
-  export type SubmitCommentMutationVariables = Types.Exact<{
-    repoFullName: Types.Scalars['String']['input'];
-    commentContent: Types.Scalars['String']['input'];
+  export type SubmitCommentMutationVariables = Exact<{
+    repoFullName: string;
+    commentContent: string;
   }>;
 
   export type SubmitCommentMutation = {
-    __typename?: 'Mutation';
-    submitComment?: {
-      __typename?: 'Comment';
+    submitComment: {
       id: number;
       createdAt: number;
       content: string;
-      postedBy: { __typename?: 'User'; login: string; html_url: string };
+      postedBy: { login: string; html_url: string };
     } | null;
   };
 }

@@ -196,7 +196,7 @@ export class CSharpResolversVisitor extends BaseVisitor<
     if (directive.name.value !== 'deprecated') {
       return '';
     }
-    const hasArguments = directive.arguments.length > 0;
+    const hasArguments = (directive.arguments || []).length > 0;
     let reason = 'Field no longer supported';
     if (hasArguments && directive.arguments[0].value.kind === Kind.STRING) {
       reason = directive.arguments[0].value.value;

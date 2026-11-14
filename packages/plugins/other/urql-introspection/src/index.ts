@@ -1,6 +1,6 @@
 import { extname } from 'path';
 import { GraphQLSchema } from 'graphql';
-import { PluginFunction, PluginValidateFn, Types } from '@graphql-codegen/plugin-helpers';
+import { PluginFunction, PluginValidateFn } from '@graphql-codegen/plugin-helpers';
 import { getIntrospectedSchema, minifyIntrospectionQuery } from '@urql/introspection';
 
 /**
@@ -222,11 +222,11 @@ export default ${content} as unknown as IntrospectionQuery;`;
   throw new Error(`Extension ${ext} is not supported`);
 };
 
-export const validate: PluginValidateFn<any> = async (
-  _schema: GraphQLSchema,
-  _documents: Types.DocumentFile[],
-  config: UrqlIntrospectionConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<UrqlIntrospectionConfig> = async (
+  _schema,
+  _documents,
+  config,
+  { outputFile },
 ) => {
   const ext = extname(outputFile).toLowerCase();
   const all = Object.values(extensions).reduce((acc, exts) => [...acc, ...exts], []);

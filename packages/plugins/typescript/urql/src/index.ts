@@ -36,11 +36,11 @@ export const plugin: PluginFunction<UrqlRawPluginConfig, Types.ComplexPluginOutp
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: UrqlRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<UrqlRawPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (config.withComponent === true) {
     if (extname(outputFile) !== '.tsx') {

@@ -3,7 +3,7 @@ import { Types } from '@graphql-codegen/plugin-helpers';
 import '@graphql-codegen/testing';
 import { buildSchema, parse } from 'graphql';
 import { CSharpOperationsRawPluginConfig } from '../src/config.js';
-import { plugin } from '../src/index.js';
+import { plugin, validate } from '../src/index.js';
 
 describe('C# Operations', () => {
   describe('Namespaces', () => {
@@ -1062,6 +1062,76 @@ describe('C# Operations', () => {
       `);
     });
 
+    it('Should inline fragment definitions when documentMode is plainString', async () => {
+      const schema = buildSchema(/* GraphQL */ `
+        type User {
+          id: ID!
+          username: String!
+        }
+        type Query {
+          user: User!
+        }
+      `);
+      const operation = parse(/* GraphQL */ `
+        query user {
+          user {
+            ...UserFields
+          }
+        }
+
+        fragment UserFields on User {
+          id
+          username
+        }
+      `);
+
+      const result = (await plugin(
+        schema,
+        [{ location: '', document: operation }],
+        { documentMode: 'plainString' },
+        { outputFile: '' },
+      )) as Types.ComplexPluginOutput;
+      expect(result.content).toMatchInlineSnapshot(`
+        "using System;
+        using Newtonsoft.Json;
+        using GraphQL;
+        using GraphQL.Client.Abstractions;
+
+        namespace GraphQLCodeGen {
+
+            public class UserGQL {
+              /// <summary>
+              /// UserGQL.Request 
+              /// </summary>
+              public static GraphQLRequest Request() {
+                return new GraphQLRequest {
+                  Query = UserDocument,
+                  OperationName = "user"
+                };
+              }
+
+              /// <remarks>This method is obsolete. Use Request instead.</remarks>
+              public static GraphQLRequest getUserGQL() {
+                return Request();
+              }
+              
+              public static string UserDocument = @"
+                query user {
+                  user {
+                    ...UserFields
+                  }
+                }
+                fragment UserFields on User {
+                  id
+                  username
+                }";
+              
+            }
+            
+        }"
+      `);
+    });
+
     it('Should generate response class', async () => {
       const schema = buildSchema(/* GraphQL */ `
         type Query {
@@ -1633,6 +1703,26 @@ describe('C# Operations', () => {
       expect(result.content).toContain('OperationName = "FindMe2"');
       expect(result.content).toContain('OperationName = "findme3"');
       expect(result.content).toContain('OperationName = "FINDME4"');
+    });
+  });
+
+  describe('validate', () => {
+    const schema = buildSchema(/* GraphQL */ `
+      type Query {
+        me: Int!
+      }
+    `);
+
+    it('Should reject an output file without the .cs extension', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'Types.ts', allPlugins: [], pluginContext: {} }),
+      ).rejects.toThrow('requires extension to be ".cs"');
+    });
+
+    it('Should accept an output file with the .cs extension', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'Types.cs', allPlugins: [], pluginContext: {} }),
+      ).resolves.toBeUndefined();
     });
   });
 });

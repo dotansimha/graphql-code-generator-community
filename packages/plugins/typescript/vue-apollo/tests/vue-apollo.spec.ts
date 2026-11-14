@@ -326,7 +326,7 @@ fragment FeedWithRepository on Entry {
     ...RepositoryWithOwner
   }
 }
-\${RepositoryWithOwnerFragmentDoc}\`;`);
+\`;`);
       expect(content.content)
         .toBeSimilarStringTo(`export const RepositoryWithOwnerFragmentDoc = gql\`
 fragment RepositoryWithOwner on Repository {
@@ -344,7 +344,8 @@ query MyFeed {
     ...FeedWithRepository
   }
 }
-\${FeedWithRepositoryFragmentDoc}\`;`);
+\${FeedWithRepositoryFragmentDoc}
+\${RepositoryWithOwnerFragmentDoc}\`;`);
       await validateTypeScript(content, schema, docs, {});
     });
 

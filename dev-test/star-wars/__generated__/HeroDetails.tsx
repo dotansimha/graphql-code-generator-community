@@ -2,16 +2,31 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 const defaultOptions = {} as const;
-export type HeroDetailsQueryVariables = Types.Exact<{
-  episode?: Types.InputMaybe<Types.Episode>;
+/** The episodes in the Star Wars trilogy */
+export type Episode =
+  /** Star Wars Episode V: The Empire Strikes Back, released in 1980. */
+  | 'EMPIRE'
+  /** Star Wars Episode VI: Return of the Jedi, released in 1983. */
+  | 'JEDI'
+  /** Star Wars Episode IV: A New Hope, released in 1977. */
+  | 'NEWHOPE';
+
+export type HeroDetailsQueryVariables = Exact<{
+  episode?: Types.Episode | null | undefined;
 }>;
 
 export type HeroDetailsQuery = {
-  __typename?: 'Query';
-  hero?:
-    | { __typename?: 'Droid'; primaryFunction?: string | null; name: string }
-    | { __typename?: 'Human'; height?: number | null; name: string }
+  hero:
+    | { primaryFunction: string | null; name: string }
+    | { height: number | null; name: string }
     | null;
 };
 

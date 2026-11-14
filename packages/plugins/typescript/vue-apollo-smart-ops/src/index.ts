@@ -38,11 +38,11 @@ export const plugin: PluginFunction<VueApolloSmartOpsRawPluginConfig, Types.Comp
   };
 };
 
-export const validate: PluginValidateFn<any> = (
-  _schema: GraphQLSchema,
-  _documents: Types.DocumentFile[],
-  _config: VueApolloSmartOpsRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<VueApolloSmartOpsRawPluginConfig> = (
+  _schema,
+  _documents,
+  _config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(

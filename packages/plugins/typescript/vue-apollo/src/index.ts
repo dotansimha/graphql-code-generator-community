@@ -38,11 +38,11 @@ export const plugin: PluginFunction<VueApolloRawPluginConfig, Types.ComplexPlugi
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  _schema: GraphQLSchema,
-  _documents: Types.DocumentFile[],
-  _config: VueApolloRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<VueApolloRawPluginConfig> = async (
+  _schema,
+  _documents,
+  _config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "vue-apollo" requires extension to be ".ts" or ".tsx"!`);

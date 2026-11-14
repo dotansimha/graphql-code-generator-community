@@ -54,11 +54,11 @@ export const addToSchema = gql`
   directive @namedClient(name: String!) on OBJECT | FIELD
 `;
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
+export const validate: PluginValidateFn<CSharpOperationsRawPluginConfig> = async (
+  schema,
+  documents,
   config,
-  outputFile: string,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.cs') {
     throw new Error(`Plugin "c-sharp-operations" requires extension to be ".cs"!`);

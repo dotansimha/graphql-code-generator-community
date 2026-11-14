@@ -2,7 +2,7 @@ import { buildSchema, GraphQLSchema, print } from 'graphql';
 import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
-import { addToSchema, plugin } from '../src/index.js';
+import { addToSchema, plugin, validate as validatePlugin } from '../src/index.js';
 
 describe('TypeScript Mongo', () => {
   const validate = async (content: Types.PluginOutput, schema: GraphQLSchema, config: any) => {
@@ -297,6 +297,20 @@ describe('TypeScript Mongo', () => {
       const result = await plugin(schema, [], {}, { outputFile: '' });
       expect(result).toContain(`nonSchemaOptionalField?: string`); // non schema optional additional field
       await validate(result, schema, {});
+    });
+  });
+
+  describe('validate', () => {
+    it('does not throw when outputFile has a .ts extension', async () => {
+      await expect(
+        validatePlugin(schema, [], {}, { outputFile: 'out.ts' }, 'typescript-mongodb'),
+      ).resolves.toBeUndefined();
+    });
+
+    it('throws when outputFile has an unsupported extension', async () => {
+      await expect(
+        validatePlugin(schema, [], {}, { outputFile: 'out.js' }, 'typescript-mongodb'),
+      ).rejects.toThrow('requires extension');
     });
   });
 });

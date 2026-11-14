@@ -1,6 +1,6 @@
 import { pascalCase } from 'change-case-all';
 import { parse } from 'graphql';
-import { plugin } from '../src/index.js';
+import { plugin, validate } from '../src/index.js';
 
 describe('msw', () => {
   const queryName = 'User';
@@ -113,5 +113,19 @@ describe('msw', () => {
     expect(result.content).toMatchSnapshot(
       'content with types configured via importOperationTypesFrom',
     );
+  });
+
+  describe('validate', () => {
+    it('Should reject output files that are not .ts', async () => {
+      await expect(
+        validate(null, [], {}, { outputFile: 'graphql.js', allPlugins: [], pluginContext: {} }),
+      ).rejects.toThrow('requires extension to be ".ts"');
+    });
+
+    it('Should accept .ts as the output file', async () => {
+      await expect(
+        validate(null, [], {}, { outputFile: 'graphql.ts', allPlugins: [], pluginContext: {} }),
+      ).resolves.toBeUndefined();
+    });
   });
 });

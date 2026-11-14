@@ -2,20 +2,24 @@ import gql from 'graphql-tag';
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 declare global {
-  export type VoteMutationVariables = Types.Exact<{
-    repoFullName: Types.Scalars['String']['input'];
+  /** The type of vote to record, when submitting a vote */
+  export type VoteType = 'CANCEL' | 'DOWN' | 'UP';
+
+  export type VoteMutationVariables = Exact<{
+    repoFullName: string;
     type: Types.VoteType;
   }>;
 
   export type VoteMutation = {
-    __typename?: 'Mutation';
-    vote?: {
-      __typename?: 'Entry';
-      score: number;
-      id: number;
-      vote: { __typename?: 'Vote'; vote_value: number };
-    } | null;
+    vote: { score: number; id: number; vote: { vote_value: number } } | null;
   };
 }
 

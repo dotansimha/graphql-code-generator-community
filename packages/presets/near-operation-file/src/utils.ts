@@ -165,6 +165,29 @@ function analyzeFragmentTypeUsage(
   visit(
     documentNode,
     visitWithTypeInfo(typeInfo, {
+      FragmentDefinition: (node: FragmentDefinitionNode) => {
+        analyzeSelectionSetTypeContext(
+          node.selectionSet,
+          node.typeCondition.name.value,
+          usedFragmentTypes,
+          fragmentRegistry,
+          schema,
+          localFragments,
+        );
+      },
+      OperationDefinition: (node: OperationDefinitionNode) => {
+        const rootType = typeInfo.getType();
+        if (!isObjectType(rootType)) return;
+
+        analyzeSelectionSetTypeContext(
+          node.selectionSet,
+          rootType.name,
+          usedFragmentTypes,
+          fragmentRegistry,
+          schema,
+          localFragments,
+        );
+      },
       Field: (node: FieldNode) => {
         if (!node.selectionSet) return;
 

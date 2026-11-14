@@ -2,19 +2,24 @@ import gql from 'graphql-tag';
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 declare global {
-  export type OnCommentAddedSubscriptionVariables = Types.Exact<{
-    repoFullName: Types.Scalars['String']['input'];
+  export type OnCommentAddedSubscriptionVariables = Exact<{
+    repoFullName: string;
   }>;
 
   export type OnCommentAddedSubscription = {
-    __typename?: 'Subscription';
-    commentAdded?: {
-      __typename?: 'Comment';
+    commentAdded: {
       id: number;
       createdAt: number;
       content: string;
-      postedBy: { __typename?: 'User'; login: string; html_url: string };
+      postedBy: { login: string; html_url: string };
     } | null;
   };
 }

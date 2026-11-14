@@ -5,7 +5,7 @@ import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
 import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
-import { plugin } from '../src/index.js';
+import { plugin, validate } from '../src/index.js';
 
 describe('urql', () => {
   let spyConsoleError;
@@ -263,7 +263,7 @@ fragment FeedWithRepository on Entry {
     ...RepositoryWithOwner
   }
 }
-\${RepositoryWithOwnerFragmentDoc}\`;`);
+\`;`);
       expect(content.content)
         .toBeSimilarStringTo(`export const RepositoryWithOwnerFragmentDoc = gql\`
 fragment RepositoryWithOwner on Repository {
@@ -281,7 +281,8 @@ query MyFeed {
     ...FeedWithRepository
   }
 }
-\${FeedWithRepositoryFragmentDoc}\`;`);
+\${FeedWithRepositoryFragmentDoc}
+\${RepositoryWithOwnerFragmentDoc}\`;`);
       await validateTypeScript(content, schema, docs, {});
     });
 
@@ -545,6 +546,20 @@ export function useSubmitRepositoryMutation() {
       await validateTypeScript(content, schema, docs, {});
 
       expect(mergeOutputs([content])).toMatchSnapshot();
+    });
+  });
+
+  describe('validate', () => {
+    it('Should reject output files that are not .ts', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'graphql.js', allPlugins: [], pluginContext: {} }),
+      ).rejects.toThrow('requires extension to be ".ts"');
+    });
+
+    it('Should accept .ts as the output file', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'graphql.ts', allPlugins: [], pluginContext: {} }),
+      ).resolves.toBeUndefined();
     });
   });
 });

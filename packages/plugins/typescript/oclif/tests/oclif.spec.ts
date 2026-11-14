@@ -1,6 +1,6 @@
 import { buildClientSchema, parse } from 'graphql';
 import { Types } from '@graphql-codegen/plugin-helpers';
-import { plugin } from '../src/index.js';
+import { plugin, validate } from '../src/index.js';
 
 const schema = buildClientSchema(require('../../../../../dev-test/githunt/schema.json'));
 
@@ -98,6 +98,20 @@ describe('oclif', () => {
       })) as Types.ComplexPluginOutput;
 
       expect(result.content).toMatchSnapshot();
+    });
+  });
+
+  describe('validate', () => {
+    it('does not throw when outputFile has a .ts extension', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'out.ts' }, 'typescript-oclif'),
+      ).resolves.toBeUndefined();
+    });
+
+    it('throws when outputFile has an unsupported extension', async () => {
+      await expect(
+        validate(schema, [], {}, { outputFile: 'out.js' }, 'typescript-oclif'),
+      ).rejects.toThrow('requires output file extensions to be ".ts"');
     });
   });
 });

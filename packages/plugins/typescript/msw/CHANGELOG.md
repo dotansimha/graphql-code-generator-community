@@ -1,5 +1,34 @@
 # @graphql-codegen/typescript-msw
 
+## 5.0.0
+
+### Major Changes
+
+- [#1711](https://github.com/dotansimha/graphql-code-generator-community/pull/1711)
+  [`fb443c1`](https://github.com/dotansimha/graphql-code-generator-community/commit/fb443c19d7ac69bcf27d5b85bab423beceab73b7)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Move to graphql-codegen v8.
+
+  - Bump `@graphql-codegen/plugin-helpers` and `@graphql-codegen/visitor-plugin-common` to `^8.0.0`
+  - Narrow the `graphql` peer dependency to `^16.0.0 || ^17.0.0`
+  - Require Node.js `>=22.18.0`
+  - `validate` reads `outputFile` from the v8 `info` argument
+
+### Patch Changes
+
+- [#1711](https://github.com/dotansimha/graphql-code-generator-community/pull/1711)
+  [`fb443c1`](https://github.com/dotansimha/graphql-code-generator-community/commit/fb443c19d7ac69bcf27d5b85bab423beceab73b7)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/8.0.0)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/8.0.0)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`graphql@^16.0.0 || ^17.0.0` ↗︎](https://www.npmjs.com/package/graphql/v/16.0.0) (from
+    `^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0`,
+    in `peerDependencies`)
+
 ## 4.0.2
 
 ### Patch Changes

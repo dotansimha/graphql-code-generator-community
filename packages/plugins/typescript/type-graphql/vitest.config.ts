@@ -6,7 +6,8 @@ export default mergeConfig(
   defineProject({
     test: {
       name: 'typescript-type-graphql',
-      include: ['**/*.spec.ts'],
+      // FIXME: skip graphql@17 until deps are fixed to handle v17
+      include: process.env.GRAPHQL_VERSION === '17' ? [] : ['**/*.spec.ts'],
     },
   }),
 );

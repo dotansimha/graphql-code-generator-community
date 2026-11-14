@@ -1,5 +1,60 @@
 # @graphql-codegen/typescript-jit-sdk
 
+## 5.0.1
+
+### Patch Changes
+
+- [#1720](https://github.com/dotansimha/graphql-code-generator-community/pull/1720)
+  [`86dd614`](https://github.com/dotansimha/graphql-code-generator-community/commit/86dd61487ab3f25053b5d81f3f079f42e8635e46)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-tools/utils@^13.0.0` ↗︎](https://www.npmjs.com/package/@graphql-tools/utils/v/13.0.0)
+    (from `^8.8.0 || ^10.0.0 || ^11.0.0`, in `peerDependencies`)
+
+- [#1720](https://github.com/dotansimha/graphql-code-generator-community/pull/1720)
+  [`86dd614`](https://github.com/dotansimha/graphql-code-generator-community/commit/86dd61487ab3f25053b5d81f3f079f42e8635e46)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Bump `@graphql-tools/utils` and
+  `@graphql-tools/schema` to the latest majors.
+
+  - `@graphql-codegen/flow-resolvers`: `engines.node` is now `>=22.18.0`, as required by the new
+    `@graphql-tools/utils` major.
+  - `@graphql-codegen/typescript-jit-sdk`: the `@graphql-tools/utils` peer range is now `^13.0.0`.
+
+## 5.0.0
+
+### Major Changes
+
+- [#1706](https://github.com/dotansimha/graphql-code-generator-community/pull/1706)
+  [`54de5c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/54de5c2360ccfd7572442e2065fa206df6e73fd2)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update `@graphql-codegen/plugin-helpers` and
+  `@graphql-codegen/visitor-plugin-common` to v8. `validate` now reads `outputFile` from the `info`
+  object passed as its fourth argument, so it requires `@graphql-codegen/cli` v8.
+
+  With the default `documentMode: graphQLTag`, a fragment document no longer interpolates the
+  documents of the fragments it spreads. Each operation document now interpolates every fragment it
+  uses, directly or through other fragments, once. To keep using a fragment document on its own (for
+  example with Apollo `cache.readFragment`), set
+  `inlineReferencedFragmentsInFragmentDocuments: true`.
+
+  The `graphql` peer dependency range is now `^16.0.0 || ^17.0.0`, and `engines.node` is now
+  `>=22.18.0`.
+
+### Patch Changes
+
+- [#1706](https://github.com/dotansimha/graphql-code-generator-community/pull/1706)
+  [`54de5c2`](https://github.com/dotansimha/graphql-code-generator-community/commit/54de5c2360ccfd7572442e2065fa206df6e73fd2)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/8.0.0)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/8.0.0)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`graphql@^16.0.0 || ^17.0.0` ↗︎](https://www.npmjs.com/package/graphql/v/16.0.0) (from
+    `^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0`,
+    in `peerDependencies`)
+
 ## 4.0.2
 
 ### Patch Changes

@@ -3,13 +3,17 @@ import * as Apollo from '@apollo/client';
 import * as Types from '../types.d.js';
 import { HumanFieldsFragmentDoc } from './HumanFields.js';
 
-const defaultOptions = {} as const;
-export type HumanWithNullHeightQueryVariables = Types.Exact<{ [key: string]: never }>;
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 
-export type HumanWithNullHeightQuery = {
-  __typename?: 'Query';
-  human?: { __typename?: 'Human'; name: string; mass?: number | null } | null;
-};
+const defaultOptions = {} as const;
+export type HumanWithNullHeightQueryVariables = Exact<{ [key: string]: never }>;
+
+export type HumanWithNullHeightQuery = { human: { name: string; mass: number | null } | null };
 
 export const HumanWithNullHeightDocument = gql`
   query HumanWithNullHeight {

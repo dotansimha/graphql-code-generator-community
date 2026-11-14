@@ -109,11 +109,11 @@ declare module '${prefix}${modulePathPrefix}${fileName}' {
     .join('\n');
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: any,
-  outputFile: string,
+export const validate: PluginValidateFn<TypeScriptFilesModulesPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (!outputFile.endsWith('.d.ts')) {
     throw new Error(`Plugin "typescript-graphql-files-modules" requires extension to be ".d.ts"!`);

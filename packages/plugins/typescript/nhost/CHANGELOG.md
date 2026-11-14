@@ -1,5 +1,39 @@
 # @graphql-codegen/typescript-nhost
 
+## 2.0.0
+
+### Major Changes
+
+- [#1715](https://github.com/dotansimha/graphql-code-generator-community/pull/1715)
+  [`d92163c`](https://github.com/dotansimha/graphql-code-generator-community/commit/d92163ca09517ddbce5e8d05a6813c40026586c2)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - Update `@graphql-codegen/plugin-helpers`,
+  `@graphql-codegen/visitor-plugin-common` and `@graphql-codegen/typescript` to v8/v7. The generated
+  output follows `@graphql-codegen/typescript` v7: scalars without a configured type are now
+  `unknown` instead of `any`, and the `Exact`, `MakeOptional`, `MakeMaybe`, `MakeEmpty` and
+  `Incremental` helper types are no longer emitted.
+
+  The `graphql` peer dependency range is now `^16.0.0 || ^17.0.0`, and `engines.node` is now
+  `>=22.18.0`.
+
+### Patch Changes
+
+- [#1715](https://github.com/dotansimha/graphql-code-generator-community/pull/1715)
+  [`d92163c`](https://github.com/dotansimha/graphql-code-generator-community/commit/d92163ca09517ddbce5e8d05a6813c40026586c2)
+  Thanks [@eddeee888](https://github.com/eddeee888)! - dependencies updates:
+  - Updated dependency
+    [`@graphql-codegen/plugin-helpers@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/plugin-helpers/v/8.0.0)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/typescript@^7.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/typescript/v/7.0.0)
+    (from `^5.0.9`, in `dependencies`)
+  - Updated dependency
+    [`@graphql-codegen/visitor-plugin-common@^8.0.0` ↗︎](https://www.npmjs.com/package/@graphql-codegen/visitor-plugin-common/v/8.0.0)
+    (from `^6.3.0`, in `dependencies`)
+  - Updated dependency
+    [`graphql@^16.0.0 || ^17.0.0` ↗︎](https://www.npmjs.com/package/graphql/v/16.0.0) (from
+    `^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0`,
+    in `peerDependencies`)
+
 ## 1.0.1
 
 ### Patch Changes

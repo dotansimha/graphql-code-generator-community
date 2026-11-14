@@ -49,11 +49,11 @@ export const plugin: PluginFunction<ReactQueryRawPluginConfig, Types.ComplexPlug
   };
 };
 
-export const validate: PluginValidateFn<any> = async (
-  schema: GraphQLSchema,
-  documents: Types.DocumentFile[],
-  config: ReactQueryRawPluginConfig,
-  outputFile: string,
+export const validate: PluginValidateFn<ReactQueryRawPluginConfig> = async (
+  schema,
+  documents,
+  config,
+  { outputFile },
 ) => {
   if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "typescript-react-query" requires extension to be ".ts" or ".tsx"!`);

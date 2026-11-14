@@ -5,33 +5,46 @@ import { VoteButtonsFragmentDoc } from './vote-buttons.fragment.stencil-componen
 import 'stencil-apollo';
 import { Component, h, Prop } from '@stencil/core';
 
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
 declare global {
-  export type FeedQueryVariables = Types.Exact<{
+  /** A list of options for the sort order of the feed */
+  export type FeedType =
+    /** Sort by a combination of freshness and score, using Reddit's algorithm */
+    | 'HOT'
+    /** Newest entries first */
+    | 'NEW'
+    /** Highest score entries first */
+    | 'TOP';
+
+  export type FeedQueryVariables = Exact<{
     type: Types.FeedType;
-    offset?: Types.InputMaybe<Types.Scalars['Int']['input']>;
-    limit?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+    offset?: number | null | undefined;
+    limit?: number | null | undefined;
   }>;
 
   export type FeedQuery = {
-    __typename?: 'Query';
-    currentUser?: { __typename?: 'User'; login: string } | null;
-    feed?: Array<{
-      __typename?: 'Entry';
+    currentUser: { login: string } | null;
+    feed: Array<{
       id: number;
       commentCount: number;
       score: number;
       createdAt: number;
       repository: {
-        __typename?: 'Repository';
         full_name: string;
         html_url: string;
-        description?: string | null;
+        description: string | null;
         stargazers_count: number;
-        open_issues_count?: number | null;
-        owner?: { __typename?: 'User'; avatar_url: string } | null;
+        open_issues_count: number | null;
+        owner: { avatar_url: string } | null;
       };
-      vote: { __typename?: 'Vote'; vote_value: number };
-      postedBy: { __typename?: 'User'; html_url: string; login: string };
+      vote: { vote_value: number };
+      postedBy: { html_url: string; login: string };
     } | null> | null;
   };
 }
