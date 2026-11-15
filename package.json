@@ -82,7 +82,7 @@
       "prettier --write"
     ],
     "pnpm-lock.yaml": [
-      "pnpm dedupe"
+      "sh -c 'pnpm dedupe' --"
     ]
   }
 }
