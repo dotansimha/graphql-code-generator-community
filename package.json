@@ -1,34 +1,22 @@
 {
   "name": "graphql-code-generator",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "packages/plugins/flow/*",
-    "packages/plugins/java/*",
-    "packages/plugins/c-sharp/*",
-    "packages/plugins/dart/*",
-    "packages/plugins/typescript/*",
-    "packages/plugins/other/*",
-    "packages/plugins/python/*",
-    "packages/presets/*"
-  ],
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "pnpm@12.21.0",
   "scripts": {
     "build": "bob build",
     "ci:lint": "cross-env \"ESLINT_USE_FLAT_CONFIG=false\" eslint --cache --ignore-path .gitignore --output-file eslint_report.json --format json .",
     "clean": "rimraf node_modules/",
-    "generate:examples": "yarn generate:examples:cjs && yarn generate:examples:esm",
+    "generate:examples": "pnpm generate:examples:cjs && pnpm generate:examples:esm",
     "generate:examples:cjs": "graphql-codegen --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
     "generate:examples:esm": "graphql-codegen-esm --require dotenv/config --config ./dev-test/codegen.ts dotenv_config_path=dev-test/.env",
     "lint": "cross-env \"ESLINT_USE_FLAT_CONFIG=false\" eslint --cache --ignore-path .gitignore .",
-    "postinstall": "patch-package",
     "prebuild": "rimraf dist/ .bob/ tsconfig.tsbuildinfo",
-    "prerelease": "yarn build",
+    "prerelease": "pnpm build",
     "prettier": "prettier --write --list-different .",
     "prettier:check": "prettier --check .",
     "release": "changeset publish",
     "test": "vitest",
-    "test-and-build": "yarn build && yarn test",
+    "test-and-build": "pnpm build && pnpm test",
     "types:check": "tsc --noEmit",
     "watch-build": "npx tsc-watch --project tsconfig.json --onSuccess \"bob build\""
   },
@@ -38,15 +26,39 @@
     "@babel/preset-typescript": "8.0.7",
     "@changesets/changelog-github": "0.7.0",
     "@changesets/cli": "2.31.1",
+    "@graphql-codegen/cli": "8.0.0",
+    "@graphql-codegen/flow": "workspace:*",
+    "@graphql-codegen/flow-operations": "workspace:*",
+    "@graphql-codegen/flow-resolvers": "workspace:*",
+    "@graphql-codegen/near-operation-file-preset": "workspace:*",
+    "@graphql-codegen/python": "workspace:*",
+    "@graphql-codegen/python-operations": "workspace:*",
+    "@graphql-codegen/testing": "6.0.0",
     "@graphql-codegen/typescript": "7.0.1",
+    "@graphql-codegen/typescript-apollo-angular": "workspace:*",
+    "@graphql-codegen/typescript-graphql-files-modules": "workspace:*",
+    "@graphql-codegen/typescript-jit-sdk": "workspace:*",
+    "@graphql-codegen/typescript-operations": "7.0.1",
+    "@graphql-codegen/typescript-react-apollo": "workspace:*",
+    "@graphql-codegen/typescript-react-query": "workspace:*",
+    "@graphql-codegen/typescript-rtk-query": "workspace:*",
+    "@graphql-codegen/typescript-stencil-apollo": "workspace:*",
+    "@graphql-codegen/typescript-urql": "workspace:*",
+    "@graphql-codegen/typescript-urql-graphcache": "workspace:*",
+    "@graphql-codegen/typescript-vue-apollo": "workspace:*",
+    "@graphql-codegen/typescript-vue-apollo-smart-ops": "workspace:*",
+    "@graphql-codegen/urql-introspection": "workspace:*",
+    "@ianvs/prettier-plugin-sort-imports": "4.4.1",
     "@theguild/prettier-config": "3.0.1",
     "@types/node": "24.19.2",
     "@typescript-eslint/eslint-plugin": "8.73.0",
     "@typescript-eslint/parser": "8.73.0",
     "bob-the-bundler": "7.0.1",
     "cross-env": "10.1.0",
+    "dotenv": "8.6.0",
     "eslint": "9.39.5",
     "eslint-plugin-import": "2.32.0",
+    "fs-extra": "11.4.1",
     "graphql": "16.13.2",
     "husky": "9.1.7",
     "jest-diff": "30.5.2",
@@ -54,14 +66,13 @@
     "lint-staged": "16.4.0",
     "patch-package": "8.0.1",
     "prettier": "3.8.5",
+    "prettier-plugin-pkg": "0.18.1",
+    "prettier-plugin-sh": "0.15.0",
     "rimraf": "6.1.4",
     "ts-node": "10.9.2",
     "tslib": "2.9.1",
     "typescript": "5.9.3",
     "vitest": "4.1.12"
-  },
-  "resolutions": {
-    "graphql": "16.13.2"
   },
   "lint-staged": {
     "packages/**/src/**/*.{ts,tsx}": [
@@ -70,8 +81,8 @@
     "**/*.{js,jsx,cjs,mjs,ts,tsx,graphql,gql,yml,yaml,json,md}": [
       "prettier --write"
     ],
-    "yarn.lock": [
-      "npx yarn-deduplicate"
+    "pnpm-lock.yaml": [
+      "pnpm dedupe"
     ]
   }
 }
