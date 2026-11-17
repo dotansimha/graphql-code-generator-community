@@ -8,6 +8,7 @@ dist/
 CHANGELOG.md
 .husky/_/
 .changeset/*.md
+pnpm-lock.yaml
 # Ignore all flow files cause it is just hard to maintain them
 *.flow.js
 # Generated Python examples (prettier has no .py parser)

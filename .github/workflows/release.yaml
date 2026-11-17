@@ -19,6 +19,7 @@ jobs:
       npmTag: alpha
       buildScript: build
       nodeVersion: 24
+      packageManager: pnpm
     secrets:
       githubToken: ${{ secrets.GITHUB_TOKEN }}
       npmToken: FILLER
@@ -33,6 +34,7 @@ jobs:
     with:
       releaseScript: release
       nodeVersion: 24
+      packageManager: pnpm
     secrets:
       githubToken: ${{ secrets.GITHUB_TOKEN }}
       npmToken: FILLER

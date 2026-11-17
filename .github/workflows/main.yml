@@ -16,7 +16,8 @@ jobs:
     name: Linting Check
     uses: the-guild-org/shared-config/.github/workflows/lint.yml@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
     with:
-      script: yarn ci:lint
+      script: pnpm ci:lint
+      packageManager: pnpm
     secrets:
       githubToken: ${{ secrets.GITHUB_TOKEN }}
   prettier-check:
@@ -29,8 +30,9 @@ jobs:
         uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
           nodeVersion: 24
+          packageManager: pnpm
       - name: Prettier Check
-        run: yarn prettier:check
+        run: pnpm prettier:check
   dev-tests:
     name: Validating dev-tests
     runs-on: ubuntu-latest
@@ -46,13 +48,14 @@ jobs:
         uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
           nodeVersion: 24
+          packageManager: pnpm
       - name: Build
-        run: yarn build
+        run: pnpm build
         env:
           CI: true
       - name: Test dev-tests ${{matrix.method}}
         run: |
-          yarn run generate:examples:${{matrix.method}}
+          pnpm run generate:examples:${{matrix.method}}
           git diff --exit-code -- dev-test/
   esm:
     name: Testing exports integrity
@@ -64,12 +67,13 @@ jobs:
         uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
           nodeVersion: 24
+          packageManager: pnpm
       - name: Build
-        run: yarn build
+        run: pnpm build
         env:
           CI: true
       - name: Test ESM & CJS integrity
-        run: yarn bob check
+        run: pnpm bob check
   test:
     name:
       Unit Test on Node ${{matrix.node_version}} (${{matrix.os}}) and GraphQL
@@ -96,20 +100,21 @@ jobs:
         uses: the-guild-org/shared-config/setup@1c4632ccc198d4c9b34d9e6b3d556c6f245b4e69 # main
         with:
           nodeVersion: ${{matrix.node_version}}
+          packageManager: pnpm
       - name: Use GraphQL v${{matrix.graphql_version}}
         run: node ./scripts/match-graphql.cjs ${{matrix.graphql_version}}
       - name: Install Dependencies
-        run: yarn
+        run: pnpm i --no-frozen-lockfile
       - name: Cache Vitest
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: node_modules/.vite
-          key: ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-vitest-${{hashFiles('yarn.lock')}}
+          key: ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-vitest-${{hashFiles('pnpm-lock.yaml')}}
           restore-keys: |
             ${{runner.os}}-${{matrix.node_version}}-${{matrix.graphql_version}}-vitest-
       - name: Build
-        run: yarn build
+        run: pnpm build
       - name: Test
-        run: GRAPHQL_VERSION=${{matrix.graphql_version}} yarn test
+        run: GRAPHQL_VERSION=${{matrix.graphql_version}} pnpm test
         env:
           CI: true

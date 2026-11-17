@@ -1,24 +1,15 @@
-const { writeFileSync } = require('fs');
-const { resolve } = require('path');
-const { argv, cwd } = require('process');
-
-const pkgPath = resolve(cwd(), './package.json');
-
-const pkg = require(pkgPath);
+const fs = require('fs');
+const { argv } = require('process');
+const yaml = require('js-yaml');
 
 const version = argv[2];
 
-pkg.resolutions = pkg.resolutions || {};
-if (pkg.resolutions.graphql.startsWith(version)) {
-  // eslint-disable-next-line no-console
-  console.info(`GraphQL v${version} is match! Skipping.`);
-  process.exit(0);
-}
+const pnpmWorkspaceFile = './pnpm-workspace.yaml';
 
-const npmVersion = version.includes('-') ? version : `^${version}`;
-pkg.devDependencies.graphql = npmVersion;
-pkg.resolutions.graphql = npmVersion;
-pkg.resolutions['**/apollo-language-server/graphql'] = npmVersion;
-pkg.resolutions['**/@types/graphql-upload/graphql'] = npmVersion;
+const file = fs.readFileSync(pnpmWorkspaceFile, 'utf8');
+const parsedFile = yaml.load(file);
 
-writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), 'utf8');
+parsedFile.overrides ||= {};
+parsedFile.overrides.graphql = version;
+
+fs.writeFileSync(pnpmWorkspaceFile, yaml.dump(parsedFile), 'utf8');
