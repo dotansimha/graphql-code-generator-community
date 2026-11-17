@@ -13,6 +13,8 @@ allowBuilds:
   msw: false
 
 minimumReleaseAgeExclude:
+  # FIXME: Remove once ready, these were installed by yarn
+  # but doesn't meet pnpm time requirements
   - '@typescript-eslint/eslint-plugin@8.73.0'
   - '@typescript-eslint/parser@8.73.0'
   - '@typescript-eslint/project-service@8.73.0'
@@ -25,4 +27,5 @@ minimumReleaseAgeExclude:
   - '@typescript-eslint/visitor-keys@8.73.0'
 
 overrides:
+  # FIXME: use graphql 17
   graphql: 16.13.2
