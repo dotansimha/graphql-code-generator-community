@@ -1,30 +1,15 @@
-const { readFileSync, writeFileSync } = require('fs');
-const { resolve } = require('path');
-const { argv, cwd } = require('process');
+const fs = require('fs');
+const { argv } = require('process');
 const yaml = require('js-yaml');
-
-const pkgPath = resolve(cwd(), './package.json');
-const workspacePath = resolve(cwd(), './pnpm-workspace.yaml');
-
-const pkg = require(pkgPath);
-const workspace = yaml.load(readFileSync(workspacePath, 'utf8'));
 
 const version = argv[2];
 
-const currentVersion = workspace.overrides?.graphql;
-if (!currentVersion) {
-  throw new Error(`Cannot find the graphql override in ${workspacePath}`);
-}
+const pnpmWorkspaceFile = './pnpm-workspace.yaml';
 
-if (String(currentVersion).startsWith(version)) {
-  // eslint-disable-next-line no-console
-  console.info(`GraphQL v${version} is match! Skipping.`);
-  process.exit(0);
-}
+const file = fs.readFileSync(pnpmWorkspaceFile, 'utf8');
+const parsedFile = yaml.load(file);
 
-const npmVersion = version.includes('-') ? version : `^${version}`;
-pkg.devDependencies.graphql = npmVersion;
-workspace.overrides.graphql = npmVersion;
+parsedFile.overrides ||= {};
+parsedFile.overrides.graphql = version;
 
-writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), 'utf8');
-writeFileSync(workspacePath, yaml.dump(workspace, { lineWidth: -1 }), 'utf8');
+fs.writeFileSync(pnpmWorkspaceFile, yaml.dump(parsedFile), 'utf8');
