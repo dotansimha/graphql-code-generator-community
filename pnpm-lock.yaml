@@ -257,8 +257,8 @@ importers:
         specifier: workspace:*
         version: link:packages/plugins/other/urql-introspection/dist
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: 4.4.1
-        version: 4.4.1(prettier@3.8.5)(supports-color@7.2.0)
+        specifier: 4.7.1
+        version: 4.7.1(prettier@3.8.5)(supports-color@7.2.0)
       '@theguild/prettier-config':
         specifier: 3.0.1
         version: 3.0.1(prettier@3.8.5)(supports-color@7.2.0)
@@ -2978,6 +2978,24 @@ packages:
       prettier: 2 || 3
     peerDependenciesMeta:
       '@vue/compiler-sfc':
+        optional: true
+
+  '@ianvs/prettier-plugin-sort-imports@4.7.1':
+    resolution: {integrity: sha512-jmTNYGlg95tlsoG3JLCcuC4BrFELJtLirLAkQW/71lXSyOhVt/Xj7xWbbGcuVbNq1gwWgSyMrPjJc9Z30hynVw==}
+    peerDependencies:
+      '@prettier/plugin-oxc': ^0.0.4 || ^0.1.0
+      '@vue/compiler-sfc': 2.7.x || 3.x
+      content-tag: ^4.0.0
+      prettier: 2 || 3 || ^4.0.0-0
+      prettier-plugin-ember-template-tag: ^2.1.0
+    peerDependenciesMeta:
+      '@prettier/plugin-oxc':
+        optional: true
+      '@vue/compiler-sfc':
+        optional: true
+      content-tag:
+        optional: true
+      prettier-plugin-ember-template-tag:
         optional: true
 
   '@inquirer/ansi@2.1.0':
@@ -8064,6 +8082,17 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.8.5)(supports-color@7.2.0)':
+    dependencies:
+      '@babel/generator': 7.29.14
+      '@babel/parser': 7.29.14
+      '@babel/traverse': 7.29.14(supports-color@7.2.0)
+      '@babel/types': 7.29.14
+      prettier: 3.8.5
+      semver: 7.8.6
+    transitivePeerDependencies:
+      - supports-color
+
+  '@ianvs/prettier-plugin-sort-imports@4.7.1(prettier@3.8.5)(supports-color@7.2.0)':
     dependencies:
       '@babel/generator': 7.29.14
       '@babel/parser': 7.29.14

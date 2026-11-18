@@ -47,7 +47,7 @@
     "@graphql-codegen/typescript-vue-apollo": "workspace:*",
     "@graphql-codegen/typescript-vue-apollo-smart-ops": "workspace:*",
     "@graphql-codegen/urql-introspection": "workspace:*",
-    "@ianvs/prettier-plugin-sort-imports": "4.4.1",
+    "@ianvs/prettier-plugin-sort-imports": "4.7.1",
     "@theguild/prettier-config": "3.0.1",
     "@types/node": "24.19.2",
     "@typescript-eslint/eslint-plugin": "8.73.0",
