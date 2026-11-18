@@ -6,8 +6,8 @@ export default mergeConfig(
   defineProject({
     test: {
       name: 'typescript-nest',
-      // FIXME: skip graphql@17 until deps are fixed to handle v17
-      include: process.env.GRAPHQL_VERSION === '17' ? [] : ['**/*.spec.ts'],
+      // Only run with GRAPHQL_VERSION=16: the @graphql-codegen/typescript@2 and visitor-plugin-common@2 dependencies crash on graphql 17.
+      include: process.env.GRAPHQL_VERSION === '16' ? ['**/*.spec.ts'] : [],
     },
   }),
 );
