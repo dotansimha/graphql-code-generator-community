@@ -12,20 +12,6 @@ packages:
 allowBuilds:
   msw: false
 
-minimumReleaseAgeExclude:
-  # FIXME: Remove once ready, these were installed by yarn
-  # but doesn't meet pnpm time requirements
-  - '@typescript-eslint/eslint-plugin@8.73.0'
-  - '@typescript-eslint/parser@8.73.0'
-  - '@typescript-eslint/project-service@8.73.0'
-  - '@typescript-eslint/scope-manager@8.73.0'
-  - '@typescript-eslint/tsconfig-utils@8.73.0'
-  - '@typescript-eslint/type-utils@8.73.0'
-  - '@typescript-eslint/types@8.73.0'
-  - '@typescript-eslint/typescript-estree@8.73.0'
-  - '@typescript-eslint/utils@8.73.0'
-  - '@typescript-eslint/visitor-keys@8.73.0'
-
 overrides:
   # FIXME: use graphql 17
   graphql: 16.13.2
