@@ -1,3 +1,4 @@
+import { versionInfo } from 'graphql';
 import { defineProject, mergeConfig } from 'vitest/config';
 import { sharedConfig } from '../../../../vitest.config.js';
 
@@ -6,8 +7,8 @@ export default mergeConfig(
   defineProject({
     test: {
       name: 'typescript-type-graphql',
-      // FIXME: skip graphql@17 until deps are fixed to handle v17
-      include: process.env.GRAPHQL_VERSION === '17' ? [] : ['**/*.spec.ts'],
+      // Only run on graphql 16: the @graphql-codegen/typescript@2 and visitor-plugin-common@2 dependencies crash on graphql 17.
+      include: versionInfo.major === 16 ? ['**/*.spec.ts'] : [],
     },
   }),
 );
