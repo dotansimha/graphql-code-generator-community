@@ -24,6 +24,9 @@
     "paths": {
       "@graphql-codegen/python": ["packages/plugins/python/python/src/index.ts"],
       "@graphql-codegen/python-common": ["packages/plugins/python/python-common/src/index.ts"],
+      "@graphql-codegen/python-generic-sdk": [
+        "packages/plugins/python/python-generic-sdk/src/index.ts"
+      ],
       "@graphql-codegen/python-operations": [
         "packages/plugins/python/python-operations/src/index.ts"
       ],
