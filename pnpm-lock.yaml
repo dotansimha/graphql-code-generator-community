@@ -258,10 +258,10 @@ importers:
         version: link:packages/plugins/other/urql-introspection/dist
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.7.1
-        version: 4.7.1(prettier@3.8.5)(supports-color@7.2.0)
+        version: 4.7.1(prettier@3.10.1)(supports-color@7.2.0)
       '@theguild/prettier-config':
         specifier: 3.0.1
-        version: 3.0.1(prettier@3.8.5)(supports-color@7.2.0)
+        version: 3.0.1(prettier@3.10.1)(supports-color@7.2.0)
       '@types/node':
         specifier: 24.19.2
         version: 24.19.2
@@ -308,14 +308,14 @@ importers:
         specifier: 8.0.1
         version: 8.0.1
       prettier:
-        specifier: 3.8.5
-        version: 3.8.5
+        specifier: 3.10.1
+        version: 3.10.1
       prettier-plugin-pkg:
         specifier: 0.18.1
-        version: 0.18.1(prettier@3.8.5)
+        version: 0.18.1(prettier@3.10.1)
       prettier-plugin-sh:
         specifier: 0.20.2
-        version: 0.20.2(prettier@3.8.5)
+        version: 0.20.2(prettier@3.10.1)
       rimraf:
         specifier: 6.1.4
         version: 6.1.4
@@ -5476,8 +5476,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.8.5:
-    resolution: {integrity: sha512-zxcTTCedNGJM4R8sj/Cq/F0W/c4iE0afWBcBwMTRtw4WHYP9TWkYjdiH3npPRUYsXQCPR0hTU9yjovOu+E6EQA==}
+  prettier@3.10.1:
+    resolution: {integrity: sha512-70vp3ZUYoPlFbF9uiTdXHUUCGEIp7d4+6p+8DYbkm2jP7x/3i/paXVF6dopSI3zd/CEitrZN1rc4i85xWmmXlg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -8116,24 +8116,24 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.8.5)(supports-color@7.2.0)':
+  '@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.10.1)(supports-color@7.2.0)':
     dependencies:
       '@babel/generator': 7.29.14
       '@babel/parser': 7.29.14
       '@babel/traverse': 7.29.14(supports-color@7.2.0)
       '@babel/types': 7.29.14
-      prettier: 3.8.5
+      prettier: 3.10.1
       semver: 7.8.6
     transitivePeerDependencies:
       - supports-color
 
-  '@ianvs/prettier-plugin-sort-imports@4.7.1(prettier@3.8.5)(supports-color@7.2.0)':
+  '@ianvs/prettier-plugin-sort-imports@4.7.1(prettier@3.10.1)(supports-color@7.2.0)':
     dependencies:
       '@babel/generator': 7.29.14
       '@babel/parser': 7.29.14
       '@babel/traverse': 7.29.14(supports-color@7.2.0)
       '@babel/types': 7.29.14
-      prettier: 3.8.5
+      prettier: 3.10.1
       semver: 7.8.6
     transitivePeerDependencies:
       - supports-color
@@ -8517,12 +8517,12 @@ snapshots:
 
   '@stencil/state-tunnel@1.0.1': {}
 
-  '@theguild/prettier-config@3.0.1(prettier@3.8.5)(supports-color@7.2.0)':
+  '@theguild/prettier-config@3.0.1(prettier@3.10.1)(supports-color@7.2.0)':
     dependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.4.1(prettier@3.8.5)(supports-color@7.2.0)
-      prettier: 3.8.5
-      prettier-plugin-pkg: 0.18.1(prettier@3.8.5)
-      prettier-plugin-sh: 0.15.0(prettier@3.8.5)
+      '@ianvs/prettier-plugin-sort-imports': 4.4.1(prettier@3.10.1)(supports-color@7.2.0)
+      prettier: 3.10.1
+      prettier-plugin-pkg: 0.18.1(prettier@3.10.1)
+      prettier-plugin-sh: 0.15.0(prettier@3.10.1)
     transitivePeerDependencies:
       - '@vue/compiler-sfc'
       - supports-color
@@ -10761,25 +10761,25 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-pkg@0.18.1(prettier@3.8.5):
+  prettier-plugin-pkg@0.18.1(prettier@3.10.1):
     dependencies:
-      prettier: 3.8.5
+      prettier: 3.10.1
 
-  prettier-plugin-sh@0.15.0(prettier@3.8.5):
+  prettier-plugin-sh@0.15.0(prettier@3.10.1):
     dependencies:
       mvdan-sh: 0.10.1
-      prettier: 3.8.5
+      prettier: 3.10.1
       sh-syntax: 0.4.2
 
-  prettier-plugin-sh@0.20.2(prettier@3.8.5):
+  prettier-plugin-sh@0.20.2(prettier@3.10.1):
     dependencies:
       '@reteps/dockerfmt': 0.5.4
-      prettier: 3.8.5
+      prettier: 3.10.1
       sh-syntax: 0.7.0
 
   prettier@2.8.8: {}
 
-  prettier@3.8.5: {}
+  prettier@3.10.1: {}
 
   pretty-format@30.5.1:
     dependencies:
