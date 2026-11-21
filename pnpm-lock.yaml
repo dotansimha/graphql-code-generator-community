@@ -195,7 +195,7 @@ importers:
         version: 2.31.1(@types/node@24.19.2)
       '@graphql-codegen/cli':
         specifier: 8.0.0
-        version: 8.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@5.9.3)
+        version: 8.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@7.0.2)
       '@graphql-codegen/flow':
         specifier: workspace:*
         version: link:packages/plugins/flow/flow/dist
@@ -267,13 +267,13 @@ importers:
         version: 24.19.2
       '@typescript-eslint/eslint-plugin':
         specifier: 8.73.0
-        version: 8.73.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
+        version: 8.73.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)
       '@typescript-eslint/parser':
         specifier: 8.73.0
-        version: 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
+        version: 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)
       bob-the-bundler:
         specifier: 7.0.1
-        version: 7.0.1(typescript@5.9.3)
+        version: 7.0.1(typescript@7.0.2)
       cross-env:
         specifier: 10.1.0
         version: 10.1.0
@@ -285,7 +285,7 @@ importers:
         version: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
       eslint-plugin-import:
         specifier: 2.32.0
-        version: 2.32.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)
+        version: 2.32.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)
       graphql:
         specifier: 16.13.2
         version: 16.13.2
@@ -321,16 +321,16 @@ importers:
         version: 6.1.4
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@24.19.2)(typescript@5.9.3)
+        version: 10.9.2(@types/node@24.19.2)(typescript@7.0.2)
       tslib:
         specifier: 2.9.1
         version: 2.9.1
       typescript:
-        specifier: 5.9.3
-        version: 5.9.3
+        specifier: 7.0.2
+        version: 7.0.2
       vitest:
         specifier: 4.1.12
-        version: 4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
+        version: 4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
 
   packages/plugins/c-sharp/c-sharp:
     dependencies:
@@ -358,7 +358,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/c-sharp/c-sharp-common:
@@ -415,7 +415,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/dart/flutter-freezed:
@@ -463,7 +463,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 4.0.5
-        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)
+        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)
     publishDirectory: dist
 
   packages/plugins/flow/operations:
@@ -489,7 +489,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 4.0.5
-        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)
+        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)
     publishDirectory: dist
 
   packages/plugins/flow/resolvers:
@@ -518,7 +518,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 4.0.5
-        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)
+        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)
     publishDirectory: dist
 
   packages/plugins/java/apollo-android:
@@ -550,7 +550,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@types/pluralize':
         specifier: 0.0.33
         version: 0.0.33
@@ -605,7 +605,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/java/kotlin:
@@ -628,7 +628,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/java/resolvers:
@@ -651,7 +651,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/other/hasura-allow-list:
@@ -687,7 +687,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/other/urql-introspection:
@@ -707,7 +707,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/python/python:
@@ -733,7 +733,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/python/python-common:
@@ -750,7 +750,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/python/python-operations:
@@ -773,7 +773,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/apollo-angular:
@@ -799,7 +799,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -854,7 +854,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/generic-sdk:
@@ -880,7 +880,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -921,7 +921,7 @@ importers:
         version: 7.0.0(graphql@16.13.2)
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -956,7 +956,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/graphql-request:
@@ -985,7 +985,7 @@ importers:
         version: 7.0.0(graphql@16.13.2)
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1029,7 +1029,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1076,7 +1076,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@types/lodash':
         specifier: 4.17.27
         version: 4.17.27
@@ -1101,7 +1101,7 @@ importers:
         version: 16.13.2
       msw:
         specifier: ^2.0.0
-        version: 2.15.0(@types/node@24.19.2)(typescript@5.9.3)
+        version: 2.15.0(@types/node@24.19.2)(typescript@7.0.2)
       tslib:
         specifier: ^2.8.1
         version: 2.9.1
@@ -1127,7 +1127,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/nest:
@@ -1153,7 +1153,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 4.0.5
-        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)
+        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)
     publishDirectory: dist
 
   packages/plugins/typescript/nhost:
@@ -1228,7 +1228,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1285,7 +1285,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1352,7 +1352,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1390,7 +1390,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/type-graphql:
@@ -1416,7 +1416,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 4.0.5
-        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)
+        version: 4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)
     publishDirectory: dist
 
   packages/plugins/typescript/urql:
@@ -1442,7 +1442,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1480,7 +1480,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/urql-svelte-operations-store:
@@ -1534,7 +1534,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1569,7 +1569,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1604,7 +1604,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -1658,7 +1658,7 @@ importers:
     devDependencies:
       '@graphql-codegen/cli':
         specifier: 8.0.0
-        version: 8.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@5.9.3)
+        version: 8.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@7.0.2)
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@16.13.2)
@@ -3550,6 +3550,126 @@ packages:
   '@typescript-eslint/visitor-keys@8.73.0':
     resolution: {integrity: sha512-k4lsFVpRZICbltkIEEH4hZRkwXkqDF1GHBpClKQOHQY+RkoZAAuyc1ci3I6p+CB6v3U4jaHIUshc4RzzQXZWLg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@typescript/typescript-aix-ppc64@7.0.2':
+    resolution: {integrity: sha512-MTKKkWB7p/0E9xi1d1tHtZ5PiLkGEMIq88pK2CubZjOsLtYTLqhgIgi6zepFa+9GHZ6h05NMCkQxGKiPXMxXtQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [ppc64]
+    os: [aix]
+
+  '@typescript/typescript-darwin-arm64@7.0.2':
+    resolution: {integrity: sha512-gowzar9MwS/aRWp6f3a4KUqzRjAZjOsmGNCM6LcTgXum+dBfgsBVMN+AgvOCCbguXyick6LJhpBszxMebJ8syA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@typescript/typescript-darwin-x64@7.0.2':
+    resolution: {integrity: sha512-SZ9xZInqApNlNGc9s0W1VSsktYSOe9cFqNOIqmN1Gs8SmkjKZYFt017G4VwPxASInODuAdbTW7sXiFUf893RgA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@typescript/typescript-freebsd-arm64@7.0.2':
+    resolution: {integrity: sha512-W5NH4y/J0plIIS5b2xvTEkU7JFxyqdMAOgf+Ilhl0vHQXKO5dZoxd+C/jEtq56c4F3wk71RB4BMRQ2XdI+bwYQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [freebsd]
+
+  '@typescript/typescript-freebsd-x64@7.0.2':
+    resolution: {integrity: sha512-UMGDx5sTpzNw3WiPebH7l90IWfJggEd+egHt/q6p7/Cm3zqoV7VxkGXt+3DxPIw8CcmvAB0j3sVVfbhX+M4Tpw==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@typescript/typescript-linux-arm64@7.0.2':
+    resolution: {integrity: sha512-Qh4eU4/y3yDjnfjjyPYihMj5/ODIlmt+Bzu17OI+fiSRDW57QmU5SiN63exPRNJPKUzcc1INa1NXdrJ+MqHjUQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@typescript/typescript-linux-arm@7.0.2':
+    resolution: {integrity: sha512-gffT3xPz9sR7j/YJExkyPntrI0P2EP9XbOyWzth2/Gs0RstK+90RBcO0ncXoXy/beYll1SXw846Nf2zdnEz0QQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm]
+    os: [linux]
+
+  '@typescript/typescript-linux-loong64@7.0.2':
+    resolution: {integrity: sha512-uEHck9i8hoAzXPiYRib1O7miOnz23SxIeVl6F4LXox+qov1K35jHcEW6VHKvZI+pyvl7fZEP4MCU5LYvIq1GuQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [loong64]
+    os: [linux]
+
+  '@typescript/typescript-linux-mips64el@7.0.2':
+    resolution: {integrity: sha512-R4KvAMnE43W5Qeqb0Ly56O3mWMWIAgsMyz36DCaycd5nbg/9kzm0liw3JocfRqyJY0KPmzFjbswozXyW0DnIYA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [mips64el]
+    os: [linux]
+
+  '@typescript/typescript-linux-ppc64@7.0.2':
+    resolution: {integrity: sha512-DORx5b3sd/4S7eayxm4FQv+A7CrkUIGRaHiwI8oiHTAI1fAPWhF4J0vAlkC8biAlHSVVwxMQ3tjZ2/DVbnQiiA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [ppc64]
+    os: [linux]
+
+  '@typescript/typescript-linux-riscv64@7.0.2':
+    resolution: {integrity: sha512-wf0jqEDOjrPRnKwYRyyJDRo11KMbvMFrU+q4zqKyChODBzvlkbhNQfKvLxQCcwTpdDaXSHZTVuh0JoCrKCUMHQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [riscv64]
+    os: [linux]
+
+  '@typescript/typescript-linux-s390x@7.0.2':
+    resolution: {integrity: sha512-IkwJc3L7yhytWd/ewjyxNDfOmswCm9GWMJT/ue/dU4aZNbwZeYAetq42VyLmsmSjvoX7z74X6ZaYCtzAr0EuGw==}
+    engines: {node: '>=16.20.0'}
+    cpu: [s390x]
+    os: [linux]
+
+  '@typescript/typescript-linux-x64@7.0.2':
+    resolution: {integrity: sha512-EYdf2cNg7rgCWJnxCdJ+F3V39O8ihb37eHAu1LK8oAFizgTQbPOK7zHHXbPt8rX24COqODXeI3sIf0fCXG7H/A==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [linux]
+
+  '@typescript/typescript-netbsd-arm64@7.0.2':
+    resolution: {integrity: sha512-+polYF4MF04aPpO5FTkHran9yUQDSXqy5GiSDKpsll5jy3l3+g9QLhpf39T+ePtefhXLOGrLl0QIjkQP6VnelA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [netbsd]
+
+  '@typescript/typescript-netbsd-x64@7.0.2':
+    resolution: {integrity: sha512-8YIT0EHM/3dq10ZOVF/A7pc/YSMtbcecct4rWtexrnSCHOPcpC2KTLXfTCR6vDpnSiY12heNb1GiN/wu+T/FyA==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [netbsd]
+
+  '@typescript/typescript-openbsd-arm64@7.0.2':
+    resolution: {integrity: sha512-APT8+ClYnuYm1u9+kgGXoMj2VzWzcymwh2gNSQVySHfkRDGOTVkoWLjCmOQSaO+PoqQ57B0flRp9SA+7GnnkzQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [openbsd]
+
+  '@typescript/typescript-openbsd-x64@7.0.2':
+    resolution: {integrity: sha512-yX7s+Q0Dln0Dt9tEzZsAjXXR/+ytBM7AlglaqyeMPxQszJ1JhlJdZ6jLA+IzldHtflX81em7lDao1xXu+aRRkg==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [openbsd]
+
+  '@typescript/typescript-sunos-x64@7.0.2':
+    resolution: {integrity: sha512-dLJDGaLZ1D4HPQn62u1n8mBDkJREwMsAkCdkwd4Ieqw+x3TUyTsqY0YiBCtE6H6OzzgGk3iuZ3vFWRS+E8/d1g==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [sunos]
+
+  '@typescript/typescript-win32-arm64@7.0.2':
+    resolution: {integrity: sha512-Gyl1Vy6OsWesLzmq+EP0Fb7b4Nid5232AvcA2SFcdYreldpNtYFFofPjnt62y9hQy7VTaZp65ICJjuAQRaVcIQ==}
+    engines: {node: '>=16.20.0'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@typescript/typescript-win32-x64@7.0.2':
+    resolution: {integrity: sha512-0BQ3HkAHHlKLSp1qRvf3SUhGpGsDuhB/jgFw75guyqbxJqEaS0Cw/VFO8i2nHglJUzQCRtMMR/IBAKE3ETMC4g==}
+    engines: {node: '>=16.20.0'}
+    cpu: [x64]
+    os: [win32]
 
   '@urql/core@5.2.0':
     resolution: {integrity: sha512-/n0ieD0mvvDnVAXEQgX/7qJiVcvYvNkOHeBvkwtylfjydar123caCXcl58PXFY11oU1oquJocVXHxLAbtv4x1A==}
@@ -5996,9 +6116,9 @@ packages:
     resolution: {integrity: sha512-phPGCwqr2+Qo0fwniCE8e4pKnGu/yFb5nD5Y8bf0EEeiI5GklnACYA9GFy/DrAeRrKHXvHn+1SUsOWgJp6RO+g==}
     engines: {node: '>= 0.4'}
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
-    engines: {node: '>=14.17'}
+  typescript@7.0.2:
+    resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
+    engines: {node: '>=16.20.0'}
     hasBin: true
 
   ua-parser-js@1.0.41:
@@ -7544,7 +7664,7 @@ snapshots:
       graphql-tag: 2.12.6(graphql@16.13.2)
       tslib: 2.9.1
 
-  '@graphql-codegen/cli@8.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@5.9.3)':
+  '@graphql-codegen/cli@8.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@7.0.2)':
     dependencies:
       '@babel/generator': 7.29.14
       '@babel/template': 7.29.7
@@ -7565,11 +7685,11 @@ snapshots:
       '@inquirer/prompts': 8.8.0(@types/node@24.19.2)
       '@whatwg-node/fetch': 0.10.13
       chalk: 5.6.2
-      cosmiconfig: 9.0.2(typescript@5.9.3)
+      cosmiconfig: 9.0.2(typescript@7.0.2)
       debounce: 3.0.0
       detect-indent: 7.0.2
       graphql: 16.13.2
-      graphql-config: 6.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@5.9.3)
+      graphql-config: 6.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@7.0.2)
       is-glob: 4.0.3
       jiti: 2.7.0
       json-to-pretty-yaml: 1.2.2
@@ -7696,7 +7816,7 @@ snapshots:
       graphql: 16.13.2
       tslib: 2.9.1
 
-  '@graphql-codegen/testing@4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)':
+  '@graphql-codegen/testing@4.0.5(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 6.3.0(graphql@16.13.2)
       common-tags: 1.8.2
@@ -7705,11 +7825,11 @@ snapshots:
       lz-string: 1.5.0
       nock: 14.0.17
       tslib: 2.9.1
-      typescript: 5.9.3
+      typescript: 7.0.2
     transitivePeerDependencies:
       - graphql
 
-  '@graphql-codegen/testing@6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))':
+  '@graphql-codegen/testing@6.0.0(graphql@16.13.2)(jest-diff@30.5.2)(typescript@7.0.2)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))':
     dependencies:
       '@graphql-codegen/plugin-helpers': 8.0.0(graphql@16.13.2)
       common-tags: 1.8.2
@@ -7718,8 +7838,8 @@ snapshots:
       lz-string: 1.5.0
       nock: 14.0.17
       tslib: 2.9.1
-      typescript: 5.9.3
-      vitest: 4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
+      typescript: 7.0.2
+      vitest: 4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
     transitivePeerDependencies:
       - graphql
 
@@ -8581,42 +8701,42 @@ snapshots:
 
   '@types/zen-observable@0.8.7': {}
 
-  '@typescript-eslint/eslint-plugin@8.73.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)':
+  '@typescript-eslint/eslint-plugin@8.73.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)':
     dependencies:
       '@eslint-community/regexpp': 4.12.3
-      '@typescript-eslint/parser': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
+      '@typescript-eslint/parser': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)
       '@typescript-eslint/scope-manager': 8.73.0
-      '@typescript-eslint/type-utils': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
-      '@typescript-eslint/utils': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
+      '@typescript-eslint/type-utils': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)
+      '@typescript-eslint/utils': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)
       '@typescript-eslint/visitor-keys': 8.73.0
       eslint: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
       ignore: 7.0.14
       natural-compare: 1.4.0
-      ts-api-utils: 2.5.0(typescript@5.9.3)
-      typescript: 5.9.3
+      ts-api-utils: 2.5.0(typescript@7.0.2)
+      typescript: 7.0.2
     transitivePeerDependencies:
       - '@typescript/native'
       - supports-color
 
-  '@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)':
+  '@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)':
     dependencies:
       '@typescript-eslint/scope-manager': 8.73.0
       '@typescript-eslint/types': 8.73.0
-      '@typescript-eslint/typescript-estree': 8.73.0(supports-color@7.2.0)(typescript@5.9.3)
+      '@typescript-eslint/typescript-estree': 8.73.0(supports-color@7.2.0)(typescript@7.0.2)
       '@typescript-eslint/visitor-keys': 8.73.0
       debug: 4.4.3(supports-color@7.2.0)
       eslint: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
-      typescript: 5.9.3
+      typescript: 7.0.2
     transitivePeerDependencies:
       - '@typescript/native'
       - supports-color
 
-  '@typescript-eslint/project-service@8.73.0(supports-color@7.2.0)(typescript@5.9.3)':
+  '@typescript-eslint/project-service@8.73.0(supports-color@7.2.0)(typescript@7.0.2)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.73.0(typescript@5.9.3)
+      '@typescript-eslint/tsconfig-utils': 8.73.0(typescript@7.0.2)
       '@typescript-eslint/types': 8.73.0
       debug: 4.4.3(supports-color@7.2.0)
-      typescript: 5.9.3
+      typescript: 7.0.2
     transitivePeerDependencies:
       - supports-color
 
@@ -8625,48 +8745,48 @@ snapshots:
       '@typescript-eslint/types': 8.73.0
       '@typescript-eslint/visitor-keys': 8.73.0
 
-  '@typescript-eslint/tsconfig-utils@8.73.0(typescript@5.9.3)':
+  '@typescript-eslint/tsconfig-utils@8.73.0(typescript@7.0.2)':
     dependencies:
-      typescript: 5.9.3
+      typescript: 7.0.2
 
-  '@typescript-eslint/type-utils@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)':
+  '@typescript-eslint/type-utils@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)':
     dependencies:
       '@typescript-eslint/types': 8.73.0
-      '@typescript-eslint/typescript-estree': 8.73.0(supports-color@7.2.0)(typescript@5.9.3)
-      '@typescript-eslint/utils': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
+      '@typescript-eslint/typescript-estree': 8.73.0(supports-color@7.2.0)(typescript@7.0.2)
+      '@typescript-eslint/utils': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)
       debug: 4.4.3(supports-color@7.2.0)
       eslint: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
-      ts-api-utils: 2.5.0(typescript@5.9.3)
-      typescript: 5.9.3
+      ts-api-utils: 2.5.0(typescript@7.0.2)
+      typescript: 7.0.2
     transitivePeerDependencies:
       - '@typescript/native'
       - supports-color
 
   '@typescript-eslint/types@8.73.0': {}
 
-  '@typescript-eslint/typescript-estree@8.73.0(supports-color@7.2.0)(typescript@5.9.3)':
+  '@typescript-eslint/typescript-estree@8.73.0(supports-color@7.2.0)(typescript@7.0.2)':
     dependencies:
-      '@typescript-eslint/project-service': 8.73.0(supports-color@7.2.0)(typescript@5.9.3)
-      '@typescript-eslint/tsconfig-utils': 8.73.0(typescript@5.9.3)
+      '@typescript-eslint/project-service': 8.73.0(supports-color@7.2.0)(typescript@7.0.2)
+      '@typescript-eslint/tsconfig-utils': 8.73.0(typescript@7.0.2)
       '@typescript-eslint/types': 8.73.0
       '@typescript-eslint/visitor-keys': 8.73.0
       debug: 4.4.3(supports-color@7.2.0)
       minimatch: 11.0.8
       semver: 7.8.6
       tinyglobby: 0.2.17
-      ts-api-utils: 2.5.0(typescript@5.9.3)
-      typescript: 5.9.3
+      ts-api-utils: 2.5.0(typescript@7.0.2)
+      typescript: 7.0.2
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)':
+  '@typescript-eslint/utils@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)':
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))
       '@typescript-eslint/scope-manager': 8.73.0
       '@typescript-eslint/types': 8.73.0
-      '@typescript-eslint/typescript-estree': 8.73.0(supports-color@7.2.0)(typescript@5.9.3)
+      '@typescript-eslint/typescript-estree': 8.73.0(supports-color@7.2.0)(typescript@7.0.2)
       eslint: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
-      typescript: 5.9.3
+      typescript: 7.0.2
     transitivePeerDependencies:
       - '@typescript/native'
       - supports-color
@@ -8675,6 +8795,66 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.73.0
       eslint-visitor-keys: 5.0.1
+
+  '@typescript/typescript-aix-ppc64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-darwin-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-darwin-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-freebsd-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-freebsd-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-arm@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-loong64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-mips64el@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-ppc64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-riscv64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-s390x@7.0.2':
+    optional: true
+
+  '@typescript/typescript-linux-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-netbsd-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-netbsd-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-openbsd-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-openbsd-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-sunos-x64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-win32-arm64@7.0.2':
+    optional: true
+
+  '@typescript/typescript-win32-x64@7.0.2':
+    optional: true
 
   '@urql/core@5.2.0(graphql@16.13.2)':
     dependencies:
@@ -8708,13 +8888,13 @@ snapshots:
       chai: 6.3.0
       tinyrainbow: 3.2.0
 
-  '@vitest/mocker@4.1.12(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))':
+  '@vitest/mocker@4.1.12(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))':
     dependencies:
       '@vitest/spy': 4.1.12
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      msw: 2.15.0(@types/node@24.19.2)(typescript@5.9.3)
+      msw: 2.15.0(@types/node@24.19.2)(typescript@7.0.2)
       vite: 8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)
 
   '@vitest/pretty-format@4.1.12':
@@ -9024,7 +9204,7 @@ snapshots:
     dependencies:
       is-windows: 1.0.2
 
-  bob-the-bundler@7.0.1(typescript@5.9.3):
+  bob-the-bundler@7.0.1(typescript@7.0.2):
     dependencies:
       consola: 3.4.2
       execa: 7.1.1
@@ -9035,7 +9215,7 @@ snapshots:
       p-limit: 4.0.0
       resolve.exports: 2.0.4
       tslib: 2.9.1
-      typescript: 5.9.3
+      typescript: 7.0.2
       yargs: 17.7.3
       zod: 3.25.76
 
@@ -9211,23 +9391,23 @@ snapshots:
     dependencies:
       browserslist: 4.29.5
 
-  cosmiconfig@8.3.6(typescript@5.9.3):
+  cosmiconfig@8.3.6(typescript@7.0.2):
     dependencies:
       import-fresh: 3.3.1
       js-yaml: 4.3.2
       parse-json: 5.2.0
       path-type: 4.0.0
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 7.0.2
 
-  cosmiconfig@9.0.2(typescript@5.9.3):
+  cosmiconfig@9.0.2(typescript@7.0.2):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.1
       js-yaml: 4.3.2
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 7.0.2
 
   create-require@1.1.1: {}
 
@@ -9470,17 +9650,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.14.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint-import-resolver-node@0.3.10(supports-color@7.2.0))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0):
+  eslint-module-utils@2.14.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2))(eslint-import-resolver-node@0.3.10(supports-color@7.2.0))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0):
     dependencies:
       debug: 3.2.7(supports-color@7.2.0)
     optionalDependencies:
-      '@typescript-eslint/parser': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
+      '@typescript-eslint/parser': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)
       eslint: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
       eslint-import-resolver-node: 0.3.10(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.2.0
@@ -9491,7 +9671,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
       eslint-import-resolver-node: 0.3.10(supports-color@7.2.0)
-      eslint-module-utils: 2.14.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint-import-resolver-node@0.3.10(supports-color@7.2.0))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)
+      eslint-module-utils: 2.14.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2))(eslint-import-resolver-node@0.3.10(supports-color@7.2.0))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)
       hasown: 2.0.4
       is-core-module: 2.18.0
       is-glob: 4.0.3
@@ -9503,7 +9683,7 @@ snapshots:
       string.prototype.trimend: 1.0.10
       tsconfig-paths: 3.15.0
     optionalDependencies:
-      '@typescript-eslint/parser': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
+      '@typescript-eslint/parser': 8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@7.0.2)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -9844,7 +10024,7 @@ snapshots:
 
   graceful-fs@4.2.12: {}
 
-  graphql-config@6.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@5.9.3):
+  graphql-config@6.0.0(@types/node@24.19.2)(graphql@16.13.2)(typescript@7.0.2):
     dependencies:
       '@graphql-tools/graphql-file-loader': 9.1.2(graphql@16.13.2)
       '@graphql-tools/json-file-loader': 9.0.9(graphql@16.13.2)
@@ -9852,7 +10032,7 @@ snapshots:
       '@graphql-tools/merge': 10.0.9(graphql@16.13.2)
       '@graphql-tools/url-loader': 10.0.9(@types/node@24.19.2)(graphql@16.13.2)
       '@graphql-tools/utils': 13.2.2(graphql@16.13.2)
-      cosmiconfig: 8.3.6(typescript@5.9.3)
+      cosmiconfig: 8.3.6(typescript@7.0.2)
       graphql: 16.13.2
       jiti: 2.7.0
       minimatch: 10.2.6
@@ -10464,7 +10644,7 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3):
+  msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2):
     dependencies:
       '@inquirer/confirm': 6.4.0(@types/node@24.19.2)
       '@mswjs/interceptors': 0.41.9
@@ -10485,7 +10665,7 @@ snapshots:
       until-async: 3.0.2
       yargs: 17.7.3
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 7.0.2
     transitivePeerDependencies:
       - '@types/node'
 
@@ -11236,9 +11416,9 @@ snapshots:
 
   tr46@0.0.3: {}
 
-  ts-api-utils@2.5.0(typescript@5.9.3):
+  ts-api-utils@2.5.0(typescript@7.0.2):
     dependencies:
-      typescript: 5.9.3
+      typescript: 7.0.2
 
   ts-invariant@0.10.3:
     dependencies:
@@ -11250,7 +11430,7 @@ snapshots:
 
   ts-log@3.0.3: {}
 
-  ts-node@10.9.2(@types/node@24.19.2)(typescript@5.9.3):
+  ts-node@10.9.2(@types/node@24.19.2)(typescript@7.0.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.14
@@ -11264,7 +11444,7 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.4
       make-error: 1.3.6
-      typescript: 5.9.3
+      typescript: 7.0.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
@@ -11323,7 +11503,28 @@ snapshots:
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
 
-  typescript@5.9.3: {}
+  typescript@7.0.2:
+    optionalDependencies:
+      '@typescript/typescript-aix-ppc64': 7.0.2
+      '@typescript/typescript-darwin-arm64': 7.0.2
+      '@typescript/typescript-darwin-x64': 7.0.2
+      '@typescript/typescript-freebsd-arm64': 7.0.2
+      '@typescript/typescript-freebsd-x64': 7.0.2
+      '@typescript/typescript-linux-arm': 7.0.2
+      '@typescript/typescript-linux-arm64': 7.0.2
+      '@typescript/typescript-linux-loong64': 7.0.2
+      '@typescript/typescript-linux-mips64el': 7.0.2
+      '@typescript/typescript-linux-ppc64': 7.0.2
+      '@typescript/typescript-linux-riscv64': 7.0.2
+      '@typescript/typescript-linux-s390x': 7.0.2
+      '@typescript/typescript-linux-x64': 7.0.2
+      '@typescript/typescript-netbsd-arm64': 7.0.2
+      '@typescript/typescript-netbsd-x64': 7.0.2
+      '@typescript/typescript-openbsd-arm64': 7.0.2
+      '@typescript/typescript-openbsd-x64': 7.0.2
+      '@typescript/typescript-sunos-x64': 7.0.2
+      '@typescript/typescript-win32-arm64': 7.0.2
+      '@typescript/typescript-win32-x64': 7.0.2
 
   ua-parser-js@1.0.41: {}
 
@@ -11396,10 +11597,10 @@ snapshots:
       jiti: 2.7.0
       yaml: 2.9.1
 
-  vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)):
+  vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)):
     dependencies:
       '@vitest/expect': 4.1.12
-      '@vitest/mocker': 4.1.12(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
+      '@vitest/mocker': 4.1.12(msw@2.15.0(@types/node@24.19.2)(typescript@7.0.2))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
       '@vitest/pretty-format': 4.1.12
       '@vitest/runner': 4.1.12
       '@vitest/snapshot': 4.1.12
