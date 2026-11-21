@@ -72,4 +72,19 @@ export interface KotlinResolversPluginRawConfig extends RawConfig {
    * ```
    */
   omitJvmStatic?: boolean;
+  /**
+   * @default false
+   * @description Allow you to include kotlinx.serialization.Serializable annotation
+   *
+   * @exampleMarkdoWn
+   * ```yaml
+   * generates:
+   *   src/main/kotlin/my-org/my-app/Types.kt:
+   *     plugins:
+   *       - kotlin
+   *     config:
+   *       serializable: true
+   * ```
+   */
+  serializable?: boolean;
 }

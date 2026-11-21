@@ -198,6 +198,24 @@ describe('Kotlin', () => {
     )
   }`);
     });
+    it('Should generate enums serialization correctly if option is set', async () => {
+      const result = await plugin(schema, [], { serializable: true }, { outputFile: OUTPUT_FILE });
+
+      // language=kotlin
+      expect(result)
+        .toBeSimilarStringTo(`    @kotlinx.serialization.Serializable enum class UserRole(val label: String) {
+        @kotlinx.serialization.SerialName("ADMIN") Admin("ADMIN"),
+        @kotlinx.serialization.SerialName("USER") User("USER"),
+        @kotlinx.serialization.SerialName("EDITOR") Editor("EDITOR");
+        
+        companion object {
+          @JvmStatic
+          fun valueOfLabel(label: String): UserRole? {
+            return values().find { it.label == label }
+          }
+        }
+      }`);
+    });
   });
 
   describe('Input Types / Arguments', () => {
@@ -222,6 +240,21 @@ describe('Kotlin', () => {
 
       // language=kotlin
       expect(result).toBeSimilarStringTo(`data class UserFriendsArgs(
+        val skip: Int? = null,
+        val limit: Int? = null
+      ) {
+        constructor(args: Map<String, Any>) : this(
+          args["skip"] as Int?,
+          args["limit"] as Int?
+        )
+      }`);
+    });
+    it('with serializable enabled input classes should be annotated', async () => {
+      const result = await plugin(schema, [], { serializable: true }, { outputFile: OUTPUT_FILE });
+
+      // language=kotlin
+      expect(result)
+        .toBeSimilarStringTo(`@kotlinx.serialization.Serializable data class UserFriendsArgs(
         val skip: Int? = null,
         val limit: Int? = null
       ) {
@@ -352,6 +385,31 @@ describe('Kotlin', () => {
 
       // language=kotlin
       expect(result).toBeSimilarStringTo(`data class Chat(
+        val id: Any,
+        val users: Iterable<User>,
+        val title: String?
+      )`);
+    });
+
+    it('Should generate types with serializable annotation if serializable is true', async () => {
+      const result = await plugin(
+        schema,
+        [],
+        { withTypes: true, serializable: true },
+        { outputFile: OUTPUT_FILE },
+      );
+      // language=kotlin
+      expect(result).toBeSimilarStringTo(`@kotlinx.serialization.Serializable data class User(
+          val id: Any,
+          val username: String,
+          val email: String,
+          val name: String?,
+          val friends: Iterable<User>,
+          val hobbies: Iterable<String>
+      )`);
+
+      // language=kotlin
+      expect(result).toBeSimilarStringTo(`@kotlinx.serialization.Serializable data class Chat(
         val id: Any,
         val users: Iterable<User>,
         val title: String?
