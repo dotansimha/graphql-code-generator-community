@@ -1,5 +1,15 @@
 # @graphql-codegen/near-operation-file-preset
 
+## 6.0.2
+
+### Patch Changes
+
+- [#1667](https://github.com/dotansimha/graphql-code-generator-community/pull/1667)
+  [`71aece2`](https://github.com/dotansimha/graphql-code-generator-community/commit/71aece2b986ebc4a3ac3b5655d0f8b881d0ea5df)
+  Thanks [@agustin18](https://github.com/agustin18)! - Fix nested fragment type imports being
+  omitted when an outer fragment spread includes conditional directives (`@include`/`@skip`) or
+  incremental delivery (`@defer`).
+
 ## 6.0.1
 
 ### Patch Changes
