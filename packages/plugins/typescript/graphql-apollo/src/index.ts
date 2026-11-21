@@ -43,7 +43,7 @@ export const validate: PluginValidateFn<RawGraphQLApolloPluginConfig> = async (
   config,
   { outputFile },
 ) => {
-  if (extname(outputFile) !== '.ts' && extname(outputFile) !== 'tsx') {
+  if (extname(outputFile) !== '.ts' && extname(outputFile) !== '.tsx') {
     throw new Error(`Plugin "typescript-graphql-apollo" requires extension to be ".ts" or ".tsx"!`);
   }
 };
