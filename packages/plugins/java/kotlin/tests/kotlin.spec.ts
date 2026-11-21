@@ -183,7 +183,7 @@ describe('Kotlin', () => {
     val username: String? = null,
     val email: String? = null,
     val name: String? = null,
-    val role: GraphqlUserRoleType? = GraphqlUserRoleType.USER,
+    val role: GraphqlUserRoleType? = GraphqlUserRoleType.User,
     val sort: GraphqlResultSortType? = null,
     val metadata: GraphqlMetadataSearchTypeInput? = null
   ) {
@@ -192,7 +192,7 @@ describe('Kotlin', () => {
         args["username"] as String?,
         args["email"] as String?,
         args["name"] as String?,
-        args["role"] as GraphqlUserRoleType? ?: GraphqlUserRoleType.USER,
+        args["role"] as GraphqlUserRoleType? ?: GraphqlUserRoleType.User,
         args["sort"] as GraphqlResultSortType?,
         args["metadata"]?.let { GraphqlMetadataSearchTypeInput(it as Map<String, Any>) }
     )
@@ -287,7 +287,7 @@ describe('Kotlin', () => {
           val username: String? = null,
           val email: String? = null,
           val name: String? = null,
-          val role: UserRole? = UserRole.USER,
+          val role: UserRole? = UserRole.User,
           val sort: ResultSort? = null,
           val metadata: MetadataSearchInput? = null
         ) {
@@ -296,7 +296,7 @@ describe('Kotlin', () => {
               args["username"] as String?,
               args["email"] as String?,
               args["name"] as String?,
-              args["role"] as UserRole? ?: UserRole.USER,
+              args["role"] as UserRole? ?: UserRole.User,
               args["sort"] as ResultSort?,
               args["metadata"]?.let { MetadataSearchInput(it as Map<String, Any>) }
           )
@@ -356,6 +356,49 @@ describe('Kotlin', () => {
         val users: Iterable<User>,
         val title: String?
       )`);
+    });
+  });
+
+  describe('Defaults and keywords', () => {
+    // language=GraphQL
+    const defaultsSchema = buildSchema(`
+      type Query {
+        items(status: Status = ACTIVE, label: String = "cost $total"): Int
+      }
+
+      input Filter {
+        class: String
+        when: String
+        in: [Filter]
+      }
+
+      enum Status {
+        ACTIVE
+      }
+    `);
+
+    it('Should use the converted enum entry in default values', async () => {
+      const result = (await plugin(defaultsSchema, [], {}, { outputFile: OUTPUT_FILE })) as string;
+
+      expect(result).toContain('val status: Status? = Status.Active');
+      expect(result).toContain('args["status"] as Status? ?: Status.Active');
+    });
+
+    it('Should escape string default values', async () => {
+      const result = (await plugin(defaultsSchema, [], {}, { outputFile: OUTPUT_FILE })) as string;
+
+      expect(result).toContain('val label: String? = "cost \\$total"');
+    });
+
+    it('Should escape Kotlin keywords used as field names', async () => {
+      const result = (await plugin(defaultsSchema, [], {}, { outputFile: OUTPUT_FILE })) as string;
+
+      expect(result).toContain('val `class`: String? = null');
+      expect(result).toContain('val `when`: String? = null');
+      expect(result).toContain('val `in`: Iterable<FilterInput>? = null');
+      expect(result).toContain(
+        'args["in"]?.let { `in` -> (`in` as List<Map<String, Any>>).map { FilterInput(it) } }',
+      );
     });
   });
 });

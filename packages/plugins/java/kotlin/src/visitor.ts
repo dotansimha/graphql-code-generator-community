@@ -27,6 +27,37 @@ import {
 } from '@graphql-codegen/visitor-plugin-common';
 import { KotlinResolversPluginRawConfig } from './config.js';
 
+const KOTLIN_HARD_KEYWORDS = new Set([
+  'as',
+  'break',
+  'class',
+  'continue',
+  'do',
+  'else',
+  'false',
+  'for',
+  'fun',
+  'if',
+  'in',
+  'interface',
+  'is',
+  'null',
+  'object',
+  'package',
+  'return',
+  'super',
+  'this',
+  'throw',
+  'true',
+  'try',
+  'typealias',
+  'typeof',
+  'val',
+  'var',
+  'when',
+  'while',
+]);
+
 export const KOTLIN_SCALARS = {
   ID: {
     input: 'Any',
@@ -84,6 +115,10 @@ export class KotlinResolversVisitor extends BaseVisitor<
 
   public getPackageName(): string {
     return `package ${this.config.package}\n`;
+  }
+
+  protected escapeName(name: string): string {
+    return KOTLIN_HARD_KEYWORDS.has(name) ? `\`${name}\`` : name;
   }
 
   protected getEnumValue(enumName: string, enumOption: string): string {
@@ -203,7 +238,7 @@ ${enumValues}
         const initial = initialValue ? ` = ${initialValue}` : typeToUse.nullable ? ' = null' : '';
 
         return indent(
-          `val ${arg.name.value}: ${typeToUse.typeName}${typeToUse.nullable ? '?' : ''}${initial}`,
+          `val ${this.escapeName(arg.name.value)}: ${typeToUse.typeName}${typeToUse.nullable ? '?' : ''}${initial}`,
           2,
         );
       })
@@ -218,9 +253,9 @@ ${enumValues}
         if (typeToUse.isArray && !typeToUse.isScalar) {
           suppress = '@Suppress("UNCHECKED_CAST")\n  ';
           return indent(
-            `args["${arg.name.value}"]${typeToUse.nullable || fallback ? '?' : '!!'}.let { ${
-              arg.name.value
-            } -> (${arg.name.value} as List<Map<String, Any>>).map { ${
+            `args["${arg.name.value}"]${typeToUse.nullable || fallback ? '?' : '!!'}.let { ${this.escapeName(
+              arg.name.value,
+            )} -> (${this.escapeName(arg.name.value)} as List<Map<String, Any>>).map { ${
               typeToUse.baseType
             }(it) } }${fallback}`,
             3,
@@ -268,7 +303,7 @@ ${ctorSet}
         const typeToUse = this.resolveInputFieldType(arg.type);
 
         return indent(
-          `val ${arg.name.value}: ${typeToUse.typeName}${typeToUse.nullable ? '?' : ''}`,
+          `val ${this.escapeName(arg.name.value)}: ${typeToUse.typeName}${typeToUse.nullable ? '?' : ''}`,
           2,
         );
       })
@@ -290,10 +325,21 @@ ${classMembers}
         return `${defaultValue.value}`;
       }
       if (defaultValue.kind === 'StringValue') {
-        return `"""${defaultValue.value}""".trimIndent()`;
+        const escaped = defaultValue.value
+          .replace(/\\/g, '\\\\')
+          .replace(/"/g, '\\"')
+          .replace(/\$/g, '\\$')
+          .replace(/\n/g, '\\n')
+          .replace(/\r/g, '\\r')
+          .replace(/\t/g, '\\t');
+        return `"${escaped}"`;
       }
       if (defaultValue.kind === 'EnumValue') {
-        return `${typeName}.${defaultValue.value}`;
+        return `${typeName}.${this.convertName(defaultValue.value, {
+          useTypesPrefix: false,
+          useTypesSuffix: false,
+          transformUnderscore: true,
+        })}`;
       }
       if (defaultValue.kind === 'ListValue') {
         const list = defaultValue.values
