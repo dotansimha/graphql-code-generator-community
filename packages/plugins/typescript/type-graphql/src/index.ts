@@ -15,8 +15,15 @@ import { TypeGraphQLVisitor } from './visitor.js';
 export * from './visitor.js';
 
 const TYPE_GRAPHQL_IMPORT = `import * as TypeGraphQL from 'type-graphql';\nexport { TypeGraphQL };`;
-const isDefinitionInterface = (definition: string) =>
-  definition.includes('@TypeGraphQL.InterfaceType()');
+const NESTJS_GRAPHQL_IMPORT = `import * as NestJSGraphQL from '@nestjs/graphql';\nexport { NestJSGraphQL };`;
+
+const isDefinitionInterface = (
+  definition: string,
+  { useNestJSGraphQL }: TypeGraphQLPluginConfig = {},
+) =>
+  useNestJSGraphQL
+    ? definition.includes('@NestJSGraphQL.InterfaceType()')
+    : definition.includes('@TypeGraphQL.InterfaceType()');
 
 export const plugin: PluginFunction<TypeGraphQLPluginConfig, Types.ComplexPluginOutput> = (
   schema: GraphQLSchema,
@@ -40,7 +47,7 @@ export const plugin: PluginFunction<TypeGraphQLPluginConfig, Types.ComplexPlugin
     prepend: [
       ...visitor.getEnumsImports(),
       ...visitor.getWrapperDefinitions(),
-      TYPE_GRAPHQL_IMPORT,
+      config.useNestJSGraphQL ? NESTJS_GRAPHQL_IMPORT : TYPE_GRAPHQL_IMPORT,
     ],
     content: [scalars, ...definitions, ...introspectionDefinitions].join('\n'),
   };

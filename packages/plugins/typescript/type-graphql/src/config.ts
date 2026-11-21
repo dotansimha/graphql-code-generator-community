@@ -31,4 +31,28 @@ export interface TypeGraphQLPluginConfig extends TypeScriptPluginConfig {
    * ```
    */
   decorateTypes?: string[];
+
+  /**
+   * @name useNestJSGraphQL
+   * @description Use @nestjs/graphql instead of type-graphql
+   * @default false
+   * @exampleMarkdown
+   * ```ts filename="codegen.ts"
+   * import type { CodegenConfig } from '@graphql-codegen/cli';
+   *  const config: CodegenConfig = {
+   *   // ...
+   *  generates: {
+   *   'path/to/file.ts': {
+   *    plugins: [ 'typescript-type-graphql' ],
+   *   config: {
+   *   useNestJSGraphQL: true,
+   *  },
+   * },
+   * },
+   * };
+   * export default config;
+   * ```
+   */
+
+  useNestJSGraphQL?: boolean;
 }
