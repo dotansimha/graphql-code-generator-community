@@ -237,7 +237,9 @@ export class JavaResolversVisitor extends BaseVisitor<
           }
           return indentMultiline(
             `if (args.get("${arg.name.value}") != null) {
-		this.${arg.name.value} = (${this.config.listType}<${typeToUse.baseType}>) args.get("${arg.name.value}");
+  this.${arg.name.value} = ((${this.config.listType}<Map<String, Object>>) args.get("${arg.name.value}")).stream()
+    .map(o -> o == null ? null : new ${typeToUse.baseType}(o))
+    .collect(Collectors.toList());
 }`,
             3,
           );
