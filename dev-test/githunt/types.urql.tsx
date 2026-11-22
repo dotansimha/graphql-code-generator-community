@@ -401,8 +401,8 @@ export default {
             type: {
               kind: 'NON_NULL',
               ofType: {
-                kind: 'OBJECT',
                 name: 'User',
+                kind: 'OBJECT',
                 ofType: null,
               },
             },
@@ -444,8 +444,8 @@ export default {
               ofType: {
                 kind: 'LIST',
                 ofType: {
-                  kind: 'OBJECT',
                   name: 'Comment',
+                  kind: 'OBJECT',
                   ofType: null,
                 },
               },
@@ -505,8 +505,8 @@ export default {
             type: {
               kind: 'NON_NULL',
               ofType: {
-                kind: 'OBJECT',
                 name: 'User',
+                kind: 'OBJECT',
                 ofType: null,
               },
             },
@@ -517,8 +517,8 @@ export default {
             type: {
               kind: 'NON_NULL',
               ofType: {
-                kind: 'OBJECT',
                 name: 'Repository',
+                kind: 'OBJECT',
                 ofType: null,
               },
             },
@@ -540,8 +540,8 @@ export default {
             type: {
               kind: 'NON_NULL',
               ofType: {
-                kind: 'OBJECT',
                 name: 'Vote',
+                kind: 'OBJECT',
                 ofType: null,
               },
             },
@@ -675,8 +675,8 @@ export default {
             type: {
               kind: 'LIST',
               ofType: {
-                kind: 'OBJECT',
                 name: 'Entry',
+                kind: 'OBJECT',
                 ofType: null,
               },
             },

@@ -13,5 +13,4 @@ allowBuilds:
   msw: false
 
 overrides:
-  # FIXME: use graphql 17
-  graphql: 16.13.2
+  graphql: 17.1.0
