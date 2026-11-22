@@ -1319,11 +1319,11 @@ importers:
         version: 2.9.1
     devDependencies:
       '@reduxjs/toolkit':
-        specifier: 2.14.0
-        version: 2.14.0(react@19.3.1)
+        specifier: 2.15.0
+        version: 2.15.0(react@19.3.1)
       '@rtk-query/graphql-request-base-query':
         specifier: 2.3.2
-        version: 2.3.2(@reduxjs/toolkit@2.14.0(react@19.3.1))(graphql@17.1.0)
+        version: 2.3.2(@reduxjs/toolkit@2.15.0(react@19.3.1))(graphql@17.1.0)
       graphql-request:
         specifier: ^6.0.0
         version: 6.1.0(graphql@17.1.0)
@@ -3252,8 +3252,8 @@ packages:
   '@oxc-project/types@0.156.0':
     resolution: {integrity: sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw==}
 
-  '@reduxjs/toolkit@2.14.0':
-    resolution: {integrity: sha512-m/PxMwRe0xLL6XUsAgy0YjInklHcfi9uMwFhJk+QINqjxqPvyc89T5cMjszA5bDmTE0gwGc7zr9LRO4gL+mhaw==}
+  '@reduxjs/toolkit@2.15.0':
+    resolution: {integrity: sha512-tHrFdR/AAbhhnL0/D3Abu60mAeyRqMAaq3pMeIKWRFWpzZek9LbGKk9J2U+Cl43FixzEDaYKk3zUoK7sFl98FA==}
     peerDependencies:
       '@types/react': '*'
       react: ^16.9.0 || ^17.0.0 || ^18 || ^19
@@ -8413,7 +8413,7 @@ snapshots:
 
   '@oxc-project/types@0.156.0': {}
 
-  '@reduxjs/toolkit@2.14.0(react@19.3.1)':
+  '@reduxjs/toolkit@2.15.0(react@19.3.1)':
     dependencies:
       '@standard-schema/spec': 1.1.0
       '@standard-schema/utils': 0.3.0
@@ -8499,9 +8499,9 @@ snapshots:
 
   '@rolldown/pluginutils@1.1.1': {}
 
-  '@rtk-query/graphql-request-base-query@2.3.2(@reduxjs/toolkit@2.14.0(react@19.3.1))(graphql@17.1.0)':
+  '@rtk-query/graphql-request-base-query@2.3.2(@reduxjs/toolkit@2.15.0(react@19.3.1))(graphql@17.1.0)':
     dependencies:
-      '@reduxjs/toolkit': 2.14.0(react@19.3.1)
+      '@reduxjs/toolkit': 2.15.0(react@19.3.1)
       graphql: 17.1.0
       graphql-request: 6.1.0(graphql@17.1.0)
     transitivePeerDependencies:
