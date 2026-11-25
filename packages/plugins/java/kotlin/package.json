@@ -1,6 +1,6 @@
 {
   "name": "@graphql-codegen/kotlin",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "type": "module",
   "description": "GraphQL Code Generator plugin for generating Kotlin code based on a GraphQL schema",
   "repository": {
