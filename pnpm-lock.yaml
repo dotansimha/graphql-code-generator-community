@@ -258,10 +258,10 @@ importers:
         version: link:packages/plugins/other/urql-introspection/dist
       '@ianvs/prettier-plugin-sort-imports':
         specifier: 4.7.1
-        version: 4.7.1(prettier@3.8.5)(supports-color@7.2.0)
+        version: 4.7.1(prettier@3.10.1)(supports-color@7.2.0)
       '@theguild/prettier-config':
         specifier: 3.0.1
-        version: 3.0.1(prettier@3.8.5)(supports-color@7.2.0)
+        version: 3.0.1(prettier@3.10.1)(supports-color@7.2.0)
       '@types/node':
         specifier: 24.19.2
         version: 24.19.2
@@ -308,14 +308,14 @@ importers:
         specifier: 8.0.1
         version: 8.0.1
       prettier:
-        specifier: 3.8.5
-        version: 3.8.5
+        specifier: 3.10.1
+        version: 3.10.1
       prettier-plugin-pkg:
         specifier: 0.18.1
-        version: 0.18.1(prettier@3.8.5)
+        version: 0.18.1(prettier@3.10.1)
       prettier-plugin-sh:
         specifier: 0.20.2
-        version: 0.20.2(prettier@3.8.5)
+        version: 0.20.2(prettier@3.10.1)
       rimraf:
         specifier: 6.1.4
         version: 6.1.4
@@ -744,6 +744,29 @@ importers:
       change-case-all:
         specifier: 1.0.15
         version: 1.0.15
+      tslib:
+        specifier: ^2.8.1
+        version: 2.9.1
+    devDependencies:
+      '@graphql-codegen/testing':
+        specifier: 6.0.0
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+    publishDirectory: dist
+
+  packages/plugins/python/python-generic-sdk:
+    dependencies:
+      '@graphql-codegen/plugin-helpers':
+        specifier: ^8.0.0
+        version: 8.0.0(graphql@17.1.0)
+      '@graphql-codegen/python-common':
+        specifier: 0.0.2
+        version: 0.0.2(graphql@17.1.0)
+      '@graphql-codegen/visitor-plugin-common':
+        specifier: ^8.0.0
+        version: 8.0.2(graphql@17.1.0)
+      graphql:
+        specifier: 17.1.0
+        version: 17.1.0
       tslib:
         specifier: ^2.8.1
         version: 2.9.1
@@ -2673,6 +2696,10 @@ packages:
     peerDependencies:
       graphql: 17.1.0
 
+  '@graphql-codegen/python-common@0.0.2':
+    resolution: {integrity: sha512-9hETt4rVQMT/yjJEcQbXwIF7wfZnH25MWKn6LQ9djfcQs+RMm1vg4wUkF9SnAT+uUUOLqVvzbDrQDbKCcfUQfg==}
+    engines: {node: '>= 16.0.0'}
+
   '@graphql-codegen/python-common@0.1.0':
     resolution: {integrity: sha512-zvO3jwPeXvoVQrgAOcVZyQGf6hVE6JLO2ZGVy3PRzzlN2qjyZFlb0sl46dDaqD/B27gziI3I9vTh2VOgHfYWTA==}
     engines: {node: '>=22.18.0'}
@@ -2732,6 +2759,12 @@ packages:
 
   '@graphql-codegen/visitor-plugin-common@2.13.8':
     resolution: {integrity: sha512-IQWu99YV4wt8hGxIbBQPtqRuaWZhkQRG2IZKbMoSvh0vGeWb3dB0n0hSgKaOOxDY+tljtOf9MTcUYvJslQucMQ==}
+    peerDependencies:
+      graphql: 17.1.0
+
+  '@graphql-codegen/visitor-plugin-common@6.3.0':
+    resolution: {integrity: sha512-vGBoE+4huzZyNhyGSAhXAkdROHlwKxxuziZm4XtP1mxe7nuI+VgyOmXebafLijbmuDsptPXQN0C/htL54O8hrg==}
+    engines: {node: '>=16'}
     peerDependencies:
       graphql: 17.1.0
 
@@ -2870,6 +2903,12 @@ packages:
     peerDependencies:
       graphql: 17.1.0
 
+  '@graphql-tools/optimize@2.0.1':
+    resolution: {integrity: sha512-I63H75wg7SD/+iPj+QdvZgvul0dxxf/el18Yiry5zmwKeqRvzcm6l2KUYRNgMR/ydytp0VuHw3XeyGhPWGigAg==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      graphql: 17.1.0
+
   '@graphql-tools/optimize@3.0.0':
     resolution: {integrity: sha512-ICKFgs4VIcAPtQAbNrrp8HnpV7RdHY6m189cUqxjcmAtzxHrfVftWV+QBHqYuzXZW7eyKZP9bDerzQUE8QMS4Q==}
     engines: {node: '>=22.18.0'}
@@ -2878,6 +2917,12 @@ packages:
 
   '@graphql-tools/relay-operation-optimizer@6.5.18':
     resolution: {integrity: sha512-mc5VPyTeV+LwiM+DNvoDQfPqwQYhPV/cl5jOBjTgSniyaq8/86aODfMkrE2OduhQ5E00hqrkuL2Fdrgk0w1QJg==}
+    peerDependencies:
+      graphql: 17.1.0
+
+  '@graphql-tools/relay-operation-optimizer@7.1.14':
+    resolution: {integrity: sha512-dpU5rev9s7rl1tj2xXLunp/bjGr57fgw4FxlIj7uA397ka93tLJsXANlH/Paix5I0qbtsqyrgt3xtapJBgmJ4w==}
+    engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: 17.1.0
 
@@ -5486,8 +5531,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.8.5:
-    resolution: {integrity: sha512-zxcTTCedNGJM4R8sj/Cq/F0W/c4iE0afWBcBwMTRtw4WHYP9TWkYjdiH3npPRUYsXQCPR0hTU9yjovOu+E6EQA==}
+  prettier@3.10.1:
+    resolution: {integrity: sha512-70vp3ZUYoPlFbF9uiTdXHUUCGEIp7d4+6p+8DYbkm2jP7x/3i/paXVF6dopSI3zd/CEitrZN1rc4i85xWmmXlg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -7686,6 +7731,14 @@ snapshots:
       import-from: 4.0.0
       tslib: 2.9.1
 
+  '@graphql-codegen/python-common@0.0.2(graphql@17.1.0)':
+    dependencies:
+      '@graphql-codegen/visitor-plugin-common': 6.3.0(graphql@17.1.0)
+      change-case-all: 1.0.15
+      tslib: 2.9.1
+    transitivePeerDependencies:
+      - graphql
+
   '@graphql-codegen/python-common@0.1.0(graphql@17.1.0)':
     dependencies:
       '@graphql-codegen/visitor-plugin-common': 8.0.2(graphql@17.1.0)
@@ -7789,6 +7842,20 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@graphql-codegen/visitor-plugin-common@6.3.0(graphql@17.1.0)':
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 6.3.0(graphql@17.1.0)
+      '@graphql-tools/optimize': 2.0.1(graphql@17.1.0)
+      '@graphql-tools/relay-operation-optimizer': 7.1.14(graphql@17.1.0)
+      '@graphql-tools/utils': 11.2.2(graphql@17.1.0)
+      auto-bind: 4.0.0
+      change-case-all: 1.0.15
+      dependency-graph: 1.0.0
+      graphql: 17.1.0
+      graphql-tag: 2.12.7(graphql@17.1.0)
+      parse-filepath: 1.0.2
+      tslib: 2.9.1
 
   '@graphql-codegen/visitor-plugin-common@8.0.2(graphql@17.1.0)':
     dependencies:
@@ -7995,6 +8062,11 @@ snapshots:
       graphql: 17.1.0
       tslib: 2.9.1
 
+  '@graphql-tools/optimize@2.0.1(graphql@17.1.0)':
+    dependencies:
+      graphql: 17.1.0
+      tslib: 2.9.1
+
   '@graphql-tools/optimize@3.0.0(graphql@17.1.0)':
     dependencies:
       graphql: 17.1.0
@@ -8009,6 +8081,13 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@graphql-tools/relay-operation-optimizer@7.1.14(graphql@17.1.0)':
+    dependencies:
+      '@ardatan/relay-compiler': 13.0.3(graphql@17.1.0)
+      '@graphql-tools/utils': 12.1.0(graphql@17.1.0)
+      graphql: 17.1.0
+      tslib: 2.9.1
 
   '@graphql-tools/relay-operation-optimizer@8.0.9(graphql@17.1.0)':
     dependencies:
@@ -8127,24 +8206,24 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.8.5)(supports-color@7.2.0)':
+  '@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.10.1)(supports-color@7.2.0)':
     dependencies:
       '@babel/generator': 7.29.15
       '@babel/parser': 7.29.15
       '@babel/traverse': 7.29.15(supports-color@7.2.0)
       '@babel/types': 7.29.15
-      prettier: 3.8.5
+      prettier: 3.10.1
       semver: 7.8.6
     transitivePeerDependencies:
       - supports-color
 
-  '@ianvs/prettier-plugin-sort-imports@4.7.1(prettier@3.8.5)(supports-color@7.2.0)':
+  '@ianvs/prettier-plugin-sort-imports@4.7.1(prettier@3.10.1)(supports-color@7.2.0)':
     dependencies:
       '@babel/generator': 7.29.15
       '@babel/parser': 7.29.15
       '@babel/traverse': 7.29.15(supports-color@7.2.0)
       '@babel/types': 7.29.15
-      prettier: 3.8.5
+      prettier: 3.10.1
       semver: 7.8.6
     transitivePeerDependencies:
       - supports-color
@@ -8529,12 +8608,12 @@ snapshots:
 
   '@stencil/state-tunnel@1.0.1': {}
 
-  '@theguild/prettier-config@3.0.1(prettier@3.8.5)(supports-color@7.2.0)':
+  '@theguild/prettier-config@3.0.1(prettier@3.10.1)(supports-color@7.2.0)':
     dependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.4.1(prettier@3.8.5)(supports-color@7.2.0)
-      prettier: 3.8.5
-      prettier-plugin-pkg: 0.18.1(prettier@3.8.5)
-      prettier-plugin-sh: 0.15.0(prettier@3.8.5)
+      '@ianvs/prettier-plugin-sort-imports': 4.4.1(prettier@3.10.1)(supports-color@7.2.0)
+      prettier: 3.10.1
+      prettier-plugin-pkg: 0.18.1(prettier@3.10.1)
+      prettier-plugin-sh: 0.15.0(prettier@3.10.1)
     transitivePeerDependencies:
       - '@vue/compiler-sfc'
       - supports-color
@@ -10781,25 +10860,25 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-pkg@0.18.1(prettier@3.8.5):
+  prettier-plugin-pkg@0.18.1(prettier@3.10.1):
     dependencies:
-      prettier: 3.8.5
+      prettier: 3.10.1
 
-  prettier-plugin-sh@0.15.0(prettier@3.8.5):
+  prettier-plugin-sh@0.15.0(prettier@3.10.1):
     dependencies:
       mvdan-sh: 0.10.1
-      prettier: 3.8.5
+      prettier: 3.10.1
       sh-syntax: 0.4.2
 
-  prettier-plugin-sh@0.20.2(prettier@3.8.5):
+  prettier-plugin-sh@0.20.2(prettier@3.10.1):
     dependencies:
       '@reteps/dockerfmt': 0.5.4
-      prettier: 3.8.5
+      prettier: 3.10.1
       sh-syntax: 0.7.0
 
   prettier@2.8.8: {}
 
-  prettier@3.8.5: {}
+  prettier@3.10.1: {}
 
   pretty-format@30.5.1:
     dependencies:
