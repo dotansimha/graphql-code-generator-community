@@ -192,10 +192,10 @@ importers:
         version: 0.7.0
       '@changesets/cli':
         specifier: 2.31.1
-        version: 2.31.1(@types/node@24.19.2)
+        version: 2.31.1(@types/node@24.19.4)
       '@graphql-codegen/cli':
         specifier: 8.0.0
-        version: 8.0.0(@types/node@24.19.2)(graphql@17.1.0)(typescript@5.9.3)
+        version: 8.0.0(@types/node@24.19.4)(graphql@17.1.0)(typescript@5.9.3)
       '@graphql-codegen/flow':
         specifier: workspace:*
         version: link:packages/plugins/flow/flow/dist
@@ -263,8 +263,8 @@ importers:
         specifier: 3.0.1
         version: 3.0.1(prettier@3.8.5)(supports-color@7.2.0)
       '@types/node':
-        specifier: 24.19.2
-        version: 24.19.2
+        specifier: 24.19.4
+        version: 24.19.4
       '@typescript-eslint/eslint-plugin':
         specifier: 8.73.0
         version: 8.73.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
@@ -321,7 +321,7 @@ importers:
         version: 6.1.4
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@types/node@24.19.2)(typescript@5.9.3)
+        version: 10.9.2(@types/node@24.19.4)(typescript@5.9.3)
       tslib:
         specifier: 2.9.1
         version: 2.9.1
@@ -330,7 +330,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.12
-        version: 4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
+        version: 4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1))
 
   packages/plugins/c-sharp/c-sharp:
     dependencies:
@@ -358,7 +358,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/c-sharp/c-sharp-common:
@@ -415,7 +415,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/dart/flutter-freezed:
@@ -550,7 +550,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@types/pluralize':
         specifier: 0.0.33
         version: 0.0.33
@@ -605,7 +605,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/java/kotlin:
@@ -628,7 +628,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/java/resolvers:
@@ -651,7 +651,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/other/hasura-allow-list:
@@ -687,7 +687,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/other/urql-introspection:
@@ -707,7 +707,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/python/python:
@@ -733,7 +733,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/python/python-common:
@@ -750,7 +750,30 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
+    publishDirectory: dist
+
+  packages/plugins/python/python-generic-sdk:
+    dependencies:
+      '@graphql-codegen/plugin-helpers':
+        specifier: ^8.0.0
+        version: 8.0.0(graphql@17.1.0)
+      '@graphql-codegen/python-common':
+        specifier: 0.0.2
+        version: 0.0.2(graphql@17.1.0)
+      '@graphql-codegen/visitor-plugin-common':
+        specifier: ^8.0.0
+        version: 8.0.2(graphql@17.1.0)
+      graphql:
+        specifier: 17.1.0
+        version: 17.1.0
+      tslib:
+        specifier: ^2.8.1
+        version: 2.9.1
+    devDependencies:
+      '@graphql-codegen/testing':
+        specifier: 6.0.0
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/python/python-operations:
@@ -773,7 +796,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/apollo-angular:
@@ -799,7 +822,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -854,7 +877,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/generic-sdk:
@@ -880,7 +903,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -921,7 +944,7 @@ importers:
         version: 7.0.0(graphql@17.1.0)
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -956,7 +979,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/graphql-request:
@@ -985,7 +1008,7 @@ importers:
         version: 7.0.0(graphql@17.1.0)
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1029,7 +1052,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1076,7 +1099,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@types/lodash':
         specifier: 4.17.27
         version: 4.17.27
@@ -1101,7 +1124,7 @@ importers:
         version: 17.1.0
       msw:
         specifier: ^2.0.0
-        version: 2.15.0(@types/node@24.19.2)(typescript@5.9.3)
+        version: 2.15.0(@types/node@24.19.4)(typescript@5.9.3)
       tslib:
         specifier: ^2.8.1
         version: 2.9.1
@@ -1127,7 +1150,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/nest:
@@ -1228,7 +1251,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1285,7 +1308,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1352,7 +1375,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1390,7 +1413,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/type-graphql:
@@ -1442,7 +1465,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1480,7 +1503,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
   packages/plugins/typescript/urql-svelte-operations-store:
@@ -1534,7 +1557,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1569,7 +1592,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1604,7 +1627,7 @@ importers:
     devDependencies:
       '@graphql-codegen/testing':
         specifier: 6.0.0
-        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -1658,7 +1681,7 @@ importers:
     devDependencies:
       '@graphql-codegen/cli':
         specifier: 8.0.0
-        version: 8.0.0(@types/node@24.19.2)(graphql@17.1.0)(typescript@5.9.3)
+        version: 8.0.0(@types/node@24.19.4)(graphql@17.1.0)(typescript@5.9.3)
       '@graphql-codegen/typescript':
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
@@ -2673,6 +2696,10 @@ packages:
     peerDependencies:
       graphql: 17.1.0
 
+  '@graphql-codegen/python-common@0.0.2':
+    resolution: {integrity: sha512-9hETt4rVQMT/yjJEcQbXwIF7wfZnH25MWKn6LQ9djfcQs+RMm1vg4wUkF9SnAT+uUUOLqVvzbDrQDbKCcfUQfg==}
+    engines: {node: '>= 16.0.0'}
+
   '@graphql-codegen/python-common@0.1.0':
     resolution: {integrity: sha512-zvO3jwPeXvoVQrgAOcVZyQGf6hVE6JLO2ZGVy3PRzzlN2qjyZFlb0sl46dDaqD/B27gziI3I9vTh2VOgHfYWTA==}
     engines: {node: '>=22.18.0'}
@@ -2732,6 +2759,12 @@ packages:
 
   '@graphql-codegen/visitor-plugin-common@2.13.8':
     resolution: {integrity: sha512-IQWu99YV4wt8hGxIbBQPtqRuaWZhkQRG2IZKbMoSvh0vGeWb3dB0n0hSgKaOOxDY+tljtOf9MTcUYvJslQucMQ==}
+    peerDependencies:
+      graphql: 17.1.0
+
+  '@graphql-codegen/visitor-plugin-common@6.3.0':
+    resolution: {integrity: sha512-vGBoE+4huzZyNhyGSAhXAkdROHlwKxxuziZm4XtP1mxe7nuI+VgyOmXebafLijbmuDsptPXQN0C/htL54O8hrg==}
+    engines: {node: '>=16'}
     peerDependencies:
       graphql: 17.1.0
 
@@ -2870,6 +2903,12 @@ packages:
     peerDependencies:
       graphql: 17.1.0
 
+  '@graphql-tools/optimize@2.0.1':
+    resolution: {integrity: sha512-I63H75wg7SD/+iPj+QdvZgvul0dxxf/el18Yiry5zmwKeqRvzcm6l2KUYRNgMR/ydytp0VuHw3XeyGhPWGigAg==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      graphql: 17.1.0
+
   '@graphql-tools/optimize@3.0.0':
     resolution: {integrity: sha512-ICKFgs4VIcAPtQAbNrrp8HnpV7RdHY6m189cUqxjcmAtzxHrfVftWV+QBHqYuzXZW7eyKZP9bDerzQUE8QMS4Q==}
     engines: {node: '>=22.18.0'}
@@ -2878,6 +2917,12 @@ packages:
 
   '@graphql-tools/relay-operation-optimizer@6.5.18':
     resolution: {integrity: sha512-mc5VPyTeV+LwiM+DNvoDQfPqwQYhPV/cl5jOBjTgSniyaq8/86aODfMkrE2OduhQ5E00hqrkuL2Fdrgk0w1QJg==}
+    peerDependencies:
+      graphql: 17.1.0
+
+  '@graphql-tools/relay-operation-optimizer@7.1.14':
+    resolution: {integrity: sha512-dpU5rev9s7rl1tj2xXLunp/bjGr57fgw4FxlIj7uA397ka93tLJsXANlH/Paix5I0qbtsqyrgt3xtapJBgmJ4w==}
+    engines: {node: '>=16.0.0'}
     peerDependencies:
       graphql: 17.1.0
 
@@ -3470,8 +3515,8 @@ packages:
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
 
-  '@types/node@24.19.2':
-    resolution: {integrity: sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ==}
+  '@types/node@24.19.4':
+    resolution: {integrity: sha512-s04odlR3ksJrLu7QLi+pddkWLD0RmSbcP9KuWn2/ozQKAp/YgwBC/6x9kJj8yAzZnGPfxePm7zm7nysVPCRagw==}
 
   '@types/parse-filepath@1.0.2':
     resolution: {integrity: sha512-CcyaQuvlpejsJR57RWxUR++E7zTKvbDDotZyiKaJsZdlbV8JfHgRYj4aZszEGKVLhiX0pbD8QeAuzEFUol4mRA==}
@@ -7327,7 +7372,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@changesets/cli@2.31.1(@types/node@24.19.2)':
+  '@changesets/cli@2.31.1(@types/node@24.19.4)':
     dependencies:
       '@changesets/apply-release-plan': 7.1.1
       '@changesets/assemble-release-plan': 6.0.10
@@ -7343,7 +7388,7 @@ snapshots:
       '@changesets/should-skip-package': 0.1.2
       '@changesets/types': 6.1.0
       '@changesets/write': 0.4.0
-      '@inquirer/external-editor': 1.0.3(@types/node@24.19.2)
+      '@inquirer/external-editor': 1.0.3(@types/node@24.19.4)
       '@manypkg/get-packages': 1.1.3
       ansi-colors: 4.1.3
       enquirer: 2.4.1
@@ -7555,7 +7600,7 @@ snapshots:
       graphql-tag: 2.12.6(graphql@17.1.0)
       tslib: 2.9.1
 
-  '@graphql-codegen/cli@8.0.0(@types/node@24.19.2)(graphql@17.1.0)(typescript@5.9.3)':
+  '@graphql-codegen/cli@8.0.0(@types/node@24.19.4)(graphql@17.1.0)(typescript@5.9.3)':
     dependencies:
       '@babel/generator': 7.29.15
       '@babel/template': 7.29.7
@@ -7566,21 +7611,21 @@ snapshots:
       '@graphql-tools/apollo-engine-loader': 9.0.9(graphql@17.1.0)
       '@graphql-tools/code-file-loader': 9.1.2(graphql@17.1.0)
       '@graphql-tools/git-loader': 9.0.10(graphql@17.1.0)
-      '@graphql-tools/github-loader': 10.0.10(@types/node@24.19.2)(graphql@17.1.0)
+      '@graphql-tools/github-loader': 10.0.10(@types/node@24.19.4)(graphql@17.1.0)
       '@graphql-tools/graphql-file-loader': 9.1.2(graphql@17.1.0)
       '@graphql-tools/json-file-loader': 9.0.9(graphql@17.1.0)
       '@graphql-tools/load': 9.1.3(graphql@17.1.0)
       '@graphql-tools/merge': 10.0.9(graphql@17.1.0)
-      '@graphql-tools/url-loader': 10.0.9(@types/node@24.19.2)(graphql@17.1.0)
+      '@graphql-tools/url-loader': 10.0.9(@types/node@24.19.4)(graphql@17.1.0)
       '@graphql-tools/utils': 13.2.2(graphql@17.1.0)
-      '@inquirer/prompts': 8.8.1(@types/node@24.19.2)
+      '@inquirer/prompts': 8.8.1(@types/node@24.19.4)
       '@whatwg-node/fetch': 0.10.13
       chalk: 5.6.2
       cosmiconfig: 9.0.2(typescript@5.9.3)
       debounce: 3.0.0
       detect-indent: 7.0.2
       graphql: 17.1.0
-      graphql-config: 6.0.0(@types/node@24.19.2)(graphql@17.1.0)(typescript@5.9.3)
+      graphql-config: 6.0.0(@types/node@24.19.4)(graphql@17.1.0)(typescript@5.9.3)
       is-glob: 4.0.3
       jiti: 2.7.0
       json-to-pretty-yaml: 1.2.2
@@ -7686,6 +7731,14 @@ snapshots:
       import-from: 4.0.0
       tslib: 2.9.1
 
+  '@graphql-codegen/python-common@0.0.2(graphql@17.1.0)':
+    dependencies:
+      '@graphql-codegen/visitor-plugin-common': 6.3.0(graphql@17.1.0)
+      change-case-all: 1.0.15
+      tslib: 2.9.1
+    transitivePeerDependencies:
+      - graphql
+
   '@graphql-codegen/python-common@0.1.0(graphql@17.1.0)':
     dependencies:
       '@graphql-codegen/visitor-plugin-common': 8.0.2(graphql@17.1.0)
@@ -7720,7 +7773,7 @@ snapshots:
     transitivePeerDependencies:
       - graphql
 
-  '@graphql-codegen/testing@6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))':
+  '@graphql-codegen/testing@6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)))':
     dependencies:
       '@graphql-codegen/plugin-helpers': 8.0.0(graphql@17.1.0)
       common-tags: 1.8.2
@@ -7730,7 +7783,7 @@ snapshots:
       nock: 14.0.17
       tslib: 2.9.1
       typescript: 5.9.3
-      vitest: 4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
+      vitest: 4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1))
     transitivePeerDependencies:
       - graphql
 
@@ -7789,6 +7842,20 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@graphql-codegen/visitor-plugin-common@6.3.0(graphql@17.1.0)':
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 6.3.0(graphql@17.1.0)
+      '@graphql-tools/optimize': 2.0.1(graphql@17.1.0)
+      '@graphql-tools/relay-operation-optimizer': 7.1.14(graphql@17.1.0)
+      '@graphql-tools/utils': 11.2.2(graphql@17.1.0)
+      auto-bind: 4.0.0
+      change-case-all: 1.0.15
+      dependency-graph: 1.0.0
+      graphql: 17.1.0
+      graphql-tag: 2.12.7(graphql@17.1.0)
+      parse-filepath: 1.0.2
+      tslib: 2.9.1
 
   '@graphql-codegen/visitor-plugin-common@8.0.2(graphql@17.1.0)':
     dependencies:
@@ -7870,7 +7937,7 @@ snapshots:
       - crossws
       - utf-8-validate
 
-  '@graphql-tools/executor-http@3.6.2(@types/node@24.19.2)(graphql@17.1.0)':
+  '@graphql-tools/executor-http@3.6.2(@types/node@24.19.4)(graphql@17.1.0)':
     dependencies:
       '@graphql-hive/signal': 2.1.0
       '@graphql-tools/executor-common': 1.1.1(graphql@17.1.0)
@@ -7880,7 +7947,7 @@ snapshots:
       '@whatwg-node/fetch': 0.10.13
       '@whatwg-node/promise-helpers': 1.3.2
       graphql: 17.1.0
-      meros: 1.3.2(@types/node@24.19.2)
+      meros: 1.3.2(@types/node@24.19.4)
       tslib: 2.9.1
     transitivePeerDependencies:
       - '@types/node'
@@ -7917,9 +7984,9 @@ snapshots:
       tslib: 2.9.1
       unixify: 1.0.0
 
-  '@graphql-tools/github-loader@10.0.10(@types/node@24.19.2)(graphql@17.1.0)':
+  '@graphql-tools/github-loader@10.0.10(@types/node@24.19.4)(graphql@17.1.0)':
     dependencies:
-      '@graphql-tools/executor-http': 3.6.2(@types/node@24.19.2)(graphql@17.1.0)
+      '@graphql-tools/executor-http': 3.6.2(@types/node@24.19.4)(graphql@17.1.0)
       '@graphql-tools/graphql-tag-pluck': 9.0.10(graphql@17.1.0)
       '@graphql-tools/utils': 13.2.2(graphql@17.1.0)
       '@whatwg-node/fetch': 0.12.1
@@ -7995,6 +8062,11 @@ snapshots:
       graphql: 17.1.0
       tslib: 2.9.1
 
+  '@graphql-tools/optimize@2.0.1(graphql@17.1.0)':
+    dependencies:
+      graphql: 17.1.0
+      tslib: 2.9.1
+
   '@graphql-tools/optimize@3.0.0(graphql@17.1.0)':
     dependencies:
       graphql: 17.1.0
@@ -8009,6 +8081,13 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - supports-color
+
+  '@graphql-tools/relay-operation-optimizer@7.1.14(graphql@17.1.0)':
+    dependencies:
+      '@ardatan/relay-compiler': 13.0.3(graphql@17.1.0)
+      '@graphql-tools/utils': 12.1.0(graphql@17.1.0)
+      graphql: 17.1.0
+      tslib: 2.9.1
 
   '@graphql-tools/relay-operation-optimizer@8.0.9(graphql@17.1.0)':
     dependencies:
@@ -8031,10 +8110,10 @@ snapshots:
       graphql: 17.1.0
       tslib: 2.9.1
 
-  '@graphql-tools/url-loader@10.0.9(@types/node@24.19.2)(graphql@17.1.0)':
+  '@graphql-tools/url-loader@10.0.9(@types/node@24.19.4)(graphql@17.1.0)':
     dependencies:
       '@graphql-tools/executor-graphql-ws': 3.2.2(graphql@17.1.0)
-      '@graphql-tools/executor-http': 3.6.2(@types/node@24.19.2)(graphql@17.1.0)
+      '@graphql-tools/executor-http': 3.6.2(@types/node@24.19.4)(graphql@17.1.0)
       '@graphql-tools/executor-legacy-ws': 2.0.9(graphql@17.1.0)
       '@graphql-tools/utils': 13.2.2(graphql@17.1.0)
       '@graphql-tools/wrap': 11.2.7(graphql@17.1.0)
@@ -8151,130 +8230,130 @@ snapshots:
 
   '@inquirer/ansi@2.1.1': {}
 
-  '@inquirer/checkbox@5.3.1(@types/node@24.19.2)':
+  '@inquirer/checkbox@5.3.1(@types/node@24.19.4)':
     dependencies:
       '@inquirer/ansi': 2.1.1
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
       '@inquirer/figures': 2.1.1
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
-  '@inquirer/confirm@6.4.1(@types/node@24.19.2)':
+  '@inquirer/confirm@6.4.1(@types/node@24.19.4)':
     dependencies:
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
-  '@inquirer/core@12.1.1(@types/node@24.19.2)':
+  '@inquirer/core@12.1.1(@types/node@24.19.4)':
     dependencies:
       '@inquirer/ansi': 2.1.1
       '@inquirer/figures': 2.1.1
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
       cli-width: 4.1.0
       fast-string-width: 3.0.2
       fast-wrap-ansi: 0.2.2
       mute-stream: 3.0.0
       signal-exit: 4.1.0
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
-  '@inquirer/editor@5.5.0(@types/node@24.19.2)':
+  '@inquirer/editor@5.5.0(@types/node@24.19.4)':
     dependencies:
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/external-editor': 3.1.1(@types/node@24.19.2)
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/external-editor': 3.1.1(@types/node@24.19.4)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
-  '@inquirer/expand@5.2.1(@types/node@24.19.2)':
+  '@inquirer/expand@5.2.1(@types/node@24.19.4)':
     dependencies:
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
-  '@inquirer/external-editor@1.0.3(@types/node@24.19.2)':
-    dependencies:
-      chardet: 2.2.0
-      iconv-lite: 0.7.3
-    optionalDependencies:
-      '@types/node': 24.19.2
-
-  '@inquirer/external-editor@3.1.1(@types/node@24.19.2)':
+  '@inquirer/external-editor@1.0.3(@types/node@24.19.4)':
     dependencies:
       chardet: 2.2.0
       iconv-lite: 0.7.3
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
+
+  '@inquirer/external-editor@3.1.1(@types/node@24.19.4)':
+    dependencies:
+      chardet: 2.2.0
+      iconv-lite: 0.7.3
+    optionalDependencies:
+      '@types/node': 24.19.4
 
   '@inquirer/figures@2.1.1': {}
 
-  '@inquirer/input@5.2.1(@types/node@24.19.2)':
+  '@inquirer/input@5.2.1(@types/node@24.19.4)':
     dependencies:
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
-  '@inquirer/number@4.3.1(@types/node@24.19.2)':
+  '@inquirer/number@4.3.1(@types/node@24.19.4)':
     dependencies:
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
-  '@inquirer/password@5.3.1(@types/node@24.19.2)':
-    dependencies:
-      '@inquirer/ansi': 2.1.1
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
-    optionalDependencies:
-      '@types/node': 24.19.2
-
-  '@inquirer/prompts@8.8.1(@types/node@24.19.2)':
-    dependencies:
-      '@inquirer/checkbox': 5.3.1(@types/node@24.19.2)
-      '@inquirer/confirm': 6.4.1(@types/node@24.19.2)
-      '@inquirer/editor': 5.5.0(@types/node@24.19.2)
-      '@inquirer/expand': 5.2.1(@types/node@24.19.2)
-      '@inquirer/input': 5.2.1(@types/node@24.19.2)
-      '@inquirer/number': 4.3.1(@types/node@24.19.2)
-      '@inquirer/password': 5.3.1(@types/node@24.19.2)
-      '@inquirer/rawlist': 5.4.1(@types/node@24.19.2)
-      '@inquirer/search': 4.4.1(@types/node@24.19.2)
-      '@inquirer/select': 5.3.1(@types/node@24.19.2)
-    optionalDependencies:
-      '@types/node': 24.19.2
-
-  '@inquirer/rawlist@5.4.1(@types/node@24.19.2)':
-    dependencies:
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
-    optionalDependencies:
-      '@types/node': 24.19.2
-
-  '@inquirer/search@4.4.1(@types/node@24.19.2)':
-    dependencies:
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/figures': 2.1.1
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
-    optionalDependencies:
-      '@types/node': 24.19.2
-
-  '@inquirer/select@5.3.1(@types/node@24.19.2)':
+  '@inquirer/password@5.3.1(@types/node@24.19.4)':
     dependencies:
       '@inquirer/ansi': 2.1.1
-      '@inquirer/core': 12.1.1(@types/node@24.19.2)
-      '@inquirer/figures': 2.1.1
-      '@inquirer/type': 4.3.1(@types/node@24.19.2)
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
-  '@inquirer/type@4.3.1(@types/node@24.19.2)':
+  '@inquirer/prompts@8.8.1(@types/node@24.19.4)':
+    dependencies:
+      '@inquirer/checkbox': 5.3.1(@types/node@24.19.4)
+      '@inquirer/confirm': 6.4.1(@types/node@24.19.4)
+      '@inquirer/editor': 5.5.0(@types/node@24.19.4)
+      '@inquirer/expand': 5.2.1(@types/node@24.19.4)
+      '@inquirer/input': 5.2.1(@types/node@24.19.4)
+      '@inquirer/number': 4.3.1(@types/node@24.19.4)
+      '@inquirer/password': 5.3.1(@types/node@24.19.4)
+      '@inquirer/rawlist': 5.4.1(@types/node@24.19.4)
+      '@inquirer/search': 4.4.1(@types/node@24.19.4)
+      '@inquirer/select': 5.3.1(@types/node@24.19.4)
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
+
+  '@inquirer/rawlist@5.4.1(@types/node@24.19.4)':
+    dependencies:
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
+    optionalDependencies:
+      '@types/node': 24.19.4
+
+  '@inquirer/search@4.4.1(@types/node@24.19.4)':
+    dependencies:
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/figures': 2.1.1
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
+    optionalDependencies:
+      '@types/node': 24.19.4
+
+  '@inquirer/select@5.3.1(@types/node@24.19.4)':
+    dependencies:
+      '@inquirer/ansi': 2.1.1
+      '@inquirer/core': 12.1.1(@types/node@24.19.4)
+      '@inquirer/figures': 2.1.1
+      '@inquirer/type': 4.3.1(@types/node@24.19.4)
+    optionalDependencies:
+      '@types/node': 24.19.4
+
+  '@inquirer/type@4.3.1(@types/node@24.19.4)':
+    optionalDependencies:
+      '@types/node': 24.19.4
 
   '@isaacs/nonrecursive-glob-match@1.1.0': {}
 
@@ -8575,7 +8654,7 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
-  '@types/node@24.19.2':
+  '@types/node@24.19.4':
     dependencies:
       undici-types: 7.24.6
 
@@ -8585,13 +8664,13 @@ snapshots:
 
   '@types/set-cookie-parser@2.4.10':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
   '@types/statuses@2.0.6': {}
 
   '@types/ws@8.18.2':
     dependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
   '@types/zen-observable@0.8.7': {}
 
@@ -8722,14 +8801,14 @@ snapshots:
       chai: 6.3.0
       tinyrainbow: 3.2.0
 
-  '@vitest/mocker@4.1.12(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))':
+  '@vitest/mocker@4.1.12(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1))':
     dependencies:
       '@vitest/spy': 4.1.12
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      msw: 2.15.0(@types/node@24.19.2)(typescript@5.9.3)
-      vite: 8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)
+      msw: 2.15.0(@types/node@24.19.4)(typescript@5.9.3)
+      vite: 8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)
 
   '@vitest/pretty-format@4.1.12':
     dependencies:
@@ -9860,13 +9939,13 @@ snapshots:
 
   graceful-fs@4.2.12: {}
 
-  graphql-config@6.0.0(@types/node@24.19.2)(graphql@17.1.0)(typescript@5.9.3):
+  graphql-config@6.0.0(@types/node@24.19.4)(graphql@17.1.0)(typescript@5.9.3):
     dependencies:
       '@graphql-tools/graphql-file-loader': 9.1.2(graphql@17.1.0)
       '@graphql-tools/json-file-loader': 9.0.9(graphql@17.1.0)
       '@graphql-tools/load': 9.1.3(graphql@17.1.0)
       '@graphql-tools/merge': 10.0.9(graphql@17.1.0)
-      '@graphql-tools/url-loader': 10.0.9(@types/node@24.19.2)(graphql@17.1.0)
+      '@graphql-tools/url-loader': 10.0.9(@types/node@24.19.4)(graphql@17.1.0)
       '@graphql-tools/utils': 13.2.2(graphql@17.1.0)
       cosmiconfig: 8.3.6(typescript@5.9.3)
       graphql: 17.1.0
@@ -10448,9 +10527,9 @@ snapshots:
 
   merge2@1.4.1: {}
 
-  meros@1.3.2(@types/node@24.19.2):
+  meros@1.3.2(@types/node@24.19.4):
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
 
   micromatch@4.0.8:
     dependencies:
@@ -10484,9 +10563,9 @@ snapshots:
 
   ms@2.1.3: {}
 
-  msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3):
+  msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3):
     dependencies:
-      '@inquirer/confirm': 6.4.1(@types/node@24.19.2)
+      '@inquirer/confirm': 6.4.1(@types/node@24.19.4)
       '@mswjs/interceptors': 0.41.9
       '@open-draft/deferred-promise': 3.0.0
       '@types/statuses': 2.0.6
@@ -11270,14 +11349,14 @@ snapshots:
 
   ts-log@3.0.3: {}
 
-  ts-node@10.9.2(@types/node@24.19.2)(typescript@5.9.3):
+  ts-node@10.9.2(@types/node@24.19.4)(typescript@5.9.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.14
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
       acorn: 8.19.0
       acorn-walk: 8.3.5
       arg: 4.1.3
@@ -11403,7 +11482,7 @@ snapshots:
 
   verkit@0.5.0: {}
 
-  vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1):
+  vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -11411,15 +11490,15 @@ snapshots:
       rolldown: 1.2.19
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
       fsevents: 2.3.3
       jiti: 2.7.0
       yaml: 2.9.1
 
-  vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)):
+  vitest@4.1.12(@types/node@24.19.4)(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)):
     dependencies:
       '@vitest/expect': 4.1.12
-      '@vitest/mocker': 4.1.12(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
+      '@vitest/mocker': 4.1.12(msw@2.15.0(@types/node@24.19.4)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1))
       '@vitest/pretty-format': 4.1.12
       '@vitest/runner': 4.1.12
       '@vitest/snapshot': 4.1.12
@@ -11436,10 +11515,10 @@ snapshots:
       tinyexec: 1.3.1
       tinyglobby: 0.2.17
       tinyrainbow: 3.2.0
-      vite: 8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)
+      vite: 8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 24.19.2
+      '@types/node': 24.19.4
     transitivePeerDependencies:
       - msw
 
