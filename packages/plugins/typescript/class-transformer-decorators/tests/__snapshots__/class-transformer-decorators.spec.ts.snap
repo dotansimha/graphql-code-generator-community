@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`class-transformer-decorators should decorate @Expose() on matching class properties and @Type on all nested classes 1`] = `
+"import 'reflect-metadata';
+import { Expose, Type } from 'class-transformer';
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+/** All built-in and custom scalars, mapped to their actual values */
+export class Scalars {
+  ID: {
+    input: string;
+    output: string;
+  };
+  String: {
+    input: string;
+    output: string;
+  };
+  Boolean: {
+    input: boolean;
+    output: boolean;
+  };
+  Int: {
+    input: number;
+    output: number;
+  };
+  Float: {
+    input: number;
+    output: number;
+  };
+}
+;
+export class User {
+  @Expose()
+  __typename?: 'User';
+  @Expose()
+  id: Scalars['ID']['output'];
+  @Expose()
+  name: Scalars['String']['output'];
+}
+;
+export class Address {
+  __typename?: 'Address';
+  id?: Maybe<Scalars['String']['output']>;
+  city: Scalars['String']['output'];
+  postalCode: Scalars['String']['output'];
+  stateProvince: Scalars['String']['output'];
+  street: Scalars['String']['output'];
+}
+;
+export class AddressInput {
+  @Expose()
+  id?: InputMaybe<Scalars['String']['input']>;
+  @Expose()
+  city: Scalars['String']['input'];
+  @Expose()
+  postalCode: Scalars['String']['input'];
+  @Expose()
+  stateProvince: Scalars['String']['input'];
+  @Expose()
+  street: Scalars['String']['input'];
+}
+;
+export class UserInput {
+  @Expose()
+  id?: InputMaybe<Scalars['String']['input']>;
+  @Expose()
+  name?: InputMaybe<Scalars['String']['input']>;
+  @Expose()
+  @Type(() => AddressInput)
+  address?: InputMaybe<AddressInput>;
+}
+;"
+`;
