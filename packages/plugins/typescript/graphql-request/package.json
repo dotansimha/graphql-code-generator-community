@@ -50,7 +50,7 @@
     "@graphql-codegen/core": "7.0.0",
     "@graphql-codegen/testing": "6.0.0",
     "@graphql-codegen/typescript": "7.0.1",
-    "@graphql-codegen/typescript-operations": "7.0.1",
+    "@graphql-codegen/typescript-operations": "7.0.2",
     "@graphql-tools/schema": "11.0.9",
     "@whatwg-node/fetch": "0.12.1",
     "fs-extra": "11.4.1",

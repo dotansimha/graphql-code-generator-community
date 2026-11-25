@@ -37,7 +37,7 @@
     "@graphql-codegen/typescript-apollo-angular": "workspace:*",
     "@graphql-codegen/typescript-graphql-files-modules": "workspace:*",
     "@graphql-codegen/typescript-jit-sdk": "workspace:*",
-    "@graphql-codegen/typescript-operations": "7.0.1",
+    "@graphql-codegen/typescript-operations": "7.0.2",
     "@graphql-codegen/typescript-react-apollo": "workspace:*",
     "@graphql-codegen/typescript-react-query": "workspace:*",
     "@graphql-codegen/typescript-rtk-query": "workspace:*",

@@ -227,8 +227,8 @@ importers:
         specifier: workspace:*
         version: link:packages/plugins/typescript/jit-sdk/dist
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
       '@graphql-codegen/typescript-react-apollo':
         specifier: workspace:*
         version: link:packages/plugins/typescript/react-apollo/dist
@@ -753,6 +753,29 @@ importers:
         version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
     publishDirectory: dist
 
+  packages/plugins/python/python-generic-sdk:
+    dependencies:
+      '@graphql-codegen/plugin-helpers':
+        specifier: ^8.0.0
+        version: 8.0.0(graphql@17.1.0)
+      '@graphql-codegen/python-common':
+        specifier: 0.1.0
+        version: 0.1.0(graphql@17.1.0)
+      '@graphql-codegen/visitor-plugin-common':
+        specifier: ^8.0.0
+        version: 8.0.2(graphql@17.1.0)
+      graphql:
+        specifier: 17.1.0
+        version: 17.1.0
+      tslib:
+        specifier: ^2.8.1
+        version: 2.9.1
+    devDependencies:
+      '@graphql-codegen/testing':
+        specifier: 6.0.0
+        version: 6.0.0(graphql@17.1.0)(jest-diff@30.5.2)(typescript@5.9.3)(vitest@4.1.12(@types/node@24.19.2)(msw@2.15.0(@types/node@24.19.2)(typescript@5.9.3))(vite@8.3.8(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)))
+    publishDirectory: dist
+
   packages/plugins/python/python-operations:
     dependencies:
       '@graphql-codegen/plugin-helpers':
@@ -804,8 +827,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
       graphql-tag:
         specifier: 2.12.6
         version: 2.12.6(graphql@17.1.0)
@@ -885,8 +908,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
     publishDirectory: dist
 
   packages/plugins/typescript/graphql-apollo:
@@ -926,8 +949,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
       '@graphql-tools/schema':
         specifier: 11.0.9
         version: 11.0.9(graphql@17.1.0)
@@ -990,8 +1013,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
       '@graphql-tools/schema':
         specifier: 11.0.9
         version: 11.0.9(graphql@17.1.0)
@@ -1034,8 +1057,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
       '@graphql-tools/utils':
         specifier: 13.2.2
         version: 13.2.2(graphql@17.1.0)
@@ -1233,8 +1256,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.7(graphql@17.1.0)
@@ -1290,8 +1313,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
     publishDirectory: dist
 
   packages/plugins/typescript/rtk-query:
@@ -1357,8 +1380,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
     publishDirectory: dist
 
   packages/plugins/typescript/stencil-apollo:
@@ -1447,8 +1470,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
     publishDirectory: dist
 
   packages/plugins/typescript/urql-graphcache:
@@ -1539,8 +1562,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
     publishDirectory: dist
 
   packages/plugins/typescript/vue-apollo-smart-ops:
@@ -1574,8 +1597,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
     publishDirectory: dist
 
   packages/plugins/typescript/vue-urql:
@@ -1609,8 +1632,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
     publishDirectory: dist
 
   packages/presets/import-types:
@@ -1663,8 +1686,8 @@ importers:
         specifier: 7.0.1
         version: 7.0.1(graphql@17.1.0)
       '@graphql-codegen/typescript-operations':
-        specifier: 7.0.1
-        version: 7.0.1(graphql@17.1.0)
+        specifier: 7.0.2
+        version: 7.0.2(graphql@17.1.0)
       '@types/parse-filepath':
         specifier: 1.0.2
         version: 1.0.2
@@ -2709,8 +2732,8 @@ packages:
     peerDependencies:
       graphql: 17.1.0
 
-  '@graphql-codegen/typescript-operations@7.0.1':
-    resolution: {integrity: sha512-qdn7Ya7TbdOkanNeZULW4rF6+q7F5dTgOX2oxE48bm+zULqSQ7UlTe3jCOVxEVKtooi6TpVNnnmhttFVB0R1EA==}
+  '@graphql-codegen/typescript-operations@7.0.2':
+    resolution: {integrity: sha512-CRzhX6pa6Wwc0qhYKFroqvjxxKxSVZJO6OJTmvwu/ZwJZ92q49eVjgv9GE7U7/sUMWDt/P3TbMOXddveqWAEpQ==}
     engines: {node: '>=22.18.0'}
     peerDependencies:
       graphql: 17.1.0
@@ -7612,7 +7635,7 @@ snapshots:
       '@graphql-codegen/plugin-helpers': 8.0.0(graphql@17.1.0)
       '@graphql-codegen/typed-document-node': 8.0.0(graphql@17.1.0)
       '@graphql-codegen/typescript': 7.0.1(graphql@17.1.0)
-      '@graphql-codegen/typescript-operations': 7.0.1(graphql@17.1.0)
+      '@graphql-codegen/typescript-operations': 7.0.2(graphql@17.1.0)
       '@graphql-codegen/visitor-plugin-common': 8.0.2(graphql@17.1.0)
       '@graphql-tools/documents': 2.0.0(graphql@17.1.0)
       '@graphql-tools/utils': 13.2.2(graphql@17.1.0)
@@ -7743,7 +7766,7 @@ snapshots:
       graphql: 17.1.0
       tslib: 2.9.1
 
-  '@graphql-codegen/typescript-operations@7.0.1(graphql@17.1.0)':
+  '@graphql-codegen/typescript-operations@7.0.2(graphql@17.1.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 8.0.0(graphql@17.1.0)
       '@graphql-codegen/schema-ast': 7.0.0(graphql@17.1.0)
