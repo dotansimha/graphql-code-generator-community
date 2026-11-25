@@ -1,5 +1,15 @@
 # @graphql-codegen/kotlin
 
+## 5.0.1
+
+### Patch Changes
+
+- [#1741](https://github.com/dotansimha/graphql-code-generator-community/pull/1741)
+  [`be4d1e7`](https://github.com/dotansimha/graphql-code-generator-community/commit/be4d1e794e87ace2d858939803a141a0b70a29fe)
+  Thanks [@agustin18](https://github.com/agustin18)! - Use the converted enum entry in default
+  values, emit properly escaped Kotlin strings, and escape Kotlin keywords used as field or argument
+  names.
+
 ## 5.0.0
 
 ### Major Changes
