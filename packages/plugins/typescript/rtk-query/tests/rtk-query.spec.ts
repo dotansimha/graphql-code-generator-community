@@ -27,6 +27,9 @@ describe('RTK Query', () => {
     newEntryMutation: readFileSync(join(githunt, 'new-entry.mutation.graphql'), {
       encoding: 'utf-8',
     }),
+    currentUserQuery: readFileSync(join(githunt, 'current-user.query.graphql'), {
+      encoding: 'utf-8',
+    }),
   };
 
   test('Without hooks', async () => {
@@ -51,6 +54,26 @@ describe('RTK Query', () => {
     expect(content.prepend).toContain("import { api } from './baseApi';");
 
     expect(content.content).toMatchSnapshot();
+  });
+
+  test('Without variables', async () => {
+    const documents = parse(gql.currentUserQuery);
+    const docs = [{ location: '', document: documents }];
+
+    const content = (await plugin(
+      schema,
+      docs,
+      {
+        importBaseApiFrom: './baseApi',
+        exportHooks: false,
+      },
+      {
+        outputFile: 'graphql.ts',
+      },
+    )) as Types.ComplexPluginOutput;
+
+    expect(content.content).toContain('CurrentUserForProfileQueryVariables | undefined');
+    expect(content.content).not.toContain('CurrentUserForProfileQueryVariables | void');
   });
 
   test('With hooks', async () => {

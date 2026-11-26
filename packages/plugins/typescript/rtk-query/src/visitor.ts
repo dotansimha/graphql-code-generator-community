@@ -131,7 +131,7 @@ export { injectedRtkApi as api };
     }
 
     const Generics = `${operationResultType}, ${operationVariablesTypes}${
-      hasRequiredVariables ? '' : ' | void'
+      hasRequiredVariables ? '' : ' | undefined'
     }`;
 
     const operationTypeString = operationType.toLowerCase();
