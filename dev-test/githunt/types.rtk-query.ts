@@ -395,7 +395,7 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     CurrentUserForProfile: build.query<
       CurrentUserForProfileQuery,
-      CurrentUserForProfileQueryVariables | void
+      CurrentUserForProfileQueryVariables | undefined
     >({
       query: variables => ({
         document: CurrentUserForProfileDocument as unknown as string,
