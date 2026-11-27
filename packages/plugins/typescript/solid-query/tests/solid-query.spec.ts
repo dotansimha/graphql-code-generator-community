@@ -142,7 +142,7 @@ describe('Solid-Query', () => {
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
-      expect(out.prepend).toContain(`import type { customFetcher } from './my-file';`);
+      expect(out.prepend).toContain(`import { customFetcher } from './my-file';`);
     });
 
     it("Should generate fetcher field when exposeFetcher is true and the fetcher isn't a solid hook", async () => {

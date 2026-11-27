@@ -194,7 +194,7 @@ describe('React-Query', () => {
 
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
-      expect(out.prepend).toContain(`import type { customFetcher } from './my-file';`);
+      expect(out.prepend).toContain(`import { customFetcher } from './my-file';`);
     });
 
     it('Should import the custom fetcher as a value when useTypeImports is true', async () => {
