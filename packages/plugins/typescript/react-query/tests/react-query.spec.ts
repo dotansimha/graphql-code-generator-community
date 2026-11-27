@@ -3,6 +3,7 @@ import { mergeOutputs, Types } from '@graphql-codegen/plugin-helpers';
 import { validateTs } from '@graphql-codegen/testing';
 import { plugin as tsPlugin } from '@graphql-codegen/typescript';
 import { plugin as tsDocumentsPlugin } from '@graphql-codegen/typescript-operations';
+import { DocumentMode } from '@graphql-codegen/visitor-plugin-common';
 import type { ReactQueryRawPluginConfig } from '../src/config';
 import { plugin } from '../src/index.js';
 
@@ -125,6 +126,36 @@ describe('React-Query', () => {
       document: basicFragment,
     },
   ];
+
+  describe('plain string documents', () => {
+    it.each([
+      'fetch',
+      { endpoint: 'https://example.com/graphql' },
+      'graphql-request',
+      { clientImportPath: "import { graphqlClient } from './client';" },
+      './fetcher#customFetcher',
+    ])('generates string operations for fetcher %j', async fetcher => {
+      const out = await plugin(schema, docs, { documentMode: DocumentMode.plainString, fetcher });
+      const output = mergeOutputs([out]);
+
+      expect(out.content).toContain('export const TestDocument = `');
+      expect(output).not.toContain('TypedDocumentString');
+      expect(output).not.toContain('DocumentTypeDecoration');
+      if (fetcher !== './fetcher#customFetcher') {
+        expect(output).toContain('query: string');
+      }
+    });
+
+    it('generates a standalone fragment as a string', async () => {
+      const out = await plugin(schema, notOperationDocs, {
+        documentMode: DocumentMode.plainString,
+      });
+
+      expect(out.content).toContain('export const EntryDataFragmentDoc = `');
+      expect(out.content).not.toContain('TypedDocumentString');
+      expect(out.prepend).toEqual([]);
+    });
+  });
 
   it('should allow to override TError type', async () => {
     const config = {

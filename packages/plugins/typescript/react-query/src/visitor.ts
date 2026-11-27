@@ -37,7 +37,10 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     const defaultReactQueryVersion = !rawConfig.reactQueryVersion && rawConfig.legacyMode ? 3 : 4;
 
     super(schema, fragments, rawConfig, {
-      documentMode: DocumentMode.string,
+      documentMode:
+        rawConfig.documentMode === DocumentMode.plainString
+          ? DocumentMode.plainString
+          : DocumentMode.string,
       errorType: getConfigValue(rawConfig.errorType, 'unknown'),
       exposeDocument: getConfigValue(rawConfig.exposeDocument, false),
       exposeQueryKeys: getConfigValue(rawConfig.exposeQueryKeys, false),
@@ -85,10 +88,16 @@ export class ReactQueryVisitor extends ClientSideBaseVisitor<
     return this._fragments.size > 0;
   }
 
+  public get usesTypedDocumentString(): boolean {
+    return (
+      this.config.documentMode === DocumentMode.string && (this.hasFragments || this.hasOperations)
+    );
+  }
+
   public getImports(): string[] {
     const baseImports = super.getImports();
 
-    if (this.hasFragments || this.hasOperations) {
+    if (this.usesTypedDocumentString) {
       const typedDocumentStringPropImport = this._generateImport(
         typedDocumentString.import,
         typedDocumentString.import.propName,

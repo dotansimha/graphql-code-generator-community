@@ -39,7 +39,7 @@ export class HardcodedFetchFetcher extends FetcherRenderer {
 
   generateFetcherImplementation(): string {
     return `
-function fetcher<TData, TVariables>(query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
+function fetcher<TData, TVariables>(query: ${this.queryType}, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(${this.getEndpoint()}, {
 ${this.getFetchParams()}
