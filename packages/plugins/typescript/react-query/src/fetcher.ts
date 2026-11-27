@@ -30,6 +30,12 @@ export abstract class FetcherRenderer {
     autoBind(this);
   }
 
+  protected get queryType(): string {
+    return this.visitor.usesTypedDocumentString
+      ? 'TypedDocumentString<unknown, unknown>'
+      : 'string';
+  }
+
   public abstract generateFetcherImplementation(): string;
   public abstract generateFetcherFetch(config: GenerateConfig): string;
   protected abstract generateQueryHook(config: GenerateConfig, isSuspense?: boolean): string;

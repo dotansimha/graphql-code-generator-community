@@ -10,7 +10,7 @@ export class FetchFetcher extends FetcherRenderer {
 
   generateFetcherImplementation(): string {
     return `
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: TypedDocumentString<unknown, unknown>, variables?: TVariables) {
+function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: ${this.queryType}, variables?: TVariables) {
   return async (): Promise<TData> => {
     const res = await fetch(endpoint, {
       method: 'POST',
