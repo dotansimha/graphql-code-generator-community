@@ -146,6 +146,20 @@ describe('Solid-Query', () => {
       expect(out.prepend).not.toContain(`import type { customFetcher }`);
     });
 
+    it('Should import a default custom fetcher as a value when useTypeImports is true', async () => {
+      const config = {
+        fetcher: {
+          func: './my-file#default as customFetcher',
+        },
+        useTypeImports: true,
+      };
+
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+
+      expect(out.prepend).toContain(`import customFetcher from './my-file';`);
+      expect(out.prepend).not.toContain(`import type`);
+    });
+
     it("Should generate fetcher field when exposeFetcher is true and the fetcher isn't a solid hook", async () => {
       const config = {
         fetcher: {
