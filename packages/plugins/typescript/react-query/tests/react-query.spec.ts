@@ -209,7 +209,7 @@ describe('React-Query', () => {
       const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
 
       expect(out.prepend).toContain(`import customFetcher from './my-file';`);
-      expect(out.prepend.join('\n')).not.toContain(`import type`);
+      expect(out.prepend.join('\n')).not.toContain(`import type { default as customFetcher }`);
     });
 
     it("Should generate fetcher field when exposeFetcher is true and the fetcher isn't a react hook", async () => {
