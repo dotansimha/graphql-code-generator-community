@@ -197,6 +197,20 @@ describe('React-Query', () => {
       expect(out.prepend).toContain(`import type { customFetcher } from './my-file';`);
     });
 
+    it('Should import the custom fetcher as a value when useTypeImports is true', async () => {
+      const config = {
+        fetcher: {
+          func: '../fetcher#fetcher',
+        },
+        useTypeImports: true,
+      };
+
+      const out = (await plugin(schema, docs, config)) as Types.ComplexPluginOutput;
+
+      expect(out.prepend).toContain(`import { fetcher } from '../fetcher';`);
+      expect(out.prepend).not.toContain(`import type { fetcher }`);
+    });
+
     it("Should generate fetcher field when exposeFetcher is true and the fetcher isn't a react hook", async () => {
       const config = {
         fetcher: {
