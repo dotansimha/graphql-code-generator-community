@@ -62,7 +62,7 @@
     "jest-diff": "30.5.2",
     "jest-docblock": "30.5.0",
     "js-yaml": "5.5.0",
-    "lint-staged": "16.4.0",
+    "lint-staged": "17.6.3",
     "patch-package": "8.0.1",
     "prettier": "3.8.5",
     "prettier-plugin-pkg": "0.18.1",
